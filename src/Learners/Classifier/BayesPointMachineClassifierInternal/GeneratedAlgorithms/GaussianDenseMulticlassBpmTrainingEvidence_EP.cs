@@ -82,10 +82,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		private int[] labels;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_0__B;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> MaxNoisyScore_rep_B_toDef;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> MaxNoisyScore_rep_F_marginal;
 		/// <summary>Message to marginal of 'ModelSelector'</summary>
 		public Bernoulli ModelSelector_marginal_F;
@@ -139,10 +139,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Message to marginal of 'Weights'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_marginal_F;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> Weights_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_rep_B_toDef;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> Weights_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_rep_F_marginal;
 		/// <summary>Message from use of 'Weights'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_use_B;

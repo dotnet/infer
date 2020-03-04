@@ -44,19 +44,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         protected PairListAutomaton sequencePairToWeight = new PairListAutomaton();
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the maximum number of states a transducer can have.
-        /// </summary>
-        public static int MaxStateCount
-        {
-            get { return PairListAutomaton.MaxStateCount; }
-            set { PairListAutomaton.MaxStateCount = value; }
-        }
-        
-        #endregion
-
         #region Factory methods
 
         /// <summary>
@@ -360,6 +347,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // Populate the stack with start destination state
             result.StartStateIndex = CreateDestState(mappingAutomaton.Start, srcAutomaton.Start);
+            var stringAutomaton = srcAutomaton as StringAutomaton;
+            var sourceDistributionHasLogProbabilityOverrides = stringAutomaton?.HasElementLogValueOverrides ?? false;
 
             while (stack.Count > 0)
             {
@@ -400,7 +389,32 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
-                        var destWeight = Weight.Product(mappingTransition.Weight, srcTransition.Weight, Weight.FromLogValue(projectionLogScale));
+                        // In the special case of a log probability override in a DiscreteChar element distribution,
+                        // we need to compensate for the fact that the distribution is not normalized.
+                        if (destElementDistribution.HasValue && sourceDistributionHasLogProbabilityOverrides)
+                        {
+                            var discreteChar =
+                                (DiscreteChar)(IDistribution<char>)srcTransition.ElementDistribution.Value;
+                            if (discreteChar.HasLogProbabilityOverride)
+                            {
+                                var totalMass = discreteChar.Ranges.EnumerableSum(rng =>
+                                    rng.Probability.Value * (rng.EndExclusive - rng.StartInclusive));
+                                projectionLogScale -= System.Math.Log(totalMass);
+                            }
+                        }
+
+                        var destWeight =
+                            sourceDistributionHasLogProbabilityOverrides && destElementDistribution.HasNoValue
+                                ? Weight.One
+                                : Weight.Product(mappingTransition.Weight, srcTransition.Weight,
+                                    Weight.FromLogValue(projectionLogScale));
+
+                        // We don't want an unnormalizable distribution to become normalizable due to a rounding error.
+                        if (Math.Abs(destWeight.LogValue) < 1e-12)
+                        {
+                            destWeight = Weight.One;
+                        }
+
                         var childDestStateIndex = CreateDestState(childMappingState, srcChildState);
                         destState.AddTransition(destElementDistribution, destWeight, childDestStateIndex, mappingTransition.Group);
                     }
@@ -555,6 +569,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         #endregion
 
         #region Nested classes
+
+        public class UnlimitedStatesComputation : IDisposable
+        {
+            private readonly PairListAutomaton.UnlimitedStatesComputation unlimitedAutomatonStatesComputation;
+
+            public UnlimitedStatesComputation() =>
+                this.unlimitedAutomatonStatesComputation = new PairListAutomaton.UnlimitedStatesComputation();
+
+            public void Dispose() =>
+                this.unlimitedAutomatonStatesComputation.Dispose();
+        }
 
         /// <summary>
         /// Represents an automaton that maps lists of element pairs to real values. Such automata are used to represent transducers internally.

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using Microsoft.ML.Probabilistic.Utilities;
@@ -275,12 +276,44 @@ digamma(mpf('9.5'))
                 };
             CheckFunctionValues("LogisticLn", MMath.LogisticLn, logisticln_pairs);
 
-            // In python mpmath:
-            // log(1+mpf('1e-3'))
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+log(1+mpf('1e-3'))
+             */
             double[,] log1plus_pairs = new double[,]
                 {
                     {0, 0},
+                    {1e-1, 0.09531017980432486004395212328 },
+                    {6.3e-2, 0.06109509935981087637675438 },
+                    {6.1e-2, 0.059211859631846083 },
+                    {5.5e-2, 0.05354076692802981828874 },
+                    {5.3e-2, 0.051643233151838449580494 },
+                    {5.1e-2, 0.0497420918948140735608097 },
+                    {4.1e-2, 0.0401817896328318316949477 },
+                    {3.1e-2, 0.0305292050348228732504307413911 },
+                    {2.7e-2, 0.0266419309464211781724586 },
+                    {2.5e-2, 0.0246926125903715010143 },
+                    {2.3e-2, 0.0227394869694894293323787753769 },
+                    {2.1e-2, 0.0207825391825285036221723649 },
+                    {2e-2, 0.019802627296179713026029 },
+                    {19e-3, 0.0188217542405877614354916031 },
+                    {17e-3, 0.0168571170664228993186476034 },
+                    {16e-3, 0.0158733491562901492451628 },
+                    {15e-3, 0.014888612493750654835409744978 },
+                    {14e-3, 0.013902905168991420865477877458 },
+                    {13e-3, 0.0129162252665463284388365486353 },
+                    {12e-3, 0.011928570865273801649186 },
+                    {11e-3, 0.0109399400383343638461374275 },
                     {1e-2, .995033085316808284821535754426e-2},
+                    {9e-3, 0.008959741371471904443146461327328 },
+                    {8e-3, 0.007968169649176873510797339 },
+                    {7e-3, 0.0069756137364252420995222 },
+                    {6e-3, 0.005982071677547463782018873 },
+                    {5e-3, 0.0049875415110390736121022 },
+                    {4e-3, 0.003992021269537452999075117871513754627 },
+                    {3e-3, 0.00299550897979847881161 },
                     {2e-3, 0.001998002662673056018253771 },
                     {1.9e-3, 0.001898197283080252703101569277 },
                     {1.5e-3, 0.00149887612373589185400014886673 },
@@ -302,22 +335,42 @@ digamma(mpf('9.5'))
                     {1e-7, 1e-7 - 0.5e-14 + 1e-21/3 - 1e-28/4},
                     {1e-8, 1e-8 - 0.5e-16 + 1e-24/3},
                     {1e-14, 1e-14 - 0.5e-28 + 1e-42/3},
-                    {-1e-2, -0.01005033585350144118},
-                    {-1e-3, -0.0010005003335835335},
-                    {-1e-4, -0.0001000050003333583353335},
-                    {-1e-5, -0.0000100000500003333358333533335},
                     {-1e-8, -0.00000001000000005000000033333333583333},
+                    {-1e-7, -0.0000001000000050000003333333583333353333335 },
+                    {-1e-6, -0.0000010000005000003333335833335333335 },
+                    {-1e-5, -0.0000100000500003333358333533335},
+                    {-1e-4, -0.0001000050003333583353335},
+                    {-1e-3, -0.0010005003335835335},
+                    {-2e-3, -0.0020020026706730773516511 },
+                    {-3e-3, -0.00300450902029872181325 },
+                    {-4e-3, -0.00400802139753881834879266 },
+                    {-5e-3, -0.0050125418235442820430937 },
+                    {-6e-3, -0.0060180723255630162019349666387 },
+                    {-1e-2, -0.01005033585350144118},
+                    {-2e-2, -0.020202707317519448408045301 },
+                    {-3e-2, -0.0304592074847085459192612876647667 },
                     {Double.PositiveInfinity, Double.PositiveInfinity},
                     {Double.NaN, Double.NaN}
                 };
             CheckFunctionValues("Log1Plus", MMath.Log1Plus, log1plus_pairs);
 
-            // In python mpmath:
-            // log(1-exp(mpf('1e-3')))
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+log(1-exp(mpf('-3')))
+            */
             double[,] log1MinusExp_pairs = new double[,]
                 {
                     {0, Double.NegativeInfinity},
+                    {-1, -0.4586751453870818910216436450673297 },
+                    {-2, -0.145413457868859056972648150099474 },
+                    {-2.5, -0.08565048374203818116996505081 },
+                    {-3, -0.0510691809427015865387237405222592504 },
+                    {-3.5, -0.0306627162554596336513956 },
+                    {-3.75, -0.02379870175015311452567632265 },
                     {-4, -0.01848544682588656052892134374 },
+                    {-4.5, -0.011171162268296935826765483324276 },
                     {-5, -0.006760749449488557825921134 },
                     {-6, -0.00248182936895952777979782 },
                     {-7, -0.9122979828390684565844296e-3},
@@ -992,7 +1045,7 @@ mp.dps = 500
 mp.pretty = True
 gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
             */
-            double[,] gammaUpper_pairs = new double[,] {
+            double[,] gammaUpperRegularized_pairs = new double[,] {
                 {1e-20,0.3,9.0567665167584664E-21},
                 {1e-6,1e-1,0.000001822923025350097857684},
                 {System.Math.Pow(0.5,5),1,0.0070733414923541296841667565874 },
@@ -1032,7 +1085,20 @@ gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
                 {double.PositiveInfinity,1,1 },
                 {double.Epsilon,0,1 },
             };
-            CheckFunctionValues("GammaUpper", MMath.GammaUpper, gammaUpper_pairs);
+            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
+
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
+            */
+            double[,] gammaUpper_pairs = new double[,] {
+                {1e-20,0.3,0.9056766516758467124267199175638778988963728798249333},
+                {1e-6,1e-1,1.8229219731321746872065707723366373632},
+                {2,1,0.73575888234288464319104754 },
+            };
+            CheckFunctionValues("GammaUpper", (a, x) => MMath.GammaUpper(a, x, false), gammaUpper_pairs);
         }
 
         [Fact]
@@ -2144,7 +2210,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             Assert.True(0 <= MMath.NormalCdfIntegral(213393529.2046707, -213393529.2046707, -1, 7.2893668811495072E-10).Mantissa);
             Assert.True(0 < MMath.NormalCdfIntegral(-0.42146853220760722, 0.42146843802130329, -0.99999999999999989, 6.2292398855983019E-09).Mantissa);
  
-            foreach (var x in OperatorTests.Doubles())
+            Parallel.ForEach (OperatorTests.Doubles(), x =>
             {
                 foreach (var y in OperatorTests.Doubles())
                 {
@@ -2153,7 +2219,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                         MMath.NormalCdfIntegral(x, y, r);
                     }
                 }
-            }
+            });
         }
 
         internal void NormalCdfIntegralTest2()
@@ -23933,6 +23999,18 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     x[k] = pairs[i, k];
                     args[k] = x[k];
+                }
+                bool showTiming = false;
+                if(showTiming)
+                {
+                    Stopwatch watch = Stopwatch.StartNew();
+                    int repetitionCount = 100000;
+                    for (int repetition = 0; repetition < repetitionCount; repetition++)
+                    {
+                        Util.DynamicInvoke(fcn, args);
+                    }
+                    watch.Stop();
+                    Trace.WriteLine($"  ({watch.ElapsedTicks} ticks for {repetitionCount} calls)");
                 }
                 double fx = pairs[i, x.Count];
                 double result = (double)Util.DynamicInvoke(fcn, args);

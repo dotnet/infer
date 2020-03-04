@@ -50,10 +50,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins6_isInitialised;
 		public Gamma CommonWeightPrecision_F;
 		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gamma></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_B_toDef;
 		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gamma></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_F_marginal;
 		/// <summary>True if Constant has executed. Set this to false to force re-execution of Constant</summary>
 		public bool Constant_isDone;

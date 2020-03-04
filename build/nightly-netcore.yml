@@ -11,7 +11,7 @@ resources:
   clean: true
 
 queue:
-  timeoutInMinutes: 120
+  timeoutInMinutes: 180
   
 trigger: none # disable CI build
 

@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Mature)]
     public static class GateEnterPartialOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterPartialOp{T}"]/message_doc[@name="LogEvidenceRatio()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterPartialOp{T}"]/message_doc[@name="LogEvidenceRatio{TDist}(IList{TDist})"]/*'/>
         [Skip]
         public static double LogEvidenceRatio<TDist>(IList<TDist> enterPartial)
             where TDist : IDistribution<T>
@@ -818,7 +818,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Mature)]
     public static class GateEnterOneOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterOneOp{T}"]/message_doc[@name="LogEvidenceRatio()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterOneOp{T}"]/message_doc[@name="LogEvidenceRatio{TDist}(TDist)"]/*'/>
         [Skip]
         public static double LogEvidenceRatio<TDist>(TDist enterOne)
             where TDist : IDistribution<T>
@@ -1047,7 +1047,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// </summary>
         public static bool ForceProper = true;
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterOp{T}"]/message_doc[@name="LogEvidenceRatio()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterOp{T}"]/message_doc[@name="LogEvidenceRatio{TDist}(IList{TDist})"]/*'/>
         [Skip]
         public static double LogEvidenceRatio<TDist>(IList<TDist> enter)
             where TDist : IDistribution<T>

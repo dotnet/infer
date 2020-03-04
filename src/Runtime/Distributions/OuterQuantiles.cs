@@ -28,6 +28,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public OuterQuantiles(double[] quantiles)
         {
+            if (quantiles == null) throw new ArgumentNullException(nameof(quantiles));
+            if (quantiles.Length == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
             AssertNondecreasing(quantiles, nameof(quantiles));
             AssertFinite(quantiles, nameof(quantiles));
             this.quantiles = quantiles;
@@ -101,6 +103,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static double GetProbLessThan(double x, double[] quantiles)
         {
             int n = quantiles.Length;
+            if (n == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
             // The index of the specified value in the specified array, if value is found; otherwise, a negative number. 
             // If value is not found and value is less than one or more elements in array, the negative number returned 
             // is the bitwise complement of the index of the first element that is larger than value. 
@@ -148,7 +151,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return MMath.NextDouble(quantiles[n - 1]);
             }
             if (n == 1) return quantiles[0];
-            double pos = MMath.LargestDoubleProduct(n - 1, probability);
+            double pos = MMath.LargestDoubleProduct(probability, n - 1);
             int lower = (int)Math.Floor(pos);
             if (lower == n - 1) return quantiles[lower];
             return GetQuantile(probability, lower, quantiles[lower], quantiles[lower + 1], n);
@@ -168,13 +171,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if(probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), probability, $"{nameof(probability)} < 0");
             if (probability > 1) throw new ArgumentOutOfRangeException(nameof(probability), probability, $"{nameof(probability)} > 1");
             if (n <= 1) throw new ArgumentOutOfRangeException(nameof(n), n, "n <= 1");
-            double pos = MMath.LargestDoubleProduct(n - 1, probability);
+            double pos = MMath.LargestDoubleProduct(probability, n - 1);
             double frac = MMath.LargestDoubleSum(-lowerIndex, pos);
             if (upperItem < lowerItem) throw new ArgumentOutOfRangeException(nameof(upperItem), upperItem, $"{nameof(upperItem)} ({upperItem}) < {nameof(lowerItem)} ({lowerItem})");
             if (upperItem == lowerItem) return lowerItem;
             // The above check ensures diff > 0
             double diff = upperItem - lowerItem;
-            double offset = MMath.LargestDoubleProduct(diff, frac);
+            double offset = MMath.LargestDoubleProduct(frac, diff);
             return MMath.LargestDoubleSum(lowerItem, offset);
         }
     }

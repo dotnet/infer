@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Tools.PrepareSource": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\..\\..\\..\\..\\InferNet_Copy_Temp\\src\\Runtime\\Factors"
+    }
+  }
+}

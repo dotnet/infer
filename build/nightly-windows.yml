@@ -12,77 +12,102 @@ resources:
   
 trigger: none # disable CI build
 
-queue:
-  name: Hosted VS2017
-  timeoutInMinutes: 120
+#queue:
+#  name: Hosted VS2017
 
-steps:
-- task: Bash@3
-  displayName: 'Updating assembly versions'
-  inputs:
-    filePath: build/updateversion.sh
-    workingDirectory: build
-    arguments: $(Build.BuildNumber)
+# Cannot use matrix strategy to create jobs for different platforms, 
+# since then the platform is given as a variable which cannot be passed as a parameter to a template,
+# because templates are actualized at a very early stage when the variable has no value yet.
+jobs:
+- job: Win64_Build_Test
+  displayName: 'Windows: Build and Test (x64)'
+  timeoutInMinutes: 180
+  
+  steps:
+  - template: windows-msbuild.yml
+    parameters:
+      BuildConfiguration: '$(BuildConfiguration)'  
+      BuildNumber: '$(Build.BuildNumber)'
 
-- task: NuGetToolInstaller@0
-  inputs:
-    versionSpec: '4.7.0'
+  - template: vstest-fast.yml
+    parameters:
+      Platform: 'x64'
 
-- task: NuGetCommand@2
-  displayName: 'Restoring NuGet packages'
-  inputs:
-    command: 'restore'
-    restoreSolution: '**/*.sln'
+- job: Win32_Build_Test
+  displayName: 'Windows: Build and Test (x86)'
+  timeoutInMinutes: 180
 
-- task: MSBuild@1
-  displayName: 'Building solutions'
-  inputs:
-    solution: '**/*.sln'
-    clean: true
-    configuration: $(BuildConfiguration)
+  steps:
+  - template: windows-msbuild.yml
+    parameters:
+      BuildConfiguration: '$(BuildConfiguration)'  
+      BuildNumber: '$(Build.BuildNumber)'
 
-- template: vstest-fast.yml
-  parameters:
-    Platform: 'x64'
+  - template: vstest-fast.yml
+    parameters:
+      Platform: 'x86'
 
-- template: vstest-fast.yml
-  parameters:
-    Platform: 'x86'
 
-- template: evaluator-netcore.yml
-  parameters:
-    Configuration: '$(BuildConfiguration)'
+- job: Win_Evaluator
+  displayName: 'Windows: Running Evaluator'
+  timeoutInMinutes: 180
 
-- template: evaluator-netframework.yml
-  parameters:
-    Configuration: '$(BuildConfiguration)'
+  steps:
+  - template: windows-msbuild.yml
+    parameters:
+      BuildConfiguration: '$(BuildConfiguration)'  
+      BuildNumber: '$(Build.BuildNumber)'
 
-- task: Bash@3
-  displayName: 'Gathering built assemblies'
+  - template: evaluator-netcore.yml
+    parameters:
+      Configuration: '$(BuildConfiguration)'
+
+  - template: evaluator-netframework.yml
+    parameters:
+      Configuration: '$(BuildConfiguration)'
+
+
+- job: Package_Publish
+  displayName: 'Package and Publish'
+  timeoutInMinutes: 30
+  dependsOn: 
+  - Win64_Build_Test
+  - Win32_Build_Test
+  - Win_Evaluator
   condition: eq(variables['BuildConfiguration'], 'Release')
-  inputs:
-    filePath: build/copyassemblies.sh
-    arguments: ../bin $(BuildConfiguration)
-    workingDirectory: build
 
-- task: NuGetCommand@2
-  displayName: 'Creating NuGet packages'
-  condition: eq(variables['BuildConfiguration'], 'Release')
-  inputs:
-    command: pack
-    packagesToPack: build/*.nuspec
-    includeSymbols: true
-    buildProperties: version=$(Build.BuildNumber);bin=../bin
+  steps:
+  - template: windows-msbuild.yml
+    parameters:
+      BuildConfiguration: '$(BuildConfiguration)'  
+      BuildNumber: '$(Build.BuildNumber)'
 
-- task: CopyFiles@2
-  displayName: 'Copying build artifacts'
-  condition: eq(variables['BuildConfiguration'], 'Release')
-  inputs:
-    sourceFolder: bin
-    targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: Bash@3
+    displayName: 'Gathering built assemblies'
+    condition: eq(variables['BuildConfiguration'], 'Release')
+    inputs:
+      filePath: build/copyassemblies.sh
+      arguments: ../bin $(BuildConfiguration)
+      workingDirectory: build
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publishing build artifacts'
-  condition: eq(variables['BuildConfiguration'], 'Release')
-  inputs:
-    artifactName: 'Everything'
+  - task: NuGetCommand@2
+    displayName: 'Creating NuGet packages'
+    condition: eq(variables['BuildConfiguration'], 'Release')
+    inputs:
+      command: pack
+      packagesToPack: build/*.nuspec
+      includeSymbols: true
+      buildProperties: version=$(Build.BuildNumber);bin=../bin
+
+  - task: CopyFiles@2
+    displayName: 'Copying build artifacts'
+    condition: eq(variables['BuildConfiguration'], 'Release')
+    inputs:
+      sourceFolder: bin
+      targetFolder: $(Build.ArtifactStagingDirectory)
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publishing build artifacts'
+    condition: eq(variables['BuildConfiguration'], 'Release')
+    inputs:
+      artifactName: 'Everything'

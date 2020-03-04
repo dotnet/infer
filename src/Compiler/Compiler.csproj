@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\build\nuget-properties.props" />
+  
   <PropertyGroup>
+    <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains the Infer.NET Compiler, which takes model descriptions written using the Infer.NET API and converts them into inference code.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\Infer.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>$(AssemblyNamePrefix)Microsoft.ML.Probabilistic.Compiler</AssemblyName>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS, SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS</DefineConstants>
     <NoWarn>1591</NoWarn>
     <RootNamespace>Microsoft.ML.Probabilistic</RootNamespace>
@@ -48,7 +45,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Condition="$(DefineConstants.Contains('ROSLYN'))" Include="Microsoft.CodeAnalysis.CSharp" version="2.10.0" />
+    <PackageReference Condition="$(DefineConstants.Contains('ROSLYN'))" Include="Microsoft.CodeAnalysis.CSharp" Version="2.10.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
     <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
     <PackageReference Condition="$(DefineConstants.Contains('CODEDOM'))" Include="System.CodeDom" Version="4.4.0" />

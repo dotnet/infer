@@ -4347,41 +4347,142 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GatedInnerProductArrayTest()
         {
+            foreach (var flip in new[] { false, true })
+            {
+                GatedInnerProductArray(flip);
+            }
+        }
+
+        internal void GatedInnerProductArray(bool flip)
+        {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             var evBlock = Variable.If(evidence);
             Range item = new Range(2).Named("item");
             VariableArray<double> a = Variable.Array<double>(item).Named("a");
             Gaussian aPrior = Gaussian.FromMeanAndVariance(1.2, 3.4);
             a[item] = Variable<double>.Random(aPrior).ForEach(item);
-            VariableArray<double> b = Variable.Observed(new[] { 2.0, 3.0 }).Named("b");
-            Variable<double> c = Variable.InnerProduct(a, b);
-            Gaussian cLike = Gaussian.FromMeanAndVariance(4, 5);
+            VariableArray<double> b = Variable.Observed(default(double[]), item).Named("b");
+            Variable<double> c = flip ? Variable.InnerProduct(b, a) : Variable.InnerProduct(a, b);
+            Variable<Gaussian> cLike = Variable.Observed(default(Gaussian));
             Variable.ConstrainEqualRandom(c, cLike);
             evBlock.CloseBlock();
-
             InferenceEngine engine = new InferenceEngine();
-            var aActual = engine.Infer<IList<Gaussian>>(a);
-            VectorGaussian vectorGaussianExpected = new VectorGaussian(item.SizeAsInt);
-            var bVector = Vector.FromArray(b.ObservedValue);
-            var aMean = (DenseVector)Util.ArrayInit(item.SizeAsInt, i => aPrior.GetMean()).ToVector();
-            var aVariance = new PositiveDefiniteMatrix(item.SizeAsInt, item.SizeAsInt);
-            aVariance.SetToDiagonal(Util.ArrayInit(item.SizeAsInt, i => aPrior.GetVariance()).ToVector());
-            var aVector = VectorGaussian.FromMeanAndVariance(aMean, aVariance);
-            InnerProductOp.AAverageConditional(cLike, bVector, vectorGaussianExpected);
-            vectorGaussianExpected.SetToProduct(vectorGaussianExpected, aVector);
-            for (int i = 0; i < aActual.Count; i++)
-            {
-                var aExpected = vectorGaussianExpected.GetMarginal(i);
-                Assert.True(aExpected.MaxDiff(aActual[i]) < 1e-10);
-            }
-            var cActual = engine.Infer<Gaussian>(c);
-            var toC = InnerProductOp.InnerProductAverageConditional(aMean, aVariance, bVector);
-            var cExpected = toC * cLike;
-            Assert.True(cExpected.MaxDiff(cActual) < 1e-10);
 
-            double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
-            double evExpected = cLike.GetLogAverageOf(toC);
-            Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-8) < 1e-10);
+            for (int trial = 0; trial <= 2; trial++)
+            {
+                if (trial == 0)
+                {
+                    b.ObservedValue = new[] { 2.0, 3.0 };
+                    cLike.ObservedValue = Gaussian.FromMeanAndVariance(4, 5);
+                }
+                else if (trial == 1)
+                {
+                    b.ObservedValue = new[] { 0.0, 0.0 };
+                    cLike.ObservedValue = Gaussian.PointMass(0);
+                }
+                else
+                {
+                    b.ObservedValue = new[] { 0.0, 2.0 };
+                    cLike.ObservedValue = Gaussian.PointMass(2.3);
+                }
+
+                var aActual = engine.Infer<IList<Gaussian>>(a);
+                VectorGaussian vectorGaussianExpected = new VectorGaussian(item.SizeAsInt);
+                var bVector = Vector.FromArray(b.ObservedValue);
+                var aMean = (DenseVector)Util.ArrayInit(item.SizeAsInt, i => aPrior.GetMean()).ToVector();
+                var aVariance = new PositiveDefiniteMatrix(item.SizeAsInt, item.SizeAsInt);
+                aVariance.SetToDiagonal(Util.ArrayInit(item.SizeAsInt, i => aPrior.GetVariance()).ToVector());
+                var aVector = VectorGaussian.FromMeanAndVariance(aMean, aVariance);
+                InnerProductOp.AAverageConditional(cLike.ObservedValue, bVector, vectorGaussianExpected);
+                vectorGaussianExpected.SetToProduct(vectorGaussianExpected, aVector);
+                for (int i = 0; i < aActual.Count; i++)
+                {
+                    var aExpected = vectorGaussianExpected.GetMarginal(i);
+                    Assert.True(aExpected.MaxDiff(aActual[i]) < 1e-10);
+                }
+                var cActual = engine.Infer<Gaussian>(c);
+                var toC = InnerProductOp.InnerProductAverageConditional(aMean, aVariance, bVector);
+                var cExpected = toC * cLike.ObservedValue;
+                Assert.True(cExpected.MaxDiff(cActual) < 1e-10);
+
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double evExpected = cLike.ObservedValue.GetLogAverageOf(toC);
+                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-8) < 1e-10);
+            }
+        }
+
+        [Fact]
+        public void GatedInnerProductVectorTest()
+        {
+            foreach (var algorithm in new IAlgorithm[] { new Algorithms.ExpectationPropagation(), new Algorithms.VariationalMessagePassing() })
+            {
+                foreach (var flip in new[] { false, true })
+                {
+                    GatedInnerProductVector(flip, algorithm);
+                }
+            }
+        }
+
+        internal void GatedInnerProductVector(bool flip, IAlgorithm algorithm)
+        {
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            var evBlock = Variable.If(evidence);
+            Range item = new Range(2).Named("item");
+            DenseVector aMean = DenseVector.FromArray(1.2, 3.4);
+            PositiveDefiniteMatrix aVariance = new PositiveDefiniteMatrix(new double[,] {
+                { 4.5, 2.3 }, { 2.3, 6.7 }
+            });
+            VectorGaussian aPrior = VectorGaussian.FromMeanAndVariance(aMean, aVariance);
+            Variable<Vector> a = Variable.Random(aPrior).Named("a");
+            a.SetValueRange(item);
+            Variable<Vector> b = Variable.Observed(default(Vector)).Named("b");
+            b.SetValueRange(item);
+            Variable<double> c = flip ? Variable.InnerProduct(b, a) : Variable.InnerProduct(a, b);
+            Variable<Gaussian> cLike = Variable.Observed(default(Gaussian));
+            Variable.ConstrainEqualRandom(c, cLike);
+            evBlock.CloseBlock();
+            InferenceEngine engine = new InferenceEngine(algorithm);
+
+            for (int trial = 0; trial <= 2; trial++)
+            {
+                if (trial == 0)
+                {
+                    b.ObservedValue = Vector.FromArray(2.0, 3.0);
+                    cLike.ObservedValue = Gaussian.FromMeanAndVariance(4, 5);
+                }
+                else if (trial == 1)
+                {
+                    b.ObservedValue = Vector.FromArray(0.0, 0.0);
+                    cLike.ObservedValue = Gaussian.PointMass(0);
+                }
+                else
+                {
+                    b.ObservedValue = Vector.FromArray(0.0, 2.0);
+                    cLike.ObservedValue = Gaussian.PointMass(2.3);
+                }
+
+                var aActual = engine.Infer<VectorGaussian>(a);
+                VectorGaussian vectorGaussianExpected = new VectorGaussian(item.SizeAsInt);
+                var bVector = b.ObservedValue;
+                InnerProductOp.AAverageConditional(cLike.ObservedValue, bVector, vectorGaussianExpected);
+                vectorGaussianExpected.SetToProduct(vectorGaussianExpected, aPrior);
+                Assert.True(vectorGaussianExpected.MaxDiff(aActual) < 1e-10);
+                var cActual = engine.Infer<Gaussian>(c);
+                var toC = InnerProductOp.InnerProductAverageConditional(aMean, aVariance, bVector);
+                var cExpected = toC * cLike.ObservedValue;
+                Assert.True(cExpected.MaxDiff(cActual) < 1e-10);
+
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double evExpected;
+                if(engine.Algorithm is Algorithms.VariationalMessagePassing)
+                {
+                    // The only stochastic variable is A, and the only stochastic factors are A's prior and cLike.
+                    evExpected = aActual.GetAverageLog(aPrior) + cExpected.GetAverageLog(cLike.ObservedValue)
+                        -aActual.GetAverageLog(aActual);
+                }
+                else evExpected = cLike.ObservedValue.GetLogAverageOf(toC);
+                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-8) < 1e-10);
+            }
         }
 
         [Fact]
@@ -5093,6 +5194,45 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "CsoftModel")]
+        public void GatedGammaPowerProductRRCTest()
+        {
+            double priorB = 0.1;
+            double meanX = 0.4;
+            double meanLogX = 1.4;
+            double y = 0.3;
+            double power = -0.5;
+            GammaPower priorZ = new GammaPower(0.2, 1.2, power);
+            GammaPower priorX = GammaPower.FromMeanAndMeanLog(meanX, meanLogX, power);
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            var ca = engine.Compiler.Compile(GatedGammaPowerProductRRCModel, priorB, priorX, y, priorZ);
+            ca.Execute(20);
+
+            GammaPower xy = GammaPower.FromMeanAndMeanLog(meanX * y, meanLogX + System.Math.Log(y), power);
+            double sumCondT = System.Math.Exp(priorZ.GetLogAverageOf(xy));
+            double Z = priorB * sumCondT + (1 - priorB);
+            double postB = priorB * sumCondT / Z;
+
+            Bernoulli bDist = ca.Marginal<Bernoulli>("b");
+            Console.WriteLine("b = {0} (should be {1})", bDist, postB);
+            Assert.True(System.Math.Abs(bDist.GetProbTrue() - postB) < 1e-4);
+        }
+
+        private void GatedGammaPowerProductRRCModel(double priorB, GammaPower priorX, double y, GammaPower priorZ)
+        {
+            bool b = Factor.Bernoulli(priorB);
+            double x = Factor.Random(priorX);
+            if (b)
+            {
+                double z = Factor.Product(x, y);
+                Constrain.EqualRandom(z, priorZ);
+            }
+            InferNet.Infer(b, nameof(b));
+        }
+
+        [Fact]
         public void GatedGammaProductCRCTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
@@ -5132,6 +5272,46 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GatedGammaPowerProductCRCTest()
+        {
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            double shape = 2.5;
+            double rate = 1;
+            double power = -0.5;
+            Variable<double> scale = Variable.Observed(0.0);
+            Variable<double> y = Variable.Random(GammaPower.FromShapeAndRate(shape, rate, power)).Named("y");
+            Variable<double> x = (y * scale).Named("x");
+            x.ObservedValue = 0.0;
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            foreach (var alg in new IAlgorithm[] { new ExpectationPropagation(), new VariationalMessagePassing() })
+            {
+                engine.Algorithm = alg;
+                foreach (var xObserved in new[] { 0.0, 2.0 })
+                {
+                    x.ObservedValue = xObserved;
+                    scale.ObservedValue = xObserved;
+                    GammaPower yActual = engine.Infer<GammaPower>(y);
+                    double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                    GammaPower yExpected = GammaPower.FromShapeAndRate(shape, rate, power);
+                    double evExpected = 0;
+                    if (xObserved != 0)
+                    {
+                        evExpected = GammaPower.FromShapeAndRate(shape, rate / System.Math.Pow(scale.ObservedValue, 1/power), power).GetLogProb(x.ObservedValue);
+                        yExpected = GammaPower.PointMass(1, power);
+                    }
+
+                    Console.WriteLine("y = {0} should be {1}", yActual, yExpected);
+                    Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
+                    Assert.True(yExpected.MaxDiff(yActual) < 1e-8);
+                    Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-8);
+                }
+            }
+        }
+
+        [Fact]
         public void GatedGammaRatioCRCTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
@@ -5158,7 +5338,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double evExpected = 0;
                     if (!double.IsPositiveInfinity(xObserved))
                     {
-                        evExpected = Gamma.FromShapeAndRate(shape, rate/xObserved).GetLogProb(xObserved);
+                        evExpected = Gamma.FromShapeAndRate(shape, rate / xObserved).GetLogProb(xObserved);
                         yExpected = Gamma.PointMass(1);
                     }
 

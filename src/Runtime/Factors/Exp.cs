@@ -162,7 +162,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // dlogGa/dx = (a-1)/x - b
                 // d2logGa/dx2 = -(a-1)/x^2
                 // match derivatives and solve for (a,b)
-                double shape = (1 + d.GetMean() - Math.Log(exp.Point)) * d.Precision;
+                // a = 1 - d2logZ/dx2*x^2 = 1 + dlogZ/dx*x + 1/vy = -1/vy*(log(x)-my) + 1/vy
+                // b = -d2logZ/dx2*x - dlogZ/dx = 1/vy/x
+                double shape = d.MeanTimesPrecision + (1 - Math.Log(exp.Point)) * d.Precision;
                 double rate = d.Precision / exp.Point;
                 return Gamma.FromShapeAndRate(shape, rate);
             }
@@ -548,6 +550,15 @@ namespace Microsoft.ML.Probabilistic.Factors
     {
         public static int QuadratureNodeCount = 1000;
 
+        public static Gaussian DAverageConditional([SkipIfUniform] GammaPower exp, [Proper] Gaussian d)
+        {
+            double scale = 1 / exp.Power;
+            Gaussian forward = GaussianProductOp.ProductAverageConditional(scale, d);
+            Gaussian message = DAverageConditional(Gamma.FromNatural(exp.Shape - exp.Power, exp.Rate), forward);
+            Gaussian backward = GaussianProductOp.BAverageConditional(message, scale);
+            return backward;
+        }
+
         public static Gaussian DAverageConditional([SkipIfUniform] Gamma exp, [Proper] Gaussian d)
         {
             // as a function of d, the factor is Ga(exp(d); shape, rate) = exp(d*(shape-1) -rate*exp(d))
@@ -672,14 +683,14 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_LaplaceProp"]/doc/*'/>
     [FactorMethod(typeof(Math), "Exp", typeof(double))]
     [Quality(QualityBand.Experimental)]
     public static class ExpOp_LaplaceProp
     {
         public static bool ForceProper;
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="LogAverageFactor(Gamma, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_LaplaceProp"]/message_doc[@name="LogAverageFactor(Gamma, Gaussian, Gaussian)"]/*'/>
         public static double LogAverageFactor([SkipIfUniform] Gamma exp, [Proper] Gaussian d, Gaussian to_d)
         {
             Gaussian dPost = d * to_d;
@@ -691,13 +702,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return exp.GetLogProb(expx) + d.GetLogProb(x) + MMath.LnSqrt2PI + 0.5 * Math.Log(v);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="LogEvidenceRatio(Gamma, Gaussian, Gaussian, Gamma)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_LaplaceProp"]/message_doc[@name="LogEvidenceRatio(Gamma, Gaussian, Gaussian, Gamma)"]/*'/>
         public static double LogEvidenceRatio([SkipIfUniform] Gamma exp, [Proper] Gaussian d, Gaussian to_d, Gamma to_exp)
         {
             return LogAverageFactor(exp, d, to_d) - to_exp.GetLogAverageOf(exp);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="DAverageConditional(Gamma, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_LaplaceProp"]/message_doc[@name="DAverageConditional(Gamma, Gaussian, Gaussian)"]/*'/>
         public static Gaussian DAverageConditional([SkipIfUniform] Gamma exp, [Proper] Gaussian d, Gaussian to_d)
         {
             if (exp.IsPointMass)
@@ -715,7 +726,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.FromNatural(r * dhat + dlogf, r);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="ExpAverageConditional(Gamma, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_LaplaceProp"]/message_doc[@name="ExpAverageConditional(Gamma, Gaussian, Gaussian)"]/*'/>
         public static Gamma ExpAverageConditional(Gamma exp, Gaussian d, Gaussian to_d)
         {
             if (d.IsPointMass)
@@ -741,19 +752,19 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace2"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/doc/*'/>
     [FactorMethod(typeof(Math), "Exp", typeof(double))]
     [Buffers("x")]
     [Quality(QualityBand.Experimental)]
     public static class ExpOp_Laplace
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace2"]/message_doc[@name="XInit(Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="XInit(Gaussian)"]/*'/>
         public static double XInit([SkipIfUniform] Gaussian d)
         {
             return d.GetMean();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace2"]/message_doc[@name="X(Gamma, Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="X2(Gamma, Gaussian, double)"]/*'/>
         public static double X2([SkipIfUniform] Gamma exp, [Proper] Gaussian d, double x)
         {
             // perform one Newton update of X
@@ -767,6 +778,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (t + d.MeanTimesPrecision) / (r + d.Precision);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="X(Gamma, Gaussian)"]/*'/>
         public static double X([SkipIfUniform] Gamma exp, [Proper] Gaussian d)
         {
             double x = 0;
@@ -779,7 +791,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return x;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace2"]/message_doc[@name="LogAverageFactor(Gamma, Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="LogAverageFactor(Gamma, Gaussian, double)"]/*'/>
         public static double LogAverageFactor([SkipIfUniform] Gamma exp, [Proper] Gaussian d, double x)
         {
             double expx = Math.Exp(x);
@@ -789,13 +801,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return exp.GetLogProb(expx) + d.GetLogProb(x) + MMath.LnSqrt2PI + 0.5 * Math.Log(v);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace2"]/message_doc[@name="LogEvidenceRatio(Gamma, Gaussian, double, Gamma)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="LogEvidenceRatio(Gamma, Gaussian, double, Gamma)"]/*'/>
         public static double LogEvidenceRatio([SkipIfUniform] Gamma exp, [Proper] Gaussian d, double x, Gamma to_exp)
         {
             return LogAverageFactor(exp, d, x) - to_exp.GetLogAverageOf(exp);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace2"]/message_doc[@name="DAverageConditional(Gamma, Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="DAverageConditional(Gamma, Gaussian, double)"]/*'/>
         public static Gaussian DAverageConditional([SkipIfUniform] Gamma exp, [Proper] Gaussian d, double x)
         {
             if (exp.IsPointMass)
@@ -817,7 +829,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace2"]/message_doc[@name="ExpAverageConditional(Gamma, Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="ExpAverageConditional(Gamma, Gaussian, double)"]/*'/>
         public static Gamma ExpAverageConditional(Gamma exp, Gaussian d, double x)
         {
             if (d.IsPointMass)

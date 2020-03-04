@@ -6,6 +6,7 @@ using System;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
+using System.Diagnostics;
 
 namespace Microsoft.ML.Probabilistic.Factors
 {
@@ -14,50 +15,217 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public static class PowerOp
     {
+        // Gamma = TruncatedGamma ^ y  /////////////////////////////////////////////////////////
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(TruncatedGamma, double)"]/*'/>
+        public static Gamma PowAverageConditional([SkipIfUniform] TruncatedGamma x, double y)
+        {
+            double mean = x.GetMeanPower(y);
+            if (x.LowerBound > 0)
+            {
+                double meanInverse = x.GetMeanPower(-y);
+                return GammaFromMeanAndMeanInverse(mean, meanInverse);
+            }
+            else
+            {
+                double variance = x.GetMeanPower(2 * y) - mean * mean;
+                return Gamma.FromMeanAndVariance(mean, variance);
+            }
+        }
+
+        public static Gamma GammaFromMeanAndMeanInverse(double mean, double meanInverse)
+        {
+            // mean = a/b
+            // meanInverse = b/(a-1)
+            // a = mean*meanInverse / (mean*meanInverse - 1)
+            // b = a/mean
+            double rate = meanInverse / (mean * meanInverse - 1);
+            double shape = mean * rate;
+            return Gamma.FromShapeAndRate(shape, rate);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(Gamma, TruncatedGamma, double)"]/*'/>
+        public static TruncatedGamma XAverageConditional([SkipIfUniform] Gamma pow, TruncatedGamma x, double y)
+        {
+            // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
+            if (pow.IsUniform()) return TruncatedGamma.Uniform();
+            // Factor is (x^y)^(pow.Shape/pow.Power - 1) * exp(-pow.Rate*(x^y)^1/pow.Power)
+            // =propto x^(pow.Shape/(pow.Power/y) - y) * exp(-pow.Rate*x^y/pow.Power)
+            // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
+            // newShape = pow.Shape + (1-y)*(pow.Power/y)
+            double power = 1 / y;
+            var toPow = PowAverageConditional(x, y);
+            var powMarginal = pow * toPow;
+            // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
+            GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
+            var xMarginal = new TruncatedGamma(GammaFromGammaPower(xMarginal2));
+            var result = xMarginal;
+            result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
+            return result;
+        }
+
+        // Gamma = Gamma ^ y  /////////////////////////////////////////////////////////
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(Gamma, double, Gamma)"]/*'/>
+        public static Gamma PowAverageConditional([SkipIfUniform] Gamma x, double y, Gamma result)
+        {
+            GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
+            return GammaFromGammaPower(message);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(Gamma, Gamma, double, Gamma)"]/*'/>
+        public static Gamma XAverageConditional([SkipIfUniform] Gamma pow, Gamma x, double y, Gamma result)
+        {
+            // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
+            if (pow.IsUniform()) return Gamma.Uniform();
+            // Factor is (x^y)^(pow.Shape/pow.Power - 1) * exp(-pow.Rate*(x^y)^1/pow.Power)
+            // =propto x^(pow.Shape/(pow.Power/y) - y) * exp(-pow.Rate*x^y/pow.Power)
+            // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
+            // newShape = pow.Shape + (1-y)*(pow.Power/y)
+            double power = 1 / y;
+            var toPow = PowAverageConditional(x, y, pow);
+            var powMarginal = pow * toPow;
+            // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
+            GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
+            Gamma xMarginal = GammaFromGammaPower(xMarginal2);
+            result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
+            return result;
+        }
+
+        public static Gamma GammaFromGammaPower(GammaPower message)
+        {
+            if (message.Power == 1) return Gamma.FromShapeAndRate(message.Shape, message.Rate); // same as below, but faster
+            if (message.IsUniform()) return Gamma.Uniform();
+            message.GetMeanAndVariance(out double mean, out double variance);
+            return Gamma.FromMeanAndVariance(mean, variance);
+        }
+
         // GammaPower = GammaPower ^ y  /////////////////////////////////////////////////////////
 
-        public static GammaPower PowAverageConditional([SkipIfUniform] GammaPower x, double y)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="LogAverageFactor(GammaPower, GammaPower, double)"]/*'/>
+        public static double LogAverageFactor(GammaPower pow, GammaPower x, double y)
         {
-            return GammaPower.FromShapeAndRate(x.Shape, x.Rate, y*x.Power);
+            // GetLogAverageOf = 
+            // gammaln(shape1+shape2-power) - (shape1+shape2-power)*log(rate1+rate2) - log(|power|)
+            // -gammaln(shape1) + shape1 * log(rate1)
+            // -gammaln(shape2) + shape2 * log(rate2)
+            // d/dshape2 = digamma(shape1+shape2-power) - digamma(shape2) - log(rate1/rate2 + 1)
+            // d/drate2 = -(shape1+shape2-power)/(rate1+rate2) + shape2/rate2
+            GammaPower toPow = PowAverageConditional(x, y, pow);
+            return toPow.GetLogAverageOf(pow);
         }
 
-        public static GammaPower XAverageConditional([SkipIfUniform] GammaPower pow, double y, GammaPower result)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(GammaPower, double, GammaPower)"]/*'/>
+        public static GammaPower PowAverageConditional([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
+            GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y * x.Power);
+            return GammaPowerFromDifferentPower(message, result.Power);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(GammaPower, GammaPower, double, GammaPower)"]/*'/>
+        public static GammaPower XAverageConditional([SkipIfUniform] GammaPower pow, GammaPower x, double y, GammaPower result)
+        {
+            // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
+            if (pow.IsUniform()) return GammaPower.Uniform(result.Power);
+            // Factor is (x^y)^(pow.Shape/pow.Power - 1) * exp(-pow.Rate*(x^y)^1/pow.Power)
+            // =propto x^(pow.Shape/(pow.Power/y) - y) * exp(-pow.Rate*x^y/pow.Power)
+            // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
+            // newShape = pow.Shape + (1-y)*(pow.Power/y)
             double power = pow.Power / y;
-            if (power != result.Power)
-                throw new NotSupportedException("Outgoing message power (" + power + ") does not match the desired power (" + result.Power + ")");
-            return GammaPower.FromShapeAndRate(pow.Shape, pow.Rate, pow.Power / y);
+            var toPow = PowAverageConditional(x, y, pow);
+            GammaPower powMarginal = pow * toPow;
+            // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
+            GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
+            GammaPower xMarginal = GammaPowerFromDifferentPower(xMarginal2, result.Power);
+            result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
+            return result;
         }
 
-        public static GammaPower PowAverageLogarithm([SkipIfUniform] GammaPower x, double y)
+        public static Gamma FromMeanPowerAndMeanLog(double meanPower, double meanLog, double power)
         {
-            return PowAverageConditional(x, y);
+            // We want E[log(x)] = meanLog but this sets E[log(x^power)] = meanLog, so we scale meanLog
+            var gammaPower = GammaPower.FromMeanAndMeanLog(meanPower, meanLog * power, power);
+            return Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate);
         }
 
-        public static GammaPower XAverageLogarithm([SkipIfUniform] GammaPower pow, double y, GammaPower result)
+        public static GammaPower GammaPowerFromDifferentPower(GammaPower message, double newPower)
         {
-            return XAverageConditional(pow, y, result);
+            if (message.Power == newPower) return message; // same as below, but faster
+            if (message.IsUniform()) return GammaPower.Uniform(newPower);
+            // Making two hops ensures that the desired mean powers are finite.
+            if (message.Power > 0 && newPower < 0 && newPower != -1) return GammaPowerFromDifferentPower(GammaPowerFromDifferentPower(message, -1), newPower);
+            if (message.Power < 0 && newPower > 0 && newPower != 1) return GammaPowerFromDifferentPower(GammaPowerFromDifferentPower(message, 1), newPower);
+            // Project the message onto the desired power
+            if (newPower == 1 || newPower == -1 || newPower == 2)
+            {
+                message.GetMeanAndVariance(out double mean, out double variance);
+                if (!double.IsPositiveInfinity(mean))
+                    return GammaPower.FromMeanAndVariance(mean, variance, newPower);
+                // Fall through
+            }
+            bool useMean = false;
+            if(useMean)
+            {
+                // Constraints:
+                // mean = Gamma(Shape + newPower)/Gamma(Shape)/Rate^newPower =approx (Shape/Rate)^newPower
+                // mean2 = Gamma(Shape + 2*newPower)/Gamma(Shape)/Rate^(2*newPower) =approx ((Shape + newPower)/Rate)^newPower * (Shape/Rate)^newPower
+                // mean2/mean^2 = Gamma(Shape + 2*newPower)*Gamma(Shape)/Gamma(Shape + newPower)^2 =approx ((Shape + newPower)/Shape)^newPower
+                // Shape =approx newPower/((mean2/mean^2)^(1/newPower) - 1)
+                // Rate = Shape/mean^(1/newPower)
+                message.GetMeanAndVariance(out double mean, out double variance);
+                double meanp = System.Math.Pow(mean, 1 / newPower);
+                double mean2p = System.Math.Pow(variance + mean * mean, 1 / newPower);
+                double shape = newPower / (mean2p / meanp / meanp - 1);
+                if (double.IsInfinity(shape)) return GammaPower.PointMass(mean, newPower);
+                double rate = shape / meanp;
+                return GammaPower.FromShapeAndRate(shape, rate, newPower);
+            }
+            else
+            {
+                // Compute the mean and variance of x^1/newPower
+                double mean = message.GetMeanPower(1 / newPower);
+                double mean2 = message.GetMeanPower(2 / newPower);
+                double variance = System.Math.Max(0, mean2 - mean * mean);
+                if (double.IsPositiveInfinity(mean*mean)) variance = mean;
+                return GammaPower.FromGamma(Gamma.FromMeanAndVariance(mean, variance), newPower);
+            }
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageLogarithm(GammaPower, double, GammaPower)"]/*'/>
+        public static GammaPower PowAverageLogarithm([SkipIfUniform] GammaPower x, double y, GammaPower result)
+        {
+            return PowAverageConditional(x, y, result);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageLogarithm(GammaPower, GammaPower, double, GammaPower)"]/*'/>
+        public static GammaPower XAverageLogarithm([SkipIfUniform] GammaPower pow, GammaPower x, double y, GammaPower result)
+        {
+            return XAverageConditional(pow, x, y, result);
         }
 
         // GammaPower = Gamma ^ y //////////////////////////////////////////////////////////////
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(Gamma, double)"]/*'/>
         public static GammaPower PowAverageConditional([SkipIfUniform] Gamma x, double y)
         {
             return GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(GammaPower, double)"]/*'/>
         public static Gamma XAverageConditional([SkipIfUniform] GammaPower pow, double y)
         {
             if (y != pow.Power)
                 throw new NotSupportedException("Incoming message " + pow + " does not match the exponent (" + y + ")");
-            return Gamma.FromShapeAndRate(pow.Shape, pow.Rate);
+            return Gamma.FromShapeAndRate(pow.Shape + (1 - y), pow.Rate);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageLogarithm(Gamma, double)"]/*'/>
         public static GammaPower PowAverageLogarithm([SkipIfUniform] Gamma x, double y)
         {
             return PowAverageConditional(x, y);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageLogarithm(GammaPower, double)"]/*'/>
         public static Gamma XAverageLogarithm([SkipIfUniform] GammaPower pow, double y)
         {
             return XAverageConditional(pow, y);

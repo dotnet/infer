@@ -7,7 +7,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System;
     using System.Diagnostics;
     using System.Runtime.Serialization;
-    
+
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Serialization;
 
@@ -28,70 +28,103 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Index of start state of automaton.
             /// </summary>
             public readonly int StartStateIndex;
-            
+
             /// <summary>
             /// All automaton states.
             /// </summary>
-            public readonly ReadOnlyArray<StateData> States;
+            public readonly ImmutableArray<StateData> States;
 
             /// <summary>
             /// All automaton transitions. Transitions for the same state are stored as a contiguous block
             /// inside this array.
             /// </summary>
-            public readonly ReadOnlyArray<Transition> Transitions;
+            public readonly ImmutableArray<Transition> Transitions;
 
             /// <summary>
             /// Gets value indicating whether this automaton is epsilon-free.
             /// </summary>
-            public bool IsEpsilonFree => (this.flags & Flags.IsEpsilonFree) != 0;
+            public bool IsEpsilonFree => this.flags.HasFlag(Flags.IsEpsilonFree);
 
             /// <summary>
             /// Get value indicating whether this automaton uses groups.
             /// </summary>
-            public bool UsesGroups => (this.flags & Flags.UsesGroups) != 0;
+            public bool UsesGroups => this.flags.HasFlag(Flags.UsesGroups);
 
             /// <summary>
-            /// Gets value indicating whether this automaton is
+            /// Gets value indicating whether this automaton is determinized
             /// </summary>
-            public DeterminizationState DeterminizationState =>
-                ((this.flags & Flags.DeterminizationStateKnown) == 0)
-                    ? DeterminizationState.Unknown
-                    : ((this.flags & Flags.IsDeterminized) != 0
-                        ? DeterminizationState.IsDeterminized
-                        : DeterminizationState.IsNonDeterminizable);
+            /// <remarks>
+            /// Null value means that this property is unknown.
+            /// False value means that this automaton can not be determinized
+            /// </remarks>
+            public bool? IsDeterminized =>
+                this.flags.HasFlag(Flags.DeterminizationStateKnown)
+                    ? this.flags.HasFlag(Flags.IsDeterminized)
+                    : (bool?)null;
+
+            /// <summary>
+            /// Gets value indicating whether this automaton is zero
+            /// </summary>
+            /// <remarks>
+            /// Null value means that this property is unknown.
+            /// </remarks>
+            public bool? IsZero =>
+                this.flags.HasFlag(Flags.IsZeroStateKnown)
+                    ? this.flags.HasFlag(Flags.IsZero)
+                    : (bool?)null;
+
+            public bool? IsEnumerable =>
+                this.flags.HasFlag(Flags.IsEnumerableStateKnown)
+                    ? this.flags.HasFlag(Flags.IsEnumerable)
+                    : (bool?)null;
 
             /// <summary>
             /// Initializes instance of <see cref="DataContainer"/>.
             /// </summary>
-            [Construction("StartStateIndex", "IsEpsilonFree", "UsesGroups", "DeterminizationState", "States", "Transitions")]
+            [Construction("StartStateIndex", "States", "Transitions", "IsEpsilonFree", "UsesGroups", "IsDeterminized", "IsZero", "IsEnumerable")]
             public DataContainer(
                 int startStateIndex,
+                ImmutableArray<StateData> states,
+                ImmutableArray<Transition> transitions,
                 bool isEpsilonFree,
                 bool usesGroups,
-                DeterminizationState determinizationState,
-                ReadOnlyArray<StateData> states,
-                ReadOnlyArray<Transition> transitions)
+                bool? isDeterminized,
+                bool? isZero,
+                bool? isEnumerable)
             {
                 this.flags =
                     (isEpsilonFree ? Flags.IsEpsilonFree : 0) |
                     (usesGroups ? Flags.UsesGroups : 0) |
-                    (determinizationState != DeterminizationState.Unknown ? Flags.DeterminizationStateKnown : 0) |
-                    (determinizationState == DeterminizationState.IsDeterminized ? Flags.IsDeterminized : 0);
+                    (isDeterminized.HasValue ? Flags.DeterminizationStateKnown : 0) |
+                    (isDeterminized == true ? Flags.IsDeterminized : 0) |
+                    (isZero.HasValue ? Flags.IsZeroStateKnown : 0) |
+                    (isZero == true ? Flags.IsZero : 0) |
+                    (isEnumerable.HasValue ? Flags.IsEnumerableStateKnown : 0) |
+                    (isEnumerable == true ? Flags.IsEnumerable : 0);
                 this.StartStateIndex = startStateIndex;
                 this.States = states;
                 this.Transitions = transitions;
             }
 
-            public DataContainer WithDeterminizationState(DeterminizationState determinizationState)
+            public DataContainer With(
+                bool? isDeterminized = null,
+                bool? isZero = null,
+                bool? isEnumerable = null)
             {
-                Debug.Assert(this.DeterminizationState == DeterminizationState.Unknown);
+                // Can't overwrite known properties
+                Debug.Assert(isDeterminized.HasValue != this.IsDeterminized.HasValue || isDeterminized == this.IsDeterminized);
+                Debug.Assert(isZero.HasValue != this.IsZero.HasValue || isZero == this.IsZero);
+                Debug.Assert(isEnumerable.HasValue != this.IsEnumerable.HasValue || isEnumerable == this.IsEnumerable);
+
                 return new DataContainer(
                     this.StartStateIndex,
+                    this.States,
+                    this.Transitions,
                     this.IsEpsilonFree,
                     this.UsesGroups,
-                    determinizationState,
-                    this.States,
-                    this.Transitions);
+                    isDeterminized ?? this.IsDeterminized,
+                    isZero ?? this.IsZero,
+                    isEnumerable ?? this.IsEnumerable);
             }
 
             /// <summary>
@@ -143,8 +176,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 this.flags = (Flags)info.GetValue(nameof(this.flags), typeof(Flags));
                 this.StartStateIndex = (int)info.GetValue(nameof(this.StartStateIndex), typeof(int));
-                this.States = (StateData[])info.GetValue(nameof(this.States), typeof(StateData[]));
-                this.Transitions = (Transition[])info.GetValue(nameof(this.Transitions), typeof(Transition[]));
+                this.States = ((StateData[])info.GetValue(nameof(this.States), typeof(StateData[]))).ToImmutableArray();
+                this.Transitions = ((Transition[])info.GetValue(nameof(this.Transitions), typeof(Transition[]))).ToImmutableArray();
 
                 if (!IsConsistent())
                 {
@@ -170,14 +203,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 UsesGroups = 0x2,
                 DeterminizationStateKnown = 0x4,
                 IsDeterminized = 0x8,
+                IsZeroStateKnown = 0x10,
+                IsZero = 0x20,
+                IsEnumerableStateKnown = 0x40,
+                IsEnumerable = 0x80,
             }
-        }
-
-        public enum DeterminizationState
-        {
-            Unknown,
-            IsDeterminized,
-            IsNonDeterminizable,
         }
     }
 }

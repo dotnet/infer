@@ -91,7 +91,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void BinaryFormatterTest()
         {
             var mc = new MyClass();
-            mc.Initialize();
+            mc.Initialize(skipStringDistributions: true);
 
             var mc2 = CloneBinaryFormatter(mc);
             mc.AssertEqualTo(mc2);
@@ -185,7 +185,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             [DataMember] private StringDistribution stringDistribution1;
             [DataMember] private StringDistribution stringDistribution2;
 
-            public void Initialize()
+            public void Initialize(bool skipStringDistributions = false)
             {
                 // DO NOT make this a constructor, because it makes the test not notice complete lack of serialization as an empty object is set up exactly as the thing
                 // you are trying to deserialize.
@@ -240,9 +240,16 @@ namespace Microsoft.ML.Probabilistic.Tests
                 this.outerQuantiles = OuterQuantiles.FromDistribution(3, this.quantileEstimator);
                 this.innerQuantiles = InnerQuantiles.FromDistribution(3, this.outerQuantiles);
 
-                this.stringDistribution1 = StringDistribution.String("aa").Append(StringDistribution.OneOf("b", "ccc")).Append("dddd");
-                this.stringDistribution2 = new StringDistribution();
-                this.stringDistribution2.SetToProduct(StringDistribution.OneOf("a", "b"), StringDistribution.OneOf("b", "c"));
+                if (!skipStringDistributions)
+                {
+                    // String distributions can not be serialized by some formatters (namely BinaryFormatter)
+                    // That is fine because this combination is never used in practice
+                    this.stringDistribution1 = StringDistribution.String("aa")
+                        .Append(StringDistribution.OneOf("b", "ccc")).Append("dddd");
+                    this.stringDistribution2 = new StringDistribution();
+                    this.stringDistribution2.SetToProduct(StringDistribution.OneOf("a", "b"),
+                        StringDistribution.OneOf("b", "c"));
+                }
             }
 
             public void AssertEqualTo(MyClass that)
@@ -280,8 +287,12 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.True(this.quantileEstimator.ValueEquals(that.quantileEstimator));
                 Assert.True(this.innerQuantiles.Equals(that.innerQuantiles));
                 Assert.True(this.outerQuantiles.Equals(that.outerQuantiles));
-                Assert.Equal(0, this.stringDistribution1.MaxDiff(that.stringDistribution1));
-                Assert.Equal(0, this.stringDistribution2.MaxDiff(that.stringDistribution2));
+
+                if (this.stringDistribution1 != null)
+                {
+                    Assert.Equal(0, this.stringDistribution1.MaxDiff(that.stringDistribution1));
+                    Assert.Equal(0, this.stringDistribution2.MaxDiff(that.stringDistribution2));
+                }
             }
         }
 

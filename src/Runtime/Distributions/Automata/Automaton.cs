@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -65,17 +65,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Cached states representation of states for zero automaton.
         /// </summary>
-        private static readonly ReadOnlyArray<StateData> ZeroStates = new[] { new StateData(0, 0, Weight.Zero) };
+        private static readonly ImmutableArray<StateData> ZeroStates =
+            ImmutableArray.Create(new StateData(0, 0, Weight.Zero));
 
         /// <summary>
         /// Cached states representation of transitions for zero automaton.
         /// </summary>
-        private static readonly ReadOnlyArray<Transition> ZeroTransitions = new Transition[] { };
+        private static readonly ImmutableArray<Transition> ZeroTransitions =
+            ImmutableArray<Transition>.Empty;
 
         /// <summary>
         /// The maximum number of states an automaton can have.
         /// </summary>
-        private static int maxStateCount = 50000;
+        private static int maxStateCount = 300_000;
+
+        /// <summary>
+        /// The maximum number of states an automaton can have in current thread.
+        /// </summary>
+        /// <remarks>
+        /// If non-zero, this value overrides the default <see cref="GlobalMaxStateCount"/>.
+        /// This value is used by <see cref="UnlimitedStatesComputation"/> to temporary increase
+        /// the state count limit in a thread-safe manner.
+        /// </remarks>
+        [ThreadStatic]
+        private static int threadMaxStateCountOverride;
 
         /// <summary>
         /// Whether to use the Regex builder for the ToString method.
@@ -145,17 +158,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public double? PruneStatesWithLogEndWeightLessThan { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of states an automaton can have.
+        /// Gets or sets the maximum number of states an automaton can have. This setting is shared
+        /// by all threads of the program.
         /// </summary>
-        public static int MaxStateCount
+        /// <remarks>
+        /// This value can only be set because it is intended to be a program-level setting.
+        /// For inspecting the value use the <see cref="MaxStateCount"/>.
+        /// </remarks>
+        public static int GlobalMaxStateCount
         {
-            get => maxStateCount;
-
             set
             {
                 Argument.CheckIfInRange(value > 0, nameof(value), "The maximum number of states must be positive.");
                 maxStateCount = value;
             }
+        }
+
+        public static int MaxStateCount
+        {
+            get => threadMaxStateCountOverride != 0 ? threadMaxStateCountOverride : maxStateCount;
+            internal set => threadMaxStateCountOverride = value;
         }
 
         /// <summary>
@@ -764,6 +786,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var builder = new StringBuilder();
+            if (this.LogValueOverride.HasValue)
+            {
+                builder.Append(this.LogValueOverride);
+                builder.Append(":");
+            }
+
             var visitedStates = new HashSet<int>();
             var stack = new Stack<(string prefix, Option<TElementDistribution> prefixDistribution, int state)>();
             stack.Push((string.Empty, Option.None, Start.Index));
@@ -1006,38 +1034,45 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </remarks>
         public bool IsZero()
         {
-            if (this.IsCanonicZero())
+            // Return cached value if available
+            if (this.Data.IsZero.HasValue)
             {
-                return true;
+                return this.Data.IsZero.Value;
             }
 
-            var visitedStates = new BitArray(this.States.Count, false);
-            return DoIsZero(this.Start.Index);
+            // Calculate and cache whether this automaton is zero
+            var isZero = DoIsZero();
+            this.Data = this.Data.With(isZero: isZero);
+            return isZero;
 
-            bool DoIsZero(int stateIndex)
+            bool DoIsZero()
             {
-                if (visitedStates[stateIndex])
-                {
-                    return true;
-                }
+                var visited = new BitArray(this.States.Count, false);
+                var stack = new Stack<int>();
+                stack.Push(this.Start.Index);
+                visited[this.Start.Index] = true;
 
-                visitedStates[stateIndex] = true;
-
-                var state = this.States[stateIndex];
-                var isZero = !state.CanEnd;
-                var transitionIndex = 0;
-                while (isZero && transitionIndex < state.Transitions.Count)
+                while (stack.Count > 0)
                 {
-                    var transition = state.Transitions[transitionIndex];
-                    if (!transition.Weight.IsZero)
+                    var stateIndex = stack.Pop();
+
+                    var state = this.States[stateIndex];
+                    if (state.CanEnd)
                     {
-                        isZero = DoIsZero(transition.DestinationStateIndex);
+                        return false;
                     }
 
-                    ++transitionIndex;
+                    foreach (var transition in state.Transitions)
+                    {
+                        if (!visited[transition.DestinationStateIndex] && !transition.Weight.IsZero)
+                        {
+                            stack.Push(transition.DestinationStateIndex);
+                            visited[transition.DestinationStateIndex] = true;
+                        }
+                    }
                 }
 
-                return isZero;
+                return true;
             }
         }
 
@@ -1420,11 +1455,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             simplification.RemoveDeadStates(); // Product can potentially create dead states
             simplification.SimplifyIfNeeded();
 
-            var bothInputsDeterminized =
-                automaton1.Data.DeterminizationState == DeterminizationState.IsDeterminized &&
-                automaton2.Data.DeterminizationState == DeterminizationState.IsDeterminized;
-            var determinizationState =
-                bothInputsDeterminized ? DeterminizationState.IsDeterminized : DeterminizationState.Unknown;
+            var bothInputsDeterminized = automaton1.Data.IsDeterminized == true && automaton2.Data.IsDeterminized == true;
+            var determinizationState = bothInputsDeterminized ? (bool?)true : null;
 
             this.Data = builder.GetData(determinizationState);
             if (this is StringAutomaton && tryDeterminize)
@@ -1620,7 +1652,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public void SetToZero()
         {
             this.Data = new DataContainer(
-                0, true, false, DeterminizationState.IsDeterminized, ZeroStates, ZeroTransitions);
+                0,
+                ZeroStates,
+                ZeroTransitions,
+                isEpsilonFree: true,
+                usesGroups: false,
+                isDeterminized: true,
+                isZero: true,
+                isEnumerable: true);
         }
 
         /// <summary>
@@ -1984,32 +2023,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The sequences in the support of this automaton</returns>
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
         {
-            if (tryDeterminize && this is StringAutomaton)
+            int idx = 0;
+            foreach (var seq in this.EnumerateSupportInternal(tryDeterminize))
             {
-                this.TryDeterminize();
-            }
-
-            // Lazily return sequences until the count is exceeded.
-            var enumeration = this.EnumerateSupport(
-                new Stack<TElement>(),
-                new ArrayDictionary<bool>(),
-                this.Start.Index);
-
-            if (!tryDeterminize) enumeration = enumeration.Distinct();
-            var result = enumeration.Select(
-                (seq, idx) =>
+                if (seq == null)
                 {
-                    if (idx < maxCount)
-                    {
-                        return seq;
-                    }
-                    else
-                    {
-                        throw new AutomatonEnumerationCountException(maxCount);
-                    }
-                });
+                    throw new NotSupportedException("Infinite loops cannot be enumerated");
+                }
 
-            return result;
+                if (++idx > maxCount)
+                {
+                    throw new AutomatonEnumerationCountException(maxCount);
+                }
+
+                yield return seq;
+            }
         }
 
         /// <summary>
@@ -2022,16 +2050,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>True if successful, false otherwise</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
         {
-            if (tryDeterminize && this is StringAutomaton)
+            var limitedResult = new List<TSequence>();
+            foreach (var seq in this.EnumerateSupportInternal(tryDeterminize))
             {
-                this.TryDeterminize();
+                if (seq == null || limitedResult.Count >= maxCount)
+                {
+                    result = null;
+                    return false;
+                }
+
+                limitedResult.Add(seq);
             }
 
-
-            result = this.EnumerateSupport(new Stack<TElement>(), new ArrayDictionary<bool>(), this.Start.Index);
-            if (!tryDeterminize) result = result.Distinct();
-            result = result.Take(maxCount + 1).ToList();
-            return result.Count() <= maxCount;
+            result = limitedResult;
+            return true;
         }
 
         /// <summary>
@@ -2225,7 +2257,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             this.Data = builder.GetData();
             this.LogValueOverride = automaton.LogValueOverride;
-            this.PruneStatesWithLogEndWeightLessThan = automaton.LogValueOverride;
+            this.PruneStatesWithLogEndWeightLessThan = automaton.PruneStatesWithLogEndWeightLessThan;
         }
 
         #endregion
@@ -2246,7 +2278,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return automaton2.IsZero() ? double.NegativeInfinity : 1;
             }
 
-            TThis theConverger = GetConverger(automaton1, automaton2);
+            TThis theConverger = GetConverger(new TThis[] {automaton1, automaton2});
             var automaton1conv = automaton1.Product(theConverger);
             var automaton2conv = automaton2.Product(theConverger);
 
@@ -2280,8 +2312,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Gets an automaton such that every given automaton, if multiplied by it, becomes normalizable.
         /// </summary>
         /// <param name="automata">The automata.</param>
+        /// <param name="decayWeight">The decay weight.</param>
         /// <returns>An automaton, product with which will make every given automaton normalizable.</returns>
-        public static TThis GetConverger(params TThis[] automata)
+        public static TThis GetConverger(TThis automata, double decayWeight = 0.99)
+        {
+            return GetConverger(new TThis[] {automata}, decayWeight);
+        }
+
+        /// <summary>
+            /// Gets an automaton such that every given automaton, if multiplied by it, becomes normalizable.
+            /// </summary>
+            /// <param name="automata">The automata.</param>
+            /// <param name="decayWeight">The decay weight.</param>
+            /// <returns>An automaton, product with which will make every given automaton normalizable.</returns>
+            public static TThis GetConverger(TThis[] automata, double decayWeight = 0.99)
         {
             // TODO: This method might not work in the presense of non-trivial loops.
 
@@ -2317,7 +2361,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Weight transitionWeight = Weight.Product(
                 Weight.FromLogValue(-uniformDist.GetLogAverageOf(uniformDist)),
                 Weight.FromLogValue(-maxLogTransitionWeightSum),
-                Weight.FromValue(0.99));
+                Weight.FromValue(decayWeight));
             theConverger.Start.AddSelfTransition(uniformDist, transitionWeight);
             theConverger.Start.SetEndWeight(Weight.One);
 
@@ -2480,71 +2524,183 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// Recursively enumerate support of this automaton
+        /// Enumerate support of this automaton
         /// </summary>
-        /// <param name="prefix">The prefix at this point</param>
-        /// <param name="visitedStates">The states visited at this point</param>
-        /// <param name="stateIndex">The index of the next state to process</param>
-        /// <returns>The strings supporting this automaton</returns>
-        private IEnumerable<TSequence> EnumerateSupport(Stack<TElement> prefix, ArrayDictionary<bool> visitedStates, int stateIndex)
+        private IEnumerable<TSequence> EnumerateSupportInternal(bool tryDeterminize)
         {
-            if (visitedStates.ContainsKey(stateIndex) && visitedStates[stateIndex])
+            var isEnumerable = this.Data.IsEnumerable;
+            if (isEnumerable != null && isEnumerable.Value == false)
             {
-                throw new NotSupportedException("Infinite loops cannot be enumerated");
+                // This automaton is definitely not enumerable
+                return new TSequence[] { null };
             }
 
-            var currentState = this.States[stateIndex];
-            if (currentState.CanEnd)
+            if (tryDeterminize && this is StringAutomaton)
             {
-                yield return SequenceManipulator.ToSequence(prefix.Reverse());
+                this.TryDeterminize();
             }
 
-            visitedStates[stateIndex] = true;
-            foreach (var transition in currentState.Transitions)
+            var enumeration = this.EnumerateSupportInternalWithDuplicates();
+            if (!tryDeterminize)
             {
-                if (transition.Weight.IsZero)
+                enumeration = enumeration.Distinct();
+            }
+
+            return enumeration;
+        }
+
+        /// <summary>
+        /// Stores information needed for backtracking during support enumeration.
+        /// </summary>
+        private struct StateEnumerationState
+        {
+            public int StateIndex;
+            public int PrefixLength;
+            public int TransitionIndex;
+            public int RemainingTransitionsCount;
+            public IEnumerator<TElement> ElementEnumerator;
+        }
+
+        /// <summary>
+        /// Enumerate support of this automaton without elimination of duplicate elements
+        /// </summary>
+        /// <returns>
+        /// The sequences supporting this automaton. Sequences may be non-distinct if
+        /// automaton is not determinized. A `null` value in enumeration means that
+        /// an infinite loop was reached. Public `EnumerateSupport()` / `TryEnumerateSupport()`
+        /// methods handle null value differently.
+        /// </returns>
+        private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates()
+        {
+            var visited = new bool[this.States.Count];
+            var prefix = new List<TElement>();
+            var stack = new Stack<StateEnumerationState>();
+
+            var current = default(StateEnumerationState);
+            TryMoveTo(this.Data.StartStateIndex);
+            if (this.States[current.StateIndex].CanEnd)
+            {
+                yield return SequenceManipulator.ToSequence(prefix);
+            }
+
+            while (true)
+            {
+                // Backtrack while needed
+                while (current.ElementEnumerator == null && current.RemainingTransitionsCount == 0)
                 {
-                    continue;
+                    if (stack.Count == 0)
+                    {
+                        // Nowhere to backtrack, enumerated everything
+                        if (this.Data.IsEnumerable == null)
+                        {
+                            this.Data = this.Data.With(isEnumerable: true);
+                        }
+
+                        yield break;
+                    }
+
+                    visited[current.StateIndex] = false;
+                    current = stack.Pop();
+                    prefix.RemoveRange(current.PrefixLength, prefix.Count - current.PrefixLength);
                 }
 
-                if (transition.IsEpsilon)
+                if (current.ElementEnumerator != null)
                 {
-                    foreach (var support in this.EnumerateSupport(prefix, visitedStates, transition.DestinationStateIndex))
+                    // Advance to next element in current transition
+                    prefix.Add(current.ElementEnumerator.Current);
+                    if (!current.ElementEnumerator.MoveNext())
                     {
-                        yield return support;
+                        // Element done, move to next transition
+                        current.ElementEnumerator = null;
                     }
                 }
-                else if (transition.ElementDistribution.Value.IsPointMass)
+                else if (current.RemainingTransitionsCount != 0)
                 {
-                    prefix.Push(transition.ElementDistribution.Value.Point);
-                    foreach (var support in this.EnumerateSupport(prefix, visitedStates, transition.DestinationStateIndex))
-                    {
-                        yield return support;
-                    }
+                    // Advance to next transition
+                    ++current.TransitionIndex;
+                    --current.RemainingTransitionsCount;
 
-                    prefix.Pop();
+                    var transition = this.Data.Transitions[current.TransitionIndex];
+
+                    if (!transition.IsEpsilon)
+                    {
+                        // Add next element to sequence
+                        var elementDistribution = transition.ElementDistribution.Value;
+                        if (!(transition.ElementDistribution.Value is CanEnumerateSupport<TElement> supportEnumerator))
+                        {
+                            throw new NotImplementedException(
+                                "Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
+                        }
+
+                        var enumerator = supportEnumerator.EnumerateSupport().GetEnumerator();
+                        if (enumerator.MoveNext())
+                        {
+                            prefix.Add(enumerator.Current);
+                            if (enumerator.MoveNext())
+                            {
+                                current.ElementEnumerator = enumerator;
+                            }
+                        }
+                    }
+                }
+
+                if (!TryMoveTo(this.Data.Transitions[current.TransitionIndex].DestinationStateIndex))
+                {
+                    // Found a loop, signal that automaton is not enumerable
+                    this.Data = this.Data.With(isEnumerable: false);
+                    yield return null;
+                    yield break;
+                }
+
+                if (this.States[current.StateIndex].CanEnd)
+                {
+                    yield return SequenceManipulator.ToSequence(prefix);
+                }
+            }
+
+            // Return false if loop was encountered
+            bool TryMoveTo(int index)
+            {
+                if (visited[index])
+                {
+                    // Loop encountered
+                    return false;
+                }
+
+                var state = this.Data.States[index];
+
+                
+                if (index >= current.StateIndex &&
+                    current.ElementEnumerator == null &&
+                    current.RemainingTransitionsCount == 0)
+                {
+                    // Fastpath: if we move forward and current state has 0 elements left to traverse,
+                    // we can omit the backtracking logic entirely
+                    visited[current.StateIndex] = false;
                 }
                 else
                 {
-                    if (!(transition.ElementDistribution.Value is CanEnumerateSupport<TElement> supportEnumerator))
+                    // Slowpath: Store information needed for backtracking
+                    stack.Push(current);
+                    if (index <= current.StateIndex)
                     {
-                        throw new NotImplementedException("Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
-                    }
-
-                    foreach (var elt in supportEnumerator.EnumerateSupport())
-                    {
-                        prefix.Push(elt);
-                        foreach (var support in this.EnumerateSupport(prefix, visitedStates, transition.DestinationStateIndex))
-                        {
-                            yield return support;
-                        }
-
-                        prefix.Pop();
+                        // Tracking the visited states only on backward transitions is enough for
+                        // loop detection. By not setting "visited" to true for forward transitions
+                        // we can backtrack with less overhead in simple cases
+                        visited[current.StateIndex] = true;
                     }
                 }
-            }
 
-            visitedStates[stateIndex] = false;
+                current = new StateEnumerationState
+                {
+                    StateIndex = index,
+                    TransitionIndex = state.FirstTransitionIndex - 1,
+                    RemainingTransitionsCount = state.TransitionsCount,
+                    PrefixLength = prefix.Count,
+                };
+
+                return true;
+            }
         }
 
         /// <summary>
@@ -2604,15 +2760,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public class UnlimitedStatesComputation : IDisposable
         {
-            private readonly int originalMaxStateCount;
+            private readonly int originalThreadMaxStateCount;
 
             /// <summary>
-            /// Initilizes a new instance of the <see cref="UnlimitedStatesComputation"/> class.
+            /// Initializes a new instance of the <see cref="UnlimitedStatesComputation"/> class.
             /// </summary>
             public UnlimitedStatesComputation()
             {
-                originalMaxStateCount = StringAutomaton.MaxStateCount;
-                StringAutomaton.MaxStateCount = int.MaxValue;
+                this.originalThreadMaxStateCount = threadMaxStateCountOverride;
+                threadMaxStateCountOverride = int.MaxValue;
             }
 
             /// <summary>
@@ -2620,12 +2776,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public void CheckStateCount(TThis automaton)
             {
-                if(automaton.States.Count > originalMaxStateCount) throw new AutomatonTooLargeException(originalMaxStateCount);
+                var limit = this.originalThreadMaxStateCount != 0
+                    ? this.originalThreadMaxStateCount
+                    : maxStateCount;
+                if (automaton.States.Count > limit)
+                {
+                    throw new AutomatonTooLargeException(limit);
+                }
             }
 
             public void Dispose()
             {
-                StringAutomaton.MaxStateCount = originalMaxStateCount;
+                threadMaxStateCountOverride = this.originalThreadMaxStateCount;
             }
         }
         #endregion
@@ -2643,11 +2805,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             var propertyMask = new BitVector32();
             var idx = 0;
-            propertyMask[1 << idx++] = true; // isEpsilonFree is alway known
+            propertyMask[1 << idx++] = true; // isEpsilonFree is always known
             propertyMask[1 << idx++] = this.Data.IsEpsilonFree;
             propertyMask[1 << idx++] = this.LogValueOverride.HasValue;
             propertyMask[1 << idx++] = this.PruneStatesWithLogEndWeightLessThan.HasValue;
-            propertyMask[1 << idx++] = true; // start state is alway serialized
+            propertyMask[1 << idx++] = true; // start state is always serialized
 
             writeInt32(propertyMask.Data);
 
@@ -2663,7 +2825,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // This state is serialized only for its index.
             this.Start.Write(writeDouble, writeInt32, writeElementDistribution);
-            
+
             writeInt32(this.States.Count);
             foreach (var state in this.States)
             {
@@ -2675,8 +2837,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Reads an automaton from.
         /// </summary>
         /// <remarks>
-        /// Serializtion format is a bit unnatural, but we do it for compatiblity with old serialized data.
-        /// So we don't have to maintain 2 versions of derserialization
+        /// Serialization format is a bit unnatural, but we do it for compatibility with old serialized data.
+        /// So we don't have to maintain 2 versions of deserialization.
         /// </remarks>
         public static TThis Read(Func<double> readDouble, Func<int> readInt32, Func<TElementDistribution> readElementDistribution)
         {
@@ -2712,7 +2874,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var numStates = readInt32();
-            
+
             for (var i = 0; i < numStates; i++)
             {
                 State.ReadTo(ref builder, readInt32, readDouble, readElementDistribution);
@@ -2723,3 +2885,4 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         #endregion
     }
 }
+

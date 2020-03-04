@@ -63,8 +63,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
         public Color Color { get; set; }
         public int Width { get; set; }
 
-        public ArrowheadStyle ArrowheadAtSource { get; set; }
-        public ArrowheadStyle ArrowheadAtTarget { get; set; }
+        public ArrowheadStyle ArrowheadAtSource { get; set; } = ArrowheadStyle.None;
+        public ArrowheadStyle ArrowheadAtTarget { get; set; } = ArrowheadStyle.Normal;
 
         public EdgeStyle Style { get; set; }
         public bool Reverse { get; set; }

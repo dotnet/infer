@@ -67,19 +67,16 @@ namespace Microsoft.ML.Probabilistic.Tools.PrepareSource
                 while ((line = reader.ReadLine()) != null)
                 {
                     ++lineNumber;
-                    
-                    //// For simplicity this code assumes that the line with <include> has no other content on it.
-                    //// This is currently the case for our codebase.
-                    
-                    int indexOfDocStart = line.IndexOf("/// <include", StringComparison.InvariantCulture);
-                    if (indexOfDocStart == -1)
+
+                    string trimmedLine = line.Trim();                    
+                    if (!trimmedLine.StartsWith("/// <include", StringComparison.InvariantCulture))
                     {
                         // Not a line with an include directive
                         writer.WriteLine(line);
                         continue;
                     }
 
-                    string includeString = line.Substring(indexOfDocStart + "/// ".Length);
+                    string includeString = trimmedLine.Substring("/// ".Length);
                     var includeDoc = XDocument.Parse(includeString);
 
                     XAttribute fileAttribute = includeDoc.Root.Attribute("file");
@@ -104,6 +101,7 @@ namespace Microsoft.ML.Probabilistic.Tools.PrepareSource
                     }
                     else
                     {
+                        int indexOfDocStart = line.IndexOf("/// <include", StringComparison.InvariantCulture);
                         foreach (XElement docElement in docElements)
                         {
                             string[] docElementStringLines = docElement.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);

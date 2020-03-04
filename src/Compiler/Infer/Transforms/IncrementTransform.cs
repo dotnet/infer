@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected override IStatement DoConvertStatement(IStatement ist)
         {
             bool wasOperatorStatement = this.isOperatorStatement;
-            if(context.InputAttributes.Has<OperatorStatement>(ist))
+            if (context.InputAttributes.Has<OperatorStatement>(ist))
             {
                 this.isOperatorStatement = true;
             }
@@ -212,10 +212,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression[] args2 = new IExpression[] { marginalExpr, forwardExpr, backwardExpr, indicesExpr, indexExpr };
                     Type[] argTypes = Array.ConvertAll(args2, e => e.GetExpressionType());
                     Exception exception;
-                    MethodInfo method =
-                        (MethodInfo)
-                        Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(itr.DotNetType, "MarginalIncrement",
-                                                                BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy, null, argTypes, out exception);
+                    MethodInfo method = (MethodInfo)Reflection.Invoker.GetBestMethod(itr.DotNetType, "MarginalIncrement",
+                        BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy, null, argTypes, out exception);
                     if (method == null)
                         Error("Cannot find a compatible MarginalIncrement method for JaggedSubarrayOp", exception);
                     else
@@ -250,10 +248,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression[] args2 = new IExpression[] { backwardExpr, forwardExpr, indicesExpr, indexExpr, marginalExpr };
                     Type[] argTypes = Array.ConvertAll(args2, e => e.GetExpressionType());
                     Exception exception;
-                    MethodInfo method =
-                        (MethodInfo)
-                        Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(itr.DotNetType, "MarginalIncrementItems",
-                                                                BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy, null, argTypes, out exception);
+                    MethodInfo method = (MethodInfo)Reflection.Invoker.GetBestMethod(itr.DotNetType, "MarginalIncrementItems",
+                        BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy, null, argTypes, out exception);
                     if (method == null)
                         Error("Cannot find a compatible MarginalIncrementItems method for JaggedSubarrayWithMarginalOp", exception);
                     else
@@ -295,10 +291,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression[] args2 = new IExpression[] { forwardExpr, backwardExpr, marginalExpr };
                     Type[] argTypes = Array.ConvertAll(args2, e => e.GetExpressionType());
                     Exception exception;
-                    MethodInfo method =
-                        (MethodInfo)
-                        Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(itr.DotNetType, "MarginalIncrementArray",
-                                                                BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy, null, argTypes, out exception);
+                    MethodInfo method = (MethodInfo)Reflection.Invoker.GetBestMethod(itr.DotNetType, "MarginalIncrementArray",
+                        BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy, null, argTypes, out exception);
                     if (method == null)
                         Error("Cannot find a compatible MarginalIncrementArray method for JaggedSubarrayWithMarginalOp", exception);
                     else

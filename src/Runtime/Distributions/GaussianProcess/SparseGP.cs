@@ -259,12 +259,42 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 if (beta == null)
                 {
-                    //beta = (FixedParameters.KernelOf_B_B + InducingDist.GetVariance()).Inverse();
-                    beta = new PositiveDefiniteMatrix(FixedParameters.NumberBasisPoints, FixedParameters.NumberBasisPoints);
-                    beta.SetToDifference(InducingDist.Precision, InducingDist.Precision*Var_B_B*InducingDist.Precision);
+                    bool UseVarBB = InducingDist.Precision.Trace() < double.MaxValue;
+                    if (UseVarBB)
+                    {
+                        beta = new PositiveDefiniteMatrix(FixedParameters.NumberBasisPoints, FixedParameters.NumberBasisPoints);
+                        beta.SetToDifference(InducingDist.Precision, InducingDist.Precision * Var_B_B * InducingDist.Precision);
+                    }
+                    else
+                    {
+                        beta = GetInverse(FixedParameters.KernelOf_B_B + GetInverse(InducingDist.Precision));
+                    }
                 }
                 return beta;
             }
+        }
+
+        private static PositiveDefiniteMatrix GetInverse(PositiveDefiniteMatrix A)
+        {
+            PositiveDefiniteMatrix result = new PositiveDefiniteMatrix(A.Rows, A.Cols);
+            LowerTriangularMatrix L = new LowerTriangularMatrix(A.Rows, A.Cols);
+            L.SetToCholesky(A);
+            bool[] isZero = new bool[L.Rows];
+            for (int i = 0; i < L.Rows; i++)
+            {
+                if (L[i, i] == 0)
+                {
+                    isZero[i] = true;
+                    L[i, i] = 1;
+                }
+            }
+            L.SetToInverse(L);
+            result.SetToOuterTranspose(L);
+            for (int i = 0; i < isZero.Length; i++)
+            {
+                if (isZero[i]) result[i, i] = double.PositiveInfinity;
+            }
+            return result;
         }
 
         #endregion
@@ -485,7 +515,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double kxx = FixedParameters.Prior.Variance(X);
                 Vector kxb = FixedParameters.KernelOf_X_B(X);
                 Gaussian result = new Gaussian(
-                    kxb.Inner(Alpha) + FixedParameters.Prior.Mean(X), kxx - Beta.QuadraticForm(kxb));
+                    kxb.Inner(Alpha) + FixedParameters.Prior.Mean(X), Math.Max(0, kxx - Beta.QuadraticForm(kxb)));
                 return result;
             }
         }
@@ -1190,7 +1220,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public Vector YPoints
         {
             get { return ypoints; }
-            set { ypoints = value.Clone(); }
+            set
+            {
+                if (value.Count < 2) throw new ArgumentException($"value.Count ({value.Count}) < 2", nameof(value));
+                ypoints = value.Clone();
+            }
         }
 
         #region IFunction Members

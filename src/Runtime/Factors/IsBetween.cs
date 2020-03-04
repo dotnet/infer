@@ -328,12 +328,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 // X is not a point mass or uniform
                 double d_p = 2 * isBetween.GetProbTrue() - 1;
-                double mx, vx;
-                X.GetMeanAndVariance(out mx, out vx);
+                double mx = X.GetMean();
                 double center = MMath.Average(lowerBound, upperBound);
+                double diff = upperBound - lowerBound;
                 if (d_p == 1.0)
                 {
-                    double diff = upperBound - lowerBound;
                     double sqrtPrec = Math.Sqrt(X.Precision);
                     double diffs = diff * sqrtPrec;
                     // X.Prob(U) = X.Prob(L) * exp(delta)
@@ -370,9 +369,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                         // In this case, alpha and beta will be very small.
                         double logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
                         if (logZ == 0) return Gaussian.Uniform();
-                        double logPhiL = Gaussian.GetLogProb(lowerBound, mx, vx);
+                        double logPhiL = X.GetLogProb(lowerBound);
                         double alphaL = d_p * Math.Exp(logPhiL - logZ);
-                        double logPhiU = Gaussian.GetLogProb(upperBound, mx, vx);
+                        double logPhiU = X.GetLogProb(upperBound);
                         double alphaU = d_p * Math.Exp(logPhiU - logZ);
                         double alphaX = alphaL - alphaU;
                         double betaX = alphaX * alphaX;
@@ -419,9 +418,13 @@ namespace Microsoft.ML.Probabilistic.Factors
                     double rU = MMath.NormalCdfRatio(zU);
                     double r1U = MMath.NormalCdfMomentRatio(1, zU);
                     double r3U = MMath.NormalCdfMomentRatio(3, zU) * 6;
-                    if (zU < -1e20)
+                    if (zU < -173205080)
                     {
                         // in this regime, rU = -1/zU, r1U = rU*rU
+                        // because rU = -1/zU + 1/zU^3 + ...
+                        // and r1U = 1/zU^2 - 3/zU^4 + ...
+                        // The second term is smaller by a factor of 3/zU^2.
+                        // The threshold satisfies 3/zU^2 == 1e-16 or zU < -sqrt(3e16)
                         if (expMinus1 > 1e100)
                         {
                             double invzUs = 1 / (zU * sqrtPrec);
@@ -455,10 +458,18 @@ namespace Microsoft.ML.Probabilistic.Factors
                                 }
                             }
                             // Abs is needed to avoid some 32-bit oddities.
-                            double prec2 = (expMinus1Ratio * expMinus1Ratio) /
-                                Math.Abs(r1U / X.Precision * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
-                                + rU / sqrtPrec * diff * (expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1))
-                                + diff * diff / 4);
+                            double prec2 = (expMinus1Ratio * expMinus1Ratio * X.Precision) /
+                                Math.Abs(r1U * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
+                                + rU * diffs * (expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1))
+                                + diffs * diffs / 4);
+                            if (prec2 > double.MaxValue)
+                            {
+                                // same as above but divide top and bottom by X.Precision, to avoid overflow
+                                prec2 = (expMinus1Ratio * expMinus1Ratio) /
+                                    Math.Abs(r1U / X.Precision * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
+                                    + rU / sqrtPrec * diff * (expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1))
+                                    + diff * diff / 4);
+                            }
                             return Gaussian.FromMeanAndPrecision(mp2, prec2) / X;
                         }
                     }
@@ -476,9 +487,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         else mp2 = lowerBound + r1U / rU / sqrtPrec;
                         // This approach loses accuracy when r1U/(rU*rU) < 1e-3, which is zU > 3.5
                         if (zU > 3.5) throw new Exception("zU > 3.5");
-                        double prec2 = rU * rU * X.Precision;
-                        if (prec2 != 0) // avoid 0/0
-                            prec2 /= NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U);
+                        double prec2 = X.Precision * (rU * rU / NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U));
                         //Console.WriteLine($"z = {zU:r} r = {rU:r} r1 = {r1U:r} r1U/rU = {r1U / rU:r} r1U/rU/sqrtPrec = {r1U / rU / sqrtPrec:r} sqrtPrec = {sqrtPrec:r} mp = {mp2:r}");
                         return Gaussian.FromMeanAndPrecision(mp2, prec2) / X;
                     }
@@ -571,18 +580,18 @@ namespace Microsoft.ML.Probabilistic.Factors
                     if (delta == 0) // avoid 0*infinity
                         qOverPrec = (r1L + drU2) * diff * (drU3 / sqrtPrec - diff / 4 + rL / 2 * diffs / 2 * diff / 2);
                     double vp = qOverPrec * alphaXcLprecDiff * alphaXcLprecDiff;
+                    if (double.IsNaN(qOverPrec) || 1/vp < X.Precision) return Gaussian.FromMeanAndPrecision(mp, MMath.NextDouble(X.Precision)) / X;
                     return new Gaussian(mp, vp) / X;
                 }
                 else
                 {
                     double logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
-                    if (d_p == -1.0 && logZ < double.MinValue)
+                    Gaussian GetPointMessage()
                     {
                         if (mx == center)
                         {
                             // The posterior is two point masses.
                             // Compute the moment-matched Gaussian and divide.
-                            double diff = upperBound - lowerBound;
                             Gaussian result = Gaussian.FromMeanAndVariance(center, diff * diff / 4);
                             result.SetToRatio(result, X, ForceProper);
                             return result;
@@ -596,9 +605,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                             return Gaussian.PointMass(upperBound);
                         }
                     }
-                    double logPhiL = Gaussian.GetLogProb(lowerBound, mx, vx);
+                    if (d_p == -1.0 && logZ < double.MinValue) return GetPointMessage();
+                    double logPhiL = X.GetLogProb(lowerBound);
                     double alphaL = d_p * Math.Exp(logPhiL - logZ);
-                    double logPhiU = Gaussian.GetLogProb(upperBound, mx, vx);
+                    double logPhiU = X.GetLogProb(upperBound);
                     double alphaU = d_p * Math.Exp(logPhiU - logZ);
                     double alphaX = alphaL - alphaU;
                     double betaX = alphaX * alphaX;
@@ -610,6 +620,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                     else betaL = (X.MeanTimesPrecision - lowerBound * X.Precision) * alphaL; // -(lowerBound - mx) / vx * alphaL;
                     if (Math.Abs(betaU) > Math.Abs(betaL)) betaX = (betaX + betaL) + betaU;
                     else betaX = (betaX + betaU) + betaL;
+                    if (Math.Abs(betaX) > double.MaxValue)
+                    {
+                        if (d_p == -1.0) return GetPointMessage();
+                        else return Gaussian.Uniform();
+                    }
                     return GaussianOp.GaussianFromAlphaBeta(X, alphaX, betaX, ForceProper);
                 }
             }

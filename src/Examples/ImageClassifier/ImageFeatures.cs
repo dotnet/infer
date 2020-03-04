@@ -3,19 +3,21 @@
 // See the LICENSE file in the project root for more information.
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
-using System.Linq;
 
 namespace ImageClassifier
 {
     public class ImageFeatures
     {
+        public const string folder = @"..\..\..\Images\";
+
         public void ComputeImageFeatures()
         {
-            string folder = @"..\..\Images\";
             string[] filenames = File.ReadAllLines(folder + "Images.txt");
             Dictionary<string, Vector> labels = ReadLabels(folder + "Labels.txt");
             Dictionary<string, Vector> features = new Dictionary<string, Vector>();
@@ -32,7 +34,7 @@ namespace ImageClassifier
             StreamWriter writer = new StreamWriter(folder + "Features.txt");
             foreach (string filename in filenames)
             {
-                writer.WriteLine(filename + "," + StringUtil.CollectionToString(features[filename], ","));
+                writer.WriteLine(filename + "," + StringUtil.CollectionToString(features[filename].Select(d => d.ToString("r", CultureInfo.InvariantCulture)), ","));
             }
 
             writer.Close();

@@ -28,7 +28,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 
         internal override IFactorGraphVisualizer FactorGraphVisualizer { get; } = new FormsFactorGraphVisualizer();
 
-        internal override IGraphWriter GraphWriter { get; } = new FormsDgmlGraphWriter();
+        internal override IGraphWriter GraphWriter { get; } = new DefaultVisualizer().GraphWriter;
         
         public static class FormHelper
         {
@@ -138,15 +138,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             {
                 ModelView modelView = new ModelView(model);
                 modelView.ShowInForm(model.modelType.Name, false);
-            }
-        }
-
-        internal class FormsDgmlGraphWriter : IGraphWriter
-        {
-            public void WriteGraph(ModelBuilder model, string path)
-            {
-                ModelView modelView = new ModelView(model);
-                modelView.WriteDgml(path + ".dgml");
             }
         }
     }

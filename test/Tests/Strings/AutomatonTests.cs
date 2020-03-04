@@ -761,8 +761,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when
-        /// an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.TryComputePoint"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -791,7 +791,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.Product"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -821,7 +822,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.GetLogNormalizer"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -848,6 +850,75 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests whether <see cref="StringAutomaton.IsZero"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void IsZeroLargeAutomaton()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                var zeroAutomaton = MakeAutomaton(Weight.Zero);
+                var nonZeroAutomaton = MakeAutomaton(Weight.One);
+
+                Assert.True(zeroAutomaton.IsZero());
+                Assert.False(nonZeroAutomaton.IsZero());
+            }
+
+            StringAutomaton MakeAutomaton(Weight endWeight)
+            {
+                const int StateCount = 100_000;
+
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < StateCount; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                state.SetEndWeight(endWeight);
+
+                return builder.GetAutomaton();
+            }
+        }
+
+        /// <summary>
+        /// Tests whether StringAutomaton.UnlimitedStatesComputation.CheckStateCount() works as expected
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void CheckStateCount()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < 200000; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                var automaton = builder.GetAutomaton();
+
+                // Fine, because 200k < default limit
+                unlimited.CheckStateCount(automaton);
+
+                for (var i = 1; i < 200000; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                automaton = builder.GetAutomaton();
+
+                // Not fine anymore, automaton (with 400k states) is over the default limit
+                Assert.Throws<AutomatonTooLargeException>(() => unlimited.CheckStateCount(automaton));
+            }
+        }
+
+        /// <summary>
         /// Tests creating an automaton from state and transition lists.
         /// </summary>
         [Fact]
@@ -858,15 +929,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton1 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
                     0,
-                    true,
-                    false,
-                    StringAutomaton.DeterminizationState.Unknown,
-                    new[]
-                        {
-                            new StringAutomaton.StateData(0, 1, Weight.One),
-                            new StringAutomaton.StateData(1, 0, Weight.One),
-                        },
-                    new[] { new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1) }));
+                    ImmutableArray.Create(
+                        new StringAutomaton.StateData(0, 1, Weight.One),
+                        new StringAutomaton.StateData(1, 0, Weight.One)),
+                    ImmutableArray.Create(
+                        new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1)),
+                    isEpsilonFree: true,
+                    usesGroups: false,
+                    isDeterminized: null,
+                    isZero: null,
+                    isEnumerable: null));
 
             StringInferenceTestUtilities.TestValue(automaton1, 1.0, string.Empty, "a");
             StringInferenceTestUtilities.TestValue(automaton1, 0.0, "b");
@@ -875,11 +947,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton2 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
                     0,
-                    true,
-                    false,
-                    StringAutomaton.DeterminizationState.IsDeterminized,
-                    new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
-                    Array.Empty<StringAutomaton.Transition>()));
+                    ImmutableArray.Create(new StringAutomaton.StateData(0, 0, Weight.Zero)),
+                    ImmutableArray<StringAutomaton.Transition>.Empty,
+                    isEpsilonFree: true,
+                    usesGroups: false,
+                    isDeterminized: true,
+                    isZero: true,
+                    isEnumerable: true));
             Assert.True(automaton2.IsZero());
 
             // Bad start state index
@@ -887,44 +961,52 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        true,
-                        false,
-                        StringAutomaton.DeterminizationState.IsNonDeterminizable,
-                        Array.Empty<StringAutomaton.StateData>(),
-                        Array.Empty<StringAutomaton.Transition>())));
+                        ImmutableArray<StringAutomaton.StateData>.Empty,
+                        ImmutableArray<StringAutomaton.Transition>.Empty,
+                        isEpsilonFree: true,
+                        usesGroups: false,
+                        isDeterminized: false,
+                        isZero: true,
+                        isEnumerable: false)));
 
             // automaton is actually epsilon-free, but data says that it is
             Assert.Throws<ArgumentException>(
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        false,
-                        false,
-                        StringAutomaton.DeterminizationState.Unknown,
-                        new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
-                        Array.Empty<StringAutomaton.Transition>())));
+                        ImmutableArray.Create(new StringAutomaton.StateData(0, 0, Weight.Zero)),
+                        ImmutableArray<StringAutomaton.Transition>.Empty,
+                        isEpsilonFree: false,
+                        usesGroups: false,
+                        isDeterminized: null,
+                        isZero: null,
+                        isEnumerable: null)));
 
             // automaton is not epsilon-free
             Assert.Throws<ArgumentException>(
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        false,
-                        false,
-                        StringAutomaton.DeterminizationState.Unknown,
-                        new[] { new StringAutomaton.StateData(0, 1, Weight.Zero) },
-                        new[] { new StringAutomaton.Transition(Option.None, Weight.One, 1) })));
+                        ImmutableArray.Create(new StringAutomaton.StateData(0, 1, Weight.Zero)),
+                        ImmutableArray.Create(new StringAutomaton.Transition(Option.None, Weight.One, 1)),
+                        isEpsilonFree: false,
+                        usesGroups: false,
+                        isDeterminized: null,
+                        isZero: null,
+                        isEnumerable: null)));
 
             // Incorrect transition index
             Assert.Throws<ArgumentException>(
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
+                        ImmutableArray.Create(new StringAutomaton.StateData(0, 1, Weight.One)),
+                        ImmutableArray.Create(new StringAutomaton.Transition(Option.None, Weight.One, 2)),
                         true,
                         false,
-                        StringAutomaton.DeterminizationState.Unknown,
-                        new[] { new StringAutomaton.StateData(0, 1, Weight.One) },
-                        new[] { new StringAutomaton.Transition(Option.None, Weight.One, 2) })));
+                        isDeterminized: null,
+                        isZero: null,
+                        isEnumerable: null)));
         }
 
         #region ToString tests
@@ -1966,6 +2048,38 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests determinization of an automaton with hugely different weights
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void Determinize11()
+        {
+            var builder = new StringAutomaton.Builder();
+
+            builder.Start
+                .AddTransition(DiscreteChar.InRange('a', 'c'), Weight.FromLogValue(-1000))
+                .AddTransition(DiscreteChar.PointMass('x'), Weight.One)
+                .SetEndWeight(Weight.One);
+            builder.Start
+                .AddTransition(DiscreteChar.PointMass('b'), Weight.One)
+                .SetEndWeight(Weight.One);
+
+            var automaton = builder.GetAutomaton();
+
+            Assert.False(automaton.IsDeterministic());
+            var determinized = automaton.TryDeterminize();
+
+            Assert.True(determinized);
+            Assert.True(automaton.IsDeterministic());
+
+            // "cx" vanishes from automaton language with naive implementation of segments overlap
+            // due to numerical errors
+            var dist = StringDistribution.FromWeightFunction(automaton);
+            StringInferenceTestUtilities.TestIfIncludes(dist, "ax", "bx", "cx", "b");
+        }
+
+
+        /// <summary>
         /// Tests whether the inability to determinize an automaton is handled correctly.
         /// </summary>
         [Fact]
@@ -2094,9 +2208,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder[0].AddTransition(DiscreteChar.UniformOver('c', 'd'), Weight.FromValue(1), 2);
             builder[2].AddTransition(DiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 3);
             builder[2].AddTransition(DiscreteChar.UniformOver('g', 'h'), Weight.FromValue(1), 4);
+            builder[2].AddEpsilonTransition(Weight.FromValue(1), 4);
             builder[4].AddTransition(DiscreteChar.UniformOver('i', 'j'), Weight.FromValue(1), 5);
             builder[4].AddTransition(DiscreteChar.UniformOver('k', 'l'), Weight.FromValue(1), 5);
 
+            builder[0].SetEndWeight(Weight.FromValue(1));
             builder[1].SetEndWeight(Weight.FromValue(1));
             builder[3].SetEndWeight(Weight.FromValue(1));
             builder[5].SetEndWeight(Weight.FromValue(1));
@@ -2106,18 +2222,59 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var expectedSupport = new HashSet<string>
             {
+                "",
                 "a", "b", 
                 "ce", "cf",
                 "cgi", "cgj", "cgk", "cgl",
                 "chi", "chj", "chk", "chl",
+                "ci", "cj", "ck", "cl",
                 "de", "df",
                 "dgi", "dgj", "dgk", "dgl",
-                "dhi", "dhj", "dhk", "dhl"
+                "dhi", "dhj", "dhk", "dhl",
+                "di", "dj", "dk", "dl"
             };
 
-            var caclulatedSupport = new HashSet<string>(automaton.EnumerateSupport());
+            var calculatedSupport1= new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: false));
+            Assert.True(calculatedSupport1.SetEquals(expectedSupport));
 
-            Assert.True(caclulatedSupport.SetEquals(expectedSupport));
+            var calculatedSupport2 = new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: true));
+            Assert.True(calculatedSupport2.SetEquals(expectedSupport));
+        }
+
+        /// <summary>
+        /// Tests enumeration of support.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void EnumerateSupportThrowsOnLoop()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start
+                .AddTransition('a', Weight.One)
+                .AddTransition('a', Weight.One, 0)
+                .SetEndWeight(Weight.One);
+
+            var automaton = builder.GetAutomaton();
+
+            Assert.Throws<NotSupportedException>(() => automaton.EnumerateSupport().ToList());
+        }
+
+        /// <summary>
+        /// Tests enumeration of support.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void TryEnumerateSupportReturnsFalseOnLoop()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start
+                .AddTransition('a', Weight.One)
+                .AddTransition('a', Weight.One, 0)
+                .SetEndWeight(Weight.One);
+
+            var automaton = builder.GetAutomaton();
+
+            Assert.False(automaton.TryEnumerateSupport(Int32.MaxValue, out _));
         }
 
         [Trait("Category", "BadTest")] // Performance tests which look for exact timings are likely to fail on the build machine

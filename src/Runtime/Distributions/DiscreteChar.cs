@@ -2,26 +2,25 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Runtime.CompilerServices;
-using Microsoft.ML.Probabilistic.Distributions.Automata;
+using System.Collections;
 
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
     using System.Diagnostics;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Text;
     using System.Text.RegularExpressions;
 
-    using Collections;
-    using Math;
-    using Utilities;
-    using Factors.Attributes;
+    using Microsoft.ML.Probabilistic.Distributions.Automata;
+    using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Utilities;
+    using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    using Serialization;
+    using Microsoft.ML.Probabilistic.Serialization;
 
     /// <summary>
     /// Represents a distribution over characters.
@@ -135,23 +134,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscreteChar"/> class
-        /// with a given list of constant probability character ranges and the probability of characters outside ranges.
+        /// with a given list of constant probability character ranges.
         /// </summary>
-        /// <param name="probabilityOutsideRanges">The probability of characters outside the given ranges.</param>
         /// <param name="ranges">The constant-probability character ranges.</param>
         /// <param name="rangeCount">The number of valid elements in the <paramref name="ranges"/> array.</param>
         /// <remarks>
         /// The probabilities need to be normalized. The character ranges need to be sorted.
         /// The created objects takes ownership of the character range list.
         /// </remarks>
-        private DiscreteChar(Weight probabilityOutsideRanges, ReadOnlyArray<CharRange> ranges, int rangeCount) =>
-            this.data_ = Storage.Create(ranges, probabilityOutsideRanges);
+        private DiscreteChar(ImmutableArray<CharRange> ranges, int rangeCount) =>
+            this.data_ = Storage.Create(ranges);
 
         private DiscreteChar(Storage storage) => this.data_ = storage;
 
         #endregion
 
         #region Properties
+
+        public bool IsInitialized => this.data_ != null;
 
         #region Properties matching factory methods
 
@@ -185,14 +185,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public bool IsWordChar => this.Data.IsWordChar;
 
+        /// <summary>
+        /// Gets a value indicating whether this distribution is broad - i.e. a general class of values.
+        /// </summary>
+        public bool IsBroad => this.Data.IsBroad;
+
+        /// <summary>
+        /// Gets a value indicating whether this distribution is partial uniform with a log probability override.
+        /// </summary>
+        public bool HasLogProbabilityOverride => this.Data.HasLogProbabilityOverride;
+
+        /// <summary>
+        /// Gets a value for the log probability override if it exists.
+        /// </summary>
+        public double? LogProbabilityOverride =>
+            this.HasLogProbabilityOverride ? this.Ranges.First().Probability.LogValue : (double?)null;
+
         #endregion
 
         #region Distribution properties
-
-        /// <summary>
-        /// Gets the probability assigned to characters outside ranges returned by <see cref="Ranges"/>.
-        /// </summary>
-        public Weight ProbabilityOutsideRanges => this.Data.ProbabilityOutsideRanges;
 
         /// <summary>
         /// Gets or sets the point mass represented by the distribution.
@@ -213,7 +224,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="value">The character.</param>
         /// <returns>The probability of the character under this distribution.</returns>
-        public double this[char value] => FindProb(value).Value;
+        public double this[char value] => this.FindProb(value).Value;
 
         #endregion
 
@@ -222,18 +233,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
         #region Factory methods
 
         /// <summary>
-        /// Creates a distribution given a list of constant probability character ranges and the probability of characters outside those ranges.
+        /// Creates a distribution given a list of constant probability character ranges.
         /// </summary>
-        /// <param name="probabilityOutsideRanges">The probability of characters outside the given ranges.</param>
         /// <param name="ranges">The constant-probability character ranges.</param>
         /// <remarks>The probabilities do not need to be normalized. The character ranges do not need to be sorted.</remarks>
         /// <returns>The created distribution.</returns>
-        [Construction("ProbabilityOutsideRanges", "Ranges")]
-        public static DiscreteChar Create(Weight probabilityOutsideRanges, IEnumerable<CharRange> ranges)
+        [Construction("Ranges")]
+        public static DiscreteChar Create(IEnumerable<CharRange> ranges)
         {
             Argument.CheckIfNotNull(ranges, "ranges");
 
-            var builder = new StorageBuilder(probabilityOutsideRanges);
+            var builder = StorageBuilder.Create();
             foreach (var range in ranges)
             {
                 builder.AddRange(range);
@@ -364,7 +374,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static DiscreteChar UniformOver(IEnumerable<char> chars)
         {
             Argument.CheckIfNotNull(chars, nameof(chars));
-            return Create(Weight.Zero, chars.Select(c => new CharRange(c, c + 1, Weight.One)));
+            return Create(chars.Select(c => new CharRange(c, c + 1, Weight.One)));
         }
 
         /// <summary>
@@ -432,15 +442,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
             Argument.CheckIfNotNull(vector, "vector");
             Argument.CheckIfValid(vector.Count <= CharRangeEndExclusive, "The given vector is of invalid size.");
 
-            var builder = new StorageBuilder(Weight.FromValue(vector.CommonValue));
+            var commonValue = Weight.FromValue(vector.CommonValue);
+            int prevEnd = 0;
+
+            var builder = StorageBuilder.Create();
             foreach (var piece in vector.Pieces)
             {
+                if (prevEnd != piece.Start && !commonValue.IsZero)
+                {
+                    builder.AddRange(new CharRange(prevEnd, piece.Start, commonValue));
+                }
+
                 builder.AddRange(new CharRange(piece.Start, piece.End + 1, Weight.FromValue(piece.Value)));
+                prevEnd = piece.End + 1;
             }
 
-            if (vector.Count < CharRangeEndExclusive && Math.Abs(vector.CommonValue) > Eps)
+            if (prevEnd < vector.Count && !commonValue.IsZero)
             {
-                builder.AddRange(new CharRange(vector.Count, CharRangeEndExclusive, Weight.Zero));
+                builder.AddRange(new CharRange(prevEnd, vector.Count, commonValue));
             }
 
             return new DiscreteChar(builder.GetResult());
@@ -489,7 +508,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </returns>
         public bool IsUniform()
         {
-            foreach (var range in this.Data.Ranges)
+            foreach (var range in this.Ranges)
             {
                 if (Math.Abs(range.Probability.LogValue - UniformProb.LogValue) > Eps)
                 {
@@ -528,18 +547,35 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return;
             }
 
-            var probabilityOutsideRanges = distribution1.Data.ProbabilityOutsideRanges * distribution2.Data.ProbabilityOutsideRanges;
-            var builder = new StorageBuilder(probabilityOutsideRanges);
-            foreach (var pair in CharRangePair.CombinedRanges(distribution1, distribution2))
+            var builder = StorageBuilder.Create();
+
+            foreach (var pair in CharRangePair.IntersectRanges(distribution1, distribution2))
             {
                 var probProduct = pair.Probability1 * pair.Probability2;
-                if (Math.Abs(probProduct.LogValue - probabilityOutsideRanges.LogValue) > Eps)
-                {
-                    builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probProduct));
-                }
+                builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probProduct));
             }
 
-            this.Data = builder.GetResult();
+            double? logProbabilityOverride = null;
+            var distribution1LogProbabilityOverride = distribution1.LogProbabilityOverride;
+            var distribution2LogProbabilityOverride = distribution2.LogProbabilityOverride;
+            if (distribution1LogProbabilityOverride.HasValue)
+            {
+                if (distribution2LogProbabilityOverride.HasValue)
+                {
+                    throw new ArgumentException("Only one distribution in a DiscreteChar product may have a log probability override");
+                }
+
+                if (distribution2.IsBroad)
+                {
+                    logProbabilityOverride = distribution1LogProbabilityOverride;
+                }
+            }
+            else if (distribution2LogProbabilityOverride.HasValue && distribution1.IsBroad)
+            {
+                logProbabilityOverride = distribution2LogProbabilityOverride;
+            }
+
+            this.Data = builder.GetResult(logProbabilityOverride);
         }
 
         /// <summary>
@@ -584,16 +620,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 var invW = Weight.Inverse(weight1 + weight2);
                 weight1 *= invW;
                 weight2 *= invW;
-                var probabilityOutsideRanges =
-                    (weight1 * distribution1.Data.ProbabilityOutsideRanges) + (weight2 * distribution2.Data.ProbabilityOutsideRanges);
-                var builder = new StorageBuilder(probabilityOutsideRanges);
-                foreach (var pair in CharRangePair.CombinedRanges(distribution1, distribution2, false))
+                var builder = StorageBuilder.Create();
+                foreach (var pair in CharRangePair.CombineRanges(distribution1, distribution2))
                 {
                     var probSum = (weight1 * pair.Probability1) + (weight2 * pair.Probability2);
-                    if (Math.Abs(probSum.LogValue - probabilityOutsideRanges.LogValue) > Eps)
-                    {
-                        builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probSum));
-                    }
+                    builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probSum));
                 }
 
                 this.Data = builder.GetResult();
@@ -618,7 +649,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             var result = Weight.Zero;
-            foreach (var pair in CharRangePair.CombinedRanges(this, distribution))
+            foreach (var pair in CharRangePair.IntersectRanges(this, distribution))
             {
                 result += Weight.Product(
                     pair.Probability1,
@@ -637,12 +668,26 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets the distribution to be uniform over the support of a given distribution.
         /// </summary>
-        /// <param name="distribution">The distribution which support will be used to setup the current distribution.</param>
+        /// <param name="distribution">The distribution whose support will be used to setup the current distribution.</param>
         public void SetToPartialUniformOf(DiscreteChar distribution)
         {
-            var builder = new StorageBuilder(
-                distribution.Data.ProbabilityOutsideRanges.IsZero ? Weight.Zero : Weight.One);
-            foreach (var range in distribution.Data.Ranges)
+            SetToPartialUniformOf(distribution, null);
+        }
+
+        /// <summary>
+        /// Sets the distribution to be uniform over the support of a given distribution.
+        /// </summary>
+        /// <param name="distribution">The distribution whose support will be used to setup the current distribution.</param>
+        /// <param name="logProbabilityOverride">An optional value to override for the log probability calculation
+        /// against this distribution. If this is set, then the distribution will not be normalize;
+        /// i.e. the probabilities will not sum to 1 over the support.</param>
+        /// <remarks>Overriding the log probability calculation in this way is useful within the context of using <see cref="StringDistribution"/>
+        /// to create more realistic language model priors. Distributions with this override are always uncached.
+        /// </remarks>
+        public void SetToPartialUniformOf(DiscreteChar distribution, double? logProbabilityOverride)
+        {
+            var builder = StorageBuilder.Create();
+            foreach (var range in distribution.Ranges)
             {
                 builder.AddRange(
                     new CharRange(
@@ -651,7 +696,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         range.Probability.IsZero ? Weight.Zero : Weight.One));
             }
 
-            this.Data = builder.GetResult();
+            this.Data = builder.GetResult(logProbabilityOverride);
         }
 
         /// <summary>
@@ -661,10 +706,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public bool IsPartialUniform()
         {
             Weight? commonProb = null;
-            bool hasCommonValues = false;
-            int prevRangeEnd = 0;
-            var data = this.Data;
-            foreach (var range in data.Ranges)
+            foreach (var range in this.Ranges)
             {
                 if (commonProb.HasValue && !range.Probability.IsZero && Math.Abs(commonProb.Value.LogValue - range.Probability.LogValue) > Eps)
                 {
@@ -672,16 +714,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
 
                 commonProb = range.Probability;
-                hasCommonValues |= range.StartInclusive > prevRangeEnd;
-                prevRangeEnd = range.EndExclusive;
-            }
-
-            hasCommonValues |= prevRangeEnd < CharRangeEndExclusive;
-
-            if (hasCommonValues && commonProb.HasValue && !data.ProbabilityOutsideRanges.IsZero &&
-                Math.Abs(commonProb.Value.LogValue - data.ProbabilityOutsideRanges.LogValue) > Eps)
-            {
-                return false;
             }
 
             return true;
@@ -695,16 +727,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="forceProper">Specifies whether the ratio must be proper.</param>
         public void SetToRatio(DiscreteChar numerator, DiscreteChar denominator, bool forceProper = false)
         {
-            var probabilityOutsideRanges = DivideProb(numerator.Data.ProbabilityOutsideRanges, denominator.Data.ProbabilityOutsideRanges);
-            var builder = new StorageBuilder(probabilityOutsideRanges);
+            var builder = StorageBuilder.Create();
 
-            foreach (var pair in CharRangePair.CombinedRanges(numerator, denominator))
+            foreach (var pair in CharRangePair.CombineRanges(numerator, denominator))
             {
                 var probRatio = DivideProb(pair.Probability1, pair.Probability2);
-                if (Math.Abs(probRatio.LogValue - probabilityOutsideRanges.LogValue) > Eps)
-                {
-                    builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probRatio));
-                }
+                builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probRatio));
             }
 
             this.Data = builder.GetResult();
@@ -717,32 +745,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="power">The power.</param>
         public void SetToPower(DiscreteChar distribution, double power)
         {
-            var builder = new StorageBuilder(Weight.Zero);
-
-            bool hasCommonValues = false;
-            int prevRangeEnd = 0;
-            foreach (var range in distribution.Data.Ranges)
+            if (power == 0)
             {
-                if (range.Probability.IsZero && power < 0)
+                this.SetToUniform();
+                return;
+            }
+
+            var builder = StorageBuilder.Create();
+
+            var prevRangeEnd = 0;
+            foreach (var range in distribution.Ranges)
+            {
+                if ((prevRangeEnd != range.StartInclusive || range.Probability.IsZero) && power < 0)
                 {
                     throw new DivideByZeroException();
                 }
 
                 builder.AddRange(new CharRange(range.StartInclusive, range.EndExclusive, Weight.Pow(range.Probability, power)));
-
-                hasCommonValues |= range.StartInclusive > prevRangeEnd;
                 prevRangeEnd = range.EndExclusive;
             }
 
-            hasCommonValues |= prevRangeEnd < CharRangeEndExclusive;
-            if (hasCommonValues)
+            if (prevRangeEnd != CharRangeEndExclusive && power < 0)
             {
-                if (distribution.Data.ProbabilityOutsideRanges.IsZero && power < 0)
-                {
-                    throw new DivideByZeroException();
-                }
-
-                builder.ProbabilityOutsideRanges = Weight.Pow(distribution.Data.ProbabilityOutsideRanges, power);
+                throw new DivideByZeroException();
             }
 
             this.Data = builder.GetResult();
@@ -767,7 +792,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             var result = Weight.Zero;
-            foreach (var pair in CharRangePair.CombinedRanges(this, distribution))
+            foreach (var pair in CharRangePair.IntersectRanges(this, distribution))
             {
                 if (pair.Probability2.IsZero && power < 0)
                 {
@@ -792,14 +817,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double GetAverageLog(DiscreteChar distribution)
         {
             double result = 0;
-            foreach (var pair in CharRangePair.CombinedRanges(this, distribution, true))
+            foreach (var pair in CharRangePair.CombineRanges(this, distribution))
             {
-                if (pair.Probability2.IsZero)
-                {
-                    return double.NegativeInfinity;
-                }
-
-                double product = ValueTimesLogValue(pair.Probability1, pair.Probability2);
+                var product = ValueTimesLogValue(pair.Probability1, pair.Probability2);
                 result += product * (pair.EndExclusive - pair.StartInclusive);
             }
 
@@ -812,36 +832,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The mode.</returns>
         public char GetMode()
         {
-            bool hasCommonValues = false;
-            int prevRangeEnd = 0;
             char mode = '\0';
-            char charOutOfRanges = '\0';
             var maxProb = Weight.Zero;
-            var data = this.Data;
-            foreach (var range in data.Ranges)
+            foreach (var range in this.Ranges)
             {
                 if (range.Probability > maxProb)
                 {
                     mode = (char)range.StartInclusive;
                     maxProb = range.Probability;
                 }
-
-                if (range.StartInclusive > prevRangeEnd)
-                {
-                    hasCommonValues = true;
-                    charOutOfRanges = (char)prevRangeEnd;
-                }
-
-                prevRangeEnd = range.EndExclusive;
             }
 
-            if (prevRangeEnd < CharRangeEndExclusive)
-            {
-                hasCommonValues = true;
-                charOutOfRanges = (char)prevRangeEnd;
-            }
-
-            return hasCommonValues && data.ProbabilityOutsideRanges > maxProb ? charOutOfRanges : mode;
+            return mode;
         }
 
         /// <summary>
@@ -852,7 +854,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             var sampleProb = Rand.Double();
 
-            foreach (var interval in EnumerateCharRanges())
+            foreach (var interval in this.Ranges)
             {
                 var intervalLength = Weight.FromValue(interval.EndExclusive - interval.StartInclusive);
                 var prob = intervalLength * interval.Probability;
@@ -864,21 +866,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             throw new Exception();
-        }
-
-        private IEnumerable<CharRange> EnumerateCharRanges()
-        {
-            var prevRangeEnd = 0;
-            var data = this.Data;
-            var probabilityOutsideRanges = data.ProbabilityOutsideRanges;
-            foreach (var range in data.Ranges)
-            {
-                yield return new CharRange(prevRangeEnd, range.StartInclusive, probabilityOutsideRanges);
-                yield return new CharRange(range.StartInclusive, range.EndExclusive, range.Probability);
-                prevRangeEnd = range.EndExclusive;
-            }
-
-            yield return new CharRange(prevRangeEnd, CharRangeEndExclusive, probabilityOutsideRanges);
         }
 
         /// <summary>
@@ -900,37 +887,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The character values with non-zero mass.</returns>
         public IEnumerable<char> EnumerateSupport()
         {
-            int prevRangeEnd = 0;
-
-            var data = this.Data;
-            var probabilityOutsideRanges = data.ProbabilityOutsideRanges;
-
-            foreach (var range in data.Ranges)
+            foreach (var range in this.Ranges)
             {
-                if (!probabilityOutsideRanges.IsZero)
-                {
-                    for (int j = prevRangeEnd; j < range.StartInclusive; j++)
-                    {
-                        yield return (char)j;
-                    }
-                }
-
                 if (!range.Probability.IsZero)
                 {
                     for (int j = range.StartInclusive; j < range.EndExclusive; j++)
                     {
                         yield return (char)j;
                     }
-                }
-
-                prevRangeEnd = range.EndExclusive;
-            }
-
-            if (!probabilityOutsideRanges.IsZero)
-            {
-                for (int j = prevRangeEnd; j < CharRangeEndExclusive; j++)
-                {
-                    yield return (char)j;
                 }
             }
         }
@@ -941,11 +905,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gets an array of character ranges with associated probabilities.
         /// </summary>
-        /// <remarks>
-        /// See <see cref="ProbabilityOutsideRanges"/> for the probability of characters not covered by the returned ranges.
-        /// </remarks>
         /// <value>An array of character ranges with associated probabilities.</value>
-        public ReadOnlyArray<CharRange> Ranges => this.Data.Ranges;
+        public ImmutableArray<CharRange> Ranges => this.Data.Ranges;
 
         /// <summary>
         /// Creates a distribution which is uniform over all characters
@@ -977,7 +938,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     return new DiscreteChar(StorageCache.UpperComplement);
                 default:
                     // TODO: decent implementation
-                    var ranges = unnormalizedCharDist.Data.Ranges;
+                    var ranges = unnormalizedCharDist.Ranges;
                     var probVector = PiecewiseVector.Zero(CharRangeEndExclusive);
                     foreach (var range in ranges)
                     {
@@ -999,9 +960,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public PiecewiseVector GetProbs()
         {
             // TODO: replace with GetLogProbs()
-            var data = this.Data;
-            var result = PiecewiseVector.Constant(CharRangeEndExclusive, data.ProbabilityOutsideRanges.Value);
-            foreach (var range in data.Ranges)
+            var result = PiecewiseVector.Constant(CharRangeEndExclusive, 0);
+            foreach (var range in this.Ranges)
             {
                 result.Pieces.Add(new ConstantVector(range.StartInclusive, range.EndExclusive - 1, range.Probability.Value));
             }
@@ -1109,8 +1069,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         private Weight FindProb(char value)
         {
-            var data = this.Data;
-            foreach (var range in data.Ranges)
+            foreach (var range in this.Ranges)
             {
                 if (range.StartInclusive <= value && range.EndExclusive > value)
                 {
@@ -1118,7 +1077,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
             }
 
-            return data.ProbabilityOutsideRanges;
+            return Weight.Zero;
         }
 
         #endregion
@@ -1168,7 +1127,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         [Serializable]
         [DataContract]
-        public struct CharRange
+        public struct CharRange : IComparable<CharRange>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="CharRange"/> struct
@@ -1191,18 +1150,27 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <summary>
             /// Gets or sets the start of the range (inclusive).
             /// </summary>
+            /// <remarks>
+            /// Setter is required for DataContractSerializer
+            /// </remarks>
             [DataMember]
             public int StartInclusive { get; private set; }
 
             /// <summary>
             /// Gets or sets the end of the range (exclusive).
             /// </summary>
+            /// <remarks>
+            /// Setter is required for DataContractSerializer
+            /// </remarks>
             [DataMember]
             public int EndExclusive { get; private set; }
 
             /// <summary>
             /// Gets or sets the probability associated with the range.
             /// </summary>
+            /// <remarks>
+            /// Setter is required for DataContractSerializer
+            /// </remarks>
             [DataMember]
             public Weight Probability { get; private set; }
 
@@ -1218,6 +1186,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 this.AppendToString(sb);
                 return sb.ToString();
             }
+
+            public int CompareTo(CharRange that) =>
+                this.StartInclusive.CompareTo(that.StartInclusive);
 
             internal void AppendToString(StringBuilder stringBuilder)
             {
@@ -1256,29 +1227,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Represents a pair of character ranges with the same start and end, but different probability values.
+        /// Represents a character range with 2 different probabilities attached to it.
         /// </summary>
         private struct CharRangePair
         {
             /// <summary>
-            /// Gets or sets the start of the ranges (inclusive).
+            /// Gets or sets the start of the range (inclusive).
             /// </summary>
-            public int StartInclusive { get; set; }
+            public int StartInclusive { get; private set; }
 
             /// <summary>
-            /// Gets or sets the end of the ranges (exclusive).
+            /// Gets or sets the end of the range (exclusive).
             /// </summary>
-            public int EndExclusive { get; set; }
+            public int EndExclusive { get; private set; }
 
             /// <summary>
-            /// Gets or sets the probability value associated with the first range.
+            /// Gets or sets the first probability value associated with the range.
             /// </summary>
-            public Weight Probability1 { get; set; }
+            public Weight Probability1 { get; private set; }
 
             /// <summary>
-            /// Gets or sets the probability value associated with the second range.
+            /// Gets or sets the second probability value associated with the range.
             /// </summary>
-            public Weight Probability2 { get; set; }
+            public Weight Probability2 { get; private set; }
 
             /// <summary>
             /// Gets a string that represents this character range.
@@ -1293,7 +1264,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return sb.ToString();
             }
 
-            internal void AppendToString(StringBuilder stringBuilder)
+            private void AppendToString(StringBuilder stringBuilder)
             {
                 stringBuilder.Append('[');
                 AppendChar(stringBuilder, (char)this.StartInclusive);
@@ -1320,159 +1291,112 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// </summary>
             /// <param name="distribution1">The first distribution.</param>
             /// <param name="distribution2">The second distribution</param>
-            /// <param name="excludeZeroProb">Whether to exclude non-intersectng ranges in the case where both distibrutions have zero probability outside their ranges.</param>
-            /// <returns></returns>
-            public static IEnumerable<CharRangePair> CombinedRanges(DiscreteChar distribution1, DiscreteChar distribution2, bool excludeZeroProb = true) =>
-                CombinedRanges(distribution1.Data, distribution2.Data, excludeZeroProb);
-
-            internal static IEnumerable<CharRangePair> CombinedRanges(Storage state1, Storage state2, bool excludeZeroProb)
+            public static IEnumerable<CharRangePair> IntersectRanges(
+                DiscreteChar distribution1, DiscreteChar distribution2)
             {
-                if (excludeZeroProb && state1.ProbabilityOutsideRanges.IsZero && state2.ProbabilityOutsideRanges.IsZero)
+                var ranges1 = distribution1.Ranges;
+                var ranges2 = distribution2.Ranges;
+
+                var rangeIndex1 = 0;
+                var rangeIndex2 = 0;
+
+                while (rangeIndex1 < ranges1.Count && rangeIndex2 < ranges2.Count)
                 {
-                    int rangeIndex1 = 0;
-                    int rangeIndex2 = 0;
-
-                    while (rangeIndex1 < state1.Ranges.Count && rangeIndex2 < state2.Ranges.Count)
+                    var range1 = ranges1[rangeIndex1];
+                    var range2 = ranges2[rangeIndex2];
+                    if (range1.StartInclusive >= range2.EndExclusive)
                     {
-                        var range1 = state1.Ranges[rangeIndex1];
-                        var range2 = state2.Ranges[rangeIndex2];
-                        if (range1.StartInclusive <= range2.StartInclusive)
-                        {
-                            if (range2.StartInclusive < range1.EndExclusive)
-                            {
-                                // We have an intersection
-                                int endExclusive = Math.Min(range1.EndExclusive, range2.EndExclusive);
-                                yield return new CharRangePair()
-                                {
-                                    StartInclusive = range2.StartInclusive,
-                                    EndExclusive = endExclusive,
-                                    Probability1 = range1.Probability,
-                                    Probability2 = range2.Probability
-                                };
-
-                                if (range1.EndExclusive == endExclusive)
-                                {
-                                    rangeIndex1++;
-                                }
-
-                                if (range2.EndExclusive == endExclusive)
-                                {
-                                    rangeIndex2++;
-                                }
-                            }
-                            else
-                            {
-                                // Can be no more intersections with range 1
-                                rangeIndex1++;
-                            }
-                        }
-                        else
-                        {
-                            if (range1.StartInclusive < range2.EndExclusive)
-                            {
-                                int endExclusive = Math.Min(range1.EndExclusive, range2.EndExclusive);
-                                yield return new CharRangePair()
-                                {
-                                    StartInclusive = range1.StartInclusive,
-                                    EndExclusive = endExclusive,
-                                    Probability1 = range1.Probability,
-                                    Probability2 = range2.Probability
-                                };
-
-                                if (range1.EndExclusive == endExclusive)
-                                {
-                                    rangeIndex1++;
-                                }
-
-                                if (range2.EndExclusive == endExclusive)
-                                {
-                                    rangeIndex2++;
-                                }
-                            }
-                            else
-                            {
-                                // Can be no more intersections with range 2
-                                rangeIndex2++;
-                            }
-                        }
+                        ++rangeIndex2;
                     }
-                }
-                else
-                {
-                    // The implementation of this function has been optimized heavily. If you decide to change something,
-                    // please make sure that the performance is unaffected.
-                    int currentStartInclusive = 0;
-                    int currentEndExclusive = 0;
-                    int rangeIndex1 = 0;
-                    int rangeIndex2 = 0;
-                    Weight currentProbability1 = Weight.Zero;
-                    Weight currentProbability2 = Weight.Zero;
-
-                    while (currentStartInclusive != CharRangeEndExclusive)
+                    else if (range2.StartInclusive >= range1.EndExclusive)
                     {
-                        currentStartInclusive = currentEndExclusive;
-                        if (currentStartInclusive == CharRangeEndExclusive)
+                        ++rangeIndex1;
+                    }
+                    else
+                    {
+                        yield return new CharRangePair()
                         {
-                            yield break;
-                        }
+                            StartInclusive = Math.Max(range1.StartInclusive, range2.StartInclusive),
+                            EndExclusive = Math.Min(range1.EndExclusive, range2.EndExclusive),
+                            Probability1 = range1.Probability,
+                            Probability2 = range2.Probability,
+                        };
 
-                        if (rangeIndex1 < state1.Ranges.Count &&
-                            state1.Ranges[rangeIndex1].EndExclusive == currentStartInclusive)
+                        if (range1.EndExclusive <= range2.EndExclusive)
                         {
                             ++rangeIndex1;
                         }
 
-                        if (rangeIndex2 < state2.Ranges.Count &&
-                            state2.Ranges[rangeIndex2].EndExclusive == currentStartInclusive)
+                        if (range2.EndExclusive <= range1.EndExclusive)
                         {
                             ++rangeIndex2;
                         }
-
-                        if (rangeIndex1 < state1.Ranges.Count)
-                        {
-                            if (state1.Ranges[rangeIndex1].StartInclusive > currentStartInclusive)
-                            {
-                                currentEndExclusive = state1.Ranges[rangeIndex1].StartInclusive;
-                                currentProbability1 = state1.ProbabilityOutsideRanges;
-                            }
-                            else
-                            {
-                                currentEndExclusive = state1.Ranges[rangeIndex1].EndExclusive;
-                                currentProbability1 = state1.Ranges[rangeIndex1].Probability;
-                            }
-                        }
-                        else
-                        {
-                            currentProbability1 = state1.ProbabilityOutsideRanges;
-                            currentEndExclusive = CharRangeEndExclusive;
-                        }
-
-                        if (rangeIndex2 < state2.Ranges.Count)
-                        {
-                            if (state2.Ranges[rangeIndex2].StartInclusive > currentStartInclusive)
-                            {
-                                currentEndExclusive = Math.Min(currentEndExclusive, state2.Ranges[rangeIndex2].StartInclusive);
-                                currentProbability2 = state2.ProbabilityOutsideRanges;
-                            }
-                            else
-                            {
-                                currentEndExclusive = Math.Min(currentEndExclusive, state2.Ranges[rangeIndex2].EndExclusive);
-                                currentProbability2 = state2.Ranges[rangeIndex2].Probability;
-                            }
-                        }
-                        else
-                        {
-                            currentProbability2 = state2.ProbabilityOutsideRanges;
-                        }
-
-                        yield return new CharRangePair()
-                        {
-                            StartInclusive = currentStartInclusive,
-                            EndExclusive = currentEndExclusive,
-                            Probability1 = currentProbability1,
-                            Probability2 = currentProbability2
-                        };
                     }
+                }
+            }
+
+            /// <summary>
+            /// Returns all ranges which have non-zero probability in either of disrtibutions.
+            /// </summary>
+            /// <param name="distribution1">The first distribution.</param>
+            /// <param name="distribution2">The second distribution</param>
+            public static IEnumerable<CharRangePair> CombineRanges(
+                DiscreteChar distribution1, DiscreteChar distribution2)
+            {
+                return CombineRanges(distribution1.Data.Ranges, distribution2.Data.Ranges);
+            }
+
+            internal static IEnumerable<CharRangePair> CombineRanges(
+                ImmutableArray<CharRange> ranges1, ImmutableArray<CharRange> ranges2)
+            {
+                var rangeIndex1 = 0;
+                var rangeIndex2 = 0;
+                var prevEndExclusive = 0;
+
+                while (prevEndExclusive != CharRangeEndExclusive)
+                {
+                    var startInclusive = prevEndExclusive;
+                    var endExclusive = CharRangeEndExclusive;
+                    var probability1 = ProcessRange(
+                        ranges1, startInclusive, ref rangeIndex1, ref endExclusive);
+                    var probability2 = ProcessRange(
+                        ranges2, startInclusive, ref rangeIndex2, ref endExclusive);
+
+                    yield return new CharRangePair()
+                    {
+                        StartInclusive = startInclusive,
+                        EndExclusive = endExclusive,
+                        Probability1 = probability1,
+                        Probability2 = probability2
+                    };
+
+                    prevEndExclusive = endExclusive;
+                }
+
+                Weight ProcessRange(
+                    ImmutableArray<CharRange> ranges,
+                    int startInclusive,
+                    ref int index,
+                    ref int endExclusive)
+                {
+                    if (index < ranges.Count && ranges[index].EndExclusive == startInclusive)
+                    {
+                        ++index;
+                    }
+
+                    if (index >= ranges.Count)
+                    {
+                        return Weight.Zero;
+                    }
+
+                    if (ranges[index].StartInclusive > startInclusive)
+                    {
+                        endExclusive = Math.Min(endExclusive, ranges[index].StartInclusive);
+                        return Weight.Zero;
+                    }
+
+                    endExclusive = Math.Min(endExclusive, ranges[index].EndExclusive);
+                    return ranges[index].Probability;
                 }
             }
         }
@@ -1510,7 +1434,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <remarks>
         /// This class is serializable but is not marked with <see cref="SerializableAttribute"/> and
         /// <see cref="DataContractAttribute"/> because we have to implement serialization manually
-        /// due to Newtonsoft.Json not deserializing <see cref="ReadOnlyArray{T}"/> properly without
+        /// due to Newtonsoft.Json not deserializing <see cref="ImmutableArray{T}"/> properly without
         /// "JsonObjectAttribute". Which can't be added because Infer.NET has no explicit dependency
         /// on Newtonsoft.Json.
         /// </remarks>
@@ -1524,72 +1448,102 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <remarks>
             /// The character probabilities must be kept normalized by applying <see cref="StorageBuilder.NormalizeProbabilities"/> when necessary.
             /// </remarks>
-            public ReadOnlyArray<CharRange> Ranges { get; }
-
-            /// <summary>
-            /// The probability of a character outside character ranges defined by <see cref="Ranges"/>.
-            /// </summary>
-            /// <remarks>
-            /// The character probabilities must be kept normalized by applying <see cref="StorageBuilder.NormalizeProbabilities"/> when necessary.
-            /// </remarks>
-            public Weight ProbabilityOutsideRanges { get; }
+            public ImmutableArray<CharRange> Ranges { get; }
 
             public char? Point { get; }
 
-            // Following 3 members are not immutable and can be recalculated on-demand
+            // Following members are not immutable and can be recalculated on-demand
             public CharClasses CharClasses { get; private set; }
+
             private string regexRepresentation;
             private string symbolRepresentation;
 
+            /// <summary>
+            /// Flags derived from ranges.
+            /// </summary>
+            /// <returns></returns>
+            private readonly Flags flags;
+
+            /// <summary>
+            /// Whether this distribution has broad support. We want to be able to
+            /// distinguish between specific distributions and general distributions.
+            /// Use the number of non-zero digits as a threshold.
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBroad => (this.flags & Flags.IsBroad) != 0;
+
+            /// <summary>
+            /// Whether this distribution is partial uniform with a log probability override.
+            /// </summary>
+            /// <returns></returns>
+            public bool HasLogProbabilityOverride => (this.flags & Flags.HasLogProbabilityOverride) != 0;
+
+            [Flags]
+            private enum Flags
+            {
+                HasLogProbabilityOverride = 0x01,
+                IsBroad = 0x02
+            }
             #endregion
 
             #region Constructor and factory methods
 
             private Storage(
-                ReadOnlyArray<CharRange> ranges,
-                Weight probabilityOutsideRanges,
+                ImmutableArray<CharRange> ranges,
                 char? point,
                 CharClasses charClasses,
                 string regexRepresentation,
                 string symbolRepresentation)
             {
                 this.Ranges = ranges;
-                this.ProbabilityOutsideRanges = probabilityOutsideRanges;
                 this.Point = point;
                 this.CharClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
                 this.symbolRepresentation = symbolRepresentation;
+                var supportCount = this.Ranges.Where(range => !range.Probability.IsZero).Sum(range => range.EndExclusive - range.StartInclusive);
+                var isBroad = supportCount >= 9; // Number of non-zero digits.
+                var totalMass = this.Ranges.Sum(range =>
+                    range.Probability.Value * (range.EndExclusive - range.StartInclusive));
+                var isScaled = Math.Abs(totalMass - 1.0) > 1e-10;
+                this.flags = 0;
+                if (isBroad)
+                {
+                    flags |= Flags.IsBroad;
+                }
+
+                if (isScaled)
+                {
+                    flags |= Flags.HasLogProbabilityOverride;
+                }
             }
 
             public static Storage CreateUncached(
-                ReadOnlyArray<CharRange> ranges,
-                Weight probabilityOutsideRanges,
+                ImmutableArray<CharRange> ranges,
                 char? point,
                 CharClasses charClasses = CharClasses.Unknown,
                 string regexRepresentation = null,
                 string symbolRepresentation = null)
             {
                 Debug.Assert(point.HasValue == IsRangesPointMass(ranges));
-                return new Storage(ranges, probabilityOutsideRanges, point, charClasses, regexRepresentation, symbolRepresentation);
+                return new Storage(ranges, point, charClasses, regexRepresentation, symbolRepresentation);
             }
 
             public static Storage Create(
-                ReadOnlyArray<CharRange> ranges,
-                Weight probabilityOutsideRanges,
-                CharClasses charClaasses = CharClasses.Unknown,
+                ImmutableArray<CharRange> ranges,
+                CharClasses charClasses = CharClasses.Unknown,
                 string regexRepresentation = null,
                 string symbolRepresentation = null)
             {
                 return IsRangesPointMass(ranges)
                     ? CreatePoint((char)ranges[0].StartInclusive, ranges)
-                    : CreateUncached(ranges, probabilityOutsideRanges, null, charClaasses, regexRepresentation, symbolRepresentation);
+                    : CreateUncached(ranges, null, charClasses, regexRepresentation, symbolRepresentation);
             }
 
-            public static Storage CreatePoint(char point, ReadOnlyArray<CharRange> ranges) =>
+            public static Storage CreatePoint(char point, ImmutableArray<CharRange> ranges) =>
                 StorageCache.GetPointMass(point, ranges);
 
             public static Storage CreatePoint(char point) =>
-                StorageCache.GetPointMass(point, new ReadOnlyArray<CharRange>(null));
+                StorageCache.GetPointMass(point, null);
 
             public static Storage CreateUniformInRanges(
                 IEnumerable<char> startEndPairs,
@@ -1601,8 +1555,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 var startEndPairsArray = startEndPairs.ToArray();
                 Argument.CheckIfValid(startEndPairsArray.Length % 2 == 0, "startEndPairs", "The number of characters must be even.");
 
-                var builder = new StorageBuilder(
-                    Weight.Zero, charClasses, regexRepresentation, symbolRepresentation);
+                var builder = StorageBuilder.Create(
+                    charClasses, regexRepresentation, symbolRepresentation);
                 for (int i = 0; i < startEndPairsArray.Length; i += 2)
                 {
                     var startInclusive = startEndPairsArray[i];
@@ -1624,10 +1578,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public Storage Complement()
             {
                 // Must use StorageBuilder, because need to Normalize probabilities
-                var builder = new StorageBuilder(this.ProbabilityOutsideRanges.IsZero ? Weight.One : Weight.Zero);
+                var builder = StorageBuilder.Create();
+                int prevEnd = 0;
                 foreach (var range in this.Ranges)
                 {
-                    builder.AddRange(new CharRange(range.StartInclusive, range.EndExclusive, range.Probability.IsZero ? Weight.One : Weight.Zero));
+                    if (range.StartInclusive != prevEnd)
+                    {
+                        builder.AddRange(new CharRange(prevEnd, range.StartInclusive, Weight.One));
+                    }
+
+                    prevEnd = range.EndExclusive;
+                }
+
+                if (prevEnd != CharRangeEndExclusive)
+                {
+                    builder.AddRange(new CharRange(prevEnd, CharRangeEndExclusive, Weight.One));
                 }
 
                 return builder.GetResult();
@@ -1636,7 +1601,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public double MaxDiff(Storage other)
             {
                 double result = 0;
-                foreach (var pair in CharRangePair.CombinedRanges(this, other, false))
+                foreach (var pair in CharRangePair.CombineRanges(this.Ranges, other.Ranges))
                 {
                     result = Math.Max(result, Weight.AbsoluteDifference(pair.Probability1, pair.Probability2).Value);
                 }
@@ -1659,8 +1624,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             #region Properties
 
             // TODO: Assumes that there are no ranges with zero probability
-            // TODO: also assumes that a point is not represented by zero-probability ranges and a non-zero value outside of ranges
-            private static bool IsRangesPointMass(ReadOnlyArray<CharRange> ranges) =>
+            private static bool IsRangesPointMass(ImmutableArray<CharRange> ranges) =>
                 ranges.Count > 0 && Math.Abs(ranges[0].Probability.LogValue - Weight.One.LogValue) < Eps;
 
             /// <summary>
@@ -1693,30 +1657,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             #region Serialization
 
-            public static Storage FromSerializationInfo(SerializationInfo info) =>
-                Storage.Create(
-                    (CharRange[]) info.GetValue(nameof(Ranges), typeof(CharRange[])),
-                    (Weight) info.GetValue(nameof(ProbabilityOutsideRanges), typeof(Weight)),
-                    (CharClasses) info.GetValue(nameof(CharClasses), typeof(CharClasses)));
+            public static Storage FromSerializationInfo(SerializationInfo info)
+            {
+                var ranges = (CharRange[]) info.GetValue(nameof(Ranges), typeof(CharRange[]));
+                var classes = (CharClasses) info.GetValue(nameof(CharClasses), typeof(CharClasses));
+                return Storage.Create(ranges.ToImmutableArray(), classes);
+            }
 
             public void GetObjectData(SerializationInfo info)
             {
                 info.AddValue(nameof(this.Ranges), this.Ranges.CloneArray());
-                info.AddValue(nameof(this.ProbabilityOutsideRanges), this.ProbabilityOutsideRanges);
                 info.AddValue(nameof(this.CharClasses), this.CharClasses);
             }
 
             public void Write(Action<int> writeInt32, Action<double> writeDouble)
             {
-                var propertyMask = new BitVector32();
-                var idx = 0;
-                propertyMask[1 << idx++] = true; // ranges can never be null
-                writeInt32(propertyMask.Data);
                 writeInt32(this.Ranges.Count);
                 this.Ranges.ForEach(range => range.Write(writeInt32, writeDouble));
-                writeInt32(this.Ranges.Count); // For compatibility with old readers
                 writeInt32((int)this.CharClasses);
-                writeDouble(this.ProbabilityOutsideRanges.LogValue);
             }
 
             /// <summary>
@@ -1724,37 +1682,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// </summary>
             public static Storage Read(Func<int> readInt32, Func<double> readDouble)
             {
-                var propertyMask = new BitVector32(readInt32());
-                var idx = 0;
-                var hasRanges = propertyMask[1 << idx++];
-                CharRange[] ranges = null;
-
-                if (hasRanges)
+                var nRanges = readInt32();
+                var ranges = new CharRange[nRanges];
+                for (var i = 0; i < nRanges; i++)
                 {
-                    var nRanges = readInt32();
-                    ranges = new CharRange[nRanges];
-                    for (var i = 0; i < nRanges; i++)
-                    {
-                        ranges[i] = CharRange.Read(readInt32, readDouble);
-                    }
-                }
-                else
-                {
-                    ranges = new CharRange[0];
+                    ranges[i] = CharRange.Read(readInt32, readDouble);
                 }
 
-                // In old internal representation rangeCount could be different from serialized array
-                var rangesCount = readInt32();
-                if (rangesCount != ranges.Length)
-                {
-                    var newRanges = new CharRange[rangesCount];
-                    Array.Copy(ranges, newRanges, rangesCount);
-                    ranges = newRanges;
-                }
                 var charClasses = (CharClasses)readInt32();
-                var probabilityOutsideRanges = Weight.FromLogValue(readDouble());
 
-                return Storage.Create(ranges, probabilityOutsideRanges, charClasses);
+                return Storage.Create(ranges.ToImmutableArray(), charClasses);
             }
 
             #endregion
@@ -1785,13 +1722,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         range.AppendToString(stringBuilder);
                         stringBuilder.Append(' ');
                     }
-
-                    if (stringBuilder.Length > 0)
-                    {
-                        stringBuilder.Append("Otherwise: ");
-                    }
-
-                    stringBuilder.Append(this.ProbabilityOutsideRanges);
                 }
             }
 
@@ -1943,8 +1873,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 string WordCharRanges(string baseRange) => baseRange + "09__";
 
                 Uniform = Storage.CreateUncached(
-                    new CharRange[] { },
-                    UniformProb,
+                    ImmutableArray.Create(new CharRange(char.MinValue, CharRangeEndExclusive, UniformProb)),
                     null,
                     CharClasses.Uniform,
                     UniformRegexRepresentation,
@@ -1970,7 +1899,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 var upperComplement = Upper.Complement();
                 UpperComplement = Storage.CreateUncached(
                     upperComplement.Ranges,
-                    upperComplement.ProbabilityOutsideRanges,
                     null,
                     regexRepresentation: @"[^\p{Lu}]",
                     symbolRepresentation: "🡻");
@@ -1978,15 +1906,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
 
-            public static Storage GetPointMass(char point, ReadOnlyArray<CharRange> ranges)
+            public static Storage GetPointMass(char point, ImmutableArray<CharRange>? ranges)
             {
                 if (PointMasses[point] == null)
                 {
                     PointMasses[point] = Storage.CreateUncached(
-                        ranges.IsNull
-                            ? new ReadOnlyArray<CharRange>(new[] { new CharRange(point, point + 1, Weight.One) })
-                            : ranges,
-                        Weight.Zero,
+                        ranges.HasValue
+                            ? ranges.Value
+                            : ImmutableArray.Create(new CharRange(point, point + 1, Weight.One)),
                         point);
                 }
 
@@ -2065,7 +1992,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             private readonly List<CharRange> ranges;
 
             /// <summary>
-            /// Precomuted character class.
+            /// Precomputed character class.
             /// </summary>
             private readonly CharClasses charClasses;
 
@@ -2079,24 +2006,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// </summary>
             private readonly string symbolRepresentation;
 
-            /// <summary>
-            /// The probability of a character outside character ranges defined by <see cref="ranges"/>.
-            /// </summary>
-            public Weight ProbabilityOutsideRanges { private get; set; }
-
             #endregion
 
             public StorageBuilder(
-                Weight probabilityOutsideRanges,
-                CharClasses charClasses = CharClasses.Unknown,
-                string regexRepresentation = null,
-                string symbolRepresentation = null)
+                CharClasses charClasses,
+                string regexRepresentation,
+                string symbolRepresentation)
             {
-                this.ProbabilityOutsideRanges = probabilityOutsideRanges;
                 this.ranges = new List<CharRange>();
                 this.charClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
                 this.symbolRepresentation = symbolRepresentation;
+            }
+
+            public static StorageBuilder Create(
+                CharClasses charClasses = CharClasses.Unknown,
+                string regexRepresentation = null,
+                string symbolRepresentation = null)
+            {
+                return new StorageBuilder(charClasses, regexRepresentation, symbolRepresentation);
             }
 
             #region Public methods
@@ -2104,7 +2032,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <summary>
             /// Adds a new character range to <see cref="ranges"/>
             /// </summary>
-            public void AddRange(CharRange range) => this.ranges.Add(range);
+            public void AddRange(CharRange range)
+            {
+                if (!range.Probability.IsZero)
+                {
+                    this.ranges.Add(range);
+                }
+            }
 
             /// <summary>
             /// Sorts ranges by StartInclusive, checks that they are non-overlapping, cover valid characters only
@@ -2115,7 +2049,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// </remarks>
             public void SortAndCheckRanges()
             {
-                this.ranges.Sort((s1, s2) => Comparer<int>.Default.Compare(s1.StartInclusive, s2.StartInclusive));
+                Debug.Assert(this.ranges.Count > 0);
+
+                this.ranges.Sort();
 
                 var prevRangeEnd = 0;
                 foreach (var range in this.ranges)
@@ -2131,16 +2067,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <summary>
             /// Normalizes probabilities in ranges and returns build Storage.
             /// </summary>
-            public Storage GetResult()
+            public Storage GetResult(double? maximumProbability = null)
             {
                 this.MergeNeighboringRanges();
-                this.NormalizeProbabilities();
-                return Storage.Create(
-                    this.ranges.ToArray(),
-                    this.ProbabilityOutsideRanges,
-                    this.charClasses,
-                    this.regexRepresentation,
-                    this.symbolRepresentation);
+                NormalizeProbabilities(this.ranges, maximumProbability);
+                return
+                    maximumProbability.HasValue
+                        ? Storage.CreateUncached(
+                            this.ranges.ToImmutableArray(),
+                            null,
+                            this.charClasses,
+                            this.regexRepresentation,
+                            this.symbolRepresentation)
+                        : Storage.Create(
+                            this.ranges.ToImmutableArray(),
+                            this.charClasses,
+                            this.regexRepresentation,
+                            this.symbolRepresentation);
             }
 
             #endregion
@@ -2156,17 +2099,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 for (var i = 0; i < this.ranges.Count; ++i)
                 {
                     var range = this.ranges[i];
-                    if (Math.Abs(range.Probability.LogValue - this.ProbabilityOutsideRanges.LogValue) < Eps)
-                    {
-                        continue;
-                    }
 
                     if (newRangeCount > 0)
                     {
                         var prevRange = this.ranges[newRangeCount - 1];
-                        if (range.StartInclusive == prevRange.EndExclusive && Math.Abs(range.Probability.LogValue - prevRange.Probability.LogValue) < Eps)
+                        if (range.StartInclusive == prevRange.EndExclusive &&
+                            Math.Abs(range.Probability.LogValue - prevRange.Probability.LogValue) < Eps)
                         {
-                            this.ranges[newRangeCount - 1] = new CharRange(prevRange.StartInclusive, range.EndExclusive, prevRange.Probability);
+                            this.ranges[newRangeCount - 1] = new CharRange(
+                                prevRange.StartInclusive, range.EndExclusive, prevRange.Probability);
                             continue;
                         }
                     }
@@ -2178,16 +2119,39 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             /// <summary>
-            /// Normalizes probabilities in ranges
+            /// Normalizes probabilities in ranges.
             /// </summary>
-            private void NormalizeProbabilities()
+            /// <param name="ranges">The ranges.</param>
+            /// <param name="logProbabilityOverride">Ignores the probabilities in the ranges and creates a non-normalized partial uniform distribution.</param>
+            /// <exception cref="ArgumentException">Thrown if logProbabilityOverride has value corresponding to a non-probability.</exception>
+            public static void NormalizeProbabilities(IList<CharRange> ranges, double? logProbabilityOverride = null)
             {
-                var normalizer = this.ComputeInvNormalizer();
-                
-                this.ProbabilityOutsideRanges *= normalizer;
-                for (int i = 0; i < this.ranges.Count; ++i)
+                if (logProbabilityOverride.HasValue)
                 {
-                    this.ranges[i] = new CharRange(this.ranges[i].StartInclusive, this.ranges[i].EndExclusive, this.ranges[i].Probability * normalizer);
+                    var weight = Weight.FromLogValue(logProbabilityOverride.Value);
+                    if (weight.IsZero || weight.Value > 1)
+                    {
+                        throw new ArgumentException("Invalid log probability override.");
+                    }
+
+                    for (var i = 0; i < ranges.Count; ++i)
+                    {
+                        var range = ranges[i];
+                        ranges[i] = new CharRange(
+                            range.StartInclusive, range.EndExclusive, weight);
+                    }
+                }
+                else
+                {
+                    var normalizer = ComputeInvNormalizer(ranges);
+                    for (var i = 0; i < ranges.Count; ++i)
+                    {
+                        var range = ranges[i];
+                        var probability = range.Probability * normalizer;
+
+                        ranges[i] = new CharRange(
+                            range.StartInclusive, range.EndExclusive, probability);
+                    }
                 }
             }
 
@@ -2195,19 +2159,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// Computes the normalizer of this distribution.
             /// </summary>
             /// <returns>The computed normalizer.</returns>
-            private Weight ComputeInvNormalizer()
+            private static Weight ComputeInvNormalizer(IEnumerable<CharRange> ranges)
             {
-                Weight normalizer = Weight.Zero;
-                var prevRangeEnd = 0;
+                var normalizer = Weight.Zero;
 
-                foreach (var range in this.ranges)
+                foreach (var range in ranges)
                 {
-                    normalizer += Weight.FromValue(range.StartInclusive - prevRangeEnd) * this.ProbabilityOutsideRanges;
                     normalizer += Weight.FromValue(range.EndExclusive - range.StartInclusive) * range.Probability;
-                    prevRangeEnd = range.EndExclusive;
                 }
-
-                normalizer += Weight.FromValue(CharRangeEndExclusive - prevRangeEnd) * this.ProbabilityOutsideRanges;
 
                 if (normalizer.IsZero)
                 {

@@ -22,7 +22,7 @@ namespace ImageClassifier
         /// <summary>
         /// If true, train and test data will be part of a single model.  This is less efficient, but simpler.
         /// </summary>
-        const bool singleModel = false;
+        readonly bool singleModel = false;
 
         public BayesPointMachine(int nFeatures, double noise)
         {

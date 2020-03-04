@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
+    using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
@@ -14,6 +15,12 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Preview)]
     public static class GammaProductOp
     {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="ProductAverageConditional(double, double)"]/*'/>
+        public static Gamma ProductAverageConditional(double a, double b)
+        {
+            return Gamma.PointMass(a * b);
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="ProductAverageConditional(double, Gamma)"]/*'/>
         public static Gamma ProductAverageConditional(double A, [SkipIfUniform] Gamma B)
         {
@@ -26,10 +33,16 @@ namespace Microsoft.ML.Probabilistic.Factors
             return ProductAverageConditional(B, A);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="ProductAverageConditional(double, double)"]/*'/>
-        public static Gamma ProductAverageConditional(double a, double b)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="ProductAverageConditional(double, GammaPower)"]/*'/>
+        public static GammaPower ProductAverageConditional(double A, [SkipIfUniform] GammaPower B)
         {
-            return Gamma.PointMass(a * b);
+            return GammaProductVmpOp.ProductAverageLogarithm(A, B);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="ProductAverageConditional(GammaPower, double)"]/*'/>
+        public static GammaPower ProductAverageConditional([SkipIfUniform] GammaPower A, double B)
+        {
+            return ProductAverageConditional(B, A);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="AAverageConditional(Gamma, double)"]/*'/>
@@ -41,6 +54,36 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return Gamma.Uniform();
             // (ab)^(shape-1) exp(-rate*(ab))
             return Gamma.FromShapeAndRate(Product.Shape, Product.Rate * B);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="AAverageConditional(GammaPower, double, GammaPower)"]/*'/>
+        public static GammaPower AAverageConditional([SkipIfUniform] GammaPower Product, double B, GammaPower result)
+        {
+            if (Product.IsPointMass)
+                return AAverageConditional(Product.Point, B, result);
+            if (B == 0)
+            {
+                result.SetToUniform();
+                return result;
+            }
+            // (ab)^(shape/power-1) exp(-rate*(ab)^(1/power))
+            return GammaPower.FromShapeAndRate(Product.Shape, Product.Rate * Math.Pow(B, 1/result.Power), result.Power);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="AAverageConditional(double, double, GammaPower)"]/*'/>
+        public static GammaPower AAverageConditional(double Product, double B, GammaPower result)
+        {
+            if (B == 0)
+            {
+                if (Product != 0)
+                    throw new AllZeroException();
+                result.SetToUniform();
+            }
+            else if ((Product != 0) && (Product > 0) != (B > 0))
+                throw new AllZeroException("Product and argument do not have the same sign");
+            else
+                result.Point = Product / B;
+            return result;
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="AAverageConditional(double, double)"]/*'/>
@@ -101,10 +144,22 @@ namespace Microsoft.ML.Probabilistic.Factors
             return AAverageConditional(Product, A);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="BAverageConditional(GammaPower, double, GammaPower)"]/*'/>
+        public static GammaPower BAverageConditional([SkipIfUniform] GammaPower Product, double A, GammaPower result)
+        {
+            return AAverageConditional(Product, A, result);
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="BAverageConditional(double, double)"]/*'/>
         public static Gamma BAverageConditional(double Product, double A)
         {
             return AAverageConditional(Product, A);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="BAverageConditional(double, double, GammaPower)"]/*'/>
+        public static GammaPower BAverageConditional(double Product, double A, GammaPower result)
+        {
+            return AAverageConditional(Product, A, result);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogAverageFactor(Gamma, Gamma, double)"]/*'/>
@@ -116,6 +171,19 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogAverageFactor(Gamma, double, Gamma)"]/*'/>
         public static double LogAverageFactor(Gamma product, double a, Gamma b)
+        {
+            return LogAverageFactor(product, b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogAverageFactor(GammaPower, GammaPower, double)"]/*'/>
+        public static double LogAverageFactor(GammaPower product, GammaPower a, double b)
+        {
+            GammaPower to_product = GammaProductOp.ProductAverageConditional(a, b);
+            return to_product.GetLogAverageOf(product);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogAverageFactor(GammaPower, double, GammaPower)"]/*'/>
+        public static double LogAverageFactor(GammaPower product, double a, GammaPower b)
         {
             return LogAverageFactor(product, b, a);
         }
@@ -132,6 +200,20 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double LogAverageFactor(double product, double a, Gamma b)
         {
             return LogAverageFactor(product, b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogAverageFactor(double, double, GammaPower)"]/*'/>
+        public static double LogAverageFactor(double product, double a, GammaPower b)
+        {
+            return LogAverageFactor(product, b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogAverageFactor(double, GammaPower, double)"]/*'/>
+        public static double LogAverageFactor(double product, GammaPower a, double b)
+        {
+            if (b == 0) return (product == 0) ? 0.0 : double.NegativeInfinity;
+            GammaPower to_product = GammaProductOp.ProductAverageConditional(a, b);
+            return to_product.GetLogProb(product);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogEvidenceRatio(Gamma, Gamma, double)"]/*'/>
@@ -156,6 +238,32 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogEvidenceRatio(double, double, Gamma)"]/*'/>
         public static double LogEvidenceRatio(double product, double a, Gamma b)
+        {
+            return LogEvidenceRatio(product, b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogEvidenceRatio(GammaPower, GammaPower, double)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(GammaPower product, GammaPower a, double b)
+        {
+            return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogEvidenceRatio(GammaPower, double, GammaPower)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(GammaPower product, double a, GammaPower b)
+        {
+            return LogEvidenceRatio(product, b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogEvidenceRatio(double, GammaPower, double)"]/*'/>
+        public static double LogEvidenceRatio(double product, GammaPower a, double b)
+        {
+            return LogAverageFactor(product, a, b);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="LogEvidenceRatio(double, double, GammaPower)"]/*'/>
+        public static double LogEvidenceRatio(double product, double a, GammaPower b)
         {
             return LogEvidenceRatio(product, b, a);
         }
@@ -466,7 +574,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, ratio, A), out bMean, out bVariance);
             Gamma bMarginal = Gamma.FromMeanAndVariance(bMean, bVariance);
             Gamma result = new Gamma();
-            result.SetToRatio(bMarginal, B, true);
+            result.SetToRatio(bMarginal, B, GammaProductOp_Laplace.ForceProper);
             return result;
         }
 
@@ -514,255 +622,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             Gamma aMarginal = Gamma.FromMeanAndVariance(aMean, aVariance);
             Gamma result = new Gamma();
-            result.SetToRatio(aMarginal, A, true);
-            if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
-                throw new InferRuntimeException("result is nan");
-            return result;
-        }
-    }
-
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
-    [Buffers("Q")]
-    [Quality(QualityBand.Experimental)]
-    public static class GammaProductOp_Laplace
-    {
-        // derivatives of the factor marginalized over Product and A
-        private static double[] dlogfs(double b, Gamma product, Gamma A)
-        {
-            if (product.IsPointMass)
-            {
-                // int delta(ab - y) Ga(a; s, r) da = int delta(a' - y) Ga(a'/b; s, r)/b da' = Ga(y/b; s, r)/b
-                // logf = -s*log(b) - y*r/b
-                double p = 1 / b;
-                double p2 = p * p;
-                double shape = A.Shape;
-                double c = product.Point * A.Rate;
-                double dlogf = -shape * p + c * p2;
-                double ddlogf = shape * p2 - 2 * c * p2 * p;
-                double dddlogf = -2 * shape * p * p2 + 6 * c * p2 * p2;
-                double d4logf = 6 * shape * p2 * p2 - 24 * c * p2 * p2 * p;
-                return new double[] { dlogf, ddlogf, dddlogf, d4logf };
-            }
-            else if (A.IsPointMass)
-            {
-                // Ga(ab; y_a, y_b)
-                // logf = (y_a-1)*log(b) - y_b*ab
-                double p = 1 / b;
-                double p2 = p * p;
-                double c = product.Rate * A.Point;
-                double shape = product.Shape - 1;
-                double dlogf = shape * p - c;
-                double ddlogf = -shape * p2;
-                double dddlogf = 2 * shape * p * p2;
-                double d4logf = -6 * shape * p2 * p2;
-                return new double[] { dlogf, ddlogf, dddlogf, d4logf };
-            }
-            else
-            {
-                // int Ga(ab; y_s, y_r) Ga(a; s, r) da = y_r^(y_s) r^s b^(y_s-1) / (r + b y_r)^(y_s + s-1) 
-                // logf = (y_s-1)*log(b) - (s+y_s-1)*log(r + b*y_r)
-                double r = product.Rate;
-                double r2 = r * r;
-                double p = 1 / (A.Rate + b * r);
-                double p2 = p * p;
-                double b2 = b * b;
-                double shape = product.Shape - 1;
-                double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape);
-                double dlogf = shape / b - shape2 * p * r;
-                double ddlogf = -shape / b2 + shape2 * p2 * r2;
-                double dddlogf = 2 * shape / (b * b2) - 2 * shape2 * p * p2 * r2 * r;
-                double d4logf = -6 * shape / (b2 * b2) + 6 * shape2 * p2 * p2 * r2 * r2;
-                return new double[] { dlogf, ddlogf, dddlogf, d4logf };
-            }
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="QInit()"]/*'/>
-        [Skip]
-        public static Gamma QInit()
-        {
-            return Gamma.Uniform();
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="Q(Gamma, Gamma, Gamma)"]/*'/>
-        [Fresh]
-        public static Gamma Q(Gamma product, [Proper] Gamma A, [Proper] Gamma B)
-        {
-            if (B.IsPointMass)
-                return B;
-            if (A.IsPointMass)
-                throw new NotImplementedException();
-            double x;
-            if (product.IsPointMass)
-            {
-                // logf = -a_s*log(b) - y*a_r/b
-                // logp = b_s*log(b) - b_r*b
-                // dlogfp = (b_s-a_s)/b - b_r + y*a_r/b^2 = 0
-                // -b_r b^2 + (b_s-a_s) b + y*a_r = 0
-                double shape = B.Shape - A.Shape;
-                double y = product.Point;
-                x = (Math.Sqrt(shape * shape + 4 * B.Rate * A.Rate * y) + shape) / 2 / B.Rate;
-            }
-            else
-            {
-                double shape1 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(B.Shape, product.Shape);
-                double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(A.Shape, product.Shape);
-                // find the maximum of the factor marginalized over Product and A, times B
-                // logf = (y_s-1)*log(b) - (y_s+a_s-1)*log(b*y_r + a_r)
-                // let b' = b*y_r and maximize over b'
-                x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, shape2, A.Rate, B.Rate / product.Rate);
-                if (x == 0)
-                    return B;
-                x /= product.Rate;
-            }
-            double[] dlogfss = dlogfs(x, product, A);
-            double dlogf = dlogfss[0];
-            double ddlogf = dlogfss[1];
-            return GammaFromShapeAndRateOp_Laplace.GammaFromDerivatives(B, x, dlogf, ddlogf);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="LogAverageFactor(Gamma, Gamma, Gamma, Gamma)"]/*'/>
-        public static double LogAverageFactor(Gamma product, Gamma A, Gamma B, Gamma q)
-        {
-            if (B.IsPointMass)
-                return GammaProductOp.LogAverageFactor(product, A, B.Point);
-            if (A.IsPointMass)
-                return GammaProductOp.LogAverageFactor(product, A.Point, B);
-            double x = q.GetMean();
-            double logf;
-            if (product.IsPointMass)
-            {
-                // Ga(y/b; s, r)/b
-                double y = product.Point;
-                logf = (A.Shape - 1) * Math.Log(y) - A.Shape * Math.Log(x) - A.Rate * y / x - A.GetLogNormalizer();
-            }
-            else
-            {
-                // int Ga(ab; y_s, y_r) Ga(a; s, r) da = b^(y_s-1) / (r + b y_r)^(y_s + s-1)  Gamma(y_s+s-1)
-                double shape = product.Shape - 1;
-                double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape);
-                logf = shape * Math.Log(x) - shape2 * Math.Log(A.Rate + x * product.Rate) +
-                  MMath.GammaLn(shape2) - A.GetLogNormalizer() - product.GetLogNormalizer();
-            }
-            double logz = logf + B.GetLogProb(x) - q.GetLogProb(x);
-            return logz;
-        }
-
-        private static double LogAverageFactor_slow(Gamma product, Gamma A, [Proper] Gamma B)
-        {
-            return LogAverageFactor(product, A, B, Q(product, A, B));
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="LogEvidenceRatio(Gamma, Gamma, Gamma, Gamma, Gamma)"]/*'/>
-        public static double LogEvidenceRatio(Gamma product, Gamma A, Gamma B, Gamma to_product, Gamma q)
-        {
-            return LogAverageFactor(product, A, B, q) - to_product.GetLogAverageOf(product);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="LogEvidenceRatio(double, Gamma, Gamma, Gamma)"]/*'/>
-        public static double LogEvidenceRatio(double product, Gamma A, Gamma B, Gamma q)
-        {
-            return LogAverageFactor(Gamma.PointMass(product), A, B, q);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="BAverageConditional(Gamma, Gamma, Gamma, Gamma)"]/*'/>
-        public static Gamma BAverageConditional([SkipIfUniform] Gamma product, [Proper] Gamma A, [Proper] Gamma B, Gamma q)
-        {
-            if (A.IsPointMass)
-                return GammaProductOp.BAverageConditional(product, A.Point);
-            if (B.IsPointMass)
-                throw new NotImplementedException();
-            if (q.IsUniform())
-                q = Q(product, A, B);
-            double x = q.GetMean();
-            double[] g = new double[] { x, 1, 0, 0 };
-            double bMean, bVariance;
-            GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, product, A), out bMean, out bVariance);
-            Gamma bMarginal = Gamma.FromMeanAndVariance(bMean, bVariance);
-            Gamma result = new Gamma();
-            result.SetToRatio(bMarginal, B, true);
-            return result;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="ProductAverageConditional(Gamma, Gamma, Gamma, Gamma)"]/*'/>
-        public static Gamma ProductAverageConditional(Gamma product, [Proper] Gamma A, [SkipIfUniform] Gamma B, Gamma q)
-        {
-            if (B.IsPointMass)
-                return GammaProductOp.ProductAverageConditional(A, B.Point);
-            if (A.IsPointMass)
-                return GammaProductOp.ProductAverageConditional(A.Point, B);
-            if (product.IsPointMass)
-                throw new NotImplementedException();
-
-            double yMean, yVariance;
-            double x = q.GetMean();
-            double x2 = x * x;
-            double r = product.Rate;
-            double r2 = r * r;
-            double p = 1 / (x * r + A.Rate);
-            double p2 = p * p;
-            double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape);
-            // yMean = shape2*b/(b y_r + a_r)
-            // yVariance = E[shape2*(shape2+1)*b^2/(b y_r + a_r)^2] - aMean^2 = var(shape2*b/(b y_r + a_r)) + E[shape2*b^2/(b y_r + a_r)^2]
-            //           = shape2^2*var(b/(b y_r + a_r)) + shape2*(var(b/(b y_r + a_r)) + (aMean/shape2)^2)
-            double[] g = new double[] { x * p, A.Rate * p2, -2 * p2 * p * A.Rate * r, 6 * p2 * p2 * A.Rate * r2 };
-            double pMean, pVariance;
-            GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, product, A), out pMean, out pVariance);
-            yMean = shape2 * pMean;
-            yVariance = shape2 * shape2 * pVariance + shape2 * (pVariance + pMean * pMean);
-
-            Gamma yMarginal = Gamma.FromMeanAndVariance(yMean, yVariance);
-            Gamma result = new Gamma();
-            result.SetToRatio(yMarginal, product, true);
-            if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
-                throw new InferRuntimeException("result is nan");
-            return result;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="AAverageConditional(Gamma, Gamma, Gamma, Gamma)"]/*'/>
-        public static Gamma AAverageConditional(Gamma product, Gamma A, [SkipIfUniform] Gamma B, Gamma q)
-        {
-            if (B.IsPointMass)
-                return GammaProductOp.AAverageConditional(product, B.Point);
-            if (A.IsPointMass)
-                throw new NotImplementedException();
-            double aMean, aVariance;
-            double x = q.GetMean();
-            if (product.IsPointMass)
-            {
-                // Z = int Ga(y/b; s, r)/b Ga(b; b_s, b_r) db
-                // E[a] = E[y/b]
-                // E[a^2] = E[y^2/b^2]
-                // aVariance = E[a^2] - aMean^2
-                double y = product.Point;
-                double p = 1 / x;
-                double p2 = p * p;
-                double[] g = new double[] { p, -p2, 2 * p2 * p, -6 * p2 * p2 };
-                double pMean, pVariance;
-                GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, product, A), out pMean, out pVariance);
-                aMean = y * pMean;
-                aVariance = y * y * pVariance;
-            }
-            else
-            {
-                double x2 = x * x;
-                double r = product.Rate;
-                double r2 = r * r;
-                double p = 1 / (x * r + A.Rate);
-                double p2 = p * p;
-                double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape);
-                // aMean = shape2/(b y_r + a_r)
-                // aVariance = E[shape2*(shape2+1)/(b y_r + a_r)^2] - aMean^2 = var(shape2/(b y_r + a_r)) + E[shape2/(b y_r + a_r)^2]
-                //           = shape2^2*var(1/(b y_r + a_r)) + shape2*(var(1/(b y_r + a_r)) + (aMean/shape2)^2)
-                double[] g = new double[] { p, -r * p2, 2 * p2 * p * r2, -6 * p2 * p2 * r2 * r };
-                double pMean, pVariance;
-                GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, product, A), out pMean, out pVariance);
-                aMean = shape2 * pMean;
-                aVariance = shape2 * shape2 * pVariance + shape2 * (pVariance + pMean * pMean);
-            }
-            Gamma aMarginal = Gamma.FromMeanAndVariance(aMean, aVariance);
-            Gamma result = new Gamma();
-            result.SetToRatio(aMarginal, A, true);
+            result.SetToRatio(aMarginal, A, GammaProductOp_Laplace.ForceProper);
             if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
                 throw new InferRuntimeException("result is nan");
             return result;
@@ -784,8 +644,24 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (a == 0) ? 0.0 : -Math.Log(a);
         }
 
+        public static double AverageLogFactor(double product, GammaPower a, double b)
+        {
+            return (b == 0) ? 0.0 : -Math.Log(b);
+        }
+
+        public static double AverageLogFactor(double product, double a, GammaPower b)
+        {
+            return (a == 0) ? 0.0 : -Math.Log(a);
+        }
+
         [Skip]
         public static double AverageLogFactor(Gamma product)
+        {
+            return 0.0;
+        }
+
+        [Skip]
+        public static double AverageLogFactor(GammaPower product)
         {
             return 0.0;
         }
@@ -803,11 +679,29 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (B.IsPointMass)
                 return Gamma.PointMass(A * B.Point);
+            if (A == 0)
+                return Gamma.PointMass(0);
             return Gamma.FromShapeAndRate(B.Shape, B.Rate / A);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(Gamma, double)"]/*'/>
         public static Gamma ProductAverageLogarithm([SkipIfUniform] Gamma A, double B)
+        {
+            return ProductAverageLogarithm(B, A);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(double, Gamma)"]/*'/>
+        public static GammaPower ProductAverageLogarithm(double A, [SkipIfUniform] GammaPower B)
+        {
+            if (B.IsPointMass)
+                return GammaPower.PointMass(A * B.Point, B.Power);
+            if (A == 0)
+                return GammaPower.PointMass(0, B.Power);
+            return GammaPower.FromShapeAndRate(B.Shape, B.Rate * Math.Pow(A, -1/B.Power), B.Power);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(Gamma, double)"]/*'/>
+        public static GammaPower ProductAverageLogarithm([SkipIfUniform] GammaPower A, double B)
         {
             return ProductAverageLogarithm(B, A);
         }
@@ -836,10 +730,22 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GammaProductOp.AAverageConditional(Product, B);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="AAverageLogarithm(GammaPower, double, GammaPower)"]/*'/>
+        public static GammaPower AAverageLogarithm([SkipIfUniform] GammaPower Product, double B, GammaPower result)
+        {
+            return GammaProductOp.AAverageConditional(Product, B, result);
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="AAverageLogarithm(double, double)"]/*'/>
         public static Gamma AAverageLogarithm(double Product, double B)
         {
             return GammaProductOp.AAverageConditional(Product, B);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="AAverageLogarithm(double, double, GammaPower)"]/*'/>
+        public static GammaPower AAverageLogarithm(double Product, double B, GammaPower result)
+        {
+            return GammaProductOp.AAverageConditional(Product, B, result);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="BAverageLogarithm(Gamma, Gamma)"]/*'/>
@@ -865,6 +771,18 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Gamma BAverageLogarithm(double Product, double A)
         {
             return AAverageLogarithm(Product, A);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="BAverageLogarithm(GammaPower, double, GammaPower)"]/*'/>
+        public static GammaPower BAverageLogarithm([SkipIfUniform] GammaPower Product, double A, GammaPower result)
+        {
+            return AAverageLogarithm(Product, A, result);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="BAverageLogarithm(double, double, GammaPower)"]/*'/>
+        public static GammaPower BAverageLogarithm(double Product, double A, GammaPower result)
+        {
+            return AAverageLogarithm(Product, A, result);
         }
     }
 

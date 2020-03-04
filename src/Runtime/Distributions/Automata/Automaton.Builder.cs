@@ -40,12 +40,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             private int numRemovedTransitions = 0;
 
             /// <summary>
+            /// Cached value of <see cref="MaxStateCount"/>. Getting MaxStateCount involves checking
+            /// thread static variable value and a comparison. Caching this property values is a little
+            /// faster.
+            /// </summary>
+            private readonly int maxStateCount;
+
+            /// <summary>
             /// Creates a new empty <see cref="Builder"/>.
             /// </summary>
             public Builder(int startStateCount = 1)
             {
                 this.states = new List<LinkedStateData>();
                 this.transitions = new List<LinkedTransitionNode>();
+                this.maxStateCount = MaxStateCount;
                 this.AddStates(startStateCount);
             }
 
@@ -112,9 +120,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public StateBuilder AddState()
             {
-                if (this.states.Count >= maxStateCount)
+                if (this.states.Count >= this.maxStateCount)
                 {
-                    throw new AutomatonTooLargeException(MaxStateCount);
+                    throw new AutomatonTooLargeException(this.maxStateCount);
                 }
 
                 var index = this.states.Count;
@@ -378,8 +386,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Stores built automaton in pre-allocated <see cref="Automaton{TSequence,TElement,TElementDistribution,TSequenceManipulator,TThis}"/> object.
             /// </summary>
-            public DataContainer GetData(
-                DeterminizationState determinizationState = DeterminizationState.Unknown)
+            public DataContainer GetData(bool? isDeterminized = null)
             {
                 if (this.StartStateIndex < 0 || this.StartStateIndex >= this.states.Count)
                 {
@@ -390,11 +397,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var hasEpsilonTransitions = false;
                 var usesGroups = false;
-                var resultStates = new StateData[this.states.Count];
-                var resultTransitions = new Transition[this.transitions.Count - this.numRemovedTransitions];
+                var hasSelfLoops = false;
+                var hasOnlyForwardTransitions = true;
+                var resultStates = ImmutableArray.CreateBuilder<StateData>(this.states.Count);
+                var resultTransitions = ImmutableArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
                 var nextResultTransitionIndex = 0;
 
-                for (var i = 0; i < resultStates.Length; ++i)
+                for (var i = 0; i < resultStates.Count; ++i)
                 {
                     var firstResultTransitionIndex = nextResultTransitionIndex;
                     var transitionIndex = this.states[i].FirstTransitionIndex;
@@ -403,7 +412,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var node = this.transitions[transitionIndex];
                         var transition = node.Transition;
                         Debug.Assert(
-                            transition.DestinationStateIndex < resultStates.Length,
+                            transition.DestinationStateIndex < resultStates.Count,
                             "Destination indexes must be in valid range");
                         resultTransitions[nextResultTransitionIndex] = transition;
                         ++nextResultTransitionIndex;
@@ -411,6 +420,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         usesGroups = usesGroups || (transition.Group != 0);
 
                         transitionIndex = node.Next;
+
+                        if (transition.DestinationStateIndex == i)
+                        {
+                            hasSelfLoops = true;
+                        }
+                        else if (transition.DestinationStateIndex < i)
+                        {
+                            hasOnlyForwardTransitions = false;
+                        }
                     }
 
                     resultStates[i] = new StateData(
@@ -420,16 +438,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 Debug.Assert(
-                    nextResultTransitionIndex == resultTransitions.Length,
+                    nextResultTransitionIndex == resultTransitions.Count,
                     "number of copied transitions must match result array size");
+
+                // Detect two very common automata shapes
+                var isEnumerable =
+                    hasSelfLoops ? false :
+                    hasOnlyForwardTransitions ? true :
+                    (bool?)null;
 
                 return new DataContainer(
                     this.StartStateIndex,
+                    resultStates.MoveToImmutable(),
+                    resultTransitions.MoveToImmutable(),
                     !hasEpsilonTransitions,
                     usesGroups,
-                    determinizationState,
-                    resultStates,
-                    resultTransitions);
+                    isDeterminized,
+                    isZero: null,
+                    isEnumerable: isEnumerable);
             }
 
             #endregion

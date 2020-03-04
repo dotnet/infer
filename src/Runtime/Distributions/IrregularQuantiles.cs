@@ -98,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double slope = (quantiles[largerIndex] - quantiles[smallerIndex]) / (probabilities[largerIndex] - probabilities[smallerIndex]);
                 // Solve for the largest x such that probabilities[smallerIndex] + (x - quantiles[smallerIndex]) / slope <= probability.
                 double frac = MMath.LargestDoubleSum(-probabilities[smallerIndex], probability);
-                double offset = MMath.LargestDoubleProduct(slope, frac);
+                double offset = MMath.LargestDoubleProduct(frac, slope);
                 return MMath.LargestDoubleSum(quantiles[smallerIndex], offset);
             }
         }

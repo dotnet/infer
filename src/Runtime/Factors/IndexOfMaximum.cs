@@ -152,7 +152,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Buffers;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IndexOfMaximumStochasticOp"]/message_doc[@name="listAverageConditional{GaussianList}(IndexOfMaximumBuffer[], GaussianList, Discrete, GaussianList)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IndexOfMaximumStochasticOp"]/message_doc[@name="ListAverageConditional{GaussianList}(IndexOfMaximumBuffer[], GaussianList, Discrete, GaussianList)"]/*'/>
         /// <typeparam name="GaussianList">The type of an incoming message from <c>list</c>.</typeparam>
         public static GaussianList ListAverageConditional<GaussianList>(
             [SkipIfUniform] IndexOfMaximumBuffer[] Buffers, GaussianList list, [SkipIfUniform] Discrete IndexOfMaximumDouble, GaussianList result)
