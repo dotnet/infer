@@ -24039,10 +24039,15 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     string strMsg = $"{name}({x:r})\t wrong by {err.ToString("g2")} (result = {result:r})";
                     Trace.WriteLine(strMsg);
-                    if (err > assertTolerance || double.IsNaN(err))
+                    if (IsErrorSignificant(assertTolerance, err) || double.IsNaN(err))
                         Assert.True(false, strMsg);
                 }
             }
+        }
+
+        public static bool IsErrorSignificant(double assertTolerance, double err)
+        {
+            return err > assertTolerance;
         }
     }
 }
