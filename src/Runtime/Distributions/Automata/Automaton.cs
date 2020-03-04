@@ -789,6 +789,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (this.LogValueOverride.HasValue)
             {
                 builder.Append(this.LogValueOverride);
+                builder.Append(":");
             }
 
             var visitedStates = new HashSet<int>();
