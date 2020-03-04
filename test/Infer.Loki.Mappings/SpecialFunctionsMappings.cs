@@ -78,5 +78,23 @@ namespace Infer.Loki.Mappings
             }
             return result;
         }
+
+        #region BinaryRepresentation
+
+        public static BigFloat NextBigFloat(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            result.NextAbove();
+            return result;
+        }
+
+        public static BigFloat PreviousBigFloat(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            result.NextBelow();
+            return result;
+        }
+
+        #endregion
     }
 }
