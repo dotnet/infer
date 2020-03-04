@@ -98,8 +98,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loki.Shared", "src\Loki\src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loki.Mapping", "src\Loki\src\Loki.Mapping\Loki.Mapping.csproj", "{11AAECAA-1E57-4C33-B930-CCA70EEBD08D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loki.Extensions", "src\Loki\src\Loki.Extensions\Loki.Extensions.csproj", "{26253015-AC79-47F2-BE8D-8B19371F80A0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infer.Loki.Tests", "test\Infer.Loki.Tests\Infer.Loki.Tests.csproj", "{F2FA3303-488B-4D5F-934C-C477DE34E9B2}"
 EndProject
 Global
@@ -552,18 +550,6 @@ Global
 		{11AAECAA-1E57-4C33-B930-CCA70EEBD08D}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
 		{11AAECAA-1E57-4C33-B930-CCA70EEBD08D}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
 		{11AAECAA-1E57-4C33-B930-CCA70EEBD08D}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.DebugCore|Any CPU.Build.0 = Debug|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.DebugFull|Any CPU.Build.0 = Debug|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
-		{26253015-AC79-47F2-BE8D-8B19371F80A0}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
 		{F2FA3303-488B-4D5F-934C-C477DE34E9B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F2FA3303-488B-4D5F-934C-C477DE34E9B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2FA3303-488B-4D5F-934C-C477DE34E9B2}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
