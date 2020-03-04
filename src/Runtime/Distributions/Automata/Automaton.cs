@@ -786,6 +786,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var builder = new StringBuilder();
+            if (this.LogValueOverride.HasValue)
+            {
+                builder.Append(this.LogValueOverride);
+                builder.Append(":");
+            }
+
             var visitedStates = new HashSet<int>();
             var stack = new Stack<(string prefix, Option<TElementDistribution> prefixDistribution, int state)>();
             stack.Push((string.Empty, Option.None, Start.Index));
