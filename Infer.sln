@@ -100,6 +100,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loki.Mapping", "src\Loki\sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infer.Loki.Tests", "test\Infer.Loki.Tests\Infer.Loki.Tests.csproj", "{F2FA3303-488B-4D5F-934C-C477DE34E9B2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infer.Loki.Mappings", "test\Infer.Loki.Mappings\Infer.Loki.Mappings.csproj", "{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -562,6 +564,18 @@ Global
 		{F2FA3303-488B-4D5F-934C-C477DE34E9B2}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
 		{F2FA3303-488B-4D5F-934C-C477DE34E9B2}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
 		{F2FA3303-488B-4D5F-934C-C477DE34E9B2}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.DebugCore|Any CPU.Build.0 = Debug|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.DebugFull|Any CPU.Build.0 = Debug|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

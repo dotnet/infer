@@ -28,14 +28,11 @@ namespace Infer.Loki.Tests
             Trace.Listeners.Add(this.listener);
         }
 
-        /// <summary>
-        ///     Tests EP and BP gate exit ops for Bernoulli random variable for correctness.
-        /// </summary>
         [Fact]
-        public async Task Loki_BernoulliEnterTest()
+        public async Task Loki_Test()
         {
             var solutionPath = $@"{Directory.GetCurrentDirectory()}\..\..\..\..\..\Infer.sln";
-            Settings settings = new Settings(solutionPath);
+            var settings = new Settings(solutionPath);
             settings.WriteGeneratedSource = true;
 
             // Examples
@@ -49,6 +46,7 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex("^MontyHall"));
             settings.ExcludeProject(new Regex("^MotifFinder"));
             settings.ExcludeProject(new Regex("^ReviewerCalibration"));
+            settings.ExcludeProject(new Regex("^RobustGaussianProcess"));
 
             // Learners
             settings.ExcludeProject(new Regex("^ClassifierModels"));
@@ -60,18 +58,29 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex("^CommandLine"));
             settings.ExcludeProject(new Regex("^Evaluator"));
             settings.ExcludeProject(new Regex("^LearnersTests"));
-            settings.ExcludeProject(new Regex("^Microsoft.ML.Probabilistic.Learners.TestApp"));
+            settings.ExcludeProject(new Regex("^LearnersNuGet"));
+            settings.ExcludeProject(new Regex(@"^Microsoft\.ML\.Probabilistic\.Learners\.TestApp"));
 
             settings.ExcludeProject(new Regex(@"^FSharpWrapper"));
             settings.ExcludeProject(new Regex(@"^TestApp"));
             settings.ExcludeProject(new Regex(@"^TestFSharp"));
             settings.ExcludeProject(new Regex(@"^TestPublic"));
             settings.ExcludeProject(new Regex(@"^Tools\.BuildFactorDoc"));
+            settings.ExcludeProject(new Regex(@"^Tools\.GenerateSeries"));
             settings.ExcludeProject(new Regex(@"^Tools\.PrepareSource"));
             settings.ExcludeProject(new Regex("^Tutorials"));
-            settings.ExcludeProject(new Regex("^Visualizers"));
+            settings.ExcludeProject(new Regex(@"^Visualizers\.Windows"));
+
+            settings.ExcludeProject(new Regex(@"^Infer\.Loki\.Tests"));
+
+            settings.PreserveNamespace(new Regex(@"^Infer\.Loki\.Mappings"));
+
+            settings.Mappers.AddMap(new AssertionMap());
+            settings.Mappers.AddMap(new SpecialFunctionsMap());
+
 
             var testResult = await TestRunner.BuildAndRunTest(settings, new SpecialFunctionsTests().GammaSpecialFunctionsTest);
+            //var testResult = await TestRunner.BuildAndRunTest(settings, new SpecialFunctionsTests().LogisticGaussianTest);
 
             Assert.True(testResult.DoublePrecisionPassed);
             Assert.True(testResult.HighPrecisionPassed);

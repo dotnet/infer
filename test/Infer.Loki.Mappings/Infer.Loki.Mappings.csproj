@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Loki\src\Loki.Mapping\Loki.Mapping.csproj" />
+    <ProjectReference Include="..\..\src\Loki\src\Loki.Shared\Loki.Shared.csproj" />
+    <ProjectReference Include="..\..\src\Loki\src\Loki\Loki.csproj" />
+  </ItemGroup>
+
+</Project>
