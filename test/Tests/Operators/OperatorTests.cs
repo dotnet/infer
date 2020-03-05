@@ -1366,16 +1366,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        [Trait("Category", "OpenBug")]
-        public void GammaUpper_IsDecreasingInX()
-        {
-            foreach (double a in DoublesGreaterThanZero())
-            {
-                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x));
-            }
-        }
-
-        [Fact]
         public void GammaLower_IsDecreasingInA()
         {
             Parallel.ForEach(DoublesAtLeastZero(), x =>
@@ -1385,13 +1375,21 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        [Trait("Category", "OpenBug")]
+        public void GammaUpper_IsDecreasingInX()
+        {
+            Parallel.ForEach(DoublesGreaterThanZero(), a =>
+            {
+                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x), 3);
+            });
+        }
+
+        [Fact]
         public void GammaUpper_IsIncreasingInA()
         {
-            foreach (double x in DoublesAtLeastZero())
+            Parallel.ForEach(DoublesAtLeastZero(), x =>
             {
-                IsIncreasingForAtLeastZero(a => MMath.GammaUpper(a + double.Epsilon, x));
-            }
+                IsIncreasingForAtLeastZero(a => MMath.GammaUpper(a + double.Epsilon, x), 13);
+            });
         }
 
         [Fact]
@@ -1457,18 +1455,22 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// </summary>
         /// <param name="func"></param>
         /// <returns></returns>
-        public bool IsIncreasingForAtLeastZero(Func<double, double> func)
+        public bool IsIncreasingForAtLeastZero(Func<double, double> func, double ulpError = 0)
         {
+            double scale = 1 + 2e-16 * ulpError;
             foreach (var x in DoublesAtLeastZero())
             {
                 double fx = func(x);
+                double smallFx;
+                if (fx >= 0) smallFx = fx / scale;
+                else smallFx = fx * scale;
                 foreach (var delta in DoublesGreaterThanZero())
                 {
                     double x2 = x + delta;
                     if (double.IsPositiveInfinity(delta)) x2 = delta;
                     double fx2 = func(x2);
                     // The cast here is important when running in 32-bit, Release mode.
-                    Assert.True((double)fx2 >= fx);
+                    Assert.True((double)fx2 >= smallFx);
                 }
             }
             return true;

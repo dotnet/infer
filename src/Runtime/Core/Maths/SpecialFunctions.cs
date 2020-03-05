@@ -687,7 +687,6 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Gamma(x).</returns>
         public static double Gamma(double x)
         {
-            /* Negative values */
             if (x < 0)
             {
                 // this test also catches -inf
@@ -700,6 +699,11 @@ namespace Microsoft.ML.Probabilistic.Math
                 return -Math.PI / (x * Math.Sin(Math.PI * x) * Gamma(-x));
             }
 
+            if (x <= GammaSmallX)
+            {
+                return 1 / x + GammaSeries(x);
+            }
+
             if (x > 180)
             {
                 return Double.PositiveInfinity;
@@ -707,6 +711,8 @@ namespace Microsoft.ML.Probabilistic.Math
 
             return Math.Exp(GammaLn(x));
         }
+
+        private const double GammaSmallX = 1e-3;
 
         /// <summary>
         /// Computes the natural logarithm of the Gamma function.
@@ -1179,9 +1185,9 @@ namespace Microsoft.ML.Probabilistic.Math
                 throw new ArgumentException($"x ({x}) < 0");
             if (!regularized)
             {
-                if (a >= 1) return Gamma(a) * GammaUpper(a, x, true);
-                else if (a > 1e-4 || x >= 1) return GammaUpperConFrac(a, x, regularized);
-                else return GammaUpperSeries(a, x, regularized);
+                if (a < 1 && x >= 1) return GammaUpperConFrac(a, x, regularized);
+                else if (a <= 10*GammaSmallX) return GammaUpperSeries(a, x, regularized);
+                else return Gamma(a) * GammaUpper(a, x, true);
             }
             if (a <= 0)
                 throw new ArgumentException($"a ({a}) <= 0");
@@ -1204,6 +1210,9 @@ namespace Microsoft.ML.Probabilistic.Math
                 return GammaAsympt(a, x, true);
             else if (x > 1.5)
                 return GammaUpperConFrac(a, x);
+            else if (a <= 1e-16)
+                // Gamma(a) = 1/a for a <= 1e-16
+                return a * GammaUpperSeries(a, x, false);
             else
                 return GammaUpperSeries(a, x);
         }
@@ -1382,6 +1391,8 @@ namespace Microsoft.ML.Probabilistic.Math
             // this series should only be applied when x is small
             // the regularized series is: 1 - x^a/Gamma(a) sum_{k=0}^inf (-x)^k /(k! (a+k))
             // = (1 - 1/Gamma(a+1)) + (1 - x^a)/Gamma(a+1) - x^a/Gamma(a) sum_{k=1}^inf (-x)^k/(k! (a+k))
+            // The unregularized series is:
+            // = (Gamma(a) - 1/a) + (1 - x^a)/a - x^a sum_{k=1}^inf (-x)^k/(k! (a+k))
             double logx = Math.Log(x);
             double alogx = a * logx;
             double xaMinus1 = MMath.ExpMinus1(alogx);
@@ -1402,24 +1413,26 @@ namespace Microsoft.ML.Probabilistic.Math
                 // offset = 1 - x^a/Gamma(a+1)
                 offset = -xaMinus1 * aReciprocalFactorial - aReciprocalFactorialMinus1;
                 scale = 1 - offset;
-                term = x / (a + 1) * a;
+                term = x * a;
             }
             else
             {
                 if (Math.Abs(alogx) <= 1e-16) offset = GammaSeries(a) - logx;
                 else offset = GammaSeries(a) - xaMinus1 / a;
                 scale = 1 + xaMinus1;
-                term = x / (a + 1);
+                term = x;
             }
-            double sum = term;
+            double sum = term / (a + 1);
             for (int i = 1; i < 1000; i++)
             {
-                term *= -(a + i) * x / ((a + i + 1) * (i + 1));
+                term *= -x / (i + 1);
                 double sumOld = sum;
-                sum += term;
+                sum += term / (a + i + 1);
                 //Console.WriteLine("{0}: {1}", i, sum);
                 if (AreEqual(sum, sumOld))
+                {
                     return scale * sum + offset;
+                }
             }
             throw new Exception($"GammaUpperSeries not converging for a={a} x={x} regularized={regularized}");
         }
@@ -1431,7 +1444,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public static double GammaSeries(double x)
         {
-            if (x > 1e-4)
+            if (x > GammaSmallX)
                 return MMath.Gamma(x) - 1 / x;
             else
                 /* using http://sagecell.sagemath.org/ (must not be indented)
@@ -1439,7 +1452,14 @@ var('x');
 f = gamma(x)-1/x
 [c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
                  */
-                return Digamma1 + x * (0.98905599532797255539539565150 + x * (-0.90747907608088628901656016736 + x * (0.98172808683440018733638029402 + x * (-0.98199506890314520210470141379))));
+                return Digamma1 
+                    + x * (0.98905599532797255539539565150 
+                    + x * (-0.90747907608088628901656016736 
+                    + x * (0.98172808683440018733638029402 
+                    + x * (-0.98199506890314520210470141379
+                    + x * (0.99314911462127619315386725333 
+                    + x * (-0.99600176044243153397007841966 
+                    ))))));
         }
 
         /// <summary>
@@ -1514,30 +1534,29 @@ f = gamma(x)-1/x
             // a_i = -i*(i-a)
             // b_i = x+1-a+2*i
             // the confrac is evaluated using Lentz's algorithm
-            double b = x + 1.0 - a;
+            double b = x - a + 1.0;
             const double tiny = 1e-30;
             double c = 1.0 / tiny;
-            double d = 1.0 / b;
-            double h = d * scale;
+            double d = b;
+            double h = scale / d;
             for (int i = 1; i < 1000; ++i)
             {
                 double an = -i * (i - a);
                 b += 2.0;
-                d = an * d + b;
+                d = an / d + b;
                 if (Math.Abs(d) < tiny)
                     d = tiny;
                 c = b + an / c;
                 if (Math.Abs(c) < tiny)
                     c = tiny;
-                d = 1.0 / d;
-                double del = d * c;
+                double del = c / d;
                 double oldH = h;
                 h *= del;
                 //Trace.WriteLine($"h = {h} del = {del}");
                 if (AreEqual(h, oldH))
                     return h;
             }
-            throw new Exception(string.Format("GammaUpperConFrac not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaUpperConFrac not converging for a={a} x={x}");
         }
 
         /// <summary>
