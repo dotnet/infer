@@ -105,8 +105,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(Gamma, TruncatedGamma, double)"]/*'/>
-        public static TruncatedGamma XAverageConditional([SkipIfUniform] Gamma pow, TruncatedGamma x, double y)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(GammaPower, TruncatedGamma, double)"]/*'/>
+        public static TruncatedGamma XAverageConditional([SkipIfUniform] GammaPower pow, TruncatedGamma x, double y)
         {
             // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
             if (pow.IsUniform()) return TruncatedGamma.Uniform();

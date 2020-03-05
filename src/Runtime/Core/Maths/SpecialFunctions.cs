@@ -1186,7 +1186,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (!regularized)
             {
                 if (a < 1 && x >= 1) return GammaUpperConFrac(a, x, regularized);
-                else if (a <= 10*GammaSmallX) return GammaUpperSeries(a, x, regularized);
+                else if (a <= GammaSmallX) return GammaUpperSeries(a, x, regularized);
                 else return Gamma(a) * GammaUpper(a, x, true);
             }
             if (a <= 0)
@@ -3509,7 +3509,7 @@ rr = mpf('-0.99999824265582826');
         /// </remarks>
         public static double ExpMinus1(double x)
         {
-            if (Math.Abs(x) < 2e-3)
+            if (Math.Abs(x) < 55e-3)
             {
                 return
                     // Truncated series 13: exp(x) - 1
@@ -3517,8 +3517,12 @@ rr = mpf('-0.99999824265582826');
                     x * (1.0 +
                     x * (1.0 / 2.0 +
                     x * (1.0 / 6.0 +
-                    x * 1.0 / 24.0)))
-                    ;
+                    x * (1.0 / 24.0 +
+                    x * (1.0 / 120.0 +
+                    x * (1.0 / 720.0 +
+                    x * (1.0 / 5040.0 +
+                    x * (1.0 / 40320.0
+                    ))))))));
             }
             else
             {
