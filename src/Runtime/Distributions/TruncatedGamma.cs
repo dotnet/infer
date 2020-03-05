@@ -249,7 +249,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return double.NegativeInfinity;
             else
             {
-                return this.Gamma.GetLogProb(value) + this.Gamma.GetLogNormalizer() - GetLogNormalizer();
+                return this.Gamma.GetLogProb(value) + (this.Gamma.GetLogNormalizer() - GetLogNormalizer());
             }
         }
 
@@ -623,7 +623,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public static double GammaLowerDiff(double a, double x, double y, bool regularized = true)
         {
-            if (!regularized || Math.Min(x,y) > 4 * a)
+            // GammaLower =approx 1 when x > 4*a or a < 1e-4
+            if (!regularized || Math.Min(x,y) > 4 * a || a < 1e-4)
             {
                 return MMath.GammaUpper(a, y, regularized) - MMath.GammaUpper(a, x, regularized);
             }

@@ -1141,7 +1141,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public static double ChooseLn(double n, double k)
         {
-            if (k <= -1 || k >= n+1)
+            if (k <= -1 || k >= n + 1)
                 return Double.NegativeInfinity;
             return GammaLn(n + 1) - GammaLn(k + 1) - GammaLn(n - k + 1);
         }
@@ -1179,8 +1179,9 @@ namespace Microsoft.ML.Probabilistic.Math
                 throw new ArgumentException($"x ({x}) < 0");
             if (!regularized)
             {
-                if (a < 1) return GammaUpperConFrac(a, x, regularized);
-                else return Gamma(a) * GammaUpper(a, x, true);
+                if (a >= 1) return Gamma(a) * GammaUpper(a, x, true);
+                else if (a > 1e-4 || x >= 1) return GammaUpperConFrac(a, x, regularized);
+                else return GammaUpperSeries(a, x, regularized);
             }
             if (a <= 0)
                 throw new ArgumentException($"a ({a}) <= 0");
@@ -1366,36 +1367,50 @@ namespace Microsoft.ML.Probabilistic.Math
                 if (AreEqual(sum, oldSum))
                     return sum * scale;
             }
-            throw new Exception(string.Format("GammaLowerSeries not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaLowerSeries not converging for a={a} x={x}");
         }
 
         /// <summary>
-        /// Compute the regularized upper incomplete Gamma function by a series expansion
+        /// Compute the upper incomplete Gamma function by a series expansion
         /// </summary>
         /// <param name="a">The shape parameter, &gt; 0</param>
         /// <param name="x">The lower bound of the integral, &gt;= 0</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
         /// <returns></returns>
-        private static double GammaUpperSeries(double a, double x)
+        private static double GammaUpperSeries(double a, double x, bool regularized = true)
         {
             // this series should only be applied when x is small
-            // the series is: 1 - x^a sum_{k=0}^inf (-x)^k /(k! Gamma(a+k+1))
-            // = (1 - 1/Gamma(a+1)) + (1 - x^a)/Gamma(a+1) - x^a sum_{k=1}^inf (-x)^k/(k! Gamma(a+k+1))
-            double xaMinus1 = MMath.ExpMinus1(a * Math.Log(x));
-            double aReciprocalFactorial, aReciprocalFactorialMinus1;
-            if (a > 0.3)
+            // the regularized series is: 1 - x^a/Gamma(a) sum_{k=0}^inf (-x)^k /(k! (a+k))
+            // = (1 - 1/Gamma(a+1)) + (1 - x^a)/Gamma(a+1) - x^a/Gamma(a) sum_{k=1}^inf (-x)^k/(k! (a+k))
+            double logx = Math.Log(x);
+            double alogx = a * logx;
+            double xaMinus1 = MMath.ExpMinus1(alogx);
+            double offset, scale, term;
+            if (regularized)
             {
-                aReciprocalFactorial = 1 / MMath.Gamma(a + 1);
-                aReciprocalFactorialMinus1 = aReciprocalFactorial - 1;
+                double aReciprocalFactorial, aReciprocalFactorialMinus1;
+                if (a > 0.3)
+                {
+                    aReciprocalFactorial = 1 / MMath.Gamma(a + 1);
+                    aReciprocalFactorialMinus1 = aReciprocalFactorial - 1;
+                }
+                else
+                {
+                    aReciprocalFactorialMinus1 = ReciprocalFactorialMinus1(a);
+                    aReciprocalFactorial = 1 + aReciprocalFactorialMinus1;
+                }
+                // offset = 1 - x^a/Gamma(a+1)
+                offset = -xaMinus1 * aReciprocalFactorial - aReciprocalFactorialMinus1;
+                scale = 1 - offset;
+                term = x / (a + 1) * a;
             }
             else
             {
-                aReciprocalFactorialMinus1 = ReciprocalFactorialMinus1(a);
-                aReciprocalFactorial = 1 + aReciprocalFactorialMinus1;
+                if (Math.Abs(alogx) <= 1e-16) offset = GammaSeries(a) - logx;
+                else offset = GammaSeries(a) - xaMinus1 / a;
+                scale = 1 + xaMinus1;
+                term = x / (a + 1);
             }
-            // offset = 1 - x^a/Gamma(a+1)
-            double offset = -xaMinus1 * aReciprocalFactorial - aReciprocalFactorialMinus1;
-            double scale = 1 - offset;
-            double term = x / (a + 1) * a;
             double sum = term;
             for (int i = 1; i < 1000; i++)
             {
@@ -1406,7 +1421,25 @@ namespace Microsoft.ML.Probabilistic.Math
                 if (AreEqual(sum, sumOld))
                     return scale * sum + offset;
             }
-            throw new Exception(string.Format("GammaUpperSeries not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaUpperSeries not converging for a={a} x={x} regularized={regularized}");
+        }
+
+        /// <summary>
+        /// Compute <c>Gamma(x) - 1/x</c> to high accuracy
+        /// </summary>
+        /// <param name="x">A real number &gt;= 0</param>
+        /// <returns></returns>
+        public static double GammaSeries(double x)
+        {
+            if (x > 1e-4)
+                return MMath.Gamma(x) - 1 / x;
+            else
+                /* using http://sagecell.sagemath.org/ (must not be indented)
+var('x');
+f = gamma(x)-1/x
+[c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
+                 */
+                return Digamma1 + x * (0.98905599532797255539539565150 + x * (-0.90747907608088628901656016736 + x * (0.98172808683440018733638029402 + x * (-0.98199506890314520210470141379))));
         }
 
         /// <summary>
@@ -1500,6 +1533,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 double del = d * c;
                 double oldH = h;
                 h *= del;
+                //Trace.WriteLine($"h = {h} del = {del}");
                 if (AreEqual(h, oldH))
                     return h;
             }
@@ -4251,7 +4285,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 return -1;
             T min = iter.Current;
             int indexOfMinimum = 0;
-            for(int i = 1; iter.MoveNext(); i++)
+            for (int i = 1; iter.MoveNext(); i++)
             {
                 T item = iter.Current;
                 if (min.CompareTo(item) > 0)

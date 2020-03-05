@@ -2230,6 +2230,27 @@ zL = (L - mx)*sqrt(prec)
         }
 
         /// <summary>
+        /// Generates a representative set of proper TruncatedGamma distributions.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<TruncatedGamma> TruncatedGammas()
+        {
+            foreach (var gamma in Gammas())
+            {
+                foreach (var lowerBound in DoublesAtLeastZero())
+                {
+                    foreach (var gap in DoublesGreaterThanZero())
+                    {
+                        double upperBound = lowerBound + gap;
+                        if (upperBound == lowerBound) continue;
+                        if (gamma.IsPointMass && (gamma.Point < lowerBound || gamma.Point > upperBound)) continue;
+                        yield return new TruncatedGamma(gamma, lowerBound, upperBound);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Generates a representative set of proper Gaussian distributions.
         /// </summary>
         /// <returns></returns>
