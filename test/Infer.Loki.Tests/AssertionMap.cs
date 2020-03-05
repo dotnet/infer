@@ -7,7 +7,7 @@ using System.Linq;
 using System.Numerics.MPFR;
 using System.Text;
 using System.Threading.Tasks;
-using static Infer.Loki.Mappings.AssertionMappings;
+using static Infer.Loki.Mappings.AssertionMethods;
 
 namespace Infer.Loki.Tests
 {

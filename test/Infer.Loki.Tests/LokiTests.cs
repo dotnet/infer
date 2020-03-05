@@ -17,12 +17,12 @@ namespace Infer.Loki.Tests
     /// <summary>
     ///     Tests for gate operations.
     /// </summary>
-    public class LokiGateOpTests : IDisposable
+    public class LokiTests : IDisposable
     {
         private readonly XunitTraceListener listener;
         private bool disposed;
 
-        public LokiGateOpTests(ITestOutputHelper output)
+        public LokiTests(ITestOutputHelper output)
         {
             this.listener = new XunitTraceListener(output);
             Trace.Listeners.Add(this.listener);

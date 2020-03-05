@@ -5,7 +5,7 @@ using System.Numerics.MPFR;
 
 namespace Infer.Loki.Mappings
 {
-    public static class AssertionMappings
+    public static class AssertionMethods
     {
         public static readonly BigFloat TOLERANCE = BigFloatFactory.Create(2e-30);
 

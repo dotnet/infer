@@ -2,7 +2,7 @@
 using Loki.Mapping.Maps;
 using System;
 using System.Numerics.MPFR;
-using static Infer.Loki.Mappings.SpecialFunctionsMappings;
+using static Infer.Loki.Mappings.SpecialFunctionsMethods;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infer.Loki.Mappings
 {
-    public static class SpecialFunctionsMappings
+    public static class SpecialFunctionsMethods
     {
         [DllImport(MPFRLibrary.FileName, CallingConvention = CallingConvention.Cdecl)]
         public static extern void mpfr_gamma_inc([In, Out] mpfr_struct rop, [In, Out] mpfr_struct op, [In, Out] mpfr_struct op2, int rnd);
