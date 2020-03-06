@@ -24031,7 +24031,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     err = Double.IsNaN(result) ? 0 : Double.NaN;
                 }
-                if (err < TOLERANCE)
+                if (!IsErrorSignificant(TOLERANCE, err))
                 {
                     Trace.WriteLine($"{name}({x:r})\t ok");
                 }
