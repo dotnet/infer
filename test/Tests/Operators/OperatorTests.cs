@@ -1379,7 +1379,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Parallel.ForEach(DoublesGreaterThanZero(), a =>
             {
-                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x), 3);
+                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x));
             });
         }
 
@@ -1388,7 +1388,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Parallel.ForEach(DoublesAtLeastZero(), x =>
             {
-                IsIncreasingForAtLeastZero(a => MMath.GammaUpper(a + double.Epsilon, x), 13);
+                IsIncreasingForAtLeastZero(a => MMath.GammaUpper(a + double.Epsilon, x), 2);
             });
         }
 

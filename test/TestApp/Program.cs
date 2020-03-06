@@ -81,8 +81,7 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new SpecialFunctionsTests().GammaUpperTest();
-            //new DistributionTests().TruncatedGamma_GetMeanPower_WithinBounds();
+            new DistributionTests().TruncatedGamma_GetMeanPower_WithinBounds();
             //new EpTests().TruncatedGammaPowerTest();
             //new EpTests().GammaPowerSumRRRTest();
             //EpTests.TestLogEvidence();

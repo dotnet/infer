@@ -328,6 +328,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             g = new TruncatedGamma(2, 1, 3, 3);
             Assert.True(g.IsPointMass);
             Assert.Equal(3.0, g.Point);
+
+            g = new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e14);
+            Assert.True(g.Sample() >= 0);
         }
 
         /// <summary>
@@ -390,10 +393,25 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void TruncatedGamma_GetMeanPower_WithinBounds()
         {
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 4.94065645841247E-324, 1.0000000000000054E-97).GetMean() >= 4.94065645841247E-324);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0.1, 1e17).GetMean() >= 0.1);
+            var g = new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e14);
+            Assert.True(g.GetMean() <= g.UpperBound);
+            for (int i = 0; i < 308; i++)
+            {
+                double power = System.Math.Pow(10, i);
+                Trace.WriteLine($"GetMeanPower({power}) = {g.GetMeanPower(power)}");
+                Assert.True(g.GetMeanPower(power) <= g.UpperBound);
+            }
+            Assert.True(g.GetMeanPower(1.7976931348623157E+308) <= g.UpperBound);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e9).GetMeanPower(1.7976931348623157E+308) <= 1e9);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e6).GetMeanPower(1.7976931348623157E+308) <= 1e6);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 100).GetMeanPower(4.94065645841247E-324) <= 100);
+
             long count = 0;
             Parallel.ForEach(OperatorTests.TruncatedGammas().Take(100000), dist =>
             {
-                foreach (var power in OperatorTests.Doubles())
+                foreach (var power in new[] { 1.0 })// OperatorTests.Doubles())
                 {
                     if (dist.Gamma.Shape <= -power && dist.LowerBound == 0) continue;
                     double meanPower = dist.GetMeanPower(power);

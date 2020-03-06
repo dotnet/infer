@@ -1509,6 +1509,7 @@ f = gamma(x)-1/x
                 scale = Math.Exp(a * Math.Log(x) - x - GammaLn(a));
             else
             {
+                // Result is inaccurate for a=100, x=3
                 double xia = x / a;
                 double phi = xia - 1 - Math.Log(xia);
                 scale = Math.Exp(0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi);
@@ -1585,8 +1586,8 @@ f = gamma(x)-1/x
                     invX2 * (-1.0 / 1680.0 +
                     invX2 * (1.0 / 1188.0 +
                     invX2 * (-691.0 / 360360.0 +
-                    invX2 * 1.0 / 156.0)))))
-                    );
+                    invX2 * (1.0 / 156.0
+                    )))))));
                 return sum;
             }
         }
