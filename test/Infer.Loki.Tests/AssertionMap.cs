@@ -16,7 +16,6 @@ namespace Infer.Loki.Tests
         public void MapAll(Mappers mappers)
         {
             mappers.MethodMapper.CreateMap<Func<double, double, bool>, Func<BigFloat, BigFloat, bool>>(SpecialFunctionsTests.IsErrorSignificant, IsErrorSignificantPreciser);
-            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Tests.SpecialFunctionsTests.TOLERANCE", () => TOLERANCE);
         }
     }
 }

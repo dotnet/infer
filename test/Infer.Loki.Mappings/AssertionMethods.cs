@@ -7,8 +7,6 @@ namespace Infer.Loki.Mappings
 {
     public static class AssertionMethods
     {
-        public static readonly BigFloat TOLERANCE = BigFloatFactory.Create(2e-30);
-
         public static bool IsErrorSignificantPreciser(BigFloat assertTolerance, BigFloat error)
         {
             var smallerTolerance = BigFloatFactory.Empty();
