@@ -16,7 +16,7 @@ using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Compiler.Transforms;
-using Assert = Xunit.Assert;
+using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 using Microsoft.ML.Probabilistic.Serialization;
@@ -236,7 +236,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             double bExpected = argmax;
             Console.WriteLine($"b = {bActual} should be {bExpected}");
-            Assert.Equal(bExpected, bActual, 1);
+            Assert.Equal(bExpected, bActual, 0.1);
         }
 
         internal void BaseOffsetTest()
