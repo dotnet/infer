@@ -13,6 +13,7 @@ using Microsoft.ML.Probabilistic.Utilities;
 using GaussianArray2D = Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Numerics;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -388,6 +389,38 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.False(double.IsInfinity(meanPower));
                 if (i == 1) Assert.Equal(MMath.GammaUpper(shape-1, 1, false)/MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
             }
+        }
+
+        /// <summary>
+        /// Returns a decimal string that exactly equals a double-precision number, unlike double.ToString which always returns a rounded result.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        internal static string ExactString(double x)
+        {
+            long bits = BitConverter.DoubleToInt64Bits(x);
+            ulong fraction = Convert.ToUInt64((bits & 0x000fffffffffffff) + 0x0010000000000000);
+            short exponent = Convert.ToInt16(((bits & 0x7ff0000000000000) >> 52) - 1023 - 52);
+            while((fraction & 1) == 0)
+            {
+                fraction >>= 1;
+                exponent++;
+            }
+            string suffix;
+            BigInteger big;
+            if (exponent >= 0)
+            {
+                big = BigInteger.Pow(2, exponent) * fraction;
+                suffix = "";
+            }
+            else
+            {
+                // Rewrite 2^-4 as 5^4 * 10^-4
+                big = BigInteger.Pow(5, -exponent) * fraction;
+                suffix = "e" + exponent;
+            }
+            return $"{big}{suffix}"; 
+            // Trace.WriteLine($"mpmath: mpf('{fraction}')*2**mpf('{exponent}')");
         }
 
         [Fact]
