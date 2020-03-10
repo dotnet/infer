@@ -1391,7 +1391,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 if (AreEqual(sum, oldSum))
                     return sum * scale;
             }
-            throw new Exception($"GammaLowerSeries not converging for a={a:r} x={x:r}");
+            throw new Exception($"GammaLowerSeries not converging for a={a:g17} x={x:g17}");
         }
 
         /// <summary>
@@ -1449,7 +1449,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     return scale * sum + offset;
                 }
             }
-            throw new Exception($"GammaUpperSeries not converging for a={a:r} x={x:r} regularized={regularized}");
+            throw new Exception($"GammaUpperSeries not converging for a={a:g17} x={x:g17} regularized={regularized}");
         }
 
         /// <summary>
@@ -1572,7 +1572,7 @@ f = gamma(x)-1/x
                 if (AreEqual(h, oldH))
                     return h;
             }
-            throw new Exception($"GammaUpperConFrac not converging for a={a:r} x={x:r}");
+            throw new Exception($"GammaUpperConFrac not converging for a={a:g17} x={x:g17}");
         }
 
         /// <summary>
@@ -2172,7 +2172,7 @@ f = gamma(x)-1/x
                     return r;
                 rOld = r;
             }
-            throw new Exception($"Not converging for n={n},x={x:r}");
+            throw new Exception($"Not converging for n={n},x={x:g17}");
         }
 
         /// <summary>
@@ -2573,7 +2573,7 @@ f = gamma(x)-1/x
             double sumOld = sum;
             for (int n = 2; n <= 100; n++)
             {
-                //Console.WriteLine($"n = {n - 1} sum = {sum:r}");
+                //Console.WriteLine($"n = {n - 1} sum = {sum:g17}");
                 double dlogphiOverFactorial;
                 if (n % 2 == 0) dlogphiOverFactorial = 1.0 / n - Halfx2y2;
                 else dlogphiOverFactorial = xy;
@@ -2588,7 +2588,7 @@ f = gamma(x)-1/x
                 rPowerN *= r;
                 sum += QderivOverFactorial * rPowerN;
                 if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= 100)
-                    throw new Exception($"NormalCdfRatioTaylor not converging for x={x:r}, y={y:r}, r={r:r}");
+                    throw new Exception($"NormalCdfRatioTaylor not converging for x={x:g17}, y={y:g17}, r={r:g17}");
                 if (AreEqual(sum, sumOld)) break;
                 sumOld = sum;
             }
@@ -2807,7 +2807,7 @@ rr = mpf('-0.99999824265582826');
                             numerPrevPlusC = scale * (c1 * R1xmry - c2 * R2xmry - c3);
                             //numer3 = scale / 3 * x * (c1 * R1xmry - c2 * R2xmry - c3 + r * omr2 * R2xmry);
                             //numer4 = scale / 3 * ((3 + x * x) * c1 * R1xmry + x * r * sqrtomr2 * omr2 * R3xmry - (3 * c2 + x * x * (c2 - r * omr2)) * R2xmry - (3 + x * x) * c3);
-                            //Trace.WriteLine($"numerPrevPlusC = {numerPrevPlusC:r} numer4 = {numer4:r}");
+                            //Trace.WriteLine($"numerPrevPlusC = {numerPrevPlusC:g17} numer4 = {numer4:g17}");
                             //shiftNumer = omr2 * x * x > 100;
                             shiftNumer = true;
                         }
@@ -2974,9 +2974,9 @@ rr = mpf('-0.99999824265582826');
                     else numer2 = numer;
                     double result = numer2 / (denom - 1);
                     if (TraceConFrac)
-                        Trace.WriteLine($"iter {i}: result={result:r} c={c:r} cOdd={cOdd:r} numer={numer:r} numer2={numer2:r} denom={denom:r} numerPrev={numerPrev:r}");
+                        Trace.WriteLine($"iter {i}: result={result:g17} c={c:g17} cOdd={cOdd:g17} numer={numer:g17} numer2={numer2:g17} denom={denom:g17} numerPrev={numerPrev:g17}");
                     if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= iterationCount - 1)
-                        throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:r} y={y:r} r={r:r} sqrtomr2={sqrtomr2:r} scale={scale:r}");
+                        throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:g17} y={y:g17} r={r:g17} sqrtomr2={sqrtomr2:g17} scale={scale:g17}");
                     if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < 1e-13)
                         break;
                     resultPrev = result;
@@ -3023,9 +3023,9 @@ rr = mpf('-0.99999824265582826');
                 {
                     double result = numer / denom;
                     if (TraceConFrac)
-                        Trace.WriteLine($"iter {i}: result={result:r} c={c:g4} numer={numer:r} denom={denom:r} numerPrev={numerPrev:r}");
+                        Trace.WriteLine($"iter {i}: result={result:g17} c={c:g4} numer={numer:g17} denom={denom:g17} numerPrev={numerPrev:g17}");
                     if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= 1000)
-                        throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x:r} y={y:r} r={r:r} scale={scale}");
+                        throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x:g17} y={y:g17} r={r:g17} scale={scale}");
                     if (AreEqual(result, resultPrev))
                         break;
                     resultPrev = result;
@@ -4593,7 +4593,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                 if ((double)(value * denominator) <= numerator)
                 {
                     double value2 = NextDouble(value);
@@ -4608,14 +4608,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                 }
             }
         }
@@ -4675,7 +4675,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                 if ((double)(value / denominator) <= ratio)
                 {
                     double value2 = NextDouble(value);
@@ -4690,14 +4690,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                 }
             }
         }
@@ -4737,7 +4737,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
                 //double value = RepresentationMidpoint(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                 if ((double)(value - b) <= sum)
                 {
                     double value2 = NextDouble(value);
@@ -4752,14 +4752,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                 }
             }
         }

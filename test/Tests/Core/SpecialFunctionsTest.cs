@@ -1947,7 +1947,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                         long ticks2 = watch.ElapsedTicks;
                         bool overtime = ticks > 10 * ticks2;
                         if (double.IsNaN(result1) /*|| overtime*/)
-                            Trace.WriteLine($"({x:r},{y:r},{r:r},{x-r*y}): {good} {ticks} {ticks2} {result1} {result2}");
+                            Trace.WriteLine($"({x:g17},{y:g17},{r:g17},{x-r*y}): {good} {ticks} {ticks2} {result1} {result2}");
                     }
                 }
             }
@@ -2361,7 +2361,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 r = 0.1;
 
 
-                Trace.WriteLine($"(x,y,r) = {x:r}, {y:r}, {r:r}");
+                Trace.WriteLine($"(x,y,r) = {x:g17}, {y:g17}, {r:g17}");
 
                 double intZOverZ;
                 try
@@ -2372,7 +2372,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     intZOverZ = double.NaN;
                 }
-                Trace.WriteLine($"intZOverZ = {intZOverZ:r}");
+                Trace.WriteLine($"intZOverZ = {intZOverZ:g17}");
 
                 double intZ0 = NormalCdfIntegralBasic(x, y, r);
                 double intZ1 = 0; // NormalCdfIntegralFlip(x, y, r);
@@ -2388,7 +2388,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     intZ = ExtendedDouble.NaN();
                 }
                 //double intZ = intZ0;
-                Trace.WriteLine($"intZ = {intZ:r} {intZ.ToDouble():r} {intZ0:r} {intZ1:r} {intZr:r}");
+                Trace.WriteLine($"intZ = {intZ:g17} {intZ.ToDouble():g17} {intZ0:g17} {intZ1:g17} {intZr:g17}");
                 if (intZ.Mantissa < 0) throw new Exception();
                 //double intZ2 = NormalCdfIntegralBasic(y, x, r);
                 //Trace.WriteLine($"intZ2 = {intZ2} {r*intZ}");
@@ -2834,7 +2834,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 if (i % 2 == 1)
                 {
                     result = -numer / denom;
-                    Console.WriteLine($"iter {i}: {result:r} {c:g4}");
+                    Console.WriteLine($"iter {i}: {result:g17} {c:g4}");
                     if (double.IsInfinity(result) || double.IsNaN(result))
                         throw new Exception($"NormalCdfConFrac5 not converging for x={x} y={y} r={r}");
                     if (result == rOld)
@@ -24067,7 +24067,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 double result = (double)Util.DynamicInvoke(fcn, args);
                 if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0)
                 {
-                    string strMsg = $"{name}({x:r})\t has wrong sign (result = {result:r})";
+                    string strMsg = $"{name}({x:g17})\t has wrong sign (result = {result:g17})";
                     Trace.WriteLine(strMsg);
                     Assert.True(false, strMsg);
                 }
@@ -24084,11 +24084,11 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 }
                 if (err < TOLERANCE)
                 {
-                    Trace.WriteLine($"{name}({x:r})\t ok");
+                    Trace.WriteLine($"{name}({x:g17})\t ok");
                 }
                 else
                 {
-                    string strMsg = $"{name}({x:r})\t wrong by {err.ToString("g2")} (result = {result:r})";
+                    string strMsg = $"{name}({x:g17})\t wrong by {err.ToString("g2")} (result = {result:g17})";
                     Trace.WriteLine(strMsg);
                     if (err > assertTolerance || double.IsNaN(err))
                         Assert.True(false, strMsg);

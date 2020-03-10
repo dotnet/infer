@@ -553,7 +553,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 sum += term;
                 if (MMath.AreEqual(sum, oldSum)) return regularized ? sum / MMath.Gamma(s) : sum;
             }
-            throw new Exception($"GammaUpperRatio not converging for s={s:r}, x={x:r}, regularized={regularized}");
+            throw new Exception($"GammaUpperRatio not converging for s={s:g17}, x={x:g17}, regularized={regularized}");
         }
 
         /// <summary>

@@ -282,7 +282,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double oldShape = shape;
                 logRate = MMath.RisingFactorialLnOverN(shape, power) - logMeanOverPower;
                 shape = Math.Exp(meanLogOverPower + logRate) + 0.5;
-                //Console.WriteLine($"shape = {shape:r}, logRate = {logRate:r}");
+                //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}");
                 if (MMath.AreEqual(oldLogRate, logRate) && MMath.AreEqual(oldShape, shape)) break;
                 if (double.IsNaN(shape)) throw new Exception("Failed to converge");
             }
