@@ -53,7 +53,7 @@ log_1_minus_variable_name = "expx"
 log_1_minus_indent = "                    "
 
 x_minus_log_1_plus_series_length = 7
-x_minus_log_1_plus_variable_name = "xOverAMinus1"
+x_minus_log_1_plus_variable_name = "x"
 x_minus_log_1_plus_indent = "                    "
 
 exp_minus_1_series_length = 9

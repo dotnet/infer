@@ -393,14 +393,23 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void TruncatedGamma_GetMeanPower_WithinBounds()
         {
-            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 4.94065645841247E-324, 1.0000000000000054E-97).GetMean() >= 4.94065645841247E-324);
+            // Fails because of rate*lowerbound
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1E+32, 0.010000000000000002), 1E+34, double.PositiveInfinity).GetMean() >= 1E+34);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1E+30, 1.0000000000000025E-43), 1E+73, double.PositiveInfinity).GetMean() >= 1E+73);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1E+17, 1.0000000000000014E-24), 1E+41, double.PositiveInfinity).GetMean() >= 1E+41);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1E+16, 1.0000000000000015E-26), 1E+42, double.PositiveInfinity).GetMean() >= 1E+42);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308), 1.0000000000000008E-16, double.PositiveInfinity).GetMean() >= 1.0000000000000008E-16);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1E+16, 0.010000000000000002), 1E+18, double.PositiveInfinity).GetMean() >= 1E+18);
+            Assert.True(new TruncatedGamma(100, 1e-31, 1.0000000000000015E-28, double.PositiveInfinity).GetMean() >= 1.0000000000000015E-28);
+            //Assert.True(new TruncatedGamma(new Gamma(1, 1), 100, 100.000001).GetMean() <= 100.000001);
+            //Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 4.94065645841247E-324, 1.0000000000000054E-97).GetMean() >= 4.94065645841247E-324);
             Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0.1, 1e17).GetMean() >= 0.1);
             var g = new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e14);
             Assert.True(g.GetMean() <= g.UpperBound);
             for (int i = 0; i < 308; i++)
             {
                 double power = System.Math.Pow(10, i);
-                Trace.WriteLine($"GetMeanPower({power}) = {g.GetMeanPower(power)}");
+                //Trace.WriteLine($"GetMeanPower({power}) = {g.GetMeanPower(power)}");
                 Assert.True(g.GetMeanPower(power) <= g.UpperBound);
             }
             Assert.True(g.GetMeanPower(1.7976931348623157E+308) <= g.UpperBound);
@@ -409,7 +418,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 100).GetMeanPower(4.94065645841247E-324) <= 100);
 
             long count = 0;
-            Parallel.ForEach(OperatorTests.TruncatedGammas().Take(100000), dist =>
+            Parallel.ForEach(OperatorTests.TruncatedGammas().Where(dist => dist.Gamma.Shape >= 1e-100 && dist.Gamma.Rate >= 1e-100 && dist.LowerBound >= 1e-100 && dist.UpperBound > double.MaxValue)/*.Take(1000000)*/, dist =>
             {
                 foreach (var power in new[] { 1.0 })// OperatorTests.Doubles())
                 {

@@ -891,7 +891,7 @@ namespace Microsoft.ML.Probabilistic.Math
             /* Shift the argument and use Taylor series near 1 if argument <= S */
             if (x <= c_digamma_small)
             {
-                return - 1 / x +
+                return -1 / x +
                     // Truncated series 2: Digamma at 1
                     // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
                     -0.577215664901532860606512090082 +
@@ -1253,6 +1253,31 @@ namespace Microsoft.ML.Probabilistic.Math
                 return 1 - GammaUpperSeries(a, x);
         }
 
+        /// <summary>
+        /// Computes <c>x - log(1+x)</c> to high accuracy.
+        /// </summary>
+        /// <param name="x">Any real number &gt;= -1</param>
+        /// <returns>A real number &gt;= 0</returns>
+        private static double XMinusLog1Plus(double x)
+        {
+            if (Math.Abs(x) < 1e-1)
+            {
+                return
+                    // Truncated series 12: x - log(1 + x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * x * (1.0 / 2.0 +
+                    x * (-1.0 / 3.0 +
+                    x * (1.0 / 4.0 +
+                    x * (-1.0 / 5.0 +
+                    x * (1.0 / 6.0
+                    )))));
+            }
+            else
+            {
+                return x - MMath.Log1Plus(x);
+            }
+        }
+
         // Reference:
         // "Computation of the incomplete gamma function ratios and their inverse"
         // Armido R DiDonato and Alfred H Morris, Jr.   
@@ -1266,7 +1291,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Compute the regularized lower incomplete Gamma function: <c>int_0^x t^(a-1) exp(-t) dt / Gamma(a)</c>
         /// </summary>
         /// <param name="a">Must be &gt; 20</param>
-        /// <param name="x"></param>
+        /// <param name="x">A real number &gt;= 0</param>
         /// <param name="upper">If true, compute the upper incomplete Gamma function</param>
         /// <returns></returns>
         private static double GammaAsympt(double a, double x, bool upper)
@@ -1274,38 +1299,28 @@ namespace Microsoft.ML.Probabilistic.Math
             if (a <= 20)
                 throw new Exception("a <= 20");
             double xOverAMinus1 = (x - a) / a;
-            double phi;
-            if (Math.Abs(xOverAMinus1) < 1e-1)
-            {
-                phi =
-                    // Truncated series 12: x - log(1 + x)
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
-                    xOverAMinus1 * xOverAMinus1 * (1.0 / 2.0 +
-                    xOverAMinus1 * (-1.0 / 3.0 +
-                    xOverAMinus1 * (1.0 / 4.0 +
-                    xOverAMinus1 * (-1.0 / 5.0 +
-                    xOverAMinus1 * 1.0 / 6.0))))
-                    ;
-            }
-            else
-            {
-                phi = xOverAMinus1 - MMath.Log1Plus(xOverAMinus1);
-            }
+            double phi = XMinusLog1Plus(xOverAMinus1);
+            // phi >= 0
             double y = a * phi;
             double z = Math.Sqrt(2 * phi);
             if (x <= a)
                 z *= -1;
-            double[] b = new double[GammaLowerAsympt_C0.Length];
-            b[b.Length - 1] = GammaLowerAsympt_C0[b.Length - 1];
-            double sum = b[b.Length - 1];
-            b[b.Length - 2] = GammaLowerAsympt_C0[b.Length - 2];
-            sum = z * sum + b[b.Length - 2];
-            for (int i = b.Length - 3; i >= 0; i--)
+            int length = GammaLowerAsympt_C0.Length;
+            double bEven = GammaLowerAsympt_C0[length - 1];
+            double sum = bEven;
+            double bOdd = GammaLowerAsympt_C0[length - 2];
+            sum = z * sum + bOdd;
+            for (int i = length - 3; i >= 0; i -= 2)
             {
-                b[i] = b[i + 2] * (i + 2) / a + GammaLowerAsympt_C0[i];
-                sum = z * sum + b[i];
+                bEven = bEven * (i + 2) / a + GammaLowerAsympt_C0[i];
+                sum = z * sum + bEven;
+                if (i > 0)
+                {
+                    bOdd = bOdd * (i + 1) / a + GammaLowerAsympt_C0[i - 1];
+                    sum = z * sum + bOdd;
+                }
             }
-            sum *= a / (a + b[1]);
+            sum *= a / (a + bOdd);
             if (x <= a)
                 sum *= -1;
             double result = 0.5 * Erfc(Math.Sqrt(y)) + sum * Math.Exp(-y) / (Math.Sqrt(a) * MMath.Sqrt2PI);
@@ -1376,7 +1391,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 if (AreEqual(sum, oldSum))
                     return sum * scale;
             }
-            throw new Exception($"GammaLowerSeries not converging for a={a} x={x}");
+            throw new Exception($"GammaLowerSeries not converging for a={a:r} x={x:r}");
         }
 
         /// <summary>
@@ -1434,7 +1449,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     return scale * sum + offset;
                 }
             }
-            throw new Exception($"GammaUpperSeries not converging for a={a} x={x} regularized={regularized}");
+            throw new Exception($"GammaUpperSeries not converging for a={a:r} x={x:r} regularized={regularized}");
         }
 
         /// <summary>
@@ -1452,13 +1467,13 @@ var('x');
 f = gamma(x)-1/x
 [c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
                  */
-                return Digamma1 
-                    + x * (0.98905599532797255539539565150 
-                    + x * (-0.90747907608088628901656016736 
-                    + x * (0.98172808683440018733638029402 
+                return Digamma1
+                    + x * (0.98905599532797255539539565150
+                    + x * (-0.90747907608088628901656016736
+                    + x * (0.98172808683440018733638029402
                     + x * (-0.98199506890314520210470141379
-                    + x * (0.99314911462127619315386725333 
-                    + x * (-0.99600176044243153397007841966 
+                    + x * (0.99314911462127619315386725333
+                    + x * (-0.99600176044243153397007841966
                     ))))));
         }
 
@@ -1500,7 +1515,7 @@ f = gamma(x)-1/x
         /// <param name="a">A positive real number</param>
         /// <param name="x"></param>
         /// <returns></returns>
-        private static double GammaUpperScale(double a, double x)
+        public static double GammaUpperScale(double a, double x)
         {
             if (double.IsPositiveInfinity(x) || double.IsPositiveInfinity(a))
                 return 0;
@@ -1510,8 +1525,8 @@ f = gamma(x)-1/x
             else
             {
                 // Result is inaccurate for a=100, x=3
-                double xia = x / a;
-                double phi = xia - 1 - Math.Log(xia);
+                double xOverAMinus1 = (x-a) / a;
+                double phi = XMinusLog1Plus(xOverAMinus1);
                 scale = Math.Exp(0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi);
             }
             return scale;
@@ -1523,7 +1538,7 @@ f = gamma(x)-1/x
         /// </summary>
         /// <param name="a">A real number.  Must be &gt; 0 if regularized is true.</param>
         /// <param name="x">A real number &gt;= 1.1</param>
-        /// <param name="regularized">If true, result is divded by Gamma(a)</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
         /// <returns></returns>
         private static double GammaUpperConFrac(double a, double x, bool regularized = true)
         {
@@ -1557,7 +1572,7 @@ f = gamma(x)-1/x
                 if (AreEqual(h, oldH))
                     return h;
             }
-            throw new Exception($"GammaUpperConFrac not converging for a={a} x={x}");
+            throw new Exception($"GammaUpperConFrac not converging for a={a:r} x={x:r}");
         }
 
         /// <summary>

@@ -1048,6 +1048,13 @@ ncdf(-12.2)
         [Fact]
         public void GammaUpperTest()
         {
+            double[,] gammaUpperScale_pairs = new double[,]
+            {
+                {100,3, 2.749402805834002258937858149557e-110},
+                {1e30,1.0000000000000024E+30, 22394530294843.000033 },
+            };
+            CheckFunctionValues(nameof(MMath.GammaUpperScale), MMath.GammaUpperScale, gammaUpperScale_pairs);
+
             double[,] gammaLower_pairs = new double[,] {
                 {1e-6,1e-1,0.9999981770769746499},
                 {0.05,3e-20,0.1085221036950261},
@@ -1071,7 +1078,7 @@ ncdf(-12.2)
                 {double.PositiveInfinity,1,0 },
                 {double.Epsilon,0,0 },
             };
-            CheckFunctionValues("GammaLower", MMath.GammaLower, gammaLower_pairs);
+            CheckFunctionValues(nameof(MMath.GammaLower), MMath.GammaLower, gammaLower_pairs);
 
             /* In python mpmath:
 from mpmath import *

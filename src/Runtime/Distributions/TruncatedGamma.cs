@@ -500,16 +500,60 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 throw new ImproperDistributionException(this);
             else
             {
-                double Z = GetNormalizer();
-                if (Z == 0)
+                double rl = this.Gamma.Rate * LowerBound;
+                if (UpperBound > double.MaxValue && rl >= 45 && rl > (this.Gamma.Shape + 1) / 0.99)
                 {
-                    return GetMode();
+                    // When UpperBound = infinity, the mean is 1/rate * GammaUpper(shape+1, rate*L)/GammaUpper(shape, rate*L)
+                    // GammaUpper(s, r*L) = (r*L)^(s-1) exp(-r*L) (1 + GammaUpperRatio)
+                    double gur = GammaUpperRatio(this.Gamma.Shape, rl, false);
+                    return LowerBound * (1 + Math.Max(0, GammaUpperRatio(this.Gamma.Shape + 1, rl, false) - gur) / (1 + gur));
                 }
-                // if Z is not zero, then Z1 cannot be zero.
-                double Z1 = GammaProbBetween(this.Gamma.Shape + 1, this.Gamma.Rate, LowerBound, UpperBound);
-                double sum = this.Gamma.Shape / this.Gamma.Rate * Z1;
-                return sum / Z;
+                else
+                {
+                    double Z = GetNormalizer();
+                    if (Z == 0)
+                    {
+                        return GetMode();
+                    }
+                    // if Z is not zero, then Z1 cannot be zero.
+                    if (this.Gamma.Shape + 1 == this.Gamma.Shape)
+                    {
+                        double ru = this.Gamma.Rate * UpperBound;
+                        return (this.Gamma.Shape + (MMath.GammaUpperScale(this.Gamma.Shape, rl) - MMath.GammaUpperScale(this.Gamma.Shape, ru)) / Z) / this.Gamma.Rate;
+                    }
+                    else
+                    {
+                        // This fails when Shape is large enough that Shape+1 == Shape.
+                        double Z1 = GammaProbBetween(this.Gamma.Shape + 1, this.Gamma.Rate, LowerBound, UpperBound);
+                        double sum = this.Gamma.Shape / this.Gamma.Rate * Z1;
+                        double mean = sum / Z;
+                        return mean;
+                    }
+                }
             }
+        }
+
+        /// <summary>
+        /// Computes <c>GammaUpper(s,x)/(x^(s-1)*exp(-x)) - 1</c> to high accuracy
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="x">A real number gt;= 45 and gt; <paramref name="s"/>/0.99</param>
+        /// <param name="regularized"></param>
+        /// <returns></returns>
+        public static double GammaUpperRatio(double s, double x, bool regularized = true)
+        {
+            if (s >= x * 0.99) throw new ArgumentOutOfRangeException(nameof(s), s, "s >= x*0.99");
+            if (x < 45) throw new ArgumentOutOfRangeException(nameof(x), x, "x < 45");
+            double term = (s - 1) / x;
+            double sum = term;
+            for (int i = 2; i < 1000; i++)
+            {
+                term *= (s - i) / x;
+                double oldSum = sum;
+                sum += term;
+                if (MMath.AreEqual(sum, oldSum)) return regularized ? sum / MMath.Gamma(s) : sum;
+            }
+            throw new Exception($"GammaUpperRatio not converging for s={s:r}, x={x:r}, regularized={regularized}");
         }
 
         /// <summary>
@@ -653,7 +697,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             // Avoid cases where GammaLower is near 1, since the results will be inaccurate.
             // GammaLower(a,x) =approx 1 when x > 4*a or a < 1e-4
-            if ((!regularized && (shape < 1 || rate*Math.Max(upperBound,lowerBound) > 0.01*shape)) || rate*Math.Min(upperBound,lowerBound) > 4 * shape || shape < 1e-4)
+            if ((!regularized && (shape < 1 || rate * Math.Max(upperBound, lowerBound) > 0.01 * shape)) || rate * Math.Min(upperBound, lowerBound) > 4 * shape || shape < 1e-4)
             {
                 double logl = Math.Log(lowerBound);
                 if (rate * upperBound < 1e-16 && shape < -1e-16 / (Math.Log(rate) + logl))
@@ -663,12 +707,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
+                    // This is inaccurate when lowerBound is close to upperBound.  In that case, use a Taylor expansion of lowerBound around upperBound.
                     return MMath.GammaUpper(shape, rate * lowerBound, regularized) - MMath.GammaUpper(shape, rate * upperBound, regularized);
                 }
             }
             else
             {
-                double diff = MMath.GammaLower(shape, rate*upperBound) - MMath.GammaLower(shape, rate*lowerBound);
+                double diff = MMath.GammaLower(shape, rate * upperBound) - MMath.GammaLower(shape, rate * lowerBound);
                 return regularized ? diff : (MMath.Gamma(shape) * diff);
             }
         }
