@@ -31,10 +31,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Initializes a new instance of the <see cref="EpsilonClosure"/> class.
             /// </summary>
+            /// <param name="automaton">The automaton from to which <paramref name="state"/> belongs.</param>
             /// <param name="state">The state, which epsilon closure this instance will represent.</param>
-            internal EpsilonClosure(State state)
+            internal EpsilonClosure(
+                Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton,
+                State state)
             {
-                weightedStates = new List<(State, Weight)>(DefaultStateListCapacity);
+                this.weightedStates = new List<(State, Weight)>(DefaultStateListCapacity);
 
                 // Optimize for a very common case: a single-node closure
                 bool singleNodeClosure = true;
@@ -61,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
                 else
                 {
-                    Condensation condensation = state.Owner.ComputeCondensation(state, tr => tr.IsEpsilon, true);
+                    Condensation condensation = automaton.ComputeCondensation(state, tr => tr.IsEpsilon, true);
                     for (int i = 0; i < condensation.ComponentCount; ++i)
                     {
                         StronglyConnectedComponent component = condensation.GetComponent(i);

@@ -65,14 +65,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Cached states representation of states for zero automaton.
         /// </summary>
-        private static readonly ImmutableArray<StateData> ZeroStates =
+        private static readonly ImmutableArray<StateData> SingleState =
             ImmutableArray.Create(new StateData(0, 0, Weight.Zero));
-
-        /// <summary>
-        /// Cached states representation of transitions for zero automaton.
-        /// </summary>
-        private static readonly ImmutableArray<Transition> ZeroTransitions =
-            ImmutableArray<Transition>.Empty;
 
         /// <summary>
         /// The maximum number of states an automaton can have.
@@ -1418,7 +1412,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // Iterate over transitions in state1
                 foreach (var transition1 in state1.Transitions)
                 {
-                    var destState1 = state1.Owner.States[transition1.DestinationStateIndex];
+                    var destState1 = automaton1.States[transition1.DestinationStateIndex];
 
                     if (transition1.IsEpsilon)
                     {
@@ -1434,7 +1428,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         Debug.Assert(
                             !transition2.IsEpsilon,
                             "The second argument of the product operation must be epsilon-free.");
-                        var destState2 = state2.Owner.States[transition2.DestinationStateIndex];
+                        var destState2 = automaton2.States[transition2.DestinationStateIndex];
                         var productLogNormalizer = Distribution<TElement>.GetLogAverageOf(
                             transition1.ElementDistribution.Value, transition2.ElementDistribution.Value,
                             out var product);
@@ -1653,8 +1647,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             this.Data = new DataContainer(
                 0,
-                ZeroStates,
-                ZeroTransitions,
+                SingleState,
+                ImmutableArray<Transition>.Empty,
                 isEpsilonFree: true,
                 usesGroups: false,
                 isDeterminized: true,
@@ -1835,7 +1829,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                     else
                     {
-                        var closure = this.States[stateIndex].GetEpsilonClosure();
+                        var closure = new EpsilonClosure(this, this.States[stateIndex]);
 
                         if (sequencePos == sequenceLength)
                         {
@@ -2229,8 +2223,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             while (stack.Count > 0)
             {
                 var oldStateIndex = stack.Pop();
-                var oldState = automaton.States[oldStateIndex];
-                var closure = oldState.GetEpsilonClosure();
+                var closure = new EpsilonClosure(automaton, automaton.States[oldStateIndex]);
                 var resultState = builder[oldToNewState[oldStateIndex].Value];
 
                 resultState.SetEndWeight(closure.EndWeight);
@@ -2661,15 +2654,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // Return false if loop was encountered
             bool TryMoveTo(int index)
             {
-                if (visited[index])
-                {
-                    // Loop encountered
-                    return false;
-                }
-
-                var state = this.Data.States[index];
-
-                
+               
                 if (index >= current.StateIndex &&
                     current.ElementEnumerator == null &&
                     current.RemainingTransitionsCount == 0)
@@ -2691,6 +2676,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
+                if (visited[index])
+                {
+                    // Loop encountered
+                    return false;
+                }
+
+                var state = this.Data.States[index];
                 current = new StateEnumerationState
                 {
                     StateIndex = index,

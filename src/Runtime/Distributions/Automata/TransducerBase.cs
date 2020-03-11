@@ -361,7 +361,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // Iterate over transitions from mappingState
                 foreach (var mappingTransition in mappingState.Transitions)
                 {
-                    var childMappingState = mappingState.Owner.States[mappingTransition.DestinationStateIndex];
+                    var childMappingState = mappingAutomaton.States[mappingTransition.DestinationStateIndex];
 
                     // Epsilon transition case
                     if (IsSrcEpsilon(mappingTransition))
@@ -380,7 +380,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         Debug.Assert(!srcTransition.IsEpsilon, "The automaton being projected must be epsilon-free.");
                         
-                        var srcChildState = srcState.Owner.States[srcTransition.DestinationStateIndex];
+                        var srcChildState = srcAutomaton.States[srcTransition.DestinationStateIndex];
 
                         var projectionLogScale = mappingTransition.ElementDistribution.Value.ProjectFirst(
                             srcTransition.ElementDistribution.Value, out var destElementDistribution);
@@ -492,7 +492,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // Enumerate transitions from the current mapping state
                 foreach (var mappingTransition in mappingState.Transitions)
                 {
-                    var destMappingState = mappingState.Owner.States[mappingTransition.DestinationStateIndex];
+                    var destMappingState = mappingAutomaton.States[mappingTransition.DestinationStateIndex];
 
                     // Epsilon transition case
                     if (IsSrcEpsilon(mappingTransition))

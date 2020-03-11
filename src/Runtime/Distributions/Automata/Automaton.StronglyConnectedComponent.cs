@@ -55,6 +55,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Initializes a new instance of the <see cref="StronglyConnectedComponent"/> class.
             /// </summary>
+            /// <param name="automaton">The automaton to which all states belong</param>
             /// <param name="transitionFilter">The transition filter used to build the condensation this component belongs to.</param>
             /// <param name="statesInComponent">The list of states in the component.</param>
             /// <param name="useApproximateClosure">
@@ -62,6 +63,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// instead of <see cref="Weight.Closure"/> in semiring computations.
             /// </param>
             internal StronglyConnectedComponent(
+                Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton,
                 Func<Transition, bool> transitionFilter,
                 List<State> statesInComponent,
                 bool useApproximateClosure)
@@ -69,14 +71,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Debug.Assert(
                     statesInComponent.Count > 0,
                     "There must be at least one state in the strongly connected component.");
-                Debug.Assert(
-                    statesInComponent.All(s => ReferenceEquals(s.Owner, statesInComponent[0].Owner)),
-                    "All the states must be valid and belong to the same automaton.");
 
+                this.Automaton = automaton;
                 this.transitionFilter = transitionFilter;
                 this.statesInComponent = statesInComponent;
                 this.useApproximateClosure = useApproximateClosure;
             }
+
+            /// <summary>
+            /// Automaton to which all states belong.
+            /// </summary>
+            public Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> Automaton { get;  }
 
             /// <summary>
             /// Gets the number of states in the component.
@@ -117,8 +122,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </returns>
             public int GetIndexByState(State state)
             {
-                Argument.CheckIfValid(ReferenceEquals(state.Owner, this.statesInComponent[0].Owner), "state", "The given state belongs to other automaton.");
-
                 if (this.statesInComponent.Count == 1)
                 {
                     return this.statesInComponent[0].Index == state.Index ? 0 : -1;
@@ -198,7 +201,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     State state = this.statesInComponent[srcStateIndexInComponent];
                     foreach (var transition in state.Transitions)
                     {
-                        State destState = state.Owner.States[transition.DestinationStateIndex];
+                        State destState = this.Automaton.States[transition.DestinationStateIndex];
                         int destStateIndexInComponent;
                         if (this.transitionFilter(transition) && (destStateIndexInComponent = this.GetIndexByState(destState)) != -1)
                         {
