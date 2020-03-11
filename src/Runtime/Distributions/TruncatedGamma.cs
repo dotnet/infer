@@ -519,7 +519,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     if (this.Gamma.Shape + 1 == this.Gamma.Shape)
                     {
                         double ru = this.Gamma.Rate * UpperBound;
-                        return (this.Gamma.Shape + (MMath.GammaUpperScale(this.Gamma.Shape, rl) - MMath.GammaUpperScale(this.Gamma.Shape, ru)) / Z) / this.Gamma.Rate;
+                        double offset = (MMath.GammaUpperScale(this.Gamma.Shape, rl) - MMath.GammaUpperScale(this.Gamma.Shape, ru)) / Z;
+                        if (rl == this.Gamma.Shape) return LowerBound + offset / this.Gamma.Rate;
+                        else return (this.Gamma.Shape + offset) / this.Gamma.Rate;
                     }
                     else
                     {
