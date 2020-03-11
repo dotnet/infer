@@ -2,17 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.ML.Probabilistic.Utilities;
-using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
-
 namespace Microsoft.ML.Probabilistic.Math
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
+    using System.Numerics;
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Core.Maths;
+    using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
+    using Microsoft.ML.Probabilistic.Utilities;
+
 
     /// <summary>
     /// This class provides mathematical constants and special functions, 
@@ -4815,6 +4816,62 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             return BitConverter.Int64BitsToDouble(midpoint);
         }
 
+        /// <summary>
+        /// Returns a decimal string that exactly equals a double-precision number, unlike double.ToString which always returns a rounded result.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static string ToStringExact(double x)
+        {
+            if (double.IsNaN(x) || double.IsInfinity(x) || x == 0) return x.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            long bits = BitConverter.DoubleToInt64Bits(x);
+            ulong fraction = Convert.ToUInt64(bits & 0x000fffffffffffff);
+            short exponent = Convert.ToInt16((bits & 0x7ff0000000000000) >> 52);
+            if (exponent == 0)
+            {
+                // subnormal number
+                exponent = -1022 - 52;
+            }
+            else
+            {
+                // normal number
+                fraction += 0x0010000000000000;
+                exponent = Convert.ToInt16(exponent - 1023 - 52);
+            }
+            while ((fraction & 1) == 0)
+            {
+                fraction >>= 1;
+                exponent++;
+            }
+            string sign = (x >= 0) ? "" : "-";
+            BigInteger big;
+            if (exponent >= 0)
+            {
+                big = BigInteger.Pow(2, exponent) * fraction;
+                return $"{sign}{big}";
+            }
+            else
+            {
+                // Rewrite 2^-4 as 5^4 * 10^-4
+                big = BigInteger.Pow(5, -exponent) * fraction;
+                // At this point, we could output the big integer with an "E"{exponent} suffix.  
+                // However, double.Parse does not correctly parse such strings.
+                // Instead we insert a decimal point and eliminate the "E" suffix if possible.
+                int digitCount = big.ToString().Length;
+                if (digitCount < -exponent)
+                {
+                    return $"{sign}0.{big}e{exponent + digitCount}";
+                }
+                else
+                {
+                    BigInteger pow10 = BigInteger.Pow(10, -exponent);
+                    BigInteger integerPart = big / pow10;
+                    BigInteger fractionalPart = big - integerPart*pow10;
+                    string zeros = new string('0', -exponent);
+                    return $"{sign}{integerPart}.{fractionalPart.ToString(zeros)}";
+                }
+            }
+        }
 
         #region Enumerations and constants
 

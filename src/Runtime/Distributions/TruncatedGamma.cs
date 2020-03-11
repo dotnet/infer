@@ -515,9 +515,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     {
                         return GetMode();
                     }
-                    // if Z is not zero, then Z1 cannot be zero.
                     if (this.Gamma.Shape + 1 == this.Gamma.Shape)
                     {
+                        // Apply the recurrence GammaUpper(s+1,x,false) = s*GammaUpper(s,x,false) + x^s*exp(-x)
                         double ru = this.Gamma.Rate * UpperBound;
                         double offset = (MMath.GammaUpperScale(this.Gamma.Shape, rl) - MMath.GammaUpperScale(this.Gamma.Shape, ru)) / Z;
                         if (rl == this.Gamma.Shape) return LowerBound + offset / this.Gamma.Rate;
@@ -526,6 +526,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     else
                     {
                         // This fails when Shape is large enough that Shape+1 == Shape.
+                        // if Z is not zero, then Z1 cannot be zero.
                         double Z1 = GammaProbBetween(this.Gamma.Shape + 1, this.Gamma.Rate, LowerBound, UpperBound);
                         double sum = this.Gamma.Shape / this.Gamma.Rate * Z1;
                         double mean = sum / Z;
