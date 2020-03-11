@@ -49,12 +49,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <summary>
     /// Interface to allow untyped access to collection distribution
     /// </summary>
-    public interface ICollectionDistribution
+    public interface ICollectionDistribution : IDistribution
     {
         /// <summary>
         /// Returns the count of known elements in collection distribution.
         /// </summary>
         int GetElementsCount();
+
+        /// <summary>
+        /// Returns the list of elements' distributions.
+        /// </summary>
+        List<IDistribution> GetElementsUntyped();
 
         /// <summary>
         /// Product of two collection distributions which also return element mapping information.
