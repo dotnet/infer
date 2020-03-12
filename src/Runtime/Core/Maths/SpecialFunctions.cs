@@ -1456,7 +1456,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </summary>
         /// <param name="x">A real number &gt;= 0</param>
         /// <returns></returns>
-        public static double GammaSeries(double x)
+        private static double GammaSeries(double x)
         {
             if (x > GammaSmallX)
                 return MMath.Gamma(x) - 1 / x;
