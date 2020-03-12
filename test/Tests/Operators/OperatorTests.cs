@@ -385,7 +385,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GammaFromShapeAndRateOpTest()
         {
             Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.SampleAverageConditional(Gamma.PointMass(0), 2.0, new Gamma(1, 1)).Rate));
-            Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.RateAverageConditional(new Gamma(1,1), 2.0, Gamma.PointMass(0)).Rate));
+            Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.RateAverageConditional(new Gamma(1, 1), 2.0, Gamma.PointMass(0)).Rate));
 
             Gamma sample, rate, result;
             double prevDiff;
@@ -2227,6 +2227,22 @@ zL = (L - mx)*sqrt(prec)
                 foreach (var power in Doubles().Where(x => !double.IsInfinity(x)))
                 {
                     yield return GammaPower.FromGamma(gamma, power);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generates a representative set of proper TruncatedGamma distributions with infinite upper bound.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<TruncatedGamma> LowerTruncatedGammas()
+        {
+            foreach (var gamma in Gammas())
+            {
+                foreach (var lowerBound in DoublesAtLeastZero())
+                {
+                    if (gamma.IsPointMass && gamma.Point < lowerBound) continue;
+                    yield return new TruncatedGamma(gamma, lowerBound, double.PositiveInfinity);
                 }
             }
         }

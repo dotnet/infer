@@ -277,8 +277,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetLogNormalizer()
         {
-            // TODO: make this more accurate.
-            return Math.Log(GetNormalizer());
+            if (IsProper() && !IsPointMass)
+            {
+                if (this.Gamma.Shape < 1)
+                {
+                    // When Shape < 1, Gamma(Shape) > 1 so use the unregularized version to avoid underflow.
+                    return Math.Log(GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound, false)) - MMath.GammaLn(this.Gamma.Shape);
+                }
+                else
+                {
+                    return Math.Log(GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound));
+                }
+            }
+            else
+            {
+                return 0.0;
+            }
         }
 
         /// <summary>
@@ -500,38 +514,36 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 throw new ImproperDistributionException(this);
             else
             {
+                // Apply the recurrence GammaUpper(s+1,x,false) = s*GammaUpper(s,x,false) + x^s*exp(-x)
                 double rl = this.Gamma.Rate * LowerBound;
-                if (UpperBound > double.MaxValue && rl >= 45 && rl > (this.Gamma.Shape + 1) / 0.99)
+                double ru = this.Gamma.Rate * UpperBound;
+                double offset;
+                if (ru > double.MaxValue)
                 {
-                    // When UpperBound = infinity, the mean is 1/rate * GammaUpper(shape+1, rate*L)/GammaUpper(shape, rate*L)
-                    // GammaUpper(s, r*L) = (r*L)^(s-1) exp(-r*L) (1 + GammaUpperRatio)
-                    double gur = GammaUpperRatio(this.Gamma.Shape, rl, false);
-                    return LowerBound * (1 + Math.Max(0, GammaUpperRatio(this.Gamma.Shape + 1, rl, false) - gur) / (1 + gur));
+                    double logZ = GetLogNormalizer();
+                    if (logZ < double.MinValue)
+                    {
+                        return GetMode();
+                    }
+                    offset = Math.Exp(MMath.GammaUpperLogScale(this.Gamma.Shape, rl) - logZ);
                 }
                 else
                 {
+                    // This fails when GammaUpperScale underflows to 0
                     double Z = GetNormalizer();
                     if (Z == 0)
                     {
                         return GetMode();
                     }
-                    if (this.Gamma.Shape + 1 == this.Gamma.Shape)
-                    {
-                        // Apply the recurrence GammaUpper(s+1,x,false) = s*GammaUpper(s,x,false) + x^s*exp(-x)
-                        double ru = this.Gamma.Rate * UpperBound;
-                        double offset = (MMath.GammaUpperScale(this.Gamma.Shape, rl) - MMath.GammaUpperScale(this.Gamma.Shape, ru)) / Z;
-                        if (rl == this.Gamma.Shape) return LowerBound + offset / this.Gamma.Rate;
-                        else return (this.Gamma.Shape + offset) / this.Gamma.Rate;
-                    }
-                    else
-                    {
-                        // This fails when Shape is large enough that Shape+1 == Shape.
-                        // if Z is not zero, then Z1 cannot be zero.
-                        double Z1 = GammaProbBetween(this.Gamma.Shape + 1, this.Gamma.Rate, LowerBound, UpperBound);
-                        double sum = this.Gamma.Shape / this.Gamma.Rate * Z1;
-                        double mean = sum / Z;
-                        return mean;
-                    }
+                    offset = (MMath.GammaUpperScale(this.Gamma.Shape, rl) - MMath.GammaUpperScale(this.Gamma.Shape, ru)) / Z;
+                }
+                if (rl == this.Gamma.Shape) return LowerBound + offset / this.Gamma.Rate;
+                else
+                {
+                    double result = (this.Gamma.Shape + offset) / this.Gamma.Rate;
+                    if (result < LowerBound) result = MMath.NextDouble(result);
+                    if (result < LowerBound) result = MMath.NextDouble(result);
+                    return result;
                 }
             }
         }

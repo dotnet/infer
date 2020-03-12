@@ -1518,19 +1518,30 @@ f = gamma(x)-1/x
         /// <returns></returns>
         public static double GammaUpperScale(double a, double x)
         {
+            return Math.Exp(GammaUpperLogScale(a, x));
+        }
+
+        /// <summary>
+        /// Computes <c>log(x^a e^(-x)/Gamma(a))</c> to high accuracy.
+        /// </summary>
+        /// <param name="a">A positive real number</param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static double GammaUpperLogScale(double a, double x)
+        {
             if (double.IsPositiveInfinity(x) || double.IsPositiveInfinity(a))
-                return 0;
-            double scale;
+                return double.NegativeInfinity;
             if (a < 10)
-                scale = Math.Exp(a * Math.Log(x) - x - GammaLn(a));
+            {
+                return a * Math.Log(x) - x - GammaLn(a);
+            }
             else
             {
                 // Result is inaccurate for a=100, x=3
-                double xOverAMinus1 = (x-a) / a;
+                double xOverAMinus1 = (x - a) / a;
                 double phi = XMinusLog1Plus(xOverAMinus1);
-                scale = Math.Exp(0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi);
+                return 0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi;
             }
-            return scale;
         }
 
         // Origin: James McCaffrey, http://msdn.microsoft.com/en-us/magazine/dn520240.aspx
