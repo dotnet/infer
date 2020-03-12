@@ -1,0 +1,9 @@
+arg0rounded,arg1rounded,arg0exact,arg1exact,expectedresult
+-Infinity,-Infinity,-Infinity,-Infinity,-Infinity
+-Infinity,-1000,-Infinity,-1000,-1000
+-Infinity,1000,-Infinity,1000,1000
+0,0,0,0,0.69314718055994528622676398299518041312694549560546875
+0,1000,0,1000,1000
+1000,0,1000,0,1000
+Infinity,Infinity,Infinity,Infinity,Infinity
+NaN,5,NaN,5,NaN
