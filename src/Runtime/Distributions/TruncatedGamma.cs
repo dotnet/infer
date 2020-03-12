@@ -279,7 +279,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsProper() && !IsPointMass)
             {
-                if (this.Gamma.Shape < 1 && this.Gamma.Rate * LowerBound > 0)
+                if (this.Gamma.Shape < 1 && (double)(this.Gamma.Rate * LowerBound) > 0)
                 {
                     // When Shape < 1, Gamma(Shape) > 1 so use the unregularized version to avoid underflow.
                     return Math.Log(GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound, false)) - MMath.GammaLn(this.Gamma.Shape);
