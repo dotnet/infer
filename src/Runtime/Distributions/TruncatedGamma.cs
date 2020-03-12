@@ -598,18 +598,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double Z = GetNormalizer();
                 if (Z == 0)
                 {
-                    mean = Math.Min(UpperBound, Math.Max(LowerBound, this.Gamma.GetMean()));
+                    mean = GetMode();
                     variance = 0.0;
                     return;
                 }
                 double m = this.Gamma.Shape / this.Gamma.Rate;
-                // Change of variables in the incomplete Gamma integral:
-                // t = x * Rate
-                // dt = dx * Rate
-                double Z1 = GammaProbBetween(this.Gamma.Shape + 1, this.Gamma.Rate, LowerBound, UpperBound);
-                mean = m * Z1 / Z;
-                double sum2 = m * (this.Gamma.Shape + 1) / this.Gamma.Rate * GammaProbBetween(this.Gamma.Shape + 2, this.Gamma.Rate, LowerBound, UpperBound);
-                variance = sum2 / Z - mean * mean;
+                mean = GetMean();
+                if (mean > double.MaxValue) variance = mean;
+                else
+                {
+                    double sum2 = m * (this.Gamma.Shape + 1) / this.Gamma.Rate * GammaProbBetween(this.Gamma.Shape + 2, this.Gamma.Rate, LowerBound, UpperBound);
+                    variance = sum2 / Z - mean * mean;
+                }
             }
         }
 

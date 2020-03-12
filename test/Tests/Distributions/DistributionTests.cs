@@ -133,7 +133,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max)
                     );
                 Interlocked.Add(ref count, 1);
-                if(count % 100000 == 0)
+                if (count % 100000 == 0)
                     Trace.WriteLine($"{count} cases passed");
             });
             Trace.WriteLine($"{count} cases passed");
@@ -227,7 +227,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerMeanAndVarianceFuzzTest()
         {
-            foreach(var gammaPower in OperatorTests.GammaPowers().Take(100000))
+            foreach (var gammaPower in OperatorTests.GammaPowers().Take(100000))
             {
                 gammaPower.GetMeanAndVariance(out double mean, out double variance);
                 Assert.False(double.IsNaN(mean));
@@ -386,8 +386,30 @@ namespace Microsoft.ML.Probabilistic.Tests
                 //Trace.WriteLine($"GetMeanPower({-i}) = {meanPower}");
                 Assert.False(double.IsNaN(meanPower));
                 Assert.False(double.IsInfinity(meanPower));
-                if (i == 1) Assert.Equal(MMath.GammaUpper(shape-1, 1, false)/MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
+                if (i == 1) Assert.Equal(MMath.GammaUpper(shape - 1, 1, false) / MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
             }
+        }
+
+        [Fact]
+        public void TruncatedGamma_GetMeanAndVariance_WithinBounds()
+        {
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 1E+19, double.PositiveInfinity).GetVariance() >= 0);
+
+            long count = 0;
+            Parallel.ForEach(OperatorTests.LowerTruncatedGammas()
+                /*.Take(100000)*/, dist =>
+                {
+                    dist.GetMeanAndVariance(out double mean, out double variance);
+                    // Compiler.Quoter.Quote(dist)
+                    Assert.True(mean >= dist.LowerBound);
+                    Assert.True(mean <= dist.UpperBound);
+                    Assert.Equal(mean, dist.GetMean());
+                    Assert.True(variance >= 0);
+                    Interlocked.Add(ref count, 1);
+                    if (count % 100000 == 0)
+                        Trace.WriteLine($"{count} cases passed");
+                });
+            Trace.WriteLine($"{count} cases passed");
         }
 
         [Fact]
@@ -410,7 +432,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Parallel.ForEach(OperatorTests.LowerTruncatedGammas()
                 .Take(100000), dist =>
             {
-                foreach (var power in new[] { 1.0 })// OperatorTests.Doubles())
+                foreach (var power in OperatorTests.Doubles())
                 {
                     if (dist.Gamma.Shape <= -power && dist.LowerBound == 0) continue;
                     double meanPower = dist.GetMeanPower(power);
