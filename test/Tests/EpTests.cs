@@ -2052,7 +2052,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        //[Trait("Category", "ModifiesGlobals")]
+        [Trait("Category", "OpenBug")]
         public void GammaPowerSumRRRTest()
         {
             //Assert.True(PlusGammaOp.AAverageConditional(GammaPower.FromShapeAndRate(299, 2135, -1), GammaPower.FromShapeAndRate(2.01, 10, -1), GammaPower.FromShapeAndRate(12, 22, -1), GammaPower.Uniform(-1)).Shape > 2);

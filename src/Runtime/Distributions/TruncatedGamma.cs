@@ -279,7 +279,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsProper() && !IsPointMass)
             {
-                if (this.Gamma.Shape < 1)
+                if (this.Gamma.Shape < 1 && this.Gamma.Rate * LowerBound > 0)
                 {
                     // When Shape < 1, Gamma(Shape) > 1 so use the unregularized version to avoid underflow.
                     return Math.Log(GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound, false)) - MMath.GammaLn(this.Gamma.Shape);
@@ -503,49 +503,34 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Get the mode (highest density point) of this distribution
+        /// </summary>
+        /// <returns></returns>
+        public double GetMode()
+        {
+            return Math.Min(Math.Max(this.Gamma.GetMode(), this.LowerBound), this.UpperBound);
+        }
+
+        /// <summary>
         /// Returns the mean (first moment) of the distribution
         /// </summary>
         /// <returns></returns>
         public double GetMean()
         {
-            if (this.Gamma.IsPointMass)
-                return this.Gamma.Point;
-            else if (!IsProper())
-                throw new ImproperDistributionException(this);
-            else
-            {
-                // Apply the recurrence GammaUpper(s+1,x,false) = s*GammaUpper(s,x,false) + x^s*exp(-x)
-                double rl = this.Gamma.Rate * LowerBound;
-                double ru = this.Gamma.Rate * UpperBound;
-                double offset;
-                if (ru > double.MaxValue)
-                {
-                    double logZ = GetLogNormalizer();
-                    if (logZ < double.MinValue)
-                    {
-                        return GetMode();
-                    }
-                    offset = Math.Exp(MMath.GammaUpperLogScale(this.Gamma.Shape, rl) - logZ);
-                }
-                else
-                {
-                    // This fails when GammaUpperScale underflows to 0
-                    double Z = GetNormalizer();
-                    if (Z == 0)
-                    {
-                        return GetMode();
-                    }
-                    offset = (MMath.GammaUpperScale(this.Gamma.Shape, rl) - MMath.GammaUpperScale(this.Gamma.Shape, ru)) / Z;
-                }
-                if (rl == this.Gamma.Shape) return LowerBound + offset / this.Gamma.Rate;
-                else
-                {
-                    double result = (this.Gamma.Shape + offset) / this.Gamma.Rate;
-                    if (result < LowerBound) result = MMath.NextDouble(result);
-                    if (result < LowerBound) result = MMath.NextDouble(result);
-                    return result;
-                }
-            }
+            double mean, variance;
+            GetMeanAndVariance(out mean, out variance);
+            return mean;
+        }
+
+        /// <summary>
+        /// Get the variance of this distribution
+        /// </summary>
+        /// <returns></returns>
+        public double GetVariance()
+        {
+            double mean, variance;
+            GetMeanAndVariance(out mean, out variance);
+            return variance;
         }
 
         /// <summary>
@@ -595,42 +580,48 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 throw new ImproperDistributionException(this);
             else
             {
-                double Z = GetNormalizer();
-                if (Z == 0)
-                {
-                    mean = GetMode();
-                    variance = 0.0;
-                    return;
-                }
+                // Apply the recurrence GammaUpper(s+1,x,false) = s*GammaUpper(s,x,false) + x^s*exp(-x)
+                double rl = this.Gamma.Rate * LowerBound;
+                double ru = this.Gamma.Rate * UpperBound;
                 double m = this.Gamma.Shape / this.Gamma.Rate;
-                mean = GetMean();
-                if (mean > double.MaxValue) variance = mean;
+                double offset, offset2;
+                if (ru > double.MaxValue)
+                {
+                    double logZ = GetLogNormalizer();
+                    if (logZ < double.MinValue)
+                    {
+                        mean = GetMode();
+                        variance = 0.0;
+                        return;
+                    }
+                    offset = Math.Exp(MMath.GammaUpperLogScale(this.Gamma.Shape, rl) - logZ);
+                    offset2 = (rl - this.Gamma.Shape) / this.Gamma.Rate * offset;
+                }
                 else
                 {
-                    double sum2 = m * (this.Gamma.Shape + 1) / this.Gamma.Rate * GammaProbBetween(this.Gamma.Shape + 2, this.Gamma.Rate, LowerBound, UpperBound);
-                    variance = sum2 / Z - mean * mean;
+                    // This fails when GammaUpperScale underflows to 0
+                    double Z = GetNormalizer();
+                    if (Z == 0)
+                    {
+                        mean = GetMode();
+                        variance = 0.0;
+                        return;
+                    }
+                    double gammaUpperScaleLower = MMath.GammaUpperScale(this.Gamma.Shape, rl);
+                    double gammaUpperScaleUpper = MMath.GammaUpperScale(this.Gamma.Shape, ru);
+                    offset = (gammaUpperScaleLower - gammaUpperScaleUpper) / Z;
+                    offset2 = ((rl - this.Gamma.Shape) / this.Gamma.Rate * gammaUpperScaleLower - (ru - this.Gamma.Shape) / this.Gamma.Rate * gammaUpperScaleUpper) / Z;
                 }
+                if (rl == this.Gamma.Shape) mean = LowerBound + offset / this.Gamma.Rate;
+                else
+                {
+                    mean = (this.Gamma.Shape + offset) / this.Gamma.Rate;
+                    if (mean < LowerBound) mean = MMath.NextDouble(mean);
+                    if (mean < LowerBound) mean = MMath.NextDouble(mean);
+                }
+                if (mean > double.MaxValue) variance = mean;
+                else variance = (m + offset2 + (1 - offset) * offset / this.Gamma.Rate) / this.Gamma.Rate;
             }
-        }
-
-        /// <summary>
-        /// Get the variance of this distribution
-        /// </summary>
-        /// <returns></returns>
-        public double GetVariance()
-        {
-            double mean, var;
-            GetMeanAndVariance(out mean, out var);
-            return var;
-        }
-
-        /// <summary>
-        /// Get the mode (highest density point) of this distribution
-        /// </summary>
-        /// <returns></returns>
-        public double GetMode()
-        {
-            return Math.Min(Math.Max(this.Gamma.GetMode(), this.LowerBound), this.UpperBound);
         }
 
         /// <summary>
@@ -659,9 +650,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 double shapePlusPower = this.Gamma.Shape + power;
                 double logZ1;
-                bool regularized = true; // shapePlusPower >= 1;
+                bool regularized = shapePlusPower >= 1;
                 if (regularized)
                 {
+                    // This formula cannot be used when shapePlusPower <= 0
                     logZ1 = (power * MMath.RisingFactorialLnOverN(this.Gamma.Shape, power)) +
                         Math.Log(GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized));
                 }
@@ -710,9 +702,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public static double GammaProbBetween(double shape, double rate, double lowerBound, double upperBound, bool regularized = true)
         {
-            // Avoid cases where GammaLower is near 1, since the results will be inaccurate.
-            // GammaLower(a,x) =approx 1 when x > 4*a or a < 1e-4
-            if ((!regularized && (shape < 1 || rate * Math.Max(upperBound, lowerBound) > 0.01 * shape)) || rate * Math.Min(upperBound, lowerBound) > 4 * shape || shape < 1e-4)
+            double rl = rate * lowerBound;
+            // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
+            bool lowerIsSmaller;
+            if (rl > 0.25)
+                lowerIsSmaller = (shape > rl + 0.25);
+            else
+                lowerIsSmaller = (shape > -MMath.Ln2 / Math.Log(rl));
+            if (!lowerIsSmaller)
             {
                 double logl = Math.Log(lowerBound);
                 if (rate * upperBound < 1e-16 && shape < -1e-16 / (Math.Log(rate) + logl))
@@ -723,12 +720,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else
                 {
                     // This is inaccurate when lowerBound is close to upperBound.  In that case, use a Taylor expansion of lowerBound around upperBound.
-                    return MMath.GammaUpper(shape, rate * lowerBound, regularized) - MMath.GammaUpper(shape, rate * upperBound, regularized);
+                    return MMath.GammaUpper(shape, rl, regularized) - MMath.GammaUpper(shape, rate * upperBound, regularized);
                 }
             }
             else
             {
-                double diff = MMath.GammaLower(shape, rate * upperBound) - MMath.GammaLower(shape, rate * lowerBound);
+                double diff = MMath.GammaLower(shape, rate * upperBound) - MMath.GammaLower(shape, rl);
                 return regularized ? diff : (MMath.Gamma(shape) * diff);
             }
         }

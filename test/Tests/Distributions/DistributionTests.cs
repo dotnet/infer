@@ -393,11 +393,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void TruncatedGamma_GetMeanAndVariance_WithinBounds()
         {
-            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 1E+19, double.PositiveInfinity).GetVariance() >= 0);
-
             long count = 0;
             Parallel.ForEach(OperatorTests.LowerTruncatedGammas()
-                /*.Take(100000)*/, dist =>
+                .Take(100000), dist =>
                 {
                     dist.GetMeanAndVariance(out double mean, out double variance);
                     // Compiler.Quoter.Quote(dist)
@@ -413,6 +411,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "OpenBug")]
         public void TruncatedGamma_GetMeanPower_WithinBounds()
         {
             var g = new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e14);

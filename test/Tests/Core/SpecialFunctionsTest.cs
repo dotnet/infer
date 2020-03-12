@@ -1068,7 +1068,7 @@ ncdf(-12.2)
             double[,] gammaUpperScale_pairs = new double[,]
             {
                 {100,3, 2.749402805834002258937858149557e-110},
-                {1e30,1.0000000000000024E+30, 22394530294843.000033 },
+                {1e30,1.0000000000000024E+30, 22798605571598.2221521928234647 },
             };
             CheckFunctionValues(nameof(MMath.GammaUpperScale), MMath.GammaUpperScale, gammaUpperScale_pairs);
 

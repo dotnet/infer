@@ -1194,13 +1194,12 @@ namespace Microsoft.ML.Probabilistic.Math
                 throw new ArgumentException($"a ({a}) <= 0");
             if (x == 0) return 1; // avoid 0/0
             // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
-            // useLower = true means that GammaLower is smaller.
-            bool useLower;
+            bool lowerIsSmaller;
             if (x > 0.25)
-                useLower = (a > x + 0.25);
+                lowerIsSmaller = (a > x + 0.25);
             else
-                useLower = (a > -MMath.Ln2 / Math.Log(x));
-            if (useLower)
+                lowerIsSmaller = (a > -MMath.Ln2 / Math.Log(x));
+            if (lowerIsSmaller)
             {
                 if (x < 0.5 * a + 67)
                     return 1 - GammaLowerSeries(a, x);
@@ -1233,13 +1232,12 @@ namespace Microsoft.ML.Probabilistic.Math
                 throw new ArgumentException($"a ({a}) <= 0");
             if (x == 0) return 0; // avoid 0/0
             // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
-            // useLower = true means that GammaLower is smaller.
-            bool useLower;
+            bool lowerIsSmaller;
             if (x > 0.25)
-                useLower = (a > x + 0.25);
+                lowerIsSmaller = (a > x + 0.25);
             else
-                useLower = (a > -MMath.Ln2 / Math.Log(x));
-            if (useLower)
+                lowerIsSmaller = (a > -MMath.Ln2 / Math.Log(x));
+            if (lowerIsSmaller)
             {
                 if (x < 0.5 * a + 67)
                     return GammaLowerSeries(a, x);
