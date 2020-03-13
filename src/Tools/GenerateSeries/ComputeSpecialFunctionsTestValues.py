@@ -18,9 +18,10 @@ pair_info = {
     'ExpMinus1RatioMinus1RatioMinusHalf.csv': None,
     'Gamma.csv': gamma,
     'GammaLn.csv': loggamma,
-    'GammaLower.csv': lowergamma,
+    'GammaLower.csv': None, #lowergamma,
     'GammaUpper.csv': None,
     'GammaUpperRegularized.csv': None,
+    'GammaUpperScale.csv' : None,
     'Log1MinusExp.csv': None,
     'Log1Plus.csv': None,
     'LogExpMinus1.csv': None,
@@ -68,12 +69,19 @@ with os.scandir(dir) as it:
                 newrows = []
                 for row in reader:
                     newrow = dict(row)
-                    #args = map(lambda s: Float(s, 500), row.values()[arg_count : 2 * arg_count])
                     args = []
                     for i in range(arg_count):
                         args.append(Float(float_str_csharp_to_python(row[f'arg{i}exact']), 500))
-                    result = f(*args).evalf(50, maxn=500)
-                    newrow['expectedresult'] = float_str_python_to_csharp(str(result))
+                    result_in_file = row['expectedresult']
+                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN':
+                        newrow['expectedresult'] = result_in_file
+                    else:
+                        try:
+                            result = f(*args).evalf(50, maxn=500)
+                        except ValueError:
+                            print(f'ValueError for args {args}. Setting result to NaN.')
+                            result = Float('nan')
+                        newrow['expectedresult'] = float_str_python_to_csharp(str(result))
                     newrows.append(newrow)
 
             with open(entry.path, 'w', newline='') as csvfile:
