@@ -5,7 +5,7 @@
     <ProjectGuid>d7562cc3-d48a-481d-b40c-07ee51ebbf50</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>GenerateSeries.py</StartupFile>
+    <StartupFile>ComputeSpecialFunctionsTestValues.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ComputeSpecialFunctionsTestValues.py" />
     <Compile Include="GenerateSeries.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
