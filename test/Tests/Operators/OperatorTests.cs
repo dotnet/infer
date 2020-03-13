@@ -384,6 +384,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaFromShapeAndRateOpTest()
         {
+            Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.SampleAverageConditional(Gamma.PointMass(0), 2.0, new Gamma(1, 1)).Rate));
+            Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.RateAverageConditional(new Gamma(1, 1), 2.0, Gamma.PointMass(0)).Rate));
+
             Gamma sample, rate, result;
             double prevDiff;
             double shape = 3;
@@ -856,7 +859,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             double point = 3;
             Gaussian toPoint = MaxGaussianOp.AAverageConditional(max, Gaussian.PointMass(point), b);
-            //Console.WriteLine($"{point} {toPoint} {toPoint.MeanTimesPrecision:r} {toPoint.Precision:r}");
+            //Console.WriteLine($"{point} {toPoint} {toPoint.MeanTimesPrecision:g17} {toPoint.Precision:g17}");
             if (max.IsPointMass && b.IsPointMass)
             {
                 Gaussian toUniform = MaxGaussianOp.AAverageConditional(max, Gaussian.Uniform(), b);
@@ -874,7 +877,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Gaussian a = Gaussian.FromMeanAndPrecision(point, System.Math.Pow(10, i));
                 Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, b);
-                //Console.WriteLine($"{a} {to_a} {to_a.MeanTimesPrecision:r} {to_a.Precision:r}");
+                //Console.WriteLine($"{a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17}");
                 double diff = toPoint.MaxDiff(to_a);
                 if (diff < 1e-14) diff = 0;
                 Assert.True(diff <= oldDiff);
@@ -1363,16 +1366,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        [Trait("Category", "OpenBug")]
-        public void GammaUpper_IsDecreasingInX()
-        {
-            foreach (double a in DoublesGreaterThanZero())
-            {
-                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x));
-            }
-        }
-
-        [Fact]
         public void GammaLower_IsDecreasingInA()
         {
             Parallel.ForEach(DoublesAtLeastZero(), x =>
@@ -1382,13 +1375,21 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        [Trait("Category", "OpenBug")]
+        public void GammaUpper_IsDecreasingInX()
+        {
+            Parallel.ForEach(DoublesGreaterThanZero(), a =>
+            {
+                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x));
+            });
+        }
+
+        [Fact]
         public void GammaUpper_IsIncreasingInA()
         {
-            foreach (double x in DoublesAtLeastZero())
+            Parallel.ForEach(DoublesAtLeastZero(), x =>
             {
-                IsIncreasingForAtLeastZero(a => MMath.GammaUpper(a + double.Epsilon, x));
-            }
+                IsIncreasingForAtLeastZero(a => MMath.GammaUpper(a + double.Epsilon, x), 2);
+            });
         }
 
         [Fact]
@@ -1454,18 +1455,22 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// </summary>
         /// <param name="func"></param>
         /// <returns></returns>
-        public bool IsIncreasingForAtLeastZero(Func<double, double> func)
+        public bool IsIncreasingForAtLeastZero(Func<double, double> func, double ulpError = 0)
         {
+            double scale = 1 + 2e-16 * ulpError;
             foreach (var x in DoublesAtLeastZero())
             {
                 double fx = func(x);
+                double smallFx;
+                if (fx >= 0) smallFx = fx / scale;
+                else smallFx = fx * scale;
                 foreach (var delta in DoublesGreaterThanZero())
                 {
                     double x2 = x + delta;
                     if (double.IsPositiveInfinity(delta)) x2 = delta;
                     double fx2 = func(x2);
                     // The cast here is important when running in 32-bit, Release mode.
-                    Assert.True((double)fx2 >= fx);
+                    Assert.True((double)fx2 >= smallFx);
                 }
             }
             return true;
@@ -1552,7 +1557,7 @@ zL = (L - mx)*sqrt(prec)
                     //X = Gaussian.FromMeanAndPrecision(mx, X.Precision + 1.0000000000000011E-19);
                     Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Gaussian xPost = X * toX2;
-                    Console.WriteLine($"mx = {X.GetMean():r} mp = {xPost.GetMean():r} vp = {xPost.GetVariance():r} toX = {toX2}");
+                    Console.WriteLine($"mx = {X.GetMean():g17} mp = {xPost.GetMean():g17} vp = {xPost.GetVariance():g17} toX = {toX2}");
                     //X.Precision *= 100;
                     //X.MeanTimesPrecision *= 0.999999;
                     //X.SetMeanAndPrecision(mx, X.Precision * 2);
@@ -1671,7 +1676,7 @@ zL = (L - mx)*sqrt(prec)
             // all we need is a good approx for (ZR/diff - 1)
             double ZR5 = (1.0 / 6 * diffs * diffs * diffs * (-1 + zL * zL) + 0.5 * diffs * diffs * (-zL) + diffs) / sqrtPrec;
             double ZR6 = (1.0 / 24 * diffs * diffs * diffs * diffs * (zL - zL * zL * zL + 2 * zL) + 1.0 / 6 * diffs * diffs * diffs * (-1 + zL * zL) + 0.5 * diffs * diffs * (-zL) + diffs) / sqrtPrec;
-            //Console.WriteLine($"zL = {zL:r} delta = {delta:r} (-zL-zU)/2*diffs={(-zL - zU) / 2 * diffs:r} diffs = {diffs:r} diffs*zL = {diffs * zL}");
+            //Console.WriteLine($"zL = {zL:g17} delta = {delta:g17} (-zL-zU)/2*diffs={(-zL - zU) / 2 * diffs:g17} diffs = {diffs:g17} diffs*zL = {diffs * zL}");
             //Console.WriteLine($"Z/N = {ZR} {ZR2} {ZR2b} {ZR2c} asympt:{ZRasympt} {ZR4} {ZR5} {ZR6}");
             // want to compute Z/X.Prob(L)/diffs + (exp(delta)-1)/delta
             double expMinus1RatioMinus1RatioMinusHalf = MMath.ExpMinus1RatioMinus1RatioMinusHalf(delta);
@@ -1741,7 +1746,7 @@ zL = (L - mx)*sqrt(prec)
             // delta = 0.0002 diffs = 0.00014142135623731: bad
             // delta = 2E-08 diffs = 1.4142135623731E-08: good
             double numer5 = delta * diffs * diffs / 6 + diffs * diffs * diffs * diffs / 24 - 1.0 / 24 * delta * delta * delta - 1.0 / 120 * delta * delta * delta * delta + diffs * diffs / 12;
-            //Console.WriteLine($"numer = {numer} smallzL:{numer1SmallzL} largezL:{numerLargezL} {numerLargezL2} {numerLargezL3} {numerLargezL4:r} {numerLargezL5:r} {numerLargezL6:r} {numerLargezL7:r} {numerLargezL8:r} {numer1e} asympt:{numerAsympt} {numerAsympt2} {numer2} {numer3} {numer4} {numer5}");
+            //Console.WriteLine($"numer = {numer} smallzL:{numer1SmallzL} largezL:{numerLargezL} {numerLargezL2} {numerLargezL3} {numerLargezL4:g17} {numerLargezL5:g17} {numerLargezL6:g17} {numerLargezL7:g17} {numerLargezL8:g17} {numer1e} asympt:{numerAsympt} {numerAsympt2} {numer2} {numer3} {numer4} {numer5}");
             double mp = mx - System.Math.Exp(logPhiL - logZ) * expMinus1 / X.Precision;
             double mp2 = center + (delta / diff - System.Math.Exp(logPhiL - logZ) * expMinus1) / X.Precision;
             double mp3 = center + (delta / diff * ZR2b - expMinus1) * System.Math.Exp(logPhiL - logZ) / X.Precision;
@@ -1776,7 +1781,7 @@ zL = (L - mx)*sqrt(prec)
             //WriteLast(mpSmallzUs);
             double mp5 = center + numer5 * delta / diffs * alphaXcLprecDiffs;
             //double mpBrute = Util.ArrayInit(10000000, i => X.Sample()).Where(sample => (sample > lowerBound) && (sample < upperBound)).Average();
-            //Console.WriteLine($"mp = {mp} {mp2} {mp3} {mpLargezL4:r} {mpLargezL5:r} {mpLargezL6:r} {mpLargezL7:r} {mpLargezL8:r} asympt:{mpAsympt} {mpAsympt2} {mp5}");
+            //Console.WriteLine($"mp = {mp} {mp2} {mp3} {mpLargezL4:g17} {mpLargezL5:g17} {mpLargezL6:g17} {mpLargezL7:g17} {mpLargezL8:g17} asympt:{mpAsympt} {mpAsympt2} {mp5}");
             double cL = -1 / expMinus1;
             // rU*diffs = rU*zU - rU*zL = r1U - 1 - rU*zL + rL*zL - rL*zL = r1U - 1 - drU*zL - (r1L-1) = dr1U - drU*zL
             // zL = -diffs/2 - delta/diffs
@@ -2227,6 +2232,43 @@ zL = (L - mx)*sqrt(prec)
         }
 
         /// <summary>
+        /// Generates a representative set of proper TruncatedGamma distributions with infinite upper bound.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<TruncatedGamma> LowerTruncatedGammas()
+        {
+            foreach (var gamma in Gammas())
+            {
+                foreach (var lowerBound in DoublesAtLeastZero())
+                {
+                    if (gamma.IsPointMass && gamma.Point < lowerBound) continue;
+                    yield return new TruncatedGamma(gamma, lowerBound, double.PositiveInfinity);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generates a representative set of proper TruncatedGamma distributions.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<TruncatedGamma> TruncatedGammas()
+        {
+            foreach (var gamma in Gammas())
+            {
+                foreach (var lowerBound in DoublesAtLeastZero())
+                {
+                    foreach (var gap in DoublesGreaterThanZero())
+                    {
+                        double upperBound = lowerBound + gap;
+                        if (upperBound == lowerBound) continue;
+                        if (gamma.IsPointMass && (gamma.Point < lowerBound || gamma.Point > upperBound)) continue;
+                        yield return new TruncatedGamma(gamma, lowerBound, upperBound);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Generates a representative set of proper Gaussian distributions.
         /// </summary>
         /// <returns></returns>
@@ -2272,10 +2314,10 @@ zL = (L - mx)*sqrt(prec)
             {
                 Parallel.ForEach(DoublesLessThanZero(), lowerBound =>
                 {
-                    //Console.WriteLine($"isBetween = {isBetween}, lowerBound = {lowerBound:r}");
+                    //Console.WriteLine($"isBetween = {isBetween}, lowerBound = {lowerBound:g17}");
                     foreach (var upperBound in new[] { -lowerBound }.Concat(UpperBounds(lowerBound)).Take(1))
                     {
-                        //Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                        //Console.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
                         double center = MMath.Average(lowerBound, upperBound);
                         if (double.IsNegativeInfinity(lowerBound) && double.IsPositiveInfinity(upperBound))
                             center = 0;
@@ -2314,8 +2356,8 @@ zL = (L - mx)*sqrt(prec)
                     }
                 });
             }
-            Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}, isBetween = {meanMaxUlpErrorIsBetween}");
-            Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}, isBetween = {precMaxUlpErrorIsBetween}");
+            Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:g17}, upperBound = {meanMaxUlpErrorUpperBound:g17}, isBetween = {meanMaxUlpErrorIsBetween}");
+            Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:g17}, upperBound = {precMaxUlpErrorUpperBound:g17}, isBetween = {precMaxUlpErrorIsBetween}");
             Assert.True(meanMaxUlpError == 0);
             Assert.True(precMaxUlpError == 0);
         }
@@ -2331,7 +2373,7 @@ zL = (L - mx)*sqrt(prec)
             for (int i = 0; i < 1000; i++)
             {
                 double logProb = DoubleIsBetweenOp.LogProbBetween(x, lowerBound, upperBound);
-                Console.WriteLine($"{x.Precision:r} {logProb:r}");
+                Console.WriteLine($"{x.Precision:g17} {logProb:g17}");
                 x = Gaussian.FromMeanAndPrecision(x.GetMean(), x.Precision + 1000000000000 * MMath.Ulp(x.Precision));
             }
         }
@@ -2348,7 +2390,7 @@ zL = (L - mx)*sqrt(prec)
             {
                 foreach (double upperBound in new double[] { 1 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
-                    if (trace) Trace.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                    if (trace) Trace.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
                     foreach (var x in Gaussians())
                     {
                         if (x.IsPointMass) continue;
@@ -2383,7 +2425,7 @@ zL = (L - mx)*sqrt(prec)
                             }
                         }
                     }
-                    if (trace) Trace.WriteLine($"maxUlpError = {maxUlpError}, lowerBound = {maxUlpErrorLowerBound:r}, upperBound = {maxUlpErrorUpperBound:r}");
+                    if (trace) Trace.WriteLine($"maxUlpError = {maxUlpError}, lowerBound = {maxUlpErrorLowerBound:g17}, upperBound = {maxUlpErrorUpperBound:g17}");
                 }
             });
             Assert.True(maxUlpError < 1e3);
@@ -2404,7 +2446,7 @@ zL = (L - mx)*sqrt(prec)
             {
                 foreach (double upperBound in new[] { -9999.9999999999982 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
-                    if (trace) Trace.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                    if (trace) Trace.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
                     Parallel.ForEach(Gaussians().Where(g => !g.IsPointMass), x =>
                     {
                         double mx = x.GetMean();
@@ -2488,8 +2530,8 @@ zL = (L - mx)*sqrt(prec)
                 }
                 if (trace)
                 {
-                    Trace.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
-                    Trace.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                    Trace.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:g17}, upperBound = {meanMaxUlpErrorUpperBound:g17}");
+                    Trace.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:g17}, upperBound = {precMaxUlpErrorUpperBound:g17}");
                 }
             }
             // meanMaxUlpError = 4271.53318407361, lowerBound = -1.0000000000000006E-12, upperBound = inf
@@ -2513,7 +2555,7 @@ zL = (L - mx)*sqrt(prec)
             {
                 foreach (double upperBound in new[] { 0.0 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
-                    if (trace) Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                    if (trace) Console.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
                     double center = (lowerBound + upperBound) / 2;
                     if (double.IsNegativeInfinity(lowerBound) && double.IsPositiveInfinity(upperBound))
                         center = 0;
@@ -2586,8 +2628,8 @@ zL = (L - mx)*sqrt(prec)
                 }
                 if (trace)
                 {
-                    Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
-                    Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                    Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:g17}, upperBound = {meanMaxUlpErrorUpperBound:g17}");
+                    Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:g17}, upperBound = {precMaxUlpErrorUpperBound:g17}");
                 }
             }
             // meanMaxUlpError = 104.001435643838, lowerBound = -1.0000000000000022E-37, upperBound = 9.9000000000000191E-36
@@ -2612,7 +2654,7 @@ zL = (L - mx)*sqrt(prec)
             {
                 foreach (double upperBound in new[] { 1.0 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
-                    if (trace) Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                    if (trace) Console.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
                     Parallel.ForEach(Gaussians(), x =>
                     {
                         Gaussian toX = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound);
@@ -2678,8 +2720,8 @@ zL = (L - mx)*sqrt(prec)
                 }
                 if (trace)
                 {
-                    Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
-                    Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                    Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:g17}, upperBound = {meanMaxUlpErrorUpperBound:g17}");
+                    Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:g17}, upperBound = {precMaxUlpErrorUpperBound:g17}");
                 }
             }
             // meanMaxUlpError = 33584, lowerBound = -1E+30, upperBound = 9.9E+31
@@ -3115,7 +3157,7 @@ weight * (tau + alphaX) + alphaX
                     Gaussian X = Gaussian.FromMeanAndPrecision(mean, System.Math.Pow(2, -i * 1 - 20));
                     Gaussian toX = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Gaussian toLowerBound = toLowerBoundPrev;// DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
-                    Trace.WriteLine($"{i} {X}: {toX.MeanTimesPrecision:r} {toX.Precision:r} {toLowerBound.MeanTimesPrecision:r} {toLowerBound.Precision:r}");
+                    Trace.WriteLine($"{i} {X}: {toX.MeanTimesPrecision:g17} {toX.Precision:g17} {toLowerBound.MeanTimesPrecision:g17} {toLowerBound.Precision:g17}");
                     Assert.False(toLowerBound.IsPointMass);
                     if ((mean > 0 && toLowerBound.MeanTimesPrecision > toLowerBoundPrev.MeanTimesPrecision) ||
                         (mean < 0 && toLowerBound.MeanTimesPrecision < toLowerBoundPrev.MeanTimesPrecision))

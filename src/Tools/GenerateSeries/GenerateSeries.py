@@ -53,10 +53,10 @@ log_1_minus_variable_name = "expx"
 log_1_minus_indent = "                    "
 
 x_minus_log_1_plus_series_length = 7
-x_minus_log_1_plus_variable_name = "xOverAMinus1"
+x_minus_log_1_plus_variable_name = "x"
 x_minus_log_1_plus_indent = "                    "
 
-exp_minus_1_series_length = 5
+exp_minus_1_series_length = 9
 exp_minus_1_variable_name = "x"
 exp_minus_1_indent = "                    "
 
@@ -126,14 +126,17 @@ def print_polynomial_with_rational_coefficients(varname, coefficients, indent):
     idx = 1
     parentheses = 0
     print(indent, end='')
-    while idx < last_non_zero_idx:
+    while idx <= last_non_zero_idx:
         print(f"{varname} * ", end='')
         if coefficients[idx] != 0:
-            print(f"({format_rational_coefficient(coefficients[idx])} +")
+            if idx < last_non_zero_idx:
+                suffix = ' +'
+            else:
+                suffix = ''
+            print(f"({format_rational_coefficient(coefficients[idx])}{suffix}")
             print(indent, end='')
             parentheses = parentheses + 1
         idx = idx + 1
-    print(f"{varname} * {format_rational_coefficient(coefficients[last_non_zero_idx])}", end='')
     for i in range(0, parentheses):
         print(")", end='')
     print()

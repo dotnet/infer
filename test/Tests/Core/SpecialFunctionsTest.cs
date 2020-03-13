@@ -34,6 +34,23 @@ namespace Microsoft.ML.Probabilistic.Tests
         };
 
         [Fact]
+        public void ToStringExactTest()
+        {
+            Assert.Equal("0", MMath.ToStringExact(0));
+            Assert.Equal("NaN", MMath.ToStringExact(double.NaN));
+            Assert.Equal(double.MaxValue, double.Parse(MMath.ToStringExact(double.MaxValue)));
+            Assert.Equal(double.MinValue, double.Parse(MMath.ToStringExact(double.MinValue)));
+            Assert.Equal("10.5", MMath.ToStringExact(10.5));
+            Assert.Equal(10.05, double.Parse(MMath.ToStringExact(10.05)));
+            Assert.Equal("0.100000000000000002505909183520875968569614680770370524992534231990046604318405148467630281218195010089496230627027825414891031146499880413081224609160619018271942662793458427551041478278701507022263926060379361392435977509403014386614147912551359088259101734169222292122040491862182202915561954185941852588326204092831631787205015401996986616948980410676557942431921652541808732242554300585073938340203330993157646467433638479065531661724812599598594906293782493759617177861888792970476530542335134710418229637566637950767497147854236589795152044892049176025289756709261767081824924720105632337755616538050643653812583050224659631159300563236507929025398878153811554013986009587978081167432804936359631140419153283449560376539011485874652862548828125e-299", MMath.ToStringExact(1e-300));
+            Assert.Equal("0.988131291682493088353137585736442744730119605228649528851171365001351014540417503730599672723271984759593129390891435461853313420711879592797549592021563756252601426380622809055691634335697964207377437272113997461446100012774818307129968774624946794546339230280063430770796148252477131182342053317113373536374079120621249863890543182984910658610913088802254960259419999083863978818160833126649049514295738029453560318710477223100269607052986944038758053621421498340666445368950667144166486387218476578691673612021202301233961950615668455463665849580996504946155275185449574931216955640746893939906729403594535543517025132110239826300978220290207572547633450191167477946719798732961988232841140527418055848553508913045817507736501283943653106689453125e-322", MMath.ToStringExact(1e-322));
+            Assert.Equal("0.4940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625e-323", MMath.ToStringExact(double.Epsilon));
+            Assert.Equal(1e-300, double.Parse(MMath.ToStringExact(1e-300)));
+            Assert.Equal(1e-322, double.Parse(MMath.ToStringExact(1e-322)));
+            Assert.Equal(double.Epsilon, double.Parse(MMath.ToStringExact(double.Epsilon)));
+        }
+
+        [Fact]
         public void GammaSpecialFunctionsTest()
         {
             double[,] BesselI_pairs = new double[,]
@@ -48,8 +65,22 @@ namespace Microsoft.ML.Probabilistic.Tests
                 };
             CheckFunctionValues("BesselI", MMath.BesselI, BesselI_pairs);
 
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+gamma(mpf('8.5'))
+            */
             double[,] Gamma_pairs = new double[,]
                 {
+                    {1e-18, 999999999999999999.422784335 },
+                    {1e-17, 99999999999999999.422784335 },
+                    {1e-16, 9999999999999999.422784335 },
+                    {1e-15, 999999999999999.422784335 },
+                    {1e-14, 99999999999999.422784335 },
+                    {1e-13, 9999999999999.422784335 },
+                    {1e-12, 999999999999.422784335 },
+                    {1e-11, 99999999999.4227843351 },
                     {System.Math.Pow(0.5,20), 1048575.42278527833494202474 },
                     {System.Math.Pow(0.5,15), 32767.42281451784694671242432333 },
                     {System.Math.Pow(0.5,10), 1023.4237493455678303694987182399 },
@@ -396,8 +427,28 @@ log(1-exp(mpf('-3')))
             double[,] expminus1_pairs = new double[,]
                 {
                     {0, 0},
+                    {1e-1, 0.1051709180756476248117 },
+                    {6e-2, 0.061836546545359622224684877 },
+                    {5.6e-2, 0.057597683736611251657434658737 },
+                    {5.5e-2, 0.0565406146754942858469448477 },
+                    {5.4e-2, 0.05548460215508004058489867657 },
+                    {5.3e-2, 0.054429645119355907456004582 },
+                    {5.2e-2, 0.05337574251336476282304 },
+                    {5.1e-2, 0.05232289328320391286964 },
+                    {5e-2, 0.0512710963760240396975 },
+                    {1e-2, 0.0100501670841680575421654569 },
+                    {3e-3, 0.003004504503377026012934 },
+                    {2e-3, 0.00200200133400026675558 },
+                    {1e-3, 0.001000500166708341668 },
                     {1e-4, 0.100005000166670833416668e-3},
                     {-1e-4, -0.9999500016666250008333e-4},
+                    {-1e-3, -0.000999500166625008331944642832344 },
+                    {-1e-2, -0.009950166250831946426094 },
+                    {-2e-2, -0.01980132669324469777918589577469 },
+                    {-3e-2, -0.029554466451491823067471648 },
+                    {-4e-2, -0.0392105608476767905607893 },
+                    {-5e-2, -0.04877057549928599090857468 },
+                    {-1e-1, -0.09516258196404042683575 },
                     {Double.PositiveInfinity, Double.PositiveInfinity},
                     {Double.NegativeInfinity, -1},
                     {Double.NaN, Double.NaN}
@@ -1014,6 +1065,13 @@ ncdf(-12.2)
         [Fact]
         public void GammaUpperTest()
         {
+            double[,] gammaUpperScale_pairs = new double[,]
+            {
+                {100,3, 2.749402805834002258937858149557e-110},
+                {1e30,1.0000000000000024E+30, 22798605571598.2221521928234647 },
+            };
+            CheckFunctionValues(nameof(MMath.GammaUpperScale), MMath.GammaUpperScale, gammaUpperScale_pairs);
+
             double[,] gammaLower_pairs = new double[,] {
                 {1e-6,1e-1,0.9999981770769746499},
                 {0.05,3e-20,0.1085221036950261},
@@ -1037,7 +1095,7 @@ ncdf(-12.2)
                 {double.PositiveInfinity,1,0 },
                 {double.Epsilon,0,0 },
             };
-            CheckFunctionValues("GammaLower", MMath.GammaLower, gammaLower_pairs);
+            CheckFunctionValues(nameof(MMath.GammaLower), MMath.GammaLower, gammaLower_pairs);
 
             /* In python mpmath:
 from mpmath import *
@@ -1085,18 +1143,28 @@ gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
                 {double.PositiveInfinity,1,1 },
                 {double.Epsilon,0,1 },
             };
-            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
+            //CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
 
             /* In python mpmath:
 from mpmath import *
 mp.dps = 500
 mp.pretty = True
-gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
+gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=False)
             */
             double[,] gammaUpper_pairs = new double[,] {
-                {1e-20,0.3,0.9056766516758467124267199175638778988963728798249333},
-                {1e-6,1e-1,1.8229219731321746872065707723366373632},
                 {2,1,0.73575888234288464319104754 },
+                {1, 1e-1, 0.9048374180359595731642490594464366211947 },
+                {0.5, 1e-1, 1.160462484793744246763365832264165338881 },
+                {1e-1, 1e-1, 1.6405876628018872105125369365484 },
+                {1e-2, 1e-1, 1.803241356902497279052687858810883 },
+                {1e-3, 1e-1, 1.8209403811279321641732411796 },
+                {1e-4, 1e-1, 1.8227254466517034567872146606649738 },
+                {1e-5, 1e-1, 1.822904105701365262441009216994 },
+                {1e-6, 1e-1, 1.8229219731321746872065707723366373632},
+                {1e-20,0.3,0.9056766516758467124267199175638778988963728798249333},
+                {1e-20, 1, 0.21938393439552027367814220743228835 },
+                {1e-20, 2, 0.048900510708061119567721436 },
+                {9.8813129168249309E-324, 4.94065645841247E-323, 741.5602711634856828468858990353816714074565 },
             };
             CheckFunctionValues("GammaUpper", (a, x) => MMath.GammaUpper(a, x, false), gammaUpper_pairs);
         }
@@ -1896,7 +1964,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                         long ticks2 = watch.ElapsedTicks;
                         bool overtime = ticks > 10 * ticks2;
                         if (double.IsNaN(result1) /*|| overtime*/)
-                            Trace.WriteLine($"({x:r},{y:r},{r:r},{x-r*y}): {good} {ticks} {ticks2} {result1} {result2}");
+                            Trace.WriteLine($"({x:g17},{y:g17},{r:g17},{x-r*y}): {good} {ticks} {ticks2} {result1} {result2}");
                     }
                 }
             }
@@ -2310,7 +2378,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 r = 0.1;
 
 
-                Trace.WriteLine($"(x,y,r) = {x:r}, {y:r}, {r:r}");
+                Trace.WriteLine($"(x,y,r) = {x:g17}, {y:g17}, {r:g17}");
 
                 double intZOverZ;
                 try
@@ -2321,7 +2389,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     intZOverZ = double.NaN;
                 }
-                Trace.WriteLine($"intZOverZ = {intZOverZ:r}");
+                Trace.WriteLine($"intZOverZ = {intZOverZ:g17}");
 
                 double intZ0 = NormalCdfIntegralBasic(x, y, r);
                 double intZ1 = 0; // NormalCdfIntegralFlip(x, y, r);
@@ -2337,7 +2405,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     intZ = ExtendedDouble.NaN();
                 }
                 //double intZ = intZ0;
-                Trace.WriteLine($"intZ = {intZ:r} {intZ.ToDouble():r} {intZ0:r} {intZ1:r} {intZr:r}");
+                Trace.WriteLine($"intZ = {intZ:g17} {intZ.ToDouble():g17} {intZ0:g17} {intZ1:g17} {intZr:g17}");
                 if (intZ.Mantissa < 0) throw new Exception();
                 //double intZ2 = NormalCdfIntegralBasic(y, x, r);
                 //Trace.WriteLine($"intZ2 = {intZ2} {r*intZ}");
@@ -2783,7 +2851,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 if (i % 2 == 1)
                 {
                     result = -numer / denom;
-                    Console.WriteLine($"iter {i}: {result:r} {c:g4}");
+                    Console.WriteLine($"iter {i}: {result:g17} {c:g4}");
                     if (double.IsInfinity(result) || double.IsNaN(result))
                         throw new Exception($"NormalCdfConFrac5 not converging for x={x} y={y} r={r}");
                     if (result == rOld)
@@ -24016,7 +24084,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 double result = (double)Util.DynamicInvoke(fcn, args);
                 if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0)
                 {
-                    string strMsg = $"{name}({x:r})\t has wrong sign (result = {result:r})";
+                    string strMsg = $"{name}({x:g17})\t has wrong sign (result = {result:g17})";
                     Trace.WriteLine(strMsg);
                     Assert.True(false, strMsg);
                 }
@@ -24033,11 +24101,11 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 }
                 if (err < TOLERANCE)
                 {
-                    Trace.WriteLine($"{name}({x:r})\t ok");
+                    Trace.WriteLine($"{name}({x:g17})\t ok");
                 }
                 else
                 {
-                    string strMsg = $"{name}({x:r})\t wrong by {err.ToString("g2")} (result = {result:r})";
+                    string strMsg = $"{name}({x:g17})\t wrong by {err.ToString("g2")} (result = {result:g17})";
                     Trace.WriteLine(strMsg);
                     if (err > assertTolerance || double.IsNaN(err))
                         Assert.True(false, strMsg);

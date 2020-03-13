@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
 
         public override string ToString()
         {
-            return $"{Mantissa:r}*exp({Exponent:r})";
+            return $"{Mantissa:g17}*exp({Exponent:g17})";
         }
 
         public static ExtendedDouble Zero()
