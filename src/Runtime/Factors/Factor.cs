@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [ParameterNames("sample", "shape", "rate", "lowerBound", "upperBound")]
         public static double TruncatedGammaFromShapeAndRate(double shape, double rate, double lowerBound, double upperBound)
         {
-            return TruncatedGamma.Sample(shape, 1 / rate, lowerBound, upperBound);
+            return TruncatedGamma.Sample(Gamma.FromShapeAndRate(shape, rate), lowerBound, upperBound);
         }
 
         /// <summary>

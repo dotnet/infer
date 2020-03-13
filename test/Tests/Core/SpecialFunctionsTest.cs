@@ -34,56 +34,21 @@ namespace Microsoft.ML.Probabilistic.Tests
             public double[,] pairs;
         };
 
-        private static string ToStringExact(double x)
+        [Fact]
+        public void ToStringExactTest()
         {
-            if (double.IsNaN(x) || double.IsInfinity(x) || x == 0) return x.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            long bits = BitConverter.DoubleToInt64Bits(x);
-            ulong fraction = Convert.ToUInt64(bits & 0x000fffffffffffff);
-            short exponent = Convert.ToInt16((bits & 0x7ff0000000000000) >> 52);
-            if (exponent == 0)
-            {
-                // subnormal number
-                exponent = -1022 - 52;
-            }
-            else
-            {
-                // normal number
-                fraction += 0x0010000000000000;
-                exponent = Convert.ToInt16(exponent - 1023 - 52);
-            }
-            while ((fraction & 1) == 0)
-            {
-                fraction >>= 1;
-                exponent++;
-            }
-            string sign = (x >= 0) ? "" : "-";
-            System.Numerics.BigInteger big;
-            if (exponent >= 0)
-            {
-                big = System.Numerics.BigInteger.Pow(2, exponent) * fraction;
-                return $"{sign}{big}";
-            }
-            else
-            {
-                // Rewrite 2^-4 as 5^4 * 10^-4
-                big = System.Numerics.BigInteger.Pow(5, -exponent) * fraction;
-                // At this point, we could output the big integer with an "E"{exponent} suffix.  
-                // However, double.Parse does not correctly parse such strings.
-                // Instead we insert a decimal point and eliminate the "E" suffix if possible.
-                int digitCount = big.ToString().Length;
-                if (digitCount < -exponent)
-                {
-                    return $"{sign}0.{big}e{exponent + digitCount}";
-                }
-                else
-                {
-                    System.Numerics.BigInteger pow10 = System.Numerics.BigInteger.Pow(10, -exponent);
-                    System.Numerics.BigInteger integerPart = big / pow10;
-                    System.Numerics.BigInteger fractionalPart = big - integerPart * pow10;
-                    string zeros = new string('0', -exponent);
-                    return $"{sign}{integerPart}.{fractionalPart.ToString(zeros)}";
-                }
-            }
+            Assert.Equal("0", MMath.ToStringExact(0));
+            Assert.Equal("NaN", MMath.ToStringExact(double.NaN));
+            Assert.Equal(double.MaxValue, double.Parse(MMath.ToStringExact(double.MaxValue)));
+            Assert.Equal(double.MinValue, double.Parse(MMath.ToStringExact(double.MinValue)));
+            Assert.Equal("10.5", MMath.ToStringExact(10.5));
+            Assert.Equal(10.05, double.Parse(MMath.ToStringExact(10.05)));
+            Assert.Equal("0.100000000000000002505909183520875968569614680770370524992534231990046604318405148467630281218195010089496230627027825414891031146499880413081224609160619018271942662793458427551041478278701507022263926060379361392435977509403014386614147912551359088259101734169222292122040491862182202915561954185941852588326204092831631787205015401996986616948980410676557942431921652541808732242554300585073938340203330993157646467433638479065531661724812599598594906293782493759617177861888792970476530542335134710418229637566637950767497147854236589795152044892049176025289756709261767081824924720105632337755616538050643653812583050224659631159300563236507929025398878153811554013986009587978081167432804936359631140419153283449560376539011485874652862548828125e-299", MMath.ToStringExact(1e-300));
+            Assert.Equal("0.988131291682493088353137585736442744730119605228649528851171365001351014540417503730599672723271984759593129390891435461853313420711879592797549592021563756252601426380622809055691634335697964207377437272113997461446100012774818307129968774624946794546339230280063430770796148252477131182342053317113373536374079120621249863890543182984910658610913088802254960259419999083863978818160833126649049514295738029453560318710477223100269607052986944038758053621421498340666445368950667144166486387218476578691673612021202301233961950615668455463665849580996504946155275185449574931216955640746893939906729403594535543517025132110239826300978220290207572547633450191167477946719798732961988232841140527418055848553508913045817507736501283943653106689453125e-322", MMath.ToStringExact(1e-322));
+            Assert.Equal("0.4940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625e-323", MMath.ToStringExact(double.Epsilon));
+            Assert.Equal(1e-300, double.Parse(MMath.ToStringExact(1e-300)));
+            Assert.Equal(1e-322, double.Parse(MMath.ToStringExact(1e-322)));
+            Assert.Equal(double.Epsilon, double.Parse(MMath.ToStringExact(double.Epsilon)));
         }
 
         [Fact]
@@ -270,8 +235,15 @@ ncdf(-12.2)
         [Fact]
         public void GammaUpperTest()
         {
+            double[,] gammaUpperScale_pairs = new double[,]
+            {
+                {100,3, 2.749402805834002258937858149557e-110},
+                {1e30,1.0000000000000024E+30, 22798605571598.2221521928234647 },
+            };
+            CheckFunctionValues(nameof(MMath.GammaUpperScale), MMath.GammaUpperScale, gammaUpperScale_pairs);
+
             double[,] gammaLower_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaLower.csv"));
-            CheckFunctionValues("GammaLower", MMath.GammaLower, gammaLower_pairs);
+            CheckFunctionValues(nameof(MMath.GammaLower), MMath.GammaLower, gammaLower_pairs);
 
             /* In python mpmath:
 from mpmath import *
@@ -280,13 +252,13 @@ mp.pretty = True
 gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
             */
             double[,] gammaUpperRegularized_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaUpperRegularized.csv"));
-            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
+            //CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
 
             /* In python mpmath:
 from mpmath import *
 mp.dps = 500
 mp.pretty = True
-gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
+gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=False)
             */
             double[,] gammaUpper_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaUpper.csv"));
             CheckFunctionValues("GammaUpper", (a, x) => MMath.GammaUpper(a, x, false), gammaUpper_pairs);
@@ -659,7 +631,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                         long ticks2 = watch.ElapsedTicks;
                         bool overtime = ticks > 10 * ticks2;
                         if (double.IsNaN(result1) /*|| overtime*/)
-                            Trace.WriteLine($"({x:r},{y:r},{r:r},{x-r*y}): {good} {ticks} {ticks2} {result1} {result2}");
+                            Trace.WriteLine($"({x:g17},{y:g17},{r:g17},{x-r*y}): {good} {ticks} {ticks2} {result1} {result2}");
                     }
                 }
             }
@@ -893,7 +865,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 r = 0.1;
 
 
-                Trace.WriteLine($"(x,y,r) = {x:r}, {y:r}, {r:r}");
+                Trace.WriteLine($"(x,y,r) = {x:g17}, {y:g17}, {r:g17}");
 
                 double intZOverZ;
                 try
@@ -904,7 +876,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     intZOverZ = double.NaN;
                 }
-                Trace.WriteLine($"intZOverZ = {intZOverZ:r}");
+                Trace.WriteLine($"intZOverZ = {intZOverZ:g17}");
 
                 double intZ0 = NormalCdfIntegralBasic(x, y, r);
                 double intZ1 = 0; // NormalCdfIntegralFlip(x, y, r);
@@ -920,7 +892,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     intZ = ExtendedDouble.NaN();
                 }
                 //double intZ = intZ0;
-                Trace.WriteLine($"intZ = {intZ:r} {intZ.ToDouble():r} {intZ0:r} {intZ1:r} {intZr:r}");
+                Trace.WriteLine($"intZ = {intZ:g17} {intZ.ToDouble():g17} {intZ0:g17} {intZ1:g17} {intZr:g17}");
                 if (intZ.Mantissa < 0) throw new Exception();
                 //double intZ2 = NormalCdfIntegralBasic(y, x, r);
                 //Trace.WriteLine($"intZ2 = {intZ2} {r*intZ}");
@@ -1366,7 +1338,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 if (i % 2 == 1)
                 {
                     result = -numer / denom;
-                    Console.WriteLine($"iter {i}: {result:r} {c:g4}");
+                    Console.WriteLine($"iter {i}: {result:g17} {c:g4}");
                     if (double.IsInfinity(result) || double.IsNaN(result))
                         throw new Exception($"NormalCdfConFrac5 not converging for x={x} y={y} r={r}");
                     if (result == rOld)
@@ -1897,8 +1869,8 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     for (int j = 0; j < argsNo; ++j)
                         file.Write($"{jagged[i][j].ToString(System.Globalization.CultureInfo.InvariantCulture)},");
                     for (int j = 0; j < argsNo; ++j)
-                        file.Write($"{ToStringExact(jagged[i][j])},");
-                    file.WriteLine(ToStringExact(jagged[i][width - 1]));
+                        file.Write($"{MMath.ToStringExact(jagged[i][j])},");
+                    file.WriteLine(MMath.ToStringExact(jagged[i][width - 1]));
                 }
             }
         }
@@ -1974,7 +1946,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 double result = (double)Util.DynamicInvoke(fcn, args);
                 if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0)
                 {
-                    string strMsg = $"{name}({x:r})\t has wrong sign (result = {result:r})";
+                    string strMsg = $"{name}({x:g17})\t has wrong sign (result = {result:g17})";
                     Trace.WriteLine(strMsg);
                     Assert.True(false, strMsg);
                 }
@@ -1991,11 +1963,11 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 }
                 if (!IsErrorSignificant(TOLERANCE, err))
                 {
-                    Trace.WriteLine($"{name}({x:r})\t ok");
+                    Trace.WriteLine($"{name}({x:g17})\t ok");
                 }
                 else
                 {
-                    string strMsg = $"{name}({x:r})\t wrong by {err.ToString("g2")} (result = {result:r})";
+                    string strMsg = $"{name}({x:g17})\t wrong by {err.ToString("g2")} (result = {result:g17})";
                     Trace.WriteLine(strMsg);
                     if (IsErrorSignificant(assertTolerance, err) || double.IsNaN(err))
                         Assert.True(false, strMsg);
