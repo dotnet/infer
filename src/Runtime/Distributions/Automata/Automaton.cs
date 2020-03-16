@@ -600,6 +600,36 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
+        /// Creates an automaton which is the concatenation of given automata.
+        /// </summary>
+        /// <param name="automata">The automata to multiply.</param>
+        /// <returns>The created automaton.</returns>
+        public static TThis Concatenate(params TThis[] automata)
+        {
+            return Concatenate((IEnumerable<TThis>)automata);
+        }
+
+        /// <summary>
+        /// Creates an automaton which is the concatenation of given automata.
+        /// </summary>
+        /// <param name="automata">The automata to multiply.</param>
+        /// <returns>The created automaton.</returns>
+        public static TThis Concatenate(IEnumerable<TThis> automata)
+        {
+            Argument.CheckIfNotNull(automata, "automata");
+
+            var builder = new Builder(1);
+            builder.Start.SetEndWeight(Weight.One);
+
+            foreach (var automaton in automata)
+            {
+                builder.Append(automaton);
+            }
+
+            return builder.GetAutomaton();
+        }
+
+        /// <summary>
         /// Creates an automaton which has given values on given sequences and is zero everywhere else.
         /// </summary>
         /// <param name="sequenceToValue">The collection of pairs of a sequence and the automaton value on that sequence.</param>
