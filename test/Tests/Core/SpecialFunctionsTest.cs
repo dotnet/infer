@@ -235,11 +235,7 @@ ncdf(-12.2)
         [Fact]
         public void GammaUpperTest()
         {
-            double[,] gammaUpperScale_pairs = new double[,]
-            {
-                {100,3, 2.749402805834002258937858149557e-110},
-                {1e30,1.0000000000000024E+30, 22798605571598.2221521928234647 },
-            };
+            double[,] gammaUpperScale_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaUpperScale.csv"));
             CheckFunctionValues(nameof(MMath.GammaUpperScale), MMath.GammaUpperScale, gammaUpperScale_pairs);
 
             double[,] gammaLower_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaLower.csv"));
