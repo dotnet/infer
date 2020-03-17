@@ -9,10 +9,11 @@ import csv
 import mpmath
 
 def normal_cdf_moment_ratio(n, x):
-    #TODO: fix
     mpmath.mp.dps = 500
-    xmpf = x.num
-    nmpf = n.num
+    xmpf = x._to_mpmath(500)
+    nmpf = n._to_mpmath(500)
+    if x < 0:
+        return Float(mpmath.power(2, -0.5 - nmpf / 2) * mpmath.hyperu(nmpf / 2 + 0.5, 0.5, xmpf * xmpf / 2))
     return Float(mpmath.exp(xmpf * xmpf / 4) * mpmath.pcfu(0.5 + nmpf, -xmpf))
 
 pair_info = {
