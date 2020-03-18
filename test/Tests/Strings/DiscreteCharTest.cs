@@ -2,9 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.ML.Probabilistic.Math;
-using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -12,15 +10,13 @@ namespace Microsoft.ML.Probabilistic.Tests
     using System.Collections.Generic;
     using Xunit;
     using Microsoft.ML.Probabilistic.Distributions;
-    using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
+    using Assert = Xunit.Assert;
 
     /// <summary>
     /// Tests for <see cref="DiscreteChar"/>.
     /// </summary>
     public class DiscreteCharTest
     {
-        const double Eps = 1e-10;
-
         /// <summary>
         /// Runs a set of common distribution tests for <see cref="DiscreteChar"/>.
         /// </summary>
@@ -67,7 +63,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 return;
             }
 
-            Xunit.Assert.True(false);
+            Assert.True(false);
         }
 
         [Fact]
@@ -92,7 +88,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var unif = Vector.Constant(numChars, 1.0 / numChars);
             var maxDiff = hist.MaxDiff(unif);
 
-            Xunit.Assert.True(maxDiff < 0.01);
+            Assert.True(maxDiff < 0.01);
         }
 
         [Fact]
@@ -110,7 +106,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             ab.SetToSum(1, a, 2, b);
 
             // 2 subsequent ranges
-            Xunit.Assert.Equal(2, ab.Ranges.Count);
+            Assert.Equal(2, ab.Ranges.Count);
             TestComplement(ab);
 
             void TestComplement(DiscreteChar dist)
@@ -121,123 +117,21 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var complement = dist.Complement();
 
                 // complement should always be partial uniform
-                Xunit.Assert.True(complement.IsPartialUniform());
+                Assert.True(complement.IsPartialUniform());
 
                 // overlap is zero
-                Xunit.Assert.True(double.IsNegativeInfinity(dist.GetLogAverageOf(complement)));
-                Xunit.Assert.True(double.IsNegativeInfinity(uniformDist.GetLogAverageOf(complement)));
+                Assert.True(double.IsNegativeInfinity(dist.GetLogAverageOf(complement)));
+                Assert.True(double.IsNegativeInfinity(uniformDist.GetLogAverageOf(complement)));
 
                 // union is covers the whole range
                 var sum = default(DiscreteChar);
                 sum.SetToSum(1, dist, 1, complement);
                 sum.SetToPartialUniform();
-                Xunit.Assert.True(sum.IsUniform());
+                Assert.True(sum.IsUniform());
 
                 // Doing complement again will cover the same set of characters
                 var complement2 = complement.Complement();
-                Xunit.Assert.Equal(uniformDist, complement2);
-            }
-        }
-
-        [Fact]
-        public void PartialUniformWithLogProbabilityOverride()
-        {
-            var dist = DiscreteChar.LetterOrDigit();
-            var probLetter = Math.Exp(dist.GetLogProb('j'));
-            var probNumber = Math.Exp(dist.GetLogProb('5'));
-
-            var logProbabilityOverride = Math.Log(0.7);
-            var scaledDist = DiscreteChar.Uniform();
-            scaledDist.SetToPartialUniformOf(dist, logProbabilityOverride);
-            var scaledLogProbLetter = scaledDist.GetLogProb('j');
-            var scaledLogProbNumber = scaledDist.GetLogProb('5');
-
-            Assert.Equal(scaledLogProbLetter, logProbabilityOverride, Eps);
-            Assert.Equal(scaledLogProbNumber, logProbabilityOverride, Eps);
-
-            // Check that cache has not been compromised.
-            Assert.Equal(probLetter, Math.Exp(dist.GetLogProb('j')), Eps);
-            Assert.Equal(probNumber, Math.Exp(dist.GetLogProb('5')), Eps);
-
-            // Check that an exception is thrown if a bad maximumProbability is passed down.
-            Xunit.Assert.Throws<ArgumentException>(() =>
-            {
-                var badDist = DiscreteChar.Uniform();
-                badDist.SetToPartialUniformOf(dist, Math.Log(1.2));
-            });
-        }
-
-        [Fact]
-        public void BroadAndNarrow()
-        {
-            var dist1 = DiscreteChar.Digit();
-            Xunit.Assert.True(dist1.IsBroad);
-
-            var dist2 = DiscreteChar.OneOf('1', '3', '5', '6');
-            Xunit.Assert.False(dist2.IsBroad);
-        }
-
-        [Fact]
-        public void HasLogOverride()
-        {
-            var dist1 = DiscreteChar.LetterOrDigit();
-            Xunit.Assert.False(dist1.HasLogProbabilityOverride);
-
-            dist1.SetToPartialUniformOf(dist1, Math.Log(0.9));
-            Xunit.Assert.True(dist1.HasLogProbabilityOverride);
-        }
-
-        [Fact]
-        public void ProductWithLogOverrideBroad()
-        {
-            for (var i = 0; i < 2; i++)
-            {
-                var dist1 = DiscreteChar.LetterOrDigit();
-                var dist2 = DiscreteChar.Digit();
-
-                var logOverrideProbability = Math.Log(0.9);
-                dist1.SetToPartialUniformOf(dist1, logOverrideProbability);
-                Xunit.Assert.True(dist1.HasLogProbabilityOverride);
-                Xunit.Assert.True(dist2.IsBroad);
-
-                if (i == 1)
-                {
-                    Util.Swap(ref dist1, ref dist2);
-                }
-
-                var dist3 = DiscreteChar.Uniform();
-                dist3.SetToProduct(dist1, dist2);
-
-                Xunit.Assert.True(dist3.HasLogProbabilityOverride);
-                Assert.Equal(logOverrideProbability, dist3.GetLogProb('5'), Eps);
-                Xunit.Assert.True(double.IsNegativeInfinity(dist3.GetLogProb('a')));
-            }
-        }
-
-        [Fact]
-        public void ProductWithLogOverrideNarrow()
-        {
-            for (var i = 0; i < 2; i++)
-            {
-                var dist1 = DiscreteChar.LetterOrDigit();
-                var dist2 = DiscreteChar.OneOf('1', '3', '5', '6');
-
-                var logOverrideProbability = Math.Log(0.9);
-                dist1.SetToPartialUniformOf(dist1, logOverrideProbability);
-                Xunit.Assert.True(dist1.HasLogProbabilityOverride);
-                Xunit.Assert.False(dist2.IsBroad);
-
-                if (i == 1)
-                {
-                    Util.Swap(ref dist1, ref dist2);
-                }
-
-                var dist3 = DiscreteChar.Uniform();
-                dist3.SetToProduct(dist1, dist2);
-
-                Xunit.Assert.False(dist3.HasLogProbabilityOverride);
-                Assert.Equal(Math.Log(0.25), dist3.GetLogProb('5'), Eps);
-                Xunit.Assert.True(double.IsNegativeInfinity(dist3.GetLogProb('a')));
+                Assert.Equal(uniformDist, complement2);
             }
         }
 
@@ -258,12 +152,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             
             foreach (var ch in included)
             {
-                Xunit.Assert.True(!double.IsNegativeInfinity(distribution.GetLogProb(ch)), distribution + " should contain " + ch);
+                Assert.True(!double.IsNegativeInfinity(distribution.GetLogProb(ch)), distribution + " should contain " + ch);
             }
             
             foreach (var ch in excluded)
             {
-                Xunit.Assert.True(double.IsNegativeInfinity(distribution.GetLogProb(ch)), distribution + " should not contain " + ch);
+                Assert.True(double.IsNegativeInfinity(distribution.GetLogProb(ch)), distribution + " should not contain " + ch);
             }
         }
     }

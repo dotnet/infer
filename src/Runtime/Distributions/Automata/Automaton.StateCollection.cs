@@ -4,13 +4,10 @@
 
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
 
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Utilities;
 
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
     {
@@ -18,19 +15,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Represents a collection of automaton states for use in public APIs
         /// </summary>
         /// <remarks>
-        /// Is a thin wrapper around Automaton.data. Wraps each <see cref="StateData"/> into <see cref="State"/> on demand.
+        /// TODO xmldoc
+        /// Is a thin wrapper around Automaton.data. Wraps each see cref="StateData"/> into <see cref="State"/> on demand.
         /// </remarks>
         public struct StateCollection : IReadOnlyList<State>
         {
             /// <summary>
             /// Cached value of this.owner.Data.states. Cached for performance.
             /// </summary>
-            internal readonly ImmutableArray<StateData> states;
-
-            /// <summary>
-            /// Cached value of this.owner.Data.states. Cached for performance.
-            /// </summary>
-            internal readonly ImmutableArray<Transition> transitions;
+            internal readonly ImmutableArray<RelativeState> states;
 
             /// <summary>
             /// Initializes instance of <see cref="StateCollection"/>.
@@ -39,13 +32,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> owner)
             {
                 this.states = owner.Data.States;
-                this.transitions = owner.Data.Transitions;
             }
 
             #region IReadOnlyList<State> methods
 
             /// <inheritdoc/>
-            public State this[int index] => new State(this.states, this.transitions, index);
+            public State this[int index] => new State(this.states[index], index);
 
             /// <inheritdoc/>
             public int Count => this.states.Count;

@@ -925,6 +925,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void QuotingTest()
         {
+            /*
             // Should work 1
             var automaton1 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
@@ -1007,6 +1008,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         isDeterminized: null,
                         isZero: null,
                         isEnumerable: null)));
+             */
         }
 
         #region ToString tests

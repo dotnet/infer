@@ -40,7 +40,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // Specify states
             foreach (var state in automaton.States)
             {
-                string shape = automaton.Start == state ? "doublecircle" : "circle";
+                string shape = automaton.Start.Index == state.Index ? "doublecircle" : "circle";
                 graphVizCode.AppendFormat("  node [shape = {0}; label = \"{1}\\nE={2:G5}\"]; N{1}", shape, state.Index, state.EndWeight.Value);
                 graphVizCode.AppendLine();
             }

@@ -26,15 +26,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Transitions created so far.
             /// </summary>
             /// <remarks>
-            /// Unlike in <see cref="StateCollection.transitions"/>, transitions
-            /// for single entity are not represented by contiguous segment of array, but rather as a linked
-            /// list. It is done this way, because transitions can be added at any moment and inserting
+            /// Transitions are represented as a linked list.
+            /// It is done this way, because transitions can be added at any moment and inserting
             /// transition into a middle of array is not feasible.
             /// </remarks>
             private readonly List<LinkedTransitionNode> transitions;
 
             /// <summary>
-            /// Number of transitions marked as removed. We maintain this count to calculate finaly transitions
+            /// Number of transitions marked as removed. We maintain this count to calculate final transitions
             /// array size without need to traverse all transitions.
             /// </summary>
             private int numRemovedTransitions = 0;
@@ -377,11 +376,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 bool SecondStartStateHasIncomingTransitions()
                 {
-                    foreach (var transition in automaton.Data.Transitions)
+                    foreach (var state in automaton.States)
                     {
-                        if (transition.DestinationStateIndex == automaton.Data.StartStateIndex)
+                        foreach (var transition in state.Transitions)
                         {
-                            return true;
+                            if (transition.DestinationStateIndex == automaton.Data.StartStateIndex)
+                            {
+                                return true;
+                            }
                         }
                     }
 
@@ -401,7 +403,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Stores built automaton in pre-allocated <see cref="Automaton{TSequence,TElement,TElementDistribution,TSequenceManipulator,TThis}"/> object.
             /// </summary>
-            public DataContainer GetData(bool? isDeterminized = null)
+            internal DataContainer GetData(bool? isDeterminized = null)
             {
                 if (this.StartStateIndex < 0 || this.StartStateIndex >= this.states.Count)
                 {
@@ -415,47 +417,90 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var hasSelfLoops = false;
                 var hasOnlyForwardTransitions = true;
 
-                var resultStates = ImmutableArray.CreateBuilder<StateData>(this.states.Count);
-                var resultTransitions = ImmutableArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
+                var resultStatesBuilder = ImmutableArray.CreateBuilder<RelativeState>(this.states.Count);
+                var transitionsTableSize = this.transitions.Count - this.numRemovedTransitions;
+
+                // First try to use cached states for simple pointmass transitions
+                for (var i = 0; i < this.states.Count; ++i)
+                {
+                    var state = this.states[i];
+                    if (state.FirstTransitionIndex != -1 &&
+                        state.FirstTransitionIndex == state.LastTransitionIndex)
+                    {
+                        var transition = this.transitions[state.FirstTransitionIndex].Transition;
+                        if (transition.Group == 0 && transition.DestinationStateIndex == i + 1)
+                        {
+                            transition.DestinationStateIndex -= i;
+                            var relativeState = RelativeStatesCache.TryGetState(transition, state.EndWeight);
+                            if (relativeState != null)
+                            {
+                                resultStatesBuilder[i] = relativeState;
+                                --transitionsTableSize;
+                            }
+                        }
+                    }
+                }
+
+                var resultTransitionsBuilder = ImmutableArray.CreateBuilder<Transition>(transitionsTableSize);
+                var firstTransitionPerState = new int[this.states.Count + 1];
                 var nextResultTransitionIndex = 0;
 
-                for (var i = 0; i < resultStates.Count; ++i)
+                for (var i = 0; i < this.states.Count; ++i)
                 {
-                    var firstResultTransitionIndex = nextResultTransitionIndex;
+                    firstTransitionPerState[i] = nextResultTransitionIndex;
+
+                    if (resultStatesBuilder[i] != null)
+                    {
+                        continue;
+                    }
+
                     var transitionIndex = this.states[i].FirstTransitionIndex;
                     while (transitionIndex != -1)
                     {
                         var node = this.transitions[transitionIndex];
                         var transition = node.Transition;
                         Debug.Assert(
-                            transition.DestinationStateIndex < resultStates.Count,
+                            transition.DestinationStateIndex < resultStatesBuilder.Count,
                             "Destination indexes must be in valid range");
-                        resultTransitions[nextResultTransitionIndex] = transition;
+                        transition.DestinationStateIndex -= i;
+                        resultTransitionsBuilder[nextResultTransitionIndex] = transition;
                         ++nextResultTransitionIndex;
                         hasEpsilonTransitions = hasEpsilonTransitions || transition.IsEpsilon;
                         usesGroups = usesGroups || (transition.Group != 0);
 
-                        if (transition.DestinationStateIndex == i)
+                        // At this point destination state index is alread relative to current state
+                        if (transition.DestinationStateIndex == 0)
                         {
                             hasSelfLoops = true;
                         }
-                        else if (transition.DestinationStateIndex < i)
+                        else if (transition.DestinationStateIndex < 0)
                         {
                             hasOnlyForwardTransitions = false;
                         }
 
                         transitionIndex = node.Next;
                     }
-
-                    resultStates[i] = new StateData(
-                        firstResultTransitionIndex,
-                        nextResultTransitionIndex - firstResultTransitionIndex,
-                        this.states[i].EndWeight);
                 }
 
                 Debug.Assert(
-                    nextResultTransitionIndex == resultTransitions.Count,
+                    nextResultTransitionIndex == resultTransitionsBuilder.Count,
                     "number of copied transitions must match result array size");
+
+                firstTransitionPerState[this.states.Count] = nextResultTransitionIndex;
+
+                var resultTransitions = resultTransitionsBuilder.MoveToImmutable();
+
+                for (var i = 0; i < this.states.Count; ++i)
+                {
+                    if (resultStatesBuilder[i] == null)
+                    {
+                        var begin = firstTransitionPerState[i];
+                        var length = firstTransitionPerState[i + 1] - firstTransitionPerState[i];
+                        resultStatesBuilder[i] = new RelativeState(
+                            new ImmutableArraySegment<Transition>(resultTransitions, begin, length),
+                            this.states[i].EndWeight);
+                    }
+                }
 
                 // Detect two very common automata shapes
                 var isEnumerable =
@@ -465,8 +510,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 return new DataContainer(
                     this.StartStateIndex,
-                    resultStates.MoveToImmutable(),
-                    resultTransitions.MoveToImmutable(),
+                    resultStatesBuilder.MoveToImmutable(),
                     !hasEpsilonTransitions,
                     usesGroups,
                     isDeterminized,
@@ -836,8 +880,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             /// <summary>
-            /// Version of <see cref="StateData"/> that is used during automaton constructions. Unlike
-            /// regular <see cref="StateData"/> transitions are stored as a linked list over
+            /// TODO xml comments
+            /// Version of see cref="AutomatonData"/> that is used during automaton constructions. Unlike
+            /// regular see cref="StateData"/> transitions are stored as a linked list over
             /// <see cref="Builder.transitions"/> array.
             /// </summary>
             private struct LinkedStateData

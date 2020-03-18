@@ -5,40 +5,23 @@
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
 
-    using Microsoft.ML.Probabilistic.Collections;
 
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
     {
         /// <summary>
         /// Represents a reference to a state of automaton for exposure in public API.
         /// </summary>
-        /// <remarks>
-        /// Acts as a "fat reference" to state in automaton. In addition to reference to actual
-        /// StateData it carries 2 additional properties for convenience: <see cref="Index"/>
-        /// of the state and full <see cref="transitions"/> table.
-        /// </remarks>
-        public struct State : IEquatable<State>
+        public struct State
         {
-            private readonly ImmutableArray<StateData> states;
-
-            private readonly ImmutableArray<Transition> transitions;
-
             /// <summary>
             /// Initializes a new instance of <see cref="State"/> class. Used internally by automaton implementation
             /// to wrap StateData for use in public Automaton APIs.
             /// </summary>
-            internal State(
-                ImmutableArray<StateData> states,
-                ImmutableArray<Transition> transitions,
-                int index)
+            internal State(RelativeState data, int index)
             {
-                this.states = states;
-                this.transitions = transitions;
+                this.Data = data;
                 this.Index = index;
             }
 
@@ -46,6 +29,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Gets the index of the state.
             /// </summary>
             public int Index { get; }
+
+            internal RelativeState Data { get; }
 
             /// <summary>
             /// Gets the ending weight of the state.
@@ -57,34 +42,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public bool CanEnd => this.Data.CanEnd;
 
-            public ImmutableArraySegment<Transition> Transitions =>
-                new ImmutableArraySegment<Transition>(
-                    this.transitions,
-                    this.Data.FirstTransitionIndex,
-                    this.Data.TransitionsCount);
-
-            internal StateData Data => this.states[this.Index];
-
-            /// <summary>
-            /// Compares 2 states for equality.
-            /// </summary>
-            public static bool operator ==(State a, State b) => a.Index == b.Index;
-
-            /// <summary>
-            /// Compares 2 states for inequality.
-            /// </summary>
-            public static bool operator !=(State a, State b) => !(a == b);
-
-            /// <summary>
-            /// Compares 2 states for equality.
-            /// </summary>
-            public bool Equals(State that) => this == that;
-
-            /// <inheritdoc/>
-            public override bool Equals(object obj) => obj is State that && this.Equals(that);
-
-            /// <inheritdoc/>
-            public override int GetHashCode() => this.Data.GetHashCode();
+            public TransitionsList Transitions =>
+                new TransitionsList(
+                    this.Index,
+                    this.Data.RelativeTransitions.BaseArray,
+                    this.Data.RelativeTransitions.BaseIndex,
+                    this.Data.RelativeTransitions.Count);
 
             /// <summary>
             /// Returns a string that represents the state.
@@ -129,7 +92,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public void Write(Action<double> writeDouble, Action<int> writeInt32, Action<TElementDistribution> writeElementDistribution)
             {
                 this.EndWeight.Write(writeDouble);
-                writeInt32(this.Index);
                 writeInt32(this.Transitions.Count);
                 foreach (var transition in this.Transitions)
                 {
@@ -138,26 +100,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             /// <summary>
-            /// Reads state and appends it into Automaton builder. Returns index in the serialized data.
-            /// If <paramref name="checkIndex"/> is true, will throw exception if serialized index
-            /// does not match index in deserialized states array. This check is bypassed only when
-            /// start state is serialized second time.
+            /// Reads state and appends it into Automaton builder.
             /// </summary>
-            public static int ReadTo(
+            public static void ReadTo(
                 ref Builder builder,
                 Func<int> readInt32,
                 Func<double> readDouble,
-                Func<TElementDistribution> readElementDistribution,
-                bool checkIndex = false)
+                Func<TElementDistribution> readElementDistribution)
             {
                 var endWeight = Weight.Read(readDouble);
-                // Note: index is serialized for compatibility with old binary serializations
-                var index = readInt32();
-
-                if (checkIndex && index != builder.StatesCount)
-                {
-                    throw new Exception("Index in serialized data does not match index in deserialized array");
-                }
 
                 var state = builder.AddState();
                 state.SetEndWeight(endWeight);
@@ -167,8 +118,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     state.AddTransition(Transition.Read(readInt32, readDouble, readElementDistribution));
                 }
-
-                return index;
             }
 
             #endregion

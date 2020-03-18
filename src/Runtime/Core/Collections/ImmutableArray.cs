@@ -145,6 +145,16 @@ namespace Microsoft.ML.Probabilistic.Collections
             this.length = length;
         }
 
+        [Construction("CloneArray")]
+        public static ImmutableArraySegment<T> CreateCopy(IEnumerable<T> sequence)
+        {
+            var array = ImmutableArray<T>.CreateCopy(sequence);
+            return new ImmutableArraySegment<T>(array, 0, array.Count);
+        }
+
+        public static implicit operator ImmutableArraySegment<T>(ImmutableArray<T> array) =>
+            new ImmutableArraySegment<T>(array, 0, array.Count);
+
         /// <inheritdoc/>
         public T this[int index]
         {
@@ -157,6 +167,21 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         /// <inheritdoc/>
         public int Count => this.length;
+
+        public ImmutableArray<T> BaseArray => this.array;
+
+        public int BaseIndex => this.begin;
+
+        public T[] CloneArray()
+        {
+            var result = new T[this.Count];
+            for (var i = 0; i < this.Count; ++i)
+            {
+                result[i] = this[i];
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Returns enumerator over elements of array.
@@ -187,11 +212,6 @@ namespace Microsoft.ML.Probabilistic.Collections
         private readonly ImmutableArray<T> array;
 
         /// <summary>
-        /// Index of the first element which belongs segment begin enumerated.
-        /// </summary>
-        private readonly int begin;
-
-        /// <summary>
         /// Index of the first element which does not belong segment begin enumerated.
         /// </summary>
         private readonly int end;
@@ -207,7 +227,6 @@ namespace Microsoft.ML.Probabilistic.Collections
         internal ImmutableArraySegmentEnumerator(ImmutableArray<T> array, int begin, int end)
         {
             this.array = array;
-            this.begin = begin;
             this.end = end;
             this.pointer = begin - 1;
         }
@@ -231,10 +250,9 @@ namespace Microsoft.ML.Probabilistic.Collections
         object IEnumerator.Current => this.Current;
 
         /// <inheritdoc/>
-        void IEnumerator.Reset()
-        {
-            this.pointer = this.begin - 1;
-        }
+        void IEnumerator.Reset() => this.Reset();
+
+        public void Reset() => throw new NotSupportedException();
     }
 
     public static class ImmutableArray

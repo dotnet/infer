@@ -637,7 +637,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Weight weight = startClosure.GetStateWeightByIndex(i);
                 var state = startClosure.GetStateByIndex(i);
-                double expectedWeight = state == automaton.Start ? 10 : 4;
+                double expectedWeight = state.Index == automaton.Start.Index ? 10 : 4;
                 Assert.Equal(expectedWeight, weight.Value, 1e-8);
             }
         }

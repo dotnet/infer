@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,15 +7,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System;
     using System.Runtime.Serialization;
     using System.Text;
-
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Serialization;
     using Microsoft.ML.Probabilistic.Utilities;
 
-    /// <content>
-    /// Contains the class used to represent a transition in an automaton.#
-    /// </content>
-    public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
+    public abstract partial class AutomatonData<TElement, TElementDistribution>
     {
         /// <summary>
         /// Represents a transition in an automaton.
@@ -117,21 +113,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 get => this.weight;
                 set => this.weight = value;
-            }
-
-            /// <summary>
-            /// Replaces the configuration of this transition with the configuration of a given transition.
-            /// </summary>
-            /// <param name="that">
-            /// The transition which configuration would be used to replace the configuration of the current transition.
-            /// </param>
-            public void SetTo(Transition that)
-            {
-                this.hasElementDistribution = that.hasElementDistribution;
-                this.elementDistribution = that.elementDistribution;
-                this.Weight = that.Weight;
-                this.DestinationStateIndex = that.DestinationStateIndex;
-                this.Group = that.Group;
             }
 
             /// <summary>
