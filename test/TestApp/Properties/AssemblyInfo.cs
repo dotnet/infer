@@ -10,9 +10,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("TestApp")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft Research Limited")]
-[assembly: AssemblyProduct("Microsoft.ML.Probabilistic")]
 [assembly: AssemblyCopyright("Copyright � Microsoft Research Limited 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
