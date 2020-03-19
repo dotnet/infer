@@ -10,9 +10,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.ML.Probabilistic.Learners.TestApp")]
 [assembly: AssemblyDescription("Learner module test application for Infer.NET")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft Research Limited")]
-[assembly: AssemblyProduct("Microsoft.ML.Probabilistic")]
 [assembly: AssemblyCopyright("Copyright © Microsoft Research Limited 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

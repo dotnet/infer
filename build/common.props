@@ -16,5 +16,29 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <SharedVersionOutputDirectory>$(MSBuildThisFileDirectory)\src\Shared</SharedVersionOutputDirectory>
+
+    <!--
+      Generate assembly info so that IntervalsVisibleTo
+      can be specified in ProjectFile, where we have access to
+      AssemblyNamePrefix
+    -->
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    
+    <!--
+      Disable generation of assembly properties where their values
+      differ for NuGet packages and assemblies. For these
+      properties are defined in AssemblyInfo files.
+    -->
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+
+    <!--
+      We currently generate versions manually using SharedAssemblyInfo.cs
+      and a tool that updates it.
+    -->
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 </Project>
