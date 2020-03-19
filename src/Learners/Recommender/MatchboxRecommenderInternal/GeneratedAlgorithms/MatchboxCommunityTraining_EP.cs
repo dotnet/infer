@@ -145,10 +145,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public bool Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isDone;
 		/// <summary>True if Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23 has performed initialisation. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23</summary>
 		public bool Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised;
-		/// <summary>True if Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22 has executed. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22</summary>
-		public bool Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isDone;
-		/// <summary>True if Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22 has performed initialisation. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22</summary>
-		public bool Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised;
+		/// <summary>True if Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21 has executed. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21</summary>
+		public bool Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isDone;
+		/// <summary>True if Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21 has performed initialisation. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21</summary>
+		public bool Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised;
 		/// <summary>True if Changed_ObservationCount has executed. Set this to false to force re-execution of Changed_ObservationCount</summary>
 		public bool Changed_ObservationCount_isDone;
 		/// <summary>True if Changed_ObservationCount_Ratings has executed. Set this to false to force re-execution of Changed_ObservationCount_Ratings</summary>
@@ -209,7 +209,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionStructArray<Gaussian,double>[] ItemBias_uses_B;
 		/// <summary>Messages to use of 'ItemBias'</summary>
 		public DistributionStructArray<Gaussian,double>[] ItemBias_uses_F;
-		/// <summary>Buffer for GetItemsOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double&gt;.ItemsAverageConditional&lt;DistributionStructArray&lt;Gaussian, double&gt;, Gaussian&gt;</summary>
 		public DistributionStructArray<Gaussian,double> ItemBias_uses_F_1__marginal;
 		/// <summary>Field backing the ItemBiasFeatureWeightPriorVariance property</summary>
 		private double itemBiasFeatureWeightPriorVariance;
@@ -244,7 +244,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> ItemTraitFeatureWeights_NonZeroItemFeatureIndices_F;
 		/// <summary>Message from use of 'ItemTraitFeatureWeights'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraitFeatureWeights_use_B;
-		/// <summary>Buffer for JaggedSubarrayOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for JaggedSubarrayOp&lt;double&gt;.ItemsAverageConditional&lt;DistributionStructArray&lt;Gaussian, double&gt;, Gaussian, DistributionStructArray&lt;Gaussian, double&gt;&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraitFeatureWeights_use_F_trait__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> itemTraitMean_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> itemTraitMean_F;
@@ -252,7 +252,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_depth0_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] ItemTraits_depth0_uses_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] ItemTraits_depth0_uses_F;
-		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double[]&gt;.ItemsAverageConditional&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, DistributionStructArray&lt;Gaussian, double&gt;&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_depth0_uses_F_1__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_index10_index10_0__index10__B;
@@ -323,7 +323,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionStructArray<Gaussian,double>[] UserBias_uses_B;
 		/// <summary>Messages to use of 'UserBias'</summary>
 		public DistributionStructArray<Gaussian,double>[] UserBias_uses_F;
-		/// <summary>Buffer for GetItemsOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double&gt;.ItemsAverageConditional&lt;DistributionStructArray&lt;Gaussian, double&gt;, Gaussian&gt;</summary>
 		public DistributionStructArray<Gaussian,double> UserBias_uses_F_1__marginal;
 		/// <summary>Field backing the UserBiasFeatureWeightPriorVariance property</summary>
 		private double userBiasFeatureWeightPriorVariance;
@@ -361,17 +361,17 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_depth0_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] UserThresholds_depth0_uses_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] UserThresholds_depth0_uses_F;
-		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double[]&gt;.ItemsAverageConditional&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, DistributionStructArray&lt;Gaussian, double&gt;&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_depth0_uses_F_1__marginal;
 		public DistributionStructArray<Gaussian,double> UserThresholds_F_reduced;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_itemUserIds_observation__F;
 		/// <summary>Message to marginal of 'UserThresholds'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_marginal_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public DistributionStructArray<Gaussian,double> UserThresholds_rep_B_toDef;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public DistributionStructArray<Gaussian,double> UserThresholds_rep_F_marginal;
 		/// <summary>Message from use of 'UserThresholds'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_use_B;
@@ -399,7 +399,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> UserTraitFeatureWeights_NonZeroUserFeatureIndices_F;
 		/// <summary>Message from use of 'UserTraitFeatureWeights'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraitFeatureWeights_use_B;
-		/// <summary>Buffer for JaggedSubarrayOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for JaggedSubarrayOp&lt;double&gt;.ItemsAverageConditional&lt;DistributionStructArray&lt;Gaussian, double&gt;, Gaussian, DistributionStructArray&lt;Gaussian, double&gt;&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraitFeatureWeights_use_F_trait__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> userTraitMean_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> userTraitMean_F;
@@ -415,7 +415,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] UserTraits_uses_B;
 		/// <summary>Messages to use of 'UserTraits'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] UserTraits_uses_F;
-		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double[]&gt;.ItemsAverageConditional&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, DistributionStructArray&lt;Gaussian, double&gt;&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_uses_F_1__marginal;
 		/// <summary>Field backing the UserTraitsInitializer property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> userTraitsInitializer;
@@ -481,7 +481,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -522,7 +522,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -562,7 +562,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -601,7 +601,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -640,7 +640,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -688,7 +688,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -732,7 +732,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -774,7 +774,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -814,7 +814,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -854,7 +854,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -893,7 +893,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -932,7 +932,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -975,7 +975,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_MiddleUserThresholdIndex_UserCount_UserThresholdCount_UserThresholdPriorMean_UserThresholdPr58_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1019,7 +1019,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1060,7 +1060,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1101,7 +1101,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1143,7 +1143,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_TraitCount_UserCount_isDone = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isDone = false;
@@ -1185,7 +1185,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1226,7 +1226,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1279,7 +1279,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1322,7 +1322,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1371,7 +1371,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_TraitCount_UserCount_isDone = false;
 					this.Changed_TraitCount_UserCount_UserTraitsInitializer_isDone = false;
@@ -1416,7 +1416,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1456,7 +1456,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isDone = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1495,7 +1495,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_UserBiasMessage_UserCount_isDone = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1534,7 +1534,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1582,7 +1582,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isDone = false;
 					this.Changed_UserCount_UserThresholdCount_UserThresholdsMessage_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isDone = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isDone = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isDone = false;
 					this.Changed_TraitCount_UserCount_isDone = false;
 					this.Changed_TraitCount_UserCount_UserTraitsInitializer_isDone = false;
@@ -1630,7 +1630,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1672,7 +1672,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1720,7 +1720,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isDone = false;
 					this.Changed_UserCount_UserThresholdCount_UserThresholdsMessage_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isDone = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isDone = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1760,7 +1760,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1803,7 +1803,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_MiddleUserThresholdIndex_UserCount_UserThresholdCount_UserThresholdPriorMean_UserThresholdPr58_isDone = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1844,7 +1844,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_MiddleUserThresholdIndex_UserCount_UserThresholdCount_UserThresholdPriorMean_UserThresholdPr58_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1884,7 +1884,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_UserCount_UserThresholdCount_UserThresholdsInitializer_isDone = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isDone = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1923,7 +1923,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_UserCount_UserThresholdCount_UserThresholdsMessage_isDone = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -1963,7 +1963,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -2002,7 +2002,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_TraitCount_UserCount_UserTraitsInitializer_isDone = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
@@ -2041,7 +2041,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 				this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 				this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -2081,7 +2081,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -2125,7 +2125,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isInitialised = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isDone = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isInitialised = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isInitialised = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isInitialised = false;
@@ -2978,6 +2978,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			if (this.Changed_ItemFeatureCount_isDone) {
 				return ;
 			}
+			this.ItemBiasFeatureWeights_marginal_F = new DistributionStructArray<Gaussian,double>(this.itemFeatureCount);
+			for(int itemFeature = 0; itemFeature<this.itemFeatureCount; itemFeature++) {
+				this.ItemBiasFeatureWeights_marginal_F[itemFeature] = Gaussian.Uniform();
+			}
 			this.ItemBiasFeatureWeights_F = new DistributionStructArray<Gaussian,double>(this.itemFeatureCount);
 			this.ItemBiasFeatureWeights_F_reduced = default(Gaussian);
 			if (this.itemFeatureCount>0) {
@@ -2985,10 +2989,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int itemFeature = 0; itemFeature<this.itemFeatureCount; itemFeature++) {
 				this.ItemBiasFeatureWeights_F[itemFeature] = this.ItemBiasFeatureWeights_F_reduced;
-			}
-			this.ItemBiasFeatureWeights_marginal_F = new DistributionStructArray<Gaussian,double>(this.itemFeatureCount);
-			for(int itemFeature = 0; itemFeature<this.itemFeatureCount; itemFeature++) {
-				this.ItemBiasFeatureWeights_marginal_F[itemFeature] = Gaussian.Uniform();
 			}
 			this.Changed_ItemFeatureCount_isDone = true;
 		}
@@ -3427,9 +3427,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
 		/// <summary>Computations that depend on the observed value of numberOfIterationsDecreased and UserCount and UserThresholdCount and UseSharedUserThresholds and must reset on changes to AffinityNoiseVariance and ItemBiasFeatureWeightPriorVariance and ItemBiasInitializer and ItemBiasMessage and ItemBiasVariance and ItemCount and ItemFeatureCount and ItemIds and ItemTraitFeatureWeightPriorVariance and ItemTraitsInitializer and ItemTraitsMessage and ItemTraitVariance and MiddleUserThresholdIndex and NonZeroItemFeatureCounts and NonZeroItemFeatureIndices and NonZeroItemFeatureValues and NonZeroUserFeatureCounts and NonZeroUserFeatureIndices and NonZeroUserFeatureValues and ObservationCount and Ratings and TraitCount and UserBiasFeatureWeightPriorVariance and UserBiasInitializer and UserBiasMessage and UserBiasVariance and UserFeatureCount and UserIds and UserThresholdNoiseVariance and UserThresholdPriorMean and UserThresholdPriorVariance and UserThresholdsInitializer and UserThresholdsMessage and UserTraitFeatureWeightPriorVariance and UserTraitsInitializer and UserTraitsMessage and UserTraitVariance</summary>
 		/// <param name="initialise">If true, reset messages that initialise loops</param>
-		private void Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22(bool initialise)
+		private void Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21(bool initialise)
 		{
-			if (this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isDone&&((!initialise)||this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised)) {
+			if (this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isDone&&((!initialise)||this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised)) {
 				return ;
 			}
 			for(int user = 0; user<this.userCount; user++) {
@@ -3449,8 +3449,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.UserThresholds_depth0_uses_F_1__marginal = GetItemsOp<double[]>.MarginalInit<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserThresholds_depth0_uses_F[1]);
 				}
 			}
-			this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isDone = true;
-			this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isInitialised = true;
+			this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isDone = true;
+			this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isInitialised = true;
 		}
 
 		/// <summary>Computations that depend on the observed value of ObservationCount</summary>
@@ -3767,8 +3767,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserBias_use_F = new DistributionStructArray<Gaussian,double>(this.userCount);
 			this.UserBias_uses_B[1] = new DistributionStructArray<Gaussian,double>(this.userCount);
 			this.UserThresholds_depth0_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.userCount);
-			this.UserThresholds_depth0_uses_B[0] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.userCount);
 			this.UserThresholds_depth0_uses_B[1] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.userCount);
+			this.UserThresholds_depth0_uses_B[0] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.userCount);
 			this.UserThresholds_uses_B = new Gaussian[this.userCount][][];
 			this.UserThresholds_uses_F = new Gaussian[this.userCount][][];
 			this.UserThresholds_use_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.userCount);
@@ -3814,11 +3814,11 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int user = 0; user<this.userCount; user++) {
 				this.UserThresholds_depth0_B[user] = new DistributionStructArray<Gaussian,double>(this.userThresholdCount);
+				this.UserThresholds_depth0_uses_B[1][user] = new DistributionStructArray<Gaussian,double>(this.userThresholdCount);
 				this.UserThresholds_depth0_uses_B[0][user] = new DistributionStructArray<Gaussian,double>(this.userThresholdCount);
 				for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 					this.UserThresholds_depth0_uses_B[0][user][userThreshold] = Gaussian.Uniform();
 				}
-				this.UserThresholds_depth0_uses_B[1][user] = new DistributionStructArray<Gaussian,double>(this.userThresholdCount);
 				this.UserThresholds_uses_B[user] = new Gaussian[this.userThresholdCount][];
 				for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 					this.UserThresholds_uses_B[user][userThreshold] = new Gaussian[2];
@@ -3960,7 +3960,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_numberOfIterationsDecreased_UserBiasInitializer_UserCount_Init_AffinityNoiseVariance_ItemBia17_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20_isDone = false;
-					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22_isDone = false;
+					this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21_isDone = false;
 					this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7_isDone = false;
 					this.Changed_NonZeroUserFeatureCounts_numberOfIterationsDecreased_TraitCount_UserCount_Init_AffinityNoise42_isDone = false;
 					this.Changed_numberOfIterationsDecreased_TraitCount_UserCount_UserTraitsInitializer_Init_AffinityNoiseVar27_isDone = false;
@@ -4024,7 +4024,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UserThresholdsInitializer_Init_Affi23(initialise);
 			this.Changed_UserCount_UserThresholdCount_UserThresholdsMessage();
 			this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_Init_AffinityNoiseVariance_ItemBias20(initialise);
-			this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini22(initialise);
+			this.Changed_numberOfIterationsDecreased_UserCount_UserThresholdCount_UseSharedUserThresholds_Init_Affini21(initialise);
 			this.Changed_numberOfIterationsDecreased_UserCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeightPriorV7(initialise);
 			this.Changed_TraitCount_UserCount();
 			this.Changed_TraitCount_UserCount_UserTraitsInitializer();

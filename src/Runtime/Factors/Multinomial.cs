@@ -11,7 +11,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MultinomialOp"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MultinomialOp"]/doc/*'/>
     /// <remarks>The factor is f(sample,p,n) = n!/prod_k sample[k]!  prod_k p[k]^sample[k]</remarks>
     [FactorMethod(new string[] { "sample", "trialCount", "p" }, typeof(Rand), "Multinomial", typeof(int), typeof(Vector))]
     [FactorMethod(typeof(Factor), "MultinomialList", typeof(int), typeof(Vector))]

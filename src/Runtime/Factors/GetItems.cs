@@ -231,7 +231,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (ArrayType)array.Clone();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType}(ArrayType, IList{DistributionType}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="Marginal2{ArrayType, DistributionType}(ArrayType, IList{DistributionType}, IList{int}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [SkipIfAllUniform("array", "items")]
@@ -251,6 +251,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType}(ArrayType, ArrayType, ArrayType)"]/*'/>
+        /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
+        /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [SkipIfAllUniform("array", "to_array")]
         [MultiplyAll]
         public static ArrayType Marginal<ArrayType, DistributionType>(

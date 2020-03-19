@@ -133,7 +133,46 @@ namespace Microsoft.ML.Probabilistic.Tests
                     (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max)
                     );
                 Interlocked.Add(ref count, 1);
-                if(count % 100000 == 0)
+                if (count % 100000 == 0)
+                    Trace.WriteLine($"{count} cases passed");
+            });
+            Trace.WriteLine($"{count} cases passed");
+        }
+
+        [Fact]
+        public void TruncatedGamma_GetMode_MaximizesGetLogProb()
+        {
+            long count = 0;
+            Parallel.ForEach(OperatorTests.TruncatedGammas().Take(100000), dist =>
+            {
+                double argmax = double.NaN;
+                double max = double.NegativeInfinity;
+                foreach (var x in OperatorTests.DoublesAtLeastZero())
+                {
+                    double logProb = dist.GetLogProb(x);
+                    Assert.False(double.IsNaN(logProb));
+                    if (logProb > max)
+                    {
+                        max = logProb;
+                        argmax = x;
+                    }
+                }
+                double mode = dist.GetMode();
+                Assert.False(double.IsNaN(mode));
+                double logProbBelowMode = dist.GetLogProb(MMath.PreviousDouble(mode));
+                Assert.False(double.IsNaN(logProbBelowMode));
+                double logProbAboveMode = dist.GetLogProb(MMath.NextDouble(mode));
+                Assert.False(double.IsNaN(logProbAboveMode));
+                double logProbAtMode = dist.GetLogProb(mode);
+                Assert.False(double.IsNaN(logProbAtMode));
+                logProbAtMode = System.Math.Max(System.Math.Max(logProbAtMode, logProbAboveMode), logProbBelowMode);
+                const double smallestNormalized = 1e-308;
+                Assert.True(logProbAtMode >= max ||
+                    MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-8 ||
+                    (mode <= double.Epsilon && dist.GetLogProb(smallestNormalized) >= max)
+                    );
+                Interlocked.Add(ref count, 1);
+                if (count % 100000 == 0)
                     Trace.WriteLine($"{count} cases passed");
             });
             Trace.WriteLine($"{count} cases passed");
@@ -188,7 +227,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerMeanAndVarianceFuzzTest()
         {
-            foreach(var gammaPower in OperatorTests.GammaPowers().Take(100000))
+            foreach (var gammaPower in OperatorTests.GammaPowers().Take(100000))
             {
                 gammaPower.GetMeanAndVariance(out double mean, out double variance);
                 Assert.False(double.IsNaN(mean));
@@ -289,6 +328,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             g = new TruncatedGamma(2, 1, 3, 3);
             Assert.True(g.IsPointMass);
             Assert.Equal(3.0, g.Point);
+
+            g = new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e14);
+            Assert.True(g.Sample() >= 0);
         }
 
         /// <summary>
@@ -303,7 +345,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 TruncatedGamma g = new TruncatedGamma(1, System.Math.Exp(-i), target, double.PositiveInfinity);
                 var mean = g.GetMean();
-                Console.WriteLine($"GetNormalizer = {g.GetNormalizer()} GetMean = {g.GetMean()}");
+                //Trace.WriteLine($"GetNormalizer = {g.GetNormalizer()} GetMean = {g.GetMean()}");
                 Assert.False(double.IsInfinity(mean));
                 Assert.False(double.IsNaN(mean));
                 double diff = System.Math.Abs(mean - target);
@@ -318,7 +360,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 TruncatedGamma g = new TruncatedGamma(System.Math.Exp(i), 1, 0, target);
                 var mean = g.GetMean();
-                Console.WriteLine($"GetNormalizer = {g.GetNormalizer()} GetMean = {g.GetMean()}");
+                //Trace.WriteLine($"GetNormalizer = {g.GetNormalizer()} GetMean = {g.GetMean()}");
                 Assert.False(double.IsInfinity(mean));
                 Assert.False(double.IsNaN(mean));
                 double diff = System.Math.Abs(mean - target);
@@ -341,11 +383,79 @@ namespace Microsoft.ML.Probabilistic.Tests
             for (int i = 0; i < 100; i++)
             {
                 var meanPower = g.GetMeanPower(-i);
-                Trace.WriteLine($"GetMeanPower({-i}) = {meanPower}");
+                //Trace.WriteLine($"GetMeanPower({-i}) = {meanPower}");
                 Assert.False(double.IsNaN(meanPower));
                 Assert.False(double.IsInfinity(meanPower));
-                if (i == 1) Assert.Equal(MMath.GammaUpper(shape-1, 1, false)/MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
+                if (i == 1) Assert.Equal(MMath.GammaUpper(shape - 1, 1, false) / MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
             }
+        }
+
+        [Fact]
+        public void TruncatedGamma_GetMeanAndVariance_WithinBounds()
+        {
+            long count = 0;
+            Parallel.ForEach(OperatorTests.LowerTruncatedGammas()
+                .Take(100000), dist =>
+                {
+                    dist.GetMeanAndVariance(out double mean, out double variance);
+                    // Compiler.Quoter.Quote(dist)
+                    Assert.True(mean >= dist.LowerBound);
+                    Assert.True(mean <= dist.UpperBound);
+                    Assert.Equal(mean, dist.GetMean());
+                    Assert.True(variance >= 0);
+                    Interlocked.Add(ref count, 1);
+                    if (count % 100000 == 0)
+                        Trace.WriteLine($"{count} cases passed");
+                });
+            Trace.WriteLine($"{count} cases passed");
+        }
+
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        public void TruncatedGamma_GetMeanPower_WithinBounds()
+        {
+            var g = new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e14);
+            Assert.True(g.GetMean() <= g.UpperBound);
+            for (int i = 0; i < 308; i++)
+            {
+                double power = System.Math.Pow(10, i);
+                //Trace.WriteLine($"GetMeanPower({power}) = {g.GetMeanPower(power)}");
+                Assert.True(g.GetMeanPower(power) <= g.UpperBound);
+            }
+            Assert.True(g.GetMeanPower(1.7976931348623157E+308) <= g.UpperBound);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e9).GetMeanPower(1.7976931348623157E+308) <= 1e9);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e6).GetMeanPower(1.7976931348623157E+308) <= 1e6);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 100).GetMeanPower(4.94065645841247E-324) <= 100);
+
+            long count = 0;
+            Parallel.ForEach(OperatorTests.LowerTruncatedGammas()
+                .Take(100000), dist =>
+            {
+                foreach (var power in OperatorTests.Doubles())
+                {
+                    if (dist.Gamma.Shape <= -power && dist.LowerBound == 0) continue;
+                    double meanPower = dist.GetMeanPower(power);
+                    if (power >= 0)
+                    {
+                        // Compiler.Quoter.Quote(dist)
+                        Assert.True(meanPower >= System.Math.Pow(dist.LowerBound, power));
+                        Assert.True(meanPower <= System.Math.Pow(dist.UpperBound, power));
+                    }
+                    else
+                    {
+                        Assert.True(meanPower <= System.Math.Pow(dist.LowerBound, power));
+                        Assert.True(meanPower >= System.Math.Pow(dist.UpperBound, power));
+                    }
+                    if (power == 1)
+                    {
+                        Assert.Equal(meanPower, dist.GetMean());
+                    }
+                }
+                Interlocked.Add(ref count, 1);
+                if (count % 100000 == 0)
+                    Trace.WriteLine($"{count} cases passed");
+            });
+            Trace.WriteLine($"{count} cases passed");
         }
 
         [Fact]

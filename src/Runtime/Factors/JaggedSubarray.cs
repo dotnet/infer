@@ -282,7 +282,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (ArrayType)array.Clone();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, Object, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -810,7 +810,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 #endif
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, Object, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -840,7 +840,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, Object, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemArrayType, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemArrayType">The type of an incoming message from <c>items</c>.</typeparam>
@@ -871,7 +871,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="MarginalIncrement{ArrayType, DistributionType, ItemType}(ArrayType, ItemType, ItemType, IList{IList{int}}, int)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="MarginalIncrementItems{ArrayType, DistributionType, ItemType}(ItemType, ItemType, IList{IList{int}}, int, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -928,7 +928,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageConditional{ArrayType}(ArrayType, ArrayType, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         public static ArrayType ArrayAverageConditional<ArrayType>(
             [Cancels] ArrayType array,
@@ -940,6 +940,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="MarginalIncrementArray{ArrayType}(ArrayType, ArrayType, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         public static ArrayType MarginalIncrementArray<ArrayType>(
             [SkipIfUniform] ArrayType array,  // SkipIfUniform on 'array' causes this line to be pruned when the incoming message isn't changing
@@ -978,6 +979,8 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         //-- VMP -------------------------------------------------------------------------------------------------------------
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="MarginalAverageLogarithm{ArrayType}(ArrayType, ArrayType)"]/*'/>
+        /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         public static ArrayType MarginalAverageLogarithm<ArrayType>(
             ArrayType array, ArrayType result)
             where ArrayType : SettableTo<ArrayType>

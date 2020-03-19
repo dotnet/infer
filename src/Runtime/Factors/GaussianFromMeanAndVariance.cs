@@ -957,10 +957,12 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// This class defines specializations for the case where variance is a point mass.
     /// These methods have fewer inputs, allowing more efficient schedules.
     /// </summary>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianFromMeanAndVarianceOp_PointVariance"]/doc/*'/>
     [FactorMethod(typeof(Factor), "GaussianFromMeanAndVariance", Default = false)]
     [Quality(QualityBand.Preview)]
     public static class GaussianFromMeanAndVarianceOp_PointVariance
     {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianFromMeanAndVarianceOp_PointVariance"]/message_doc[@name="LogEvidenceRatio(double, Gaussian, Gamma)"]/*'/>
         public static double LogEvidenceRatio(
             double sample, [SkipIfUniform] Gaussian mean, [SkipIfUniform] Gamma variance)
         {
@@ -969,6 +971,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GaussianFromMeanAndVarianceOp.LogEvidenceRatio(sample, mean, variance.Point);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianFromMeanAndVarianceOp_PointVariance"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, Gamma)"]/*'/>
         [Skip]
         public static double LogEvidenceRatio(
             [SkipIfUniform] Gaussian sample, [SkipIfUniform] Gaussian mean, [SkipIfUniform] Gamma variance)
@@ -978,6 +981,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GaussianFromMeanAndVarianceOp.LogEvidenceRatio(sample, mean, variance.Point);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianFromMeanAndVarianceOp_PointVariance"]/message_doc[@name="VarianceAverageConditional(Gaussian, Gaussian, Gamma)"]/*'/>
         public static Gamma VarianceAverageConditional([SkipIfUniform] Gaussian sample, [SkipIfUniform] Gaussian mean, [Proper] Gamma variance)
         {
             if (!variance.IsPointMass)
@@ -985,6 +989,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, mean, variance);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianFromMeanAndVarianceOp_PointVariance"]/message_doc[@name="SampleAverageConditional(Gaussian, Gamma)"]/*'/>
         public static Gaussian SampleAverageConditional([SkipIfUniform] Gaussian mean, [Proper] Gamma variance)
         {
             if (!variance.IsPointMass)
@@ -992,6 +997,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GaussianFromMeanAndVarianceOp.SampleAverageConditional(mean, variance.Point);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianFromMeanAndVarianceOp_PointVariance"]/message_doc[@name="MeanAverageConditional(Gaussian, Gamma)"]/*'/>
         public static Gaussian MeanAverageConditional([SkipIfUniform] Gaussian sample, [Proper] Gamma variance)
         {
             return SampleAverageConditional(sample, variance);

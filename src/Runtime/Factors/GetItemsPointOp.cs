@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public static class GetItemsPointOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsPointOp{T}"]/message_doc[@name="ItemsAverageConditional{DistributionType}(IList{DistributionType}, IList{int}, int, DistributionType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static DistributionType ItemsAverageConditional<DistributionType>(
             [SkipIfAllUniform] IList<DistributionType> array,
@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public static class GetItemsFromJaggedPointOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsFromJaggedPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsFromJaggedPointOp{T}"]/message_doc[@name="ItemsAverageConditional{DistributionArrayType, DistributionType}(IList{DistributionArrayType}, IList{int}, IList{int}, int, DistributionType)"]/*'/>
         /// <typeparam name="DistributionArrayType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over inner array elements.</typeparam>
         public static DistributionType ItemsAverageConditional<DistributionArrayType, DistributionType>(
@@ -62,7 +62,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public static class GetItemsFromDeepJaggedPointOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsFromDeepJaggedPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsFromDeepJaggedPointOp{T}"]/message_doc[@name="ItemsAverageConditional{DistributionArrayArrayType, DistributionArrayType, DistributionType}(IList{DistributionArrayArrayType}, IList{int}, IList{int}, IList{int}, int, DistributionType)"]/*'/>
         /// <typeparam name="DistributionArrayArrayType">The type of a distribution over depth 1 array elements.</typeparam>
         /// <typeparam name="DistributionArrayType">The type of a distribution over depth 2 array elements.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over depth 3 array elements.</typeparam>
@@ -84,11 +84,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsPointOp{T}"]/doc/*'/>
+    /// <typeparam name="T">The type of an item.</typeparam>
     [FactorMethod(typeof(Factor), "GetJaggedItems<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetJaggedItemsPointOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ItemType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ItemType, DistributionType}(IList{DistributionType}, IList{IList{int}}, int, ItemType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         public static ItemType ItemsAverageConditional<ItemType, DistributionType>(
@@ -114,11 +116,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsPointOp{T}"]/doc/*'/>
+    /// <typeparam name="T">The type of an item.</typeparam>
     [FactorMethod(typeof(Factor), "GetDeepJaggedItems<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetDeepJaggedItemsPointOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ItemType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ItemType, ItemType2, DistributionType}(IList{DistributionType}, IList{IList{IList{int}}}, int, ItemType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
@@ -152,11 +156,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsFromJaggedPointOp{T}"]/doc/*'/>
+    /// <typeparam name="T">The type of an item.</typeparam>
     [FactorMethod(typeof(Factor), "GetJaggedItemsFromJagged<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetJaggedItemsFromJaggedPointOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ItemType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsFromJaggedPointOp{T}"]/message_doc[@name="ItemsAverageConditional{ItemType, DistributionType}(IList{ItemType}, IList{IList{int}}, IList{IList{int}}, int, ItemType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         public static ItemType ItemsAverageConditional<ItemType, DistributionType>(

@@ -1097,8 +1097,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 mpa.prototypeExpression = Builder.StaticMethod(new Func<Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian>(Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.Uniform));
                 return mpa;
             }
-            else if (Recognizer.IsStaticMethod(imie, new Func<double, double, double, double, double>(TruncatedGamma.Sample))
-                || Recognizer.IsStaticMethod(imie, new Func<double, double, double, double, double>(Factor.TruncatedGammaFromShapeAndRate))
+            else if (Recognizer.IsStaticMethod(imie, new Func<double, double, double, double, double>(Factor.TruncatedGammaFromShapeAndRate))
                 )
             {
                 MarginalPrototype mpa = new MarginalPrototype(null);

@@ -4792,6 +4792,30 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void PartiallyUniformArrayTest2()
+        {
+            var item = new Range(2).Named("item");
+            var inner = new Range(2).Named("inner");
+            var arrays = Variable.Array(Variable.Array<double>(inner), item).Named("arrays");
+            arrays[0][0] = Variable.GaussianFromMeanAndPrecision(0, 1);
+            arrays[0][1] = Variable.GaussianFromMeanAndPrecision(0, 1);
+            arrays[1][0] = Variable.Random(Gaussian.Uniform());
+            arrays[1][1] = Variable.Random(Gaussian.Uniform());
+            var sums = Variable.Array<double>(item).Named("sums");
+            using (Variable.ForEach(item))
+            {
+                sums[item] = Variable.Sum(arrays[item]);
+            }
+            InferenceEngine engine = new InferenceEngine();
+            GaussianArray expected = new GaussianArray(2);
+            expected[0] = Gaussian.FromMeanAndPrecision(0, 0.5);
+            expected[1] = Gaussian.Uniform();
+            IList<Gaussian> actual = engine.Infer<IList<Gaussian>>(sums);
+            Console.WriteLine(actual);
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
         public void VectorGaussianFactorTest()
         {
             Variable<VectorGaussian> meanPrior = Variable.New<VectorGaussian>().Named("meanPrior");

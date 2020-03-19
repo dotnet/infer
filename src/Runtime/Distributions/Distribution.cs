@@ -13,6 +13,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Utilities;
     using Factors.Attributes;
 
+    /// <summary>
+    /// Base type for all distributions that doesn't specify over which domain distribution is defined.
+    /// </summary>
+    /// <remarks>
+    /// This interface is useful in generic code where distributions of different types have to be stored
+    /// in single container. Container of <see cref="IDistribution"/> is a more specific type than
+    /// container of <see cref="object"/> and adds some type-safety in these cases.
+    /// </remarks>
+    [Quality(QualityBand.Mature)]
+    public interface IDistribution : ICloneable, Diffable, SettableToUniform
+    {
+    }
+
     /// <summary>Distribution interface</summary>
     /// <typeparam name="T">The type of objects in the domain, e.g. Vector or Matrix.</typeparam>
     /// <remarks><para>
@@ -29,20 +42,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// CanGetLogAverageOf, CanGetAverageLog</c>
     /// </para></remarks>
     [Quality(QualityBand.Mature)]
-    public interface IDistribution<T> : ICloneable,
-                                        HasPoint<T>, Diffable, SettableToUniform, CanGetLogProb<T>
+    public interface IDistribution<T> : IDistribution, HasPoint<T>, CanGetLogProb<T>
     {
     }
 
     /// <summary>
     /// Interface to allow untyped access to collection distribution
     /// </summary>
-    public interface ICollectionDistribution
+    public interface ICollectionDistribution : IDistribution
     {
         /// <summary>
         /// Returns the count of known elements in collection distribution.
         /// </summary>
         int GetElementsCount();
+
+        /// <summary>
+        /// Returns the list of elements' distributions.
+        /// </summary>
+        List<IDistribution> GetElementsUntyped();
 
         /// <summary>
         /// Product of two collection distributions which also return element mapping information.

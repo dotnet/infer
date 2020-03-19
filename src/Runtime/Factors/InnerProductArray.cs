@@ -10,21 +10,21 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/doc/*'/>
     [FactorMethod(typeof(Factor), "InnerProduct", typeof(double[]), typeof(double[]))]
     [Quality(QualityBand.Experimental)]
     public static class InnerProductArrayOp
     {
         //-- VMP -------------------------------------------------------------------------------------------------------------
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VectorMultiplyOp"]/message_doc[@name="AverageLogFactor()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AverageLogFactor()"]/*'/>
         [Skip]
         public static double AverageLogFactor()
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageLogarithm(DistributionArray2D{Gaussian}, DistributionArray2D{Gaussian}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageLogarithm(IList{Gaussian}, IList{Gaussian}, Gaussian)"]/*'/>
         public static Gaussian InnerProductAverageLogarithm(
             [SkipIfUniform] IList<Gaussian> A, [SkipIfUniform] IList<Gaussian> B, Gaussian result)
         {
@@ -54,40 +54,40 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageLogarithmInit(DistributionArray2D{Gaussian}, DistributionArray2D{Gaussian})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageLogarithmInit(IList{Gaussian}, IList{Gaussian})"]/*'/>
         [Skip]
         public static Gaussian InnerProductAverageLogarithmInit([IgnoreDependency] IList<Gaussian> A, [IgnoreDependency] IList<Gaussian> B)
         {
             return new Gaussian();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageLogarithmInit(double[,], DistributionArray2D{Gaussian})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageLogarithmInit(double[], IList{Gaussian})"]/*'/>
         [Skip]
         public static Gaussian InnerProductAverageLogarithmInit([IgnoreDependency] double[] A, [IgnoreDependency] IList<Gaussian> B)
         {
             return new Gaussian();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageLogarithmInit(DistributionArray2D{Gaussian}, double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageLogarithmInit(IList{Gaussian}, double[])"]/*'/>
         [Skip]
         public static Gaussian InnerProductAverageLogarithmInit([IgnoreDependency] IList<Gaussian> A, [IgnoreDependency] double[] B)
         {
             return new Gaussian();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageLogarithm(double[,], DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageLogarithm(double[], IList{Gaussian})"]/*'/>
         public static Gaussian InnerProductAverageLogarithm(double[] A, [SkipIfUniform] IList<Gaussian> B)
         {
             return InnerProductAverageConditional(A, B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageLogarithm(DistributionStructArray2D{Gaussian, double}, double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageLogarithm(IList{Gaussian}, double[])"]/*'/>
         public static Gaussian InnerProductAverageLogarithm([SkipIfUniform] IList<Gaussian> A, double[] B)
         {
             return InnerProductAverageConditional(A, B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="AAverageLogarithm(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AAverageLogarithm{GaussianList}(Gaussian, IList{Gaussian}, IList{Gaussian}, GaussianList)"]/*'/>
         public static GaussianList AAverageLogarithm<GaussianList>(
             [SkipIfUniform] Gaussian innerProduct, [Stochastic] IList<Gaussian> A, [SkipIfUniform] IList<Gaussian> B, GaussianList to_A)
             where GaussianList : IList<Gaussian>
@@ -135,7 +135,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="AAverageLogarithm(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AAverageLogarithm{GaussianList}(Gaussian, IList{Gaussian}, double[], GaussianList)"]/*'/>
         public static GaussianList AAverageLogarithm<GaussianList>(
             [SkipIfUniform] Gaussian innerProduct, [Proper, Stochastic] IList<Gaussian> A, double[] B, GaussianList to_A)
             where GaussianList : IList<Gaussian>
@@ -181,7 +181,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="BAverageLogarithm(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="BAverageLogarithm{GaussianList}(Gaussian, IList{Gaussian}, IList{Gaussian}, GaussianList)"]/*'/>
         public static GaussianList BAverageLogarithm<GaussianList>(
             [SkipIfUniform] Gaussian innerProduct, [SkipIfUniform] IList<Gaussian> A, [Proper, Stochastic] IList<Gaussian> B, GaussianList to_B)
             where GaussianList : IList<Gaussian>
@@ -189,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return AAverageLogarithm(innerProduct, B, A, to_B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="BAverageLogarithm(DistributionStructArray2D{Gaussian, double}, double[,], DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="BAverageLogarithm{GaussianList}(Gaussian, double[], IList{Gaussian}, GaussianList)"]/*'/>
         public static GaussianList BAverageLogarithm<GaussianList>(
             [SkipIfUniform] Gaussian innerProduct, double[] A, [Proper, Stochastic] IList<Gaussian> B, GaussianList to_B)
             where GaussianList : IList<Gaussian>
@@ -199,7 +199,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         private const string NotSupportedMessage = "Variational Message Passing does not support a InnerProduct factor with fixed output.";
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="AAverageLogarithm(double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AAverageLogarithm{GaussianList}(double)"]/*'/>
         [NotSupported(InnerProductArrayOp.NotSupportedMessage)]
         public static GaussianList AAverageLogarithm<GaussianList>(double innerProduct)
                where GaussianList : IList<Gaussian>
@@ -207,7 +207,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             throw new NotSupportedException(InnerProductArrayOp.NotSupportedMessage);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="BAverageLogarithm(double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="BAverageLogarithm(double)"]/*'/>
         [NotSupported(InnerProductArrayOp.NotSupportedMessage)]
         public static IList<Gaussian> BAverageLogarithm(double innerProduct)
         {
@@ -221,14 +221,14 @@ namespace Microsoft.ML.Probabilistic.Factors
         private const string BothRandomNotSupportedMessage =
             "A InnerProduct factor between two Gaussian arrays is not yet implemented for Expectation Propagation.  Try using Variational Message Passing.";
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageConditional(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageConditional(IList{Gaussian}, IList{Gaussian}, IList{Gaussian})"]/*'/>
         [NotSupported(InnerProductArrayOp.BothRandomNotSupportedMessage)]
         public static Gaussian InnerProductAverageConditional([SkipIfUniform] IList<Gaussian> A, [SkipIfUniform] IList<Gaussian> B, IList<Gaussian> result)
         {
             throw new NotSupportedException(InnerProductArrayOp.BothRandomNotSupportedMessage);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="AAverageConditional(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AAverageConditional{GaussianList}(Gaussian, IList{Gaussian}, GaussianList)"]/*'/>
         [NotSupported(InnerProductArrayOp.BothRandomNotSupportedMessage)]
         public static GaussianList AAverageConditional<GaussianList>(Gaussian innerProduct, [SkipIfUniform] IList<Gaussian> B, GaussianList result)
             where GaussianList : IList<Gaussian>
@@ -236,7 +236,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             throw new NotSupportedException(InnerProductArrayOp.BothRandomNotSupportedMessage);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="BAverageConditional(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="BAverageConditional{GaussianList}(Gaussian, IList{Gaussian}, GaussianList)"]/*'/>
         [NotSupported(InnerProductArrayOp.BothRandomNotSupportedMessage)]
         public static GaussianList BAverageConditional<GaussianList>(Gaussian innerProduct, [SkipIfUniform] IList<Gaussian> A, GaussianList result)
             where GaussianList : IList<Gaussian>
@@ -244,7 +244,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             throw new NotSupportedException(InnerProductArrayOp.BothRandomNotSupportedMessage);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogAverageFactor(double[,], double[,], double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogAverageFactor(double, double[], double[])"]/*'/>
         public static double LogAverageFactor(double innerProduct, double[] A, double[] B)
         {
 
@@ -260,74 +260,73 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogEvidenceRatio(double[,], double[,], double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogEvidenceRatio(double, double[], double[])"]/*'/>
         public static double LogEvidenceRatio(double innerProduct, double[] A, double[] B)
         {
             return LogAverageFactor(innerProduct, A, B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="AverageLogFactor(double[,], double[,], double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AverageLogFactor(double, double[], double[])"]/*'/>
         public static double AverageLogFactor(double innerProduct, double[] A, double[] B)
         {
             return LogAverageFactor(innerProduct, A, B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogAverageFactor(DistributionStructArray2D{Gaussian, double}, double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogAverageFactor(Gaussian, double[], IList{Gaussian})"]/*'/>
         public static double LogAverageFactor(Gaussian innerProduct, double[] A, IList<Gaussian> B)
         {
             Gaussian to_innerProduct = InnerProductAverageConditional(A, B);
             return to_innerProduct.GetLogAverageOf(innerProduct);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogAverageFactor(double[,], double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogAverageFactor(double, double[], IList{Gaussian})"]/*'/>
         public static double LogAverageFactor(double innerProduct, double[] A, IList<Gaussian> B)
         {
             Gaussian to_innerProduct = InnerProductAverageConditional(A, B);
             return to_innerProduct.GetLogProb(innerProduct);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogAverageFactor(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogAverageFactor(Gaussian, IList{Gaussian}, double[])"]/*'/>
         public static double LogAverageFactor(Gaussian innerProduct, IList<Gaussian> A, double[] B)
         {
             Gaussian to_innerProduct = InnerProductAverageConditional(A, B);
             return to_innerProduct.GetLogAverageOf(innerProduct);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogAverageFactor(double[,], DistributionStructArray2D{Gaussian, double}, double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogAverageFactor(double, IList{Gaussian}, double[])"]/*'/>
         public static double LogAverageFactor(double innerProduct, IList<Gaussian> A, double[] B)
         {
             Gaussian to_innerProduct = InnerProductAverageConditional(A, B);
             return to_innerProduct.GetLogProb(innerProduct);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogEvidenceRatio(DistributionStructArray2D{Gaussian, double}, double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogEvidenceRatio(Gaussian, double[], IList{Gaussian})"]/*'/>
         [Skip]
         public static double LogEvidenceRatio(Gaussian innerProduct, double[] A, IList<Gaussian> B)
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogEvidenceRatio(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogEvidenceRatio(Gaussian, IList{Gaussian}, double[])"]/*'/>
         [Skip]
         public static double LogEvidenceRatio(Gaussian innerProduct, IList<Gaussian> A, double[] B)
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogEvidenceRatio(double[,], double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogEvidenceRatio(double, double[], IList{Gaussian})"]/*'/>
         public static double LogEvidenceRatio(double innerProduct, double[] A, IList<Gaussian> B)
         {
             return LogAverageFactor(innerProduct, A, B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="LogEvidenceRatio(double[,], DistributionStructArray2D{Gaussian, double}, double[,])"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="LogEvidenceRatio(double, IList{Gaussian}, double[])"]/*'/>
         public static double LogEvidenceRatio(double innerProduct, IList<Gaussian> A, double[] B)
         {
             return LogAverageFactor(innerProduct, A, B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageConditional(double[,], DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
-
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageConditional(double[], IList{Gaussian})"]/*'/>
         public static Gaussian InnerProductAverageConditional(double[] A, [SkipIfUniform] IList<Gaussian> B)
         {
             double xMean = 0, xVariance = 0,
@@ -343,13 +342,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.FromMeanAndVariance(xMean, xVariance);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="InnerProductAverageConditional(DistributionStructArray2D{Gaussian, double}, double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="InnerProductAverageConditional(IList{Gaussian}, double[])"]/*'/>
         public static Gaussian InnerProductAverageConditional([SkipIfUniform] IList<Gaussian> A, double[] B)
         {
             return InnerProductAverageConditional(B, A);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="AAverageConditional(DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double}, double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AAverageConditional{GaussianList}(Gaussian, IList{Gaussian}, double[], Gaussian, GaussianList)"]/*'/>
         public static GaussianList AAverageConditional<GaussianList>(
             [SkipIfUniform] Gaussian innerProduct, IList<Gaussian> A, double[] B, [Fresh] Gaussian to_innerProduct, GaussianList result)
             where GaussianList : IList<Gaussian>
@@ -390,7 +389,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="BAverageConditional(DistributionStructArray2D{Gaussian, double}, double[,], DistributionStructArray2D{Gaussian, double}, DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="BAverageConditional{GaussianList}(Gaussian, double[], IList{Gaussian}, Gaussian, GaussianList)"]/*'/>
         public static GaussianList BAverageConditional<GaussianList>(
             [SkipIfUniform] Gaussian innerProduct, double[] A, [SkipIfUniform] IList<Gaussian> B, Gaussian to_innerProduct, GaussianList result)
             where GaussianList : IList<Gaussian>
@@ -398,7 +397,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return AAverageConditional(innerProduct, B, A, to_innerProduct, result);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="AAverageConditional(double[,], double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AAverageConditional{GaussianList}(double, double[], GaussianList)"]/*'/>
         [NotSupported(InnerProductArrayOp.LowRankNotSupportedMessage)]
         public static GaussianList AAverageConditional<GaussianList>(double innerProduct, double[] B, GaussianList result)
             where GaussianList : IList<Gaussian>
@@ -406,9 +405,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             throw new NotImplementedException(InnerProductArrayOp.LowRankNotSupportedMessage);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="BAverageConditional(double[,], double[,], DistributionStructArray2D{Gaussian, double})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="BAverageConditional{GaussianList}(double, double[], GaussianList)"]/*'/>
         [NotSupported(InnerProductArrayOp.LowRankNotSupportedMessage)]
-        public static GaussianList BAverageConditional<GaussianList>(double innerProduct, double A, GaussianList result)
+        public static GaussianList BAverageConditional<GaussianList>(double innerProduct, double[] A, GaussianList result)
             where GaussianList : IList<Gaussian>
         {
             throw new NotImplementedException(InnerProductArrayOp.LowRankNotSupportedMessage);

@@ -2,17 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.ML.Probabilistic.Utilities;
-using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
-
 namespace Microsoft.ML.Probabilistic.Math
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
+    using System.Numerics;
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Core.Maths;
+    using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
+    using Microsoft.ML.Probabilistic.Utilities;
+
 
     /// <summary>
     /// This class provides mathematical constants and special functions, 
@@ -687,7 +688,6 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Gamma(x).</returns>
         public static double Gamma(double x)
         {
-            /* Negative values */
             if (x < 0)
             {
                 // this test also catches -inf
@@ -700,6 +700,11 @@ namespace Microsoft.ML.Probabilistic.Math
                 return -Math.PI / (x * Math.Sin(Math.PI * x) * Gamma(-x));
             }
 
+            if (x <= GammaSmallX)
+            {
+                return 1 / x + GammaSeries(x);
+            }
+
             if (x > 180)
             {
                 return Double.PositiveInfinity;
@@ -707,6 +712,8 @@ namespace Microsoft.ML.Probabilistic.Math
 
             return Math.Exp(GammaLn(x));
         }
+
+        private const double GammaSmallX = 1e-3;
 
         /// <summary>
         /// Computes the natural logarithm of the Gamma function.
@@ -745,11 +752,35 @@ namespace Microsoft.ML.Probabilistic.Math
                 // Use Taylor series at x=2
                 // Reference: https://dlmf.nist.gov/5.7#E3
                 double dx = x - 2;
-                double sum = 0;
-                for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                {
-                    sum = dx * (gammaTaylorCoefficients[i] + sum);
-                }
+                double sum =
+                    // Truncated series 1: Gamma at 2
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    dx * (0.322467033424113218236207583323 +
+                    dx * (-0.0673523010531980951332460538371 +
+                    dx * (0.0205808084277845478790009241353 +
+                    dx * (-0.00738555102867398526627309729141 +
+                    dx * (0.00289051033074152328575298829849 +
+                    dx * (-0.00119275391170326097711393569283 +
+                    dx * (0.000509669524743042422335654813582 +
+                    dx * (-0.000223154758453579379761418803601 +
+                    dx * (0.0000994575127818085337145958900319 +
+                    dx * (-0.0000449262367381331417002075024064 +
+                    dx * (0.0000205072127756706915531665039783 +
+                    dx * (-0.00000943948827526839590398742510441 +
+                    dx * (0.00000437486678990748780418179322395 +
+                    dx * (-0.00000203921575380136623678190070967 +
+                    dx * (0.000000955141213040741983285717977295 +
+                    dx * (-0.000000449246919876456604329429033119 +
+                    dx * (0.000000212071848055546658692313590108 +
+                    dx * (-0.000000100432248239680996087208305005 +
+                    dx * (0.0000000476981016936398056576019341725 +
+                    dx * (-0.0000000227110946089431649103199811606 +
+                    dx * (0.0000000108386592148969540910749175797 +
+                    dx * (-0.00000000518347504197004665512124864706 +
+                    dx * (0.00000000248367454380247831718500866399 +
+                    dx * (-0.00000000119214014058609120744254820277 +
+                    dx * 5.73136724167886201333019485796e-10))))))))))))))))))))))))
+                    ;
                 sum = dx * (1 + Digamma1 + sum);
                 result += sum;
                 return result;
@@ -802,39 +833,6 @@ namespace Microsoft.ML.Probabilistic.Math
             }
             else return (MMath.GammaLn(x + n) - MMath.GammaLn(x)) / n;
         }
-
-        /* Python code to generate this table (must not be indented):
-for k in range(2,26):
-		print("            %0.20g," % ((-1)**k*(zeta(k)-1)/k))
-         */
-        private static readonly double[] gammaTaylorCoefficients =
-        {
-            0.32246703342411320303,
-            -0.06735230105319810201,
-            0.020580808427784546416,
-            -0.0073855510286739856768,
-            0.0028905103307415229257,
-            -0.0011927539117032610189,
-            0.00050966952474304234172,
-            -0.00022315475845357938579,
-            9.945751278180853098e-05,
-            -4.4926236738133142046e-05,
-            2.0507212775670691067e-05,
-            -9.4394882752683967152e-06,
-            4.3748667899074873274e-06,
-            -2.0392157538013666132e-06,
-            9.551412130407419353e-07,
-            -4.4924691987645661855e-07,
-            2.1207184805554664645e-07,
-            -1.0043224823968100408e-07,
-            4.7698101693639803983e-08,
-            -2.2711094608943166813e-08,
-            1.0838659214896952939e-08,
-            -5.1834750419700474714e-09,
-            2.4836745438024780616e-09,
-            -1.1921401405860913615e-09,
-            5.7313672416788612175e-10,
-        };
 
         private static double[] DigammaLookup;
 
@@ -891,10 +889,15 @@ for k in range(2,26):
             // The threshold for applying de Moivre's expansion for the digamma function.
             const double c_digamma_small = 1e-6;
 
-            /* Use Taylor series if argument <= S */
+            /* Shift the argument and use Taylor series near 1 if argument <= S */
             if (x <= c_digamma_small)
             {
-                return (Digamma1 - 1 / x + Zeta2 * x);
+                return -1 / x +
+                    // Truncated series 2: Digamma at 1
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    -0.577215664901532860606512090082 +
+                    x * 1.64493406684822643647241516665
+                    ;
             }
 
             if (x <= 2.5)
@@ -906,11 +909,35 @@ for k in range(2,26):
                     x++;
                 }
                 double dx = x - 2;
-                double sum2 = 0;
-                for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                {
-                    sum2 = dx * (gammaTaylorCoefficients[i] * (i + 2) + sum2);
-                }
+                double sum2 =
+                    // Truncated series 3: Digamma at 2
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    dx * (0.644934066848226436472415166646 +
+                    dx * (-0.202056903159594285399738161511 +
+                    dx * (0.0823232337111381915160036965412 +
+                    dx * (-0.0369277551433699263313654864570 +
+                    dx * (0.0173430619844491397145179297909 +
+                    dx * (-0.00834927738192282683979754984980 +
+                    dx * (0.00407735619794433937868523850865 +
+                    dx * (-0.00200839282608221441785276923241 +
+                    dx * (0.000994575127818085337145958900319 +
+                    dx * (-0.000494188604119464558702282526470 +
+                    dx * (0.000246086553308048298637998047740 +
+                    dx * (-0.000122713347578489146751836526357 +
+                    dx * (0.0000612481350587048292585451051353 +
+                    dx * (-0.0000305882363070204935517285106451 +
+                    dx * (0.0000152822594086518717325714876367 +
+                    dx * (-0.00000763719763789976227360029356303 +
+                    dx * (0.00000381729326499983985646164462194 +
+                    dx * (-0.00000190821271655393892565695779510 +
+                    dx * (0.000000953962033872796113152038683449 +
+                    dx * (-0.000000476932986787806463116719604373 +
+                    dx * (0.000000238450502727732990003648186753 +
+                    dx * (-0.000000119219925965311073067788718882 +
+                    dx * (0.0000000596081890512594796124402079358 +
+                    dx * (-0.0000000298035035146522801860637050694 +
+                    dx * 0.0000000149015548283650412346585066307))))))))))))))))))))))))
+                    ;
                 result2 += sum2;
                 return result2;
             }
@@ -930,24 +957,20 @@ for k in range(2,26):
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = 0;
-            for (int i = c_digamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_digamma_series[i] + sum);
-            }
+            double sum =
+                // Truncated series 4: Digamma asymptotic
+                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                invX2 * (1.0 / 12.0 +
+                invX2 * (-1.0 / 120.0 +
+                invX2 * (1.0 / 252.0 +
+                invX2 * (-1.0 / 240.0 +
+                invX2 * (1.0 / 132.0 +
+                invX2 * (-691.0 / 32760.0 +
+                invX2 * 1.0 / 12.0))))))
+                ;
             result -= sum;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the digamma function.
-        /// Each coefficient is B_{2j}/(2j) where B_{2j} are the Bernoulli numbers, starting from j=1
-        /// </summary>
-        private static readonly double[] c_digamma_series =
-        {
-            1.0/12, -1.0/120, 1.0/252, -1.0/240, 1.0/132,
-            -691.0/32760, 1.0/12, /* -3617.0/8160, 43867.0/14364, -174611.0/6600 */
-        };
 
         /// <summary>
         /// Evaluates Trigamma(x), the derivative of Digamma(x).
@@ -978,10 +1001,15 @@ for k in range(2,26):
             const double c_trigamma_large = 8;
             const double c_trigamma_small = 1e-4;
 
-            /* Use Taylor series if argument <= small */
+            /* Shift the argument and use Taylor series at 1 if argument <= small */
             if (x <= c_trigamma_small)
             {
-                return (1.0 / (x * x) + Zeta2 + M2Zeta3 * x);
+                return 1.0 / (x * x) +
+                    // Truncated series 5: Trigamma at 1
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    1.64493406684822643647241516665 +
+                    x * -2.40411380631918857079947632302
+                    ;
             }
 
             result = 0.0;
@@ -997,20 +1025,21 @@ for k in range(2,26):
             // This expansion can be computed in Maple via asympt(Psi(1,x),x)
             double invX2 = 1 / (x * x);
             result += 0.5 * invX2;
-            double sum = 0;
-            for (int i = c_trigamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_trigamma_series[i] + sum);
-            }
+            double sum =
+                    // Truncated series 6: Trigamma asymptotic
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    invX2 * (1.0 / 6.0 +
+                    invX2 * (-1.0 / 30.0 +
+                    invX2 * (1.0 / 42.0 +
+                    invX2 * (-1.0 / 30.0 +
+                    invX2 * (5.0 / 66.0 +
+                    invX2 * (-691.0 / 2730.0 +
+                    invX2 * (7.0 / 6.0 +
+                    invX2 * -3617.0 / 510.0)))))))
+                    ;
             result += (1 + sum) / x;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the trigamma function.
-        /// Each coefficient is B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=1
-        /// </summary>
-        private static readonly double[] c_trigamma_series = { 1.0 / 6, -1.0 / 30, 1.0 / 42, -1.0 / 30, 5.0 / 66, -691.0 / 2730, 7.0 / 6, -3617.0 / 510 };
 
         /// <summary>
         ///  Evaluates Tetragamma, the forth derivative of logGamma(x)
@@ -1027,7 +1056,12 @@ for k in range(2,26):
                          c_tetragamma_small = 1e-4;
             /* Use Taylor series if argument <= small */
             if (x < c_tetragamma_small)
-                return -2 / (x * x * x) + M2Zeta3 + 6 * Zeta4 * x;
+                return -2 / (x * x * x) +
+                    // Truncated series 7: Tetragamma at 1
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    -2.40411380631918857079947632302 +
+                    x * 6.49393940226682914909602217925
+                    ;
             double result = 0;
             /* Reduce to Tetragamma(x+n) where ( X + N ) >= L */
             while (x < c_tetragamma_large)
@@ -1040,20 +1074,21 @@ for k in range(2,26):
             // Milton Abramowitz and Irene A. Stegun, Handbook of Mathematical Functions, Section 6.4
             double invX2 = 1 / (x * x);
             result += -invX2 / x;
-            double sum = 0;
-            for (int i = c_tetragamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_tetragamma_series[i] + sum);
-            }
+            double sum =
+                // Truncated series 8: Tetragamma asymptotic
+                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                invX2 * (-1.0 +
+                invX2 * (-1.0 / 2.0 +
+                invX2 * (1.0 / 6.0 +
+                invX2 * (-1.0 / 6.0 +
+                invX2 * (3.0 / 10.0 +
+                invX2 * (-5.0 / 6.0 +
+                invX2 * (691.0 / 210.0 +
+                invX2 * -35.0 / 2.0)))))))
+                ;
             result += sum;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the quadgamma function.
-        /// Each coefficient is -(2j+1) B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=0
-        /// </summary>
-        private static readonly double[] c_tetragamma_series = { -1, -.5, +1 / 6.0, -1 / 6.0, +3 / 10.0, -5 / 6.0, 691.0 / 210, -35.0 / 2 };
 
         /// <summary>
         /// Computes the natural logarithm of the multivariate Gamma function.
@@ -1113,7 +1148,7 @@ for k in range(2,26):
         /// <returns></returns>
         public static double ChooseLn(double n, double k)
         {
-            if (k < 0 || k > n)
+            if (k <= -1 || k >= n + 1)
                 return Double.NegativeInfinity;
             return GammaLn(n + 1) - GammaLn(k + 1) - GammaLn(n - k + 1);
         }
@@ -1151,20 +1186,20 @@ for k in range(2,26):
                 throw new ArgumentException($"x ({x}) < 0");
             if (!regularized)
             {
-                if (a < 1) return GammaUpperConFrac(a, x, regularized);
+                if (a < 1 && x >= 1) return GammaUpperConFrac(a, x, regularized);
+                else if (a <= GammaSmallX) return GammaUpperSeries(a, x, regularized);
                 else return Gamma(a) * GammaUpper(a, x, true);
             }
             if (a <= 0)
                 throw new ArgumentException($"a ({a}) <= 0");
             if (x == 0) return 1; // avoid 0/0
             // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
-            // useLower = true means that GammaLower is smaller.
-            bool useLower;
+            bool lowerIsSmaller;
             if (x > 0.25)
-                useLower = (a > x + 0.25);
+                lowerIsSmaller = (a > x + 0.25);
             else
-                useLower = (a > -MMath.Ln2 / Math.Log(x));
-            if (useLower)
+                lowerIsSmaller = (a > -MMath.Ln2 / Math.Log(x));
+            if (lowerIsSmaller)
             {
                 if (x < 0.5 * a + 67)
                     return 1 - GammaLowerSeries(a, x);
@@ -1175,6 +1210,9 @@ for k in range(2,26):
                 return GammaAsympt(a, x, true);
             else if (x > 1.5)
                 return GammaUpperConFrac(a, x);
+            else if (a <= 1e-16)
+                // Gamma(a) = 1/a for a <= 1e-16
+                return a * GammaUpperSeries(a, x, false);
             else
                 return GammaUpperSeries(a, x);
         }
@@ -1194,13 +1232,12 @@ for k in range(2,26):
                 throw new ArgumentException($"a ({a}) <= 0");
             if (x == 0) return 0; // avoid 0/0
             // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
-            // useLower = true means that GammaLower is smaller.
-            bool useLower;
+            bool lowerIsSmaller;
             if (x > 0.25)
-                useLower = (a > x + 0.25);
+                lowerIsSmaller = (a > x + 0.25);
             else
-                useLower = (a > -MMath.Ln2 / Math.Log(x));
-            if (useLower)
+                lowerIsSmaller = (a > -MMath.Ln2 / Math.Log(x));
+            if (lowerIsSmaller)
             {
                 if (x < 0.5 * a + 67)
                     return GammaLowerSeries(a, x);
@@ -1213,6 +1250,31 @@ for k in range(2,26):
                 return 1 - GammaUpperConFrac(a, x);
             else
                 return 1 - GammaUpperSeries(a, x);
+        }
+
+        /// <summary>
+        /// Computes <c>x - log(1+x)</c> to high accuracy.
+        /// </summary>
+        /// <param name="x">Any real number &gt;= -1</param>
+        /// <returns>A real number &gt;= 0</returns>
+        private static double XMinusLog1Plus(double x)
+        {
+            if (Math.Abs(x) < 1e-1)
+            {
+                return
+                    // Truncated series 12: x - log(1 + x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * x * (1.0 / 2.0 +
+                    x * (-1.0 / 3.0 +
+                    x * (1.0 / 4.0 +
+                    x * (-1.0 / 5.0 +
+                    x * (1.0 / 6.0
+                    )))));
+            }
+            else
+            {
+                return x - MMath.Log1Plus(x);
+            }
         }
 
         // Reference:
@@ -1228,7 +1290,7 @@ for k in range(2,26):
         /// Compute the regularized lower incomplete Gamma function: <c>int_0^x t^(a-1) exp(-t) dt / Gamma(a)</c>
         /// </summary>
         /// <param name="a">Must be &gt; 20</param>
-        /// <param name="x"></param>
+        /// <param name="x">A real number &gt;= 0</param>
         /// <param name="upper">If true, compute the upper incomplete Gamma function</param>
         /// <returns></returns>
         private static double GammaAsympt(double a, double x, bool upper)
@@ -1236,22 +1298,28 @@ for k in range(2,26):
             if (a <= 20)
                 throw new Exception("a <= 20");
             double xOverAMinus1 = (x - a) / a;
-            double phi = xOverAMinus1 - MMath.Log1Plus(xOverAMinus1);
+            double phi = XMinusLog1Plus(xOverAMinus1);
+            // phi >= 0
             double y = a * phi;
             double z = Math.Sqrt(2 * phi);
             if (x <= a)
                 z *= -1;
-            double[] b = new double[GammaLowerAsympt_C0.Length];
-            b[b.Length - 1] = GammaLowerAsympt_C0[b.Length - 1];
-            double sum = b[b.Length - 1];
-            b[b.Length - 2] = GammaLowerAsympt_C0[b.Length - 2];
-            sum = z * sum + b[b.Length - 2];
-            for (int i = b.Length - 3; i >= 0; i--)
+            int length = GammaLowerAsympt_C0.Length;
+            double bEven = GammaLowerAsympt_C0[length - 1];
+            double sum = bEven;
+            double bOdd = GammaLowerAsympt_C0[length - 2];
+            sum = z * sum + bOdd;
+            for (int i = length - 3; i >= 0; i -= 2)
             {
-                b[i] = b[i + 2] * (i + 2) / a + GammaLowerAsympt_C0[i];
-                sum = z * sum + b[i];
+                bEven = bEven * (i + 2) / a + GammaLowerAsympt_C0[i];
+                sum = z * sum + bEven;
+                if (i > 0)
+                {
+                    bOdd = bOdd * (i + 1) / a + GammaLowerAsympt_C0[i - 1];
+                    sum = z * sum + bOdd;
+                }
             }
-            sum *= a / (a + b[1]);
+            sum *= a / (a + bOdd);
             if (x <= a)
                 sum *= -1;
             double result = 0.5 * Erfc(Math.Sqrt(y)) + sum * Math.Exp(-y) / (Math.Sqrt(a) * MMath.Sqrt2PI);
@@ -1322,47 +1390,90 @@ for k in range(2,26):
                 if (AreEqual(sum, oldSum))
                     return sum * scale;
             }
-            throw new Exception(string.Format("GammaLowerSeries not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaLowerSeries not converging for a={a:g17} x={x:g17}");
         }
 
         /// <summary>
-        /// Compute the regularized upper incomplete Gamma function by a series expansion
+        /// Compute the upper incomplete Gamma function by a series expansion
         /// </summary>
         /// <param name="a">The shape parameter, &gt; 0</param>
         /// <param name="x">The lower bound of the integral, &gt;= 0</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
         /// <returns></returns>
-        private static double GammaUpperSeries(double a, double x)
+        private static double GammaUpperSeries(double a, double x, bool regularized = true)
         {
             // this series should only be applied when x is small
-            // the series is: 1 - x^a sum_{k=0}^inf (-x)^k /(k! Gamma(a+k+1))
-            // = (1 - 1/Gamma(a+1)) + (1 - x^a)/Gamma(a+1) - x^a sum_{k=1}^inf (-x)^k/(k! Gamma(a+k+1))
-            double xaMinus1 = MMath.ExpMinus1(a * Math.Log(x));
-            double aReciprocalFactorial, aReciprocalFactorialMinus1;
-            if (a > 0.3)
+            // the regularized series is: 1 - x^a/Gamma(a) sum_{k=0}^inf (-x)^k /(k! (a+k))
+            // = (1 - 1/Gamma(a+1)) + (1 - x^a)/Gamma(a+1) - x^a/Gamma(a) sum_{k=1}^inf (-x)^k/(k! (a+k))
+            // The unregularized series is:
+            // = (Gamma(a) - 1/a) + (1 - x^a)/a - x^a sum_{k=1}^inf (-x)^k/(k! (a+k))
+            double logx = Math.Log(x);
+            double alogx = a * logx;
+            double xaMinus1 = MMath.ExpMinus1(alogx);
+            double offset, scale, term;
+            if (regularized)
             {
-                aReciprocalFactorial = 1 / MMath.Gamma(a + 1);
-                aReciprocalFactorialMinus1 = aReciprocalFactorial - 1;
+                double aReciprocalFactorial, aReciprocalFactorialMinus1;
+                if (a > 0.3)
+                {
+                    aReciprocalFactorial = 1 / MMath.Gamma(a + 1);
+                    aReciprocalFactorialMinus1 = aReciprocalFactorial - 1;
+                }
+                else
+                {
+                    aReciprocalFactorialMinus1 = ReciprocalFactorialMinus1(a);
+                    aReciprocalFactorial = 1 + aReciprocalFactorialMinus1;
+                }
+                // offset = 1 - x^a/Gamma(a+1)
+                offset = -xaMinus1 * aReciprocalFactorial - aReciprocalFactorialMinus1;
+                scale = 1 - offset;
+                term = x * a;
             }
             else
             {
-                aReciprocalFactorialMinus1 = ReciprocalFactorialMinus1(a);
-                aReciprocalFactorial = 1 + aReciprocalFactorialMinus1;
+                if (Math.Abs(alogx) <= 1e-16) offset = GammaSeries(a) - logx;
+                else offset = GammaSeries(a) - xaMinus1 / a;
+                scale = 1 + xaMinus1;
+                term = x;
             }
-            // offset = 1 - x^a/Gamma(a+1)
-            double offset = -xaMinus1 * aReciprocalFactorial - aReciprocalFactorialMinus1;
-            double scale = 1 - offset;
-            double term = x / (a + 1) * a;
-            double sum = term;
+            double sum = term / (a + 1);
             for (int i = 1; i < 1000; i++)
             {
-                term *= -(a + i) * x / ((a + i + 1) * (i + 1));
+                term *= -x / (i + 1);
                 double sumOld = sum;
-                sum += term;
+                sum += term / (a + i + 1);
                 //Console.WriteLine("{0}: {1}", i, sum);
                 if (AreEqual(sum, sumOld))
+                {
                     return scale * sum + offset;
+                }
             }
-            throw new Exception(string.Format("GammaUpperSeries not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaUpperSeries not converging for a={a:g17} x={x:g17} regularized={regularized}");
+        }
+
+        /// <summary>
+        /// Compute <c>Gamma(x) - 1/x</c> to high accuracy
+        /// </summary>
+        /// <param name="x">A real number &gt;= 0</param>
+        /// <returns></returns>
+        private static double GammaSeries(double x)
+        {
+            if (x > GammaSmallX)
+                return MMath.Gamma(x) - 1 / x;
+            else
+                /* using http://sagecell.sagemath.org/ (must not be indented)
+var('x');
+f = gamma(x)-1/x
+[c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
+                 */
+                return Digamma1
+                    + x * (0.98905599532797255539539565150
+                    + x * (-0.90747907608088628901656016736
+                    + x * (0.98172808683440018733638029402
+                    + x * (-0.98199506890314520210470141379
+                    + x * (0.99314911462127619315386725333
+                    + x * (-0.99600176044243153397007841966
+                    ))))));
         }
 
         /// <summary>
@@ -1374,40 +1485,28 @@ for k in range(2,26):
         {
             if (x > 0.3)
                 return 1 / MMath.Gamma(x + 1) - 1;
-            double sum = 0;
-            double term = x;
-            for (int i = 0; i < reciprocalFactorialMinus1Coeffs.Length; i++)
-            {
-                sum += reciprocalFactorialMinus1Coeffs[i] * term;
-                term *= x;
-            }
-            return sum;
-        }
 
-        /* using http://sagecell.sagemath.org/ (must not be indented)
-var('x');
-f = 1/gamma(x+1)-1
-[c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
-         */
-        private static readonly double[] reciprocalFactorialMinus1Coeffs =
-        {
-            0.57721566490153286060651209008,
-            -0.65587807152025388107701951515,
-            -0.042002635034095235529003934875,
-            0.16653861138229148950170079510,
-            -0.042197734555544336748208301289,
-            -0.0096219715278769735621149216721,
-            0.0072189432466630995423950103404,
-            -0.0011651675918590651121139710839,
-            -0.00021524167411495097281572996312,
-            0.00012805028238811618615319862640,
-            -0.000020134854780788238655689391375,
-            -1.2504934821426706573453594884e-6,
-            1.1330272319816958823741296196e-6,
-            -2.0563384169776071034501526118e-7,
-            6.1160951044814158178625767024e-9,
-            5.0020076444692229300557063872e-9
-        };
+            return
+                // Truncated series 18: Reciprocal factorial minus 1
+                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                x * (0.577215664901532860606512090082 +
+                x * (-0.655878071520253881077019515145 +
+                x * (-0.0420026350340952355290039348754 +
+                x * (0.166538611382291489501700795102 +
+                x * (-0.0421977345555443367482083012891 +
+                x * (-0.00962197152787697356211492167231 +
+                x * (0.00721894324666309954239501034044 +
+                x * (-0.00116516759185906511211397108402 +
+                x * (-0.000215241674114950972815729963027 +
+                x * (0.000128050282388116186153198626338 +
+                x * (-0.0000201348547807882386556893913662 +
+                x * (-0.00000125049348214267065734535945301 +
+                x * (0.00000113302723198169588237412961344 +
+                x * (-0.000000205633841697760710345015364430 +
+                x * (0.00000000611609510448141581786252410878 +
+                x * 0.00000000500200764446922293005568923640)))))))))))))))
+                ;
+        }
 
         /// <summary>
         /// Computes <c>x^a e^(-x)/Gamma(a)</c> to high accuracy.
@@ -1415,20 +1514,32 @@ f = 1/gamma(x+1)-1
         /// <param name="a">A positive real number</param>
         /// <param name="x"></param>
         /// <returns></returns>
-        private static double GammaUpperScale(double a, double x)
+        public static double GammaUpperScale(double a, double x)
+        {
+            return Math.Exp(GammaUpperLogScale(a, x));
+        }
+
+        /// <summary>
+        /// Computes <c>log(x^a e^(-x)/Gamma(a))</c> to high accuracy.
+        /// </summary>
+        /// <param name="a">A positive real number</param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static double GammaUpperLogScale(double a, double x)
         {
             if (double.IsPositiveInfinity(x) || double.IsPositiveInfinity(a))
-                return 0;
-            double scale;
+                return double.NegativeInfinity;
             if (a < 10)
-                scale = Math.Exp(a * Math.Log(x) - x - GammaLn(a));
+            {
+                return a * Math.Log(x) - x - GammaLn(a);
+            }
             else
             {
-                double xia = x / a;
-                double phi = xia - 1 - Math.Log(xia);
-                scale = Math.Exp(0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi);
+                // Result is inaccurate for a=100, x=3
+                double xOverAMinus1 = (x - a) / a;
+                double phi = XMinusLog1Plus(xOverAMinus1);
+                return 0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi;
             }
-            return scale;
         }
 
         // Origin: James McCaffrey, http://msdn.microsoft.com/en-us/magazine/dn520240.aspx
@@ -1437,7 +1548,7 @@ f = 1/gamma(x+1)-1
         /// </summary>
         /// <param name="a">A real number.  Must be &gt; 0 if regularized is true.</param>
         /// <param name="x">A real number &gt;= 1.1</param>
-        /// <param name="regularized">If true, result is divded by Gamma(a)</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
         /// <returns></returns>
         private static double GammaUpperConFrac(double a, double x, bool regularized = true)
         {
@@ -1449,29 +1560,29 @@ f = 1/gamma(x+1)-1
             // a_i = -i*(i-a)
             // b_i = x+1-a+2*i
             // the confrac is evaluated using Lentz's algorithm
-            double b = x + 1.0 - a;
+            double b = x - a + 1.0;
             const double tiny = 1e-30;
             double c = 1.0 / tiny;
-            double d = 1.0 / b;
-            double h = d * scale;
+            double d = b;
+            double h = scale / d;
             for (int i = 1; i < 1000; ++i)
             {
                 double an = -i * (i - a);
                 b += 2.0;
-                d = an * d + b;
+                d = an / d + b;
                 if (Math.Abs(d) < tiny)
                     d = tiny;
                 c = b + an / c;
                 if (Math.Abs(c) < tiny)
                     c = tiny;
-                d = 1.0 / d;
-                double del = d * c;
+                double del = c / d;
                 double oldH = h;
                 h *= del;
+                //Trace.WriteLine($"h = {h} del = {del}");
                 if (AreEqual(h, oldH))
                     return h;
             }
-            throw new Exception(string.Format("GammaUpperConFrac not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaUpperConFrac not converging for a={a:g17} x={x:g17}");
         }
 
         /// <summary>
@@ -1489,23 +1600,22 @@ f = 1/gamma(x+1)-1
             else
             {
                 // the series is:  sum_{i=1}^inf B_{2i} / (2i*(2i-1)*x^(2i-1))
-                double sum = 0;
-                double term = 1.0 / x;
-                double delta = term * term;
-                for (int i = 0; i < c_gammaln_series.Length; i++)
-                {
-                    sum += c_gammaln_series[i] * term;
-                    term *= delta;
-                }
+                double invX = 1.0 / x;
+                double invX2 = invX * invX;
+                double sum = invX * (
+                    // Truncated series 9: GammaLn asymptotic
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    1.0 / 12.0 +
+                    invX2 * (-1.0 / 360.0 +
+                    invX2 * (1.0 / 1260.0 +
+                    invX2 * (-1.0 / 1680.0 +
+                    invX2 * (1.0 / 1188.0 +
+                    invX2 * (-691.0 / 360360.0 +
+                    invX2 * (1.0 / 156.0
+                    )))))));
                 return sum;
             }
         }
-
-        private static double[] c_gammaln_series =
-        {
-            1.0 / (6 * 2), -1.0 / (30 * 4 * 3), 1.0 / (42 * 6 * 5), -1.0 / (30 * 8 * 7),
-            5.0/(66*10*9), -691.0/(2730*12*11), 7.0/(6*14*13)
-        };
 
         #endregion
 
@@ -1838,7 +1948,14 @@ f = 1/gamma(x+1)-1
                 // log(NormalCdf(x)) = log(1-NormalCdf(-x))
                 double y = NormalCdf(-x);
                 // log(1-y)
-                return -y * (1 + y * (0.5 + y * (1.0 / 3 + y * (0.25))));
+                return
+                    // Truncated series 11: log(1 - x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    y * (-1.0 +
+                    y * (-1.0 / 2.0 +
+                    y * (-1.0 / 3.0 +
+                    y * -1.0 / 4.0)))
+                    ;
             }
             else if (x >= large)
             {
@@ -1850,13 +1967,17 @@ f = 1/gamma(x+1)-1
                 double z = 1 / (x * x);
                 // asymptotic series for log(normcdf)
                 // Maple command: subs(x=-x,asympt(log(normcdf(-x)),x));
-                double s = z * (c_normcdfln_series[0] + z *
-                              (c_normcdfln_series[1] + z *
-                               (c_normcdfln_series[2] + z *
-                                (c_normcdfln_series[3] + z *
-                                 (c_normcdfln_series[4] + z *
-                                  (c_normcdfln_series[5] + z *
-                                   c_normcdfln_series[6]))))));
+                double s =
+                    // Truncated series 16: normcdfln asymptotic
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    z * (-1.0 +
+                    z * (5.0 / 2.0 +
+                    z * (-37.0 / 3.0 +
+                    z * (353.0 / 4.0 +
+                    z * (-4081.0 / 5.0 +
+                    z * (55205.0 / 6.0 +
+                    z * -854197.0 / 7.0))))))
+                    ;
                 return s - LnSqrt2PI - 0.5 * x * x - Math.Log(-x);
             }
         }
@@ -2061,7 +2182,7 @@ f = 1/gamma(x+1)-1
                     return r;
                 rOld = r;
             }
-            throw new Exception($"Not converging for n={n},x={x:r}");
+            throw new Exception($"Not converging for n={n},x={x:g17}");
         }
 
         /// <summary>
@@ -2462,7 +2583,7 @@ f = 1/gamma(x+1)-1
             double sumOld = sum;
             for (int n = 2; n <= 100; n++)
             {
-                //Console.WriteLine($"n = {n - 1} sum = {sum:r}");
+                //Console.WriteLine($"n = {n - 1} sum = {sum:g17}");
                 double dlogphiOverFactorial;
                 if (n % 2 == 0) dlogphiOverFactorial = 1.0 / n - Halfx2y2;
                 else dlogphiOverFactorial = xy;
@@ -2477,7 +2598,7 @@ f = 1/gamma(x+1)-1
                 rPowerN *= r;
                 sum += QderivOverFactorial * rPowerN;
                 if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= 100)
-                    throw new Exception($"NormalCdfRatioTaylor not converging for x={x:r}, y={y:r}, r={r:r}");
+                    throw new Exception($"NormalCdfRatioTaylor not converging for x={x:g17}, y={y:g17}, r={r:g17}");
                 if (AreEqual(sum, sumOld)) break;
                 sumOld = sum;
             }
@@ -2696,7 +2817,7 @@ rr = mpf('-0.99999824265582826');
                             numerPrevPlusC = scale * (c1 * R1xmry - c2 * R2xmry - c3);
                             //numer3 = scale / 3 * x * (c1 * R1xmry - c2 * R2xmry - c3 + r * omr2 * R2xmry);
                             //numer4 = scale / 3 * ((3 + x * x) * c1 * R1xmry + x * r * sqrtomr2 * omr2 * R3xmry - (3 * c2 + x * x * (c2 - r * omr2)) * R2xmry - (3 + x * x) * c3);
-                            //Trace.WriteLine($"numerPrevPlusC = {numerPrevPlusC:r} numer4 = {numer4:r}");
+                            //Trace.WriteLine($"numerPrevPlusC = {numerPrevPlusC:g17} numer4 = {numer4:g17}");
                             //shiftNumer = omr2 * x * x > 100;
                             shiftNumer = true;
                         }
@@ -2863,9 +2984,9 @@ rr = mpf('-0.99999824265582826');
                     else numer2 = numer;
                     double result = numer2 / (denom - 1);
                     if (TraceConFrac)
-                        Trace.WriteLine($"iter {i}: result={result:r} c={c:r} cOdd={cOdd:r} numer={numer:r} numer2={numer2:r} denom={denom:r} numerPrev={numerPrev:r}");
+                        Trace.WriteLine($"iter {i}: result={result:g17} c={c:g17} cOdd={cOdd:g17} numer={numer:g17} numer2={numer2:g17} denom={denom:g17} numerPrev={numerPrev:g17}");
                     if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= iterationCount - 1)
-                        throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:r} y={y:r} r={r:r} sqrtomr2={sqrtomr2:r} scale={scale:r}");
+                        throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:g17} y={y:g17} r={r:g17} sqrtomr2={sqrtomr2:g17} scale={scale:g17}");
                     if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < 1e-13)
                         break;
                     resultPrev = result;
@@ -2912,9 +3033,9 @@ rr = mpf('-0.99999824265582826');
                 {
                     double result = numer / denom;
                     if (TraceConFrac)
-                        Trace.WriteLine($"iter {i}: result={result:r} c={c:g4} numer={numer:r} denom={denom:r} numerPrev={numerPrev:r}");
+                        Trace.WriteLine($"iter {i}: result={result:g17} c={c:g4} numer={numer:g17} denom={denom:g17} numerPrev={numerPrev:g17}");
                     if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= 1000)
-                        throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x:r} y={y:r} r={r:r} scale={scale}");
+                        throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x:g17} y={y:g17} r={r:g17} scale={scale}");
                     if (AreEqual(result, resultPrev))
                         break;
                     resultPrev = result;
@@ -3170,7 +3291,14 @@ rr = mpf('-0.99999824265582826');
             if (x > 1e-4)
                 return 1 - Math.Sqrt(1 - x);
             else
-                return x * (1.0 / 2 + x * (1.0 / 8 + x * (1.0 / 16 + x * 5.0 / 128)));
+                return
+                    // Truncated series 17: 1 - sqrt(1 - x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 8.0 +
+                    x * (1.0 / 16.0 +
+                    x * 5.0 / 128.0)))
+                    ;
         }
 
         /// <summary>
@@ -3303,11 +3431,26 @@ rr = mpf('-0.99999824265582826');
         public static double Log1Plus(double x)
         {
             Assert.IsTrue(Double.IsNaN(x) || x >= -1);
-            if (x > -1e-3 && x < 2e-3)
+            if (x > -1e-3 && x < 6e-2)
             {
                 // use the Taylor series for log(1+x) around x=0
                 // Maple command: series(log(1+x),x);
-                return x * (1 - x * (0.5 - x * (1.0 / 3 - x * (0.25 - x * (1.0 / 5)))));
+                return
+                    // Truncated series 10: log(1 + x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 +
+                    x * (-1.0 / 2.0 +
+                    x * (1.0 / 3.0 +
+                    x * (-1.0 / 4.0 +
+                    x * (1.0 / 5.0 +
+                    x * (-1.0 / 6.0 +
+                    x * (1.0 / 7.0 +
+                    x * (-1.0 / 8.0 +
+                    x * (1.0 / 9.0 +
+                    x * (-1.0 / 10.0 +
+                    x * (1.0 / 11.0 +
+                    x * -1.0 / 12.0)))))))))))
+                    ;
             }
             else
             {
@@ -3352,15 +3495,28 @@ rr = mpf('-0.99999824265582826');
         /// <param name="x">A non-positive real number: -Inf &lt;= x &lt;= 0, or NaN.</param>
         /// <returns>log(1-exp(x)), which is always &lt;= 0.</returns>
         /// <remarks>This function provides higher accuracy than a direct evaluation of <c>log(1-exp(x))</c>,
-        /// particularly when x &lt; -7.5 or x > -1e-5.</remarks>
+        /// particularly when x &lt; -5 or x > -1e-5.</remarks>
         public static double Log1MinusExp(double x)
         {
             if (x > 0)
                 throw new ArgumentException("x (" + x + ") > 0");
-            if (x < -7.5)
+            if (x < -3.5)
             {
-                double y = Math.Exp(x);
-                return -y * (1 + y * (0.5 + y * (1.0 / 3 + y * (0.25))));
+                double expx = Math.Exp(x);
+                return
+                    // Truncated series 11: log(1 - x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    expx * (-1.0 +
+                    expx * (-1.0 / 2.0 +
+                    expx * (-1.0 / 3.0 +
+                    expx * (-1.0 / 4.0 +
+                    expx * (-1.0 / 5.0 +
+                    expx * (-1.0 / 6.0 +
+                    expx * (-1.0 / 7.0 +
+                    expx * (-1.0 / 8.0 +
+                    expx * (-1.0 / 9.0 +
+                    expx * -1.0 / 10.0)))))))))
+                    ;
             }
             else
             {
@@ -3379,9 +3535,20 @@ rr = mpf('-0.99999824265582826');
         /// </remarks>
         public static double ExpMinus1(double x)
         {
-            if (Math.Abs(x) < 2e-3)
+            if (Math.Abs(x) < 55e-3)
             {
-                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+                return
+                    // Truncated series 13: exp(x) - 1
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 +
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 6.0 +
+                    x * (1.0 / 24.0 +
+                    x * (1.0 / 120.0 +
+                    x * (1.0 / 720.0 +
+                    x * (1.0 / 5040.0 +
+                    x * (1.0 / 40320.0
+                    ))))))));
             }
             else
             {
@@ -3398,9 +3565,22 @@ rr = mpf('-0.99999824265582826');
         {
             if (Math.Abs(x) < 6e-1)
             {
-                return x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0 / 120 + x * (1.0 / 720 +
-                    x * (1.0 / 5040 + x * (1.0 / 40320 + x * (1.0 / 362880 + x * (1.0 / 3628800 +
-                    x * (1.0 / 39916800 + x * (1.0 / 479001600 + x * (1.0 / 6227020800 + x * (1.0 / 87178291200))))))))))));
+                return
+                    // Truncated series 14: ((exp(x) - 1) / x - 1) / x - 0.5
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 / 6.0 +
+                    x * (1.0 / 24.0 +
+                    x * (1.0 / 120.0 +
+                    x * (1.0 / 720.0 +
+                    x * (1.0 / 5040.0 +
+                    x * (1.0 / 40320.0 +
+                    x * (1.0 / 362880.0 +
+                    x * (1.0 / 3628800.0 +
+                    x * (1.0 / 39916800.0 +
+                    x * (1.0 / 479001600.0 +
+                    x * (1.0 / 6227020800.0 +
+                    x * 1.0 / 87178291200.0)))))))))))
+                    ;
             }
             else if (double.IsPositiveInfinity(x))
             {
@@ -3426,7 +3606,13 @@ rr = mpf('-0.99999824265582826');
         {
             if (x < 1e-3)
             {
-                return Math.Log(x) + x * (0.5 + x * (1.0 / 24 + x * (-1.0 / 2880)));
+                return Math.Log(x) +
+                    // Truncated series 15: log(exp(x) - 1) / x
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 24.0 +
+                    x * x * -1.0 / 2880.0))
+                    ;
             }
             else if (x > 50)
             {
@@ -4140,22 +4326,24 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static int IndexOfMinimum<T>(IList<T> list)
+        public static int IndexOfMinimum<T>(IEnumerable<T> list)
             where T : IComparable<T>
         {
-            if (list.Count == 0)
+            IEnumerator<T> iter = list.GetEnumerator();
+            if (!iter.MoveNext())
                 return -1;
-            T min = list[0];
-            int pos = 0;
-            for (int i = 1; i < list.Count; i++)
+            T min = iter.Current;
+            int indexOfMinimum = 0;
+            for (int i = 1; iter.MoveNext(); i++)
             {
-                if (min.CompareTo(list[i]) > 0)
+                T item = iter.Current;
+                if (min.CompareTo(item) > 0)
                 {
-                    min = list[i];
-                    pos = i;
+                    min = item;
+                    indexOfMinimum = i;
                 }
             }
-            return pos;
+            return indexOfMinimum;
         }
 
         /// <summary>
@@ -4164,22 +4352,24 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static int IndexOfMaximum<T>(IList<T> list)
+        public static int IndexOfMaximum<T>(IEnumerable<T> list)
             where T : IComparable<T>
         {
-            if (list.Count == 0)
+            IEnumerator<T> iter = list.GetEnumerator();
+            if (!iter.MoveNext())
                 return -1;
-            T max = list[0];
-            int pos = 0;
-            for (int i = 1; i < list.Count; i++)
+            T max = iter.Current;
+            int indexOfMaximum = 0;
+            for (int i = 1; iter.MoveNext(); i++)
             {
-                if (max.CompareTo(list[i]) < 0)
+                T item = iter.Current;
+                if (max.CompareTo(item) < 0)
                 {
-                    max = list[i];
-                    pos = i;
+                    max = item;
+                    indexOfMaximum = i;
                 }
             }
-            return pos;
+            return indexOfMaximum;
         }
 
         /// <summary>
@@ -4413,7 +4603,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                 if ((double)(value * denominator) <= numerator)
                 {
                     double value2 = NextDouble(value);
@@ -4428,14 +4618,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                 }
             }
         }
@@ -4495,7 +4685,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                 if ((double)(value / denominator) <= ratio)
                 {
                     double value2 = NextDouble(value);
@@ -4510,14 +4700,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                 }
             }
         }
@@ -4557,7 +4747,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
                 //double value = RepresentationMidpoint(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                 if ((double)(value - b) <= sum)
                 {
                     double value2 = NextDouble(value);
@@ -4572,14 +4762,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                 }
             }
         }
@@ -4635,6 +4825,62 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             return BitConverter.Int64BitsToDouble(midpoint);
         }
 
+        /// <summary>
+        /// Returns a decimal string that exactly equals a double-precision number, unlike double.ToString which always returns a rounded result.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static string ToStringExact(double x)
+        {
+            if (double.IsNaN(x) || double.IsInfinity(x) || x == 0) return x.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            long bits = BitConverter.DoubleToInt64Bits(x);
+            ulong fraction = Convert.ToUInt64(bits & 0x000fffffffffffff);
+            short exponent = Convert.ToInt16((bits & 0x7ff0000000000000) >> 52);
+            if (exponent == 0)
+            {
+                // subnormal number
+                exponent = -1022 - 52;
+            }
+            else
+            {
+                // normal number
+                fraction += 0x0010000000000000;
+                exponent = Convert.ToInt16(exponent - 1023 - 52);
+            }
+            while ((fraction & 1) == 0)
+            {
+                fraction >>= 1;
+                exponent++;
+            }
+            string sign = (x >= 0) ? "" : "-";
+            BigInteger big;
+            if (exponent >= 0)
+            {
+                big = BigInteger.Pow(2, exponent) * fraction;
+                return $"{sign}{big}";
+            }
+            else
+            {
+                // Rewrite 2^-4 as 5^4 * 10^-4
+                big = BigInteger.Pow(5, -exponent) * fraction;
+                // At this point, we could output the big integer with an "E"{exponent} suffix.  
+                // However, double.Parse does not correctly parse such strings.
+                // Instead we insert a decimal point and eliminate the "E" suffix if possible.
+                int digitCount = big.ToString().Length;
+                if (digitCount < -exponent)
+                {
+                    return $"{sign}0.{big}e{exponent + digitCount}";
+                }
+                else
+                {
+                    BigInteger pow10 = BigInteger.Pow(10, -exponent);
+                    BigInteger integerPart = big / pow10;
+                    BigInteger fractionalPart = big - integerPart*pow10;
+                    string zeros = new string('0', -exponent);
+                    return $"{sign}{integerPart}.{fractionalPart.ToString(zeros)}";
+                }
+            }
+        }
 
         #region Enumerations and constants
 
@@ -4701,14 +4947,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// Zeta4 = pi^4/90 = polygamma(3,1)/6
         /// </summary>
         private const double Zeta4 = 1.0823232337111381915;
-
-        /// <summary>
-        /// Coefficients of the asymptotic expansion of NormalCdfLn.
-        /// </summary>
-        private static readonly double[] c_normcdfln_series =
-            {
-                -1, 5.0/2, -37.0/3, 353.0/4, -4081.0/5, 55205.0/6, -854197.0/7
-            };
 
         /// <summary>
         /// NormCdf(x)/NormPdf(x) for x = 0, -1, -2, -3, ..., -16

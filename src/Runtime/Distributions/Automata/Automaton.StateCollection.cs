@@ -25,17 +25,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Cached value of this.owner.Data.states. Cached for performance.
             /// </summary>
-            internal readonly ReadOnlyArray<StateData> states;
+            internal readonly ImmutableArray<StateData> states;
 
             /// <summary>
             /// Cached value of this.owner.Data.states. Cached for performance.
             /// </summary>
-            internal readonly ReadOnlyArray<Transition> transitions;
-
-            /// <summary>
-            /// Owner automaton of all states in collection.
-            /// </summary>
-            private readonly Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> owner;
+            internal readonly ImmutableArray<Transition> transitions;
 
             /// <summary>
             /// Initializes instance of <see cref="StateCollection"/>.
@@ -43,7 +38,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             internal StateCollection(
                 Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> owner)
             {
-                this.owner = owner;
                 this.states = owner.Data.States;
                 this.transitions = owner.Data.Transitions;
             }
@@ -51,7 +45,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             #region IReadOnlyList<State> methods
 
             /// <inheritdoc/>
-            public State this[int index] => new State(this.owner, this.states, this.transitions, index);
+            public State this[int index] => new State(this.states, this.transitions, index);
 
             /// <inheritdoc/>
             public int Count => this.states.Count;

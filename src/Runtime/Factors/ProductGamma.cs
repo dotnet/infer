@@ -56,7 +56,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gamma.FromShapeAndRate(Product.Shape, Product.Rate * B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="AAverageConditional(Gamma, double, GammaPower)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="AAverageConditional(GammaPower, double, GammaPower)"]/*'/>
         public static GammaPower AAverageConditional([SkipIfUniform] GammaPower Product, double B, GammaPower result)
         {
             if (Product.IsPointMass)
@@ -144,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return AAverageConditional(Product, A);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="BAverageConditional(Gamma, double, GammaPower)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="BAverageConditional(GammaPower, double, GammaPower)"]/*'/>
         public static GammaPower BAverageConditional([SkipIfUniform] GammaPower Product, double A, GammaPower result)
         {
             return AAverageConditional(Product, A, result);
@@ -773,7 +773,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return AAverageLogarithm(Product, A);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="BAverageLogarithm(Gamma, double, GammaPower)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="BAverageLogarithm(GammaPower, double, GammaPower)"]/*'/>
         public static GammaPower BAverageLogarithm([SkipIfUniform] GammaPower Product, double A, GammaPower result)
         {
             return AAverageLogarithm(Product, A, result);

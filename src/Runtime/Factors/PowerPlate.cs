@@ -162,13 +162,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampBackwardOp"]/message_doc[@name="AverageLogFactor()"]/*'/>
         [Skip]
         public static double AverageLogFactor()
         {
             return 0.0;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampBackwardOp"]/message_doc[@name="ValueAverageConditional{Distribution}(Distribution, double, Distribution)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampBackwardOp"]/message_doc[@name="ValueAverageConditional{Distribution}(Distribution, double, Distribution)"]/*'/>
         /// <typeparam name="Distribution">The type of the distribution over the damped variable.</typeparam>
         public static Distribution ValueAverageConditional<Distribution>(
             [SkipIfUniform] Distribution backward, double stepsize, Distribution to_value)
@@ -184,6 +185,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampBackwardOp"]/message_doc[@name="ValueAverageLogarithm{Distribution}(Distribution, double, Distribution)"]/*'/>
         /// <typeparam name="Distribution">The type of the distribution over the damped variable.</typeparam>
         public static Distribution ValueAverageLogarithm<Distribution>(
             [SkipIfUniform] Distribution backward, double stepsize, Distribution to_value)
@@ -199,6 +201,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return value;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampBackwardOp"]/message_doc[@name="BackwardAverageLogarithm{Distribution}(Distribution)"]/*'/>
         /// <typeparam name="Distribution">The type of the distribution over the damped variable.</typeparam>
         public static Distribution BackwardAverageLogarithm<Distribution>([IsReturned] Distribution value)
         {
@@ -206,25 +209,26 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp{T}"]/doc/*'/>
     [FactorMethod(typeof(Damp), "Forward<>")]
     [Quality(QualityBand.Preview)]
     public static class DampForwardOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp"]/message_doc[@name="LogEvidenceRatio()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp{T}"]/message_doc[@name="LogEvidenceRatio()"]/*'/>
         [Skip]
         public static double LogEvidenceRatio()
         {
             return 0.0;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp{T}"]/message_doc[@name="AverageLogFactor()"]/*'/>
         [Skip]
         public static double AverageLogFactor()
         {
             return 0.0;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp"]/message_doc[@name="ForwardAverageConditional{Distribution}(Distribution, double, Distribution)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp{T}"]/message_doc[@name="ForwardAverageConditional{Distribution}(Distribution, double, Distribution)"]/*'/>
         /// <typeparam name="Distribution">The type of the distribution over the damped variable.</typeparam>
         public static Distribution ForwardAverageConditional<Distribution>(
             [SkipIfUniform] Distribution value, double stepsize, Distribution to_forward)
@@ -248,6 +252,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp{T}"]/message_doc[@name="ForwardAverageLogarithm{Distribution}(Distribution,double,Distribution)"]/*'/>
         /// <typeparam name="Distribution">The type of the distribution over the damped variable.</typeparam>
         public static Distribution ForwardAverageLogarithm<Distribution>(
             [SkipIfUniform] Distribution value, double stepsize, Distribution to_forward)
@@ -256,13 +261,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return ForwardAverageConditional(value, stepsize, to_forward);
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp"]/message_doc[@name="ValueAverageConditional{Distribution}(Distribution, Distribution)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp{T}"]/message_doc[@name="ValueAverageConditional{Distribution}(Distribution)"]/*'/>
         /// <typeparam name="Distribution">The type of the distribution over the damped variable.</typeparam>
         public static Distribution ValueAverageConditional<Distribution>([IsReturned] Distribution forward)
         {
             return forward;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampForwardOp{T}"]/message_doc[@name="ValueAverageLogarithm{Distribution}(Distribution)"]/*'/>
         /// <typeparam name="Distribution">The type of the distribution over the damped variable.</typeparam>
         public static Distribution ValueAverageLogarithm<Distribution>([IsReturned] Distribution forward)
         {

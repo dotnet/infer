@@ -10,7 +10,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaPowerProductOp_Laplace"]/doc/*'/>
     [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
     [Buffers("Q")]
     [Quality(QualityBand.Experimental)]

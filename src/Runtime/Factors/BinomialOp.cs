@@ -10,7 +10,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="BinomialOp"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="BinomialOp"]/doc/*'/>
     /// <remarks>The factor is f(sample,n,p) = choose(n,sample) p^sample (1-p)^(n-sample)</remarks>
     [FactorMethod(new string[] { "sample", "trialCount", "p" }, typeof(Rand), "Binomial", typeof(int), typeof(double))]
     [Quality(QualityBand.Preview)]

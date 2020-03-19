@@ -476,7 +476,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Mature)]
     public static class IntCasesOp
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntCasesOp"]/message_doc[@name="CasesAverageConditional{BernoulliList}(Discrete, BernoulliList)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntCasesOp"]/message_doc[@name="CasesAverageConditional(Discrete, int)"]/*'/>
         public static Bernoulli CasesAverageConditional(Discrete i, int resultIndex)
         {
             return Bernoulli.FromLogOdds(i.GetLogProb(resultIndex));
@@ -541,7 +541,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         //-- VMP --------------------------------------------------------------------------------------------
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntCasesOp"]/message_doc[@name="CasesAverageLogarithm{BernoulliList}(Discrete, BernoulliList)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntCasesOp"]/message_doc[@name="CasesAverageLogarithm(Discrete, int)"]/*'/>
         public static Bernoulli CasesAverageLogarithm(Discrete i, int resultIndex)
         {
             return CasesAverageConditional(i, resultIndex);

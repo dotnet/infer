@@ -67,10 +67,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> Labels_InstanceRange__selector_cases_rep8_B_reduced;
 		public Bernoulli[][][] Labels_InstanceRange__selector_cases_uses_B;
 		public Discrete Labels_InstanceRange__selector_rep_B_reduced;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Discrete></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Discrete&gt;</summary>
 		public DistributionRefArray<Discrete,int> Labels_InstanceRange__selector_rep_B_toDef;
 		public DistributionRefArray<DistributionRefArray<Discrete,int>,int[]> Labels_InstanceRange__selector_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Discrete></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Discrete&gt;</summary>
 		public DistributionRefArray<Discrete,int> Labels_InstanceRange__selector_rep_F_marginal;
 		public Discrete[][] Labels_InstanceRange__selector_uses_B;
 		public Discrete[][] Labels_InstanceRange__selector_uses_F;
@@ -84,10 +84,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Discrete[][] Labels_uses_F;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_0__B;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> MaxNoisyScore_rep_B_toDef;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> MaxNoisyScore_rep_F_marginal;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> NoisyScoreDeltas_B;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> NoisyScoreDeltas_F;
@@ -108,7 +108,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Field backing the WeightPriors property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> weightPriors;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_F;
-		/// <summary>Buffer for JaggedSubarrayOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for JaggedSubarrayOp&lt;double&gt;.ItemsAverageConditional&lt;DistributionStructArray&lt;Gaussian, double&gt;, Gaussian, DistributionStructArray&lt;Gaussian, double&gt;&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_F_ClassRange__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_F;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> Weights_FeatureIndexes_B;
@@ -538,6 +538,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_uses_F[InstanceRange][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.classCount));
 			}
 			if (this.instanceCount>0) {
+				this.vbool76_reduced = new bool[this.classCount][];
 				this.Labels_InstanceRange__selector_cases_rep8_B_reduced = new DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]>(this.classCount);
 			}
 			for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
@@ -549,11 +550,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.Labels_InstanceRange__selector_cases_rep8_B_reduced[ClassMaxNoisyScore][_a8] = Bernoulli.Uniform();
 					}
 				}
-			}
-			if (this.instanceCount>0) {
-				this.vbool76_reduced = new bool[this.classCount][];
-			}
-			for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
 				if (this.instanceCount>0) {
 					this.vbool76_reduced[ClassMaxNoisyScore] = new bool[this.classCount];
 				}
@@ -786,8 +782,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_uses_F[InstanceRange] = new Discrete[2];
 			}
 			this.Labels_InstanceRange__selector_cases_uses_B = new Bernoulli[this.instanceCount][][];
-			this.Labels_InstanceRange__selector_cases_rep8_B_reduced = default(DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]>);
 			this.vbool76_reduced = default(bool[][]);
+			this.Labels_InstanceRange__selector_cases_rep8_B_reduced = default(DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]>);
 			this.NoisyScoreDeltas_F = new DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]>(this.instanceCount);
 			this.NoisyScoreDeltas_B = new DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]>(this.instanceCount);
 			this.vdouble740_B = new DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]>(this.instanceCount);

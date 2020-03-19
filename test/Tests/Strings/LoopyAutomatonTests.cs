@@ -629,14 +629,15 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             AssertStochastic(automaton);
 
-            StringAutomaton.EpsilonClosure startClosure = automaton.Start.GetEpsilonClosure();
+            StringAutomaton.EpsilonClosure startClosure = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(automaton, automaton.Start);
             Assert.Equal(3, startClosure.Size);
             Assert.Equal(0.0, startClosure.EndWeight.LogValue, 1e-8);
 
             for (int i = 0; i < startClosure.Size; ++i)
             {
                 Weight weight = startClosure.GetStateWeightByIndex(i);
-                double expectedWeight = startClosure.GetStateByIndex(i) == automaton.Start ? 10 : 4;
+                var state = startClosure.GetStateByIndex(i);
+                double expectedWeight = state == automaton.Start ? 10 : 4;
                 Assert.Equal(expectedWeight, weight.Value, 1e-8);
             }
         }
