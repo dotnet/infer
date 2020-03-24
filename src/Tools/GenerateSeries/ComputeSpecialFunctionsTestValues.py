@@ -19,7 +19,6 @@ def normal_cdf_moment_ratio(n, x):
     return Float(mpmath.exp(xmpf * xmpf / 4) * mpmath.pcfu(0.5 + nmpf, -xmpf))
 
 def beta_cdf(x, a, b):
-    mpmath.ncdf()
     rv = sympy.stats.Beta('p', a, b)
     return sympy.stats.P(rv < x)
 
@@ -36,6 +35,32 @@ def normal_cdf2(x, y, r):
     rmpf = r._to_mpmath(500)
     f = lambda t: mpmath.mpf('0') if t == mpmath.mpf('-1') else 1 / (2 * mpmath.pi * mpmath.sqrt(1 - t * t)) * mpmath.exp(-(xmpf * xmpf + ympf * ympf - 2 * t * xmpf * ympf) / (2 * (1 - t * t)))
     result = mpmath.quad(f, [-1, rmpf])
+    return Float(result)
+
+def logistic_gaussian(m, v):
+    if m == oo:
+        if v == oo:
+            return oo
+        return Float('1.0')
+    if v == oo:
+        return Float('0.5')
+    mpmath.mp.dps = 500
+    mmpf = m._to_mpmath(500)
+    vmpf = v._to_mpmath(500)
+    # The integration routine below is obtained by substituting x = atanh(t)
+    # into the definition of logistic_gaussian
+    #
+    # f = lambda x: mpmath.exp(-(x - mmpf) * (x - mmpf) / (2 * vmpf)) / (1 + mpmath.exp(-x))
+    # result = 1 / mpmath.sqrt(2 * mpmath.pi * vmpf) * mpmath.quad(f, [-mpmath.inf, mpmath.inf])
+    #
+    # Such substitution makes mpmath.quad call much faster.
+    tanhm = mpmath.tanh(mmpf)
+    # Not a really precise threshold, but fine for our data
+    if tanhm == mpmath.mpf('1.0'):
+        return Float('1.0')
+    f = lambda t: mpmath.exp(-(mpmath.atanh(t) - mmpf) ** 2 / (2 * vmpf)) / ((1 - t) * (1 + t + mpmath.sqrt(1 - t * t)))
+    coef = 1 / mpmath.sqrt(2 * mpmath.pi * vmpf)
+    int = mpmath.quad(f, [-1, 1])
     return Float(result)
 
 pair_info = {
@@ -55,13 +80,13 @@ pair_info = {
     'Log1Plus.csv': lambda x: log(1 + x),
     'LogExpMinus1.csv': lambda x: log(exp(x) - 1),
     'Logistic.csv': lambda x: 1 / (1 + exp(-x)),
-    'logisticGaussian.csv': None, #lambda m, v: integrate(1 / sqrt(2 * pi * v) * exp(-(sx - m) * (sx - m) / (2 * v)) / (1 + exp(-sx)), (sx, -oo, oo)),
+    'logisticGaussian.csv': logistic_gaussian,
     'logisticGaussianDeriv.csv': None,
     'logisticGaussianDeriv2.csv': None,
     'LogisticLn.csv': lambda x: -log(1 + exp(-x)),
     'LogSumExp.csv': lambda x, y: log(exp(x) + exp(y)),
     'NormalCdf.csv': lambda x: erfc(-x / sqrt(S(2))) / 2,
-    'NormalCdf2.csv': normal_cdf2, # lambda x, y, r: integrate(1 / (2 * pi * sqrt(1 - sx * sx)) * exp(-(x * x + y * y - 2 * sx * x * y) / (2 * (1 - sx * sx))), (sx, -1, r)),
+    'NormalCdf2.csv': normal_cdf2,
     'NormalCdfIntegral.csv': None,
     'NormalCdfIntegralRatio.csv': None,
     'NormalCdfInv.csv': lambda x: -sqrt(S(2)) * erfcinv(2 * x),
@@ -80,7 +105,7 @@ def float_str_csharp_to_python(s):
     return s.replace('NaN', 'nan').replace('Infinity', 'inf')
 
 def float_str_python_to_csharp(s):
-    return s.replace('nan', 'NaN').replace('inf', 'Infinity')
+    return s.replace('nan', 'NaN').replace('inf', 'Infinity').replace('oo', 'Infinity')
 
 dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', '..', 'test', 'Tests', 'data', 'SpecialFunctionsValues')
 with os.scandir(dir) as it:
