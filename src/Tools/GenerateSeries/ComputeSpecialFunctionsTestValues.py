@@ -55,12 +55,80 @@ def logistic_gaussian(m, v):
     #
     # Such substitution makes mpmath.quad call much faster.
     tanhm = mpmath.tanh(mmpf)
-    # Not a really precise threshold, but fine for our data
+    # Not really a precise threshold, but fine for our data
     if tanhm == mpmath.mpf('1.0'):
         return Float('1.0')
     f = lambda t: mpmath.exp(-(mpmath.atanh(t) - mmpf) ** 2 / (2 * vmpf)) / ((1 - t) * (1 + t + mpmath.sqrt(1 - t * t)))
     coef = 1 / mpmath.sqrt(2 * mpmath.pi * vmpf)
-    int = mpmath.quad(f, [-1, 1])
+    int, err = mpmath.quad(f, [-1, 1], error=True)
+    result = coef * int
+    if mpmath.mpf('1e50') * abs(err) > abs(int):
+        print(f"Suspiciously big error when evaluating an integral for logistic_gaussian({m}, {v}).")
+        print(f"Integral: {int}")
+        print(f"integral error estimate: {err}")
+        print(f"Coefficient: {coef}")
+        print(f"Result (Coefficient * Integral): {result}")
+    return Float(result)
+
+def logistic_gaussian_deriv(m, v):
+    if m.is_infinite or v.is_infinite:
+        return Float('0.0')
+    mpmath.mp.dps = 500
+    mmpf = m._to_mpmath(500)
+    vmpf = v._to_mpmath(500)
+    # The integration routine below is obtained by substituting x = atanh(t)
+    # into the definition of logistic_gaussian'
+    #
+    # f = lambda x: mpmath.exp(-(x - mmpf) * (x - mmpf) / (2 * vmpf)) / ((1 + mpmath.exp(-x)) * (1 + mpmath.exp(x)))
+    # result = 1 / mpmath.sqrt(2 * mpmath.pi * vmpf) * mpmath.quad(f, [-mpmath.inf, mpmath.inf])
+    #
+    # Such substitution makes mpmath.quad call much faster.
+    def f(t):
+        one_minus_t_squared = 1 - t * t
+        return mpmath.exp(-(mpmath.atanh(t) - mmpf) ** 2 / (2 * vmpf)) / (one_minus_t_squared + mpmath.sqrt(one_minus_t_squared))
+    coef = mpmath.mpf('0.5') / mpmath.sqrt(2 * mpmath.pi * vmpf)
+    int, err = mpmath.quad(f, [-1, 1], error=True)
+    result = coef * int
+    if mpmath.mpf('1e50') * abs(err) > abs(int):
+        print(f"Suspiciously big error when evaluating an integral for logistic_gaussian'({m}, {v}).")
+        print(f"Integral: {int}")
+        print(f"integral error estimate: {err}")
+        print(f"Coefficient: {coef}")
+        print(f"Result (Coefficient * Integral): {result}")
+    return Float(result)
+
+def logistic_gaussian_deriv2(m, v):
+    if m.is_infinite or v.is_infinite:
+        return Float('0.0')
+    mpmath.mp.dps = 500
+    mmpf = m._to_mpmath(500)
+    vmpf = v._to_mpmath(500)
+    # The integration routine below is obtained by substituting x = atanh(t)
+    # into the definition of logistic_gaussian''
+    #
+    # def f(x):
+    #     expx = mpmath.exp(x)
+    #     one_plus_expx = 1 + expx
+    #     return mpmath.exp(-(x - mmpf) * (x - mmpf) / (2 * vmpf)) * (1 - expx) / ((1 + mpmath.exp(-x)) * one_plus_expx * one_plus_expx)
+    # coef = 1 / mpmath.sqrt(2 * mpmath.pi * vmpf)
+    # int = mpmath.quad(f, [-mpmath.inf, mpmath.inf])
+    # result = coef * int
+    #
+    # Such substitution makes mpmath.quad call much faster.
+    def f(t):
+        one_minus_t = 1 - t
+        one_minus_t_squared = 1 - t * t
+        sqrt_one_minus_t_squared = mpmath.sqrt(one_minus_t_squared)
+        return mpmath.exp(-(mpmath.atanh(t) - mmpf) ** 2 / (2 * vmpf)) * (one_minus_t - sqrt_one_minus_t_squared) / ((one_minus_t_squared + sqrt_one_minus_t_squared) * (one_minus_t + sqrt_one_minus_t_squared))
+    coef = mpmath.mpf('0.5') / mpmath.sqrt(2 * mpmath.pi * vmpf)
+    int, err = mpmath.quad(f, [-1, 1], error=True)
+    result = coef * int
+    if mpmath.mpf('1e50') * abs(err) > abs(int):
+        print(f"Suspiciously big error when evaluating an integral for logistic_gaussian''({m}, {v}).")
+        print(f"Integral: {int}")
+        print(f"integral error estimate: {err}")
+        print(f"Coefficient: {coef}")
+        print(f"Result (Coefficient * Integral): {result}")
     return Float(result)
 
 pair_info = {
@@ -81,8 +149,8 @@ pair_info = {
     'LogExpMinus1.csv': lambda x: log(exp(x) - 1),
     'Logistic.csv': lambda x: 1 / (1 + exp(-x)),
     'logisticGaussian.csv': logistic_gaussian,
-    'logisticGaussianDeriv.csv': None,
-    'logisticGaussianDeriv2.csv': None,
+    'logisticGaussianDeriv.csv': logistic_gaussian_deriv,
+    'logisticGaussianDeriv2.csv': logistic_gaussian_deriv2,
     'LogisticLn.csv': lambda x: -log(1 + exp(-x)),
     'LogSumExp.csv': lambda x, y: log(exp(x) + exp(y)),
     'NormalCdf.csv': lambda x: erfc(-x / sqrt(S(2))) / 2,
