@@ -159,7 +159,7 @@ pair_info = {
     'NormalCdfIntegralRatio.csv': None,
     'NormalCdfInv.csv': lambda x: -sqrt(S(2)) * erfcinv(2 * x),
     'NormalCdfLn.csv': lambda x: log(erfc(-x / sqrt(S(2))) / 2),
-    'NormalCdfLn2.csv': None,
+    'NormalCdfLn2.csv': lambda x, y, r: log(normal_cdf2(x, y, r)),
     'NormalCdfLogit.csv': lambda x: log(erfc(-x / sqrt(S(2))) / 2) - log(erfc(x / sqrt(S(2))) / 2),
     'NormalCdfMomentRatio.csv': normal_cdf_moment_ratio,
     'NormalCdfRatioLn2.csv': None,
