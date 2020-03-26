@@ -192,10 +192,24 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // This formula works even when Precision == 0
                 return Gaussian.FromNatural(MMath.Average(a.MeanTimesPrecision, b.MeanTimesPrecision), a.Precision / 2);
             }
-            double prec = a.Precision + b.Precision;
-            if (prec == 0)
-                throw new ImproperDistributionException(a.IsProper() ? b : a);
-            return Gaussian.FromNatural((a.MeanTimesPrecision * b.Precision + b.MeanTimesPrecision * a.Precision) / prec, a.Precision * b.Precision / prec);
+            double meanTimesPrec, prec;
+            if(a.Precision >= b.Precision)
+            {
+                double precOverAPrec = 1 + b.Precision / a.Precision;
+                if (precOverAPrec == 0)
+                    throw new ImproperDistributionException(a.IsProper() ? b : a);
+                meanTimesPrec = (a.MeanTimesPrecision / a.Precision * b.Precision + b.MeanTimesPrecision) / precOverAPrec;
+                prec = b.Precision / precOverAPrec;
+            }
+            else
+            {
+                double precOverBPrec = a.Precision / b.Precision + 1;
+                if (precOverBPrec == 0)
+                    throw new ImproperDistributionException(a.IsProper() ? b : a);
+                meanTimesPrec = (a.MeanTimesPrecision + b.MeanTimesPrecision / b.Precision * a.Precision) / precOverBPrec;
+                prec = a.Precision / precOverBPrec;
+            }
+            return Gaussian.FromNatural(meanTimesPrec, prec);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="SumAverageConditional(double, Gaussian)"]/*'/>

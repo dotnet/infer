@@ -28,12 +28,21 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Assert.False(DoublePlusOp.BAverageConditional(Gaussian.FromNatural(-8.6696467442044984E+102, 0.43834920434350727), Gaussian.FromNatural(2.193337045017726E+205, 2.193337045017726E+205)).MeanTimesPrecision < double.MinValue);
             Gaussian Sum = Gaussian.FromNatural(1, 1);
+            double tolerance = 1e-10;
             foreach(var prec in DoublesGreaterThanZero().Where(x => !double.IsPositiveInfinity(x)))
             {
                 Gaussian b = Gaussian.FromNatural(prec, prec);
                 Gaussian a = DoublePlusOp.AAverageConditional(Sum, b);
                 //Trace.WriteLine($"b = {b}: a = {a}");
-                Assert.True(MMath.AbsDiff(a.GetMean(), 0) < 1e-1);
+                Assert.True(MMath.AbsDiff(a.GetMean(), 0) < tolerance);
+
+                Gaussian a2 = DoublePlusOp.AAverageConditional(b, Sum);
+                //Trace.WriteLine($"b = {b}: a2 = {a2}");
+                Assert.True(MMath.AbsDiff(a2.GetMean(), 0) < tolerance);
+
+                Gaussian sum2 = DoublePlusOp.SumAverageConditional(Sum, b);
+                //Trace.WriteLine($"b = {b}: sum2 = {sum2}");
+                Assert.True(MMath.AbsDiff(sum2.GetMean(), 2) < tolerance);
             }
         }
 
@@ -2178,11 +2187,14 @@ zL = (L - mx)*sqrt(prec)
             yield return MMath.NextDouble(0);
             yield return MMath.PreviousDouble(double.PositiveInfinity);
             yield return double.PositiveInfinity;
-            for (int i = 0; i <= 300; i++)
+            for (int i = 0; i <= 323; i++)
             {
-                double bigValue = System.Math.Pow(10, i);
-                yield return -bigValue;
-                yield return bigValue;
+                if (i <= 308)
+                {
+                    double bigValue = System.Math.Pow(10, i);
+                    yield return -bigValue;
+                    yield return bigValue;
+                }
                 if (i != 0)
                 {
                     double smallValue = System.Math.Pow(0.1, i);
