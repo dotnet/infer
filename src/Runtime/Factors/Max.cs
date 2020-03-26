@@ -722,7 +722,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 //Console.WriteLine($"z2={z2} m={m} v={v} vc2={vc2} diff={diff}");
                 result.SetToRatio(result, a, ForceProper);
                 if (Double.IsNaN(result.Precision) || Double.IsNaN(result.MeanTimesPrecision))
-                    throw new InferRuntimeException($"result is NaN.  max={max:g17}, a={a:g17}, b={b:g17}");
+                    throw new InferRuntimeException($"result is NaN.  max={max}, a={a}, b={b}");
                 return result;
             }
         }
