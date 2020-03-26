@@ -1942,7 +1942,7 @@ f = gamma(x)-1/x
         /// <remarks>This function provides higher accuracy than <c>Math.Log(NormalCdf(x))</c>, which can fail for x &lt; -7.</remarks>
         public static double NormalCdfLn(double x)
         {
-            const double large = -8;
+            const double large = -10;
             if (x > 4)
             {
                 // log(NormalCdf(x)) = log(1-NormalCdf(-x))
@@ -1965,19 +1965,46 @@ f = gamma(x)-1/x
             {
                 // x < large
                 double z = 1 / (x * x);
-                // asymptotic series for log(normcdf)
-                // Maple command: subs(x=-x,asympt(log(normcdf(-x)),x));
-                double s =
-                    // Truncated series 16: normcdfln asymptotic
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
-                    z * (-1.0 +
-                    z * (5.0 / 2.0 +
-                    z * (-37.0 / 3.0 +
-                    z * (353.0 / 4.0 +
-                    z * (-4081.0 / 5.0 +
-                    z * (55205.0 / 6.0 +
-                    z * -854197.0 / 7.0))))))
-                    ;
+                double s;
+                if (x > -16)
+                    // This truncated series provides a good approximation
+                    // for x <= -10
+                    s =
+                        // Truncated series 16: normcdfln asymptotic
+                        // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                        z * (-1.0 +
+                        z * (5.0 / 2.0 +
+                        z * (-37.0 / 3.0 +
+                        z * (353.0 / 4.0 +
+                        z * (-4081.0 / 5.0 +
+                        z * (55205.0 / 6.0 +
+                        z * (-854197.0 / 7.0 +
+                        z * (14876033.0 / 8.0 +
+                        z * (-288018721.0 / 9.0 +
+                        z * (1227782785.0 / 2.0 +
+                        z * (-142882295557.0 / 11.0 +
+                        z * (3606682364513.0 / 12.0 +
+                        z * (-98158402127761.0 / 13.0 +
+                        z * (2865624738913445.0 / 14.0 +
+                        z * (-89338394736560917.0 / 15.0
+                        )))))))))))))))
+                        ;
+                else
+                    // This truncated series provides a good approximation
+                    // for x <= -16
+                    s =
+                        // Truncated series 16: normcdfln asymptotic
+                        // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                        z * (-1.0 +
+                        z * (5.0 / 2.0 +
+                        z * (-37.0 / 3.0 +
+                        z * (353.0 / 4.0 +
+                        z * (-4081.0 / 5.0 +
+                        z * (55205.0 / 6.0 +
+                        z * (-854197.0 / 7.0 +
+                        z * (14876033.0 / 8.0
+                        ))))))))
+                        ;
                 return s - LnSqrt2PI - 0.5 * x * x - Math.Log(-x);
             }
         }
