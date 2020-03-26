@@ -580,7 +580,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     if (delta == 0) // avoid 0*infinity
                         qOverPrec = (r1L + drU2) * diff * (drU3 / sqrtPrec - diff / 4 + rL / 2 * diffs / 2 * diff / 2);
                     double vp = qOverPrec * alphaXcLprecDiff * alphaXcLprecDiff;
-                    if (double.IsNaN(qOverPrec) || 1/vp < X.Precision) return Gaussian.FromMeanAndPrecision(mp, MMath.NextDouble(X.Precision)) / X;
+                    if (double.IsNaN(qOverPrec) || 1 / vp < X.Precision) return Gaussian.FromMeanAndPrecision(mp, MMath.NextDouble(X.Precision)) / X;
                     return new Gaussian(mp, vp) / X;
                 }
                 else
@@ -670,7 +670,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         // Compute the mean and variance of (X-L) and (U-X)
         // sqrtomr2 is sqrt(1-r*r) with high accuracy.
-        internal static void GetDiffMeanAndVariance(Gaussian X, Gaussian L, Gaussian U, out double yl, out double yu, out double r, 
+        internal static void GetDiffMeanAndVariance(Gaussian X, Gaussian L, Gaussian U, out double yl, out double yu, out double r,
             out double sqrtomr2,
             out double invSqrtVxl,
             out double invSqrtVxu)
@@ -898,6 +898,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         // dlogf = -d_p N(L;mx,vx)/f
                         // ddlogf = -dlogf^2 + dlogf*(mx-L)/vx
                         double L = lowerBound.Point;
+                        double U = upperBound.Point;
                         double mx = X.GetMean();
                         if (mx < L && d_p == 1)
                         {
@@ -905,7 +906,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                             // Z/X.GetProb(L)*sqrtPrec = MMath.NormalCdfRatio(sqrtPrec*(mx-L)) - MMath.NormalCdfRatio(sqrtPrec*(mx-U))*X.GetProb(U)/X.GetProb(L)
                             // X.GetProb(U)/X.GetProb(L) = Math.Exp(X.MeanTimesPrecision*(U-L) - 0.5*(U*U - L*L)*X.Precision) =approx 0
                             double sqrtPrec = Math.Sqrt(X.Precision);
-                            double U = upperBound.Point;
                             double mxL = sqrtPrec * (mx - L);
                             double LCdfRatio = MMath.NormalCdfRatio(mxL);
                             double UCdfRatio = MMath.NormalCdfRatio(sqrtPrec * (mx - U));
@@ -922,6 +922,26 @@ namespace Microsoft.ML.Probabilistic.Factors
                             // this is equivalent
                             // L - dlogf/ddlogf = L - 1/(-dlogf + (X.MeanTimesPrecision - L * X.Precision)) =approx mx
                             //return Gaussian.FromMeanAndPrecision(L - dlogf / ddlogf, -ddlogf);
+                        }
+                        else if (mx > U && d_p == 1)
+                        {
+                            double sqrtPrec = Math.Sqrt(X.Precision);
+                            double zL = (L - mx) * sqrtPrec;
+                            double zU = (U - mx) * sqrtPrec;
+                            double diff = U - L;
+                            // diffs = zU - zL
+                            double diffs = sqrtPrec * diff;
+                            double deltaOverDiffs = (-zL - zU) / 2;
+                            double delta = diffs * deltaOverDiffs;
+                            // (Cdf(zU) - Cdf(zL))/N(zL) = R(zU)*exp(delta) - R(zL)
+                            double expMinus1 = MMath.ExpMinus1(delta);
+                            //if (expMinus1 > 1e100) return MMath.NormalCdfLn(zU);
+                            double rU = MMath.NormalCdfRatio(zU);
+                            double drU = MMath.NormalCdfRatioDiff(zL, diffs);
+                            double CdfRatioDiff = drU + rU * expMinus1;
+                            double dlogf = -d_p / CdfRatioDiff * sqrtPrec;
+                            double ddlogf = dlogf * (-dlogf + (X.MeanTimesPrecision - L * X.Precision));
+                            return Gaussian.FromDerivatives(L, dlogf, ddlogf, ForceProper);
                         }
                         else
                         {
