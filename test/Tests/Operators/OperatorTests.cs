@@ -24,6 +24,20 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class OperatorTests
     {
         [Fact]
+        public void GaussianPlusOpTest()
+        {
+            Assert.False(DoublePlusOp.BAverageConditional(Gaussian.FromNatural(-8.6696467442044984E+102, 0.43834920434350727), Gaussian.FromNatural(2.193337045017726E+205, 2.193337045017726E+205)).MeanTimesPrecision < double.MinValue);
+            Gaussian Sum = Gaussian.FromNatural(1, 1);
+            foreach(var prec in DoublesGreaterThanZero().Where(x => !double.IsPositiveInfinity(x)))
+            {
+                Gaussian b = Gaussian.FromNatural(prec, prec);
+                Gaussian a = DoublePlusOp.AAverageConditional(Sum, b);
+                //Trace.WriteLine($"b = {b}: a = {a}");
+                Assert.True(MMath.AbsDiff(a.GetMean(), 0) < 1e-1);
+            }
+        }
+
+        [Fact]
         public void PlusGammaOpTest()
         {
             long count = 0;

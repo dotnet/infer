@@ -933,6 +933,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                             double diffs = sqrtPrec * diff;
                             double deltaOverDiffs = (-zL - zU) / 2;
                             double delta = diffs * deltaOverDiffs;
+                            // mx > U implies abs(zL) > abs(zU) and -zL > diffs
                             // (Cdf(zU) - Cdf(zL))/N(zL) = R(zU)*exp(delta) - R(zL)
                             double expMinus1 = MMath.ExpMinus1(delta);
                             //if (expMinus1 > 1e100) return MMath.NormalCdfLn(zU);
