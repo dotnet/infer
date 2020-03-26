@@ -187,13 +187,13 @@ with os.scandir(dir) as it:
             with open(entry.path) as csvfile:
                 reader = csv.DictReader(csvfile, delimiter=',')
                 fieldnames = reader.fieldnames
-                arg_count = (len(fieldnames) - 1) // 2
+                arg_count = len(fieldnames) - 1
                 newrows = []
                 for row in reader:
                     newrow = dict(row)
                     args = []
                     for i in range(arg_count):
-                        args.append(Float(float_str_csharp_to_python(row[f'arg{i}exact']), 500))
+                        args.append(Float(float_str_csharp_to_python(row[f'arg{i}']), 500))
                     result_in_file = row['expectedresult']
                     if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN':
                         newrow['expectedresult'] = result_in_file

@@ -28,6 +28,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         public delegate double MathFcn3(double arg1, double arg2, double arg3);
         public delegate double MathFcn4(double arg1, double arg2, double arg3, double arg4);
 
+        private const string PairFileArgColumnNamePrefix = "arg";
+        private const string PairFileExpectedValueColumnName = "expectedresult";
+        private const char PairFileSeparator = ',';
+
         public struct Test
         {
             public MathFcn fcn;
@@ -1821,17 +1825,25 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         private static double[,] ReadPairs(string filepath)
         {
             string[] lines = File.ReadAllLines(filepath);
-            int argsNo = lines[0].Count(c => c == ',') / 2;
+            string[] header = lines[0].Split(PairFileSeparator).Select(s => s.Trim()).ToArray();
+            for (int i = 0; i < header.Length - 1; ++i)
+                if (header[i] != $"{PairFileArgColumnNamePrefix}{i}")
+                    throw new InvalidDataException($"The header of the file {filepath} has an incorrect element at position {i}\nExpected: {PairFileArgColumnNamePrefix}{i}\nActual: {header[i]} ");
+            if (header[header.Length - 1] != PairFileExpectedValueColumnName)
+                throw new InvalidDataException($"The header of the file {filepath} has an incorrect last element\nExpected: {PairFileExpectedValueColumnName}\nActual: {header[header.Length - 1]} ");
+            int argsNo = header.Length - 1;
             int length = lines.Length - 1;
             int width = argsNo + 1;
             double[,] pairs = new double[length, width];
-            var cells = lines.Skip(1).SelectMany(s => s.Split(',').Skip(argsNo).Select(c => double.Parse(c, System.Globalization.CultureInfo.InvariantCulture))).GetEnumerator();
             for (int i = 0; i < length; ++i)
             {
+                string[] line = lines[i + 1].Split(PairFileSeparator);
+                if (line.Length != width)
+                    throw new InvalidDataException($"The number of entries on the line {i + 1} of the file {filepath} is inconsistent with the file's header.");
                 for (int j = 0; j < width; ++j)
                 {
-                    cells.MoveNext();
-                    pairs[i, j] = cells.Current;
+                    if (!double.TryParse(line[j], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out pairs[i, j]))
+                        throw new InvalidDataException($"Failed to parse the entry at position {j} on the line {i + 1} of the file {filepath}.");
                 }
             }
             return pairs;
@@ -1846,10 +1858,8 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 var argsNo = width - 1;
 
                 for (int i = 0; i < argsNo; i++)
-                    file.Write($"arg{i}rounded,");
-                for (int i = 0; i < argsNo; i++)
-                    file.Write($"arg{i}exact,");
-                file.WriteLine("expectedresult");
+                    file.Write($"{PairFileArgColumnNamePrefix}{i}{PairFileSeparator}");
+                file.WriteLine(PairFileExpectedValueColumnName);
 
                 var jagged = new double[len][];
                 for (int i = 0; i < len; ++i)
@@ -1863,9 +1873,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 for (int i = 0; i < len; ++i)
                 {
                     for (int j = 0; j < argsNo; ++j)
-                        file.Write($"{jagged[i][j].ToString(System.Globalization.CultureInfo.InvariantCulture)},");
-                    for (int j = 0; j < argsNo; ++j)
-                        file.Write($"{MMath.ToStringExact(jagged[i][j])},");
+                        file.Write($"{MMath.ToStringExact(jagged[i][j])}{PairFileSeparator}");
                     file.WriteLine(MMath.ToStringExact(jagged[i][width - 1]));
                 }
             }
@@ -1896,7 +1904,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             public int Compare(double[] x, double[] y)
             {
                 var len = System.Math.Min(x.Length, y.Length);
-                for (int i = 0; i< len; ++i)
+                for (int i = 0; i < len; ++i)
                 {
                     if (x[i] < y[i])
                         return -1;
