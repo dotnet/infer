@@ -137,7 +137,7 @@ pair_info = {
     'Digamma.csv': digamma,
     'Erfc.csv': erfc,
     'ExpMinus1.csv': lambda x: exp(x) - 1,
-    'ExpMinus1RatioMinus1RatioMinusHalf.csv': lambda x: ((exp(x) - 1) / x - 1) / x - S(1) / 2,
+    'ExpMinus1RatioMinus1RatioMinusHalf.csv': lambda x: ((exp(x) - 1) / x - 1) / x - S(1) / 2 if x != S(0) else S(0),
     'Gamma.csv': gamma,
     'GammaLn.csv': loggamma,
     'GammaLower.csv': lambda s, x: lowergamma(s, x) / gamma(s) if s != oo else S(0),
