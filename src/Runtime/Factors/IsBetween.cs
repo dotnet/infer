@@ -652,9 +652,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // r = (r1-1)/z
                 // r1 = (r2-r)/z = r2/z - r1/z^2 + 1/z^2
                 // r1 = (r2/z + 1/z^2)/(1 + 1/z^2) = (r2*z + 1)/(1 + z^2)
-                // r*r = (r1*r1 - 2r1 +1)/z^2
-                // r*r - r1 = (r1*r1 - 2r1 + 1 - z^2*r1)/z^2 = (r1*r1 + 1 - r3 + z*r)/z^2 = (r1*r1 + r1 - r3)/z^2
-                // r3 = z*r2 + 2*r1 = z^2*r1 + z*r + 2*r1
+                // r3 = z*r2 + 2*r1
                 // r*r - r1 = (r*r + r*r*z^2 - r2*z - 1)/(1 + z^2) = (r*r + (r1-1)^2 - (r3 - 2*r1) - 1)/(1+z^2)
                 return (r * r + r1 * r1 - r3) / (1 + z * z);
             }

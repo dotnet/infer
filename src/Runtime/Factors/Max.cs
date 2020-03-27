@@ -658,13 +658,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double mc2 = m1;
                 if (alpha2 != 0) // avoid 0*infinity
                     mc2 += alpha2 * v1;
-                // z2 = (mx2 - m1) / Math.Sqrt(vx2 + v1)
-                // logw2 = MMath.NormalCdfLn(z2);
-                // alpha2 = -Math.Exp(Gaussian.GetLogProb(mx2, m1, vx2 + v1) - logw2);
-                //        = -1/sqrt(vx2+v1)/NormalCdfRatio(z2)
-                // m1 + alpha2*v1 = sqrt(vx2+v1)*(m1/sqrt(vx2+v1) - v1/(vx2+v1)/NormalCdfRatio(z2))
-                //                = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - z2 - v1/(vx2+v1)/NormalCdfRatio(z2))
-                //                = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - dY/Y)  if vx2=0
                 double z2 = 0, Y = 0, dY = 0;
                 const double z2small = 0;
                 if (vx2 == 0)
@@ -674,6 +667,15 @@ namespace Microsoft.ML.Probabilistic.Factors
                     {
                         Y = MMath.NormalCdfRatio(z2);
                         dY = MMath.NormalCdfMomentRatio(1, z2);
+                        // logw2 = MMath.NormalCdfLn(z2);
+                        // alpha2 = -Math.Exp(Gaussian.GetLogProb(mx2, m1, vx2 + v1) - logw2);
+                        //        = -1/sqrt(vx2+v1)/NormalCdfRatio(z2)
+                        // m1 = mx2 - sqrt(vx2 + v1)*z2
+                        // z2 + 1/NormalCdfRatio(z2) = z2 + 1/Y = (z2*Y + 1)/Y = dY/Y
+                        // mc2 = m1 + alpha2*v1 
+                        //     = sqrt(vx2+v1)*(m1/sqrt(vx2+v1) - v1/(vx2+v1)/NormalCdfRatio(z2))
+                        //     = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - z2 - v1/(vx2+v1)/NormalCdfRatio(z2))
+                        //     = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - dY/Y)  if vx2=0
                         mc2 = mx2 - Math.Sqrt(v1) * dY / Y;
                     }
                 }
@@ -698,15 +700,43 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double vc2;
                 if (vx2 == 0 && z2 < z2small)
                 {
+                    // Since vx2 == 0,
                     // beta2 = alpha2 * (alpha2 - z2/sqrt(v1))
                     // vc2 = v1 - v1^2 * alpha2 * (alpha2 - z2/sqrt(v1))
+                    //     = v1 - v1^2 * -1/sqrt(v1)/Y * (-1/sqrt(v1)/Y - z2/sqrt(v1))
+                    //     = v1 - v1 * 1/Y * (1/Y + z2)
                     //     = v1 - v1*dY/Y^2
-                    //     =approx v1/z2^2
-                    // posterior E[x^2] = v - v*dY/Y^2 + v*dY^2/Y^2 = v - v*dY/Y^2*(1 - dY) = v + v*z*dY/Y = v*d2Y/Y
-                    //vc2 = v1 * (1 - dY / (Y * Y));
-                    double d2Y = 2 * MMath.NormalCdfMomentRatio(2, z2);
-                    double dYiY = dY / Y;
-                    vc2 = v1 * (d2Y / Y - dYiY * dYiY);
+                    //     = v1 * (1 - dY/Y^2)
+                    // Since vc1 == 0 and mx2 == 0,
+                    // posterior E[x^2] = v - v*dY/Y^2 + v*dY^2/Y^2 
+                    //                  = v - v*dY/Y^2*(1 - dY) 
+                    //                  = v + v*z*dY/Y 
+                    //                  = v * (1 + z*dY/Y)
+                    //                  = v * d2Y/Y
+                    if (z2 < -1e8)
+                    {
+                        // Y =approx -1/z2
+                        // dY =approx 1/z2^2
+                        // d2Y =approx -2/z2^3
+                        // d2Y/Y - (dY/Y)^2 =approx 2/z2^2 - 1/z2^2 = 1/z2^2
+                        // The exact formulas are:
+                        // d2Y/Y = 1 + z*dY/Y
+                        // dY = (d2Y - Y)/z
+                        // dY/Y = d2Y/Y/z - 1/z
+                        // d2Y = (d3Y - 2dY)/z
+                        // d2Y/Y = (d3Y/Y - 2dY/Y)/z
+                        //       = d3Y/Y/z - 2(d2Y/Y/z - 1/z)/z
+                        // d2Y/Y - (dY/Y)^2 = d3Y/Y/z - 2 d2Y/Y/z^2 + 2/z^2 - (d2Y^2/Y^2/z^2 - 2 d2Y/Y/z^2 + 1/z^2)
+                        //                  = d3Y/Y/z - d2Y^2/Y^2/z^2 + 1/z^2
+                        // Could rewrite using the method of NormalCdfRatioSqrMinusDerivative
+                        vc2 = v1 * dY;
+                    }
+                    else
+                    {
+                        double d2Y = 2 * MMath.NormalCdfMomentRatio(2, z2);
+                        double dYiY = dY / Y;
+                        vc2 = v1 * (d2Y / Y - dYiY * dYiY);
+                    }
                 }
                 else if (beta2 == 0)
                 {
