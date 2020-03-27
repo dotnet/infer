@@ -590,7 +590,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                     z = max.Point * a.Precision - a.MeanTimesPrecision;
                     alpha = z * w1 - w2 * alpha2;
-                    beta = (z * z - a.Precision) * w1 - z * alpha2 * w2 - alpha * alpha;
+                    beta =  - z * alpha2 * w2 - alpha * alpha;
+                    if (w1 != 0) // avoid 0 * inf
+                        beta += (z * z - a.Precision) * w1;
                 }
                 else
                 {
@@ -726,6 +728,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                         // d2Y = (d3Y - 2dY)/z
                         // d2Y/Y = (d3Y/Y - 2dY/Y)/z
                         //       = d3Y/Y/z - 2(d2Y/Y/z - 1/z)/z
+                        // d2Y/Y = (d3Y/Y + 2)/(2z + z^2)
+                        // (d2Y/Y - 1) = z*dY/Y
+                        // d2Y/Y - (dY/Y)^2 = (d3Y/Y + 2 - (2z+z^2)(dY/Y)^2)/(2z + z^2)
+                        //                  = (d3Y/Y + 2 - (2/z + 1)(d2Y/Y - 1)^2)/(2z + z^2)
                         // d2Y/Y - (dY/Y)^2 = d3Y/Y/z - 2 d2Y/Y/z^2 + 2/z^2 - (d2Y^2/Y^2/z^2 - 2 d2Y/Y/z^2 + 1/z^2)
                         //                  = d3Y/Y/z - d2Y^2/Y^2/z^2 + 1/z^2
                         // Could rewrite using the method of NormalCdfRatioSqrMinusDerivative

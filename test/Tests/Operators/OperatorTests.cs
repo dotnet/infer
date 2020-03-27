@@ -802,6 +802,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void MaxTest2()
         {
             // check that this doesn't throw
+            MaxGaussianOp.AAverageConditional(0, Gaussian.FromNatural(-1.4645421092742907E+154, 3.5796135021809028), 0); 
             MaxGaussianOp.AAverageConditional(0, Gaussian.FromNatural(3.2443039945841963E+107, 0.14776223874132702), 0);
             MaxGaussianOp.AAverageConditional(0, Gaussian.FromNatural(537836855.52522063, 23.535214584839739), 0);
 
