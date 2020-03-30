@@ -801,34 +801,37 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void MaxTest2()
         {
-            // check that this doesn't throw
-            MaxGaussianOp.AAverageConditional(2, Gaussian.FromNatural(3.5542031429861715E+153, 0.069193607598794934), 0);
-            MaxGaussianOp.AAverageConditional(0, Gaussian.FromNatural(-1.4645421092742907E+154, 3.5796135021809028), 0); 
-            MaxGaussianOp.AAverageConditional(0, Gaussian.FromNatural(3.2443039945841963E+107, 0.14776223874132702), 0);
-            MaxGaussianOp.AAverageConditional(0, Gaussian.FromNatural(537836855.52522063, 23.535214584839739), 0);
-
-            double max = 0;
-            double oldm = 0;
-            double oldv = 0;
-            for (int i = 0; i < 100; i++)
+            foreach (double max in new[] { 0.0, 2.0 })
             {
-                Gaussian a = new Gaussian(System.Math.Pow(10, i), 177);
-                Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, max);
-                Gaussian to_a2 = IsPositiveOp.XAverageConditional(false, a);
-                double error = to_a.MaxDiff(to_a2) / to_a.Precision;
-                //Console.WriteLine($"{a} {to_a} {to_a2} {error}");
-                Assert.True(error < 1e-8);
-                double m, v;
-                to_a.GetMeanAndVariance(out m, out v);
-                if (i > 0)
+                double oldm = double.NaN;
+                double oldv = double.NaN;
+                for (int i = 0; i < 300; i++)
                 {
-                    Assert.True(v <= oldv);
-                    double olddiff = System.Math.Abs(max - oldm);
-                    double diff = System.Math.Abs(max - m);
-                    Assert.True(diff <= olddiff);
+                    Gaussian a = new Gaussian(System.Math.Pow(10, i), 177);
+                    Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, 0);
+                    Gaussian to_b = MaxGaussianOp.BAverageConditional(max, 0, a);
+                    Assert.Equal(to_a, to_b);
+                    if (max == 0)
+                    {
+                        Gaussian to_a2 = IsPositiveOp.XAverageConditional(false, a);
+                        double error = System.Math.Max(MMath.AbsDiff(to_a.MeanTimesPrecision, to_a2.MeanTimesPrecision, double.Epsilon),
+                            MMath.AbsDiff(to_a.Precision, to_a2.Precision, double.Epsilon));
+                        Trace.WriteLine($"{a} {to_a} {to_a2} {error}");
+                        Assert.True(error < 1e-12);
+                    }
+                    else Trace.WriteLine($"{a} {to_a}");
+                    double m, v;
+                    to_a.GetMeanAndVariance(out m, out v);
+                    if (!double.IsNaN(oldm))
+                    {
+                        Assert.True(v <= oldv);
+                        double olddiff = System.Math.Abs(max - oldm);
+                        double diff = System.Math.Abs(max - m);
+                        Assert.True(diff <= olddiff);
+                    }
+                    oldm = m;
+                    oldv = v;
                 }
-                oldm = m;
-                oldv = v;
             }
         }
 
@@ -1233,7 +1236,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 {
                     x.Precision = System.Math.Pow(0.1, i);
                     Gaussian result2 = IsPositiveOp.XAverageConditional(isPositive, x);
-                    //Console.WriteLine("{0}: {1} maxDiff={2}", x, result2, result.MaxDiff(result2));
+                    //Console.WriteLine($"{x}: {result2} maxDiff={result.MaxDiff(result2)}");
                     Assert.True(result.MaxDiff(result2) < 1e-6);
                 }
             }
