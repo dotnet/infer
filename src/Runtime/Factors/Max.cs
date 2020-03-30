@@ -102,7 +102,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                     else // b.Point < max.Point
                     {
                         // the factor reduces to the constraint (a == max.Point)
-                        logw1 = a.GetLogProb(max.Point);
+                        //logw1 = a.GetLogProb(max.Point);
+                        // using the true value of logw1 can lead to overflow and isn't needed.
+                        logw1 = 0;
                         logw2 = double.NegativeInfinity;
                         logz = logw1;
                         alpha1 = 0;
