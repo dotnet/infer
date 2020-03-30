@@ -8,8 +8,6 @@ import os
 import csv
 import mpmath
 
-sx = Symbol('sx')
-
 def normal_cdf_moment_ratio(n, x):
     mpmath.mp.dps = 500
     xmpf = x._to_mpmath(500)
@@ -22,19 +20,82 @@ def beta_cdf(x, a, b):
     rv = sympy.stats.Beta('p', a, b)
     return sympy.stats.P(rv < x)
 
-def normal_cdf2(x, y, r):
-    if x == -oo or y == -oo:
-        return Float('0')
+def mpmath_normal_cdf2(x, y, r):
+    """
+    This function produces correct results for inputs currently present in /test/Tests/Data/SpecialFunctionsValues.
+    Other inputs may fall into areas where currently present algorithms produce incorrect results and may require modifying this function.
+    """
+    if x == -mpmath.inf or y == -mpmath.inf:
+        return mpmath.mpf('0')
+    if x == mpmath.inf:
+        return mpmath.ncdf(y)
+    if y == mpmath.inf:
+        return mpmath.ncdf(x)
+    if r == mpmath.mpf('1'):
+        return mpmath.ncdf(min(x, y))
+    if r == mpmath.mpf('-1'):
+        return mpmath.ncdf(x) - mpmath.ncdf(-y)
+
+    if r > mpmath.mpf('-0.9'):
+        if abs(y) > abs(x):
+            z = x
+            x = y
+            y = z
+
+        if (x + y > 0):
+            # phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
+            return mpmath.ncdf(y) - mpmath_normal_cdf2(-x, y, -r)
+
+        def f(t):
+            if abs(t) == mpmath.mpf('1'):
+                return mpmath.mpf('0')
+            omt2 = (1 - t) * (1 + t)
+            return 1 / (2 * mpmath.pi * mpmath.sqrt(omt2)) * mpmath.exp(-(x * x + y * y - 2 * t * x * y) / (2 * omt2))
+        int, err = mpmath.quad(f, [-1, r], error=True)
+        result = int
+    else:
+        if y < x:
+            z = x
+            x = y
+            y = z
+
+        # In the definition
+        # int_(-inf)^x int_(-inf)^y exp(-0.5*(u^2+v^2-2*u*v*r)/(1-r^2))/(2*pi*sqrt(1-r^2)) du dv
+        # Integrate by v (getting an erfc) and substitute u = atanh(t)
+        coef = 1 / mpmath.sqrt(2 * mpmath.pi)
+        def f(t):
+            if abs(t) == mpmath.mpf('1'):
+                return mpmath.mpf('0')
+            atanht = mpmath.atanh(t)
+            return mpmath.exp(-atanht * atanht / 2) * mpmath.erfc((r * atanht - y) / mpmath.sqrt(2 * (1 - r) * (1 + r))) / ((1 - t) * (1 + t))
+
+        upperbound = mpmath.tanh(x)
+        # Compute complementary integral, then adapt formula for integral of error function with Gaussian density function
+        # int_-inf^inf erf(ax + b) * 1 / 2pi * exp(-x^2 / 2) dx = erf(b / sqrt(1 + 2a^2))
+        # The complementary integral gets computed faster and significantly preciser.
+        int, err = mpmath.quad(f, [upperbound, 1], error=True)
+        comp = coef * int
+
+        full_int = mpmath.erf(-y / mpmath.sqrt(4 - 2 * r * r))
+        result = (1 - comp - full_int) / 2
+
+    if mpmath.mpf('1e50') * abs(err) > abs(int):
+        print(f"Suspiciously big error when evaluating an integral for normal_cdf2({x}, {y}, {r}).")
+        print(f"Integral: {int}")
+        print(f"Integral error estimate: {err}")
+        print(f"End result: {result}")
+    return result
+
+def to_mpmath(x):
+    if x == -oo:
+        return -mpmath.inf
     if x == oo:
-        return erfc(-y / sqrt(S(2))) / 2
-    if y == oo:
-        return erfc(-x / sqrt(S(2))) / 2
+        return mpmath.inf
+    return x._to_mpmath(mpmath.mp.dps)
+
+def normal_cdf2(x, y, r):
     mpmath.mp.dps = 500
-    xmpf = x._to_mpmath(500)
-    ympf = y._to_mpmath(500)
-    rmpf = r._to_mpmath(500)
-    f = lambda t: mpmath.mpf('0') if t == mpmath.mpf('-1') else 1 / (2 * mpmath.pi * mpmath.sqrt(1 - t * t)) * mpmath.exp(-(xmpf * xmpf + ympf * ympf - 2 * t * xmpf * ympf) / (2 * (1 - t * t)))
-    result = mpmath.quad(f, [-1, rmpf])
+    result = mpmath_normal_cdf2(to_mpmath(x), to_mpmath(y), to_mpmath(r))
     return Float(result)
 
 def logistic_gaussian(m, v):
