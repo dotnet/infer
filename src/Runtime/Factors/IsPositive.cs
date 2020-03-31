@@ -162,18 +162,19 @@ namespace Microsoft.ML.Probabilistic.Factors
                     //                =approx sqrt(v)*(-1/z) = -1/tau
                     // posterior variance = v - v*dY/Y^2 =approx v/z^2
                     // posterior E[x^2] = v - v*dY/Y^2 + v*dY^2/Y^2 = v - v*dY/Y^2*(1 - dY) = v + v*z*dY/Y = v*d2Y/Y
-                    double dY = MMath.NormalCdfMomentRatio(1, z);
+                    // d3Y = z*d2Y + 2*dY
+                    //     = z*(z*dY + Y) + 2*dY 
+                    //     = z^2*dY + z*Y + 2*dY
+                    //     = z^2*dY + 3*dY - 1
+                    double d3Y = 6 * MMath.NormalCdfMomentRatio(3, z);
+                    //double dY = MMath.NormalCdfMomentRatio(1, z);
+                    double dY = (d3Y + 1) / (z * z + 3);
                     if (MMath.AreEqual(dY, 0))
                     {
                         double tau2 = tau * tau;
                         if (tau2 > double.MaxValue) return Gaussian.PointMass(-1 / tau);
                         else return Gaussian.FromNatural(-2 * tau, tau2);
                     }
-                    // d3Y = z*d2Y + 2*dY
-                    //     = z*(z*dY + Y) + 2*dY 
-                    //     = z^2*dY + z*Y + 2*dY
-                    //     = z^2*dY + 3*dY - 1
-                    double d3Y = 6 * MMath.NormalCdfMomentRatio(3, z);
                     // Y = (dY-1)/z
                     // alpha = sqrtPrec*z/(dY-1) = tau/(dY-1)
                     // alpha+tau = tau*(1 + 1/(dY-1)) = tau*dY/(dY-1) = alpha*dY
@@ -188,7 +189,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                     //        = dY*z^2/(dY^2 + 1 + z*Y - d3Y)
                     //        = dY*z^2/(dY^2 + dY - d3Y)
                     //        = z^2/(dY + 1 - d3Y/dY)
-                    // dY = (d3Y+1)/(z^2 + 3)
                     double d3YidY = d3Y / dY;
                     double denom = dY - d3YidY + 1;
                     double msgPrec = tau * tau / denom;

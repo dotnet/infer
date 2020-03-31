@@ -633,7 +633,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 return GaussianOp.GaussianFromAlphaBeta(a, alpha, -beta, ForceProper);
             }
-            else
+            else // w1==0 && logw2 <= -100
             {
                 double m1, v1, m2, v2;
                 a.GetMeanAndVariance(out m1, out v1);
@@ -651,18 +651,31 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double mc2 = m1;
                 if (alpha2 != 0) // avoid 0*infinity
                     mc2 += alpha2 * v1;
-                double z2 = 0, Y = 0, dY = 0;
+                double z2 = 0, Y = 0, dY = 0, d2YiY = 0;
                 const double z2small = 0;
                 if (vx2 == 0)
                 {
                     double sqrtPrec = Math.Sqrt(a.Precision);
                     z2 = (mx2 - m1) * sqrtPrec;
+                    // When max.IsPointMass, logw2 <= -100 implies NormalCdfLn(z2) <= -100 implies z2 < -13
                     if (z2 < z2small)
                     {
-                        Y = MMath.NormalCdfRatio(z2);
-                        dY = MMath.NormalCdfMomentRatio(1, z2);
+                        // dY = 1 + z2*Y
                         // d2Y = Y + z2*dY
+                        //     = Y + z2*(1 + z2*Y)
+                        //     = Y + z2^2*Y + z2
                         double d2Y = 2 * MMath.NormalCdfMomentRatio(2, z2);
+                        // Y = (dY-1)/z2
+                        // d2Y = (dY-1)/z2 + z2*dY
+                        //     = dY*(z2 + 1/z2) - 1/z2
+                        // dY = (d2Y+1/z2)/(z2 + 1/z2)
+                        double invz2 = 1/z2;
+                        //dY = MMath.NormalCdfMomentRatio(1, z2);
+                        dY = (d2Y + invz2) / (z2 + invz2);
+                        //Y = MMath.NormalCdfRatio(z2);
+                        // Y = (d2Y - z2)/(1 + z2^2)
+                        Y = (dY - 1) / z2;
+                        d2YiY = d2Y / Y;
                         // logw2 = MMath.NormalCdfLn(z2);
                         // alpha2 = -Math.Exp(Gaussian.GetLogProb(mx2, m1, vx2 + v1) - logw2);
                         //        = -1/sqrt(vx2+v1)/NormalCdfRatio(z2)
@@ -674,7 +687,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         //     = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - dY/Y)  if vx2=0
                         //     = mx2 - sqrt(v1)*dY/Y
                         // sqrt(v1)*dY/Y = sqrt(v)*(d2Y/Y - 1)/z2   (see IsPositiveOp)
-                        mc2 = mx2 - (d2Y / Y - 1) / (z2 * sqrtPrec);
+                        mc2 = mx2 - (d2YiY - 1) / (z2 * sqrtPrec);
                     }
                 }
                 double m = w1 * mc1 + w2 * mc2;
@@ -735,9 +748,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                     else
                     {
-                        double d2Y = 2 * MMath.NormalCdfMomentRatio(2, z2);
                         double dYiY = dY / Y;
-                        vc2 = (d2Y / Y - dYiY * dYiY) / a.Precision;
+                        vc2 = (d2YiY - dYiY * dYiY) / a.Precision;
                     }
                 }
                 else if (beta2 == 0)

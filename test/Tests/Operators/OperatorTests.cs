@@ -816,10 +816,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                         Gaussian to_a2 = IsPositiveOp.XAverageConditional(false, a);
                         double error = System.Math.Max(MMath.AbsDiff(to_a.MeanTimesPrecision, to_a2.MeanTimesPrecision, double.Epsilon),
                             MMath.AbsDiff(to_a.Precision, to_a2.Precision, double.Epsilon));
-                        Trace.WriteLine($"{a} {to_a} {to_a2} {error}");
+                        //Trace.WriteLine($"{a} {to_a} {to_a2} {error}");
                         Assert.True(error < 1e-12);
                     }
-                    else Trace.WriteLine($"{a} {to_a}");
+                    //else Trace.WriteLine($"{a} {to_a}");
                     double m, v;
                     to_a.GetMeanAndVariance(out m, out v);
                     if (!double.IsNaN(oldm))
