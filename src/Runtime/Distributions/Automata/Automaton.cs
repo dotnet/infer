@@ -1940,101 +1940,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automata</remarks>
         public TSequence TryComputePoint()
         {
-            var isEndNodeReachable = this.ComputeEndStateReachability();
-            if (!isEndNodeReachable[this.Start.Index])
-            {
-                return null;
-            }
-
-            var point = new List<TElement>();
-            int? pointLength = null;
-            var stateDepth = new ArrayDictionary<int>(this.States.Count);
-            var stack = new Stack<(int stateIndex, int sequencePos)>();
-            stack.Push((this.Start.Index, 0));
-
-            // Note: this algorithm looks simpler if implemented recursively. But recursive implementation
-            // causes StackOverflowException.
-            // Algorithm is simple: traverse automaton id depth-first fashion and check that element transitions
-            // along all paths are equal. If any inconsistency is found
-
-            while (stack.Count != 0)
-            {
-                var (stateIndex, sequencePos) = stack.Pop();
-                Debug.Assert(isEndNodeReachable[stateIndex], "Dead branches must not be visited.");
-
-                if (stateDepth.TryGetValue(stateIndex, out var cachedStateDepth))
-                {
-                    // If we've already been in this state, we must be at the same sequence pos
-                    if (sequencePos != cachedStateDepth)
-                    {
-                        return null;
-                    }
-
-                    // This state was already processed, goto next one
-                    continue;
-                }
-
-                stateDepth.Add(stateIndex, sequencePos);
-
-                var state = this.States[stateIndex];
-
-                // Can we stop in this state?
-                if (state.CanEnd)
-                {
-                    // Is this a suffix or a prefix of the point already found?
-                    if (pointLength.HasValue)
-                    {
-                        if (sequencePos != pointLength.Value)
-                        {
-                            return null;
-                        }
-                    }
-                    else
-                    {
-                        // Now we know the length of the sequence
-                        pointLength = sequencePos;
-                    }
-                }
-
-                foreach (var transition in state.Transitions)
-                {
-                    var destStateIndex = transition.DestinationStateIndex;
-                    if (!isEndNodeReachable[destStateIndex])
-                    {
-                        // Only walk through the accepting part of the automaton
-                        continue;
-                    }
-
-                    if (transition.IsEpsilon)
-                    {
-                        // Move to the next state, keep the sequence position
-                        stack.Push((destStateIndex, sequencePos));
-                    }
-                    else if (!transition.ElementDistribution.Value.IsPointMass)
-                    {
-                        // If there's non-point distribution on transition, than automaton doesn't have point either
-                        return null;
-                    }
-                    else
-                    {
-                        var element = transition.ElementDistribution.Value.Point;
-                        if (sequencePos == point.Count)
-                        {
-                            // It is the first time at this sequence position
-                            point.Add(element);
-                        }
-                        else if (!point[sequencePos].Equals(element))
-                        {
-                            // This is not the first time at this sequence position, and the elements are different
-                            return null;
-                        }
-
-                        stack.Push((destStateIndex, sequencePos + 1));
-                    }
-                }
-            }
-
-            return pointLength.HasValue ? SequenceManipulator.ToSequence(point) : null;
+            var enumerated = this.TryEnumerateSupport(1, out var support, tryDeterminize: false);
+            return enumerated && support.Count() == 1
+                ? support.Single()
+                : null;
         }
 
         /// <summary>
@@ -2392,83 +2301,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// For each state computes whether any state with non-zero ending weight can be reached from it.
-        /// </summary>
-        /// <returns>An array mapping state indices to end state reachability.</returns>
-        /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automatons</remarks>
-        private bool[] ComputeEndStateReachability()
-        {
-            //// First, build a reversed graph
-
-            var edgePlacementIndices = new int[this.States.Count + 1];
-            for (var i = 0; i < this.States.Count; ++i)
-            {
-                var state = this.States[i];
-                foreach (var transition in state.Transitions)
-                {
-                    if (!transition.Weight.IsZero)
-                    {
-                        ++edgePlacementIndices[transition.DestinationStateIndex + 1];
-                    }
-                }
-            }
-
-            // The element of edgePlacementIndices at index i+1 contains a count of the number of edges 
-            // going into the i'th state (the indegree of the state).
-            // Convert this into a cumulative count (which will be used to give a unique index to each edge).
-            for (var i = 1; i < edgePlacementIndices.Length; ++i)
-            {
-                edgePlacementIndices[i] += edgePlacementIndices[i - 1];
-            }
-
-            var edgeArrayStarts = (int[])edgePlacementIndices.Clone();
-            var totalEdgeCount = edgePlacementIndices[this.States.Count];
-            var edgeDestinationIndices = new int[totalEdgeCount];
-            for (var i = 0; i < this.States.Count; ++i)
-            {
-                var state = this.States[i];
-                foreach (var transition in state.Transitions)
-                {
-                    if (!transition.Weight.IsZero)
-                    {
-                        // The unique index for this edge
-                        var edgePlacementIndex = edgePlacementIndices[transition.DestinationStateIndex]++;
-
-                        // The source index for the edge (which is the destination edge in the reversed graph)
-                        edgeDestinationIndices[edgePlacementIndex] = i;
-                    }
-                }
-            }
-
-            //// Now run a depth-first search to label all reachable nodes
-            var stack = new Stack<int>();
-            var visitedNodes = new bool[this.States.Count];
-            for (var i = 0; i < this.States.Count; ++i)
-            {
-                if (!visitedNodes[i] && this.States[i].CanEnd)
-                {
-                    visitedNodes[i] = true;
-                    stack.Push(i);
-                    while (stack.Count != 0)
-                    {
-                        var stateIndex = stack.Pop();
-                        for (var edgeIndex = edgeArrayStarts[stateIndex]; edgeIndex < edgeArrayStarts[stateIndex + 1]; ++edgeIndex)
-                        {
-                            var destinationIndex = edgeDestinationIndices[edgeIndex];
-                            if (!visitedNodes[destinationIndex])
-                            {
-                                visitedNodes[destinationIndex] = true;
-                                stack.Push(destinationIndex);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return visitedNodes;
-        }
-
-        /// <summary>
         /// Computes the logarithm of the normalizer of the automaton, normalizing it afterwards if requested.
         /// </summary>
         /// <param name="normalize">Specifies whether the automaton must be normalized after computing the normalizer.</param>
@@ -2649,19 +2481,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         // Add next element to sequence
                         var elementDistribution = transition.ElementDistribution.Value;
-                        if (!(transition.ElementDistribution.Value is CanEnumerateSupport<TElement> supportEnumerator))
+                        if (elementDistribution.IsPointMass)
                         {
-                            throw new NotImplementedException(
-                                "Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
+                            prefix.Add(elementDistribution.Point);
                         }
-
-                        var enumerator = supportEnumerator.EnumerateSupport().GetEnumerator();
-                        if (enumerator.MoveNext())
+                        else
                         {
-                            prefix.Add(enumerator.Current);
+                            if (!(elementDistribution is CanEnumerateSupport<TElement> supportEnumerator))
+                            {
+                                throw new NotImplementedException(
+                                    "Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
+                            }
+
+                            var enumerator = supportEnumerator.EnumerateSupport().GetEnumerator();
                             if (enumerator.MoveNext())
                             {
-                                current.ElementEnumerator = enumerator;
+                                prefix.Add(enumerator.Current);
+                                if (enumerator.MoveNext())
+                                {
+                                    current.ElementEnumerator = enumerator;
+                                }
                             }
                         }
                     }
