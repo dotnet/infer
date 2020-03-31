@@ -1940,7 +1940,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automata</remarks>
         public TSequence TryComputePoint()
         {
-            var enumerated = this.TryEnumerateSupport(1, out var support, tryDeterminize: false);
+            // Need to get at least 2 support strings to be sure that this is not a point
+            var enumerated = this.TryEnumerateSupport(2, out var support, tryDeterminize: false);
             return enumerated && support.Count() == 1
                 ? support.Single()
                 : null;
