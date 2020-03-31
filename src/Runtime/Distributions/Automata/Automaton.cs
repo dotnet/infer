@@ -1962,7 +1962,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (seq == null)
                 {
-                    throw new NotSupportedException("Infinite loops cannot be enumerated");
+                    throw new InvalidOperationException("Automaton is not enumerable");
                 }
 
                 if (++idx > maxCount)
@@ -2490,8 +2490,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             if (!(elementDistribution is CanEnumerateSupport<TElement> supportEnumerator))
                             {
-                                throw new NotImplementedException(
-                                    "Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
+                                yield return null;
+                                yield break;
                             }
 
                             var enumerator = supportEnumerator.EnumerateSupport().GetEnumerator();
