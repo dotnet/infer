@@ -3,7 +3,6 @@
 # See the LICENSE file in the project root for more information.
 from __future__ import division
 from sympy import *
-import sympy.stats
 import os
 import csv
 import mpmath
@@ -15,10 +14,6 @@ def normal_cdf_moment_ratio(n, x):
     if x < 0:
         return Float(mpmath.power(2, -0.5 - nmpf / 2) * mpmath.hyperu(nmpf / 2 + 0.5, 0.5, xmpf * xmpf / 2))
     return Float(mpmath.exp(xmpf * xmpf / 4) * mpmath.pcfu(0.5 + nmpf, -xmpf))
-
-def beta_cdf(x, a, b):
-    rv = sympy.stats.Beta('p', a, b)
-    return sympy.stats.P(rv < x)
 
 def mpmath_normal_cdf2(x, y, r):
     """
@@ -34,50 +29,28 @@ def mpmath_normal_cdf2(x, y, r):
     if r == mpmath.mpf('1'):
         return mpmath.ncdf(min(x, y))
     if r == mpmath.mpf('-1'):
-        return mpmath.ncdf(x) - mpmath.ncdf(-y)
+        return mpmath.mpf('0') if x <= -y else mpmath.ncdf(x) - mpmath.ncdf(-y)
 
-    if r > mpmath.mpf('-0.9'):
-        if abs(y) > abs(x):
-            z = x
-            x = y
-            y = z
+    if abs(y) > abs(x):
+        z = x
+        x = y
+        y = z
 
-        if (x + y > 0):
-            # phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
-            return mpmath.ncdf(y) - mpmath_normal_cdf2(-x, y, -r)
+    if r < 0:
+        # phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
+        return max(mpmath.ncdf(x) - mpmath_normal_cdf2(x, -y, -r), mpmath.mpf('0'))
 
-        def f(t):
-            if abs(t) == mpmath.mpf('1'):
-                return mpmath.mpf('0')
-            omt2 = (1 - t) * (1 + t)
-            return 1 / (2 * mpmath.pi * mpmath.sqrt(omt2)) * mpmath.exp(-(x * x + y * y - 2 * t * x * y) / (2 * omt2))
-        int, err = mpmath.quad(f, [-1, r], error=True)
-        result = int
-    else:
-        if y < x:
-            z = x
-            x = y
-            y = z
+    if x + y > 0:
+        # phi(x,y,r) = phi(-x,-y,r) - phi(x,y,-1)
+        return mpmath_normal_cdf2(-x, -y, r) + (mpmath.mpf('0') if x <= -y else mpmath.ncdf(x) - mpmath.ncdf(-y))
 
-        # In the definition
-        # int_(-inf)^x int_(-inf)^y exp(-0.5*(u^2+v^2-2*u*v*r)/(1-r^2))/(2*pi*sqrt(1-r^2)) du dv
-        # Integrate by v (getting an erfc) and substitute u = atanh(t)
-        coef = 1 / mpmath.sqrt(2 * mpmath.pi)
-        def f(t):
-            if abs(t) == mpmath.mpf('1'):
-                return mpmath.mpf('0')
-            atanht = mpmath.atanh(t)
-            return mpmath.exp(-atanht * atanht / 2) * mpmath.erfc((r * atanht - y) / mpmath.sqrt(2 * (1 - r) * (1 + r))) / ((1 - t) * (1 + t))
-
-        upperbound = mpmath.tanh(x)
-        # Compute complementary integral, then adapt formula for integral of error function with Gaussian density function
-        # int_-inf^inf erf(ax + b) * 1 / 2pi * exp(-x^2 / 2) dx = erf(b / sqrt(1 + 2a^2))
-        # The complementary integral gets computed faster and significantly preciser.
-        int, err = mpmath.quad(f, [upperbound, 1], error=True)
-        comp = coef * int
-
-        full_int = mpmath.erf(-y / mpmath.sqrt(4 - 2 * r * r))
-        result = (1 - comp - full_int) / 2
+    def f(t):
+        if abs(t) == mpmath.mpf('1'):
+            return mpmath.mpf('0')
+        omt2 = (1 - t) * (1 + t)
+        return 1 / (2 * mpmath.pi * mpmath.sqrt(omt2)) * mpmath.exp(-(x * x + y * y - 2 * t * x * y) / (2 * omt2))
+    int, err = mpmath.quad(f, [-1, r], error=True)
+    result = int
 
     if mpmath.mpf('1e50') * abs(err) > abs(int):
         print(f"Suspiciously big error when evaluating an integral for normal_cdf2({x}, {y}, {r}).")
@@ -96,6 +69,22 @@ def to_mpmath(x):
 def normal_cdf2(x, y, r):
     mpmath.mp.dps = 500
     result = mpmath_normal_cdf2(to_mpmath(x), to_mpmath(y), to_mpmath(r))
+    return Float(result)
+
+def normal_cdf_ln2(x, y, r):
+    # Some bad cases present in test data that were computed separately,
+    # because the routine here can not provide sufficient accuracy
+    if x == Float('-0.299999999999999988897769753748434595763683319091796875') and y == Float('-0.299999999999999988897769753748434595763683319091796875') and r == Float('-0.99999899999999997124433548378874547779560089111328125'):
+        return Float('-90020.4997847132695760821045836463571450496491084868602301611')
+    if x == Float('-0.1000000000000000055511151231257827021181583404541015625') and y == Float('-0.1000000000000000055511151231257827021181583404541015625'):
+        if r == Float('-0.99999899999999997124433548378874547779560089111328125'):
+            return Float('-10018.3026957438325237319456255040365689256268122985682785824')
+        if r == Float('-0.99999000000000004551026222543441690504550933837890625'):
+            return Float('-1014.85016355878529115329386335426754801497185281882358946348')
+        if r == Float('-0.9999000000000000110134124042815528810024261474609375'):
+            return Float('-111.409512020775362450645082754211442935050576861888726532')
+    mpmath.mp.dps = 500
+    result = mpmath.ln(mpmath_normal_cdf2(to_mpmath(x), to_mpmath(y), to_mpmath(r)))
     return Float(result)
 
 def logistic_gaussian(m, v):
@@ -220,7 +209,7 @@ pair_info = {
     'NormalCdfIntegralRatio.csv': None,
     'NormalCdfInv.csv': lambda x: -sqrt(S(2)) * erfcinv(2 * x),
     'NormalCdfLn.csv': lambda x: log(erfc(-x / sqrt(S(2))) / 2),
-    'NormalCdfLn2.csv': lambda x, y, r: log(normal_cdf2(x, y, r)),
+    'NormalCdfLn2.csv': normal_cdf_ln2,
     'NormalCdfLogit.csv': lambda x: log(erfc(-x / sqrt(S(2))) / 2) - log(erfc(x / sqrt(S(2))) / 2),
     'NormalCdfMomentRatio.csv': normal_cdf_moment_ratio,
     'NormalCdfRatioLn2.csv': None,
