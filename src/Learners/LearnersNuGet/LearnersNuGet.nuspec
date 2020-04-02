@@ -21,7 +21,7 @@
     <tags>Infer.NET machine learning Bayesian inference probabilistic</tags>
     <developmentDependency>false</developmentDependency>
     <language>en-US</language>
-    <repository type="git" url="https://github.com/dotnet/infer.git" />
+    <repository type="git" url="https://github.com/dotnet/infer.git" commit="$CommitId$" />
     <dependencies>
       <group targetFramework=".NETStandard2.0">
         <dependency id="Microsoft.ML.Probabilistic" version="$version$" />

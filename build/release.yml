@@ -170,7 +170,7 @@ jobs:
       packDirectory: '$(Build.SourcesDirectory)/bin/packages'
       nobuild: true # We must not rebuild, otherwise we overwrite the signed assemblies.
       versioningScheme: 'byBuildNumber'
-      buildProperties: 'BaseOutputPath=$(Build.SourcesDirectory)/bin/obj/packages;BuildProjectReferences=false;version=$(Build.BuildNumber)' # BaseOutputPath is set to the location the signed assemblies have been copied to. version is used for NuSpec substitution in LearnersNuGet.csproj.
+      buildProperties: 'BaseOutputPath=$(Build.SourcesDirectory)/bin/obj/packages;BuildProjectReferences=false;version=$(Build.BuildNumber);CommitId=$(Build.SourceVersion)' # BaseOutputPath is set to the location the signed assemblies have been copied to. version is used for NuSpec substitution in LearnersNuGet.csproj.
 
   - task: MSBuild@1
     displayName: Sign Packages
