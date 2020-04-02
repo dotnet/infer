@@ -3052,7 +3052,8 @@ rr = mpf('-0.99999824265582826');
         }
 
         /// <summary>
-        /// Computes the integral of the cumulative bivariate normal distribution wrt x.
+        /// Computes the integral of the cumulative bivariate normal distribution wrt x,
+        /// from -infinity to <paramref name="x"/>.
         /// </summary>
         /// <param name="x">First upper limit.</param>
         /// <param name="y">Second upper limit.</param>
@@ -4735,11 +4736,12 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             double upperBound;
             if (Math.Abs(sum) > Math.Abs(b))
             {
-                upperBound = b + NextDouble(sum);
+                // Cast to double to prevent upperBound from landing between double.MaxValue and infinity on a 32-bit platform.
+                upperBound = (double)(b + NextDouble(sum));
             }
             else
             {
-                upperBound = NextDouble(b) + sum;
+                upperBound = (double)(NextDouble(b) + sum);
             }
             int iterCount = 0;
             while (true)
