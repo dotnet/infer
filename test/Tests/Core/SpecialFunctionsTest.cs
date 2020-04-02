@@ -1143,7 +1143,7 @@ gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
                 {double.PositiveInfinity,1,1 },
                 {double.Epsilon,0,1 },
             };
-            //CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
+            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
 
             /* In python mpmath:
 from mpmath import *
@@ -2194,6 +2194,11 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 };
             CheckFunctionValues("NormalCdfRatioLn2", new MathFcn4(MMath.NormalCdfRatioLn), normalcdfRatioLn2_pairs);
 
+            // The true values are computed using
+            // x * MMath.NormalCdf(x, y, r) + System.Math.Exp(Gaussian.GetLogProb(x, 0, 1) + MMath.NormalCdfLn(ymrx)) + r * System.Math.Exp(Gaussian.GetLogProb(y, 0, 1) + MMath.NormalCdfLn(xmry))
+            // where
+            // ymrx = (y - r * x) / sqrt(1-r*r)
+            // xmry = (x - r * y) / sqrt(1-r*r)
             double[,] normalcdfIntegral_pairs = new double[,]
                 {
                     { -10, -100000000000, -0.1, 0 },

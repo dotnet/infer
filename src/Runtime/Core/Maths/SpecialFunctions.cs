@@ -3052,7 +3052,8 @@ rr = mpf('-0.99999824265582826');
         }
 
         /// <summary>
-        /// Computes the integral of the cumulative bivariate normal distribution wrt x.
+        /// Computes the integral of the cumulative bivariate normal distribution wrt x,
+        /// from -infinity to <paramref name="x"/>.
         /// </summary>
         /// <param name="x">First upper limit.</param>
         /// <param name="y">Second upper limit.</param>
