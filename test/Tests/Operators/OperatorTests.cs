@@ -2423,7 +2423,7 @@ zL = (L - mx)*sqrt(prec)
                 foreach (double upperBound in new double[] { 1 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
                     if (trace) Trace.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
-                    foreach (var x in Gaussians())
+                    foreach (var x in Gaussians().Take(100000))
                     {
                         if (x.IsPointMass) continue;
                         double mx = x.GetMean();
@@ -2479,7 +2479,7 @@ zL = (L - mx)*sqrt(prec)
                 foreach (double upperBound in new[] { -9999.9999999999982 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
                     if (trace) Trace.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
-                    Parallel.ForEach(Gaussians().Where(g => !g.IsPointMass), x =>
+                    Parallel.ForEach(Gaussians().Where(g => !g.IsPointMass).Take(100000), x =>
                     {
                         double mx = x.GetMean();
                         Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
@@ -2591,7 +2591,7 @@ zL = (L - mx)*sqrt(prec)
                     double center = (lowerBound + upperBound) / 2;
                     if (double.IsNegativeInfinity(lowerBound) && double.IsPositiveInfinity(upperBound))
                         center = 0;
-                    Parallel.ForEach(Gaussians(), x =>
+                    Parallel.ForEach(Gaussians().Take(100000), x =>
                     {
                         double mx = x.GetMean();
                         Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
@@ -2631,7 +2631,6 @@ zL = (L - mx)*sqrt(prec)
                             // Increasing the prior mean should increase the posterior mean.
                             if (mean2 < mean)
                             {
-                                // TEMPORARY
                                 meanError = MMath.Ulp(mean);
                                 meanError2 = MMath.Ulp(mean2);
                                 double meanUlpDiff = (mean - mean2) / System.Math.Max(meanError, meanError2);
@@ -2687,7 +2686,7 @@ zL = (L - mx)*sqrt(prec)
                 foreach (double upperBound in new[] { 1.0 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
                     if (trace) Console.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
-                    Parallel.ForEach(Gaussians(), x =>
+                    Parallel.ForEach(Gaussians().Take(100000), x =>
                     {
                         Gaussian toX = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound);
                         Gaussian xPost;

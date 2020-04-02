@@ -457,17 +457,20 @@ namespace Microsoft.ML.Probabilistic.Factors
                                     mp2 = upperBound + offset;
                                 }
                             }
+                            double c = expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1);
+                            double expMinus1RatioSqr = expMinus1Ratio * expMinus1Ratio;
+                            double diffsSqrOver4 = diffs * diffs / 4;
                             // Abs is needed to avoid some 32-bit oddities.
-                            double prec2 = (expMinus1Ratio * expMinus1Ratio * X.Precision) /
+                            double prec2 = expMinus1RatioSqr * X.Precision /
                                 Math.Abs(r1U * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
-                                + rU * diffs * (expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1))
-                                + diffs * diffs / 4);
-                            if (prec2 > double.MaxValue)
+                                + rU * diffs * c
+                                + diffsSqrOver4);
+                            if (prec2 > double.MaxValue || diffsSqrOver4 < 1e-308)
                             {
                                 // same as above but divide top and bottom by X.Precision, to avoid overflow
-                                prec2 = (expMinus1Ratio * expMinus1Ratio) /
+                                prec2 = expMinus1RatioSqr /
                                     Math.Abs(r1U / X.Precision * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
-                                    + rU / sqrtPrec * diff * (expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1))
+                                    + rU / sqrtPrec * diff * c
                                     + diff * diff / 4);
                             }
                             return Gaussian.FromMeanAndPrecision(mp2, prec2) / X;
