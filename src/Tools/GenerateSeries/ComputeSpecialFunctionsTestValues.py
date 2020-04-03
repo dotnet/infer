@@ -49,14 +49,12 @@ def mpmath_normal_cdf2(x, y, r):
             return mpmath.mpf('0')
         omt2 = (1 - t) * (1 + t)
         return 1 / (2 * mpmath.pi * mpmath.sqrt(omt2)) * mpmath.exp(-(x * x + y * y - 2 * t * x * y) / (2 * omt2))
-    int, err = mpmath.quad(f, [-1, r], error=True)
-    result = int
-
-    if mpmath.mpf('1e50') * abs(err) > abs(int):
+    result, err = mpmath.quad(f, [-1, r], error=True)
+    
+    if mpmath.mpf('1e50') * abs(err) > abs(result):
         print(f"Suspiciously big error when evaluating an integral for normal_cdf2({x}, {y}, {r}).")
-        print(f"Integral: {int}")
+        print(f"Integral: {result}")
         print(f"Integral error estimate: {err}")
-        print(f"End result: {result}")
     return result
 
 def to_mpmath(x):
@@ -181,9 +179,45 @@ def logistic_gaussian_deriv2(m, v):
         print(f"Result (Coefficient * Integral): {result}")
     return Float(result)
 
+def normal_cdf(x):
+    return erfc(-x / sqrt(S(2))) / 2
+
+def normal_pdf_ln(x):
+    return -x * x / 2 - log(sqrt(2 * pi))
+
+def normal_cdf_integral(x, y, r):
+    if x == -oo or y == -oo:
+        return Float('0.0')
+    if x == oo:
+        return oo
+    if y == oo:
+        result = normal_cdf2(x, y, r)
+        if x > 0:
+            return result * x + exp(normal_pdf_ln(x) - log(normal_cdf(x)))
+        else:
+            return result * normal_cdf_moment_ratio(Float('1.0', 500), x) * exp(normal_pdf_ln(x) - log(normal_cdf(x)))
+    if r == S(1):
+        if x <= y:
+            return normal_cdf_moment_ratio(Float('1.0', 500), x) * exp(normal_pdf_ln(x))
+        else:
+            npdfy = exp(normal_pdf_ln(y))
+            return (normal_cdf_moment_ratio(Float('1.0', 500), y) + (x - y) * normal_cdf(y) / npdfy) * npdfy
+    if r == S(-1):
+        if x + y <= 0:
+            return S(0)
+        else:
+            return x * (normal_cdf(y) - normal_cdf(-x)) + exp(normal_pdf_ln(x)) - exp(normal_pdf_ln(y))
+
+    # This area separation works well for inputs currently present in /test/Tests/Data/SpecialFunctionsValues
+    # Other inputs may require making this more accurate
+    if x > 0 and y > 0 and 1 + r < Float('1e-12'):
+        return normal_cdf_integral(x, y, S(-1)) - normal_cdf_integral(-x, -y, r)
+    sqrtomr2 = sqrt((1 - r) * (1 + r))
+    return x * normal_cdf2(x, y, r) + exp(normal_pdf_ln(x) + log(normal_cdf((y - r * x) / sqrtomr2))) + r * exp(normal_pdf_ln(y) + log(normal_cdf((x - r * y) / sqrtomr2)))
+
 pair_info = {
     'BesselI.csv': besseli,
-    'BetaCdf.csv': None, #lambda x, a, b: sympy.stats.P(sympy.stats.Beta('p', a, b) < x),
+    'BetaCdf.csv': None,
     'Digamma.csv': digamma,
     'Erfc.csv': erfc,
     'ExpMinus1.csv': lambda x: exp(x) - 1,
@@ -203,21 +237,20 @@ pair_info = {
     'logisticGaussianDeriv2.csv': logistic_gaussian_deriv2,
     'LogisticLn.csv': lambda x: -log(1 + exp(-x)),
     'LogSumExp.csv': lambda x, y: log(exp(x) + exp(y)),
-    'NormalCdf.csv': lambda x: erfc(-x / sqrt(S(2))) / 2,
+    'NormalCdf.csv': normal_cdf,
     'NormalCdf2.csv': normal_cdf2,
-    'NormalCdfIntegral.csv': None,
+    'NormalCdfIntegral.csv': normal_cdf_integral,
     'NormalCdfIntegralRatio.csv': None,
-    'NormalCdfInv.csv': lambda x: -sqrt(S(2)) * erfcinv(2 * x),
-    'NormalCdfLn.csv': lambda x: log(erfc(-x / sqrt(S(2))) / 2),
+    'NormalCdfInv.csv': lambda x: -sqrt(S(2)) * erfinv(1 - 2 * x),
+    'NormalCdfLn.csv': lambda x: log(normal_cdf(x)),
     'NormalCdfLn2.csv': normal_cdf_ln2,
-    'NormalCdfLogit.csv': lambda x: log(erfc(-x / sqrt(S(2))) / 2) - log(erfc(x / sqrt(S(2))) / 2),
+    'NormalCdfLogit.csv': lambda x: log(normal_cdf(x)) - log(normal_cdf(-x)),
     'NormalCdfMomentRatio.csv': normal_cdf_moment_ratio,
-    'NormalCdfRatioLn2.csv': None,
+    'NormalCdfRatioLn2.csv': None, # All test cases are pathological and need to be computed separately.
     'Tetragamma.csv': lambda x: polygamma(2, x),
     'Trigamma.csv': trigamma,
     'ulp.csv': None
     }
-
 
 def float_str_csharp_to_python(s):
     return s.replace('NaN', 'nan').replace('Infinity', 'inf')
@@ -250,6 +283,8 @@ with os.scandir(dir) as it:
                     else:
                         try:
                             result = f(*args).evalf(50, maxn=500)
+                            if abs(result) < Float('1e-20000'):
+                                result = Float('0')
                         except ValueError:
                             print(f'ValueError for args {args}. Setting result to NaN.')
                             result = Float('nan')
