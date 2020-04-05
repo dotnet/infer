@@ -13,6 +13,7 @@ using Microsoft.ML.Probabilistic.Utilities;
 using Xunit;
 using System.IO;
 using System.Linq;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {

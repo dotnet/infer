@@ -13,6 +13,7 @@ using Microsoft.ML.Probabilistic.Utilities;
 using Assert = Xunit.Assert;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Algorithms;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {

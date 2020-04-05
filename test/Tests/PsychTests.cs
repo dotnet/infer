@@ -16,8 +16,9 @@ using Microsoft.ML.Probabilistic.Serialization;
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using Assert = Xunit.Assert;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
-    
+
     public class PsychTests
     {
         internal void LogisticIrtTest()

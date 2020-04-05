@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace ReviewerCalibration
 {
