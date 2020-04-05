@@ -17,7 +17,7 @@ trigger: none # disable CI build
 jobs:
 - job: macOS # Hosted MacOS agent
   pool:
-    vmImage: xcode9-macos10.13
+    vmImage: macOS-10.14
   steps:
   - task: DotNetCoreInstaller@0
     inputs:
@@ -47,7 +47,7 @@ jobs:
 
 - job: Windows # Hosted Windows agent, VS 2017
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
 
   steps:
   - task: Bash@3
