@@ -230,11 +230,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                     else
                     {
                         outcome = 1;  // draw
-                        whitePlayer[year].Add(w);
-                        blackPlayer[year].Add(b);
-                        outcomes[year].Add(outcome);
                     }
-
+                    whitePlayer[year].Add(w);
+                    blackPlayer[year].Add(b);
+                    outcomes[year].Add(outcome);
                     break;
                 }
             }

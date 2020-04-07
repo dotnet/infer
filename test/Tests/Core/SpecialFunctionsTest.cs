@@ -252,7 +252,7 @@ mp.pretty = True
 gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
             */
             double[,] gammaUpperRegularized_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaUpperRegularized.csv"));
-            //CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
+            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
 
             /* In python mpmath:
 from mpmath import *
@@ -751,6 +751,11 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             double[,] normalcdfRatioLn2_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfRatioLn2.csv"));
             CheckFunctionValues("NormalCdfRatioLn2", new MathFcn4(MMath.NormalCdfRatioLn), normalcdfRatioLn2_pairs);
 
+            // The true values are computed using
+            // x * MMath.NormalCdf(x, y, r) + System.Math.Exp(Gaussian.GetLogProb(x, 0, 1) + MMath.NormalCdfLn(ymrx)) + r * System.Math.Exp(Gaussian.GetLogProb(y, 0, 1) + MMath.NormalCdfLn(xmry))
+            // where
+            // ymrx = (y - r * x) / sqrt(1-r*r)
+            // xmry = (x - r * y) / sqrt(1-r*r)
             double[,] normalcdfIntegral_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfIntegral.csv"));
             CheckFunctionValues("NormalCdfIntegral", new MathFcn3(MMath.NormalCdfIntegral), normalcdfIntegral_pairs);
 
