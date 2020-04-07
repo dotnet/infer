@@ -215,6 +215,26 @@ def normal_cdf_integral(x, y, r):
     sqrtomr2 = sqrt((1 - r) * (1 + r))
     return x * normal_cdf2(x, y, r) + exp(normal_pdf_ln(x) + log(normal_cdf((y - r * x) / sqrtomr2))) + r * exp(normal_pdf_ln(y) + log(normal_cdf((x - r * y) / sqrtomr2)))
 
+def normal_cdf_integral_ratio(x, y, r):
+    # Some bad cases present in test data that were computed separately,
+    # because the routine here can not provide sufficient accuracy
+    if x == Float('-39062.4923802060075104236602783203125') and y == Float('39062.5011106818928965367376804351806640625') and r == Float('-0.9999998333405668571316482484689913690090179443359375'):
+        return Float('0.000025600004960154713498351213672772546931354593117186546685502492546785021612')
+    # Returned values in cases below are imprecise, because their evaluation requires values to be represented as unevaluated exponents
+    # (otherwise both normal cdf and its integral end up being zeroes even in mpfr).
+    # Standard libraries don't have that, so for now values produced by Infer.Net itself are used.
+    if x == Float('-824.4368021638800883010844700038433074951171875') and y == Float('-23300.71373148090788163244724273681640625') and r == Float('-0.9991576459172382129736433853395283222198486328125'):
+        return Float('6.9859450855259114E-08')
+    if x == Float('790.8036889243788891690201126039028167724609375') and y == Float('-1081777102.232640743255615234375') and r == Float('-0.9458744064347397451086862929514609277248382568359375'):
+        return Float('1.0293108592794333E-10')
+    if x == Float('790.8036889243788891690201126039028167724609375') and y == Float('-1081776354979.671875') and r == Float('-0.9458744064347397451086862929514609277248382568359375'):
+        return Float('1.0293107755790882E-13')
+    int_z = normal_cdf_integral(x, y, r)
+    if int_z == S(0):
+        return int_z
+    z = normal_cdf2(x, y, r)
+    return int_z / z
+
 pair_info = {
     'BesselI.csv': besseli,
     'BetaCdf.csv': None,
@@ -240,7 +260,7 @@ pair_info = {
     'NormalCdf.csv': normal_cdf,
     'NormalCdf2.csv': normal_cdf2,
     'NormalCdfIntegral.csv': normal_cdf_integral,
-    'NormalCdfIntegralRatio.csv': None,
+    'NormalCdfIntegralRatio.csv': normal_cdf_integral_ratio,
     'NormalCdfInv.csv': lambda x: -sqrt(S(2)) * erfinv(1 - 2 * x),
     'NormalCdfLn.csv': lambda x: log(normal_cdf(x)),
     'NormalCdfLn2.csv': normal_cdf_ln2,
