@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\common.props" />
 
   <PropertyGroup>
@@ -6,6 +6,7 @@
     <TargetFramework>net461</TargetFramework>
     <Configurations>Debug;DebugFull;DebugCore;Release;ReleaseFull;ReleaseCore</Configurations>
     <ErrorReport>prompt</ErrorReport>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -49,10 +50,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
   <ItemGroup>

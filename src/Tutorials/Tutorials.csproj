@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
 
   <PropertyGroup>
@@ -56,13 +56,12 @@
     <ProjectReference Include="..\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\Runtime\Runtime.csproj" />
   </ItemGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains('NETFULL'))">
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('NETFULL'))">
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <ProjectReference Include="..\Visualizers\Windows\Visualizers.Windows.csproj" />
-    <Compile Update="ExamplesViewer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('NETCORE'))">
     <Compile Remove="ExamplesViewer.cs">
