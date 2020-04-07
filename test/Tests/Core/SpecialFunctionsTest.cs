@@ -1827,6 +1827,12 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             Assert.Equal(3, MMath.Median(new[] { double.MaxValue, 3, double.MinValue }));
         }
 
+        /// <summary>
+        /// Reads a 2D array of doubles from a csv file.
+        /// Checks that the header of the file has the form
+        /// arg0,arg1,...,argN,expectedresult
+        /// and that the rest of the file conforms to it.
+        /// </summary>
         private static double[,] ReadPairs(string filepath)
         {
             string[] lines = File.ReadAllLines(filepath);
@@ -1854,6 +1860,14 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             return pairs;
         }
 
+        /// <summary>
+        /// Writes a 2D array of doubles into a csv file using MMath.ToStringExact.
+        /// Add a call to this in CheckFunctionValues to save all arguments and expected values
+        /// used in tests.
+        /// </summary>
+        /// <param name="pairs">2D array of doubles to write</param>
+        /// <param name="folder">Folder where the resulting csv will be saved</param>
+        /// <param name="name">Name of the saved file without extension</param>
         private static void WritePairs(double[,] pairs, string folder, string name)
         {
             using (var file = new StreamWriter(Path.Combine(folder, $"{name}.csv"), false))

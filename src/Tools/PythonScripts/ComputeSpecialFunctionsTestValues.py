@@ -1,6 +1,24 @@
 # Licensed to the .NET Foundation under one or more agreements.
 # The .NET Foundation licenses this file to you under the MIT license.
 # See the LICENSE file in the project root for more information.
+"""A script to evalute test values for special functions in high precision.
+
+This scripts looks for .csv files in /test/Tests/Data/SpecialFunctionsValues.
+These files are expected to contain sets of arguments and expected result values
+for some special functions.
+Whenever the script encounters a file for which it has a defined funtion,
+it evaluates that function for every set of arguments present in that file
+and replaces the expected result in the file with the one it computed,
+except for Infinite or NaN results, which are preserved.
+
+.csv files are expected to have the header of the form
+arg0,arg1,...,argN,expectedresult
+use comma as a value separator, dot as a decimal separator, and
+"Infinity", "-Infinity", and "NaN" to designate the corresponding values.
+
+The correspondence between file names and functions is set in the pair_info
+dictionary within the script.
+"""
 from __future__ import division
 from sympy import *
 import os
