@@ -235,9 +235,18 @@ def normal_cdf_integral_ratio(x, y, r):
     z = normal_cdf2(x, y, r)
     return int_z / z
 
+def beta_cdf(x, a, b):
+    if x <= S(0):
+        return Float('0.0')
+    if x >= S(1):
+        return Float('1.0')
+    mpmath.mp.dps = 500
+    result = mpmath.betainc(to_mpmath(a), to_mpmath(b), 0, to_mpmath(x), regularized=True)
+    return Float(result)
+
 pair_info = {
     'BesselI.csv': besseli,
-    'BetaCdf.csv': None,
+    'BetaCdf.csv': beta_cdf,
     'Digamma.csv': digamma,
     'Erfc.csv': erfc,
     'ExpMinus1.csv': lambda x: exp(x) - 1,
