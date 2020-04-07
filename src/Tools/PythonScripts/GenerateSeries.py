@@ -82,7 +82,7 @@ reciprocal_factorial_minus_1_indent = "                "
 
 def print_heading_comment(indent, header):
     print(f"{indent}// Truncated series {header}")
-    print(f"{indent}// Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py")
+    print(f"{indent}// Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py")
 
 def format_real_coefficient(coefficient):
     return str(coefficient)

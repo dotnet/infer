@@ -754,7 +754,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 double dx = x - 2;
                 double sum =
                     // Truncated series 1: Gamma at 2
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     dx * (0.322467033424113218236207583323 +
                     dx * (-0.0673523010531980951332460538371 +
                     dx * (0.0205808084277845478790009241353 +
@@ -894,7 +894,7 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 return -1 / x +
                     // Truncated series 2: Digamma at 1
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     -0.577215664901532860606512090082 +
                     x * 1.64493406684822643647241516665
                     ;
@@ -911,7 +911,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 double dx = x - 2;
                 double sum2 =
                     // Truncated series 3: Digamma at 2
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     dx * (0.644934066848226436472415166646 +
                     dx * (-0.202056903159594285399738161511 +
                     dx * (0.0823232337111381915160036965412 +
@@ -959,7 +959,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double invX2 = invX * invX;
             double sum =
                 // Truncated series 4: Digamma asymptotic
-                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                 invX2 * (1.0 / 12.0 +
                 invX2 * (-1.0 / 120.0 +
                 invX2 * (1.0 / 252.0 +
@@ -1006,7 +1006,7 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 return 1.0 / (x * x) +
                     // Truncated series 5: Trigamma at 1
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     1.64493406684822643647241516665 +
                     x * -2.40411380631918857079947632302
                     ;
@@ -1027,7 +1027,7 @@ namespace Microsoft.ML.Probabilistic.Math
             result += 0.5 * invX2;
             double sum =
                     // Truncated series 6: Trigamma asymptotic
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     invX2 * (1.0 / 6.0 +
                     invX2 * (-1.0 / 30.0 +
                     invX2 * (1.0 / 42.0 +
@@ -1058,7 +1058,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (x < c_tetragamma_small)
                 return -2 / (x * x * x) +
                     // Truncated series 7: Tetragamma at 1
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     -2.40411380631918857079947632302 +
                     x * 6.49393940226682914909602217925
                     ;
@@ -1076,7 +1076,7 @@ namespace Microsoft.ML.Probabilistic.Math
             result += -invX2 / x;
             double sum =
                 // Truncated series 8: Tetragamma asymptotic
-                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                 invX2 * (-1.0 +
                 invX2 * (-1.0 / 2.0 +
                 invX2 * (1.0 / 6.0 +
@@ -1263,7 +1263,7 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 return
                     // Truncated series 12: x - log(1 + x)
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     x * x * (1.0 / 2.0 +
                     x * (-1.0 / 3.0 +
                     x * (1.0 / 4.0 +
@@ -1488,7 +1488,7 @@ f = gamma(x)-1/x
 
             return
                 // Truncated series 18: Reciprocal factorial minus 1
-                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                 x * (0.577215664901532860606512090082 +
                 x * (-0.655878071520253881077019515145 +
                 x * (-0.0420026350340952355290039348754 +
@@ -1604,7 +1604,7 @@ f = gamma(x)-1/x
                 double invX2 = invX * invX;
                 double sum = invX * (
                     // Truncated series 9: GammaLn asymptotic
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     1.0 / 12.0 +
                     invX2 * (-1.0 / 360.0 +
                     invX2 * (1.0 / 1260.0 +
@@ -1950,7 +1950,7 @@ f = gamma(x)-1/x
                 // log(1-y)
                 return
                     // Truncated series 11: log(1 - x)
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     y * (-1.0 +
                     y * (-1.0 / 2.0 +
                     y * (-1.0 / 3.0 +
@@ -1971,7 +1971,7 @@ f = gamma(x)-1/x
                     // for x <= -10
                     s =
                         // Truncated series 16: normcdfln asymptotic
-                        // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                         z * (-1.0 +
                         z * (5.0 / 2.0 +
                         z * (-37.0 / 3.0 +
@@ -1994,7 +1994,7 @@ f = gamma(x)-1/x
                     // for x <= -16
                     s =
                         // Truncated series 16: normcdfln asymptotic
-                        // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                         z * (-1.0 +
                         z * (5.0 / 2.0 +
                         z * (-37.0 / 3.0 +
@@ -3321,7 +3321,7 @@ rr = mpf('-0.99999824265582826');
             else
                 return
                     // Truncated series 17: 1 - sqrt(1 - x)
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     x * (1.0 / 2.0 +
                     x * (1.0 / 8.0 +
                     x * (1.0 / 16.0 +
@@ -3465,7 +3465,7 @@ rr = mpf('-0.99999824265582826');
                 // Maple command: series(log(1+x),x);
                 return
                     // Truncated series 10: log(1 + x)
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     x * (1.0 +
                     x * (-1.0 / 2.0 +
                     x * (1.0 / 3.0 +
@@ -3533,7 +3533,7 @@ rr = mpf('-0.99999824265582826');
                 double expx = Math.Exp(x);
                 return
                     // Truncated series 11: log(1 - x)
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     expx * (-1.0 +
                     expx * (-1.0 / 2.0 +
                     expx * (-1.0 / 3.0 +
@@ -3567,7 +3567,7 @@ rr = mpf('-0.99999824265582826');
             {
                 return
                     // Truncated series 13: exp(x) - 1
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     x * (1.0 +
                     x * (1.0 / 2.0 +
                     x * (1.0 / 6.0 +
@@ -3595,7 +3595,7 @@ rr = mpf('-0.99999824265582826');
             {
                 return
                     // Truncated series 14: ((exp(x) - 1) / x - 1) / x - 0.5
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     x * (1.0 / 6.0 +
                     x * (1.0 / 24.0 +
                     x * (1.0 / 120.0 +
@@ -3636,7 +3636,7 @@ rr = mpf('-0.99999824265582826');
             {
                 return Math.Log(x) +
                     // Truncated series 15: log(exp(x) - 1) / x
-                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
                     x * (1.0 / 2.0 +
                     x * (1.0 / 24.0 +
                     x * x * -1.0 / 2880.0))
