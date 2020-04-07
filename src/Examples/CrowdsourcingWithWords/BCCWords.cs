@@ -9,6 +9,7 @@ using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Utilities;
 using System;
 using System.Linq;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace CrowdsourcingWithWords
 {

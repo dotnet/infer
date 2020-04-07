@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Models;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
