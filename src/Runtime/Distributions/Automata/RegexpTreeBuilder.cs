@@ -199,7 +199,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             var s = currentComponent.GetStateByIndex(i);
                             var sIdx = s.Index;
-                            foreach (var s1 in s.Owner.States)
+                            foreach (var s1 in automaton.States)
                             {
                                 if (currentComponent.HasState(s1))
                                 {
@@ -381,7 +381,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     int destStateIndex;
-                    if ((destStateIndex = component.GetIndexByState(state.Owner.States[transition.DestinationStateIndex])) != -1)
+                    if ((destStateIndex = component.GetIndexByState(component.Automaton.States[transition.DestinationStateIndex])) != -1)
                     {
                         var destStateRegexp = transition.IsEpsilon
                                 ? RegexpTreeNode<TElement>.Empty()

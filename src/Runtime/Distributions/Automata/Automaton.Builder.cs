@@ -307,8 +307,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var secondStartState = this[oldStateCount + automaton.Start.Index];
 
-                if (avoidEpsilonTransitions &&
-                    (AllEndStatesHaveNoTransitions() || !automaton.Start.HasIncomingTransitions))
+                if (avoidEpsilonTransitions && CanMergeEndAndStart())
                 {
                     // Remove start state of appended automaton and copy all its transitions to previous end states
                     for (var i = 0; i < oldStateCount; ++i)
@@ -359,7 +358,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                bool AllEndStatesHaveNoTransitions()
+                bool CanMergeEndAndStart() =>
+                    AllOldEndStatesHaveNoOutgoingTransitions() || !SecondStartStateHasIncomingTransitions();
+
+                bool AllOldEndStatesHaveNoOutgoingTransitions()
                 {
                     for (var i = 0; i < oldStateCount; ++i)
                     {
@@ -371,6 +373,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     return true;
+                }
+
+                bool SecondStartStateHasIncomingTransitions()
+                {
+                    foreach (var transition in automaton.Data.Transitions)
+                    {
+                        if (transition.DestinationStateIndex == automaton.Data.StartStateIndex)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
                 }
             }
 
@@ -399,6 +414,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var usesGroups = false;
                 var hasSelfLoops = false;
                 var hasOnlyForwardTransitions = true;
+
                 var resultStates = ImmutableArray.CreateBuilder<StateData>(this.states.Count);
                 var resultTransitions = ImmutableArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
                 var nextResultTransitionIndex = 0;
@@ -419,8 +435,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         hasEpsilonTransitions = hasEpsilonTransitions || transition.IsEpsilon;
                         usesGroups = usesGroups || (transition.Group != 0);
 
-                        transitionIndex = node.Next;
-
                         if (transition.DestinationStateIndex == i)
                         {
                             hasSelfLoops = true;
@@ -429,6 +443,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             hasOnlyForwardTransitions = false;
                         }
+
+                        transitionIndex = node.Next;
                     }
 
                     resultStates[i] = new StateData(
@@ -570,7 +586,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     state.LastTransitionIndex = transitionIndex;
                     this.builder.states[this.Index] = state;
 
-                    
                     return new StateBuilder(this.builder, transition.DestinationStateIndex);
                 }
 

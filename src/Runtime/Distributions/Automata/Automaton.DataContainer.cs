@@ -179,7 +179,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 this.States = ((StateData[])info.GetValue(nameof(this.States), typeof(StateData[]))).ToImmutableArray();
                 this.Transitions = ((Transition[])info.GetValue(nameof(this.Transitions), typeof(Transition[]))).ToImmutableArray();
 
-                if (!IsConsistent())
+                if (!this.IsConsistent())
                 {
                     throw new Exception("Deserialized automaton is inconsistent!");
                 }

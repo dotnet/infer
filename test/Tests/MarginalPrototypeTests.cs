@@ -14,6 +14,7 @@ using GaussianArray2D = Microsoft.ML.Probabilistic.Distributions.DistributionStr
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Models.Attributes;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {

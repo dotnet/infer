@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -209,6 +209,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
+        /// Creates an automaton which is the concatenation of given transducers.
+        /// </summary>
+        /// <param name="transducers">The transducers to concatenate.</param>
+        /// <returns>The created transucer.</returns>
+        public static TThis Concatenate(params TThis[] transducers)
+        {
+            return Concatenate((IEnumerable<TThis>)transducers);
+        }
+
+        /// <summary>
+        /// Creates an automaton which is the concatenation of given transducers.
+        /// </summary>
+        /// <param name="transducers">The transducers to concatenate.</param>
+        /// <returns>The created transucer.</returns>
+        public static TThis Concatenate(IEnumerable<TThis> transducers)
+        {
+            Argument.CheckIfNotNull(transducers, "transducers");
+
+            return new TThis { sequencePairToWeight = PairListAutomaton.Concatenate(transducers.Select(t => t.sequencePairToWeight)) };
+        }
+
+        /// <summary>
         /// Creates a transducer <c>T'(a, b) = sum_{k=Kmin}^{Kmax} sum_{a1 a2 ... ak = a} sum_{b1 b2 ... bk = b} T(a1, b1)T(a2, b2)...T(ak, bk)</c>,
         /// where <c>T(a, b)</c> is a given transducer, and <c>Kmin</c> and <c>Kmax</c> are the minimum
         /// and the maximum number of factors in a sum term.
@@ -361,7 +383,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // Iterate over transitions from mappingState
                 foreach (var mappingTransition in mappingState.Transitions)
                 {
-                    var childMappingState = mappingState.Owner.States[mappingTransition.DestinationStateIndex];
+                    var childMappingState = mappingAutomaton.States[mappingTransition.DestinationStateIndex];
 
                     // Epsilon transition case
                     if (IsSrcEpsilon(mappingTransition))
@@ -380,7 +402,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         Debug.Assert(!srcTransition.IsEpsilon, "The automaton being projected must be epsilon-free.");
                         
-                        var srcChildState = srcState.Owner.States[srcTransition.DestinationStateIndex];
+                        var srcChildState = srcAutomaton.States[srcTransition.DestinationStateIndex];
 
                         var projectionLogScale = mappingTransition.ElementDistribution.Value.ProjectFirst(
                             srcTransition.ElementDistribution.Value, out var destElementDistribution);
@@ -492,7 +514,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // Enumerate transitions from the current mapping state
                 foreach (var mappingTransition in mappingState.Transitions)
                 {
-                    var destMappingState = mappingState.Owner.States[mappingTransition.DestinationStateIndex];
+                    var destMappingState = mappingAutomaton.States[mappingTransition.DestinationStateIndex];
 
                     // Epsilon transition case
                     if (IsSrcEpsilon(mappingTransition))

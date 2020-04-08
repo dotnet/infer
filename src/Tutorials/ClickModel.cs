@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Distributions;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {

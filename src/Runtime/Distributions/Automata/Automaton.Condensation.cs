@@ -41,9 +41,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public Condensation ComputeCondensation(State root, Func<Transition, bool> transitionFilter, bool useApproximateClosure)
         {
             Argument.CheckIfNotNull(transitionFilter, nameof(transitionFilter));
-            Argument.CheckIfValid(ReferenceEquals(root.Owner, this), nameof(root), "The given node belongs to a different automaton.");
 
-            return new Condensation(root, transitionFilter, useApproximateClosure);
+            return new Condensation(this, root, transitionFilter, useApproximateClosure);
         }
         
         /// <summary>
@@ -52,6 +51,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public class Condensation
         {
+            /// <summary>
+            /// Automaton to which <see cref="Root"/> belongs.
+            /// </summary>
+            private readonly Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton;
+
             /// <summary>
             /// A function specifying whether the transition should be treated as an edge
             /// of the automaton graph while building the condensation.
@@ -90,6 +94,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Initializes a new instance of the <see cref="Condensation"/> class.
             /// </summary>
+            /// <param name="automaton">The automaton.</param>
             /// <param name="root">The root of the condensation DAG.</param>
             /// <param name="transitionFilter">
             /// A function specifying whether the transition should be treated as an edge
@@ -99,10 +104,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Specifies whether <see cref="Weight.ApproximateClosure"/> should be used
             /// instead of <see cref="Weight.Closure"/> in semiring computations.
             /// </param>
-            internal Condensation(State root, Func<Transition, bool> transitionFilter, bool useApproximateClosure)
+            internal Condensation(
+                Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton,
+                State root,
+                Func<Transition, bool> transitionFilter, bool useApproximateClosure)
             {
                 Debug.Assert(transitionFilter != null, "A valid transition filter must be provided.");
-                
+
+                this.automaton = automaton;
                 this.Root = root;
                 this.transitionFilter = transitionFilter;
                 this.useApproximateClosure = useApproximateClosure;
@@ -168,8 +177,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The computed total weight.</returns>
             public Weight GetWeightFromRoot(State state)
             {
-                Argument.CheckIfValid(ReferenceEquals(state.Owner, this.Root.Owner), "state", "The given state belongs to a different automaton.");
-
                 if (!this.weightsFromRootComputed)
                 {
                     this.ComputeWeightsFromRoot();
@@ -191,7 +198,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 var components = new List<StronglyConnectedComponent>();
 
-                var states = this.Root.Owner.States;
+                var states = this.automaton.States;
                 var stateIdStack = new Stack<int>();
                 var stateIdToStateInfo = new Dictionary<int, TarjanStateInfo>();
                 int traversalIndex = 0;
@@ -269,7 +276,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         } while (stateIndex != currentStateIndex);
 
                         components.Add(new StronglyConnectedComponent(
-                            this.transitionFilter, statesInComponent, this.useApproximateClosure));
+                            this.automaton, this.transitionFilter, statesInComponent, this.useApproximateClosure));
                     }
                 }
 
@@ -297,7 +304,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         Weight weightToAdd = state.EndWeight;
                         foreach (var transition in state.Transitions)
                         {
-                            State destState = state.Owner.States[transition.DestinationStateIndex];
+                            State destState = this.automaton.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
                                 weightToAdd += transition.Weight * this.stateIdToInfo[transition.DestinationStateIndex].WeightToEnd;
@@ -371,7 +378,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         // Aggregate weights of all the outgoing transitions from this state
                         foreach (var transition in srcState.Transitions)
                         {
-                            State destState = srcState.Owner.States[transition.DestinationStateIndex];
+                            State destState = this.automaton.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
                                 CondensationStateInfo destStateInfo = this.stateIdToInfo[destState.Index];

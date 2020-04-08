@@ -16,6 +16,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Algorithms;
     using System.Diagnostics;
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     /// <summary>
     /// Summary description for BugsTests

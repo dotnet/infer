@@ -17,6 +17,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using ParallelScheduler = Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler;
     using Microsoft.ML.Probabilistic.Factors;
     using Microsoft.ML.Probabilistic.Models.Attributes;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     public class ParallelSchedulerTests
     {

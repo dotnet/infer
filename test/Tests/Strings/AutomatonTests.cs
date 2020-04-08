@@ -709,7 +709,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 // Make sure it doesn't contain epsilon transitions
                 Assert.True(automaton.States.All(s => s.Transitions.All(t => !t.IsEpsilon)));
-        }
+            }
         }
 
         /// <summary>
@@ -732,7 +732,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             state.SetEndWeight(Weight.One);
 
             var automaton = builder.GetAutomaton();
-            var closure = automaton.Start.GetEpsilonClosure();
+            var closure = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(automaton, automaton.Start);
             
             Assert.Equal(ChainLength + 1, closure.Size);
             Assert.Equal(Math.Log(1 << ChainLength), closure.EndWeight.LogValue);
@@ -2295,6 +2295,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder[3].SetEndWeight(Weight.FromValue(1));
             builder[5].SetEndWeight(Weight.FromValue(1));
             builder[6].SetEndWeight(Weight.FromValue(1));
+
+            var s = builder[5];
+            for (var i = 0; i < 100; ++i) s = s.AddTransition('a', Weight.One);
+            s.SetEndWeight(Weight.One);
 
             var automaton = builder.GetAutomaton();
 

@@ -90,7 +90,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RobustGaussianProcess", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnersNuGet", "src\Learners\LearnersNuGet\LearnersNuGet.csproj", "{6BC792EE-0436-494E-9F0C-63A3822320D0}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tools.GenerateSeries", "src\Tools\GenerateSeries\Tools.GenerateSeries.pyproj", "{D7562CC3-D48A-481D-B40C-07EE51EBBF50}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tools.PythonScripts", "src\Tools\PythonScripts\Tools.PythonScripts.pyproj", "{D7562CC3-D48A-481D-B40C-07EE51EBBF50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loki", "src\Loki\src\Loki\Loki.csproj", "{72230E75-6FF0-4ED9-B9FD-ED7BD8000557}"
 EndProject
