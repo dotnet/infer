@@ -1853,11 +1853,24 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     throw new InvalidDataException($"The number of entries on the line {i + 1} of the file {filepath} is inconsistent with the file's header.");
                 for (int j = 0; j < width; ++j)
                 {
-                    if (!double.TryParse(line[j], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out pairs[i, j]))
+                    if (!DoubleTryParseWithWorkarounds(line[j], out pairs[i, j]))
                         throw new InvalidDataException($"Failed to parse the entry at position {j} on the line {i + 1} of the file {filepath}.");
                 }
             }
             return pairs;
+        }
+
+        // These get incorrectly rounded when parsed on .NET Framework x64 and .NET Core 2.1
+        private static readonly Dictionary<string, double> doubleParsingWorkarounds = new Dictionary<string, double>()
+            {
+                { "1.0866893952407441142985209453839598005754913416137e-317", 1.0866894829774883E-317 },
+                { "1.4752977335476395893266937547311965076180770936655e-317", 1.4752978048452125E-317 }
+            };
+
+        private static bool DoubleTryParseWithWorkarounds(string s, out double result)
+        {
+            return doubleParsingWorkarounds.TryGetValue(s, out result)
+                || double.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out result);
         }
 
         /// <summary>
