@@ -229,15 +229,15 @@ namespace Microsoft.ML.Probabilistic.Tests.CodeModel
             Assert.Equal("0.0", WriteLiteralExpression(0.0));
             Assert.Equal("(-1.0 * 0.0)", WriteLiteralExpression(-1.0 * 0.0)); // some build configurations result in -0.0 producing a positive zero, hence (-1.0 * 0.0)
             Assert.Equal("42.0", WriteLiteralExpression(42.0000000));
-            Assert.Equal("3.14159265", WriteLiteralExpression(3.14159265));
-            Assert.Equal("-3.14159265", WriteLiteralExpression(-3.14159265));
+            Assert.Equal("3.1415926500000002", WriteLiteralExpression(3.14159265));
+            Assert.Equal("-3.1415926500000002", WriteLiteralExpression(-3.14159265));
             Assert.Equal("1000000.0", WriteLiteralExpression(1e6));
-            Assert.Equal("1234567.89", WriteLiteralExpression(1.23456789E6));
-            Assert.Equal("1.23456789E+42", WriteLiteralExpression(1.23456789e+42));
+            Assert.Equal("1234567.8899999999", WriteLiteralExpression(1.23456789E6));
+            Assert.Equal("1.2345678900000001E+42", WriteLiteralExpression(1.23456789e+42));
             Assert.Equal("1.23456789E-42", WriteLiteralExpression(1.23456789e-42));
             Assert.Equal("-1000000.0", WriteLiteralExpression(-1e6));
-            Assert.Equal("-1234567.89", WriteLiteralExpression(-1.23456789E6));
-            Assert.Equal("-1.23456789E+42", WriteLiteralExpression(-1.23456789e+42));
+            Assert.Equal("-1234567.8899999999", WriteLiteralExpression(-1.23456789E6));
+            Assert.Equal("-1.2345678900000001E+42", WriteLiteralExpression(-1.23456789e+42));
             Assert.Equal("-1.23456789E-42", WriteLiteralExpression(-1.23456789e-42));
             Assert.Equal("double.PositiveInfinity", WriteLiteralExpression(double.PositiveInfinity));
             Assert.Equal("double.NegativeInfinity", WriteLiteralExpression(double.NegativeInfinity));
