@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Algorithms
         /// <returns></returns>
         public override string GetOperatorMethodSuffix(List<ICompilerAttribute> factorAttributes)
         {
-            if (factorAttributes.Find(o => o.GetType().IsAssignableFrom(typeof (IsVariableFactor))) != null)
+            if (factorAttributes.Find(o => o.GetType().IsAssignableFrom(typeof(IsVariableFactor))) != null)
                 return "Gibbs";
             else
                 return "AverageConditional";
@@ -53,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Algorithms
         /// <returns></returns>
         public override string GetEvidenceMethodName(List<ICompilerAttribute> factorAttributes)
         {
-            if (factorAttributes.Find(o => o.GetType().IsAssignableFrom(typeof (IsVariableFactor))) != null)
+            if (factorAttributes.Find(o => o.GetType().IsAssignableFrom(typeof(IsVariableFactor))) != null)
                 return "GibbsEvidence";
             else
                 return "LogEvidenceRatio";
@@ -125,9 +125,10 @@ namespace Microsoft.ML.Probabilistic.Algorithms
                     Type innermostElementType = Distribution.GetDomainType(innermostMessageType);
                     //t = MessageExpressionTransform.GetDistributionType(channelInfo.varInfo.varType, channelInfo.varInfo.innermostElementType, innermostMessageType, true);
                     t = MessageTransform.GetDistributionType(channelInfo.varInfo.varType, innermostElementType, innermostMessageType, true);
-                    messTyp = typeof (GibbsMarginal<,>).MakeGenericType(t, channelInfo.varInfo.varType);
+                    messTyp = typeof(GibbsMarginal<,>).MakeGenericType(t, Distribution.GetDomainType(t));
+                    bool isConstant = (channelInfo.decl == null);
                     mp = Builder.NewObject(
-                        messTyp, (t == innermostMessageType) ? marginalPrototypeExpression : Builder.DefaultExpr(t), Quoter.Quote(this.BurnIn), Quoter.Quote(this.Thin),
+                        messTyp, (t == innermostMessageType) ? marginalPrototypeExpression : Builder.DefaultExpr(t), Quoter.Quote(isConstant ? 0 : this.BurnIn), Quoter.Quote(this.Thin),
                         Quoter.Quote(estimateMarginal), Quoter.Quote(collectSamples), Quoter.Quote(collectDistributions));
                 }
                 else

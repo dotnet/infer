@@ -449,4 +449,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             this.decl = decl;
         }
     }
+
+    /// <summary>
+    /// Attribute used to mark pseudo-factors corresponding to variables in the factor graph
+    /// </summary>
+    internal class IsVariableFactor : ICompilerAttribute
+    {
+    }
 }

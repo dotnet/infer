@@ -922,6 +922,8 @@ namespace Microsoft.ML.Probabilistic.Models
                 foreach (QueryTypeCompilerAttribute qt in qtlist)
                 {
                     IExpression queryExpr = Builder.FieldRefExpr(Builder.TypeRefExpr(typeof (QueryTypes)), typeof (QueryTypes), qt.QueryType.Name);
+                    // for a constant, we must get the variable reference, not the value
+                    if (isConstant) varExpr = Builder.VarRefExpr((IVariableDeclaration)variable.GetDeclaration());
                     AddStatement(Builder.ExprStatement(
                         Builder.StaticMethod(new Action<object>(InferNet.Infer), varExpr, varName, queryExpr)));
                 }
