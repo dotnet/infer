@@ -58,13 +58,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaSpecialFunctionsTest()
         {
-            double[,] BesselI_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "BesselI.csv"));
+            double[,] BesselI_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "BesselI.csv"));
             CheckFunctionValues("BesselI", MMath.BesselI, BesselI_pairs);
 
-            double[,] Gamma_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "Gamma.csv"));
+            double[,] Gamma_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Gamma.csv"));
             CheckFunctionValues("Gamma", MMath.Gamma, Gamma_pairs);
 
-            double[,] GammaLn_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaLn.csv"));
+            double[,] GammaLn_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLn.csv"));
             CheckFunctionValues("GammaLn", new MathFcn(MMath.GammaLn), GammaLn_pairs);
 
             /* In python mpmath:
@@ -73,13 +73,13 @@ mp.dps = 500
 mp.pretty = True
 digamma(mpf('9.5'))
             */
-            double[,] digamma_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "Digamma.csv"));
+            double[,] digamma_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Digamma.csv"));
             CheckFunctionValues("Digamma", new MathFcn(MMath.Digamma), digamma_pairs);
 
-            double[,] trigamma_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "Trigamma.csv"));
+            double[,] trigamma_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Trigamma.csv"));
             CheckFunctionValues("Trigamma", new MathFcn(MMath.Trigamma), trigamma_pairs);
 
-            double[,] tetragamma_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "Tetragamma.csv"));
+            double[,] tetragamma_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Tetragamma.csv"));
             CheckFunctionValues("Tetragamma", MMath.Tetragamma, tetragamma_pairs);
         }
 
@@ -105,11 +105,11 @@ digamma(mpf('9.5'))
         [Fact]
         public void SpecialFunctionsTest()
         {
-            double[,] logistic_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "Logistic.csv"));
+            double[,] logistic_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Logistic.csv"));
 
             CheckFunctionValues("Logistic", MMath.Logistic, logistic_pairs);
 
-            double[,] logisticln_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "LogisticLn.csv"));
+            double[,] logisticln_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "LogisticLn.csv"));
             CheckFunctionValues("LogisticLn", MMath.LogisticLn, logisticln_pairs);
 
             /* In python mpmath:
@@ -118,7 +118,7 @@ mp.dps = 500
 mp.pretty = True
 log(1+mpf('1e-3'))
              */
-            double[,] log1plus_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "Log1Plus.csv"));
+            double[,] log1plus_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Log1Plus.csv"));
             CheckFunctionValues("Log1Plus", MMath.Log1Plus, log1plus_pairs);
 
             /* In python mpmath:
@@ -127,10 +127,10 @@ mp.dps = 500
 mp.pretty = True
 log(1-exp(mpf('-3')))
             */
-            double[,] log1MinusExp_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "Log1MinusExp.csv"));
+            double[,] log1MinusExp_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Log1MinusExp.csv"));
             CheckFunctionValues("Log1MinusExp", MMath.Log1MinusExp, log1MinusExp_pairs);
 
-            double[,] expminus1_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "ExpMinus1.csv"));
+            double[,] expminus1_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "ExpMinus1.csv"));
             CheckFunctionValues("ExpMinus1", MMath.ExpMinus1, expminus1_pairs);
 
             /* In python mpmath:
@@ -140,13 +140,13 @@ mp.pretty = True
 x = mpf("1e-4")
 ((exp(x)-1)/x - 1)/x - 0.5
             */
-            double[,] expMinus1RatioMinus1RatioMinusHalf_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "ExpMinus1RatioMinus1RatioMinusHalf.csv"));
+            double[,] expMinus1RatioMinus1RatioMinusHalf_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "ExpMinus1RatioMinus1RatioMinusHalf.csv"));
             CheckFunctionValues("ExpMinus1RatioMinus1RatioMinusHalf", MMath.ExpMinus1RatioMinus1RatioMinusHalf, expMinus1RatioMinus1RatioMinusHalf_pairs);
 
-            double[,] logexpminus1_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "LogExpMinus1.csv"));
+            double[,] logexpminus1_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "LogExpMinus1.csv"));
             CheckFunctionValues("LogExpMinus1", MMath.LogExpMinus1, logexpminus1_pairs);
 
-            double[,] logsumexp_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "LogSumExp.csv"));
+            double[,] logsumexp_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "LogSumExp.csv"));
             CheckFunctionValues("LogSumExp", MMath.LogSumExp, logsumexp_pairs);
         }
 
@@ -164,7 +164,7 @@ ncdf(-12.2)
             // In xcas: (not always accurate)
             // Digits := 30
             // phi(x) := evalf(erfc(-x/sqrt(2))/2);
-            double[,] normcdf_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdf.csv"));
+            double[,] normcdf_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdf.csv"));
             CheckFunctionValues("NormalCdf", new MathFcn(MMath.NormalCdf), normcdf_pairs);
 
             Assert.Equal(0.5, MMath.NormalCdf(0));
@@ -200,10 +200,10 @@ ncdf(-12.2)
             }
             CheckFunctionValues("NormalCdfInv", new MathFcn(MMath.NormalCdfInv), normcdfinv_pairs);
 
-            double[,] normcdfln_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfLn.csv"));
+            double[,] normcdfln_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfLn.csv"));
             CheckFunctionValues("NormalCdfLn", new MathFcn(MMath.NormalCdfLn), normcdfln_pairs);
 
-            double[,] normcdflogit_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfLogit.csv"));
+            double[,] normcdflogit_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfLogit.csv"));
             CheckFunctionValues("NormalCdfLogit", new MathFcn(MMath.NormalCdfLogit), normcdflogit_pairs);
         }
 
@@ -226,23 +226,23 @@ ncdf(-12.2)
         [Fact]
         public void LogisticGaussianTest()
         {
-            double[,] logisticGaussian_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "logisticGaussian.csv"));
+            double[,] logisticGaussian_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "logisticGaussian.csv"));
             CheckFunctionValues("logisticGaussian", new MathFcn2(MMath.LogisticGaussian), logisticGaussian_pairs);
 
-            double[,] logisticDerivGaussian_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "logisticGaussianDeriv.csv"));
+            double[,] logisticDerivGaussian_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "logisticGaussianDeriv.csv"));
             CheckFunctionValues("logisticGaussianDeriv", MMath.LogisticGaussianDerivative, logisticDerivGaussian_pairs);
 
-            double[,] logisticDeriv2Gaussian_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "logisticGaussianDeriv2.csv"));
+            double[,] logisticDeriv2Gaussian_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "logisticGaussianDeriv2.csv"));
             CheckFunctionValues("logisticGaussianDeriv2", MMath.LogisticGaussianDerivative2, logisticDeriv2Gaussian_pairs);
         }
 
         [Fact]
         public void GammaUpperTest()
         {
-            double[,] gammaUpperScale_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaUpperScale.csv"));
+            double[,] gammaUpperScale_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpperScale.csv"));
             CheckFunctionValues(nameof(MMath.GammaUpperScale), MMath.GammaUpperScale, gammaUpperScale_pairs);
 
-            double[,] gammaLower_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaLower.csv"));
+            double[,] gammaLower_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLower.csv"));
             CheckFunctionValues(nameof(MMath.GammaLower), MMath.GammaLower, gammaLower_pairs);
 
             /* In python mpmath:
@@ -251,7 +251,7 @@ mp.dps = 500
 mp.pretty = True
 gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
             */
-            double[,] gammaUpperRegularized_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaUpperRegularized.csv"));
+            double[,] gammaUpperRegularized_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpperRegularized.csv"));
             CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
 
             /* In python mpmath:
@@ -260,7 +260,7 @@ mp.dps = 500
 mp.pretty = True
 gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=False)
             */
-            double[,] gammaUpper_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "GammaUpper.csv"));
+            double[,] gammaUpper_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpper.csv"));
             CheckFunctionValues("GammaUpper", (a, x) => MMath.GammaUpper(a, x, false), gammaUpper_pairs);
         }
 
@@ -282,7 +282,7 @@ mp.dps = 100; mp.pretty = True
 x = mpf('-2'); n=300;
 exp(x*x/4)*pcfu(0.5+n,-x)
              */
-            double[,] normcdfMomentRatio_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfMomentRatio.csv"));
+            double[,] normcdfMomentRatio_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfMomentRatio.csv"));
             CheckFunctionValues("NormalCdfMomentRatio", delegate (double n, double x)
             {
                 return MMath.NormalCdfMomentRatio((int)n, x);
@@ -739,16 +739,16 @@ exp(x*x/4)*pcfu(0.5+n,-x)
 
             // In sage:
             // integral(1/(2*pi*sqrt(1-t*t))*exp(-(x*x+y*y-2*t*x*y)/(2*(1-t*t))),t,-1,r).n(digits=200);
-            double[,] normalcdf2_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdf2.csv"));
+            double[,] normalcdf2_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdf2.csv"));
             CheckFunctionValues("NormalCdf2", new MathFcn3(MMath.NormalCdf), normalcdf2_pairs);
 
             // using wolfram alpha:  (for cases where r=-1 returns zero)
             // log(integrate(1/(2*pi*sqrt(1-t*t))*exp(-(2*0.1*0.1 - 2*t*0.1*0.1)/(2*(1-t*t))),t,-1,-0.9999))
             // log(integrate(1/(2*pi*sqrt(1-t*t))*exp(-(2*1.5*1.5 + 2*t*1.5*1.5)/(2*(1-t*t))),t,-1,-0.5))
-            double[,] normalcdfln2_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfLn2.csv"));
+            double[,] normalcdfln2_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfLn2.csv"));
             CheckFunctionValues("NormalCdfLn2", new MathFcn3(MMath.NormalCdfLn), normalcdfln2_pairs);
 
-            double[,] normalcdfRatioLn2_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfRatioLn2.csv"));
+            double[,] normalcdfRatioLn2_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfRatioLn2.csv"));
             CheckFunctionValues("NormalCdfRatioLn2", new MathFcn4(MMath.NormalCdfRatioLn), normalcdfRatioLn2_pairs);
 
             // The true values are computed using
@@ -756,10 +756,10 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             // where
             // ymrx = (y - r * x) / sqrt(1-r*r)
             // xmry = (x - r * y) / sqrt(1-r*r)
-            double[,] normalcdfIntegral_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfIntegral.csv"));
+            double[,] normalcdfIntegral_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfIntegral.csv"));
             CheckFunctionValues("NormalCdfIntegral", new MathFcn3(MMath.NormalCdfIntegral), normalcdfIntegral_pairs);
 
-            double[,] normalcdfIntegralRatio_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "NormalCdfIntegralRatio.csv"));
+            double[,] normalcdfIntegralRatio_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfIntegralRatio.csv"));
             CheckFunctionValues("NormalCdfIntegralRatio", new MathFcn3(MMath.NormalCdfIntegralRatio), normalcdfIntegralRatio_pairs);
         }
 
@@ -1806,7 +1806,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         {
             // This ground truth comes from R. Each row is of the form:
             // (x, a, b, pbeta(x, a, b))
-            double[,] groundTruth = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "BetaCdf.csv"));
+            double[,] groundTruth = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "BetaCdf.csv"));
 
             MathFcn3 fun = new MathFcn3((x, a, b) => (new Beta(a, b)).GetProbLessThan(x));
             CheckFunctionValues("BetaCdf", fun, groundTruth, 1e-9);
@@ -1815,7 +1815,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         [Fact]
         public void UlpTest()
         {
-            double[,] Ulp_pairs = ReadPairs(Path.Combine("Data", "SpecialFunctionsValues", "ulp.csv"));
+            double[,] Ulp_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "ulp.csv"));
             CheckFunctionValues("ulp", MMath.Ulp, Ulp_pairs);
         }
 

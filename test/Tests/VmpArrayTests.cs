@@ -1245,11 +1245,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void BayesianPCA()
         {
             Rand.Restart(12347);
-            double[,] dataIn = MatlabReader.ReadMatrix(new double[400, 64], Path.Combine(
-#if NETCORE
-                Path.GetDirectoryName(typeof(VmpArrayTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "Data", "pca.txt"));
+            double[,] dataIn = MatlabReader.ReadMatrix(new double[400, 64], Path.Combine(TestUtils.DataFolderPath, "pca.txt"));
             VariableArray2D<double> data = Variable.Observed(dataIn).Named("data");
 
             Range N = data.Range0.Named("N");
@@ -1328,11 +1324,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void BayesianPartialVectorPCA()
         {
             Rand.Restart(12347);
-            double[,] dataIn = MatlabReader.ReadMatrix(new double[400, 64], Path.Combine(
-#if NETCORE
-                Path.GetDirectoryName(typeof(VmpArrayTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "Data", "pca.txt"));
+            double[,] dataIn = MatlabReader.ReadMatrix(new double[400, 64], Path.Combine(TestUtils.DataFolderPath, "pca.txt"));
             VariableArray2D<double> data = Variable.Observed(dataIn).Named("data");
 
             Range N = data.Range0.Named("N");
@@ -1421,11 +1413,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void BayesianVectorPCA()
         {
             Rand.Restart(12347);
-            double[,] dataIn = MatlabReader.ReadMatrix(new double[400, 64], Path.Combine(
-#if NETCORE
-                Path.GetDirectoryName(typeof(VmpArrayTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "Data", "pca.txt"));
+            double[,] dataIn = MatlabReader.ReadMatrix(new double[400, 64], Path.Combine(TestUtils.DataFolderPath, "pca.txt"));
             VariableArray2D<double> data = Variable.Observed(dataIn).Named("data");
 
             Range N = data.Range0.Named("N");
@@ -1503,11 +1491,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void BinaryPCA()
         {
             Rand.Restart(12347);
-            double[,] dataIn = MatlabReader.ReadMatrix(new double[400, 64], Path.Combine(
-#if NETCORE
-                Path.GetDirectoryName(typeof(VmpArrayTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "Data", "pca.txt"));
+            double[,] dataIn = MatlabReader.ReadMatrix(new double[400, 64], Path.Combine(TestUtils.DataFolderPath, "pca.txt"));
             var binData = new bool[400, 64];
             for (int i = 0; i < 400; i++)
             {
