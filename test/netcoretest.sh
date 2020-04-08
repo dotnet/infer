@@ -15,11 +15,11 @@ then
     configuration=Release
 fi
 
-compath=/bin/${configuration}/netcoreapp2.1/
+compath=/bin/${configuration}/netcoreapp3.1/
 dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll"
 
 # dotnet command
-dotnet='dotnet --fx-version 2.1.5'
+dotnet='dotnet --fx-version 3.1.3'
 
 # path to the xunit runner
 runner=~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll

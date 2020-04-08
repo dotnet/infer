@@ -22,6 +22,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Algorithms;
     using Microsoft.ML.Probabilistic.Compiler;
     using Microsoft.ML.Probabilistic.Serialization;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS
 #pragma warning disable 162

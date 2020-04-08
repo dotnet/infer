@@ -15,6 +15,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Compiler;
     using Microsoft.ML.Probabilistic.Algorithms;
     using Microsoft.ML.Probabilistic.Models.Attributes;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     public class TransformTests
     {
