@@ -61,6 +61,10 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('NETFULL'))">
+    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App" IsWindowsOnly="false" />
+    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WPF" IsWindowsOnly="false" />
+    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WindowsForms" IsWindowsOnly="false" />
+    
     <ProjectReference Include="..\Visualizers\Windows\Visualizers.Windows.csproj" />
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('NETCORE'))">
