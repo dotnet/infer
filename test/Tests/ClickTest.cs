@@ -193,11 +193,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             int[] ex;
 
             // limit numDocs to 100 to make the test quicker
-            LoadData(Path.Combine(
-#if NETCORE
-                Path.GetDirectoryName(typeof(ClickTest).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "Data", "ClickModel.txt"), out lb, out ck, out ex, 100);
+            LoadData(Path.Combine(TestUtils.DataFolderPath, "ClickModel.txt"), out lb, out ck, out ex, 100);
             Console.WriteLine("Total number of documents: {0}", lb.Length);
 
 #if multi_plate_model

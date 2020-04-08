@@ -84,6 +84,8 @@
     <Content Include="Bugs\*.txt" />
     <None Remove="Data\*.txt" />
     <Content Include="Data\*.txt" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="Data\**\*.csv" />
+    <Content Include="Data\**\*.csv" CopyToOutputDirectory="PreserveNewest" />
     <None Remove="*.m" />
     <Content Include="*.m" />
     <None Remove="Vibes\*.m;Vibes\*.xml" />
