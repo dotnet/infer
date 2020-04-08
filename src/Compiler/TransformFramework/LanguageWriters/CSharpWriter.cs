@@ -569,7 +569,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 else
                 {
-                    string s = d.ToString("R", CultureInfo.InvariantCulture);
+                    string s = d.ToString("G17", CultureInfo.InvariantCulture);
                     sb.Append(s);
                     if (!s.Contains(".") && !s.Contains("E") && !s.Contains("e"))
                         sb.Append(".0");
@@ -605,7 +605,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 else
                 {
-                    sb.Append(f.ToString("R", CultureInfo.InvariantCulture));
+                    sb.Append(f.ToString("G9", CultureInfo.InvariantCulture));
                     sb.Append("F");
                 }
             }
