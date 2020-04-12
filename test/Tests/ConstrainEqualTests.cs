@@ -12,6 +12,7 @@ using Microsoft.ML.Probabilistic.Algorithms;
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using Assert = Xunit.Assert;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     /// <summary>
     /// Tests of EqualityPropagationTransform

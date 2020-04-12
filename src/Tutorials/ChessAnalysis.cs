@@ -8,6 +8,7 @@ using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
@@ -230,11 +231,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                     else
                     {
                         outcome = 1;  // draw
-                        whitePlayer[year].Add(w);
-                        blackPlayer[year].Add(b);
-                        outcomes[year].Add(outcome);
                     }
-
+                    whitePlayer[year].Add(w);
+                    blackPlayer[year].Add(b);
+                    outcomes[year].Add(outcome);
                     break;
                 }
             }

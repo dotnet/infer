@@ -1,23 +1,23 @@
 # Building Infer.NET from its source code
 
-- [Building with Visual Studio 2017](#building-with-visual-studio-2017)
+- [Building with Visual Studio 2019](#building-with-visual-studio-2019)
 - [Building from the command line](#building-from-the-command-line)
 
 To build from source, you must first clone the repository.
 Next decide whether you want to use a code editor like Visual Studio (recommended) or the command line.
 When building, you must select a configuration.
-All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.1, .NET Core 2.1, or both depending on build configuration:
+All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.1, .NET Core 3.1, or both depending on build configuration:
 
 | Configurations | Targeted Frameworks |
 |:---|---:|
-| Debug, Release | both .NET Framework 4.6.1 and .NET Core 2.1 |
+| Debug, Release | both .NET Framework 4.6.1 and .NET Core 3.1 |
 | DebugFull, ReleaseFull | .NET Framework 4.6.1 only |
-| DebugCore, ReleaseCore | .NET Core 2.1 only |
+| DebugCore, ReleaseCore | .NET Core 3.1 only |
 
 
-## Building with Visual Studio 2017
+## Building with Visual Studio 2019
 
-1. If you don't have Visual Studio 2017, you can install the free [Visual Studio 2017 Community](https://visualstudio.microsoft.com/vs/community/).
+1. If you don't have Visual Studio 2019, you can install the free [Visual Studio 2019 Community](https://visualstudio.microsoft.com/vs/community/).
 1. Start Visual Studio.
 1. Select `File -> Open -> Project/Solution` and open the `Infer.sln` solution file located in your cloned repository.
 1. Select a build configuration using `Build -> Configuration Manager...`.  When switching between configurations that change the targeted frameworks, Visual Studio currently requires you to close and re-open the solution file using `File -> Close Solution` and `File -> Open`.
@@ -57,7 +57,7 @@ When not using Windows, expect build failure messages about examples that use WP
 Unit tests are written using the [XUnit](https://xunit.github.io/) framework.
 In order to run unit tests, build the test project and execute one of the following commands:
 ```bash
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll <path to netcoreapp2.1 assembly with tests> <filter>
+dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll <path to netcoreapp3.1 assembly with tests> <filter>
 ```
 ```bash
 mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe <path to net461 assembly with tests> <filter>
@@ -69,7 +69,7 @@ There are three test assemblies in the solution:
 - **TestPublic.dll** in the folder `test/TestPublic`.
 - **Microsoft.ML.Probabilistic.Learners.Tests.dll** in the folder `test/Learners/LearnersTests`. 
 
-Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<netcoreapp2.1|net461>` or `bin/Release<Core|Full>/<netcoreapp2.1|net461>` subdirectories
+Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<netcoreapp3.1|net461>` or `bin/Release<Core|Full>/<netcoreapp3.1|net461>` subdirectories
 of the test project.
 
 `<filter>` is a rule to choose what tests will be run. You can specify them
@@ -96,9 +96,9 @@ _OpenBug_ is a category of tests that can fail.
 An example of quick testing of `Microsoft.ML.Probabilistic.Tests.dll` in `Debug` configuration after changing working directory to
 the `Tests` project looks like:
 ```bash
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll bin/DebugCore/netcoreapp2.1/Microsoft.ML.Probabilistic.Tests.dll -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=Platform -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance
+dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll bin/DebugCore/netcoreapp3.1/Microsoft.ML.Probabilistic.Tests.dll -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=Platform -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance
 
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll bin/DebugCore/netcoreapp2.1/Microsoft.ML.Probabilistic.Tests.dll -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=Platform -parallel none
+dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll bin/DebugCore/netcoreapp3.1/Microsoft.ML.Probabilistic.Tests.dll -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=Platform -parallel none
 ```
 To run the same set of tests on Mono:
 
