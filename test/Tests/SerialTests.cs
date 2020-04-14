@@ -23,8 +23,9 @@ namespace Microsoft.ML.Probabilistic.Tests
 {
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
     using GaussianArray = DistributionStructArray<Gaussian, double>;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
-    
+
     public class SerialTests
     {
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS

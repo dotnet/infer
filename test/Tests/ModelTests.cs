@@ -26,6 +26,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using BernoulliArrayArray = DistributionRefArray<DistributionStructArray<Bernoulli, bool>, bool[]>;
     using DirichletArray = DistributionRefArray<Dirichlet, Vector>;
     using GaussianArray = DistributionStructArray<Gaussian, double>;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     /// <summary>
     /// Tests for the modelling API

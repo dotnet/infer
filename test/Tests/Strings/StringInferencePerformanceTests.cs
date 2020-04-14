@@ -14,6 +14,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Models;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     /// <summary>
     /// These tests don't check for correctness, just print timings to the console.

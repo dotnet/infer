@@ -5,12 +5,12 @@
     <ProjectGuid>d7562cc3-d48a-481d-b40c-07ee51ebbf50</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>GenerateSeries.py</StartupFile>
+    <StartupFile>ComputeSpecialFunctionsTestValues.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Tools.GenerateSeries</Name>
+    <Name>Tools.PythonScripts</Name>
     <RootNamespace>GenerateSeries</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -22,6 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ComputeSpecialFunctionsTestValues.py" />
     <Compile Include="GenerateSeries.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

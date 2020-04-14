@@ -12,6 +12,7 @@ using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Models.Attributes;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
