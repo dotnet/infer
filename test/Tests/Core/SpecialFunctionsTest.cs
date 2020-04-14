@@ -1833,7 +1833,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         /// arg0,arg1,...,argN,expectedresult
         /// and that the rest of the file conforms to it.
         /// </summary>
-        private static double[,] ReadPairs(string filepath)
+        internal static double[,] ReadPairs(string filepath)
         {
             string[] lines = File.ReadAllLines(filepath);
             string[] header = lines[0].Split(PairFileSeparator).Select(s => s.Trim()).ToArray();
@@ -1867,7 +1867,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 { "1.4752977335476395893266937547311965076180770936655e-317", 1.4752978048452125E-317 }
             };
 
-        private static bool DoubleTryParseWithWorkarounds(string s, out double result)
+        internal static bool DoubleTryParseWithWorkarounds(string s, out double result)
         {
             return doubleParsingWorkarounds.TryGetValue(s, out result)
                 || double.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out result);

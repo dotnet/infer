@@ -102,6 +102,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infer.Loki.Tests", "test\In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infer.Loki.Mappings", "test\Infer.Loki.Mappings\Infer.Loki.Mappings.csproj", "{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LokiGenerated", "LokiGenerated", "{7594B309-ED90-44EA-92F2-76FF58EBBCA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "generated", "test\LokiGeneratedSource\generated.csproj", "{2B970A77-8A2F-4CF1-AFBB-127DE8525918}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -576,6 +580,18 @@ Global
 		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
 		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
 		{0C2BF716-9D24-43D2-99FA-DCC7A21D20AB}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.DebugCore|Any CPU.Build.0 = Debug|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.DebugFull|Any CPU.Build.0 = Debug|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -604,6 +620,7 @@ Global
 		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA} = {DC5F5BC4-CDB0-41F7-8B03-CD4C38C8DEB2}
 		{62719C63-ECED-49CD-B73C-6DAF2A18033B} = {DC5F5BC4-CDB0-41F7-8B03-CD4C38C8DEB2}
 		{6BC792EE-0436-494E-9F0C-63A3822320D0} = {2964BB90-4E6D-49ED-AA35-645D94337C76}
+		{2B970A77-8A2F-4CF1-AFBB-127DE8525918} = {7594B309-ED90-44EA-92F2-76FF58EBBCA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {160F773C-9CF5-4F8D-B45A-1112A1BC5E16}

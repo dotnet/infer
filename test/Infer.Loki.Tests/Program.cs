@@ -1,35 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
+﻿using Loki;
+using Microsoft.ML.Probabilistic.Tests;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Loki;
-using Microsoft.ML.Probabilistic.Tests;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace Infer.Loki.Tests
 {
-    /// <summary>
-    ///     Tests for gate operations.
-    /// </summary>
-    public class LokiTests : IDisposable
+    class Program
     {
-        private readonly XunitTraceListener listener;
-        private bool disposed;
-
-        public LokiTests(ITestOutputHelper output)
-        {
-            this.listener = new XunitTraceListener(output);
-            Trace.Listeners.Add(this.listener);
-        }
-
-        [Fact]
-        public async Task Loki_Test()
+        public static async Task Main()
         {
             var solutionPath = Path.GetFullPath(Path.Combine("..", "..", "..", "..", "..", "Infer.sln"));
             var settings = new Settings(solutionPath);
@@ -91,50 +74,7 @@ namespace Infer.Loki.Tests
             await runner.Build();
             Environment.CurrentDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "Tests");
             var gammaTestResult = runner.RunTest(new SpecialFunctionsTests().GammaSpecialFunctionsTest, 0);
-            Assert.True(gammaTestResult.TestPassed, gammaTestResult.Message);
-        }
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (this.disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                Trace.Listeners.Remove(this.listener);
-            }
-
-            this.disposed = true;
-        }
-    }
-
-    public class XunitTraceListener : TraceListener
-    {
-        private readonly ITestOutputHelper output;
-
-        public XunitTraceListener(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
-
-        public override void Write(string str)
-        {
-            this.output.WriteLine(str);
-        }
-
-        public override void WriteLine(string str)
-        {
-            this.output.WriteLine(str);
+            Console.WriteLine($"gammaTest result: {gammaTestResult.TestPassed},\nMessage: {gammaTestResult.Message}");
         }
     }
 }
