@@ -2413,7 +2413,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public int PathLength;
             public int TransitionIndex;
             public int RemainingTransitionsCount;
-            public bool LeadsToEnd;
             public IEnumerator<TElement> ElementEnumerator;
         }
 
@@ -2422,7 +2421,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Visiting = 0x80000000,
             PartOfLoop = 0x40000000,
-            DepthMask  = 0x3fffffff,
+            LeadsToEnd = 0x20000000,
+            DepthMask  = 0x1fffffff,
         }
 
         /// <summary>
@@ -2458,12 +2458,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     if (loopsInPathCount != 0)
                     {
+                        // If we produce something with known loops in path, support becomes infinite
+                        // and thus noe-enumerable
+                        this.Data = this.Data.With(isEnumerable: false);
                         yield return null;
                         yield break;
                     }
 
                     yield return SequenceManipulator.ToSequence(path);
-                    current.LeadsToEnd = true;
+                    flags[current.StateIndex] |= StateFlags.LeadsToEnd;
                 }
 
                 // Backtrack while needed
@@ -2480,19 +2483,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         yield break;
                     }
 
-                    if (flags[current.StateIndex].HasFlag(StateFlags.PartOfLoop))
+                    var prevFlags = flags[current.StateIndex];
+                    if (prevFlags.HasFlag(StateFlags.PartOfLoop))
                     {
                         --loopsInPathCount;
                     }
 
-                    var leadsToEnd = current.LeadsToEnd;
                     flags[current.StateIndex] = 0;
                     current = stack.Pop();
-                    current.LeadsToEnd |= leadsToEnd;
+                    flags[current.StateIndex] |= prevFlags & StateFlags.LeadsToEnd;
                     path.RemoveRange(current.PathLength, path.Count - current.PathLength);
 
-                    if (current.LeadsToEnd && loopsInPathCount != 0)
+                    if (flags[current.StateIndex].HasFlag(StateFlags.LeadsToEnd) && loopsInPathCount != 0)
                     {
+                        // We produced something starting from this state and then found a loop.
+                        // Imagine automaton *-->a->* [end]
+                        //                  /  \
+                        //                 /->a->
+                        this.Data = this.Data.With(isEnumerable: false);
                         yield return null;
                         yield break;
                     }
@@ -2571,8 +2579,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (index > current.StateIndex &&
                     current.ElementEnumerator == null &&
                     current.RemainingTransitionsCount == 0 &&
-                    !current.LeadsToEnd &&
-                    !flags[current.StateIndex].HasFlag(StateFlags.PartOfLoop))
+                    (flags[current.StateIndex] & (StateFlags.PartOfLoop | StateFlags.LeadsToEnd)) == 0)
                 {
                     // Fastpath: if we move forward and current state has 0 elements left to traverse
                     // and includes no loops. We can omit the backtracking logic for this state entirely.
@@ -2586,8 +2593,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // loop detection. By not setting "visited" to true for forward transitions
                     // we can backtrack with less overhead in simple cases
                     stack.Push(current);
-                    flags[index] = StateFlags.Visiting | (StateFlags)path.Count;
                 }
+
+                // Mark next state as being visited for future loop detection
+                flags[index] = StateFlags.Visiting | (StateFlags)path.Count;
 
                 var state = this.Data.States[index];
                 current = new StateEnumerationState
@@ -2597,7 +2606,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     RemainingTransitionsCount = state.TransitionsCount,
                     PathLength = path.Count,
                     ElementEnumerator = null,
-                    LeadsToEnd = false,
                 };
             }
         }
