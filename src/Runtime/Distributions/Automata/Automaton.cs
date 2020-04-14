@@ -1940,101 +1940,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automata</remarks>
         public TSequence TryComputePoint()
         {
-            var isEndNodeReachable = this.ComputeEndStateReachability();
-            if (!isEndNodeReachable[this.Start.Index])
-            {
-                return null;
-            }
-
-            var point = new List<TElement>();
-            int? pointLength = null;
-            var stateDepth = new ArrayDictionary<int>(this.States.Count);
-            var stack = new Stack<(int stateIndex, int sequencePos)>();
-            stack.Push((this.Start.Index, 0));
-
-            // Note: this algorithm looks simpler if implemented recursively. But recursive implementation
-            // causes StackOverflowException.
-            // Algorithm is simple: traverse automaton id depth-first fashion and check that element transitions
-            // along all paths are equal. If any inconsistency is found
-
-            while (stack.Count != 0)
-            {
-                var (stateIndex, sequencePos) = stack.Pop();
-                Debug.Assert(isEndNodeReachable[stateIndex], "Dead branches must not be visited.");
-
-                if (stateDepth.TryGetValue(stateIndex, out var cachedStateDepth))
-                {
-                    // If we've already been in this state, we must be at the same sequence pos
-                    if (sequencePos != cachedStateDepth)
-                    {
-                        return null;
-                    }
-
-                    // This state was already processed, goto next one
-                    continue;
-                }
-
-                stateDepth.Add(stateIndex, sequencePos);
-
-                var state = this.States[stateIndex];
-
-                // Can we stop in this state?
-                if (state.CanEnd)
-                {
-                    // Is this a suffix or a prefix of the point already found?
-                    if (pointLength.HasValue)
-                    {
-                        if (sequencePos != pointLength.Value)
-                        {
-                            return null;
-                        }
-                    }
-                    else
-                    {
-                        // Now we know the length of the sequence
-                        pointLength = sequencePos;
-                    }
-                }
-
-                foreach (var transition in state.Transitions)
-                {
-                    var destStateIndex = transition.DestinationStateIndex;
-                    if (!isEndNodeReachable[destStateIndex])
-                    {
-                        // Only walk through the accepting part of the automaton
-                        continue;
-                    }
-
-                    if (transition.IsEpsilon)
-                    {
-                        // Move to the next state, keep the sequence position
-                        stack.Push((destStateIndex, sequencePos));
-                    }
-                    else if (!transition.ElementDistribution.Value.IsPointMass)
-                    {
-                        // If there's non-point distribution on transition, than automaton doesn't have point either
-                        return null;
-                    }
-                    else
-                    {
-                        var element = transition.ElementDistribution.Value.Point;
-                        if (sequencePos == point.Count)
-                        {
-                            // It is the first time at this sequence position
-                            point.Add(element);
-                        }
-                        else if (!point[sequencePos].Equals(element))
-                        {
-                            // This is not the first time at this sequence position, and the elements are different
-                            return null;
-                        }
-
-                        stack.Push((destStateIndex, sequencePos + 1));
-                    }
-                }
-            }
-
-            return pointLength.HasValue ? SequenceManipulator.ToSequence(point) : null;
+            // Need to get at least 2 support strings to be sure that this is not a point
+            var enumerated = this.TryEnumerateSupport(2, out var support, tryDeterminize: false);
+            return enumerated && support.Count() == 1
+                ? support.Single()
+                : null;
         }
 
         /// <summary>
@@ -2052,7 +1962,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (seq == null)
                 {
-                    throw new NotSupportedException("Infinite loops cannot be enumerated");
+                    throw new NotSupportedException();
                 }
 
                 if (++idx > maxCount)
@@ -2070,7 +1980,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="maxCount">The maximum support enumeration count.</param>
         /// <param name="result">The sequences in the support of this automaton</param>
         /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
-        /// <exception cref="AutomatonException">General automaton exception.</exception>
         /// <returns>True if successful, false otherwise</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
         {
@@ -2392,83 +2301,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// For each state computes whether any state with non-zero ending weight can be reached from it.
-        /// </summary>
-        /// <returns>An array mapping state indices to end state reachability.</returns>
-        /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automatons</remarks>
-        private bool[] ComputeEndStateReachability()
-        {
-            //// First, build a reversed graph
-
-            var edgePlacementIndices = new int[this.States.Count + 1];
-            for (var i = 0; i < this.States.Count; ++i)
-            {
-                var state = this.States[i];
-                foreach (var transition in state.Transitions)
-                {
-                    if (!transition.Weight.IsZero)
-                    {
-                        ++edgePlacementIndices[transition.DestinationStateIndex + 1];
-                    }
-                }
-            }
-
-            // The element of edgePlacementIndices at index i+1 contains a count of the number of edges 
-            // going into the i'th state (the indegree of the state).
-            // Convert this into a cumulative count (which will be used to give a unique index to each edge).
-            for (var i = 1; i < edgePlacementIndices.Length; ++i)
-            {
-                edgePlacementIndices[i] += edgePlacementIndices[i - 1];
-            }
-
-            var edgeArrayStarts = (int[])edgePlacementIndices.Clone();
-            var totalEdgeCount = edgePlacementIndices[this.States.Count];
-            var edgeDestinationIndices = new int[totalEdgeCount];
-            for (var i = 0; i < this.States.Count; ++i)
-            {
-                var state = this.States[i];
-                foreach (var transition in state.Transitions)
-                {
-                    if (!transition.Weight.IsZero)
-                    {
-                        // The unique index for this edge
-                        var edgePlacementIndex = edgePlacementIndices[transition.DestinationStateIndex]++;
-
-                        // The source index for the edge (which is the destination edge in the reversed graph)
-                        edgeDestinationIndices[edgePlacementIndex] = i;
-                    }
-                }
-            }
-
-            //// Now run a depth-first search to label all reachable nodes
-            var stack = new Stack<int>();
-            var visitedNodes = new bool[this.States.Count];
-            for (var i = 0; i < this.States.Count; ++i)
-            {
-                if (!visitedNodes[i] && this.States[i].CanEnd)
-                {
-                    visitedNodes[i] = true;
-                    stack.Push(i);
-                    while (stack.Count != 0)
-                    {
-                        var stateIndex = stack.Pop();
-                        for (var edgeIndex = edgeArrayStarts[stateIndex]; edgeIndex < edgeArrayStarts[stateIndex + 1]; ++edgeIndex)
-                        {
-                            var destinationIndex = edgeDestinationIndices[edgeIndex];
-                            if (!visitedNodes[destinationIndex])
-                            {
-                                visitedNodes[destinationIndex] = true;
-                                stack.Push(destinationIndex);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return visitedNodes;
-        }
-
-        /// <summary>
         /// Computes the logarithm of the normalizer of the automaton, normalizing it afterwards if requested.
         /// </summary>
         /// <param name="normalize">Specifies whether the automaton must be normalized after computing the normalizer.</param>
@@ -2578,10 +2410,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private struct StateEnumerationState
         {
             public int StateIndex;
-            public int PrefixLength;
+            public int PathLength;
             public int TransitionIndex;
             public int RemainingTransitionsCount;
             public IEnumerator<TElement> ElementEnumerator;
+        }
+
+        [Flags]
+        private enum StateFlags : uint
+        {
+            Visiting = 0x80000000,
+            PartOfLoop = 0x40000000,
+            LeadsToEnd = 0x20000000,
+            DepthMask  = 0x1fffffff,
         }
 
         /// <summary>
@@ -2595,19 +2436,39 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </returns>
         private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates()
         {
-            var visited = new bool[this.States.Count];
-            var prefix = new List<TElement>();
+            // Path to current state in automaton from root
+            var path = new List<TElement>();
+
+            // Stack of states for backtracking
             var stack = new Stack<StateEnumerationState>();
 
+            // maps state to depth in current path. Used for loop tracking
+            var flags = new StateFlags[this.States.Count];
+
+            // number of (non-empty) loops in current path
+            var loopsInPathCount = 0;
+
+            // essentially a top of traversal stack, materialized in local variable for performance
             var current = default(StateEnumerationState);
-            TryMoveTo(this.Data.StartStateIndex);
-            if (this.States[current.StateIndex].CanEnd)
-            {
-                yield return SequenceManipulator.ToSequence(prefix);
-            }
+            MoveTo(this.Data.StartStateIndex);
 
             while (true)
             {
+                if (this.States[current.StateIndex].CanEnd)
+                {
+                    if (loopsInPathCount != 0)
+                    {
+                        // If we produce something with known loops in path, support becomes infinite
+                        // and thus noe-enumerable
+                        this.Data = this.Data.With(isEnumerable: false);
+                        yield return null;
+                        yield break;
+                    }
+
+                    yield return SequenceManipulator.ToSequence(path);
+                    flags[current.StateIndex] |= StateFlags.LeadsToEnd;
+                }
+
                 // Backtrack while needed
                 while (current.ElementEnumerator == null && current.RemainingTransitionsCount == 0)
                 {
@@ -2622,22 +2483,40 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         yield break;
                     }
 
-                    visited[current.StateIndex] = false;
+                    var prevFlags = flags[current.StateIndex];
+                    if (prevFlags.HasFlag(StateFlags.PartOfLoop))
+                    {
+                        --loopsInPathCount;
+                    }
+
+                    flags[current.StateIndex] = 0;
                     current = stack.Pop();
-                    prefix.RemoveRange(current.PrefixLength, prefix.Count - current.PrefixLength);
+                    flags[current.StateIndex] |= prevFlags & StateFlags.LeadsToEnd;
+                    path.RemoveRange(current.PathLength, path.Count - current.PathLength);
+
+                    if (flags[current.StateIndex].HasFlag(StateFlags.LeadsToEnd) && loopsInPathCount != 0)
+                    {
+                        // We produced something starting from this state and then found a loop.
+                        // Imagine automaton *-->a->* [end]
+                        //                  /  \
+                        //                 /->a->
+                        this.Data = this.Data.With(isEnumerable: false);
+                        yield return null;
+                        yield break;
+                    }
                 }
 
                 if (current.ElementEnumerator != null)
                 {
                     // Advance to next element in current transition
-                    prefix.Add(current.ElementEnumerator.Current);
+                    path.Add(current.ElementEnumerator.Current);
                     if (!current.ElementEnumerator.MoveNext())
                     {
                         // Element done, move to next transition
                         current.ElementEnumerator = null;
                     }
                 }
-                else if (current.RemainingTransitionsCount != 0)
+                else
                 {
                     // Advance to next transition
                     ++current.TransitionIndex;
@@ -2645,72 +2524,79 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     var transition = this.Data.Transitions[current.TransitionIndex];
 
+                    if (transition.Weight.IsZero)
+                    {
+                        continue;
+                    }
+
                     if (!transition.IsEpsilon)
                     {
                         // Add next element to sequence
                         var elementDistribution = transition.ElementDistribution.Value;
-                        if (!(transition.ElementDistribution.Value is CanEnumerateSupport<TElement> supportEnumerator))
+                        if (elementDistribution.IsPointMass)
                         {
-                            throw new NotImplementedException(
-                                "Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
+                            path.Add(elementDistribution.Point);
                         }
-
-                        var enumerator = supportEnumerator.EnumerateSupport().GetEnumerator();
-                        if (enumerator.MoveNext())
+                        else
                         {
-                            prefix.Add(enumerator.Current);
+                            if (!(elementDistribution is CanEnumerateSupport<TElement> supportEnumerator))
+                            {
+                                this.Data = this.Data.With(isEnumerable: false);
+                                yield return null;
+                                yield break;
+                            }
+
+                            var enumerator = supportEnumerator.EnumerateSupport().GetEnumerator();
                             if (enumerator.MoveNext())
                             {
-                                current.ElementEnumerator = enumerator;
+                                path.Add(enumerator.Current);
+                                current.ElementEnumerator = enumerator.MoveNext() ? enumerator : null;
                             }
                         }
                     }
                 }
 
-                if (!TryMoveTo(this.Data.Transitions[current.TransitionIndex].DestinationStateIndex))
-                {
-                    // Found a loop, signal that automaton is not enumerable
-                    this.Data = this.Data.With(isEnumerable: false);
-                    yield return null;
-                    yield break;
-                }
-
-                if (this.States[current.StateIndex].CanEnd)
-                {
-                    yield return SequenceManipulator.ToSequence(prefix);
-                }
+                MoveTo(this.Data.Transitions[current.TransitionIndex].DestinationStateIndex);
             }
 
-            // Return false if loop was encountered
-            bool TryMoveTo(int index)
+            void MoveTo(int index)
             {
-               
-                if (index >= current.StateIndex &&
-                    current.ElementEnumerator == null &&
-                    current.RemainingTransitionsCount == 0)
+                if (flags[index] != 0)
                 {
-                    // Fastpath: if we move forward and current state has 0 elements left to traverse,
-                    // we can omit the backtracking logic entirely
-                    visited[current.StateIndex] = false;
+                    // Do not get into loops, just mark them and count
+                    var prevDepth = (int) (flags[index] & StateFlags.DepthMask);
+                    if (path.Count != prevDepth && !flags[index].HasFlag(StateFlags.PartOfLoop))
+                    {
+                        ++loopsInPathCount;
+                        flags[index] |= StateFlags.PartOfLoop;
+                    }
+
+                    // No point in traversing other elements int the same transition
+                    current.ElementEnumerator = null;
+                    return;
+                }
+
+                if (index > current.StateIndex &&
+                    current.ElementEnumerator == null &&
+                    current.RemainingTransitionsCount == 0 &&
+                    (flags[current.StateIndex] & (StateFlags.PartOfLoop | StateFlags.LeadsToEnd)) == 0)
+                {
+                    // Fastpath: if we move forward and current state has 0 elements left to traverse
+                    // and includes no loops. We can omit the backtracking logic for this state entirely.
+                    // So reset its flags now, because we will never see it again.
+                    flags[current.StateIndex] = 0;
                 }
                 else
                 {
-                    // Slowpath: Store information needed for backtracking
+                    // Slowpath: Store information needed for backtracking and loop tracking
+                    // Tracking the visited states only on backward transitions is enough for
+                    // loop detection. By not setting "visited" to true for forward transitions
+                    // we can backtrack with less overhead in simple cases
                     stack.Push(current);
-                    if (index <= current.StateIndex)
-                    {
-                        // Tracking the visited states only on backward transitions is enough for
-                        // loop detection. By not setting "visited" to true for forward transitions
-                        // we can backtrack with less overhead in simple cases
-                        visited[current.StateIndex] = true;
-                    }
                 }
 
-                if (visited[index])
-                {
-                    // Loop encountered
-                    return false;
-                }
+                // Mark next state as being visited for future loop detection
+                flags[index] = StateFlags.Visiting | (StateFlags)path.Count;
 
                 var state = this.Data.States[index];
                 current = new StateEnumerationState
@@ -2718,10 +2604,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     StateIndex = index,
                     TransitionIndex = state.FirstTransitionIndex - 1,
                     RemainingTransitionsCount = state.TransitionsCount,
-                    PrefixLength = prefix.Count,
+                    PathLength = path.Count,
+                    ElementEnumerator = null,
                 };
-
-                return true;
             }
         }
 

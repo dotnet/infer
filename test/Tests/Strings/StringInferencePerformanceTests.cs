@@ -8,14 +8,11 @@ namespace Microsoft.ML.Probabilistic.Tests
     using System.Diagnostics;
     using Xunit;
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
-    using Microsoft.ML.Probabilistic;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Distributions.Automata;
     using Microsoft.ML.Probabilistic.Factors;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Models;
-    using System.Threading.Tasks;
-    using Microsoft.ML.Probabilistic.Utilities;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Range = Microsoft.ML.Probabilistic.Models.Range;
 
