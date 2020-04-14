@@ -18,6 +18,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using DirichletArray = DistributionRefArray<Dirichlet, Vector>;
     using GaussianArrayArrayArray = DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, double[][]>;
     using Microsoft.ML.Probabilistic.Algorithms;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     /// <summary>
     /// Provides test routines for shared variables on Gaussian and Discrete.

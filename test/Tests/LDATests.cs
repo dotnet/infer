@@ -15,6 +15,7 @@ using Microsoft.ML.Probabilistic.Models.Attributes;
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     internal class LDAModel
     {

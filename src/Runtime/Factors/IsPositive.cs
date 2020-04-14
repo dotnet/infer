@@ -132,9 +132,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                         (!isPositive.Point && tau > 0))
                     {
                         // posterior is proportional to I(x>0) exp(tau*x)
-                        double mp = -1 / tau;
-                        double vp = mp * mp;
-                        return (new Gaussian(mp, vp)) / x;
+                        //double mp = -1 / tau;
+                        //double vp = mp * mp;
+                        return Gaussian.FromNatural(-tau, tau * tau) / x;
                     }
                 }
                 return Gaussian.Uniform();
@@ -151,57 +151,71 @@ namespace Microsoft.ML.Probabilistic.Factors
             double alpha;
             if (isPositive.IsPointMass)
             {
-                if (isPositive.Point)
+                if ((isPositive.Point && z < -10) || (!isPositive.Point && z > 10))
                 {
-                    if (z < -1e10)
+                    if (z > 10) z = -z;
+                    //double Y = MMath.NormalCdfRatio(z);
+                    // dY = z*Y + 1
+                    // d2Y = z*dY + Y
+                    // posterior mean = m + sqrt(v)/Y = sqrt(v)*(z + 1/Y) = sqrt(v)*dY/Y 
+                    //                = sqrt(v)*(d2Y/Y - 1)/z = (d2Y/Y - 1)/tau
+                    //                =approx sqrt(v)*(-1/z) = -1/tau
+                    // posterior variance = v - v*dY/Y^2 =approx v/z^2
+                    // posterior E[x^2] = v - v*dY/Y^2 + v*dY^2/Y^2 = v - v*dY/Y^2*(1 - dY) = v + v*z*dY/Y = v*d2Y/Y
+                    // d3Y = z*d2Y + 2*dY
+                    //     = z*(z*dY + Y) + 2*dY 
+                    //     = z^2*dY + z*Y + 2*dY
+                    //     = z^2*dY + 3*dY - 1
+                    double d3Y = 6 * MMath.NormalCdfMomentRatio(3, z);
+                    //double dY = MMath.NormalCdfMomentRatio(1, z);
+                    double dY = (d3Y + 1) / (z * z + 3);
+                    if (MMath.AreEqual(dY, 0))
                     {
-                        double mp = -1 / (z * sqrtPrec);
-                        double vp = 1 / (z * z * prec);
-                        return (new Gaussian(mp, vp)) / x;
+                        double tau2 = tau * tau;
+                        if (tau2 > double.MaxValue) return Gaussian.PointMass(-1 / tau);
+                        else return Gaussian.FromNatural(-2 * tau, tau2);
                     }
-                    else if (z < -100)
+                    // Y = (dY-1)/z
+                    // alpha = sqrtPrec*z/(dY-1) = tau/(dY-1)
+                    // alpha+tau = tau*(1 + 1/(dY-1)) = tau*dY/(dY-1) = alpha*dY
+                    // beta = alpha * (alpha + tau)
+                    //      = alpha * tau * dY / (dY - 1)
+                    //      = prec * z^2 * dY/(dY-1)^2
+                    // prec/beta = (dY-1)^2/(dY*z^2)
+                    // prec/beta - 1 = ((dY-1)^2 - dY*z^2)/(dY*z^2)
+                    // weight = beta/(prec - beta) 
+                    //        = dY*z^2/((dY-1)^2 - dY*z^2)
+                    //        = dY*z^2/(dY^2 -2*dY + 1 - dY*z^2)
+                    //        = dY*z^2/(dY^2 + 1 + z*Y - d3Y)
+                    //        = dY*z^2/(dY^2 + dY - d3Y)
+                    //        = z^2/(dY + 1 - d3Y/dY)
+                    double d3YidY = d3Y / dY;
+                    double denom = dY - d3YidY + 1;
+                    double msgPrec = tau * tau / denom;
+                    // weight * (tau + alpha) + alpha 
+                    // = z^2/(dY + 1 - d3Y/dY) * alpha*dY + alpha
+                    // = alpha*(z^2*dY/(dY + 1 - d3Y/dY) + 1)
+                    // = alpha*(z^2*dY + dY + 1 - d3Y/dY)/(dY + 1 - d3Y/dY)
+                    // = alpha*(z^2*dY + dY + 1 - d3Y/dY)/(dY + 1 - d3Y/dY)
+                    // = alpha*(d3Y - 2*dY + 2 - d3Y/dY)/(dY + 1 - d3Y/dY)
+                    // z^2*dY = d3Y - 3*dY + 1
+                    double numer = (d3Y - 2 * dY - d3YidY + 2) / (dY - 1);
+                    double msgMeanTimesPrec = tau * numer / denom;
+                    if (msgPrec > double.MaxValue)
                     {
-                        double Y = MMath.NormalCdfRatio(z);
-                        // double dY = MMath.NormalCdfMomentRatio(1, z);
-                        // dY = z*Y + 1
-                        // d2Y = z*dY + Y
-                        // posterior mean = m + sqrt(v)/Y = sqrt(v)*(z + 1/Y) = sqrt(v)*dY/Y 
-                        //                = sqrt(v)*(d2Y/Y - 1)/z = (d2Y/Y - 1)/tau
-                        //                =approx sqrt(v)*(-1/z) = -1/tau
-                        // posterior variance = v - v*dY/Y^2 =approx v/z^2
-                        // posterior E[x^2] = v - v*dY/Y^2 + v*dY^2/Y^2 = v - v*dY/Y^2*(1 - dY) = v + v*z*dY/Y = v*d2Y/Y
-                        double d2Y = 2 * MMath.NormalCdfMomentRatio(2, z);
-                        // m2TimesPrec = z*dY/Y + 1
-                        double m2TimesPrec = d2Y / Y;
-                        Assert.IsTrue(tau != 0);
-                        double mp = (m2TimesPrec - 1) / tau;
-                        double vp = m2TimesPrec / prec - mp * mp;
-                        return (new Gaussian(mp, vp)) / x;
+                        // In this case, the message should be the posterior.
+                        // posterior mean = (msgMeanTimesPrec + tau)*denom/(tau*tau)
+                        // = (numer + denom)/tau
+                        return Gaussian.PointMass((numer + denom) / tau);
                     }
+                    else return Gaussian.FromNatural(msgMeanTimesPrec, msgPrec);
+                }
+                else if (isPositive.Point)
+                {
                     alpha = sqrtPrec / MMath.NormalCdfRatio(z);
                 }
                 else
                 {
-                    if (z > 1e10)
-                    {
-                        double mp = 1 / (z * sqrtPrec);
-                        double vp = 1 / (z * z * prec);
-                        return (new Gaussian(mp, vp)) / x;
-                    }
-                    else if (z > 100)
-                    {
-                        double Y = MMath.NormalCdfRatio(-z);
-                        // dY = -(d2Y/prec - Y)/(-z)*sqrtPrec
-                        // dY/Y/prec = -(d2Y/Y/prec/prec - 1/prec)/(-z)*sqrtPrec
-                        // dY/Y/prec = -(d2Y/Y/prec - 1)/(-tau)
-                        //double dY = -MMath.NormalCdfMomentRatio(1,-z)*sqrtPrec;
-                        double d2Y = 2 * MMath.NormalCdfMomentRatio(2, -z);
-                        double m2TimesPrec = d2Y / Y;
-                        Assert.IsTrue(tau != 0);
-                        double mp = (m2TimesPrec - 1) / tau;
-                        double vp = m2TimesPrec / prec - mp * mp;
-                        return (new Gaussian(mp, vp)) / x;
-                    }
                     alpha = -sqrtPrec / MMath.NormalCdfRatio(-z);
                 }
             }
