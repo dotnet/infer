@@ -13,7 +13,7 @@ namespace Infer.Loki.Mappings
     public static class SpecialFunctionsMethods
     {
         [DllImport(MPFRLibrary.FileName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void mpfr_gamma_inc([In, Out] mpfr_struct rop, [In, Out] mpfr_struct op, [In, Out] mpfr_struct op2, int rnd);
+        public static extern int mpfr_gamma_inc([In, Out] mpfr_struct rop, [In, Out] mpfr_struct op, [In, Out] mpfr_struct op2, int rnd);
 
         public static BigFloat Gamma(BigFloat x)
         {
@@ -392,6 +392,57 @@ namespace Infer.Loki.Mappings
                 result.Sub(tmp);
             }
             return result;
+        }
+
+        public static BigFloat Log1Plus(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            result.Log1p();
+            return result;
+        }
+
+        private static readonly BigFloat log1MinusMethodThreshold = BigFloatFactory.Create("-3.5");
+        public static BigFloat Log1MinusExp(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            if (result.IsLesser(log1MinusMethodThreshold))
+            {
+                result.Exp();
+                result.Neg();
+                result.Log1p();
+            }
+            else
+            {
+                result.Expm1();
+                result.Neg();
+                result.Log();
+            }
+            return result;
+        }
+
+        public static BigFloat ExpMinus1(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            result.Expm1();
+            return result;
+        }
+
+        public static BigFloat ExpMinus1RatioMinus1RatioMinusHalf(BigFloat x)
+        {
+            if (x.IsInf() && x.IsPositive())
+            {
+                return BigFloatFactory.Create(x);
+            }
+            else
+            {
+                var result = BigFloatFactory.Create(x);
+                result.Expm1();
+                result.Div(x);
+                result.Sub(1);
+                result.Div(x);
+                result.Sub(0.5);
+                return result;
+            }
         }
 
         #region BinaryRepresentation
