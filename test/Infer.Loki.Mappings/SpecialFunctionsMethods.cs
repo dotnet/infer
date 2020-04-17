@@ -15,6 +15,21 @@ namespace Infer.Loki.Mappings
         //[DllImport(MPFRLibrary.FileName, CallingConvention = CallingConvention.Cdecl)]
         //public static extern int mpfr_gamma_inc([In, Out] mpfr_struct rop, [In, Out] mpfr_struct op, [In, Out] mpfr_struct op2, int rnd);
 
+        public static readonly BigFloat Sqrt2;
+        public static readonly BigFloat LnSqrt2PI;
+
+        static SpecialFunctionsMethods()
+        {
+            Sqrt2 = BigFloatFactory.Create(2);
+            Sqrt2.Sqrt();
+
+            LnSqrt2PI = BigFloatFactory.Empty();
+            LnSqrt2PI.ConstPi();
+            LnSqrt2PI.Mul2(1);
+            LnSqrt2PI.Sqrt();
+            LnSqrt2PI.Log();
+        }
+
         public static BigFloat Gamma(BigFloat x)
         {
             if (x.IsNegative())
@@ -104,13 +119,35 @@ namespace Infer.Loki.Mappings
             using (var tmp1 = BigFloatFactory.Empty())
             using (var invX2 = BigFloatFactory.Empty())
             {
-                BigFloat.Sqr(tmp1, c_trigamma_large);
-                BigFloat.Div(invX2, 1.0, tmp1);
-                Console.WriteLine($"Trigamma asymptotic: {FindConvergencePoint(invX2, trigammaAsymptotic)}");
-
-                BigFloat.Sqr(tmp1, c_tetragamma_large);
-                BigFloat.Div(invX2, 1.0, tmp1);
-                Console.WriteLine($"Tetragamma asymptotic: {FindConvergencePoint(invX2, tetragammaAsymptotic)}");
+                for (int i = -30; i >= -100; --i)
+                {
+                    tmp1.Set(i);
+                    tmp1.Sqr();
+                    //BigFloat.Sqr(tmp1, c_trigamma_large);
+                    BigFloat.Div(invX2, 1.0, tmp1);
+                    int conv = FindConvergencePoint(invX2, normalCdfLnAsymptotic);
+                    Console.WriteLine($"Convergence point at {i}: {conv}");
+                    if (conv > 0)
+                    {
+                        using (var result = EvaluateSeries(invX2, normalCdfLnAsymptotic.Take(conv).ToArray()))
+                        using (var x = BigFloatFactory.Create(i))
+                        using (var f = NormalCdf(x))
+                        {
+                            result.Sub(LnSqrt2PI);
+                            tmp1.Div2(1);
+                            result.Sub(tmp1);
+                            BigFloat.Neg(tmp1, x);
+                            tmp1.Log();
+                            result.Sub(tmp1);
+                            Console.WriteLine($"Polynomial: {result}");
+                            f.Log();
+                            Console.WriteLine($"Algebraic:  {f}");
+                            f.Sub(result);
+                            f.Abs();
+                            Console.WriteLine($"Diff:       {f}");
+                        }
+                    }
+                }
             }
         }
 
@@ -489,6 +526,91 @@ namespace Infer.Loki.Mappings
                 result.Sub(0.5);
                 return result;
             }
+        }
+
+        public static BigFloat NormalCdf(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            result.Neg();
+            result.Div(Sqrt2);
+            result.Erfc();
+            result.Div2(1);
+            return result;
+        }
+
+
+        private static readonly BigFloat normalCdfLnThreshold1 = BigFloatFactory.Create("4");
+        private static readonly BigFloat normalCdfLnThreshold2 = BigFloatFactory.Create("-50");
+        // Truncated series 16: normcdfln asymptotic
+        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+        private static readonly BigFloat[] normalCdfLnAsymptotic = new BigFloat[]
+        {
+            BigFloatFactory.Create("0"),
+            BigFloatFactory.Create("-1.0000000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("2.5000000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-12.333333333333333333333333333333333333333333333333"),
+            BigFloatFactory.Create("88.250000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-816.20000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("9200.8333333333333333333333333333333333333333333333"),
+            BigFloatFactory.Create("-122028.14285714285714285714285714285714285714285714"),
+            BigFloatFactory.Create("1859504.1250000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-32002080.111111111111111111111111111111111111111111"),
+            BigFloatFactory.Create("613891392.50000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-12989299596.090909090909090909090909090909090909091"),
+            BigFloatFactory.Create("300556863709.41666666666666666666666666666666666667"),
+            BigFloatFactory.Create("-7550646317520.0769230769230769230769230769230769231"),
+            BigFloatFactory.Create("204687481350960.35714285714285714285714285714285714"),
+            BigFloatFactory.Create("-5955892982437394.4666666666666666666666666666666667"),
+            BigFloatFactory.Create("185158929516994912.06250000000000000000000000000000"),
+            BigFloatFactory.Create("-6125200081143892800.0588235294117647058823529411765"),
+            BigFloatFactory.Create("214837724609518838186.94444444444444444444444444444")
+        };
+
+        public static BigFloat NormalCdfLn(BigFloat x)
+        {
+            if (x.IsGreater(normalCdfLnThreshold1))
+            {
+                using (var z = BigFloatFactory.Create(x))
+                {
+                    z.Neg();
+                    var result = NormalCdf(z);
+                    // maybe replace with series
+                    result.Neg();
+                    result.Log1p();
+                    return result;
+                }
+            }
+            else if (x.IsGreaterOrEqual(normalCdfLnThreshold2))
+            {
+                var result = NormalCdf(x);
+                result.Log();
+                return result;
+            }
+            else
+            {
+                using (var z = BigFloatFactory.Create(1))
+                using (var xx = BigFloatFactory.Create(x))
+                {
+                    // x < large
+                    xx.Sqr();
+                    z.Div(xx);
+                    var result = EvaluateSeries(z, normalCdfLnAsymptotic);
+                    result.Sub(LnSqrt2PI);
+                    xx.Div2(1);
+                    result.Sub(xx);
+                    BigFloat.Neg(xx, x);
+                    xx.Log();
+                    result.Sub(xx);
+                    return result;
+                }
+            }
+        }
+
+        public static BigFloat Erfc(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            result.Erfc();
+            return result;
         }
 
         #region BinaryRepresentation

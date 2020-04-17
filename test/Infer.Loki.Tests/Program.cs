@@ -14,6 +14,8 @@ namespace Infer.Loki.Tests
     {
         public static async Task Main()
         {
+            //Infer.Loki.Mappings.SpecialFunctionsMethods.FindThresholds();
+            //return;
             var solutionPath = Path.GetFullPath(Path.Combine("..", "..", "..", "..", "..", "Infer.sln"));
             var settings = new Settings(solutionPath);
             settings.WriteGeneratedSource = true;
@@ -73,7 +75,7 @@ namespace Infer.Loki.Tests
             //Assert.True(testResult.HighPrecisionPassed);
             await runner.Build();
             Environment.CurrentDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "Tests");
-            var testResult = runner.RunTest(new SpecialFunctionsTests().SpecialFunctionsTest, 0);
+            var testResult = runner.RunTest(new SpecialFunctionsTests().NormalCdfTest, 0);
             Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
         }
     }
