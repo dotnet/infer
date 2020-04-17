@@ -4,6 +4,10 @@
     <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
 
+  <!--<ItemGroup>
+    <PackageReference Include="Math.Mpfr.Native.NET" Version="2.0.0" />
+  </ItemGroup>-->
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Loki\src\Loki.Mapping\Loki.Mapping.csproj" />
     <ProjectReference Include="..\..\src\Loki\src\Loki.Shared\Loki.Shared.csproj" />

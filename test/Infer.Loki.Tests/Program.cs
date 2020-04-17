@@ -73,8 +73,8 @@ namespace Infer.Loki.Tests
             //Assert.True(testResult.HighPrecisionPassed);
             await runner.Build();
             Environment.CurrentDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "Tests");
-            var gammaTestResult = runner.RunTest(new SpecialFunctionsTests().GammaUpperTest, 0);
-            Console.WriteLine($"Test result: {gammaTestResult.TestPassed},\nMessage: {gammaTestResult.Message}");
+            var testResult = runner.RunTest(new SpecialFunctionsTests().SpecialFunctionsTest, 0);
+            Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
         }
     }
 }

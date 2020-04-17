@@ -12,8 +12,8 @@ namespace Infer.Loki.Mappings
 {
     public static class SpecialFunctionsMethods
     {
-        [DllImport(MPFRLibrary.FileName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int mpfr_gamma_inc([In, Out] mpfr_struct rop, [In, Out] mpfr_struct op, [In, Out] mpfr_struct op2, int rnd);
+        //[DllImport(MPFRLibrary.FileName, CallingConvention = CallingConvention.Cdecl)]
+        //public static extern int mpfr_gamma_inc([In, Out] mpfr_struct rop, [In, Out] mpfr_struct op, [In, Out] mpfr_struct op2, int rnd);
 
         public static BigFloat Gamma(BigFloat x)
         {
@@ -361,25 +361,71 @@ namespace Infer.Loki.Mappings
             return result;
         }
 
-        public static BigFloat GammaUpper(BigFloat a, BigFloat x, bool regularized = true)
-        {
-            var result = BigFloatFactory.Empty();
-            mpfr_gamma_inc(result.Value, x.Value, a.Value, BigFloat.GetRounding(null));
-            if (regularized)
-            {
-                using (var gammaa = Gamma(x))
-                    result.Div(gammaa);
-            }
-            return result;
-        }
+        //public static BigFloat GammaUpper(BigFloat a, BigFloat x, bool regularized = true)
+        //{
+        //    var result = BigFloatFactory.Empty();
+        //    var an = new Math.Mpfr.Native.mpfr_t();
+        //    var xn = new Math.Mpfr.Native.mpfr_t();
+        //    var resultn = new Math.Mpfr.Native.mpfr_t();
+        //    Math.Mpfr.Native.mpfr_lib.mpfr_inits2((uint)BigFloatFactory.FloatingPointPrecision, an, xn, resultn);
+        //    try
+        //    {
+        //        CrossLibSet(an, a);
+        //        CrossLibSet(xn, x);
+        //        Math.Mpfr.Native.mpfr_lib.mpfr_gamma_inc(resultn, xn, an, Math.Mpfr.Native.mpfr_rnd_t.MPFR_RNDN);
+        //        var vbuf = Math.Gmp.Native.gmp_lib.allocate(1 + BigFloatFactory.FloatingPointPrecision / 4 + (BigFloatFactory.FloatingPointPrecision % 4 != 0 ? 1 : 0));
+        //        try
+        //        {
+        //            var buf = new Math.Gmp.Native.char_ptr(vbuf.ToIntPtr());
+        //            var expBuf = new Math.Mpfr.Native.mpfr_exp_t(0);
+        //            Math.Mpfr.Native.mpfr_lib.mpfr_get_str(buf, ref expBuf, 16, 0, resultn, Math.Mpfr.Native.mpfr_rnd_t.MPFR_RNDN);
+        //            var resultString = buf.ToString();
+        //            int signPosShift = resultString[0] == '+' || resultString[0] == '-' ? 1 : 0;
+        //            if (resultString[signPosShift] != '@')
+        //            {
+        //                resultString = $"{resultString.Substring(0, signPosShift + 1)}.{resultString.Substring(signPosShift + 1)}@{(int)expBuf}";
+        //            }
+        //            result.Set(resultString, 16);
+        //        }
+        //        finally
+        //        {
+        //            Math.Gmp.Native.gmp_lib.free(vbuf);
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        Math.Mpfr.Native.mpfr_lib.mpfr_clears(an, xn, resultn);
+        //    }
+        //    //Math.Mpfr.Native.mpfr_lib.mpfr_gamma_inc()
+        //    //mpfr_gamma_inc(result.Value, x.Value, a.Value, BigFloat.GetRounding(null));
+        //    if (regularized)
+        //    {
+        //        using (var gammaa = Gamma(x))
+        //            result.Div(gammaa);
+        //    }
+        //    return result;
 
-        public static BigFloat GammaLower(BigFloat a, BigFloat x)
-        {
-            var result = BigFloatFactory.Create(1.0);
-            using (var upper = GammaUpper(a, x))
-                result.Sub(upper);
-            return result;
-        }
+        //    void CrossLibSet(Math.Mpfr.Native.mpfr_t rop, BigFloat op)
+        //    {
+        //        var astr = new Math.Gmp.Native.char_ptr(op.ToString("b16d0", System.Globalization.CultureInfo.InvariantCulture));
+        //        try
+        //        {
+        //            Math.Mpfr.Native.mpfr_lib.mpfr_set_str(rop, astr, 16, Math.Mpfr.Native.mpfr_rnd_t.MPFR_RNDN);
+        //        }
+        //        finally
+        //        {
+        //            Math.Gmp.Native.gmp_lib.free(astr);
+        //        }
+        //    }
+        //}
+
+        //public static BigFloat GammaLower(BigFloat a, BigFloat x)
+        //{
+        //    var result = BigFloatFactory.Create(1.0);
+        //    using (var upper = GammaUpper(a, x))
+        //        result.Sub(upper);
+        //    return result;
+        //}
 
         public static BigFloat ReciprocalFactorialMinus1(BigFloat x)
         {
