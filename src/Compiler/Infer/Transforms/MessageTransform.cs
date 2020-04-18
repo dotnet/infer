@@ -2463,8 +2463,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
             }
             Type domainType = Distribution.GetDomainType(marginalType);
-            Type messageType = GetDistributionType(ci.channelType, domainType, marginalType, 0, distArraysDepth, useFileArrayAtDepth);
-            return messageType;
+            try
+            {
+                return GetDistributionType(ci.channelType, domainType, marginalType, 0, distArraysDepth, useFileArrayAtDepth);
+            }
+            catch(Exception ex)
+            {
+                Error(ex.Message);
+                return ci.channelType;
+            }
         }
 
         /// <summary>

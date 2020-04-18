@@ -4517,6 +4517,24 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "CsoftModel")]
+        public void InferObservedArray3DTest()
+        {
+            InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
+            double[,,] array3D = new double[,,] { { { 2.5 } } };
+            var ca = engine.Compiler.Compile(Array3DModel, array3D);
+            ca.Execute(1);
+            var actual = ca.Marginal<PointMass<double[,,]>>("array3D");
+            Assert.Equal(array3D[0, 0, 0], actual.Point[0, 0, 0]);
+        }
+
+        private void Array3DModel(double[,,] array3D)
+        {
+            InferNet.Infer(array3D, nameof(array3D));
+        }
+
+        [Fact]
         public void InferUniformDiscreteFromDirichletTest()
         {
             int numStates = 3;
