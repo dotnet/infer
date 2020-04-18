@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <remarks>Assumes a Com-Poisson precision of 1.0</remarks>
         public void Add(Poisson item)
         {
-            if (item.Precision != 1.0)
+            if (!item.IsPointMass && item.Precision != 1.0)
                 throw new InferRuntimeException("Poisson estimator does not support a non-unity precision");
             Add(item.GetMean());
         }

@@ -143,32 +143,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return ist;
         }
 
-        protected override IParameterDeclaration ConvertMethodParameter(IParameterDeclaration ipd, int index)
-        {
-            ProcessConstant(ipd);
-            if (!context.InputAttributes.Has<DescriptionAttribute>(ipd))
-                context.OutputAttributes.Set(ipd, new DescriptionAttribute("The observed value of '" + ipd.Name + "'"));
-            return base.ConvertMethodParameter(ipd, index);
-        }
-
-        private void ProcessConstant(object decl)
-        {
-            if (context.InputAttributes.Has<IsInferred>(decl))
-            {
-                VariableInformation vi = VariableInformation.GetVariableInformation(context, decl);
-                vi.DefineAllIndexVars(context);
-                MarginalPrototype mpa = Context.InputAttributes.Get<MarginalPrototype>(decl);
-                if (!vi.SetMarginalPrototypeFromAttribute(mpa, throwIfMissing: false))
-                {
-                    IExpression varRef = null;
-                    if (decl is IVariableDeclaration) varRef = Builder.VarRefExpr((IVariableDeclaration) decl);
-                    else if (decl is IParameterDeclaration) varRef = Builder.ParamRef((IParameterDeclaration) decl);
-                    else throw new NotImplementedException();
-                    vi.marginalPrototypeExpression = Builder.NewObject(typeof (PointMass<>).MakeGenericType(vi.varType), varRef);
-                }
-            }
-        }
-
         private VariableToChannelInformation DeclareUsesArray(IList<IStatement> stmts, IVariableDeclaration ivd, VariableInformation vi, int useCount, int usageDepth)
         {
             // Create AnyIndex expressions up to usageDepth
@@ -192,7 +166,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IVariableDeclaration usesDecl = vi.DeriveArrayVariable(stmts, context, prefix + "_uses", Builder.LiteralExpr(useCount), Builder.VarDecl("_ind", typeof (int)),
                                                                    prefixSizes, prefixVars, useLiteralIndices: true);
             context.OutputAttributes.Remove<ChannelInfo>(usesDecl);
-            SetMarginalPrototype(usesDecl);
             ChannelInfo ci = ChannelInfo.UseChannel(vi);
             ci.decl = usesDecl;
             context.OutputAttributes.Set(usesDecl, ci);
@@ -201,21 +174,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             vtci.usageDepth = usageDepth;
             usesOfVariable[ivd] = vtci;
             return vtci;
-        }
-
-        private void SetMarginalPrototype(IVariableDeclaration ivd)
-        {
-            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
-            // Ensure the marginal prototype is set.
-            MarginalPrototype mpa = Context.InputAttributes.Get<MarginalPrototype>(ivd);
-            try
-            {
-                vi.SetMarginalPrototypeFromAttribute(mpa);
-            }
-            catch (ArgumentException ex)
-            {
-                Error(ex.Message);
-            }
         }
 
         protected override IExpression ConvertAssign(IAssignExpression iae)
@@ -247,11 +205,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(target);
             if (ivd == null) return;
             VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
-            if (!vi.IsStochastic)
-            {
-                ProcessConstant(ivd);
-                return;
-            }
+            if (!vi.IsStochastic) return;
             bool isEvidenceVar = context.InputAttributes.Has<DoNotSendEvidence>(ivd);
             if (SwapIndices && replicateEvidenceVars != isEvidenceVar) return;
             // iae defines a stochastic variable
@@ -421,25 +375,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             context.InputAttributes.Remove<Containers>(ivde.Variable);
             context.InputAttributes.Set(ivde.Variable, new Containers(context));
-            IVariableDeclaration ivd = ivde.Variable;
-            if (!CodeRecognizer.IsStochastic(context, ivd))
-            {
-                ProcessConstant(ivd);
-                if (!context.InputAttributes.Has<DescriptionAttribute>(ivd))
-                    context.OutputAttributes.Set(ivd, new DescriptionAttribute("The constant '" + ivd.Name + "'"));
-                return ivde;
-            }
-            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
-            // Ensure the marginal prototype is set.
-            MarginalPrototype mpa = Context.InputAttributes.Get<MarginalPrototype>(ivd);
-            try
-            {
-                vi.SetMarginalPrototypeFromAttribute(mpa);
-            }
-            catch (ArgumentException ex)
-            {
-                Error(ex.Message);
-            }
             return ivde;
         }
 
@@ -493,7 +428,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (usesOfVariable.TryGetValue(ivd, out vtci))
             {
                 IExpression usageIndex = Builder.LiteralExpr(GetUseNumber(ivd, vtci));
-                ChannelInfo ci = context.OutputAttributes.Get<ChannelInfo>(vtci.usesDecl);
                 IExpression newExpr = Builder.VarRefExpr(vtci.usesDecl);
                 if (vtci.usageDepth > indices.Count) Error("usageDepth (" + vtci.usageDepth + ") > indices.Count (" + indices.Count + ")");
                 // append the indices up to the usageDepth

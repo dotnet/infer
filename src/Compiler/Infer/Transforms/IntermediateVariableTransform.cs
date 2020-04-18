@@ -9,6 +9,11 @@ using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
+    /// <summary>
+    /// Support MSL from the API by mapping identical expressions to a new intermediate variable.
+    /// If this isn't done, multiple intermediate get introduced and the gate transform complains that
+    /// defintions don't match declaration as it can't tell that the variables are identical.
+    /// </summary>
     internal class IntermediateVariableTransform : ShallowCopyTransform
     {
         public override string Name { get { return "IntermediateVariableTransform"; } }
@@ -64,9 +69,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private IExpression MakeIntermediateVariable(IExpression input)
         {
-            // support MSL from the API by making sure that identical expressions share an intermediate variable
-            // if this isn't done, multiple intermediate get introduced and the gate transform complains that
-            // defintions don't match declaration as it can't tell that the variables are identical
             IVariableDeclaration varDecl;
             if (!replacements.TryGetValue(input, out varDecl))
             {

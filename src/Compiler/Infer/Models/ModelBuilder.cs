@@ -827,9 +827,8 @@ namespace Microsoft.ML.Probabilistic.Models
             stBlocks.AddRange(variable.Containers);
 
             IVariableDeclarationExpression ivde = Builder.VarDeclExpr(ivd);
-            if (variable is IVariableArray)
+            if (variable is IVariableArray iva)
             {
-                IVariableArray iva = (IVariableArray) variable;
                 IList<IStatement> sc = Builder.StmtCollection();
                 IList<IVariableDeclaration[]> jaggedIndexVars;
                 IList<IExpression[]> jaggedSizes;
@@ -938,6 +937,12 @@ namespace Microsoft.ML.Probabilistic.Models
             jaggedSizes = new List<IExpression[]>();
             while (true)
             {
+                Type arrayType = array.GetExpression().GetExpressionType();
+                Type elementType = Util.GetElementType(arrayType, out int rank);
+                if (!arrayType.IsAssignableFrom(Util.MakeArrayType(elementType, rank)))
+                {
+                    break;
+                }
                 IVariableDeclaration[] indexVars;
                 IExpression[] sizes;
                 GetArrayIndicesAndSizes(array, out indexVars, out sizes);
@@ -1003,25 +1008,14 @@ namespace Microsoft.ML.Probabilistic.Models
 
         private void FinishGivenOrConstant(Variable variable, object decl)
         {
-            if (variable is IVariableArray)
+            if (variable is IVariableArray iva)
             {
                 // attach a VariableInformation attribute that holds the array sizes
                 // this is needed because the array size never appears in the code
-                IVariableArray iva = (IVariableArray)variable;
                 IList<IVariableDeclaration[]> jaggedIndexVars;
                 IList<IExpression[]> jaggedSizes;
                 GetJaggedArrayIndicesAndSizes(iva, out jaggedIndexVars, out jaggedSizes);
-                IVariableDeclaration ivd;
-                if(decl is IParameterDeclaration)
-                {
-                    IParameterDeclaration ipd = (IParameterDeclaration)decl;
-                    ivd = Builder.VarDecl(ipd.Name, ipd.ParameterType);
-                }
-                else
-                {
-                    ivd = (IVariableDeclaration)decl;
-                }
-                var vi = new VariableInformation(ivd);
+                var vi = new VariableInformation(decl);
                 vi.sizes.AddRange(jaggedSizes);
                 vi.indexVars.AddRange(jaggedIndexVars);
                 Attributes.Set(decl, vi);

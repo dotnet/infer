@@ -190,12 +190,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
         {
             if (exception.InnerException == null)
             {
-                exception = (Exception) Activator.CreateInstance(exception.GetType(), message);
+                exception = (Exception)Activator.CreateInstance(exception.GetType(), message);
             }
             else
             {
                 // must only try this when InnerException!=null
-                exception = (Exception) Activator.CreateInstance(exception.GetType(), message, exception.InnerException);
+                exception = (Exception)Activator.CreateInstance(exception.GetType(), message, exception.InnerException);
             }
             return exception;
         }
@@ -205,9 +205,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             ParameterInfo[] parameters = method.GetParameters();
             string[][] lines = new string[5][];
             lines[0] = new string[parameters.Length + 2];
-            lines[1] = new string[] {" "};
+            lines[1] = new string[] { " " };
             lines[2] = new string[parameters.Length + 2];
-            lines[3] = new string[] {" "};
+            lines[3] = new string[] { " " };
             lines[4] = new string[parameters.Length + 2];
             lines[0][0] = "Parameter";
             lines[0][1] = "---------";
@@ -428,7 +428,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
         /// <remarks>Each element of the stream is the same object as <paramref name="binding"/>, but modified to (possibly) 
         /// include more bindings.  <paramref name="binding"/> is returned to its original state at the end of the stream.</remarks>
         public static IEnumerator<Binding> InferGenericParameters(Type[] formals, Type[] actuals, Binding binding, IList<Exception> errors, int start, int position,
-                                                                  bool isMethodCall, Func<int,bool> allowSubtype, ConversionOptions conversionOptions)
+                                                                  bool isMethodCall, Func<int, bool> allowSubtype, ConversionOptions conversionOptions)
         {
             if (formals.Length != actuals.Length)
             {
@@ -490,7 +490,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 if (!binding.Types.TryGetValue(formal, out boundFormal))
                 {
                     // formal is not bound
-                    if (actual == typeof (Nullable))
+                    if (actual == typeof(Nullable))
                     {
                         // nothing to infer
                         yield return binding;
@@ -541,7 +541,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                     // fall through
                 }
             }
-            if (isReplaced || !formal.ContainsGenericParameters || actual == typeof (Nullable) || GenericParameterFactory.IsConstructedParameter(actual))
+            if (isReplaced || !formal.ContainsGenericParameters || actual == typeof(Nullable) || GenericParameterFactory.IsConstructedParameter(actual))
             {
                 // no more substitutions are possible in formal.
                 Conversion conv;
@@ -616,15 +616,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 // we consider all supertypes of actual having the form C<U> and then try to match (T,U).
                 Type formalGenericTypeDefinition = formal.GetGenericTypeDefinition();
                 Type[] formalArgs = formal.GetGenericArguments();
-                bool includeIList = formalGenericTypeDefinition.Equals(typeof (IList<>));
+                bool includeIList = formalGenericTypeDefinition.Equals(typeof(IList<>));
                 IEnumerable<Type> choices;
                 if (allowSubtype) choices = TypesAssignableFrom(actual, includeIList);
                 else
                 {
-                    choices = new Type[] {actual};
+                    choices = new Type[] { actual };
                 }
                 Type[] formalDefArgs = formalGenericTypeDefinition.GetGenericArguments();
-                Func<int,bool> parameterIsCovariant = i => (formalDefArgs[i].GenericParameterAttributes & GenericParameterAttributes.Covariant) != 0;
+                Func<int, bool> parameterIsCovariant = i => (formalDefArgs[i].GenericParameterAttributes & GenericParameterAttributes.Covariant) != 0;
                 int subclassCount = 0;
                 bool anyMatch = false;
                 List<Exception> innerErrors = new List<Exception>();
@@ -707,7 +707,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             bool isObject = false;
             for (Type baseType = type; baseType != null; baseType = baseType.BaseType)
             {
-                if (baseType.Equals(typeof (object)))
+                if (baseType.Equals(typeof(object)))
                 {
                     isObject = true;
                     break;
@@ -731,10 +731,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                         isFirst = false;
                         continue;
                     }
-                    yield return typeof (IList<>).MakeGenericType(super);
+                    yield return typeof(IList<>).MakeGenericType(super);
                 }
             }
-            if (isObject) yield return typeof (object);
+            if (isObject) yield return typeof(object);
         }
 
         /// <summary>
@@ -827,36 +827,27 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             MethodInfo info = method as MethodInfo;
             if (info == null) return method;
             if (!info.ContainsGenericParameters) return method;
-            Type[] args = Array.ConvertAll<Type, Type>(info.GetGenericArguments(), delegate(Type arg)
+            Type[] args = Array.ConvertAll(info.GetGenericArguments(), delegate (Type arg)
+            {
+                if (!arg.IsGenericParameter) return arg;
+                else
                 {
-                    if (!arg.IsGenericParameter) return arg;
+                    Type bound;
+                    // if the actuals contain constructed type parameters, then these may also be bound, so
+                    // we need to call Bind(bound)
+                    if (Types.TryGetValue(arg, out bound)) return Bind(bound);
                     else
                     {
-                        Type bound;
-                        // if the actuals contain constructed type parameters, then these may also be bound, so
-                        // we need to call Bind(bound)
-                        if (Types.TryGetValue(arg, out bound)) return Bind(bound);
-                        else
-                        {
-                            Type[] constraints = arg.GetGenericParameterConstraints();
-                            if (constraints.Length == 0) return typeof (object);
-                            else return Bind(constraints[0]);
-                        }
+                        Type[] constraints = arg.GetGenericParameterConstraints();
+                        if (constraints.Length == 0) return typeof(object);
+                        else return Bind(constraints[0]);
                     }
-                });
+                }
+            });
             if (args.Length == 0) return method;
             else
             {
-                MethodBase rtn = null;
-                try
-                {
-                    rtn = info.GetGenericMethodDefinition().MakeGenericMethod(args);
-                }
-                catch
-                {
-                    rtn = method;
-                }
-                return rtn;
+                return info.GetGenericMethodDefinition().MakeGenericMethod(args);
             }
         }
 
@@ -939,7 +930,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
     public class ConversionOptions
     {
         public static ConversionOptions NoConversions = new ConversionOptions();
-        public static ConversionOptions AllConversions = new ConversionOptions() {AllowImplicitConversions = true, AllowExplicitConversions = true};
+        public static ConversionOptions AllConversions = new ConversionOptions() { AllowImplicitConversions = true, AllowExplicitConversions = true };
 
         public bool AllowImplicitConversions;
         public bool AllowExplicitConversions;
@@ -993,7 +984,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             public static Constraints FromTypeParameter(Type typeParam, IDictionary<Type, Type> typeMap)
             {
                 Type[] constraints = typeParam.GetGenericParameterConstraints();
-                constraints = Array.ConvertAll<Type, Type>(constraints, delegate(Type tt) { return Binding.ReplaceTypeParameters(tt, typeMap); });
+                constraints = Array.ConvertAll<Type, Type>(constraints, delegate (Type tt) { return Binding.ReplaceTypeParameters(tt, typeMap); });
                 Constraints result = new Constraints();
                 result.attributes = typeParam.GenericParameterAttributes;
                 foreach (Type c in constraints)
@@ -1127,7 +1118,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             indexOfParam[ThisType] = count++;
             foreach (Type t in types)
             {
-                ForEachTypeParameterIncludingConstraints(t, delegate(Type param)
+                ForEachTypeParameterIncludingConstraints(t, delegate (Type param)
                     {
                         if (!indexOfParam.ContainsKey(param))
                         {
@@ -1145,7 +1136,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
 
         public static void ForEachTypeParameterIncludingConstraints(Type t, Predicate<Type> visit)
         {
-            Binding.ForEachTypeParameter(t, delegate(Type param)
+            Binding.ForEachTypeParameter(t, delegate (Type param)
                 {
                     if (visit(param))
                     {
@@ -1200,7 +1191,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                     // therefore we create a dummy first method.
                     MethodBuilder dummy = parentType.DefineMethod("dummy", MethodAttributes.Public | MethodAttributes.Static);
                     dummy.SetParameters();
-                    dummy.SetReturnType(typeof (void));
+                    dummy.SetReturnType(typeof(void));
                     ILGenerator ilg = dummy.GetILGenerator();
                     ilg.Emit(OpCodes.Ret);
                 }
@@ -1237,7 +1228,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                         typeParams[entry.Value].SetInterfaceConstraints(interfaceConstraints.ToArray());
                     }
                     myMethod.SetParameters();
-                    myMethod.SetReturnType(typeof (void));
+                    myMethod.SetReturnType(typeof(void));
                     ILGenerator ilg = myMethod.GetILGenerator();
                     ilg.Emit(OpCodes.Ret);
                 }

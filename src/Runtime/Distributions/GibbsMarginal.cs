@@ -140,7 +140,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (collectSamples)
             {
                 // The sample list
-                Accumulator<T> sampAcc = new SampleList<T>() as Accumulator<T>;
+                Accumulator<T> sampAcc = new SampleList<T>();
                 // Add to the list of sample accumulators. 
                 // This is this first in the list - do not change as some code depends on this
                 this.sampleAccumulators.Accumulators.Add(new BurnInAccumulator<T>(burnIn, thin, sampAcc));
@@ -148,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (collectDistributions)
             {
                 // The conditional list
-                Accumulator<TDist> condAcc = new ConditionalList<TDist>() as Accumulator<TDist>;
+                Accumulator<TDist> condAcc = new ConditionalList<TDist>();
                 // Add to the list of distribution accumulators. 
                 // This is this first in the list - do not change as some code depends on this
                 this.distribAccumulators.Accumulators.Add(new BurnInAccumulator<TDist>(burnIn, thin, condAcc));
@@ -168,13 +168,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 if (this.Estimator == null)
                 {
                     this.Estimator = ArrayEstimator.CreateEstimator<TDist, T>(distPrototype, false);
-                    Accumulator<T> acc = this.Estimator as Accumulator<T>;
+                    Accumulator<T> acc = (Accumulator<T>)this.Estimator;
                     // Thinning is always 1 for estimators
                     this.sampleAccumulators.Accumulators.Add(new BurnInAccumulator<T>(burnIn, 1, acc));
                 }
                 else
                 {
-                    Accumulator<TDist> acc = this.Estimator as Accumulator<TDist>;
+                    Accumulator<TDist> acc = (Accumulator<TDist>)this.Estimator;
                     // Thinning is always 1 for estimators
                     this.distribAccumulators.Accumulators.Add(new BurnInAccumulator<TDist>(burnIn, 1, acc));
                 }

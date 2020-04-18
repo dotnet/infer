@@ -141,150 +141,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(GibbsMarginal<,>));
         }
 
-        private static bool IsPointMass(Type type)
+        public static bool IsPointMass(Type type)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(PointMass<>));
         }
 
-        /// <summary>
-        /// Adds statements to declare and set the marginal of an inferred constant variable or method parameter.
-        /// </summary>
-        /// <param name="decl">The variable's declaration</param>
-        /// <param name="varRef">A reference to the variable, for use in expressions</param>
-        /// <param name="outputs">Receives the new statements</param>
-        private void AddMarginalStatements(object decl, IExpression varRef, IList<IStatement> outputs)
-        {
-            if (!context.InputAttributes.Has<IsInferred>(decl)) return;
-            VariableInformation vi = context.InputAttributes.Get<VariableInformation>(decl);
-            if (vi.marginalPrototypeExpression == null)
-            {
-                Error(vi + " has no marginal prototype");
-                return;
-            }
-            string name = varRef.ToString();
-            var channelInfo = ChannelInfo.MarginalChannel(vi);
-
-            ChannelToMessageInfo ctmi = ctmi = new ChannelToMessageInfo();
-            context.InputAttributes.Set(decl, new ObservedVariableMessages(ctmi));
-
-#if true
-            // The following code is based on ConvertVariableDeclExpr
-            var cpas = context.InputAttributes.GetAll<ChannelPathAttribute>(decl).ToArray();
-            foreach (MessageDirection direction in directions)
-            {
-                MessageArrayInformation mai = UseMessageAnalysis
-                                                  ? CreateMessageVariable2(name, channelInfo, ctmi, direction, cpas)
-                                                  : CreateMessageVariable(name, channelInfo, ctmi, direction, cpas);
-                if (mai == null) continue;
-                context.OutputAttributes.Set(mai.decl, new Containers(context));
-                // Make the declaration expression for the message array variable
-                IExpressionStatement stmt = MakeDeclStatement(channelInfo, mai);
-                // This will be a declaration expression if this is an array and
-                // a declaration with assignment otherwise
-                if (InitializeOnSeparateLine && stmt.Expression is IAssignExpression)
-                {
-                    IAssignExpression iae = (IAssignExpression)stmt.Expression;
-                    outputs.Add(Builder.ExprStatement(iae.Target));
-                    iae.Target = Builder.VarRefExpr(mai.decl);
-                    outputs.Add(Builder.ExprStatement(iae));
-                }
-                else outputs.Add(stmt);
-                if (direction == MessageDirection.Forwards)
-                {
-                    Type messageType = mai.decl.VariableType.DotNetType;
-                    if(IsGibbsMarginal(messageType))
-                    {
-                        IStatement updateStmt = Builder.ExprStatement(Builder.Method(Builder.VarRefExpr(mai.decl), new Action(new GibbsMarginal<Gaussian,double>(new Gaussian(), 0, 0, false, false, false).PostUpdate)));
-                        outputs.Add(updateStmt);
-                    }
-                    else if(mai.isDistribution)
-                    {
-                        // This will throw when messageType is GibbsMarginal
-                        Type messageDomainType = Distribution.GetDomainType(messageType);
-                        IExpression distributionExpr = Builder.StaticGenericMethod(new Func<Bernoulli, bool, Bernoulli>(Distribution.SetPoint),
-                                                                                   new Type[] { messageType, messageDomainType }, Builder.VarRefExpr(mai.decl), varRef);
-                        IStatement assignSt = Builder.AssignStmt(Builder.VarRefExpr(mai.decl), distributionExpr);
-                        //context.OutputAttributes.Set(assignSt, new OperatorMethod());
-                        outputs.Add(assignSt);
-                    }
-                }
-            }
-#else
-            Type distType = vi.marginalPrototypeExpression.GetExpressionType();
-            Type domainType = Distribution.GetDomainType(distType);
-            int arrayDepth = Util.GetArrayDepth(vi.varType, domainType);
-            Type messageType;
-            try
-            {
-                messageType = GetDistributionType(vi.varType, domainType, distType, true);
-            }
-            catch (Exception ex)
-            {
-                Error(ex.Message, ex);
-                return;
-            }
-            IVariableDeclaration uniformDecl = Builder.VarDecl(vi.Name + "_uniform", messageType);
-            VariableInformation uniformVarInfo = new VariableInformation(uniformDecl);
-            context.OutputAttributes.Set(uniformDecl, uniformVarInfo);
-            IVariableDeclaration marginalDecl = Builder.VarDecl(vi.Name + "_marginal", messageType);
-            VariableInformation marginalVarInfo = new VariableInformation(marginalDecl);
-            context.OutputAttributes.Set(marginalDecl, marginalVarInfo);
-            bool isPointMass = (messageType.Name == typeof(PointMass<>).Name);
-            if (isPointMass)
-            {
-                IObjectCreateExpression ioce = Builder.NewObject(messageType, varRef);
-                outputs.Add(Builder.AssignStmt(Builder.VarDeclExpr(uniformDecl), ioce));
-                outputs.Add(Builder.AssignStmt(Builder.VarDeclExpr(marginalDecl), ioce));
-            }
-            else
-            {
-                IExpression uniformExpr = MakeUniform(vi.marginalPrototypeExpression);
-                if (true)
-                {
-                    vi.DefineSizesUpToDepth(context, arrayDepth);
-                    vi.DefineIndexVarsUpToDepth(context, arrayDepth);
-                    marginalVarInfo.sizes.AddRange(vi.sizes);
-                    marginalVarInfo.indexVars.AddRange(vi.indexVars);
-                }
-                IExpression messageExpr = GetDistributionArrayCreateExpression(vi.varType, domainType, uniformExpr, marginalVarInfo);
-                // Distribution.SetPoint<mpe.ExprType,ipd.ParameterType>(ArrayHelper.MakeUniform(mpe), ipd)
-                IStatement uniformSt = Builder.AssignStmt(Builder.VarDeclExpr(uniformDecl), messageExpr);
-                //context.OutputAttributes.Set(initSt, new Initializer());
-                outputs.Add(uniformSt);
-                IStatement initSt = Builder.AssignStmt(Builder.VarDeclExpr(marginalDecl), messageExpr);
-                context.OutputAttributes.Set(initSt, new Initializer());
-                outputs.Add(initSt);
-                Type messageDomainType = Distribution.GetDomainType(messageType);
-                IExpression distributionExpr = Builder.StaticGenericMethod(new Func<Bernoulli, bool, Bernoulli>(Distribution.SetPoint),
-                                                                           new Type[] { messageType, messageDomainType }, Builder.VarRefExpr(marginalDecl), varRef);
-                IStatement assignSt = Builder.AssignStmt(Builder.VarRefExpr(marginalDecl), distributionExpr);
-                //context.OutputAttributes.Set(assignSt, new OperatorMethod());
-                outputs.Add(assignSt);
-            }
-            // Attach an attribute to be used by ConvertInfer
-            var ci = ChannelInfo.UseChannel(vi);
-            MessageArrayInformation uniformMai = new MessageArrayInformation();
-            uniformMai.decl = uniformDecl;
-            uniformMai.ci = ci;
-            MessageArrayInformation marginalMai = new MessageArrayInformation();
-            marginalMai.decl = marginalDecl;
-            marginalMai.ci = ci;
-            ctmi.fwd = marginalMai;
-            ctmi.bck = uniformMai;
-            context.InputAttributes.Set(uniformDecl, uniformMai);
-            context.InputAttributes.Set(marginalDecl, marginalMai);
-#endif
-        }
-
         protected override void DoConvertMethodBody(IList<IStatement> outputs, IList<IStatement> inputs)
         {
-            // create marginals for inferred method parameters
-            IMethodDeclaration imd = context.FindAncestor<IMethodDeclaration>();
-            foreach (IParameterDeclaration ipd in imd.Parameters)
-            {
-                IExpression varRef = Builder.ParamRef(ipd);
-                AddMarginalStatements(ipd, varRef, outputs);
-            }
             if (UseMessageAnalysis)
             {
                 // create factory variables
@@ -366,6 +229,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (info.IsVoid != !isAssignment)
             {
                 if (info.IsVoid) Error("A void function cannot be used in an assignment");
+                else if (context.InputStack[context.InputStack.Count - 2].inputElement is IExpressionStatement)
+                    Error("The return value of a non-void function must be assigned to a variable");
                 else Error("Nested function calls are not allowed. Create a temporary variable for each function result");
                 return imie;
             }
@@ -796,7 +661,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 argumentTypes[resultName] = resultElementType;
                 // Get the expressions for all the arguments to the operator
                 List<IExpression> args = GetOperatorArguments(alg, info, fninfo, mi, msgInfo, argumentTypes, isStochastic, isVariableFactor);
-                VariableInformation vi = VariableInformation.GetVariableInformation(context, mi.channelDecl);
+                VariableInformation vi = VariableInformation.GetVariableInformation(context, (mi.channelDecl != null) ? mi.channelDecl : Recognizer.GetVariableDeclaration(mi.messageToFactor));
                 int depth = Recognizer.GetIndexingDepth(mi.messageFromFactor);
                 vi.DefineIndexVarsUpToDepth(context, depth + 1);
                 IVariableDeclaration indexVar = vi.indexVars[depth][0];
@@ -974,11 +839,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 //   x = f(y);
                 // to:
                 //   x = SetPoint(x,f(y));
-                assignExpr.Expression = Builder.StaticGenericMethod(
-                    new Func<Bernoulli, bool, Bernoulli>(Distribution.SetPoint<Bernoulli, bool>),
-                    new Type[] { lhsType, rhsType },
-                    assignExpr.Target,
-                    assignExpr.Expression);
+                assignExpr.Expression = SetPointExpression(assignExpr.Target, lhsType, assignExpr.Expression, rhsType);
             }
 
             string argName = "'" + targetParameter + "'";
@@ -1043,7 +904,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (resultType.IsArray)
                 {
                     Type eltType = resultType.GetElementType();
-                    if (Distribution.IsDistributionType(eltType))
+                    if (Distribution.IsDistributionType(eltType) && Distribution.IsSettableTo(eltType, argToBeCopied.GetExpressionType()))
                     {
                         if (resultType.GetArrayRank() != 1) throw new NotSupportedException("array rank > 1 is not supported in this context");
                         return Builder.StaticGenericMethod(new Func<Bernoulli[], Bernoulli[], Bernoulli[]>(ArrayHelper.SetTo),
@@ -1056,7 +917,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 else
                 {
                     // must use IsDistributionType here, not IsSettableTo, because only DistributionTypes are guaranteed to be initialized
-                    if (Distribution.IsDistributionType(resultType))
+                    if (Distribution.IsDistributionType(resultType) && Distribution.IsSettableTo(resultType, argToBeCopied.GetExpressionType()))
+                        // TODO: find the appropriate generic type parameter, similar to SetPointExpression
                         return Builder.StaticGenericMethod(new Func<Bernoulli, Bernoulli, Bernoulli>(ArrayHelper.SetTo),
                                                            new Type[] { resultType }, msg, argToBeCopied);
                     else
@@ -1342,17 +1204,25 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 //   x = f(y);
                 // to:
                 //   x = SetPoint(x,f(y));
-                try
-                {
-                    ae.Expression = Builder.StaticGenericMethod(new Func<Bernoulli, bool, Bernoulli>(Distribution.SetPoint<Bernoulli, bool>),
-                                                                new Type[] { lhsType, rhsType }, ae.Target, ae.Expression);
-                }
-                catch
-                {
-                    Error("Cannot call SetPoint on " + StringUtil.TypeToString(lhsType));
-                }
+                ae.Expression = SetPointExpression(ae.Target, lhsType, ae.Expression, rhsType);
             }
             return ae;
+        }
+
+        private IExpression SetPointExpression(IExpression target, Type targetType, IExpression expression, Type expressionType)
+        {
+            try
+            {
+                Type hasPoint = targetType.GetInterface(typeof(HasPoint<>).Name);
+                expressionType = hasPoint.GetGenericArguments()[0];
+                return Builder.StaticGenericMethod(new Func<Bernoulli, bool, Bernoulli>(Distribution.SetPoint),
+                                                            new Type[] { targetType, expressionType }, target, expression);
+            }
+            catch (Exception ex)
+            {
+                Error("Cannot call SetPoint on " + StringUtil.TypeToString(targetType), ex);
+                return expression;
+            }
         }
 
         protected IExpression ConvertInfer(IMethodInvokeExpression imie)
@@ -1430,6 +1300,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 vi = VariableInformation.GetVariableInformation(context, channelInfo.decl);
             }
             else vi = channelInfo.varInfo;
+            if (vi.marginalPrototypeExpression == null)
+            {
+                try
+                {
+                    vi.SetMarginalPrototypeFromAttribute(null);
+                }
+                catch (Exception ex)
+                {
+                    Error(ex.Message);
+                }
+            }
             IExpression prototypeExpression = vi.marginalPrototypeExpression;
             IExpression mpe = algorithm.GetMessagePrototype(channelInfo, direction, prototypeExpression, null, qtlist);
             Type innermostType = mpe.GetExpressionType();
@@ -1464,7 +1345,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
             }
             // See if this is a distribution
-            bool isDistribution = Distribution.IsDistributionType(innermostType) && !IsPointMass(innermostType);
+            bool isDistribution = Distribution.IsDistributionType(innermostType) && Distribution.GetDomainType(innermostType).Equals(Distribution.GetDomainType(prototypeExpression.GetExpressionType()));
 
             // Cache the message type
             bool isGibbsMarginal = false;
@@ -1638,9 +1519,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // identifies a non-stochastic variable
             if (channelInfo == null)
             {
-                IList<IStatement> stmts = Builder.StmtCollection();
-                AddMarginalStatements(ivd, Builder.VarRefExpr(ivd), stmts);
-                context.AddStatementsBeforeCurrent(stmts);
                 return ivde; // The variable is constant.
             }
             // ChannelToMessageInfo records any info needed to convert channels to messages
@@ -1694,12 +1572,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Context.OutputAttributes.Set(ivde, new QualityBandCompilerAttribute(qb));
             }
 
-            VariableInformation channelVarInfo = (channelInfo.decl != null) 
-                ? context.InputAttributes.Get<VariableInformation>(channelInfo.decl) 
+            VariableInformation channelVarInfo = (channelInfo.decl != null)
+                ? context.InputAttributes.Get<VariableInformation>(channelInfo.decl)
                 : channelInfo.varInfo;
             // Note: sizes.Count != ArrayDepth in general
-            // If this variable has sizes, then it must have array create expressions, which will be handled by DoConvertArray
-            if (channelVarInfo.sizes.Count == 0)
+            // If this variable has sizes, then it must have array create expressions, which will be handled by DoConvertArray.
+            // However, !mai.isDistribution implies DoConvertArray will always have elementInit==null and generates no statements.
+            if (channelVarInfo.sizes.Count == 0 || (!mai.isDistribution && !(algorithm is GibbsSampling)))
             {
                 InitialiseTo it = context.InputAttributes.Get<InitialiseTo>(mai.decl);
                 bool userInitialized = (it != null);
@@ -1719,8 +1598,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 else if (!UseMessageAnalysis && mai.isDistribution) expr = MakeUniform(mai.marginalPrototypeExpression);
                 else expr = mai.marginalPrototypeExpression;
-                if (expr != null && msgType.IsAssignableFrom(expr.GetExpressionType()))
+                if (expr != null)
                 {
+                    if (!msgType.IsAssignableFrom(expr.GetExpressionType()))
+                        Error($"Invalid initializer: {ivde} = {expr}");
                     IExpressionStatement init = Builder.AssignStmt(ivde, expr);
                     context.OutputAttributes.Set(init, new Initializer() { UserInitialized = userInitialized });
                     return init;
@@ -1814,7 +1695,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="outputLhs">Expression on the LHS</param>
         /// <param name="iace">Expression on the RHS</param>
         /// <param name="depth">Number of indexing brackets on the LHS</param>
-        /// <param name="ci"></param>
+        /// <param name="ci">Attribute of ivd</param>
         /// <param name="ctmi">Attribute of ivd</param>
         /// <returns></returns>
         private IExpression DoConvertArray(
@@ -1858,25 +1739,28 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (direction == MessageDirection.Forwards)
                 {
-                    if (mpe is IObjectCreateExpression && IsGibbsMarginal(messageType))
+                    if (mpe is IObjectCreateExpression ioce && IsGibbsMarginal(messageType))
                     {
                         if (depth > 0) return null;
                         InitialiseTo it = context.InputAttributes.Get<InitialiseTo>(mai.decl);
                         if (it != null)
                             AddGibbsMarginalInitStatements(Builder.VarRefExpr(mai.decl), it.initialMessagesExpression, channelVarInfo);
-                        // replace the first argument of "new GibbsMarginal" with marginal_B
-                        IObjectCreateExpression ioce = (IObjectCreateExpression)mpe;
-                        IExpression messageExpression = Builder.VarRefExpr(Builder.VarRef(ctmi.bck.decl));
-                        ioce.Arguments[0] = messageExpression;
-                        IList<IExpression> newArgs = Builder.ExprCollection();
-                        newArgs.Add(messageExpression);
-                        for (int i = 1; i < ioce.Arguments.Count; i++)
+                        if (ioce.Arguments[0] is IDefaultExpression)
                         {
-                            newArgs.Add(ioce.Arguments[i]);
+                            // replace the first argument of "new GibbsMarginal" with marginal_B
+                            IExpression messageExpression = Builder.VarRefExpr(Builder.VarRef(ctmi.bck.decl));
+                            ioce.Arguments[0] = messageExpression;
+                            IList<IExpression> newArgs = Builder.ExprCollection();
+                            newArgs.Add(messageExpression);
+                            for (int i = 1; i < ioce.Arguments.Count; i++)
+                            {
+                                newArgs.Add(ioce.Arguments[i]);
+                            }
+                            IExpression initExpr = Builder.NewObject(ioce.Type, newArgs);
+                            context.OutputAttributes.Set(initExpr, new Initializer());
+                            return initExpr;
                         }
-                        IExpression initExpr = Builder.NewObject(ioce.Type, newArgs);
-                        context.OutputAttributes.Set(initExpr, new Initializer());
-                        return initExpr;
+                        else return mpe;
                     }
                 }
                 if (!mai.isDistribution)
@@ -1886,16 +1770,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
             }
 
-            Type arrayType = messageType; // type of this array
-            if (!IsGibbsMarginal(arrayType))
-            {
-                for (int i = 0; i < depth; i++)
-                {
-                    arrayType = Util.GetElementType(arrayType);
-                }
-            }
             bool isInitialiseTo = false;
-            // arrayType is now the message type of the LHS
             // If the user has specified an initializer, use it for elementInit.
             if (!(ci.IsMarginal && algorithm is GibbsSampling))
             {
@@ -1932,10 +1807,25 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             else
             {
-                domainType = mpe.GetExpressionType();
+                Type marginalType = mpe.GetExpressionType();
+                // If marginalType is PointMass<innermost channelType>, we want GetDomainType.
+                // If marginalType is innermost channelType, we do not want GetDomainType.
+                domainType = mai.isDistribution ? Distribution.GetDomainType(marginalType) : marginalType;
                 arrayDepth = Util.GetArrayDepth(ci.channelType, domainType);
             }
-            if (arrayDepth == 0 && depth == 0 && elementInit != null)
+            bool depthZeroInit = arrayDepth == 0 && depth == 0 && elementInit != null;
+            // if arrayDepth < depth+1, then DoConvertArray will have already created an initializer
+            if (arrayDepth < depth + 1 && !depthZeroInit) return null;
+            Type arrayType = messageType; // type of this array
+            if (!IsGibbsMarginal(arrayType))
+            {
+                for (int i = 0; i < depth; i++)
+                {
+                    arrayType = Util.GetElementType(arrayType);
+                }
+            }
+            // arrayType is now the message type of the LHS
+            if (depthZeroInit)
             {
                 if (isInitialiseTo)
                 {
@@ -1961,9 +1851,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     return elementInit;
                 }
             }
-            // if arrayDepth < depth+1, then DoConvertArray will have already created an initializer
-            else if (arrayDepth < depth + 1) return null;
-            if (arrayDepth == depth + 1 && elementInit != null)
+            else if (arrayDepth == depth + 1 && elementInit != null)
             {
                 if (isInitialiseTo)
                 {
@@ -2199,6 +2087,58 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return initialiser;
         }
 
+        public static IExpression GetDistributionArrayCreateExpression(Type arrayType, Type innermostElementType, IExpression innermostElementInit, VariableInformation varInfo,
+                                                                       int depth = 0)
+        {
+            // new DistributionRefArray<>(sourceArray.Length, index0 => new DistributionArray(sourceArray[index0].Length, ...))
+            if (innermostElementType.IsAssignableFrom(arrayType)) return innermostElementInit;
+            int rank;
+            Type elementType = Util.GetElementType(arrayType, out rank);
+            if (elementType == null) throw new ArgumentException(arrayType + " is not an array type with innermost element type " + innermostElementType);
+            IExpression elementInit = GetDistributionArrayCreateExpression(elementType, innermostElementType, innermostElementInit, varInfo, depth + 1);
+            IExpression initDelegate = MakeArrayInitDelegate(elementInit, varInfo.indexVars[depth]);
+            Type innerType = elementInit.GetExpressionType();
+            Type distributionType = Distribution.MakeDistributionArrayType(innerType, rank);
+            IList<IExpression> args = Builder.ExprCollection();
+            for (int i = 0; i < rank; i++)
+            {
+                args.Add(varInfo.sizes[depth][i]);
+            }
+            args.Add(initDelegate);
+            return Builder.NewObject(distributionType, args);
+        }
+
+        public static IAnonymousMethodExpression MakeArrayInitDelegate(IExpression elementInit, IVariableDeclaration[] indexVars)
+        {
+            // result has the form:  
+            //   delegate(int index1, int index2) { return elementInit; })
+            int rank = indexVars.Length;
+            Type[] typeArgs = new Type[rank + 1];
+            for (int i = 0; i < rank; i++)
+            {
+                typeArgs[i] = typeof(int);
+            }
+            typeArgs[typeArgs.Length - 1] = elementInit.GetExpressionType();
+            Type delegateType;
+            if (rank == 1) delegateType = typeof(Func<,>);
+            else if (rank == 2) delegateType = typeof(Func<,,>);
+            else if (rank == 3) delegateType = typeof(Func<,,,>);
+            else if (rank == 4) delegateType = typeof(Func<,,,,>);
+            else throw new NotImplementedException("Cannot initialize array of rank " + rank);
+            IAnonymousMethodExpression iame = Builder.AnonMethodExpr(delegateType.MakeGenericType(typeArgs));
+            iame.Body = Builder.BlockStmt();
+            for (int i = 0; i < rank; i++)
+            {
+                IVariableDeclaration indexVar = indexVars[i];
+                IParameterDeclaration param = Builder.Param(indexVar.Name, typeof(int));
+                iame.Parameters.Add(param);
+                int replaceCount = 0;
+                elementInit = Builder.ReplaceExpression(elementInit, Builder.VarRefExpr(indexVar), Builder.ParamRef(param), ref replaceCount);
+            }
+            iame.Body.Statements.Add(Builder.Return(elementInit));
+            return iame;
+        }
+
         private IExpression GetSamplingExpression(IExpression distributionExpr)
         {
             Type srcType = distributionExpr.GetExpressionType();
@@ -2312,15 +2252,36 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return new[] { fs };
         }
 
+        public static IExpression GetArrayCreateExpression(Type arrayType, IExpression elementInit, VariableInformation varInfo, int depth = 0)
+        {
+            int rank;
+            Type elementType = Util.GetElementType(arrayType, out rank);
+            IExpression initDelegate = MakeArrayInitDelegate(elementInit, varInfo.indexVars[depth]);
+            IExpression[] args = new IExpression[rank + 1];
+            for (int i = 0; i < rank; i++)
+            {
+                args[i] = varInfo.sizes[depth][i];
+            }
+            args[rank] = initDelegate;
+            if (rank == 1)
+            {
+                return Builder.StaticGenericMethod(new Func<int, Converter<int, PlaceHolder>, PlaceHolder[]>(Util.ArrayInit<PlaceHolder>), new Type[] { elementType }, args);
+            }
+            else if (rank == 2)
+            {
+                return Builder.StaticGenericMethod(new Func<int, int, Func<int, int, PlaceHolder>, PlaceHolder[,]>(Util.ArrayInit<PlaceHolder>), new Type[] { elementType }, args);
+            }
+            else
+                throw new NotImplementedException("rank > 2");
+        }
+
         protected static IExpression MakeUniform(IExpression expression)
         {
-            IExpression expr;
-            if (!Quoter.TryQuoteConstructable(null, out expr, "IsUniform", expression.GetExpressionType()))
-            {
-                expr = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(ArrayHelper.MakeUniform<PlaceHolder>),
-                                                   new Type[] { expression.GetExpressionType() }, expression);
-            }
-            return expr;
+            Type type = expression.GetExpressionType();
+            if (IsPointMass(type)) return expression;
+            if (Quoter.TryQuoteConstructable(null, out IExpression uniformExpr, "IsUniform", type)) return uniformExpr;
+            return Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(ArrayHelper.MakeUniform<PlaceHolder>),
+                                               new Type[] { type }, expression);
         }
 
         protected IExpression NewArrayFilled(Type elementType, IList<IExpression> sizes, IExpression elementExpr)
@@ -2412,81 +2373,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        public static IExpression GetArrayCreateExpression(Type arrayType, IExpression elementInit, VariableInformation varInfo, int depth = 0)
-        {
-            int rank;
-            Type elementType = Util.GetElementType(arrayType, out rank);
-            IExpression initDelegate = MakeArrayInitDelegate(elementInit, varInfo.indexVars[depth]);
-            IExpression[] args = new IExpression[rank + 1];
-            for (int i = 0; i < rank; i++)
-            {
-                args[i] = varInfo.sizes[depth][i];
-            }
-            args[rank] = initDelegate;
-            if (rank == 1)
-            {
-                return Builder.StaticGenericMethod(new Func<int, Converter<int, PlaceHolder>, PlaceHolder[]>(Util.ArrayInit<PlaceHolder>), new Type[] { elementType }, args);
-            }
-            else if (rank == 2)
-            {
-                return Builder.StaticGenericMethod(new Func<int, int, Func<int, int, PlaceHolder>, PlaceHolder[,]>(Util.ArrayInit<PlaceHolder>), new Type[] { elementType }, args);
-            }
-            else
-                throw new NotImplementedException("rank > 2");
-        }
-
-        public static IExpression GetDistributionArrayCreateExpression(Type arrayType, Type innermostElementType, IExpression innermostElementInit, VariableInformation varInfo,
-                                                                       int depth = 0)
-        {
-            // new DistributionRefArray<>(sourceArray.Length, index0 => new DistributionArray(sourceArray[index0].Length, ...))
-            if (innermostElementType.IsAssignableFrom(arrayType)) return innermostElementInit;
-            int rank;
-            Type elementType = Util.GetElementType(arrayType, out rank);
-            if (elementType == null) throw new ArgumentException(arrayType + " is not an array type with innermost element type " + innermostElementType);
-            IExpression elementInit = GetDistributionArrayCreateExpression(elementType, innermostElementType, innermostElementInit, varInfo, depth + 1);
-            IExpression initDelegate = MakeArrayInitDelegate(elementInit, varInfo.indexVars[depth]);
-            Type innerType = elementInit.GetExpressionType();
-            Type distributionType = Distribution.MakeDistributionArrayType(innerType, rank);
-            IList<IExpression> args = Builder.ExprCollection();
-            for (int i = 0; i < rank; i++)
-            {
-                args.Add(varInfo.sizes[depth][i]);
-            }
-            args.Add(initDelegate);
-            return Builder.NewObject(distributionType, args);
-        }
-
-        public static IAnonymousMethodExpression MakeArrayInitDelegate(IExpression elementInit, IVariableDeclaration[] indexVars)
-        {
-            // result has the form:  
-            //   delegate(int index1, int index2) { return elementInit; })
-            int rank = indexVars.Length;
-            Type[] typeArgs = new Type[rank + 1];
-            for (int i = 0; i < rank; i++)
-            {
-                typeArgs[i] = typeof(int);
-            }
-            typeArgs[typeArgs.Length - 1] = elementInit.GetExpressionType();
-            Type delegateType;
-            if (rank == 1) delegateType = typeof(Func<,>);
-            else if (rank == 2) delegateType = typeof(Func<,,>);
-            else if (rank == 3) delegateType = typeof(Func<,,,>);
-            else if (rank == 4) delegateType = typeof(Func<,,,,>);
-            else throw new NotImplementedException("Cannot initialize array of rank " + rank);
-            IAnonymousMethodExpression iame = Builder.AnonMethodExpr(delegateType.MakeGenericType(typeArgs));
-            iame.Body = Builder.BlockStmt();
-            for (int i = 0; i < rank; i++)
-            {
-                IVariableDeclaration indexVar = indexVars[i];
-                IParameterDeclaration param = Builder.Param(indexVar.Name, typeof(int));
-                iame.Parameters.Add(param);
-                int replaceCount = 0;
-                elementInit = Builder.ReplaceExpression(elementInit, Builder.VarRefExpr(indexVar), Builder.ParamRef(param), ref replaceCount);
-            }
-            iame.Body.Statements.Add(Builder.Return(elementInit));
-            return iame;
-        }
-
         /// <summary>
         /// Convert an array type into a distribution type, converting a specified number of inner arrays to DistributionArrays.
         /// </summary>
@@ -2504,21 +2390,28 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             int rank;
             Type elementType = Util.GetElementType(arrayType, out rank);
             if (elementType == null) throw new ArgumentException(arrayType + " is not an array type.");
-            Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, depth + 1, useDistributionArraysDepth, useFileArrayAtDepth);
-            if (useFileArrayAtDepth(depth))
+            if (arrayType.IsAssignableFrom(Util.MakeArrayType(elementType, rank)))
             {
-                return Distribution.MakeDistributionFileArrayType(innerType, rank);
-            }
-            else
-            {
-                if ((depth >= useDistributionArraysDepth) && (useDistributionArraysDepth >= 0))
+                Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, depth + 1, useDistributionArraysDepth, useFileArrayAtDepth);
+                if (useFileArrayAtDepth(depth))
                 {
-                    return Distribution.MakeDistributionArrayType(innerType, rank);
+                    return Distribution.MakeDistributionFileArrayType(innerType, rank);
                 }
                 else
                 {
-                    return CodeBuilder.MakeArrayType(innerType, rank);
+                    if ((depth >= useDistributionArraysDepth) && (useDistributionArraysDepth >= 0))
+                    {
+                        return Distribution.MakeDistributionArrayType(innerType, rank);
+                    }
+                    else
+                    {
+                        return CodeBuilder.MakeArrayType(innerType, rank);
+                    }
                 }
+            }
+            else
+            {
+                return typeof(PointMass<>).MakeGenericType(arrayType);
             }
         }
 
@@ -2554,7 +2447,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public Type GetMessageType(ChannelInfo ci, Type marginalType)
         {
-            VariableInformation vi = (ci.decl != null) 
+            VariableInformation vi = (ci.decl != null)
                 ? VariableInformation.GetVariableInformation(context, ci.decl)
                 : ci.varInfo;
             // leading array is [] up to distArraysDepth, then distribution arrays
@@ -2684,6 +2577,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             get { return decl.VariableType.DotNetType; }
         }
 
+        /// <summary>
+        /// Indicates whether the message is a distribution over the channel.  
+        /// (This can only be false when the algorithm overrides GetMessagePrototype.)
+        /// </summary>
         internal bool isDistribution = true;
 
         /// <summary>
