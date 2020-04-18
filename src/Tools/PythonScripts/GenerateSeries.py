@@ -68,7 +68,7 @@ log_exp_minus_1_ratio_series_length = 5
 log_exp_minus_1_ratio_variable_name = "x"
 log_exp_minus_1_ratio_indent = "                    "
 
-normcdfln_asymptotic_series_length = 8
+normcdfln_asymptotic_series_length = 16
 normcdfln_asymptotic_variable_name = "z"
 normcdfln_asymptotic_indent = "                    "
 
@@ -82,7 +82,7 @@ reciprocal_factorial_minus_1_indent = "                "
 
 def print_heading_comment(indent, header):
     print(f"{indent}// Truncated series {header}")
-    print(f"{indent}// Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py")
+    print(f"{indent}// Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py")
 
 def format_real_coefficient(coefficient):
     return str(coefficient)

@@ -434,10 +434,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Optimizes the automaton by removing all states which can't reach end states.
             /// </summary>
-            /// <remarks>
-            /// This function looks a lot like <see cref="ComputeEndStateReachability"/>. But unfortunately operates on
-            /// a different graph representation.
-            /// </remarks>
             public bool RemoveDeadStates()
             {
                 var builder = this.builder;

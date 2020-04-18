@@ -25,6 +25,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using GaussianArrayArray =
         Microsoft.ML.Probabilistic.Distributions.DistributionRefArray<Microsoft.ML.Probabilistic.Distributions.DistributionStructArray<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>, double[]>;
     using Microsoft.ML.Probabilistic.Models.Attributes;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     /// <summary>
     /// Matchbox recommender tests

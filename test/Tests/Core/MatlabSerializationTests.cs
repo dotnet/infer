@@ -15,11 +15,7 @@ namespace Microsoft.ML.Probabilistic.Tests.Core
         //[DeploymentItem(@"Data\IRT2PL_10_250.mat", "Data")]
         public void MatlabReaderTest2()
         {
-            Dictionary<string, object> dict = MatlabReader.Read(Path.Combine(
-#if NETCORE
-                Path.GetDirectoryName(typeof(PsychTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "Data", "IRT2PL_10_250.mat"));
+            Dictionary<string, object> dict = MatlabReader.Read(Path.Combine(TestUtils.DataFolderPath, "IRT2PL_10_250.mat"));
             Assert.Equal(5, dict.Count);
             Matrix m = (Matrix)dict["Y"];
             Assert.True(m.Rows == 250);
@@ -36,11 +32,7 @@ namespace Microsoft.ML.Probabilistic.Tests.Core
         ////[DeploymentItem(@"Data\test.mat", "Data")]
         public void MatlabReaderTest()
         {
-            MatlabReaderTester(Path.Combine(
-#if NETCORE
-                Path.GetDirectoryName(typeof(PsychTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "Data", "test.mat"));
+            MatlabReaderTester(Path.Combine(TestUtils.DataFolderPath, "test.mat"));
         }
 
         private void MatlabReaderTester(string fileName)
@@ -89,11 +81,7 @@ namespace Microsoft.ML.Probabilistic.Tests.Core
         //[DeploymentItem(@"Data\test.mat", "Data")]
         public void MatlabWriterTest()
         {
-            Dictionary<string, object> dict = MatlabReader.Read(Path.Combine(
-#if NETCORE
-                Path.GetDirectoryName(typeof(PsychTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "Data", "test.mat"));
+            Dictionary<string, object> dict = MatlabReader.Read(Path.Combine(TestUtils.DataFolderPath, "test.mat"));
             string fileName = $"{System.IO.Path.GetTempPath()}MatlabWriterTest{Environment.CurrentManagedThreadId}.mat";
             using (MatlabWriter writer = new MatlabWriter(fileName))
             {

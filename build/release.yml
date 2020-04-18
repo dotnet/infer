@@ -17,12 +17,12 @@ trigger: none # disable CI build
 jobs:
 - job: macOS # Hosted MacOS agent
   pool:
-    vmImage: xcode9-macos10.13
+    vmImage: macOS-10.14
   steps:
   - task: DotNetCoreInstaller@0
     inputs:
       packageType: 'sdk' 
-      version: '2.1.403' 
+      version: '3.1.201' 
 
   - script: |
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
@@ -37,7 +37,7 @@ jobs:
   - task: DotNetCoreInstaller@0
     inputs:
       packageType: 'sdk' 
-      version: '2.1.403' 
+      version: '3.1.201' 
 
   - script: |
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
@@ -47,7 +47,7 @@ jobs:
 
 - job: Windows # Hosted Windows agent, VS 2017
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
 
   steps:
   - task: Bash@3
@@ -59,7 +59,7 @@ jobs:
 
   - task: NuGetToolInstaller@0
     inputs:
-      versionSpec: '4.7.0'
+      versionSpec: '5.5.1'
 
   - task: NuGetCommand@2
     displayName: 'Restoring NuGet packages'
