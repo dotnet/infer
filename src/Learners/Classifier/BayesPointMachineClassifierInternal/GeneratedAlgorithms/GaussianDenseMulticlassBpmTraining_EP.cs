@@ -118,9 +118,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_rep_F_marginal;
 		/// <summary>Message from use of 'Weights'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_use_B;
-		/// <summary>Messages from use of 'Weights'</summary>
+		/// <summary>Messages from uses of 'Weights_use'</summary>
 		public Gaussian[][][] Weights_uses_B;
-		/// <summary>Messages to use of 'Weights'</summary>
+		/// <summary>Messages to uses of 'Weights_use'</summary>
 		public Gaussian[][][] Weights_uses_F;
 		#endregion
 

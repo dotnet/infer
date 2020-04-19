@@ -1156,7 +1156,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         }
                         //method = (MethodInfo)Invoker.GetBestMethod(new MethodBase[] { method }, null, types, out matchException);
                         //if (method == null) continue;
-                        method = (MethodInfo)binding.Bind(method);
+                        try
+                        {
+                            method = (MethodInfo)binding.Bind(method);
+                        }
+                        catch (Exception ex)
+                        {
+                            errors.Add(ex);
+                            if (tracing) Trace.WriteLine(errors[errors.Count - 1]);
+                            continue;
+                        }
 
                         // check return type
                         if (returnType != null)

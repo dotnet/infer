@@ -403,17 +403,6 @@ namespace Microsoft.ML.Probabilistic.Models.Attributes
     }
 
     /// <summary>
-    /// Attribute which indicates that the output message will be recovered from
-    /// the targetted variable. The output message of a variable is its marginal divided by
-    /// its inbox message, and is used in situations where variables are shared
-    /// between different models
-    /// </summary>
-    [Obsolete("Use QueryTypes.MarginalDividedByPrior")]
-    public class Output : Attribute, ICompilerAttribute
-    {
-    }
-
-    /// <summary>
     /// For expert use only!  When sharing a variable between multiple models (e.g. using SharedVariable)
     /// you can add this attribute to have the variable be treated as a derived variable, even if it 
     /// is not derived in the submodel where it appears.

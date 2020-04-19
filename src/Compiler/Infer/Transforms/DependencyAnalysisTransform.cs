@@ -122,6 +122,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// Find expressions that have overlapping mutations, and replace these mutations with a dummy statement that depends on all of them.
         /// </summary>
         /// <param name="newStatement">Invoked on each new statement</param>
+        /// <remarks>
+        /// Statements with non-overlapping conditionals are not considered overlapping, 
+        /// so these two statements will not create a dummy statement:
+        /// <code>
+        ///   if(b) x = 0;
+        ///   if(!b) x = 1;
+        /// </code>
+        /// Examples of overlapping mutations:
+        /// ArrayConstraintsTest
+        /// ConstrainBetweenTest
+        /// </remarks>
         private void CreateDummyStatements(Action<IStatement> newStatement)
         {
             foreach (MutationInformation mutInfo in mutInfos.Values)
@@ -406,7 +417,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             IAssignExpression iae = (IAssignExpression)ies.Expression;
                             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(iae.Target);
-                            if (ivd != null && ivd.Name == "cumulativeTeamSizes")
+                            if (ivd != null && ivd.Name == "skillInSquad_F" && iae.Expression.ToString().Contains("skills_F"))
                                 Console.WriteLine(ivd);
                         }
                     }
