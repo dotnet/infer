@@ -446,7 +446,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <param name="name">Name of the new variable.</param>
         /// <param name="arraySize">Length of the array.  Cannot be null.</param>
         /// <param name="newIndexVar">Name of a new integer variable used to index the array.  Cannot be null.</param>
-        /// <param name="indices">Indices applied to this, before creating the array.  May be null.  May contain wildcards.</param>
+        /// <param name="indices">Indices applied to this, before creating the array.  May be null (equivalent to an empty array).  May contain wildcards.</param>
         /// <param name="wildcardVars">Loop variables to use for wildcards.  May be null if there are no wildcards.</param>
         /// <param name="useLiteralIndices">If true, literal indices will be used instead of newIndexVar.</param>
         /// <param name="copyInitializer">If true, the new variable will be given an InitialiseTo attribute if this variable had one</param>
@@ -532,7 +532,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             if (indices != null) replacements.AddRange(indices);
             for (int i = indexingDepth; i < sizes.Count; i++)
             {
-                if (indices == null)
+                if (replacements.Count == 0)
                 {
                     newSizes.Add(sizes[i]);
                     if (indexVars.Count > i) newIndexVars.Add(indexVars[i]);

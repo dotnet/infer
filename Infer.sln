@@ -61,12 +61,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evaluator", "src\Learners\Runners\Evaluator\Evaluator.csproj", "{040FA938-BE24-4391-86BA-D04B331A787A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classifier", "src\Learners\Classifier\Classifier.csproj", "{07E9E91D-6593-4FF9-A266-270ED5241C98}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3207C90B-DB71-4293-8974-0795863C076B} = {3207C90B-DB71-4293-8974-0795863C076B}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassifierModels", "src\Learners\ClassifierModels\ClassifierModels.csproj", "{3207C90B-DB71-4293-8974-0795863C076B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Learners\Core\Core.csproj", "{29A1A83E-51DC-4409-B29B-CDE7D65A1EF8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recommender", "src\Learners\Recommender\Recommender.csproj", "{5AB7D09F-5F98-465E-AB9D-07014F1DBC3F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8D4D5502-4321-46A5-975B-C20BD745FC06} = {8D4D5502-4321-46A5-975B-C20BD745FC06}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecommenderModels", "src\Learners\RecommenderModels\RecommenderModels.csproj", "{8D4D5502-4321-46A5-975B-C20BD745FC06}"
 EndProject

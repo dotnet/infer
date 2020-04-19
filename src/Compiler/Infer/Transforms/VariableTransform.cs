@@ -149,6 +149,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (this.analysis.variablesExcludingVariableFactor.Contains(ivd))
             {
                 this.variablesLackingVariableFactor.Add(ivd);
+                // ivd will get a marginal channel in ConvertMethodInvoke
+                useOfVariable[ivd] = ivd;
                 return;
             }
             if (isDerived && !isInferred && !isPointEstimate)

@@ -4503,8 +4503,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<Bernoulli> predictedDistributions, 
             double tolerance = Tolerance)
         {
-            Assert.Equal(expectedDistributions.Count(), predictedDistributions.Count());
-            var distributions = expectedDistributions.Zip(predictedDistributions, Pair.Create);
+            var expectedDistributionsList = expectedDistributions.ToList();
+            var predictedDistributionsList = predictedDistributions.ToList();
+            Assert.Equal(expectedDistributionsList.Count, predictedDistributionsList.Count);
+            var distributions = expectedDistributionsList.Zip(predictedDistributionsList, Pair.Create);
             foreach (var pair in distributions)
             {
                 Assert.Equal(pair.First.GetProbTrue(), pair.Second.GetProbTrue(), tolerance);
@@ -4522,8 +4524,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<Discrete> predictedDistributions,
             double tolerance = Tolerance)
         {
-            Assert.Equal(expectedDistributions.Count(), predictedDistributions.Count());
-            var distributions = expectedDistributions.Zip(predictedDistributions, Pair.Create);
+            var expectedDistributionsList = expectedDistributions.ToList();
+            var predictedDistributionsList = predictedDistributions.ToList();
+            Assert.Equal(expectedDistributionsList.Count, predictedDistributionsList.Count);
+            var distributions = expectedDistributionsList.Zip(predictedDistributionsList, Pair.Create);
             foreach (var pair in distributions)
             {
                 Assert.Equal(pair.First.Dimension, pair.Second.Dimension);
@@ -4545,8 +4549,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<IDictionary<string, double>> predictedDistributions, 
             double tolerance = Tolerance)
         {
-            Assert.Equal(expectedDistributions.Count(), predictedDistributions.Count());
-            var distributions = expectedDistributions.Zip(predictedDistributions, Pair.Create);
+            var expectedDistributionsList = expectedDistributions.ToList();
+            var predictedDistributionsList = predictedDistributions.ToList();
+            Assert.Equal(expectedDistributionsList.Count, predictedDistributionsList.Count);
+            var distributions = expectedDistributionsList.Zip(predictedDistributionsList, Pair.Create);
             foreach (var pair in distributions)
             {
                 Assert.Equal(pair.First.Count, pair.Second.Count);
@@ -4566,8 +4572,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<IDictionary<string, double>> predictedDistributions, 
             double tolerance = Tolerance)
         {
-            Assert.Equal(expectedDistributions.Count(), predictedDistributions.Count());
-            var distributions = expectedDistributions.Zip(predictedDistributions, Pair.Create);
+            var expectedDistributionsList = expectedDistributions.ToList();
+            var predictedDistributionsList = predictedDistributions.ToList();
+            Assert.Equal(expectedDistributionsList.Count, predictedDistributionsList.Count);
+            var distributions = expectedDistributionsList.Zip(predictedDistributionsList, Pair.Create);
             foreach (var pair in distributions)
             {
                 Assert.Equal(pair.First.Count, pair.Second.Count);

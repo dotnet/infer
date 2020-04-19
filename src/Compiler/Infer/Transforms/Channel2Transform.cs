@@ -166,6 +166,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IVariableDeclaration usesDecl = vi.DeriveArrayVariable(stmts, context, prefix + "_uses", Builder.LiteralExpr(useCount), Builder.VarDecl("_ind", typeof (int)),
                                                                    prefixSizes, prefixVars, useLiteralIndices: true);
             context.OutputAttributes.Remove<ChannelInfo>(usesDecl);
+            context.OutputAttributes.Add(usesDecl, new DescriptionAttribute($"uses of '{vi.Name}'"));
             ChannelInfo ci = ChannelInfo.UseChannel(vi);
             ci.decl = usesDecl;
             context.OutputAttributes.Set(usesDecl, ci);

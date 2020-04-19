@@ -2603,7 +2603,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public override string ToString()
         {
-            return String.Format("MessageArrayInformation({0},useCount={1},{2})", decl, useCount, ci);
+            return $"MessageArrayInformation({decl},useCount={useCount},{ci},{marginalPrototypeExpression})";
         }
     }
 
