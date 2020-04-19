@@ -79,8 +79,9 @@ namespace Microsoft.ML.Probabilistic.Models
                     {
                         if (!this.containers.Contains(cb))
                         {
-                            throw new InvalidOperationException(arg + " was created in condition " + cb + " and cannot be used outside.  To give " + arg +
-                                                                " a conditional definition, use SetTo inside " + cb + " rather than assignment (=)");
+                            throw new InvalidOperationException($"{arg} was created in condition {cb} and cannot be used outside.  " +
+                                $"To give {arg} a conditional definition, use SetTo inside {cb} rather than assignment (=).  " +
+                                $"If you are using GetCopyFor, make sure you call GetCopyFor outside of conflicting conditional statements.");
                         }
                     }
                 }

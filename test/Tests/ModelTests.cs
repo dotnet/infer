@@ -2730,18 +2730,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             x[r, r2] = !y[r, r2];
             InferenceEngine engine = new InferenceEngine();
             y.ObservedValue = Util.ArrayInit(1, 1, (i, j) => true);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 object xActual = engine.Infer(x);
-                Assert.True(false, "Did not throw exception");
                 IDistribution<bool[]> xExpected = Distribution<bool>.Array(r.SizeAsInt, i => new Bernoulli(0));
                 Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -2753,18 +2748,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             x[r] = !y[r];
             InferenceEngine engine = new InferenceEngine();
             y.ObservedValue = Util.ArrayInit(2, i => true);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 object xActual = engine.Infer(x);
-                Assert.True(false, "Did not throw exception");
                 IDistribution<bool[]> xExpected = Distribution<bool>.Array(r.SizeAsInt, i => new Bernoulli(0));
                 Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -2777,18 +2767,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             x[r] = !y[r];
             InferenceEngine engine = new InferenceEngine();
             y.ObservedValue = Util.ArrayInit(2, i => true);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 object xActual = engine.Infer(x);
-                Assert.True(false, "Did not throw exception");
                 IDistribution<bool[]> xExpected = Distribution<bool>.Array(size.ObservedValue, i => new Bernoulli(0));
                 Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -2801,18 +2786,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             x[r] = !y[r];
             InferenceEngine engine = new InferenceEngine();
             y.ObservedValue = Util.ArrayInit(2, i => true);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 object xActual = engine.Infer(x);
-                Assert.True(false, "Did not throw exception");
                 IDistribution<bool[]> xExpected = Distribution<bool>.Array(size.ObservedValue, i => new Bernoulli(0));
                 Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with " + ex);
-            }
+            });
         }
 
         [Fact]

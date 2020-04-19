@@ -105,7 +105,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>Message to marginal of 'Ratings'</summary>
 		public DistributionRefArray<Discrete,int> Ratings_marginal_F;
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> Ratings_observation__selector_cases_B;
+		/// <summary>Messages from uses of 'Ratings_observation__selector_cases'</summary>
 		public Bernoulli[][][] Ratings_observation__selector_cases_uses_B;
+		/// <summary>Messages from uses of 'Ratings_observation__selector'</summary>
 		public Discrete[][] Ratings_observation__selector_uses_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Discrete&gt;</summary>
 		public DistributionRefArray<Discrete,int> Ratings_observation__selector_uses_B_toDef;

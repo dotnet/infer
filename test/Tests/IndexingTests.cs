@@ -878,6 +878,14 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void GetItemsJagged(IAlgorithm algorithm)
         {
+            foreach(bool easyCase in new[] { false, true })
+            {
+                GetItemsJagged(algorithm, easyCase);
+            }
+        }
+
+        private void GetItemsJagged(IAlgorithm algorithm, bool easyCase)
+        {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             IfBlock block = null;
             if (!(algorithm is GibbsSampling)) block = Variable.If(evidence);
@@ -890,7 +898,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             priors.ObservedValue = Util.ArrayInit(outer.SizeAsInt, i =>
                                                                    Util.ArrayInit(middle.SizeAsInt, j =>
                                                                                                     Util.ArrayInit(inner.SizeAsInt, k => 1.0/(1 + i + j + k))));
-            if (false)
+            if (easyCase)
             {
                 array[outer][middle][inner] = Variable.Bernoulli(priors[outer][middle][inner]);
             }
@@ -905,7 +913,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Range xitem = new Range(indicesLength).Named("xitem");
             VariableArray<int> indices = Variable.Array<int>(xitem).Named("indices");
             Variable<bool> x;
-            if (false)
+            if (easyCase)
             {
                 x = array[indices[xitem]][middle][inner];
             }

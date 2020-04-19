@@ -38,11 +38,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private Set<IExpression> targetsOfCurrentAssignment;
 
-        private Dictionary<IVariableDeclaration, IVariableDeclaration> useOfVariable =
-            new Dictionary<IVariableDeclaration, IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+        private Dictionary<object, IVariableDeclaration> useOfVariable =
+            new Dictionary<object, IVariableDeclaration>(new IdentityComparer<object>());
 
-        private Dictionary<IVariableDeclaration, IVariableDeclaration> marginalOfVariable =
-            new Dictionary<IVariableDeclaration, IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+        private Dictionary<object, IVariableDeclaration> marginalOfVariable =
+            new Dictionary<object, IVariableDeclaration>(new IdentityComparer<object>());
 
         private IAlgorithm algorithmDefault;
         private VariableAnalysisTransform analysis;
@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IExpression rhs = iae.Expression;
             bool shouldDelete = false;
             foreach (IExpression target in targetsOfCurrentAssignment)
-                ProcessAssign(target, iae.Expression, ref shouldDelete);
+                ProcessAssign(target, rhs, ref shouldDelete);
             targetsOfCurrentAssignment = oldTargets;
             return shouldDelete ? null : iae;
         }
@@ -107,24 +107,24 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             bool firstTime = !variablesAssigned.Contains(ivd);
             variablesAssigned.Add(ivd);
-            if (!CodeRecognizer.IsStochastic(context, ivd))
-                return;
-            // definition of a stochastic variable
+            bool isInferred = context.InputAttributes.Has<IsInferred>(ivd);
+            bool isStochastic = CodeRecognizer.IsStochastic(context, ivd);
+            if (!isStochastic) return;
             VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
+            Containers defContainers = context.InputAttributes.Get<Containers>(ivd);
+            int ancIndex = defContainers.GetMatchingAncestorIndex(context);
+            Containers missing = defContainers.GetContainersNotInContext(context, ancIndex);
+            // definition of a stochastic variable
             IExpression lhs = target;
             if (lhs is IVariableDeclarationExpression)
                 lhs = Builder.VarRefExpr(ivd);
             IExpression defExpr = lhs;
-            Containers defContainers = context.InputAttributes.Get<Containers>(ivd);
-            int ancIndex = defContainers.GetMatchingAncestorIndex(context);
-            Containers missing = defContainers.GetContainersNotInContext(context, ancIndex);
-            if (firstTime)
+            if (firstTime && isStochastic)
             {
                 // Create a ChannelInfo attribute for use by later transforms, e.g. MessageTransform
                 ChannelInfo defChannel = ChannelInfo.DefChannel(vi);
                 defChannel.decl = ivd;
                 context.OutputAttributes.Set(ivd, defChannel);
-                SetMarginalPrototype(ivd);
             }
             bool isDerived = context.InputAttributes.Has<DerivedVariable>(ivd);
             IAlgorithm algorithm = this.algorithmDefault;
@@ -145,11 +145,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 stmts = Containers.WrapWithContainers(stmts, missing.outputs);
                 context.AddStatementsBeforeAncestorIndex(ancIndex, stmts);
             }
-            bool isInferred = context.InputAttributes.Has<IsInferred>(ivd);
             bool isPointEstimate = context.InputAttributes.Has<PointEstimate>(ivd);
             if (this.analysis.variablesExcludingVariableFactor.Contains(ivd))
             {
                 this.variablesLackingVariableFactor.Add(ivd);
+                // ivd will get a marginal channel in ConvertMethodInvoke
+                useOfVariable[ivd] = ivd;
                 return;
             }
             if (isDerived && !isInferred && !isPointEstimate)
@@ -163,20 +164,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IList<IStatement> stmts = Builder.StmtCollection();
 
                 CreateMarginalChannel(ivd, vi, stmts);
-                CreateUseChannel(ivd, vi, stmts);
+                if (isStochastic)
+                {
+                    CreateUseChannel(ivd, vi, stmts);
+                    context.InputAttributes.Set(useOfVariable[ivd], defContainers);
+                }
 
                 // Add the declarations
                 stmts = Containers.WrapWithContainers(stmts, missing.outputs);
                 context.AddStatementsBeforeAncestorIndex(ancIndex, stmts);
-                context.InputAttributes.Set(useOfVariable[ivd], defContainers);
             }
-            if (!useOfVariable.ContainsKey(ivd))
+            if (isStochastic && !useOfVariable.ContainsKey(ivd))
             {
                 Error("cannot find use channel of " + ivd);
                 return;
             }
-            IExpression useExpr = Builder.ReplaceVariable(lhs, ivd, useOfVariable[ivd]);
             IExpression marginalExpr = Builder.ReplaceVariable(lhs, ivd, marginalOfVariable[ivd]);
+            IExpression useExpr = isStochastic ? Builder.ReplaceVariable(lhs, ivd, useOfVariable[ivd]) : marginalExpr;
             InitialiseTo it = context.InputAttributes.Get<InitialiseTo>(ivd);
             Type[] genArgs = new Type[] { defExpr.GetExpressionType() };
             if (rhs is IMethodInvokeExpression)
@@ -186,7 +190,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     IExpression arg = imie.Arguments[0];
                     IVariableDeclaration ivd2 = Recognizer.GetVariableDeclaration(arg);
-                    if (context.InputAttributes.Get<MarginalPrototype>(ivd) == context.InputAttributes.Get<MarginalPrototype>(ivd2))
+                    if (ivd2 != null && context.InputAttributes.Get<MarginalPrototype>(ivd) == context.InputAttributes.Get<MarginalPrototype>(ivd2))
                     {
                         // if a variable is a copy, use the original expression since it will give more precise dependencies.
                         defExpr = arg;
@@ -214,7 +218,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             context.OutputAttributes.Set(useDecl2, usageChannel);
                             //context.OutputAttributes.Set(useDecl2, new DescriptionAttribute("use of '" + ivd.Name + "'"));
                             context.OutputAttributes.Remove<InitialiseTo>(vi.declaration);
-                            SetMarginalPrototype(useDecl2);
 
                             IExpression copyExpr = Builder.StaticGenericMethod(
                                 new Func<PlaceHolder, PlaceHolder>(Factor.Copy), genArgs, useExpr2);
@@ -251,50 +254,50 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             context.InputAttributes.CopyObjectAttributesTo<GivePriorityTo>(ivd, context.OutputAttributes, variableFactorExpr);
             context.InputAttributes.CopyObjectAttributesTo<Algorithm>(ivd, context.OutputAttributes, variableFactorExpr);
-            context.OutputAttributes.Set(variableFactorExpr, new IsVariableFactor());
+            if (isStochastic)
+                context.OutputAttributes.Set(variableFactorExpr, new IsVariableFactor());
             var assignStmt = Builder.AssignStmt(useExpr2 == null ? useExpr : useExpr2, variableFactorExpr);
             context.AddStatementAfterCurrent(assignStmt);
         }
 
-        private void CreateMarginalChannel(IVariableDeclaration ivd, VariableInformation vi, IList<IStatement> stmts)
+        private void CreateMarginalChannel(object decl, VariableInformation vi, IList<IStatement> stmts)
         {
-            IVariableDeclaration marginalDecl = vi.DeriveIndexedVariable(stmts, context, ivd.Name + "_marginal");
-            marginalOfVariable[ivd] = marginalDecl;
-            ChannelInfo marginalChannel = ChannelInfo.MarginalChannel(vi);
-            marginalChannel.decl = marginalDecl;
-            context.InputAttributes.CopyObjectAttributesTo<InitialiseTo>(vi.declaration, context.OutputAttributes, marginalChannel.decl);
-            context.OutputAttributes.Set(marginalChannel.decl, marginalChannel);
-            context.OutputAttributes.Set(marginalChannel.decl, new DescriptionAttribute("marginal of '" + ivd.Name + "'"));
-            SetMarginalPrototype(marginalDecl);
+            marginalOfVariable[decl] = CreateMarginalChannel(vi, stmts);
         }
 
-        private void CreateUseChannel(IVariableDeclaration ivd, VariableInformation vi, IList<IStatement> stmts)
+        private IVariableDeclaration CreateMarginalChannel(VariableInformation vi, IList<IStatement> stmts)
         {
-            IVariableDeclaration useDecl = vi.DeriveIndexedVariable(stmts, context, ivd.Name + "_use");
-            useOfVariable[ivd] = useDecl;
+            IVariableDeclaration marginalDecl = vi.DeriveIndexedVariable(stmts, context, vi.Name + "_marginal");
+            ChannelInfo marginalChannel = ChannelInfo.MarginalChannel(vi);
+            marginalChannel.decl = marginalDecl;
+            context.InputAttributes.CopyObjectAttributesTo<InitialiseTo>(vi.declaration, context.OutputAttributes, marginalDecl);
+            context.OutputAttributes.Set(marginalDecl, marginalChannel);
+            context.OutputAttributes.Set(marginalDecl, new DescriptionAttribute("marginal of '" + vi.Name + "'"));
+            // The following lines are needed for AddMarginalStatements
+            VariableInformation marginalInformation = VariableInformation.GetVariableInformation(context, marginalDecl);
+            marginalInformation.IsStochastic = true;
+            return marginalDecl;
+        }
+
+        private void CreateUseChannel(object decl, VariableInformation vi, IList<IStatement> stmts)
+        {
+            useOfVariable[decl] = CreateUseChannel(vi, stmts);
+        }
+
+        private IVariableDeclaration CreateUseChannel(VariableInformation vi, IList<IStatement> stmts)
+        { 
+            IVariableDeclaration useDecl = vi.DeriveIndexedVariable(stmts, context, vi.Name + "_use");
             ChannelInfo usageChannel = ChannelInfo.UseChannel(vi);
             usageChannel.decl = useDecl;
             context.InputAttributes.CopyObjectAttributesTo<InitialiseTo>(vi.declaration, context.OutputAttributes, useDecl);
             context.InputAttributes.CopyObjectAttributesTo<DerivMessage>(vi.declaration, context.OutputAttributes, useDecl);
             context.OutputAttributes.Set(useDecl, usageChannel);
-            context.OutputAttributes.Set(useDecl, new DescriptionAttribute("use of '" + ivd.Name + "'"));
+            context.OutputAttributes.Set(useDecl, new DescriptionAttribute("use of '" + vi.Name + "'"));
             context.OutputAttributes.Remove<InitialiseTo>(vi.declaration);
-            SetMarginalPrototype(useDecl);
-        }
-
-        private void SetMarginalPrototype(IVariableDeclaration ivd)
-        {
-            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
-            // Ensure the marginal prototype is set.
-            MarginalPrototype mpa = Context.InputAttributes.Get<MarginalPrototype>(ivd);
-            try
-            {
-                vi.SetMarginalPrototypeFromAttribute(mpa);
-            }
-            catch (ArgumentException ex)
-            {
-                Error(ex.Message);
-            }
+            // The following lines are needed for AddMarginalStatements
+            VariableInformation useInformation = VariableInformation.GetVariableInformation(context, useDecl);
+            useInformation.IsStochastic = true;
+            return useDecl;
         }
 
         protected override IExpression ConvertVariableRefExpr(IVariableReferenceExpression ivre)
@@ -326,9 +329,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return ConvertInfer(imie);
             foreach (IExpression arg in imie.Arguments)
             {
-                if (arg is IAddressOutExpression)
+                if (arg is IAddressOutExpression iaoe)
                 {
-                    IAddressOutExpression iaoe = (IAddressOutExpression)arg;
                     targetsOfCurrentAssignment.Add(iaoe.Expression);
                 }
             }
@@ -369,23 +371,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns>The modified expression</returns>
         protected IExpression ConvertInfer(IMethodInvokeExpression imie)
         {
-            IVariableReferenceExpression ivre = imie.Arguments[0] as IVariableReferenceExpression;
-            if (ivre == null)
-            {
-                //Error("Argument to Infer() must be a variable reference, was " + imie.Arguments[0] + ".");
-                return imie;
-            }
+            IExpression arg = imie.Arguments[0];
+            object decl = AddMarginalStatements(arg);
+            //if (arg is IArgumentReferenceExpression iare) AddMarginalStatements(iare);
+            //else if (arg is IVariableReferenceExpression ivre) decl = ivre.Variable.Resolve();
+            //else return imie;
             // Find expression for the marginal of interest
-            IVariableDeclaration ivd = ivre.Variable.Resolve();
             IVariableDeclaration marginalDecl;
             ExpressionEvaluator eval = new ExpressionEvaluator();
             QueryType query = (imie.Arguments.Count < 3) ? null : (QueryType)eval.Evaluate(imie.Arguments[2]);
             bool isOutput = (query == QueryTypes.MarginalDividedByPrior);
-            Dictionary<IVariableDeclaration, IVariableDeclaration> dict = isOutput ? useOfVariable : marginalOfVariable;
-            if (!dict.TryGetValue(ivd, out marginalDecl))
-            {
-                return imie; // The argument is constant
-            }
+            if (!isOutput || !useOfVariable.TryGetValue(decl, out marginalDecl))
+                marginalDecl = marginalOfVariable[decl];
             IMethodInvokeExpression mie = Builder.MethodInvkExpr();
             mie.Method = imie.Method;
             mie.Arguments.Add(Builder.VarRefExpr(marginalDecl));
@@ -400,6 +397,36 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 context.OutputAttributes.Set(marginalDecl, new IsInferred());
             }
             return mie;
+        }
+
+        private object AddMarginalStatements(IExpression expr)
+        {
+            object decl = Recognizer.GetDeclaration(expr);
+            if (!marginalOfVariable.ContainsKey(decl))
+            {
+                VariableInformation vi = VariableInformation.GetVariableInformation(context, decl);
+                vi.DefineAllIndexVars(context);
+                IList<IStatement> stmts = Builder.StmtCollection();
+
+                CreateMarginalChannel(decl, vi, stmts);
+                CreateUseChannel(decl, vi, stmts);
+                IVariableDeclaration useDecl = useOfVariable[decl];
+                useOfVariable.Remove(decl);
+                IExpression useExpr = Builder.VarRefExpr(useDecl);
+                IVariableDeclaration marginalDecl = marginalOfVariable[decl];
+                IExpression marginalExpr = Builder.VarRefExpr(marginalDecl);
+                Type[] genArgs = new Type[] { expr.GetExpressionType() };
+                IAlgorithm algorithm = this.algorithmDefault;
+                Delegate d = algorithm.GetVariableFactor(true, false);
+                IExpression variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, expr, marginalExpr);
+                //IExpression variableFactorExpr = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Factor.Copy), genArgs, expr);
+                context.OutputAttributes.Set(variableFactorExpr, new IsVariableFactor());
+                var assignStmt = Builder.AssignStmt(useExpr, variableFactorExpr);
+                stmts.Add(assignStmt);
+
+                context.AddStatementsBeforeCurrent(stmts);
+            }
+            return decl;
         }
     }
 
@@ -448,5 +475,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             this.decl = decl;
         }
+    }
+
+    /// <summary>
+    /// Attribute used to mark pseudo-factors corresponding to variables in the factor graph
+    /// </summary>
+    internal class IsVariableFactor : ICompilerAttribute
+    {
     }
 }
