@@ -12,6 +12,9 @@ resources:
   
 trigger: none # disable CI build
 
+pool:
+  vmImage: 'windows-2019'
+
 #queue:
 #  name: Hosted VS2017
 
