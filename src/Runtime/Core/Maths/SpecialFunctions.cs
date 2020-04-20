@@ -2181,7 +2181,7 @@ f = gamma(x)-1/x
             const double smallestNormalized = 1e-308;
             const double smallestNormalizedOverEpsilon = smallestNormalized / double.Epsilon;
             // the number of iterations required may grow with n, so we need to explicitly test for convergence.
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 double numerNew = numer + a * numerPrev;
                 double denomNew = denom + a * denomPrev;
