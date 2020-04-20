@@ -16,6 +16,7 @@ namespace Infer.Loki.Mappings
         //public static extern int mpfr_gamma_inc([In, Out] mpfr_struct rop, [In, Out] mpfr_struct op, [In, Out] mpfr_struct op2, int rnd);
 
         public static readonly BigFloat Sqrt2;
+        public static readonly BigFloat Sqrt2PI;
         public static readonly BigFloat LnSqrt2PI;
 
         static SpecialFunctionsMethods()
@@ -23,10 +24,12 @@ namespace Infer.Loki.Mappings
             Sqrt2 = BigFloatFactory.Create(2);
             Sqrt2.Sqrt();
 
-            LnSqrt2PI = BigFloatFactory.Empty();
-            LnSqrt2PI.ConstPi();
-            LnSqrt2PI.Mul2(1);
-            LnSqrt2PI.Sqrt();
+            Sqrt2PI = BigFloatFactory.Empty();
+            Sqrt2PI.ConstPi();
+            Sqrt2PI.Mul2(1);
+            Sqrt2PI.Sqrt();
+
+            LnSqrt2PI = BigFloatFactory.Create(Sqrt2PI);
             LnSqrt2PI.Log();
         }
 
@@ -611,6 +614,155 @@ namespace Infer.Loki.Mappings
             var result = BigFloatFactory.Create(x);
             result.Erfc();
             return result;
+        }
+
+
+        private static readonly BigFloat normalCdfRatioThreshold = BigFloatFactory.Create("-25");
+        private static readonly BigFloat[] c_normcdf_table = new BigFloat[]
+        {
+            BigFloatFactory.Create("1.2533141373155002512078826424055226265034933703050"),
+            BigFloatFactory.Create("0.65567954241879847154387123073081128339928233287046"),
+            BigFloatFactory.Create("0.42136922928805447322493433354238497871759897424685"),
+            BigFloatFactory.Create("0.30459029871010329573361254651572220194332086785732"),
+            BigFloatFactory.Create("0.23665238291356067062398593643584354772280595719945"),
+            BigFloatFactory.Create("0.19280810471531576487746572791751625149030275528504"),
+            BigFloatFactory.Create("0.16237766089686746181568210281899300101285429948633"),
+            BigFloatFactory.Create("0.14010418345305024159953452179636098824179029701342"),
+            BigFloatFactory.Create("0.12313196325793229628218074351719907628055418406307"),
+            BigFloatFactory.Create("0.10978728257830829123063783305609744024963272432146"),
+            BigFloatFactory.Create("0.099028596471731921395337188595310578345522351804893"),
+            BigFloatFactory.Create("0.090175675501064682279780356185873435376447672142213"),
+            BigFloatFactory.Create("0.082766286501369177252265050041905901860174647936978"),
+            BigFloatFactory.Create("0.076475761016248502993495194221514297839495267927670"),
+            BigFloatFactory.Create("0.071069580538852107090596841578057621441250984768689"),
+            BigFloatFactory.Create("0.066374235823250173591323880429856263938548730308721"),
+            BigFloatFactory.Create("0.062258665995026195776685945013859824034284602258714"),
+            BigFloatFactory.Create("0.058622064980015943875453424458613461051690664823031"),
+            BigFloatFactory.Create("0.055385651470100734467246738955231191017362356305507"),
+            BigFloatFactory.Create("0.052486980219676364236804604231478581750669351644688"),
+            BigFloatFactory.Create("0.049875925981836783658240561473547677421984200939185"),
+            BigFloatFactory.Create("0.047511794276278113026555416422393514742536362543443"),
+            BigFloatFactory.Create("0.045361207289993100875851687673213152771439836060349"),
+            BigFloatFactory.Create("0.043396533095512704064299446607278252292001462420503"),
+            BigFloatFactory.Create("0.041594702232575505419657616279389108630393708182485"),
+            BigFloatFactory.Create("0.039936304769535592528778701538208913507390239835584"),
+            BigFloatFactory.Create("0.038404893342102127679827361148942634536063966746361"),
+            BigFloatFactory.Create("0.036986439428385819875150275693382405885634992108882"),
+            BigFloatFactory.Create("0.035668904990075763502562777837627528340021232014842"),
+            BigFloatFactory.Create("0.034441901929091245587507704942245227872609616802230")
+        };
+        /// <summary>
+        /// Computes <c>NormalCdf(x)/N(x;0,1)</c> to high accuracy.
+        /// </summary>
+        /// <param name="x">Any real number.</param>
+        /// <returns></returns>
+        public static BigFloat NormalCdfRatio(BigFloat x)
+        {
+            if (x.IsPositive() && !x.IsZero())
+            {
+                // Sqrt2PI * Math.Exp(0.5 * x * x) - NormalCdfRatio(-x);
+                var result = BigFloatFactory.Create(x);
+                result.Sqr();
+                result.Mul2(-1);
+                result.Exp();
+                result.Mul(Sqrt2PI);
+                using (var mx = BigFloatFactory.Create(x))
+                {
+                    mx.Neg();
+                    using (var ncdfrmx = NormalCdfRatio(mx))
+                        result.Sub(ncdfrmx);
+                }
+                return result;
+            }
+            else if (x.IsGreater(normalCdfRatioThreshold))
+            {
+                // Taylor expansion
+                using (var tmp1 = BigFloatFactory.Create(x))
+                using (var tmp2 = BigFloatFactory.Create(x))
+                {
+                    tmp1.Neg();
+                    tmp1.Add(0.5);
+                    tmp1.Floor();
+                    var j = tmp1.ToInt64();
+                    if (j >= c_normcdf_table.Length)
+                        j = c_normcdf_table.Length - 1;
+                    var result = BigFloatFactory.Create(c_normcdf_table[j]);
+                    tmp2.Add(j);
+                    tmp1.Set(-j);
+                    using (var y = NormalCdfRatioDiff_Simple(tmp1, tmp2, result))
+                        result.Add(y);
+                    return result;
+                }
+            }
+            else
+            {
+                // Continued fraction approach
+                if (x.IsNan())
+                    return x;
+                using (var invX = BigFloatFactory.Create(1))
+                using (var invX2 = BigFloatFactory.Empty())
+                using (var numer = BigFloatFactory.Empty())
+                using (var numerPrev = BigFloatFactory.Create(0))
+                using (var denom = BigFloatFactory.Create(1))
+                using (var denomPrev = BigFloatFactory.Create(1))
+                using (var a = BigFloatFactory.Empty())
+                using (var numerNew = BigFloatFactory.Empty())
+                using (var denomNew = BigFloatFactory.Empty())
+                {
+                    invX.Div(x);
+                    BigFloat.Sqr(invX2, invX);
+                    BigFloat.Neg(numer, invX);
+                    BigFloat.Set(a, invX2);
+                    for (int i = 1; i < 22; i++)
+                    {
+                        BigFloat.Fma(numerNew, a, numerPrev, numer);
+                        BigFloat.Fma(denomNew, a, denomPrev, denom);
+                        a.Add(invX2);
+                        BigFloat.Swap(numerPrev, numer);
+                        BigFloat.Swap(numer, numerNew);
+                        BigFloat.Swap(denomPrev, denom);
+                        BigFloat.Swap(denom, denomNew);
+                    }
+                    var result = BigFloatFactory.Create(numer);
+                    result.Div(denom);
+                    return result;
+                }
+            }
+        }
+
+        /// <summary>
+        /// BigFloat adaptation of <see cref="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfRatioDiff_Simple"/>
+        /// </summary>
+        private static BigFloat NormalCdfRatioDiff_Simple(BigFloat x, BigFloat delta, BigFloat y)
+        {
+            using (var Reven = BigFloatFactory.Create(y))
+            using (var Rodd = BigFloatFactory.Create(Reven))
+            using (var delta2 = BigFloatFactory.Create(delta))
+            using (var oldSum = BigFloatFactory.Empty())
+            using (var tmp = BigFloatFactory.Empty())
+            using (var pwr = BigFloatFactory.Create(1))
+            {
+                Rodd.Mul(x);
+                Rodd.Add(1);
+                delta2.Sqr();
+                var sum = BigFloatFactory.Create(delta);
+                sum.Mul(Rodd);
+                for (long i = 2; i < 10000; i += 2)
+                {
+                    BigFloat.Fma(tmp, x, Rodd, Reven);
+                    BigFloat.Div(Reven, tmp, i);
+                    BigFloat.Fma(tmp, x, Reven, Rodd);
+                    BigFloat.Div(Rodd, tmp, i + 1);
+                    pwr.Mul(delta2);
+                    BigFloat.Swap(oldSum, sum);
+                    BigFloat.Fma(tmp, delta, Rodd, Reven);
+                    tmp.Mul(pwr);
+                    BigFloat.Add(sum, oldSum, tmp);
+                    if (BigFloat.Equal(sum, oldSum))
+                        break;
+                }
+                return sum;
+            }
         }
 
         #region BinaryRepresentation

@@ -32,11 +32,14 @@ namespace Infer.Loki.Tests
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Erfc, Erfc);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdf, NormalCdf);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfLn, NormalCdfLn);
+            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfRatio, NormalCdfRatio);
 
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDouble, NextBigFloat);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDouble, PreviousBigFloat);
 
             mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Sqrt2", () => Sqrt2);
+            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Sqrt2PI", () => Sqrt2PI);
+            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.LnSqrt2PI", () => LnSqrt2PI);
         }
     }
 }
