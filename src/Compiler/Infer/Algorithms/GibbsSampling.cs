@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Algorithms
         /// <returns></returns>
         public override string GetOperatorMethodSuffix(List<ICompilerAttribute> factorAttributes)
         {
-            if (factorAttributes.Find(o => o.GetType().IsAssignableFrom(typeof (IsVariableFactor))) != null)
+            if (factorAttributes.Find(o => o.GetType().IsAssignableFrom(typeof(IsVariableFactor))) != null)
                 return "Gibbs";
             else
                 return "AverageConditional";
@@ -53,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Algorithms
         /// <returns></returns>
         public override string GetEvidenceMethodName(List<ICompilerAttribute> factorAttributes)
         {
-            if (factorAttributes.Find(o => o.GetType().IsAssignableFrom(typeof (IsVariableFactor))) != null)
+            if (factorAttributes.Find(o => o.GetType().IsAssignableFrom(typeof(IsVariableFactor))) != null)
                 return "GibbsEvidence";
             else
                 return "LogEvidenceRatio";
@@ -102,11 +102,7 @@ namespace Microsoft.ML.Probabilistic.Algorithms
             ChannelInfo channelInfo, MessageDirection direction,
             IExpression marginalPrototypeExpression, string path, IList<QueryType> queryTypes)
         {
-            Type t = null;
-            Type messTyp = null;
-            IExpression mp = null;
             CodeBuilder Builder = CodeBuilder.Instance;
-
             if (channelInfo.IsMarginal)
             {
                 // We want the marginal variable to be a GibbsEstimator over the appropriate
@@ -122,36 +118,34 @@ namespace Microsoft.ML.Probabilistic.Algorithms
                         else if (qt.Name == "Conditionals") collectDistributions = true;
                     }
                     Type innermostMessageType = marginalPrototypeExpression.GetExpressionType();
-                    Type innermostElementType = Distribution.GetDomainType(innermostMessageType);
+                    Type innermostElementType = Distribution.IsDistributionType(innermostMessageType) ? Distribution.GetDomainType(innermostMessageType) : innermostMessageType;
                     //t = MessageExpressionTransform.GetDistributionType(channelInfo.varInfo.varType, channelInfo.varInfo.innermostElementType, innermostMessageType, true);
-                    t = MessageTransform.GetDistributionType(channelInfo.varInfo.varType, innermostElementType, innermostMessageType, true);
-                    messTyp = typeof (GibbsMarginal<,>).MakeGenericType(t, channelInfo.varInfo.varType);
-                    mp = Builder.NewObject(
-                        messTyp, (t == innermostMessageType) ? marginalPrototypeExpression : Builder.DefaultExpr(t), Quoter.Quote(this.BurnIn), Quoter.Quote(this.Thin),
+                    Type t = MessageTransform.GetDistributionType(channelInfo.varInfo.varType, innermostElementType, innermostMessageType, true);
+                    Type messTyp = typeof(GibbsMarginal<,>).MakeGenericType(t, Distribution.GetDomainType(t));
+                    bool isConstant = !channelInfo.varInfo.IsStochastic;
+                    return Builder.NewObject(
+                        messTyp, (t == innermostMessageType) ? marginalPrototypeExpression : Builder.DefaultExpr(t), Quoter.Quote(isConstant ? 0 : this.BurnIn), Quoter.Quote(this.Thin),
                         Quoter.Quote(estimateMarginal), Quoter.Quote(collectSamples), Quoter.Quote(collectDistributions));
                 }
                 else
-                    mp = marginalPrototypeExpression;
-                return mp;
+                    return marginalPrototypeExpression;
             }
             else
             {
                 // Default is sample
-                t = marginalPrototypeExpression.GetExpressionType();
+                Type t = marginalPrototypeExpression.GetExpressionType();
                 bool useSample = (path != "Distribution");
                 if (useSample)
                 {
-                    messTyp = Distribution.GetDomainType(t);
+                    Type messTyp = Distribution.GetDomainType(t);
                     while (messTyp.IsArray)
                         messTyp = messTyp.GetElementType();
-                    mp = Builder.DefaultExpr(messTyp);
+                    return Builder.DefaultExpr(messTyp);
                 }
                 else
                 {
-                    messTyp = t;
-                    mp = marginalPrototypeExpression;
+                    return marginalPrototypeExpression;
                 }
-                return mp;
             }
         }
 

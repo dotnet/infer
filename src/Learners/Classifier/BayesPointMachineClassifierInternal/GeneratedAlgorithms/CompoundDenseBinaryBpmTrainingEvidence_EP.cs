@@ -68,19 +68,25 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Bernoulli ModelSelector_selector_B;
 		public Bernoulli ModelSelector_selector_cases_0_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep10_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep10'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep10_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep15_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep2_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep2'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep2_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep3_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep4_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep4'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep4_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep5_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep5'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep5_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep6_B;
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> ModelSelector_selector_cases_0_rep6_rep_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep7_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep7'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep7_uses_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0'</summary>
 		public Bernoulli[] ModelSelector_selector_cases_0_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_B;
 		public DistributionStructArray<Gaussian,double> NoisyScore_F;
@@ -95,9 +101,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_F;
 		/// <summary>Message from use of 'SharedWeightPrecisionRates'</summary>
 		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_use_B;
-		/// <summary>Messages from use of 'SharedWeightPrecisionRates'</summary>
+		/// <summary>Messages from uses of 'SharedWeightPrecisionRates_use'</summary>
 		public Gamma[][] SharedWeightPrecisionRates_uses_B;
-		/// <summary>Messages to use of 'SharedWeightPrecisionRates'</summary>
+		/// <summary>Messages to uses of 'SharedWeightPrecisionRates_use'</summary>
 		public Gamma[][] SharedWeightPrecisionRates_uses_F;
 		/// <summary>The constant 'vBernoulli4'</summary>
 		public Bernoulli vBernoulli4;
@@ -117,9 +123,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Gamma,double> WeightPrecisionRates_rep_F_marginal;
 		/// <summary>Message from use of 'WeightPrecisionRates'</summary>
 		public DistributionStructArray<Gamma,double> WeightPrecisionRates_use_B;
-		/// <summary>Messages from use of 'WeightPrecisionRates'</summary>
+		/// <summary>Messages from uses of 'WeightPrecisionRates_use'</summary>
 		public Gamma[][] WeightPrecisionRates_uses_B;
-		/// <summary>Messages to use of 'WeightPrecisionRates'</summary>
+		/// <summary>Messages to uses of 'WeightPrecisionRates_use'</summary>
 		public Gamma[][] WeightPrecisionRates_uses_F;
 		public DistributionStructArray<Gamma,double> WeightPrecisions_B;
 		/// <summary>Buffer for GammaRatioOp_Laplace.LogEvidenceRatio</summary>
@@ -137,9 +143,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Gaussian,double> Weights_rep_F_marginal;
 		/// <summary>Message from use of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double> Weights_use_B;
-		/// <summary>Messages from use of 'Weights'</summary>
+		/// <summary>Messages from uses of 'Weights_use'</summary>
 		public Gaussian[][] Weights_uses_B;
-		/// <summary>Messages to use of 'Weights'</summary>
+		/// <summary>Messages to uses of 'Weights_use'</summary>
 		public Gaussian[][] Weights_uses_F;
 		#endregion
 
@@ -289,8 +295,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			this.ModelSelector_selector_cases_0_rep2_uses_B = new Bernoulli[this.featureCount][];
-			this.WeightPrecisionRates_marginal_F = new DistributionStructArray<Gamma,double>(this.featureCount);
 			this.WeightPrecisionRates_depth0_F = new DistributionStructArray<Gamma,double>(this.featureCount);
+			this.WeightPrecisionRates_marginal_F = new DistributionStructArray<Gamma,double>(this.featureCount);
 			this.SharedWeightPrecisionRates_uses_F = new Gamma[this.featureCount][];
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.SharedWeightPrecisionRates_uses_F[FeatureRange] = new Gamma[2];
@@ -345,8 +351,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.Weights_rep_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.featureCount);
 			this.WeightPrecisions_B_FeatureRange__Q = new DistributionStructArray<Gamma,double>(this.featureCount);
 			this.ModelSelector_selector_cases_0_rep2_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
-			this.ModelSelector_selector_cases_0_rep5_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
 			this.ModelSelector_selector_cases_0_rep5_uses_B = new Bernoulli[this.featureCount][];
+			this.ModelSelector_selector_cases_0_rep5_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange] = new Bernoulli[3];
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][1] = Bernoulli.Uniform();
@@ -354,10 +360,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.SharedWeightPrecisionRates_uses_F[FeatureRange][1] = Gamma.Uniform();
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][2] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep2_B[FeatureRange] = Bernoulli.Uniform();
-				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange] = new Bernoulli[2];
+				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange] = new Bernoulli[3];
+				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange][1] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange][0] = Bernoulli.Uniform();
 				this.WeightPrecisionRates_uses_F[FeatureRange][0] = Gamma.Uniform();
-				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange][1] = Bernoulli.Uniform();
+				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange][2] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep5_B[FeatureRange] = Bernoulli.Uniform();
 				this.WeightPrecisionRates_depth0_F[FeatureRange] = Gamma.Uniform();
 				this.WeightPrecisionRates_marginal_F[FeatureRange] = Gamma.Uniform();
@@ -481,7 +488,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep2_B[FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange], this.ModelSelector_selector_cases_0_rep2_B[FeatureRange]);
 				this.WeightPrecisionRates_uses_F[FeatureRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gamma>(this.WeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][1], 0, this.WeightPrecisionRates_uses_F[FeatureRange][0]);
 				this.WeightPrecisionRates_uses_F[FeatureRange][1] = ReplicateOp_NoDivide.UsesAverageConditional<Gamma>(this.WeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][1], 1, this.WeightPrecisionRates_uses_F[FeatureRange][1]);
-				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange][1] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gamma>(this.WeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][1], this.WeightPrecisionRates_uses_F[FeatureRange]));
+				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange][2] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gamma>(this.WeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][1], this.WeightPrecisionRates_uses_F[FeatureRange]));
 				this.ModelSelector_selector_cases_0_rep5_B[FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange], this.ModelSelector_selector_cases_0_rep5_B[FeatureRange]);
 				this.WeightPrecisionRates_depth0_F[FeatureRange] = ArrayHelper.SetTo<Gamma>(this.WeightPrecisionRates_depth0_F[FeatureRange], this.WeightPrecisionRates_uses_F[FeatureRange][0]);
 				this.WeightPrecisionRates_marginal_F[FeatureRange] = DerivedVariableOp.MarginalAverageConditional<Gamma>(this.WeightPrecisionRates_use_B[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][1], this.WeightPrecisionRates_marginal_F[FeatureRange]);

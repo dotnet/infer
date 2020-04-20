@@ -48,6 +48,19 @@
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU' OR '$(Configuration)|$(Platform)'=='ReleaseFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='ReleaseCore|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFull|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Microsoft.ML.Probabilistic.Learners.ClassifierModels.XML</DocumentationFile>
   </PropertyGroup>
@@ -55,6 +68,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains('NETFULL'))">
+    <ProjectReference Include="..\..\Visualizers\Windows\Visualizers.Windows.csproj" />
   </ItemGroup>
 
   <ItemGroup>

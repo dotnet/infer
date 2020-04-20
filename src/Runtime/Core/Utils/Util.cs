@@ -80,11 +80,11 @@ namespace Microsoft.ML.Probabilistic.Utilities
             }
         }
 
-        public static Type MakeArrayType(Type tp, int rank)
+        public static Type MakeArrayType(Type elementType, int rank)
         {
-            if (rank == 0) return tp;
-            else if (rank == 1) return tp.MakeArrayType(); // bizarrely, gives different result to MakeArrayType(1);
-            else return tp.MakeArrayType(rank);
+            if (rank == 0) return elementType;
+            else if (rank == 1) return elementType.MakeArrayType(); // bizarrely, gives different result to MakeArrayType(1);
+            else return elementType.MakeArrayType(rank);
         }
 
         /// <summary>
@@ -172,8 +172,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
 
         public static Type GetElementType(Type type)
         {
-            int rank;
-            return GetElementType(type, out rank);
+            return GetElementType(type, out int rank);
         }
 
         public static Type GetElementType(Type type, out int rank)

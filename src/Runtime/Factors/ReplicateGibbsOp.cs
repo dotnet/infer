@@ -146,13 +146,14 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp{T}"]/message_doc[@name="MarginalGibbs{TDist}(T, GibbsMarginal{TDist, T})"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
+        /// <typeparam name="TDomain">The domain type of <typeparamref name="TDist"/>.</typeparam>
         [Stochastic] // must be labelled Stochastic to get correct schedule, even though it isn't Stochastic
-        public static GibbsMarginal<TDist, T> MarginalGibbs<TDist>(
-            T Def,
-            GibbsMarginal<TDist, T> to_marginal)
-            where TDist : IDistribution<T>, Sampleable<T>
+        public static GibbsMarginal<TDist, TDomain> MarginalGibbs<TDist, TDomain>(
+            TDomain Def,
+            GibbsMarginal<TDist, TDomain> to_marginal)
+            where TDist : IDistribution<TDomain>, Sampleable<TDomain>
         {
-            GibbsMarginal<TDist, T> result = to_marginal;
+            GibbsMarginal<TDist, TDomain> result = to_marginal;
             TDist marginal = result.LastConditional;
             marginal.Point = Def;
             result.LastConditional = marginal;
@@ -165,7 +166,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp{T}"]/message_doc[@name="MarginalGibbs{TDist}(T[], GibbsMarginal{TDist, T})"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
         [Stochastic] // must be labelled Stochastic to get correct schedule, even though it isn't Stochastic
-        public static GibbsMarginal<TDist, T> MarginalGibbs<TDist>(
+        public static GibbsMarginal<TDist, T> MarginalGibbs2<TDist>(
             T[] Uses,
             GibbsMarginal<TDist, T> to_marginal)
             where TDist : IDistribution<T>, Sampleable<T>

@@ -566,10 +566,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             if (variable.IsLoopIndex) return; // do nothing
 
-            if (!variable.IsObserved)
-            {
-                FinishRandVar(variable, alg);
-            }
+            FinishRandVar(variable, alg);
         }
 
         /// <summary>
@@ -830,9 +827,8 @@ namespace Microsoft.ML.Probabilistic.Models
             stBlocks.AddRange(variable.Containers);
 
             IVariableDeclarationExpression ivde = Builder.VarDeclExpr(ivd);
-            if (variable is IVariableArray)
+            if (variable is IVariableArray iva)
             {
-                IVariableArray iva = (IVariableArray) variable;
                 IList<IStatement> sc = Builder.StmtCollection();
                 IList<IVariableDeclaration[]> jaggedIndexVars;
                 IList<IExpression[]> jaggedSizes;
@@ -888,16 +884,12 @@ namespace Microsoft.ML.Probabilistic.Models
             if (variable.IsArrayElement) return;
             if (variable.Inline) return;
 
-            IVariableDeclaration ivd = (IVariableDeclaration) variable.GetDeclaration();
+            object ivd = variable.GetDeclaration();
             bool doNotInfer = false;
-            bool isOutput = false;
             // Add attributes
             foreach (ICompilerAttribute attr in variable.GetAttributes<ICompilerAttribute>())
             {
                 if (attr is DoNotInfer) doNotInfer = true;
-#pragma warning disable 618 // The Output attribute was marked obsolete during v2.6 development, so we need to preserve this code this until v2.7
-                else if (attr is Output) isOutput = true;
-#pragma warning restore 618
                 else Attributes.Add(ivd, attr);
             }
             foreach (IStatementBlock stBlock in variable.Containers)
@@ -905,14 +897,14 @@ namespace Microsoft.ML.Probabilistic.Models
                 if (stBlock is HasRange)
                 {
                     doNotInfer = true;
-                    isOutput = false;
                     break;
                 }
             }
             List<IStatementBlock> stBlocks = new List<IStatementBlock>();
             stBlocks.AddRange(variable.Containers);
             // Add Infer statement 
-            if (!doNotInfer && (!inferOnlySpecifiedVars || variablesToInfer.Contains(variable)))
+            bool isConstant = (variable.IsBase && variable.IsReadOnly);
+            if (!doNotInfer && ((!inferOnlySpecifiedVars && !isConstant) || variablesToInfer.Contains(variable)))
             {
                 // If there has been no explicit indication of query types for inference, set the
                 // default types
@@ -920,7 +912,6 @@ namespace Microsoft.ML.Probabilistic.Models
                 if (qtlist.Count == 0)
                 {
                     alg.ForEachDefaultQueryType(qt => Attributes.Add(ivd, new QueryTypeCompilerAttribute(qt)));
-                    if (isOutput) Attributes.Add(ivd, new QueryTypeCompilerAttribute(QueryTypes.MarginalDividedByPrior));
                     qtlist = Attributes.GetAll<QueryTypeCompilerAttribute>(ivd);
                 }
                 variablesToInfer.Add(variable);
@@ -930,6 +921,8 @@ namespace Microsoft.ML.Probabilistic.Models
                 foreach (QueryTypeCompilerAttribute qt in qtlist)
                 {
                     IExpression queryExpr = Builder.FieldRefExpr(Builder.TypeRefExpr(typeof (QueryTypes)), typeof (QueryTypes), qt.QueryType.Name);
+                    // for a constant, we must get the variable reference, not the value
+                    if (isConstant) varExpr = Builder.VarRefExpr((IVariableDeclaration)variable.GetDeclaration());
                     AddStatement(Builder.ExprStatement(
                         Builder.StaticMethod(new Action<object>(InferNet.Infer), varExpr, varName, queryExpr)));
                 }
@@ -944,6 +937,12 @@ namespace Microsoft.ML.Probabilistic.Models
             jaggedSizes = new List<IExpression[]>();
             while (true)
             {
+                Type arrayType = array.GetExpression().GetExpressionType();
+                Type elementType = Util.GetElementType(arrayType, out int rank);
+                if (!arrayType.IsAssignableFrom(Util.MakeArrayType(elementType, rank)))
+                {
+                    break;
+                }
                 IVariableDeclaration[] indexVars;
                 IExpression[] sizes;
                 GetArrayIndicesAndSizes(array, out indexVars, out sizes);
@@ -1009,43 +1008,14 @@ namespace Microsoft.ML.Probabilistic.Models
 
         private void FinishGivenOrConstant(Variable variable, object decl)
         {
-            // Add attributes
-            bool doNotInfer = false;
-            foreach (ICompilerAttribute attr in variable.GetAttributes<ICompilerAttribute>())
-            {
-                if (attr is DoNotInfer) doNotInfer = true;
-                else Attributes.Add(decl, attr);
-            }
-            // Add Infer statement
-            bool isConstant = (variable.IsBase && variable.IsReadOnly);
-            if (!doNotInfer && ((!inferOnlySpecifiedVars && !isConstant) || variablesToInfer.Contains(variable)))
-            {
-                variablesToInfer.Add(variable);
-                IExpression varRefExpr = variable.GetExpression();
-                // for a constant, we must get the variable reference, not the value
-                if (isConstant) varRefExpr = Builder.VarRefExpr((IVariableDeclaration) variable.GetDeclaration());
-                AddStatement(Builder.ExprStatement(
-                    Builder.StaticMethod(new Action<object>(InferNet.Infer), varRefExpr)));
-            }
-            if (variable is IVariableArray)
+            if (variable is IVariableArray iva)
             {
                 // attach a VariableInformation attribute that holds the array sizes
                 // this is needed because the array size never appears in the code
-                IVariableArray iva = (IVariableArray)variable;
                 IList<IVariableDeclaration[]> jaggedIndexVars;
                 IList<IExpression[]> jaggedSizes;
                 GetJaggedArrayIndicesAndSizes(iva, out jaggedIndexVars, out jaggedSizes);
-                IVariableDeclaration ivd;
-                if(decl is IParameterDeclaration)
-                {
-                    IParameterDeclaration ipd = (IParameterDeclaration)decl;
-                    ivd = Builder.VarDecl(ipd.Name, ipd.ParameterType);
-                }
-                else
-                {
-                    ivd = (IVariableDeclaration)decl;
-                }
-                var vi = new VariableInformation(ivd);
+                var vi = new VariableInformation(decl);
                 vi.sizes.AddRange(jaggedSizes);
                 vi.indexVars.AddRange(jaggedIndexVars);
                 Attributes.Set(decl, vi);

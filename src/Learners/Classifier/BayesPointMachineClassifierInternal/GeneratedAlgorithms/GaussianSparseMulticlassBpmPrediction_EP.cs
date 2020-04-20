@@ -63,8 +63,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<Discrete,int> Labels_InstanceRange__selector_B;
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> Labels_InstanceRange__selector_cases_B;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]>,bool[][]> Labels_InstanceRange__selector_cases_rep7_B;
+		/// <summary>Messages from uses of 'Labels_InstanceRange__selector_cases_rep7'</summary>
 		public Bernoulli[][][][] Labels_InstanceRange__selector_cases_rep7_uses_B;
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> Labels_InstanceRange__selector_cases_rep8_B_reduced;
+		/// <summary>Messages from uses of 'Labels_InstanceRange__selector_cases'</summary>
 		public Bernoulli[][][] Labels_InstanceRange__selector_cases_uses_B;
 		public Discrete Labels_InstanceRange__selector_rep_B_reduced;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Discrete&gt;</summary>
@@ -72,15 +74,17 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionRefArray<Discrete,int>,int[]> Labels_InstanceRange__selector_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Discrete&gt;</summary>
 		public DistributionRefArray<Discrete,int> Labels_InstanceRange__selector_rep_F_marginal;
+		/// <summary>Messages from uses of 'Labels_InstanceRange__selector'</summary>
 		public Discrete[][] Labels_InstanceRange__selector_uses_B;
+		/// <summary>Messages to uses of 'Labels_InstanceRange__selector'</summary>
 		public Discrete[][] Labels_InstanceRange__selector_uses_F;
 		/// <summary>Message to marginal of 'Labels'</summary>
 		public DistributionRefArray<Discrete,int> Labels_marginal_F;
 		/// <summary>Message from use of 'Labels'</summary>
 		public DistributionRefArray<Discrete,int> Labels_use_B;
-		/// <summary>Messages from use of 'Labels'</summary>
+		/// <summary>Messages from uses of 'Labels_use'</summary>
 		public Discrete[][] Labels_uses_B;
-		/// <summary>Messages to use of 'Labels'</summary>
+		/// <summary>Messages to uses of 'Labels_use'</summary>
 		public Discrete[][] Labels_uses_F;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_0__B;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_rep_B;
@@ -113,7 +117,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_F;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> Weights_FeatureIndexes_B;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> Weights_FeatureIndexes_F;
+		/// <summary>Messages from uses of 'Weights'</summary>
 		public Gaussian[][][] Weights_uses_B;
+		/// <summary>Messages to uses of 'Weights'</summary>
 		public Gaussian[][][] Weights_uses_F;
 		#endregion
 

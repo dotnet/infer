@@ -61,7 +61,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             int length = 3;
             GaussianArray garray = new GaussianArray(length, i => new Gaussian(i, i + 1));
             ArrayEstimator<GaussianEstimator, GaussianArray, Gaussian, double> est =
-                new ArrayEstimator<GaussianEstimator, DistributionStructArray<Gaussian, double>, Gaussian, double>(
+                new ArrayEstimator<GaussianEstimator, GaussianArray, Gaussian, double>(
                     Utilities.Util.ArrayInit(length, i => new GaussianEstimator()));
             double[] sum = new double[length];
             double[] sum2 = new double[length];

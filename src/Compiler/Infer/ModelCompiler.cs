@@ -892,6 +892,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             tc.AddTransform(new ArrayAnalysisTransform());
             tc.AddTransform(new EqualityPropagationTransform());
             tc.AddTransform(new StocAnalysisTransform(true));
+            tc.AddTransform(new MarginalAnalysisTransform());
 
             tc.AddTransform(new GateTransform(algorithm));
             tc.AddTransform(new IndexingTransform());

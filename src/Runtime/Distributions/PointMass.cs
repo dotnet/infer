@@ -237,5 +237,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             return GetLogAverageOf(that);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is PointMass<T> that)
+                return Point.Equals(that.Point);
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Point.GetHashCode();
+        }
     }
 }
