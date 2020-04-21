@@ -18,6 +18,7 @@ namespace Infer.Loki.Mappings
         public static readonly BigFloat Sqrt2;
         public static readonly BigFloat Sqrt2PI;
         public static readonly BigFloat LnSqrt2PI;
+        public static readonly BigFloat DefaultBetaEpsilon = BigFloatFactory.Create("1e-38");
 
         static SpecialFunctionsMethods()
         {

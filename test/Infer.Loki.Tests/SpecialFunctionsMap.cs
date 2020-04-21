@@ -40,6 +40,7 @@ namespace Infer.Loki.Tests
             mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Sqrt2", () => Sqrt2);
             mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Sqrt2PI", () => Sqrt2PI);
             mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.LnSqrt2PI", () => LnSqrt2PI);
+            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.DefaultBetaEpsilon", () => DefaultBetaEpsilon);
         }
     }
 }
