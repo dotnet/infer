@@ -500,6 +500,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return mult * result;
         }
 
+        private const double DefaultBetaEpsilon = 1e-15;
+
         /// <summary>
         /// Computes the regularized incomplete beta function: int_0^x t^(a-1) (1-t)^(b-1) dt / Beta(a,b)
         /// </summary>
@@ -509,7 +511,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="epsilon">A tolerance for terminating the series calculation.</param>
         /// <returns>The incomplete beta function at (<paramref name="x"/>, <paramref name="a"/>, <paramref name="b"/>).</returns>
         /// <remarks>The beta function is obtained by setting x to 1.</remarks>
-        public static double Beta(double x, double a, double b, double epsilon = 1e-15)
+        public static double Beta(double x, double a, double b, double epsilon = DefaultBetaEpsilon)
         {
             double result = 0.0;
             bool swap = false;
