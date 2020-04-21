@@ -156,7 +156,7 @@ namespace Microsoft.ML.Probabilistic.Math
         private static double BGRat(double x, double a, double b, double epsilon)
         {
             List<double> p = new List<double>();
-            List<int> twoNPlus1Factorial = new List<int>();
+            List<double> twoNPlus1Factorial = new List<double>();
             p.Add(1.0);
             twoNPlus1Factorial.Add(1);
             double T = a + 0.5 * (b - 1);
