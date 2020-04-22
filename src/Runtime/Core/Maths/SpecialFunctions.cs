@@ -181,6 +181,8 @@ namespace Microsoft.ML.Probabilistic.Math
                 bPlus2n += 2;
                 bPlus2nPlus1 += 2;
                 lnXTerm *= lnXOver2Sq;
+                // This can overflow, which will result in infinity. This is OK, because
+                // it will mean only that some of the terms added to currP will be zero.
                 twoNPlus1Factorial.Add(twoNPlus1Factorial.Last() * (2 * n) * (2 * n + 1));
 
                 double currP = 0.0;
