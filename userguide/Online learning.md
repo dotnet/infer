@@ -29,47 +29,17 @@ However, you need to give the compiler a hint that you’ll be doing this:
 mean.AddAttribute(QueryTypes.MarginalDividedByPrior);
 ```
 
-Here’s the complete code for online learning of a Gaussian with a Laplacian mean:
+The complete code for online learning of a Gaussian with a Laplacian mean can be found in [OnlineLearning.cs](https://github.com/dotnet/infer/blob/master/test/Tests/OnlineLearning.cs#L198), along with other examples.  The output of this code should be:
 
-```csharp
-Variable<int> nItems = Variable.New<int>().Named("nItems");  
-Range item = new Range(nItems).Named("item");  
-Variable<double> variance = Variable.GammaFromShapeAndRate(1.0, 1.0).Named("variance");  
-Variable<double> mean = Variable.GaussianFromMeanAndVariance(0.0, variance).Named("mean");  
-VariableArray<double> x = Variable.Array<double>(item).Named("x");  
-x[item] = Variable.GaussianFromMeanAndPrecision(mean, 1.0).ForEach(item);  
-
-Variable<Gaussian> meanMessage = Variable.Observed<Gaussian>(Gaussian.Uniform()).Named("meanMessage");  
-Variable.ConstrainEqualRandom(mean, meanMessage);  
-mean.AddAttribute(QueryTypes.Marginal);  
-mean.AddAttribute(QueryTypes.MarginalDividedByPrior);  
-InferenceEngine engine = new InferenceEngine();  
-
-// inference on a single batch  
-double[] data = { 2, 3, 4, 5 };  
-x.ObservedValue = data;  
-nItems.ObservedValue = data.Length;  
-Gaussian meanExpected = engine.Infer<Gaussian>(mean);  
-
-// online learning in mini-batches  
-int batchSize = 1;  
-double[][] dataBatches = new double[data.Length / batchSize][];  
-for (int batch = 0; batch < dataBatches.Length; batch++)  
-{  
-    dataBatches[batch] = data.Skip(batch * batchSize).Take(batchSize).ToArray();  
-}  
-Gaussian meanMarginal = Gaussian.Uniform();  
-for (int batch = 0; batch < dataBatches.Length; batch++)  
-{  
-    nItems.ObservedValue = dataBatches[batch].Length;  
-    x.ObservedValue = dataBatches[batch];  
-    meanMarginal = engine.Infer<Gaussian>(mean);  
-    Console.WriteLine("mean after batch {0} = {1}", batch, meanMarginal);  
-    meanMessage.ObservedValue = engine.Infer<Gaussian>(mean, QueryTypes.MarginalDividedByPrior);  
-}  
-// the answers should be identical for this simple model  
-Console.WriteLine("mean = {0} should be {1}", meanMarginal, meanExpected);
 ```
+mean after batch 0 = Gaussian(0.9045, 0.6301)
+mean after batch 1 = Gaussian(1.798, 0.4907)
+mean after batch 2 = Gaussian(2.529, 0.3333)
+mean after batch 3 = Gaussian(3.146, 0.25)
+mean = Gaussian(3.146, 0.25) should be Gaussian(3.146, 0.25)
+```
+
+The last line shows that, by using the accumulator, the posterior distribution obtained by processing the data one at a time matches the posterior distribution obtained by processing the data together.
 
 This approach generalizes to any number of shared parameters. For each parameter, you store its upward messages in an accumulator, and attach the accumulator to the parameter via _ConstrainEqualRandom_.  This approach is the closest you can get to processing the data together because it duplicates exactly what would happen internally if you ran EP for one iteration over the data.
 
