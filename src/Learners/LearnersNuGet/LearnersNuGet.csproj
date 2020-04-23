@@ -35,7 +35,7 @@
     <!--
     It is necessary to forward required values through to the NuSpec since this is not automatic.
     -->
-    <NuspecProperties>minClientVersion=4.0;bin=$(OutputPath);version=$(version)</NuspecProperties>
+    <NuspecProperties>minClientVersion=4.0;bin=$(OutputPath);version=$(version);CommitId=$(CommitId)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,6 +5,7 @@ using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
 using System;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace RobustGaussianProcess
 {
