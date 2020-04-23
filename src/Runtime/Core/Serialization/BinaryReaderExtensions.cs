@@ -48,10 +48,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             {
                 if (exceptionMessage == null)
                 {
-                    exceptionMessage = string.Format(
-                        "The deserialized guid {0} is invalid. Custom binary serialization of this object expects the guid to be {1}.",
-                        deserializedGuid,
-                        expectedSerializationGuid);
+                    exceptionMessage = $"The deserialized guid {deserializedGuid} is invalid. Custom binary serialization of this object expects the guid to be {expectedSerializationGuid}.";
                 }
 
                 throw new SerializationException(exceptionMessage);

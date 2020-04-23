@@ -132,15 +132,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [Skip]
         public GibbsMarginal(TDist distPrototype, int burnIn, int thin, bool estimateMarginal, bool collectSamples, bool collectDistributions)
         {
-            this.LastConditional = (TDist) (distPrototype.Clone());
+            this.LastConditional = (TDist) distPrototype.Clone();
             this.LastSample = default(T);
-            this.resultWorkspace = (TDist) (distPrototype.Clone());
-            this.estimator = null;
+            this.resultWorkspace = (TDist) distPrototype.Clone();
+            this.Estimator = null;
 
             if (collectSamples)
             {
                 // The sample list
-                Accumulator<T> sampAcc = new SampleList<T>() as Accumulator<T>;
+                Accumulator<T> sampAcc = new SampleList<T>();
                 // Add to the list of sample accumulators. 
                 // This is this first in the list - do not change as some code depends on this
                 this.sampleAccumulators.Accumulators.Add(new BurnInAccumulator<T>(burnIn, thin, sampAcc));
@@ -148,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (collectDistributions)
             {
                 // The conditional list
-                Accumulator<TDist> condAcc = new ConditionalList<TDist>() as Accumulator<TDist>;
+                Accumulator<TDist> condAcc = new ConditionalList<TDist>();
                 // Add to the list of distribution accumulators. 
                 // This is this first in the list - do not change as some code depends on this
                 this.distribAccumulators.Accumulators.Add(new BurnInAccumulator<TDist>(burnIn, thin, condAcc));
@@ -160,21 +160,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // be the case. If not, create an estimator where we add samples
                 try
                 {
-                    this.estimator = ArrayEstimator.CreateEstimator<TDist, T>(distPrototype, true);
+                    this.Estimator = ArrayEstimator.CreateEstimator<TDist, T>(distPrototype, true);
                 }
                 catch (Exception)
                 {
                 }
-                if (this.estimator == null)
+                if (this.Estimator == null)
                 {
-                    this.estimator = ArrayEstimator.CreateEstimator<TDist, T>(distPrototype, false);
-                    Accumulator<T> acc = this.estimator as Accumulator<T>;
+                    this.Estimator = ArrayEstimator.CreateEstimator<TDist, T>(distPrototype, false);
+                    Accumulator<T> acc = (Accumulator<T>)this.Estimator;
                     // Thinning is always 1 for estimators
                     this.sampleAccumulators.Accumulators.Add(new BurnInAccumulator<T>(burnIn, 1, acc));
                 }
                 else
                 {
-                    Accumulator<TDist> acc = this.estimator as Accumulator<TDist>;
+                    Accumulator<TDist> acc = (Accumulator<TDist>)this.Estimator;
                     // Thinning is always 1 for estimators
                     this.distribAccumulators.Accumulators.Add(new BurnInAccumulator<TDist>(burnIn, 1, acc));
                 }
@@ -189,22 +189,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <remarks>This does a soft copy of the estimator and sample and conditional lists</remarks>
         public GibbsMarginal(GibbsMarginal<TDist, T> that)
         {
-            estimator = that.estimator;
+            Estimator = that.Estimator;
             sampleAccumulators = that.sampleAccumulators;
             distribAccumulators = that.distribAccumulators;
             LastSample = that.LastSample;
             LastConditional = that.LastConditional;
         }
 
-        private Estimator<TDist> estimator = null;
-
         /// <summary>
         /// The embedded estimator
         /// </summary>
-        public Estimator<TDist> Estimator
-        {
-            get { return estimator; }
-        }
+        public Estimator<TDist> Estimator { get; }
 
         private AccumulatorList<T> sampleAccumulators = new AccumulatorList<T>();
         private AccumulatorList<TDist> distribAccumulators = new AccumulatorList<TDist>();
@@ -264,7 +259,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public TDist GetDistribution(TDist result)
         {
-            return estimator.GetDistribution(result);
+            return Estimator.GetDistribution(result);
         }
 
         #endregion
@@ -274,7 +269,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public TDist Distribution
         {
-            get { return estimator.GetDistribution(resultWorkspace); }
+            get { return Estimator.GetDistribution(resultWorkspace); }
         }
 
         /// <summary>

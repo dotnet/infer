@@ -861,7 +861,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             ConstructorInfo mi = t.GetConstructor(types);
             if (mi == null && types.Length > 0)
-                throw new MissingMethodException("GetConstructor failed for type " + t);
+                throw new MissingMethodException($"GetConstructor failed for type {StringUtil.TypeToString(t)} with arguments {StringUtil.ArrayToString(types)}");
             IMethodReference m = MethodRef();
             m.ReturnType = MethodReturnType(TypeRef(t));
             m.DeclaringType = TypeRef(t);
@@ -1724,7 +1724,12 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 return expr;
             }
-
+            else if (expr is IAddressOutExpression iaoe)
+            {
+                IAddressOutExpression aoe = AddrOutExpr();
+                aoe.Expression = ReplaceExpression(iaoe.Expression, exprFind, exprReplace, ref replaceCount);
+                return aoe;
+            }
             else throw new NotImplementedException("Unhandled expression type in ReplaceExpression(): " + expr.GetType());
         }
 
@@ -2188,21 +2193,23 @@ namespace Microsoft.ML.Probabilistic.Compiler
             Type arrayType = ToType(decl.VariableType);
             int rank;
             Type elementType = Util.GetElementType(arrayType, out rank);
-            if (sizes.Count == 0 || !arrayType.IsAssignableFrom(MakeArrayType(elementType, rank)))
+            if (sizes.Count == 0)
             {
                 addTo.Add(ExprStatement(VarDeclExpr(decl)));
                 return decl;
             }
+            if (!arrayType.IsAssignableFrom(MakeArrayType(elementType, rank)))
+                throw new ArgumentException($"sizes.Count > 0 but {decl} cannot be assigned to an array");
 
             IStatement declSt = AssignStmt(VarDeclExpr(decl), ArrayCreateExpr(elementType, sizes[0]));
             addTo.Add(declSt);
-            ICollection<IStatement> isc = addTo;
             IExpression expr = VarRefExpr(decl);
-            AddInnerLoops(0, indexVars, sizes, elementType, isc, expr, literalIndexingDepth);
+            AddInnerLoops(addTo, expr, elementType, indexVars, sizes, literalIndexingDepth, 0);
             return decl;
         }
 
-        private void AddInnerLoops(int i, IList<IVariableDeclaration[]> indexVars, IList<IExpression[]> sizes, Type elementType, ICollection<IStatement> isc, IExpression expr, int literalIndexingDepth)
+        // elementType is the type of expr[0]
+        private void AddInnerLoops(ICollection<IStatement> addTo, IExpression expr, Type elementType, IList<IVariableDeclaration[]> indexVars, IList<IExpression[]> sizes, int literalIndexingDepth, int i)
         {
             if (i >= sizes.Count - 1)
                 return;
@@ -2210,7 +2217,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             int rank;
             elementType = Util.GetElementType(arrayType, out rank);
             if (!arrayType.IsAssignableFrom(MakeArrayType(elementType, rank)))
-                return;
+                throw new ArgumentException($"{StringUtil.TypeToString(arrayType)} cannot be assigned to an array");
             if (i == literalIndexingDepth - 1)
             {
                 if (sizes[i].Length != 1) throw new Exception("sizes[i].Length != 1");
@@ -2218,19 +2225,19 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 for (int j = 0; j < sizeAsInt; j++)
                 {
                     var lhs = ArrayIndex(expr, this.LiteralExpr(j));
-                    isc.Add(AssignStmt(lhs, ArrayCreateExpr(elementType, sizes[i + 1])));
-                    AddInnerLoops(i + 1, indexVars, sizes, elementType, isc, lhs, literalIndexingDepth);
+                    addTo.Add(AssignStmt(lhs, ArrayCreateExpr(elementType, sizes[i + 1])));
+                    AddInnerLoops(addTo, lhs, elementType, indexVars, sizes, literalIndexingDepth, i + 1);
                 }
             }
             else
             {
                 IForStatement innerFor;
                 IForStatement fs = NestedForStmt(indexVars[i], sizes[i], out innerFor);
-                isc.Add(fs);
-                isc = innerFor.Body.Statements;
+                addTo.Add(fs);
+                addTo = innerFor.Body.Statements;
                 var lhs = ArrayIndex(expr, VarRefExprArray(indexVars[i]));
-                isc.Add(AssignStmt(lhs, ArrayCreateExpr(elementType, sizes[i + 1])));
-                AddInnerLoops(i + 1, indexVars, sizes, elementType, isc, lhs, literalIndexingDepth);
+                addTo.Add(AssignStmt(lhs, ArrayCreateExpr(elementType, sizes[i + 1])));
+                AddInnerLoops(addTo, lhs, elementType, indexVars, sizes, literalIndexingDepth, i + 1);
             }
         }
 

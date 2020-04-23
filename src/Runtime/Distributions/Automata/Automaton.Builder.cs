@@ -412,7 +412,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var hasEpsilonTransitions = false;
                 var usesGroups = false;
-                var hasSelfLoops = false;
                 var hasOnlyForwardTransitions = true;
 
                 var resultStates = ImmutableArray.CreateBuilder<StateData>(this.states.Count);
@@ -435,11 +434,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         hasEpsilonTransitions = hasEpsilonTransitions || transition.IsEpsilon;
                         usesGroups = usesGroups || (transition.Group != 0);
 
-                        if (transition.DestinationStateIndex == i)
-                        {
-                            hasSelfLoops = true;
-                        }
-                        else if (transition.DestinationStateIndex < i)
+                        if (transition.DestinationStateIndex <= i)
                         {
                             hasOnlyForwardTransitions = false;
                         }
@@ -458,10 +453,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     "number of copied transitions must match result array size");
 
                 // Detect two very common automata shapes
-                var isEnumerable =
-                    hasSelfLoops ? false :
-                    hasOnlyForwardTransitions ? true :
-                    (bool?)null;
+                var isEnumerable = hasOnlyForwardTransitions ? true : (bool?)null;
 
                 return new DataContainer(
                     this.StartStateIndex,
