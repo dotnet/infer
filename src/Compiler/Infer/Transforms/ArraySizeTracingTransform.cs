@@ -110,7 +110,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
             }
             if (size == null && typeof(IEnumerable).IsAssignableFrom(varInfo.varType))
-                size = Builder.StaticMethod(new Func<IEnumerable, long>(JaggedArray.GetLongLength), Builder.VarRefExpr(varInfo.declaration));
+                size = Builder.StaticMethod(new Func<IEnumerable, long>(JaggedArray.GetLongLength), varInfo.GetExpression());
             return size;
         }
 

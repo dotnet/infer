@@ -5,6 +5,7 @@
     <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains classes and methods needed to execute the inference code.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>$(AssemblyNamePrefix)Microsoft.ML.Probabilistic</AssemblyName>
+    <PackageId>$(AssemblyName)$(NuGetPackageIdSuffix)</PackageId>
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS</DefineConstants>
     <NoWarn>1591</NoWarn>
     <RootNamespace>Microsoft.ML.Probabilistic</RootNamespace>

@@ -35,6 +35,7 @@ namespace Microsoft.ML.Probabilistic.Learners.TestApp
             // Tests for the Bayes Point machine classifier
             var classifierTests = new BayesPointMachineClassifierTests();
 
+            classifierTests.GaussianSparseBinaryStandardCustomSerializationRegressionTest();
             ////classifierTests.DenseBinaryNativeConstantZeroFeatureTest();
             ////classifierTests.SparseBinaryNativeConstantZeroFeatureTest();
             ////classifierTests.DenseMulticlassNativeConstantZeroFeatureTest();
@@ -48,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Learners.TestApp
             // Tests for the Matchbox recommender
             var recommenderTests = new MatchboxRecommenderTests();
             ////recommenderTests.UserItemFeaturesRegressionTest();
-            recommenderTests.StandardDataFormatCustomSerializationTest();
+            ////recommenderTests.StandardDataFormatCustomSerializationTest();
 
 #if NETFULL
             logWriter.Dispose();

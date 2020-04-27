@@ -12,8 +12,8 @@ resources:
   
 trigger: none # disable CI build
 
-#queue:
-#  name: Hosted VS2017
+pool:
+  vmImage: 'windows-2019'
 
 # Cannot use matrix strategy to create jobs for different platforms, 
 # since then the platform is given as a variable which cannot be passed as a parameter to a template,
@@ -22,7 +22,7 @@ jobs:
 - job: Win64_Build_Test
   displayName: 'Windows: Build and Test (x64)'
   timeoutInMinutes: 180
-  
+
   steps:
   - template: windows-msbuild.yml
     parameters:
