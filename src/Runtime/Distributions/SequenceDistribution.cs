@@ -1106,15 +1106,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             this.point = that.point;
-            if (this.point == null)
-            {
-                this.SetWeightFunction(that.sequenceToWeight);
-            }
-            else
-            {
-                this.sequenceToWeight = null;
-            }
-
+            this.sequenceToWeight = that.sequenceToWeight;
             this.isNormalized = that.isNormalized;
         }
 
