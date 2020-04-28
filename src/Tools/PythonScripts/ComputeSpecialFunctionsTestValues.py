@@ -276,7 +276,7 @@ pair_info = {
     'GammaLn.csv': loggamma,
     'GammaLower.csv': lambda s, x: lowergamma(s, x) / gamma(s) if s != oo else S(0),
     'GammaUpper.csv': uppergamma,
-    'GammaUpperRegularized.csv': lambda s, x: 1 - (lowergamma(s, x) / gamma(s) if s != oo else S(0)),
+    'GammaUpperRegularized.csv': lambda s, x: 1 - (lowergamma(s, x) / gamma(s) if s != oo else S(0)) if x != oo else S(0),
     'GammaUpperScale.csv' : lambda s, x: x ** s * exp(-x) / gamma(s),
     'Log1MinusExp.csv': lambda x: log(1 - exp(x)),
     'Log1Plus.csv': lambda x: log(1 + x),
