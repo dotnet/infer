@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ML.Probabilistic.Math;
+using System.Reflection;
 
 namespace Infer.Loki.Tests
 {
@@ -23,6 +24,7 @@ namespace Infer.Loki.Tests
             //mappers.MethodMapper.CreateMap<Func<double, double, bool, double>, Func<BigFloat, BigFloat, bool, BigFloat>>(MMath.GammaUpper, GammaUpper);
             //mappers.MethodMapper.CreateMap<Func<double, double, double>, Func<BigFloat, BigFloat, BigFloat>>(MMath.GammaLower, GammaLower);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ReciprocalFactorialMinus1, ReciprocalFactorialMinus1);
+            mappers.MethodMapper.CreateMap<Func<double, double, double>, Func<BigFloat, BigFloat, BigFloat>>(MMath.GammaUpperLogScale, GammaUpperLogScale);
 
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1Plus, Log1Plus);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1MinusExp, Log1MinusExp);
@@ -37,10 +39,43 @@ namespace Infer.Loki.Tests
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDouble, NextBigFloat);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDouble, PreviousBigFloat);
 
+            mappers.MethodMapper.CreateMap
+            (
+                typeof(MMath).GetMethod(
+                    "GammaSeries",
+                    BindingFlags.Static | BindingFlags.NonPublic,
+                    null,
+                    new Type[] { typeof(double) },
+                    null),
+                typeof(Mappings.SpecialFunctionsMethods).GetMethod(
+                    "GammaSeries",
+                    BindingFlags.Static | BindingFlags.Public,
+                    null,
+                    new Type[] { typeof(BigFloat) },
+                    null)
+            );
+
+            mappers.MethodMapper.CreateMap
+            (
+                typeof(MMath).GetMethod(
+                    "XMinusLog1Plus",
+                    BindingFlags.Static | BindingFlags.NonPublic,
+                    null,
+                    new Type[] { typeof(double) },
+                    null),
+                typeof(Mappings.SpecialFunctionsMethods).GetMethod(
+                    "XMinusLog1Plus",
+                    BindingFlags.Static | BindingFlags.Public,
+                    null,
+                    new Type[] { typeof(BigFloat) },
+                    null)
+            );
+
             mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Sqrt2", () => Sqrt2);
             mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Sqrt2PI", () => Sqrt2PI);
             mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.LnSqrt2PI", () => LnSqrt2PI);
             mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.DefaultBetaEpsilon", () => DefaultBetaEpsilon);
+            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Ulp1", () => Ulp1);
         }
     }
 }

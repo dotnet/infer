@@ -63,6 +63,10 @@ namespace Infer.Loki.Tests
 
             settings.PreserveNamespace(new Regex(@"^Infer\.Loki\.Mappings"));
 
+            settings.ExcludeProject(new Regex(@"^Loki\.Tests$"));
+            settings.ExcludeProject(new Regex(@"^Loki$"));
+            settings.ExcludeProject(new Regex(@"^Loki\.Mapping$"));
+
             settings.Mappers.AddMap(new AssertionMap());
             settings.Mappers.AddMap(new SpecialFunctionsMap());
             settings.Mappers.AddMap(new TestHelpersMap());
@@ -75,7 +79,7 @@ namespace Infer.Loki.Tests
             //Assert.True(testResult.HighPrecisionPassed);
             await runner.Build();
             Environment.CurrentDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "Tests");
-            var testResult = runner.RunTest(new SpecialFunctionsTests().BetaCdfTest, 0);
+            var testResult = runner.RunTest(new SpecialFunctionsTests().GammaUpperTest, 0);
             Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
         }
     }

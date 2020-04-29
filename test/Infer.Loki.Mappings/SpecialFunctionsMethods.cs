@@ -19,6 +19,7 @@ namespace Infer.Loki.Mappings
         public static readonly BigFloat Sqrt2PI;
         public static readonly BigFloat LnSqrt2PI;
         public static readonly BigFloat DefaultBetaEpsilon = BigFloatFactory.Create("1e-38");
+        public static readonly BigFloat Ulp1;
 
         static SpecialFunctionsMethods()
         {
@@ -32,6 +33,10 @@ namespace Infer.Loki.Mappings
 
             LnSqrt2PI = BigFloatFactory.Create(Sqrt2PI);
             LnSqrt2PI.Log();
+
+            Ulp1 = BigFloatFactory.Create(1);
+            Ulp1.NextAbove();
+            Ulp1.Sub(1);
         }
 
         public static BigFloat Gamma(BigFloat x)
@@ -120,38 +125,75 @@ namespace Infer.Loki.Mappings
 
         public static void FindThresholds()
         {
-            using (var tmp1 = BigFloatFactory.Empty())
+            using (var tmp1 = BigFloatFactory.Create("0.0075"))
+            using (var invX = BigFloatFactory.Create(1))
             using (var invX2 = BigFloatFactory.Empty())
             {
-                for (int i = -30; i >= -100; --i)
-                {
-                    tmp1.Set(i);
-                    tmp1.Sqr();
-                    //BigFloat.Sqr(tmp1, c_trigamma_large);
-                    BigFloat.Div(invX2, 1.0, tmp1);
-                    int conv = FindConvergencePoint(invX2, normalCdfLnAsymptotic);
-                    Console.WriteLine($"Convergence point at {i}: {conv}");
-                    if (conv > 0)
-                    {
-                        using (var result = EvaluateSeries(invX2, normalCdfLnAsymptotic.Take(conv).ToArray()))
-                        using (var x = BigFloatFactory.Create(i))
-                        using (var f = NormalCdf(x))
-                        {
-                            result.Sub(LnSqrt2PI);
-                            tmp1.Div2(1);
-                            result.Sub(tmp1);
-                            BigFloat.Neg(tmp1, x);
-                            tmp1.Log();
-                            result.Sub(tmp1);
-                            Console.WriteLine($"Polynomial: {result}");
-                            f.Log();
-                            Console.WriteLine($"Algebraic:  {f}");
-                            f.Sub(result);
-                            f.Abs();
-                            Console.WriteLine($"Diff:       {f}");
-                        }
-                    }
-                }
+                invX.Div(tmp1);
+                int conv = FindConvergencePoint(tmp1, gammaMinusReciprocalAt0);
+                Console.WriteLine($"Convergence point at {tmp1}: {conv}");
+                var result = EvaluateSeries(tmp1, gammaMinusReciprocalAt0.Take(conv).ToArray());
+                var f = BigFloatFactory.Create(tmp1);
+                f.Gamma();
+                f.Sub(invX);
+                Console.WriteLine($"Polynomial: {result}");
+                Console.WriteLine($"Algebraic:  {f}");
+                f.Sub(result);
+                f.Abs();
+                Console.WriteLine($"Diff:       {f}");
+                //for (int i = 10; i < 70; ++i)
+                //{
+                //    BigFloat.Set(tmp1, i);
+                //    BigFloat.Set(invX, 1);
+                //    invX.Div(tmp1);
+                //    BigFloat.Sqr(invX2, invX);
+                //    int conv = FindConvergencePoint(invX2, gammaLnAsymptotic);
+                //    Console.WriteLine($"Convergence point at {i}: {conv}");
+                //    if (conv > 0)
+                //    {
+                //        using (var result = EvaluateSeries(invX2, gammaLnAsymptotic.Take(conv).ToArray()))
+                //        using (var logx = BigFloatFactory.Create(tmp1))
+                //        using (var tmp = BigFloatFactory.Create(tmp1))
+                //        using (var f = GammaLn(tmp1))
+                //        {
+                //            result.Mul(invX);
+                //            logx.Log();
+                //            tmp.Sub(0.5);
+                //            tmp.Mul(logx);
+                //            f.Sub(tmp);
+                //            f.Add(tmp1);
+                //            f.Sub(LnSqrt2PI);
+                //            Console.WriteLine($"Polynomial: {result}");
+                //            Console.WriteLine($"Algebraic:  {f}");
+                //            f.Sub(result);
+                //            f.Abs();
+                //            Console.WriteLine($"Diff:       {f}");
+                //        }
+                //    }
+                //}
+                //for (int i = 0; i < 11; ++i)
+                //{
+                //    int conv = FindConvergencePoint(tmp1, xMinusLog1PlusAt0);
+                //    Console.WriteLine($"Convergence point at {tmp1}: {conv}");
+                //    if (conv < 0)
+                //        conv = xMinusLog1PlusAt0.Length;
+                //    if (conv > 0)
+                //    {
+                //        using (var result = EvaluateSeries(tmp1, xMinusLog1PlusAt0.Take(conv).ToArray()))
+                //        using (var x = BigFloatFactory.Create(tmp1))
+                //        using (var f = Log1Plus(x))
+                //        {
+                //            f.Neg();
+                //            f.Add(x);
+                //            Console.WriteLine($"Polynomial: {result}");
+                //            Console.WriteLine($"Algebraic:  {f}");
+                //            f.Sub(result);
+                //            f.Abs();
+                //            Console.WriteLine($"Diff:       {f}");
+                //        }
+                //    }
+                //    tmp1.Div2(1);
+                //}
             }
         }
 
@@ -468,17 +510,57 @@ namespace Infer.Loki.Mappings
         //    return result;
         //}
 
+        private static readonly BigFloat reciprocalFactorialMinus1Threshold = BigFloatFactory.Create("0.025");
+        // Truncated series 18: Reciprocal factorial minus 1
+        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+        private static readonly BigFloat[] reciprocalFactorialMinus1At0 = new BigFloat[]
+        {
+            BigFloatFactory.Create("0"),
+            BigFloatFactory.Create("0.57721566490153286060651209008240243104215933593992"),
+            BigFloatFactory.Create("-0.65587807152025388107701951514539048127976638047858"),
+            BigFloatFactory.Create("-0.042002635034095235529003934875429818711394500401106"),
+            BigFloatFactory.Create("0.16653861138229148950170079510210523571778150224717"),
+            BigFloatFactory.Create("-0.042197734555544336748208301289187391301652684189823"),
+            BigFloatFactory.Create("-0.0096219715278769735621149216723481989753629422521130"),
+            BigFloatFactory.Create("0.0072189432466630995423950103404465727099048008802383"),
+            BigFloatFactory.Create("-0.0011651675918590651121139710840183886668093337953841"),
+            BigFloatFactory.Create("-0.00021524167411495097281572996305364780647824192337834"),
+            BigFloatFactory.Create("0.00012805028238811618615319862632816432339489209969368"),
+            BigFloatFactory.Create("-0.000020134854780788238655689391421021818382294833297979"),
+            BigFloatFactory.Create("-0.0000012504934821426706573453594738330922423226556211540"),
+            BigFloatFactory.Create("0.0000011330272319816958823741296203307449433240048386211"),
+            BigFloatFactory.Create("-0.00000020563384169776071034501541300205728365125790262934"),
+            BigFloatFactory.Create("0.0000000061160951044814158178624986828553428672758657197123"),
+            BigFloatFactory.Create("0.0000000050020076444692229300556650480599913030446127424945"),
+            BigFloatFactory.Create("-0.0000000011812745704870201445881265654365055777387595049326"),
+            BigFloatFactory.Create("0.00000000010434267116911005104915403323122501914007098231258"),
+            BigFloatFactory.Create("0.0000000000077822634399050712540499373113607772260680861813929"),
+            BigFloatFactory.Create("-0.0000000000036968056186422057081878158780857662365709634513610"),
+            BigFloatFactory.Create("0.00000000000051003702874544759790154813228632318027268860697076")
+        };
+
+        /// <summary>
+        /// Computes <c>1/Gamma(x+1) - 1</c> to high accuracy
+        /// </summary>
+        /// <param name="x">A real number &gt;= 0</param>
         public static BigFloat ReciprocalFactorialMinus1(BigFloat x)
         {
-            var result = BigFloatFactory.Create(1.0);
-            using (var tmp = BigFloatFactory.Create(1.0))
+            if (x.IsGreater(reciprocalFactorialMinus1Threshold))
             {
-                tmp.Add(x);
-                result.Div(tmp);
-                tmp.Set(1.0);
-                result.Sub(tmp);
+                using (var denom = BigFloatFactory.Create(x))
+                {
+                    denom.Add(1);
+                    denom.Gamma();
+                    var result = BigFloatFactory.Create(1);
+                    result.Div(denom);
+                    result.Sub(1);
+                    return result;
+                }
             }
-            return result;
+            else
+            {
+                return EvaluateSeries(x, reciprocalFactorialMinus1At0);
+            }
         }
 
         public static BigFloat Log1Plus(BigFloat x)
@@ -764,6 +846,227 @@ namespace Infer.Loki.Mappings
                 }
                 return sum;
             }
+        }
+
+        private static readonly BigFloat xMinusLog1PlusThresholdNeg = BigFloatFactory.Create("-0.025");
+        private static readonly BigFloat xMinusLog1PlusThresholdPos = BigFloatFactory.Create("0.025");
+        // Truncated series 12: x - log(1 + x)
+        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+        private static readonly BigFloat[] xMinusLog1PlusAt0 = new BigFloat[]
+        {
+            BigFloatFactory.Create("0"),
+            BigFloatFactory.Create("0"),
+            BigFloatFactory.Create("0.50000000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-0.33333333333333333333333333333333333333333333333333"),
+            BigFloatFactory.Create("0.25000000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-0.20000000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("0.16666666666666666666666666666666666666666666666667"),
+            BigFloatFactory.Create("-0.14285714285714285714285714285714285714285714285714"),
+            BigFloatFactory.Create("0.12500000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-0.11111111111111111111111111111111111111111111111111"),
+            BigFloatFactory.Create("0.10000000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-0.090909090909090909090909090909090909090909090909091"),
+            BigFloatFactory.Create("0.083333333333333333333333333333333333333333333333333"),
+            BigFloatFactory.Create("-0.076923076923076923076923076923076923076923076923077"),
+            BigFloatFactory.Create("0.071428571428571428571428571428571428571428571428571"),
+            BigFloatFactory.Create("-0.066666666666666666666666666666666666666666666666667"),
+            BigFloatFactory.Create("0.062500000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-0.058823529411764705882352941176470588235294117647059"),
+            BigFloatFactory.Create("0.055555555555555555555555555555555555555555555555556"),
+            BigFloatFactory.Create("-0.052631578947368421052631578947368421052631578947368"),
+            BigFloatFactory.Create("0.050000000000000000000000000000000000000000000000000"),
+            BigFloatFactory.Create("-0.047619047619047619047619047619047619047619047619048"),
+            BigFloatFactory.Create("0.045454545454545454545454545454545454545454545454545"),
+            BigFloatFactory.Create("-0.043478260869565217391304347826086956521739130434783"),
+            BigFloatFactory.Create("0.041666666666666666666666666666666666666666666666667"),
+            BigFloatFactory.Create("-0.040000000000000000000000000000000000000000000000000")
+        };
+
+        /// <summary>
+        /// Computes <c>x - log(1+x)</c> to high accuracy.
+        /// </summary>
+        /// <param name="x">Any real number &gt;= -1</param>
+        /// <returns>A real number &gt;= 0</returns>
+        public static BigFloat XMinusLog1Plus(BigFloat x)
+        {
+            if (x.IsGreater(xMinusLog1PlusThresholdNeg) && x.IsLesser(xMinusLog1PlusThresholdPos))
+            {
+                return EvaluateSeries(x, xMinusLog1PlusAt0);
+            }
+            else
+            {
+                var result = Log1Plus(x);
+                result.Neg();
+                result.Add(x);
+                return result;
+            }
+        }
+
+        private static readonly BigFloat gammaLnSeriesThreshold = BigFloatFactory.Create("16");
+        // Truncated series 9: GammaLn asymptotic
+        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+        private static readonly BigFloat[] gammaLnAsymptotic = new BigFloat[]
+        {
+            BigFloatFactory.Create("0.083333333333333333333333333333333333333333333333333"),
+            BigFloatFactory.Create("-0.0027777777777777777777777777777777777777777777777778"),
+            BigFloatFactory.Create("0.00079365079365079365079365079365079365079365079365079"),
+            BigFloatFactory.Create("-0.00059523809523809523809523809523809523809523809523809"),
+            BigFloatFactory.Create("0.00084175084175084175084175084175084175084175084175084"),
+            BigFloatFactory.Create("-0.0019175269175269175269175269175269175269175269175269"),
+            BigFloatFactory.Create("0.0064102564102564102564102564102564102564102564102564"),
+            BigFloatFactory.Create("-0.029550653594771241830065359477124183006535947712418"),
+            BigFloatFactory.Create("0.17964437236883057316493849001588939669435025472177"),
+            BigFloatFactory.Create("-1.3924322169059011164274322169059011164274322169059"),
+            BigFloatFactory.Create("13.402864044168391994478951000690131124913733609386"),
+            BigFloatFactory.Create("-156.84828462600201730636513245208897382810426288687"),
+            BigFloatFactory.Create("2193.1033333333333333333333333333333333333333333333"),
+            BigFloatFactory.Create("-36108.771253724989357173265219242230736483610046828"),
+            BigFloatFactory.Create("691472.26885131306710839525077567346755333407168780"),
+            BigFloatFactory.Create("-15238221.539407416192283364958886780518659076533839"),
+            BigFloatFactory.Create("382900751.39141414141414141414141414141414141414141"),
+            BigFloatFactory.Create("-10882266035.784391089015149165525105374729434879811"),
+            BigFloatFactory.Create("347320283765.00225225225225225225225225225225225225"),
+            BigFloatFactory.Create("-12369602142269.274454251710349271324881080978641954"),
+            BigFloatFactory.Create("488788064793079.33507581516251802290210847053890567"),
+            BigFloatFactory.Create("-21320333960919373.896975058982136838557465453319852"),
+            BigFloatFactory.Create("1021775296525700077.5652876280535855003940110323089"),
+            BigFloatFactory.Create("-53575472173300203610.827709191969204484849040543659"),
+            BigFloatFactory.Create("3061578263704883415043.1510513296227581941867656153"),
+            BigFloatFactory.Create("-189999174263992040502937.14293069429029473424589962"),
+            BigFloatFactory.Create("12763374033828834149234951.377697825976541633608830"),
+            BigFloatFactory.Create("-925284717612041630723024234.83476227795193312434692"),
+            BigFloatFactory.Create("72188225951856102978360501873.016379224898404202597"),
+            BigFloatFactory.Create("-6045183405995856967743148238754.5472860661443959672"),
+            BigFloatFactory.Create("542067047157009454519347781482610.00136612021857923")
+        };
+
+        /// <summary>
+        /// Computes <c>GammaLn(x) - (x-0.5)*log(x) + x - 0.5*log(2*pi)</c> for x &gt;= 10
+        /// </summary>
+        /// <param name="x">A real number &gt;= 10</param>
+        /// <returns></returns>
+        private static BigFloat GammaLnSeries(BigFloat x)
+        {
+            if (x.IsLesser(gammaLnSeriesThreshold))
+            {
+                using (var logx = BigFloatFactory.Create(x))
+                using (var tmp = BigFloatFactory.Create(x))
+                {
+                    var result = GammaLn(x);
+                    logx.Log();
+                    tmp.Sub(0.5);
+                    tmp.Mul(logx);
+                    result.Sub(tmp);
+                    result.Add(x);
+                    result.Sub(LnSqrt2PI);
+                    return result;
+                }
+            }
+            else
+            {
+                using (var invX = BigFloatFactory.Create(1))
+                using (var invX2 = BigFloatFactory.Empty())
+                {
+                    invX.Div(x);
+                    BigFloat.Sqr(invX2, invX);
+                    var result = EvaluateSeries(invX2, gammaLnAsymptotic);
+                    result.Mul(invX);
+                    return result;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Computes <c>log(x^a e^(-x)/Gamma(a))</c> to high accuracy.
+        /// </summary>
+        /// <param name="a">A positive real number</param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static BigFloat GammaUpperLogScale(BigFloat a, BigFloat x)
+        {
+            if (DoubleMethods.IsPositiveInfinity(x) || DoubleMethods.IsPositiveInfinity(a))
+                return BigFloatFactory.NegativeInfinity;
+            if (a.IsLesser(gammaLnSeriesThreshold))
+            {
+                using (var gammaLnA = GammaLn(a))
+                {
+                    var result = BigFloatFactory.Create(x);
+                    result.Log();
+                    result.Mul(a);
+                    result.Sub(x);
+                    result.Sub(gammaLnA);
+                    return result;
+                }
+            }
+            else
+            {
+                using (var tmp = BigFloatFactory.Create(x))
+                {
+                    tmp.Sub(a);
+                    tmp.Div(a);
+                    using (var phi = XMinusLog1Plus(tmp))
+                    {
+                        var result = GammaLnSeries(a);
+                        result.Neg();
+                        BigFloat.Set(tmp, a);
+                        tmp.Log();
+                        tmp.Div2(1);
+                        tmp.Sub(LnSqrt2PI);
+                        result.Add(tmp);
+                        phi.Mul(a);
+                        result.Sub(phi);
+                        return result;// 0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi;
+                    }
+                }
+            }
+        }
+
+        private static readonly BigFloat gammaMinusReciprocalThreshold = BigFloatFactory.Create("0.0075");
+        // Truncated series 19: Gamma(x) - 1/x
+        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+        private static readonly BigFloat[] gammaMinusReciprocalAt0 = new BigFloat[]
+        {
+            BigFloatFactory.Create("-0.57721566490153286060651209008240243104215933593992"),
+            BigFloatFactory.Create("0.98905599532797255539539565150063470793918352072821"),
+            BigFloatFactory.Create("-0.90747907608088628901656016735627511492861144907256"),
+            BigFloatFactory.Create("0.98172808683440018733638029402185085036057367972347"),
+            BigFloatFactory.Create("-0.98199506890314520210470141379137467551742650714720"),
+            BigFloatFactory.Create("0.99314911462127619315386725332865849803749075523943"),
+            BigFloatFactory.Create("-0.99600176044243153397007841966456668673529880955458"),
+            BigFloatFactory.Create("0.99810569378312892197857540308836723752396852479018"),
+            BigFloatFactory.Create("-0.99902526762195486779467805964888808853230396352566"),
+            BigFloatFactory.Create("0.99951565607277744106705087759437019443450329799460"),
+            BigFloatFactory.Create("-0.99975659750860128702584244914060923599695138562883"),
+            BigFloatFactory.Create("0.99987827131513327572617164259000321938762910895432"),
+            BigFloatFactory.Create("-0.99993906420644431683585223136895513185794350282804"),
+            BigFloatFactory.Create("0.99996951776348210449861140509195350726552804247988"),
+            BigFloatFactory.Create("-0.99998475269937704874370963172444753832608332577145"),
+            BigFloatFactory.Create("0.99999237447907321585539509450510782583381634469466"),
+            BigFloatFactory.Create("-0.99999618658947331202896495779561431380201731243263"),
+            BigFloatFactory.Create("0.99999809308113089205186619151459489773169557198830"),
+            BigFloatFactory.Create("-0.99999904646891115771748687947054372632469616324955")
+        };
+
+        /// <summary>
+        /// Compute <c>Gamma(x) - 1/x</c> to high accuracy
+        /// </summary>
+        /// <param name="x">A real number &gt;= 0</param>
+        /// <returns></returns>
+        public static BigFloat GammaSeries(BigFloat x)
+        {
+            if (x.IsGreater(gammaMinusReciprocalThreshold))
+            {
+                using (var invX = BigFloatFactory.Create(1))
+                {
+                    invX.Div(x);
+                    var result = BigFloatFactory.Create(x);
+                    result.Gamma();
+                    result.Sub(invX);
+                    return result;
+                }
+            }
+            else
+                return EvaluateSeries(x, gammaMinusReciprocalAt0);
         }
 
         #region BinaryRepresentation

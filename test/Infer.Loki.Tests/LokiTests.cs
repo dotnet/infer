@@ -78,6 +78,10 @@ namespace Infer.Loki.Tests
 
             settings.PreserveNamespace(new Regex(@"^Infer\.Loki\.Mappings"));
 
+            settings.ExcludeProject(new Regex(@"^Loki\.Tests$"));
+            settings.ExcludeProject(new Regex(@"^Loki$"));
+            settings.ExcludeProject(new Regex(@"^Loki\.Mapping$"));
+
             settings.Mappers.AddMap(new AssertionMap());
             settings.Mappers.AddMap(new SpecialFunctionsMap());
             settings.Mappers.AddMap(new TestHelpersMap());
