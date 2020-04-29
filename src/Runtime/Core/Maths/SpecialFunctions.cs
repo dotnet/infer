@@ -1173,6 +1173,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return result;
         }
 
+        private const double Ulp1 = 2.2204460492503131e-16; // Ulp(1.0);
+
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
         /// </summary>
@@ -1214,7 +1216,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 return GammaAsympt(a, x, true);
             else if (x > 1.5)
                 return GammaUpperConFrac(a, x);
-            else if (a <= 1e-16)
+            else if (a <= Ulp1)
                 // Gamma(a) = 1/a for a <= 1e-16
                 return a * GammaUpperSeries(a, x, false);
             else
@@ -1435,7 +1437,7 @@ namespace Microsoft.ML.Probabilistic.Math
             }
             else
             {
-                if (Math.Abs(alogx) <= 1e-16) offset = GammaSeries(a) - logx;
+                if (Math.Abs(alogx) <= Ulp1) offset = GammaSeries(a) - logx;
                 else offset = GammaSeries(a) - xaMinus1 / a;
                 scale = 1 + xaMinus1;
                 term = x;
@@ -1470,14 +1472,17 @@ var('x');
 f = gamma(x)-1/x
 [c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
                  */
-                return Digamma1
-                    + x * (0.98905599532797255539539565150
-                    + x * (-0.90747907608088628901656016736
-                    + x * (0.98172808683440018733638029402
-                    + x * (-0.98199506890314520210470141379
-                    + x * (0.99314911462127619315386725333
-                    + x * (-0.99600176044243153397007841966
-                    ))))));
+                return
+                    // Truncated series 19: Gamma(x) - 1/x
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    -0.577215664901532860606512090082 +
+                    x * (0.989055995327972555395395651501 +
+                    x * (-0.907479076080886289016560167356 +
+                    x * (0.981728086834400187336380294022 +
+                    x * (-0.981995068903145202104701413791 +
+                    x * (0.993149114621276193153867253329 +
+                    x * -0.996001760442431533970078419665)))))
+                    ;
         }
 
         /// <summary>
