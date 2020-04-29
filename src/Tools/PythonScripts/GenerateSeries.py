@@ -80,6 +80,10 @@ reciprocal_factorial_minus_1_series_length = 17
 reciprocal_factorial_minus_1_variable_name = "x"
 reciprocal_factorial_minus_1_indent = "                "
 
+gamma_minus_reciprocal_series_length = 7
+gamma_minus_reciprocal_variable_name = "x"
+gamma_minus_reciprocal_indent = "                    "
+
 def print_heading_comment(indent, header):
     print(f"{indent}// Truncated series {header}")
     print(f"{indent}// Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py")
@@ -268,6 +272,10 @@ def get_reciprocal_factorial_minus_1_coefficients(count):
     x = symbols('x')
     return list(reversed(Poly((1 / gamma(x + 1) - 1).series(x, 0, count).removeO(), x).all_coeffs()))
 
+def get_gamma_minus_reciprocal_coefficients(count):
+    x = symbols('x')
+    return list(reversed(Poly((gamma(x) - 1 / x).series(x, 0, count).removeO(), x).all_coeffs()))
+
 def main():
     print_heading_comment(gamma_at_2_indent, "1: Gamma at 2")
     gamma_at_2_coefficients = [gamma_at_2_coefficient(k) for k in range(0, gamma_at_2_series_length)]
@@ -340,6 +348,10 @@ def main():
     print_heading_comment(reciprocal_factorial_minus_1_indent, "18: Reciprocal factorial minus 1")
     reciprocal_factorial_minus_1_coefficients = get_reciprocal_factorial_minus_1_coefficients(reciprocal_factorial_minus_1_series_length)
     print_polynomial_with_real_coefficients(reciprocal_factorial_minus_1_variable_name, reciprocal_factorial_minus_1_coefficients, reciprocal_factorial_minus_1_indent)
+    
+    print_heading_comment(gamma_minus_reciprocal_indent, "19: Gamma(x) - 1/x")
+    gamma_minus_reciprocal_coefficients = get_gamma_minus_reciprocal_coefficients(gamma_minus_reciprocal_series_length)
+    print_polynomial_with_real_coefficients(gamma_minus_reciprocal_variable_name, gamma_minus_reciprocal_coefficients, gamma_minus_reciprocal_indent)
 
 def big_float_main():
     print_heading_comment(trigamma_at_1_indent, "5: Trigamma at 1")
@@ -358,12 +370,28 @@ def big_float_main():
     tetragamma_asymptotic_coefficients = [tetragamma_asymptotic_coefficient(k) for k in range(0, 32)]
     print_big_float_array(tetragamma_asymptotic_coefficients, 50, 500)
 
+    print_heading_comment(gammaln_asymptotic_indent, "9: GammaLn asymptotic")
+    gammaln_asymptotic_coefficients = [gammaln_asymptotic_coefficient(k) for k in range(0, 31)]
+    print_big_float_array(gammaln_asymptotic_coefficients, 50, 500)
+
     print_heading_comment(log_1_minus_indent, "11: log(1 - x)")
     log_1_minus_coefficients = [log_1_minus_coefficient(k) for k in range(0, 50)]
     print_big_float_array(log_1_minus_coefficients, 50, 500)
 
+    print_heading_comment(x_minus_log_1_plus_indent, "12: x - log(1 + x)")
+    x_minus_log_1_plus_coefficients = [x_minus_log_1_plus_coefficient(k) for k in range(0, 26)]
+    print_big_float_array(x_minus_log_1_plus_coefficients, 50, 500)
+
     print_heading_comment(normcdfln_asymptotic_indent, "16: normcdfln asymptotic")
     normcdfln_asymptotic_coefficients = [normcdfln_asymptotic_coefficient(k) for k in range(0, 19)]
     print_big_float_array(normcdfln_asymptotic_coefficients, 50, 500)
+    
+    print_heading_comment(reciprocal_factorial_minus_1_indent, "18: Reciprocal factorial minus 1")
+    reciprocal_factorial_minus_1_coefficients = get_reciprocal_factorial_minus_1_coefficients(22)
+    print_big_float_array(reciprocal_factorial_minus_1_coefficients, 50, 500)
+    
+    print_heading_comment(gamma_minus_reciprocal_indent, "19: Gamma(x) - 1/x")
+    gamma_minus_reciprocal_coefficients = get_gamma_minus_reciprocal_coefficients(30)
+    print_big_float_array(gamma_minus_reciprocal_coefficients, 50, 500)
 
 if __name__ == '__main__': big_float_main()
