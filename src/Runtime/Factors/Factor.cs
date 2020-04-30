@@ -1303,18 +1303,6 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <summary>
-        /// Passes the input through to the output. Used to set backward messages to uniform.
-        /// </summary>
-        /// <typeparam name="T">The type the input value.</typeparam>
-        /// <param name="value">The value to return.</param>
-        /// <returns>The supplied value.</returns>
-        [Hidden]
-        public static T Cut<T>([SkipIfUniform] T value)
-        {
-            return value;
-        }
-
-        /// <summary>
         /// Generate a jagged array of Gaussian random variables.
         /// </summary>
         /// <param name="sampleCount"></param>
