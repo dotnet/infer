@@ -206,6 +206,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected override IExpression ConvertMethodInvoke(IMethodInvokeExpression imie)
         {
             if (CodeRecognizer.IsInfer(imie)) return ConvertInfer(imie);
+            if (CodeRecognizer.IsIsIncreasing(imie)) return imie;
             if (context.FindAncestor<IExpressionStatement>() == null) return imie;
             IExpression expr = imie;
             IAssignExpression iae = context.FindAncestor<IAssignExpression>();
