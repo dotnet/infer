@@ -631,9 +631,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected override IExpression ConvertAssign(IAssignExpression iae)
         {
             iae = (IAssignExpression)base.ConvertAssign(iae);
-            if (iae.Expression is IMethodInvokeExpression)
+            if (iae.Expression is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression)iae.Expression;
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(iae.Target);
                 if (ivd != null)
                 {

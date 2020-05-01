@@ -65,7 +65,7 @@ namespace Microsoft.ML.Probabilistic.Models
             modelType.Owner = null;
             modelType.BaseType = null;
             modelType.Visibility = TypeVisibility.Public;
-            modelMethod = Builder.MethodDecl(MethodVisibility.Public, "Model", typeof (void), modelType);
+            modelMethod = Builder.MethodDecl(MethodVisibility.Public, "Model", typeof(void), modelType);
             IBlockStatement body = Builder.BlockStmt();
             modelMethod.Body = body;
             //blocks = new List<IList<IStatement>>();
@@ -114,15 +114,13 @@ namespace Microsoft.ML.Probabilistic.Models
             List<IModelExpression> exprs = new List<IModelExpression>();
             foreach (IModelExpression expr in ModelExpressions)
             {
-                if (expr is Variable)
+                if (expr is Variable var)
                 {
-                    Variable var = (Variable) expr;
                     exprs.Add(var);
                     timestamps.Add(var.timestamp);
                 }
-                else if (expr is MethodInvoke)
+                else if (expr is MethodInvoke mi)
                 {
-                    MethodInvoke mi = (MethodInvoke) expr;
                     exprs.Add(mi);
                     timestamps.Add(mi.timestamp);
                 }
@@ -183,9 +181,9 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             if (var == null) throw new NullReferenceException("Model expression was null.");
             // Console.WriteLine("Building expression: "+var+" "+builtVars.ContainsKey(var));
-            if (var is MethodInvoke)
+            if (var is MethodInvoke methodInvoke)
             {
-                BuildMethodInvoke((MethodInvoke)var, null);
+                BuildMethodInvoke(methodInvoke);
                 return;
             }
             MethodInfo mb = new Action<IModelExpression<object>>(this.BuildExpression<object>).Method.GetGenericMethodDefinition();
@@ -220,7 +218,7 @@ namespace Microsoft.ML.Probabilistic.Models
             Type[] faces = expr.GetType().GetInterfaces();
             foreach (Type face in faces)
             {
-                if (face.IsGenericType && face.GetGenericTypeDefinition() == typeof (IModelExpression<>))
+                if (face.IsGenericType && face.GetGenericTypeDefinition() == typeof(IModelExpression<>))
                 {
                     domainType = face.GetGenericArguments()[0];
                     break;
@@ -236,14 +234,14 @@ namespace Microsoft.ML.Probabilistic.Models
             if (expr == null) throw new NullReferenceException("Model expression was null.");
             // Console.WriteLine("Searching expression: "+var+" "+builtVars.ContainsKey(var));
             if (searched.Contains(expr)) return;
-            if (expr is MethodInvoke)
+            if (expr is MethodInvoke methodInvoke)
             {
-                SearchMethodInvoke((MethodInvoke) expr);
+                SearchMethodInvoke(methodInvoke);
                 return;
             }
-            if (expr is Range)
+            if (expr is Range range)
             {
-                SearchRange((Range) expr);
+                SearchRange(range);
                 return;
             }
             MethodInfo mb = new Action<IModelExpression<object>>(this.SearchExpression<object>).Method.GetGenericMethodDefinition();
@@ -253,7 +251,7 @@ namespace Microsoft.ML.Probabilistic.Models
             Type[] faces = expr.GetType().GetInterfaces();
             foreach (Type face in faces)
             {
-                if (face.IsGenericType && face.GetGenericTypeDefinition() == typeof (IModelExpression<>))
+                if (face.IsGenericType && face.GetGenericTypeDefinition() == typeof(IModelExpression<>))
                 {
                     domainType = face.GetGenericArguments()[0];
                     break;
@@ -284,15 +282,13 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Add a statement of the form x = f(...) to the MSL.
         /// </summary>
         /// <param name="method">Stores the method to call, the argument variables, and target variable.</param>
-        /// <param name="lhs">Stores the name and type of the target variable, if it is not already declared.  Otherwise null.</param>
-        /// 
         /// <remarks>
         /// If any variable in the statement is an item variable, then we surround the statement with a loop over its range.
         /// Since there may be multiple item variables, and each item may depend on multiple ranges, we may end up with multiple loops.
         /// </remarks>
-        private void BuildMethodInvoke(MethodInvoke method, IExpression lhs)
+        private void BuildMethodInvoke(MethodInvoke method)
         {
-            if (method.ReturnValue is Variable && ((Variable) method.ReturnValue).Inline) return;
+            if (method.ReturnValue is Variable && ((Variable)method.ReturnValue).Inline) return;
             // Open containing blocks
             List<IStatementBlock> stBlocks = method.Containers;
             List<Range> localRanges = new List<Range>();
@@ -304,7 +300,7 @@ namespace Microsoft.ML.Probabilistic.Models
             foreach (IModelExpression arg in method.returnValueAndArgs())
             {
                 MethodInvoke.ForEachRange(arg,
-                                          delegate(Range r) { if (!localRanges.Contains(r)) localRanges.Add(r); });
+                                          delegate (Range r) { if (!localRanges.Contains(r)) localRanges.Add(r); });
             }
             ParameterInfo[] pis = method.method.GetParameters();
             for (int i = 0; i < pis.Length; i++)
@@ -320,32 +316,20 @@ namespace Microsoft.ML.Probabilistic.Models
             {
                 if (b is HasRange)
                 {
-                    HasRange br = (HasRange) b;
+                    HasRange br = (HasRange)b;
                     localRanges.Remove(br.Range);
                 }
             }
-            localRanges.Sort(delegate(Range a, Range b) { return MethodInvoke.CompareRanges(dict, a, b); });
+            localRanges.Sort(delegate (Range a, Range b) { return MethodInvoke.CompareRanges(dict, a, b); });
             // convert from List<Range> to List<IStatementBlock>
             List<IStatementBlock> localRangeBlocks = new List<IStatementBlock>(localRanges.Select(r => r));
             BuildStatementBlocks(stBlocks, true);
-            if (lhs != null)
-            {
-                // If there are inline loops, we need to incorporate the variable declaration outside the loops
-                AddStatement(Builder.ExprStatement(lhs));
-                lhs = null;
-            }
             BuildStatementBlocks(localRangeBlocks, true);
 
             // Invoke method
             IExpression methodExpr = method.GetExpression();
-            if (lhs != null)
-            {
-                // If this is the definition of a declared variable, merge the declaration in to the assignment.
-                IAssignExpression iae = (IAssignExpression) methodExpr;
-                iae.Target = lhs;
-            }
             IStatement st = Builder.ExprStatement(methodExpr);
-            if (methodExpr is IAssignExpression && method.ReturnValue is HasObservedValue && ((HasObservedValue) method.ReturnValue).IsObserved)
+            if (methodExpr is IAssignExpression && method.ReturnValue is HasObservedValue && ((HasObservedValue)method.ReturnValue).IsObserved)
             {
                 Attributes.Set(st, new Constraint());
             }
@@ -388,23 +372,23 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             if (isb is IfBlock)
             {
-                IfBlock ib = (IfBlock) isb;
+                IfBlock ib = (IfBlock)isb;
                 var condVar = ib.ConditionVariable;
                 if (!negatedConditionVariables.Contains(condVar))
                 {
                     if (condVar.definition != null)
                     {
                         MethodInvoke mi = condVar.definition;
-                        if (mi.method.Equals(new Func<int, int, bool>(Microsoft.ML.Probabilistic.Factors.Factor.AreEqual).Method))
+                        if (mi.method.Equals(new Func<int, int, bool>(Factor.AreEqual).Method))
                         {
                             if (mi.Arguments[1] is Variable)
                             {
-                                Variable arg1 = (Variable) mi.Arguments[1];
+                                Variable arg1 = (Variable)mi.Arguments[1];
                                 if (arg1.IsObserved || arg1.IsLoopIndex)
                                 {
                                     // convert 'if(vbool1)' into 'if(x==value)'  where value is observed (or a loop index) and vbool1 is never negated.
                                     // if vbool1 is negated, then we cannot make this substitution since we need to match the corresponding 'if(!vbool1)' condition.
-                                    IConditionStatement ics = (IConditionStatement) ist;
+                                    IConditionStatement ics = (IConditionStatement)ist;
                                     ics.Condition = Builder.BinaryExpr(mi.Arguments[0].GetExpression(), BinaryOperator.ValueEquality, arg1.GetExpression());
                                 }
                             }
@@ -422,7 +406,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// 
         public void SearchExpression<T>(IModelExpression<T> var)
         {
-            if (var is Variable<T>) SearchVariable<T>((Variable<T>) var);
+            if (var is Variable<T> varT) SearchVariable<T>(varT);
             else throw new InferCompilerException("Unhandled model expression type: " + var.GetType());
         }
 
@@ -473,9 +457,11 @@ namespace Microsoft.ML.Probabilistic.Models
                 if (!variable.Inline)
                 {
                     // Determine if the variable should be inlined
-                    bool inline = false;
+                    bool inline;
                     if (variable.definition != null)
+                    {
                         inline = variable.definition.CanBeInlined();
+                    }
                     else
                     {
                         inline = (variable.conditionalDefinitions.Values.Count == 1);
@@ -496,7 +482,6 @@ namespace Microsoft.ML.Probabilistic.Models
                 if (variable is IVariableArray)
                 {
                     IVariableArray iva = (IVariableArray)variable;
-                    IList<IStatement> sc = Builder.StmtCollection();
                     IList<IVariableDeclaration[]> jaggedIndexVars;
                     IList<IExpression[]> jaggedSizes;
                     GetJaggedArrayIndicesAndSizes(iva, out jaggedIndexVars, out jaggedSizes);
@@ -565,8 +550,53 @@ namespace Microsoft.ML.Probabilistic.Models
         private void FinishVariable<T>(Variable<T> variable, IAlgorithm alg)
         {
             if (variable.IsLoopIndex) return; // do nothing
+            if (variable.IsArrayElement) return;
+            if (variable.Inline) return;
 
-            FinishRandVar(variable, alg);
+            object ivd = variable.GetDeclaration();
+            bool doNotInfer = false;
+            // Add attributes
+            foreach (ICompilerAttribute attr in variable.GetAttributes<ICompilerAttribute>())
+            {
+                if (attr is DoNotInfer) doNotInfer = true;
+                else Attributes.Add(ivd, attr);
+            }
+            foreach (IStatementBlock stBlock in variable.Containers)
+            {
+                if (stBlock is HasRange)
+                {
+                    doNotInfer = true;
+                    break;
+                }
+            }
+            List<IStatementBlock> stBlocks = new List<IStatementBlock>();
+            stBlocks.AddRange(variable.Containers);
+            // Add Infer statement 
+            bool isConstant = (variable.IsBase && variable.IsReadOnly);
+            if (!doNotInfer && ((!inferOnlySpecifiedVars && !isConstant) || variablesToInfer.Contains(variable)))
+            {
+                // If there has been no explicit indication of query types for inference, set the
+                // default types
+                List<QueryTypeCompilerAttribute> qtlist = Attributes.GetAll<QueryTypeCompilerAttribute>(ivd);
+                if (qtlist.Count == 0)
+                {
+                    alg.ForEachDefaultQueryType(qt => Attributes.Add(ivd, new QueryTypeCompilerAttribute(qt)));
+                    qtlist = Attributes.GetAll<QueryTypeCompilerAttribute>(ivd);
+                }
+                variablesToInfer.Add(variable);
+                BuildStatementBlocks(stBlocks, true);
+                IExpression varExpr = variable.GetExpression();
+                IExpression varName = Builder.LiteralExpr(variable.NameInGeneratedCode);
+                foreach (QueryTypeCompilerAttribute qt in qtlist)
+                {
+                    IExpression queryExpr = Builder.FieldRefExpr(Builder.TypeRefExpr(typeof(QueryTypes)), typeof(QueryTypes), qt.QueryType.Name);
+                    // for a constant, we must get the variable reference, not the value
+                    if (isConstant) varExpr = Builder.VarRefExpr((IVariableDeclaration)variable.GetDeclaration());
+                    AddStatement(Builder.ExprStatement(
+                        Builder.StaticMethod(new Action<object>(InferNet.Infer), varExpr, varName, queryExpr)));
+                }
+                BuildStatementBlocks(stBlocks, false);
+            }
         }
 
         /// <summary>
@@ -576,7 +606,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="expr">The variable expression</param>
         private void BuildExpression<T>(IModelExpression<T> expr)
         {
-            if (expr is Variable<T>) BuildVariable<T>((Variable<T>) expr);
+            if (expr is Variable<T> var) BuildVariable<T>(var);
             else throw new InferCompilerException("Unhandled model expression type: " + expr.GetType());
         }
 
@@ -606,7 +636,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         private bool ShouldInlineConstant<T>(Variable<T> constant)
         {
-            return (Quoter.ShouldInlineType(typeof (T)) && (!constant.IsDefined) && !variablesToInfer.Contains(constant));
+            return (Quoter.ShouldInlineType(typeof(T)) && (!constant.IsDefined) && !variablesToInfer.Contains(constant));
         }
 
         /// <summary>
@@ -637,9 +667,9 @@ namespace Microsoft.ML.Probabilistic.Models
                     if (!useExisting)
                     {
                         // create a new declaration
-                        ivd = (IVariableDeclaration) constant.GetDeclaration();
+                        ivd = (IVariableDeclaration)constant.GetDeclaration();
                         var rhs = Quoter.Quote(constant.ObservedValue);
-                        if (ReferenceEquals(constant.ObservedValue, null)) rhs = Builder.CastExpr(rhs, typeof (T));
+                        if (ReferenceEquals(constant.ObservedValue, null)) rhs = Builder.CastExpr(rhs, typeof(T));
                         AddStatement(Builder.AssignStmt(Builder.VarDeclExpr(ivd), rhs));
                         constants[key] = ivd;
                     }
@@ -692,7 +722,7 @@ namespace Microsoft.ML.Probabilistic.Models
         private void SearchRange(Range range)
         {
             if (searched.Contains(range)) return;
-            string name = ((IModelExpression) range).Name;
+            string name = ((IModelExpression)range).Name;
             foreach (IModelExpression expr in searched)
             {
                 if (name.Equals(expr.Name))
@@ -716,9 +746,9 @@ namespace Microsoft.ML.Probabilistic.Models
                 {
                     var ds = (DistributedSchedule)attr;
                     toSearch.Push(ds.commExpression);
-                    if(ds.scheduleExpression != null)
+                    if (ds.scheduleExpression != null)
                         toSearch.Push(ds.scheduleExpression);
-                    if(ds.schedulePerThreadExpression != null)
+                    if (ds.schedulePerThreadExpression != null)
                         toSearch.Push(ds.schedulePerThreadExpression);
                     var attr2 = new DistributedScheduleExpression(ds.commExpression.GetExpression(), ds.scheduleExpression?.GetExpression(), ds.schedulePerThreadExpression?.GetExpression());
                     Attributes.Set(ivd, attr2);
@@ -740,28 +770,26 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             foreach (IStatementBlock sb in containers)
             {
-                if (sb is ConditionBlock)
+                if (sb is ConditionBlock cb)
                 {
-                    if (sb is SwitchBlock)
+                    if (cb is SwitchBlock swb)
                     {
-                        SearchRange(((SwitchBlock) sb).Range);
+                        SearchRange(swb.Range);
                     }
-                    ConditionBlock cb = (ConditionBlock) sb;
                     Variable condVar = cb.ConditionVariableUntyped;
-                    if (cb is IfBlock)
+                    if (cb is IfBlock ib)
                     {
-                        IfBlock ib = (IfBlock) cb;
                         if (ib.ConditionValue == false) negatedConditionVariables.Add(condVar);
                     }
                     toSearch.Push(condVar);
                 }
-                else if (sb is ForEachBlock)
+                else if (sb is ForEachBlock fb)
                 {
-                    SearchRange(((ForEachBlock) sb).Range);
+                    SearchRange(fb.Range);
                 }
-                else if (sb is RepeatBlock)
+                else if (sb is RepeatBlock rb)
                 {
-                    toSearch.Push(((RepeatBlock) sb).Count);
+                    toSearch.Push(rb.Count);
                 }
             }
         }
@@ -814,7 +842,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 }
                 return;
             }
-            IVariableDeclaration ivd = (IVariableDeclaration) variable.GetDeclaration();
+            IVariableDeclaration ivd = (IVariableDeclaration)variable.GetDeclaration();
             if (variable.initialiseTo != null)
             {
                 Attributes.Set(ivd, new InitialiseTo(variable.initialiseTo.GetExpression()));
@@ -837,9 +865,8 @@ namespace Microsoft.ML.Probabilistic.Models
                 Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>();
                 foreach (IStatementBlock stBlock in stBlocks)
                 {
-                    if (stBlock is ForEachBlock)
+                    if (stBlock is ForEachBlock fb)
                     {
-                        ForEachBlock fb = (ForEachBlock) stBlock;
                         IVariableDeclaration loopVar = fb.Range.GetIndexDeclaration();
                         if (loopVars.Contains(loopVar))
                             throw new InvalidOperationException("Variable '" + ivd.Name + "' uses range '" + loopVar.Name + "' twice. Use a cloned range instead.");
@@ -881,53 +908,6 @@ namespace Microsoft.ML.Probabilistic.Models
 
         protected void FinishRandVar<T>(Variable<T> variable, IAlgorithm alg)
         {
-            if (variable.IsArrayElement) return;
-            if (variable.Inline) return;
-
-            object ivd = variable.GetDeclaration();
-            bool doNotInfer = false;
-            // Add attributes
-            foreach (ICompilerAttribute attr in variable.GetAttributes<ICompilerAttribute>())
-            {
-                if (attr is DoNotInfer) doNotInfer = true;
-                else Attributes.Add(ivd, attr);
-            }
-            foreach (IStatementBlock stBlock in variable.Containers)
-            {
-                if (stBlock is HasRange)
-                {
-                    doNotInfer = true;
-                    break;
-                }
-            }
-            List<IStatementBlock> stBlocks = new List<IStatementBlock>();
-            stBlocks.AddRange(variable.Containers);
-            // Add Infer statement 
-            bool isConstant = (variable.IsBase && variable.IsReadOnly);
-            if (!doNotInfer && ((!inferOnlySpecifiedVars && !isConstant) || variablesToInfer.Contains(variable)))
-            {
-                // If there has been no explicit indication of query types for inference, set the
-                // default types
-                List<QueryTypeCompilerAttribute> qtlist = Attributes.GetAll<QueryTypeCompilerAttribute>(ivd);
-                if (qtlist.Count == 0)
-                {
-                    alg.ForEachDefaultQueryType(qt => Attributes.Add(ivd, new QueryTypeCompilerAttribute(qt)));
-                    qtlist = Attributes.GetAll<QueryTypeCompilerAttribute>(ivd);
-                }
-                variablesToInfer.Add(variable);
-                BuildStatementBlocks(stBlocks, true);
-                IExpression varExpr = variable.GetExpression();
-                IExpression varName = Builder.LiteralExpr(variable.NameInGeneratedCode);
-                foreach (QueryTypeCompilerAttribute qt in qtlist)
-                {
-                    IExpression queryExpr = Builder.FieldRefExpr(Builder.TypeRefExpr(typeof (QueryTypes)), typeof (QueryTypes), qt.QueryType.Name);
-                    // for a constant, we must get the variable reference, not the value
-                    if (isConstant) varExpr = Builder.VarRefExpr((IVariableDeclaration)variable.GetDeclaration());
-                    AddStatement(Builder.ExprStatement(
-                        Builder.StaticMethod(new Action<object>(InferNet.Infer), varExpr, varName, queryExpr)));
-                }
-                BuildStatementBlocks(stBlocks, false);
-            }
         }
 
         protected void GetJaggedArrayIndicesAndSizes(IVariableArray array, out IList<IVariableDeclaration[]> jaggedIndexVars, out IList<IExpression[]> jaggedSizes)
@@ -955,10 +935,10 @@ namespace Microsoft.ML.Probabilistic.Models
                 }
                 jaggedIndexVars.Add(indexVars);
                 jaggedSizes.Add(sizes);
-                if (array is IVariableJaggedArray)
+                if (array is IVariableJaggedArray variableJaggedArray)
                 {
-                    IVariable itemPrototype = ((IVariableJaggedArray) array).ItemPrototype;
-                    if (itemPrototype is IVariableArray) array = (IVariableArray) itemPrototype;
+                    IVariable itemPrototype = variableJaggedArray.ItemPrototype;
+                    if (itemPrototype is IVariableArray variableArray) array = variableArray;
                     else break;
                 }
                 else break;
