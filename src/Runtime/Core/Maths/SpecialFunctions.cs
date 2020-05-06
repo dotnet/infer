@@ -2617,7 +2617,8 @@ f = gamma(x)-1/x
             // Second term of the Taylor series
             sum += Qderiv * rPowerN;
             double sumOld = sum;
-            for (int n = 2; n <= 100; n++)
+            int maxIterations = 1000;
+            for (int n = 2; n <= maxIterations; n++)
             {
                 //Console.WriteLine($"n = {n - 1} sum = {sum:g17}");
                 double dlogphiOverFactorial;
@@ -2633,7 +2634,7 @@ f = gamma(x)-1/x
                 Qderivs.Add(QderivOverFactorial);
                 rPowerN *= r;
                 sum += QderivOverFactorial * rPowerN;
-                if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= 100)
+                if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= maxIterations)
                     throw new Exception($"NormalCdfRatioTaylor not converging for x={x:g17}, y={y:g17}, r={r:g17}");
                 if (AreEqual(sum, sumOld)) break;
                 sumOld = sum;
@@ -2718,6 +2719,7 @@ rr = mpf('-0.99999824265582826');
         }
 
         internal static bool TraceConFrac;
+        private const double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
 
         /// <summary>
         /// Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale.
@@ -2931,7 +2933,7 @@ rr = mpf('-0.99999824265582826');
                 b /= x;
             }
             double bIncr = sqrtomr2 / x;
-            const int iterationCount = 1000;
+            const int iterationCount = 10000;
             for (int i = 1; i <= iterationCount; i++)
             {
                 double numerNew, denomNew;
@@ -3023,7 +3025,7 @@ rr = mpf('-0.99999824265582826');
                         Trace.WriteLine($"iter {i}: result={result:g17} c={c:g17} cOdd={cOdd:g17} numer={numer:g17} numer2={numer2:g17} denom={denom:g17} numerPrev={numerPrev:g17}");
                     if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= iterationCount - 1)
                         throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:g17} y={y:g17} r={r:g17} sqrtomr2={sqrtomr2:g17} scale={scale:g17}");
-                    if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < 1e-13)
+                    if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < NormalCdfRatioConfracTolerance)
                         break;
                     resultPrev = result;
                 }
