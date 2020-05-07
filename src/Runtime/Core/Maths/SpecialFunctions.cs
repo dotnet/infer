@@ -3999,7 +3999,7 @@ rr = mpf('-0.99999824265582826');
             // sigma(|m|,v) <= 0.5 + |m| sigma'(0,v)
             // sigma'(0,v) <= N(0;0,v+8/pi)
             //double d0Upper = MMath.InvSqrt2PI / Math.Sqrt(variance + 8 / Math.PI);
-            if (mean * mean / (variance + 8 / Math.PI) < 2e-20 * Math.PI)
+            if (mean * mean / (variance + 8 / Math.PI) < 1e-8)
             {
                 double deriv = LogisticGaussianDerivative(mean, variance);
                 return 0.5 + mean * deriv;
@@ -4019,14 +4019,18 @@ rr = mpf('-0.99999824265582826');
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
-                double shift = (mean < 0) ? Gaussian.GetLogProb(0, mean, variance) : 0;
+                double sqrtv = System.Math.Sqrt(variance);
+                double meanInvSqrtV = mean / sqrtv;
+                double shift = (mean < 0) ? Gaussian.GetLogProb(0, meanInvSqrtV, 1) : 0;
                 double f(double x)
                 {
-                    return Math.Exp(MMath.LogisticLn(x) + Gaussian.GetLogProb(x, mean, variance) - shift);
+                    double diff = x - meanInvSqrtV;
+                    return Math.Exp(MMath.LogisticLn(x*sqrtv) - diff*diff/2 - MMath.LnSqrt2PI - shift);
                 }
                 double upperBound = mean + Math.Sqrt(variance);
                 upperBound = Math.Max(upperBound, 10);
-                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, upperBound, 32, 1e-10), shift).ToDouble();
+                upperBound /= sqrtv;
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, upperBound, 32, 1e-13), shift).ToDouble();
             }
             else
             {
