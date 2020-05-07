@@ -1,7 +1,7 @@
 # Licensed to the .NET Foundation under one or more agreements.
 # The .NET Foundation licenses this file to you under the MIT license.
 # See the LICENSE file in the project root for more information.
-"""A script to evalute test values for special functions in high precision.
+"""A script to evaluate test values for special functions in high precision.
 
 This scripts looks for .csv files in /test/Tests/Data/SpecialFunctionsValues.
 These files are expected to contain sets of arguments and expected result values
@@ -18,6 +18,9 @@ use comma as a value separator, dot as a decimal separator, and
 
 The correspondence between file names and functions is set in the pair_info
 dictionary within the script.
+
+To add a new test case, add a new row to the csv file using a dummy value for the expectedresult.
+Then run this script to replace the dummy value.
 """
 from __future__ import division
 from sympy import *
