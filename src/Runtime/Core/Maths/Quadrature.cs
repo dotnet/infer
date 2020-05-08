@@ -19,37 +19,47 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Integrate the function f from -Infinity to Infinity
         /// </summary>
         /// <param name="f">The function to integrate</param>
-        /// <param name="CCFactor">A positive tuning parameter</param>
-        /// <param name="numIntervals">The initial number of nodes</param>
+        /// <param name="scale">A positive tuning parameter.  f is assumed to be negligible outside of [-scale,scale]</param>
+        /// <param name="nodeCount">The initial number of nodes.  Should be at least 2 and a power of 2.</param>
         /// <param name="relTol">A threshold to stop subdividing</param>
         /// <returns></returns>
-        public static double AdaptiveClenshawCurtis(Converter<double, double> f, double CCFactor, int numIntervals, double relTol)
+        public static double AdaptiveClenshawCurtis(Converter<double, double> f, double scale, int nodeCount, double relTol)
         {
+            // To get fast convergence, the transformation function should grow like 1/x (or faster) near the endpoints of the integration.
+            // In this case, we use 1/tan(x) which is approximately 1/x when x is near 0 and approximately -1/x when x is near pi.
+            // The transformation function atanh(x) for x in [-1,1] would be a bad choice since it only grows like log(1/x) near the endpoints.
             double fInvTan(double x)
             {
                 if (x == 0 || x == System.Math.PI)
                     return 0;
                 double sinX = System.Math.Sin(x);
-                return f(CCFactor / System.Math.Tan(x)) / (sinX * sinX);
+                return f(scale / System.Math.Tan(x)) / (sinX * sinX);
             }
-            return CCFactor * AdaptiveTrapeziumRule(fInvTan, numIntervals, 0, System.Math.PI, relTol, 10000);
+            return scale * AdaptiveTrapeziumRule(fInvTan, nodeCount, 0, System.Math.PI, relTol, 10000);
         }
 
-        // Requires f(a)=f(b)=0
-        // numIntervals should be at least 2 and a power of 2
-        internal static double AdaptiveTrapeziumRule(Converter<double, double> f, int numIntervals, double a, double b, double relTol, int maxNodes)
+        /// <summary>
+        /// Integrate the function f from a to b
+        /// </summary>
+        /// <param name="f">The function to integrate.  Must have f(a)=f(b)=0.</param>
+        /// <param name="nodeCount">The initial number of nodes.  Should be at least 2 and a power of 2.</param>
+        /// <param name="a">The lower bound</param>
+        /// <param name="b">The upper bound</param>
+        /// <param name="relTol">A threshold to stop subdividing</param>
+        /// <param name="maxNodes">Another threshold to stop subdividing</param>
+        /// <returns></returns>
+        internal static double AdaptiveTrapeziumRule(Converter<double, double> f, int nodeCount, double a, double b, double relTol, int maxNodes)
         {
-            int n = numIntervals / 2;
-            double intervalWidth = (b - a) / n;
+            double intervalWidth = (b - a) / nodeCount;
             double sumf1 = 0, sumf2 = 0;
             for (double x = intervalWidth + a; x < b; x += intervalWidth)
             {
                 sumf1 += f(x);
             }
-            while (n < maxNodes)
+            while (nodeCount < maxNodes)
             {
-                n = n * 2;
-                intervalWidth = (b - a) / n;
+                nodeCount *= 2;
+                intervalWidth /= 2;
                 sumf2 = sumf1;
                 for (double x = intervalWidth + a; x < b; x += intervalWidth * 2)
                 {
@@ -69,7 +79,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 }
                 sumf1 = sumf2;
             }
-            //Trace.WriteLine($"Reached maxNodes ({n} >= {maxNodes})");
+            //Trace.WriteLine($"Reached maxNodes ({nodeCount} >= {maxNodes})");
             return sumf2 * intervalWidth;
         }
 
@@ -121,10 +131,6 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Quadrature nodes for Gamma expectations.
         /// </summary>
@@ -150,7 +156,8 @@ namespace Microsoft.ML.Probabilistic.Math
             int n = nodes.Count;
             if (a + 1 < 0) throw new ArgumentOutOfRangeException("a is too small (" + a + ")");
             if (b <= 0) throw new ArgumentOutOfRangeException("b is too small (" + b + ")");
-            if (false)
+            bool useLaguerre = false;
+            if (useLaguerre)
             {
                 if (n < 2 || n > LaguerreNodesAndWeights.Length + 1)
                     throw new Exception("The requested number of nodes is outside [2," + (LaguerreNodesAndWeights.Length + 1) + "]");
@@ -194,10 +201,6 @@ namespace Microsoft.ML.Probabilistic.Math
                 }
             }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         public static void LaguerreGammaNodesAndWeights(double a, double b, IList<double> nodes, IList<double> weights)
         {

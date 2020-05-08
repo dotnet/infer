@@ -4001,7 +4001,7 @@ rr = mpf('-0.99999824265582826');
             //double d0Upper = MMath.InvSqrt2PI / Math.Sqrt(variance + 8 / Math.PI);
             if (mean * mean / (variance + 8 / Math.PI) < 1e-8)
             {
-                double deriv = LogisticGaussianDerivative(mean, variance);
+                double deriv = LogisticGaussianDerivative(0, variance);
                 return 0.5 + mean * deriv;
             }
 
@@ -4028,9 +4028,8 @@ rr = mpf('-0.99999824265582826');
                     return Math.Exp(MMath.LogisticLn(x*sqrtv) - diff*diff/2 - MMath.LnSqrt2PI - shift);
                 }
                 double upperBound = mean + Math.Sqrt(variance);
-                upperBound = Math.Max(upperBound, 10);
-                upperBound /= sqrtv;
-                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, upperBound, 32, 1e-13), shift).ToDouble();
+                double scale = Math.Max(upperBound, 10) / sqrtv;
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, scale, 32, 1e-13), shift).ToDouble();
             }
             else
             {

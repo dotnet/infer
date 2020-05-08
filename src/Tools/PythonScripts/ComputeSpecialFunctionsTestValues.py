@@ -27,6 +27,7 @@ from sympy import *
 import os
 import csv
 import mpmath
+import time
 
 mpmath.mp.pretty = true
 mpmath.mp.dps = 500
@@ -111,6 +112,10 @@ def logistic_gaussian(m, v):
     logEpsilon = log(mpmath.mpf('1e-500'))
     if 2*mmpf + 4*vmpf < logEpsilon:
         return Float(exp(mmpf + vmpf/2) * (1 - exp(mmpf + 1.5 * vmpf) * (1 - exp(mmpf + 2.5 * vmpf))))
+    tanhm = mpmath.tanh(mmpf)
+    # Not really a precise threshold, but fine for our data
+    if tanhm == mpmath.mpf('1.0'):
+        return Float('1.0')
     # The integration routine below is obtained by substituting x = atanh(t)*sqrt(v)
     # into the definition of logistic_gaussian
     #
@@ -118,17 +123,16 @@ def logistic_gaussian(m, v):
     # result = 1 / mpmath.sqrt(2 * mpmath.pi * vmpf) * mpmath.quad(f, [-mpmath.inf, mpmath.inf])
     #
     # Such substitution makes mpmath.quad call much faster.
-    tanhm = mpmath.tanh(mmpf)
-    # Not really a precise threshold, but fine for our data
-    if tanhm == mpmath.mpf('1.0'):
-        return Float('1.0')
+    # mpmath.quad uses exponential spacing between quadrature points, so we want the transformation to grow like log(x).
     sqrtv = mpmath.sqrt(vmpf)
     misqrtv = mmpf/sqrtv
+    scale = max(10, mmpf + sqrtv)/sqrtv
     def f(t): 
-        x = mpmath.atanh(t)
+        x = scale*mpmath.atanh(t)
         return mpmath.exp(-(x - misqrtv) ** 2 / 2) / (1 + mpmath.exp(-x*sqrtv)) / (1 - t * t)
-    coef = 1 / mpmath.sqrt(2 * mpmath.pi)
-    int, err = mpmath.quad(f, [-1, 0, 1], error=True)
+    coef = scale / mpmath.sqrt(2 * mpmath.pi)
+    points = [-1, 0, 1]
+    int, err = mpmath.quad(f, points, error=True)
     result = coef * int
     if mpmath.mpf('1e50') * abs(err) > abs(int):
         print(f"Suspiciously big error when evaluating an integral for logistic_gaussian({m}, {v}).")
@@ -331,12 +335,15 @@ with os.scandir(dir) as it:
                     for i in range(arg_count):
                         args.append(Float(float_str_csharp_to_python(row[f'arg{i}'])))
                     result_in_file = row['expectedresult']
-                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN' or len(newrows) > 5:
+                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN':
                         newrow['expectedresult'] = result_in_file
                     else:
                         print(f'{entry.name}{args}')
                         try:
+                            startTime = time.time()
                             result = f(*args).evalf(50, maxn=500)
+                            elapsed = time.time() - startTime
+                            print(f'({elapsed} seconds elapsed)')
                             print(result)
                             if abs(result) < Float('1e-20000'):
                                 result = Float('0')
