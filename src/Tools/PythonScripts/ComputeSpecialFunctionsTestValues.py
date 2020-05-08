@@ -19,7 +19,7 @@ use comma as a value separator, dot as a decimal separator, and
 The correspondence between file names and functions is set in the pair_info
 dictionary within the script.
 
-To add a new test case, add a new row to the csv file using a dummy value for the expectedresult.
+To add a new test case, add a new row to the csv file using zero for the expectedresult.
 Then run this script to replace the dummy value.
 """
 from __future__ import division
@@ -27,11 +27,14 @@ from sympy import *
 import os
 import csv
 import mpmath
+import time
+
+mpmath.mp.pretty = true
+mpmath.mp.dps = 500
 
 def normal_cdf_moment_ratio(n, x):
-    mpmath.mp.dps = 500
-    xmpf = x._to_mpmath(500)
-    nmpf = n._to_mpmath(500)
+    xmpf = to_mpmath(x)
+    nmpf = to_mpmath(n)
     if x < 0:
         return Float(mpmath.power(2, -0.5 - nmpf / 2) * mpmath.hyperu(nmpf / 2 + 0.5, 0.5, xmpf * xmpf / 2))
     return Float(mpmath.exp(xmpf * xmpf / 4) * mpmath.pcfu(0.5 + nmpf, -xmpf))
@@ -78,15 +81,7 @@ def mpmath_normal_cdf2(x, y, r):
         print(f"Integral error estimate: {err}")
     return result
 
-def to_mpmath(x):
-    if x == -oo:
-        return -mpmath.inf
-    if x == oo:
-        return mpmath.inf
-    return x._to_mpmath(mpmath.mp.dps)
-
 def normal_cdf2(x, y, r):
-    mpmath.mp.dps = 500
     result = mpmath_normal_cdf2(to_mpmath(x), to_mpmath(y), to_mpmath(r))
     return Float(result)
 
@@ -102,7 +97,6 @@ def normal_cdf_ln2(x, y, r):
             return Float('-1014.85016355878529115329386335426754801497185281882358946348')
         if r == Float('-0.9999000000000000110134124042815528810024261474609375'):
             return Float('-111.409512020775362450645082754211442935050576861888726532')
-    mpmath.mp.dps = 500
     result = mpmath.ln(mpmath_normal_cdf2(to_mpmath(x), to_mpmath(y), to_mpmath(r)))
     return Float(result)
 
@@ -113,23 +107,32 @@ def logistic_gaussian(m, v):
         return Float('1.0')
     if v == oo:
         return Float('0.5')
-    mpmath.mp.dps = 500
-    mmpf = m._to_mpmath(500)
-    vmpf = v._to_mpmath(500)
-    # The integration routine below is obtained by substituting x = atanh(t)
+    mmpf = to_mpmath(m)
+    vmpf = to_mpmath(v)
+    logEpsilon = log(mpmath.mpf('1e-500'))
+    if 2*mmpf + 4*vmpf < logEpsilon:
+        return Float(exp(mmpf + vmpf/2) * (1 - exp(mmpf + 1.5 * vmpf) * (1 - exp(mmpf + 2.5 * vmpf))))
+    tanhm = mpmath.tanh(mmpf)
+    # Not really a precise threshold, but fine for our data
+    if tanhm == mpmath.mpf('1.0'):
+        return Float('1.0')
+    # The integration routine below is obtained by substituting x = atanh(t)*sqrt(v)
     # into the definition of logistic_gaussian
     #
     # f = lambda x: mpmath.exp(-(x - mmpf) * (x - mmpf) / (2 * vmpf)) / (1 + mpmath.exp(-x))
     # result = 1 / mpmath.sqrt(2 * mpmath.pi * vmpf) * mpmath.quad(f, [-mpmath.inf, mpmath.inf])
     #
     # Such substitution makes mpmath.quad call much faster.
-    tanhm = mpmath.tanh(mmpf)
-    # Not really a precise threshold, but fine for our data
-    if tanhm == mpmath.mpf('1.0'):
-        return Float('1.0')
-    f = lambda t: mpmath.exp(-(mpmath.atanh(t) - mmpf) ** 2 / (2 * vmpf)) / ((1 - t) * (1 + t + mpmath.sqrt(1 - t * t)))
-    coef = 1 / mpmath.sqrt(2 * mpmath.pi * vmpf)
-    int, err = mpmath.quad(f, [-1, 1], error=True)
+    # mpmath.quad uses exponential spacing between quadrature points, so we want the transformation to grow like log(x).
+    sqrtv = mpmath.sqrt(vmpf)
+    misqrtv = mmpf/sqrtv
+    scale = max(10, mmpf + sqrtv)/sqrtv
+    def f(t): 
+        x = scale*mpmath.atanh(t)
+        return mpmath.exp(-(x - misqrtv) ** 2 / 2) / (1 + mpmath.exp(-x*sqrtv)) / (1 - t * t)
+    coef = scale / mpmath.sqrt(2 * mpmath.pi)
+    points = [-1, 0, 1]
+    int, err = mpmath.quad(f, points, error=True)
     result = coef * int
     if mpmath.mpf('1e50') * abs(err) > abs(int):
         print(f"Suspiciously big error when evaluating an integral for logistic_gaussian({m}, {v}).")
@@ -142,9 +145,8 @@ def logistic_gaussian(m, v):
 def logistic_gaussian_deriv(m, v):
     if m.is_infinite or v.is_infinite:
         return Float('0.0')
-    mpmath.mp.dps = 500
-    mmpf = m._to_mpmath(500)
-    vmpf = v._to_mpmath(500)
+    mmpf = to_mpmath(m)
+    vmpf = to_mpmath(v)
     # The integration routine below is obtained by substituting x = atanh(t)
     # into the definition of logistic_gaussian'
     #
@@ -169,9 +171,8 @@ def logistic_gaussian_deriv(m, v):
 def logistic_gaussian_deriv2(m, v):
     if m.is_infinite or v.is_infinite:
         return Float('0.0')
-    mpmath.mp.dps = 500
-    mmpf = m._to_mpmath(500)
-    vmpf = v._to_mpmath(500)
+    mmpf = to_mpmath(m)
+    vmpf = to_mpmath(v)
     # The integration routine below is obtained by substituting x = atanh(t)
     # into the definition of logistic_gaussian''
     #
@@ -216,13 +217,13 @@ def normal_cdf_integral(x, y, r):
         if x > 0:
             return result * x + exp(normal_pdf_ln(x) - log(normal_cdf(x)))
         else:
-            return result * normal_cdf_moment_ratio(Float('1.0', 500), x) * exp(normal_pdf_ln(x) - log(normal_cdf(x)))
+            return result * normal_cdf_moment_ratio(Float('1.0'), x) * exp(normal_pdf_ln(x) - log(normal_cdf(x)))
     if r == S(1):
         if x <= y:
-            return normal_cdf_moment_ratio(Float('1.0', 500), x) * exp(normal_pdf_ln(x))
+            return normal_cdf_moment_ratio(Float('1.0'), x) * exp(normal_pdf_ln(x))
         else:
             npdfy = exp(normal_pdf_ln(y))
-            return (normal_cdf_moment_ratio(Float('1.0', 500), y) + (x - y) * normal_cdf(y) / npdfy) * npdfy
+            return (normal_cdf_moment_ratio(Float('1.0'), y) + (x - y) * normal_cdf(y) / npdfy) * npdfy
     if r == S(-1):
         if x + y <= 0:
             return S(0)
@@ -261,7 +262,6 @@ def beta_cdf(x, a, b):
         return Float('0.0')
     if x >= S(1):
         return Float('1.0')
-    mpmath.mp.dps = 500
     result = mpmath.betainc(to_mpmath(a), to_mpmath(b), 0, to_mpmath(x), regularized=True)
     return Float(result)
 
@@ -302,6 +302,13 @@ pair_info = {
     'ulp.csv': None
     }
 
+def to_mpmath(x):
+    if x == -oo:
+        return -mpmath.inf
+    if x == oo:
+        return mpmath.inf
+    return x._to_mpmath(mpmath.mp.dps)
+
 def float_str_csharp_to_python(s):
     return s.replace('NaN', 'nan').replace('Infinity', 'inf')
 
@@ -311,7 +318,7 @@ def float_str_python_to_csharp(s):
 dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', '..', 'test', 'Tests', 'data', 'SpecialFunctionsValues')
 with os.scandir(dir) as it:
     for entry in it:
-        if entry.name.endswith('.csv') and entry.is_file():
+        if entry.name.endswith('.csv') and entry.is_file() and entry.name == "logisticGaussian.csv":
             print(f'Processing {entry.name}...')
             if entry.name not in pair_info.keys() or pair_info[entry.name] == None:
                 print("Don't know how to process. Skipping.")
@@ -326,13 +333,18 @@ with os.scandir(dir) as it:
                     newrow = dict(row)
                     args = []
                     for i in range(arg_count):
-                        args.append(Float(float_str_csharp_to_python(row[f'arg{i}']), 500))
+                        args.append(Float(float_str_csharp_to_python(row[f'arg{i}'])))
                     result_in_file = row['expectedresult']
                     if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN':
                         newrow['expectedresult'] = result_in_file
                     else:
+                        print(f'{entry.name}{args}')
                         try:
+                            startTime = time.time()
                             result = f(*args).evalf(50, maxn=500)
+                            elapsed = time.time() - startTime
+                            print(f'({elapsed} seconds elapsed)')
+                            print(result)
                             if abs(result) < Float('1e-20000'):
                                 result = Float('0')
                         except ValueError:
