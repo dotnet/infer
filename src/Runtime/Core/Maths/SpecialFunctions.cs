@@ -10,7 +10,6 @@ namespace Microsoft.ML.Probabilistic.Math
     using System.Linq;
     using System.Numerics;
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Core.Maths;
     using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -4025,7 +4024,7 @@ rr = mpf('-0.99999824265582826');
                 double f(double x)
                 {
                     double diff = x - meanInvSqrtV;
-                    return Math.Exp(MMath.LogisticLn(x*sqrtv) - diff*diff/2 - MMath.LnSqrt2PI - shift);
+                    return Math.Exp(MMath.LogisticLn(x * sqrtv) - diff * diff / 2 - MMath.LnSqrt2PI - shift);
                 }
                 double upperBound = mean + Math.Sqrt(variance);
                 double scale = Math.Max(upperBound, 10) / sqrtv;
@@ -4757,7 +4756,7 @@ rr = mpf('-0.99999824265582826');
         {
             if (double.IsNaN(x) || double.IsInfinity(x) || x == 0) return x.ToString(System.Globalization.CultureInfo.InvariantCulture);
             long bits = BitConverter.DoubleToInt64Bits(x);
-            ulong fraction = Convert.ToUInt64(bits & 0x000fffffffffffff);
+            ulong fraction = Convert.ToUInt64(bits & 0x000fffffffffffff); // 52 bits
             short exponent = Convert.ToInt16((bits & 0x7ff0000000000000) >> 52);
             if (exponent == 0)
             {

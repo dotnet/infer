@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -13,8 +14,6 @@ using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
-using Microsoft.ML.Probabilistic.Core.Maths;
-using System.IO;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
