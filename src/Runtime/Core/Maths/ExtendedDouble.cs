@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Utilities;
 
-namespace Microsoft.ML.Probabilistic.Core.Maths
+namespace Microsoft.ML.Probabilistic.Math
 {
     /// <summary>
     /// Represents a number as Mantissa * exp(Exponent).
