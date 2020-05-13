@@ -2491,7 +2491,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 {
                                     current.ElementEnumerator = enumerator;
                                 }
-                                }
                             }
                         }
                     }
