@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ML.Probabilistic.Math;
 using System.Reflection;
+using Infer.Loki.Mappings;
 
 namespace Infer.Loki.Tests
 {
@@ -21,12 +22,11 @@ namespace Infer.Loki.Tests
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Digamma, Digamma);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Trigamma, Trigamma);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Tetragamma, Tetragamma);
-            //mappers.MethodMapper.CreateMap<Func<double, double, bool, double>, Func<BigFloat, BigFloat, bool, BigFloat>>(MMath.GammaUpper, GammaUpper);
-            //mappers.MethodMapper.CreateMap<Func<double, double, double>, Func<BigFloat, BigFloat, BigFloat>>(MMath.GammaLower, GammaLower);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ReciprocalFactorialMinus1, ReciprocalFactorialMinus1);
             mappers.MethodMapper.CreateMap<Func<double, double, double>, Func<BigFloat, BigFloat, BigFloat>>(MMath.GammaUpperLogScale, GammaUpperLogScale);
 
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1Plus, Log1Plus);
+            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1PlusExp, Log1PlusExp);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1MinusExp, Log1MinusExp);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1, ExpMinus1);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1RatioMinus1RatioMinusHalf, ExpMinus1RatioMinus1RatioMinusHalf);
@@ -47,12 +47,7 @@ namespace Infer.Loki.Tests
                     null,
                     new Type[] { typeof(double) },
                     null),
-                typeof(Mappings.SpecialFunctionsMethods).GetMethod(
-                    "GammaSeries",
-                    BindingFlags.Static | BindingFlags.Public,
-                    null,
-                    new Type[] { typeof(BigFloat) },
-                    null)
+                new Func<BigFloat, BigFloat>(GammaSeries).Method
             );
 
             mappers.MethodMapper.CreateMap
@@ -63,19 +58,30 @@ namespace Infer.Loki.Tests
                     null,
                     new Type[] { typeof(double) },
                     null),
-                typeof(Mappings.SpecialFunctionsMethods).GetMethod(
-                    "XMinusLog1Plus",
-                    BindingFlags.Static | BindingFlags.Public,
-                    null,
-                    new Type[] { typeof(BigFloat) },
-                    null)
+                new Func<BigFloat, BigFloat>(XMinusLog1Plus).Method
             );
 
-            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Sqrt2", () => Sqrt2);
-            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Sqrt2PI", () => Sqrt2PI);
-            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.LnSqrt2PI", () => LnSqrt2PI);
-            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.DefaultBetaEpsilon", () => DefaultBetaEpsilon);
-            mappers.MemberMapper.CreateMap("Microsoft.ML.Probabilistic.Math.MMath.Ulp1", () => Ulp1);
+            mappers.MemberMapper.CreateMap(
+                typeof(MMath).GetField(nameof(MMath.Sqrt2)),
+                typeof(SpecialFunctionsMethods).GetField(nameof(Sqrt2)));
+            mappers.MemberMapper.CreateMap(
+                typeof(MMath).GetField(nameof(MMath.Sqrt2PI)),
+                typeof(SpecialFunctionsMethods).GetField(nameof(Sqrt2PI)));
+            mappers.MemberMapper.CreateMap(
+                typeof(MMath).GetField(nameof(MMath.InvSqrt2PI)),
+                typeof(SpecialFunctionsMethods).GetField(nameof(InvSqrt2PI)));
+            mappers.MemberMapper.CreateMap(
+                typeof(MMath).GetField(nameof(MMath.LnSqrt2PI)),
+                typeof(SpecialFunctionsMethods).GetField(nameof(LnSqrt2PI)));
+            mappers.MemberMapper.CreateMap(
+                typeof(MMath).GetField(nameof(MMath.Ln2)),
+                typeof(SpecialFunctionsMethods).GetField(nameof(Ln2)));
+            mappers.MemberMapper.CreateMap(
+                typeof(MMath).GetField("DefaultBetaEpsilon", BindingFlags.NonPublic | BindingFlags.Static),
+                typeof(SpecialFunctionsMethods).GetField(nameof(DefaultBetaEpsilon)));
+            mappers.MemberMapper.CreateMap(
+                typeof(MMath).GetField("Ulp1", BindingFlags.NonPublic | BindingFlags.Static),
+                typeof(SpecialFunctionsMethods).GetField(nameof(Ulp1)));
         }
     }
 }

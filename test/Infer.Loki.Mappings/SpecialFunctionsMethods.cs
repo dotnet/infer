@@ -12,12 +12,11 @@ namespace Infer.Loki.Mappings
 {
     public static class SpecialFunctionsMethods
     {
-        //[DllImport(MPFRLibrary.FileName, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern int mpfr_gamma_inc([In, Out] mpfr_struct rop, [In, Out] mpfr_struct op, [In, Out] mpfr_struct op2, int rnd);
-
         public static readonly BigFloat Sqrt2;
         public static readonly BigFloat Sqrt2PI;
+        public static readonly BigFloat InvSqrt2PI;
         public static readonly BigFloat LnSqrt2PI;
+        public static readonly BigFloat Ln2;
         public static readonly BigFloat DefaultBetaEpsilon = BigFloatFactory.Create("1e-38");
         public static readonly BigFloat Ulp1;
 
@@ -31,8 +30,14 @@ namespace Infer.Loki.Mappings
             Sqrt2PI.Mul2(1);
             Sqrt2PI.Sqrt();
 
+            InvSqrt2PI = BigFloatFactory.Create(1);
+            InvSqrt2PI.Div(Sqrt2PI);
+
             LnSqrt2PI = BigFloatFactory.Create(Sqrt2PI);
             LnSqrt2PI.Log();
+
+            Ln2 = BigFloatFactory.Create(2);
+            Ln2.Log();
 
             Ulp1 = BigFloatFactory.Create(1);
             Ulp1.NextAbove();
@@ -125,22 +130,22 @@ namespace Infer.Loki.Mappings
 
         public static void FindThresholds()
         {
-            using (var tmp1 = BigFloatFactory.Create("0.0075"))
+            using (var tmp1 = BigFloatFactory.Create("0.6"))
             using (var invX = BigFloatFactory.Create(1))
             using (var invX2 = BigFloatFactory.Empty())
             {
-                invX.Div(tmp1);
-                int conv = FindConvergencePoint(tmp1, gammaMinusReciprocalAt0);
-                Console.WriteLine($"Convergence point at {tmp1}: {conv}");
-                var result = EvaluateSeries(tmp1, gammaMinusReciprocalAt0.Take(conv).ToArray());
-                var f = BigFloatFactory.Create(tmp1);
-                f.Gamma();
-                f.Sub(invX);
-                Console.WriteLine($"Polynomial: {result}");
-                Console.WriteLine($"Algebraic:  {f}");
-                f.Sub(result);
-                f.Abs();
-                Console.WriteLine($"Diff:       {f}");
+                //invX.Div(tmp1);
+                //int conv = FindConvergencePoint(expMinus1RatioMinus1RatioMinusHalfThresholdPos, expMinus1RatioMinus1RatioMinusHalfAt0);
+                //Console.WriteLine($"Convergence point at {tmp1}: {conv}");
+                //var result = EvaluateSeries(tmp1, gammaMinusReciprocalAt0.Take(conv).ToArray());
+                //var f = BigFloatFactory.Create(tmp1);
+                //f.Gamma();
+                //f.Sub(invX);
+                //Console.WriteLine($"Polynomial: {result}");
+                //Console.WriteLine($"Algebraic:  {f}");
+                //f.Sub(result);
+                //f.Abs();
+                //Console.WriteLine($"Diff:       {f}");
                 //for (int i = 10; i < 70; ++i)
                 //{
                 //    BigFloat.Set(tmp1, i);
@@ -171,29 +176,32 @@ namespace Infer.Loki.Mappings
                 //        }
                 //    }
                 //}
-                //for (int i = 0; i < 11; ++i)
-                //{
-                //    int conv = FindConvergencePoint(tmp1, xMinusLog1PlusAt0);
-                //    Console.WriteLine($"Convergence point at {tmp1}: {conv}");
-                //    if (conv < 0)
-                //        conv = xMinusLog1PlusAt0.Length;
-                //    if (conv > 0)
-                //    {
-                //        using (var result = EvaluateSeries(tmp1, xMinusLog1PlusAt0.Take(conv).ToArray()))
-                //        using (var x = BigFloatFactory.Create(tmp1))
-                //        using (var f = Log1Plus(x))
-                //        {
-                //            f.Neg();
-                //            f.Add(x);
-                //            Console.WriteLine($"Polynomial: {result}");
-                //            Console.WriteLine($"Algebraic:  {f}");
-                //            f.Sub(result);
-                //            f.Abs();
-                //            Console.WriteLine($"Diff:       {f}");
-                //        }
-                //    }
-                //    tmp1.Div2(1);
-                //}
+                for (int i = 0; i < 11; ++i)
+                {
+                    int conv = FindConvergencePoint(tmp1, expMinus1RatioMinus1RatioMinusHalfAt0);
+                    Console.WriteLine($"Convergence point at {tmp1}: {conv}");
+                    //if (conv < 0)
+                    //    conv = xMinusLog1PlusAt0.Length;
+                    if (conv > 0)
+                    {
+                        using (var result = EvaluateSeries(tmp1, expMinus1RatioMinus1RatioMinusHalfAt0.Take(conv).ToArray()))
+                        using (var x = BigFloatFactory.Create(tmp1))
+                        using (var f = BigFloatFactory.Create(tmp1))
+                        {
+                            f.Expm1();
+                            f.Div(x);
+                            f.Sub(1);
+                            f.Div(x);
+                            f.Sub(0.5);
+                            Console.WriteLine($"Polynomial: {result}");
+                            Console.WriteLine($"Algebraic:  {f}");
+                            f.Sub(result);
+                            f.Abs();
+                            Console.WriteLine($"Diff:       {f}");
+                        }
+                    }
+                    tmp1.Div2(1);
+                }
             }
         }
 
@@ -444,72 +452,6 @@ namespace Infer.Loki.Mappings
             return result;
         }
 
-        //public static BigFloat GammaUpper(BigFloat a, BigFloat x, bool regularized = true)
-        //{
-        //    var result = BigFloatFactory.Empty();
-        //    var an = new Math.Mpfr.Native.mpfr_t();
-        //    var xn = new Math.Mpfr.Native.mpfr_t();
-        //    var resultn = new Math.Mpfr.Native.mpfr_t();
-        //    Math.Mpfr.Native.mpfr_lib.mpfr_inits2((uint)BigFloatFactory.FloatingPointPrecision, an, xn, resultn);
-        //    try
-        //    {
-        //        CrossLibSet(an, a);
-        //        CrossLibSet(xn, x);
-        //        Math.Mpfr.Native.mpfr_lib.mpfr_gamma_inc(resultn, xn, an, Math.Mpfr.Native.mpfr_rnd_t.MPFR_RNDN);
-        //        var vbuf = Math.Gmp.Native.gmp_lib.allocate(1 + BigFloatFactory.FloatingPointPrecision / 4 + (BigFloatFactory.FloatingPointPrecision % 4 != 0 ? 1 : 0));
-        //        try
-        //        {
-        //            var buf = new Math.Gmp.Native.char_ptr(vbuf.ToIntPtr());
-        //            var expBuf = new Math.Mpfr.Native.mpfr_exp_t(0);
-        //            Math.Mpfr.Native.mpfr_lib.mpfr_get_str(buf, ref expBuf, 16, 0, resultn, Math.Mpfr.Native.mpfr_rnd_t.MPFR_RNDN);
-        //            var resultString = buf.ToString();
-        //            int signPosShift = resultString[0] == '+' || resultString[0] == '-' ? 1 : 0;
-        //            if (resultString[signPosShift] != '@')
-        //            {
-        //                resultString = $"{resultString.Substring(0, signPosShift + 1)}.{resultString.Substring(signPosShift + 1)}@{(int)expBuf}";
-        //            }
-        //            result.Set(resultString, 16);
-        //        }
-        //        finally
-        //        {
-        //            Math.Gmp.Native.gmp_lib.free(vbuf);
-        //        }
-        //    }
-        //    finally
-        //    {
-        //        Math.Mpfr.Native.mpfr_lib.mpfr_clears(an, xn, resultn);
-        //    }
-        //    //Math.Mpfr.Native.mpfr_lib.mpfr_gamma_inc()
-        //    //mpfr_gamma_inc(result.Value, x.Value, a.Value, BigFloat.GetRounding(null));
-        //    if (regularized)
-        //    {
-        //        using (var gammaa = Gamma(x))
-        //            result.Div(gammaa);
-        //    }
-        //    return result;
-
-        //    void CrossLibSet(Math.Mpfr.Native.mpfr_t rop, BigFloat op)
-        //    {
-        //        var astr = new Math.Gmp.Native.char_ptr(op.ToString("b16d0", System.Globalization.CultureInfo.InvariantCulture));
-        //        try
-        //        {
-        //            Math.Mpfr.Native.mpfr_lib.mpfr_set_str(rop, astr, 16, Math.Mpfr.Native.mpfr_rnd_t.MPFR_RNDN);
-        //        }
-        //        finally
-        //        {
-        //            Math.Gmp.Native.gmp_lib.free(astr);
-        //        }
-        //    }
-        //}
-
-        //public static BigFloat GammaLower(BigFloat a, BigFloat x)
-        //{
-        //    var result = BigFloatFactory.Create(1.0);
-        //    using (var upper = GammaUpper(a, x))
-        //        result.Sub(upper);
-        //    return result;
-        //}
-
         private static readonly BigFloat reciprocalFactorialMinus1Threshold = BigFloatFactory.Create("0.025");
         // Truncated series 18: Reciprocal factorial minus 1
         // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
@@ -570,6 +512,14 @@ namespace Infer.Loki.Mappings
             return result;
         }
 
+        public static BigFloat Log1PlusExp(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            result.Exp();
+            result.Log1p();
+            return result;
+        }
+
         private static readonly BigFloat log1MinusMethodThreshold = BigFloatFactory.Create("-3.5");
         public static BigFloat Log1MinusExp(BigFloat x)
         {
@@ -596,9 +546,39 @@ namespace Infer.Loki.Mappings
             return result;
         }
 
+
+        private static readonly BigFloat expMinus1RatioMinus1RatioMinusHalfThresholdNeg = BigFloatFactory.Create("-0.075");
+        private static readonly BigFloat expMinus1RatioMinus1RatioMinusHalfThresholdPos = BigFloatFactory.Create("0.075");
+        // Truncated series 12: x - log(1 + x)
+        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+        private static readonly BigFloat[] expMinus1RatioMinus1RatioMinusHalfAt0 = new BigFloat[]
+        {
+            BigFloatFactory.Create("0"),
+            BigFloatFactory.Create("0.16666666666666666666666666666666666666666666666667"),
+            BigFloatFactory.Create("0.041666666666666666666666666666666666666666666666667"),
+            BigFloatFactory.Create("0.0083333333333333333333333333333333333333333333333333"),
+            BigFloatFactory.Create("0.0013888888888888888888888888888888888888888888888889"),
+            BigFloatFactory.Create("0.00019841269841269841269841269841269841269841269841270"),
+            BigFloatFactory.Create("0.000024801587301587301587301587301587301587301587301587"),
+            BigFloatFactory.Create("0.0000027557319223985890652557319223985890652557319223986"),
+            BigFloatFactory.Create("0.00000027557319223985890652557319223985890652557319223986"),
+            BigFloatFactory.Create("0.000000025052108385441718775052108385441718775052108385442"),
+            BigFloatFactory.Create("0.0000000020876756987868098979210090321201432312543423654535"),
+            BigFloatFactory.Create("0.00000000016059043836821614599392377170154947932725710503488"),
+            BigFloatFactory.Create("0.000000000011470745597729724713851697978682105666232650359634"),
+            BigFloatFactory.Create("0.00000000000076471637318198164759011319857880704441551002397563"),
+            BigFloatFactory.Create("0.000000000000047794773323873852974382074911175440275969376498477"),
+            BigFloatFactory.Create("0.0000000000000028114572543455207631989455830103200162334927352045"),
+            BigFloatFactory.Create("1.5619206968586226462216364350057333423519404084470e-16"),
+            BigFloatFactory.Create("8.2206352466243297169559812368722807492207389918261e-18"),
+            BigFloatFactory.Create("4.1103176233121648584779906184361403746103694959131e-19")
+        };
+
         public static BigFloat ExpMinus1RatioMinus1RatioMinusHalf(BigFloat x)
         {
-            if (x.IsInf() && x.IsPositive())
+            if (x.IsLesser(expMinus1RatioMinus1RatioMinusHalfThresholdPos) && x.IsGreater(expMinus1RatioMinus1RatioMinusHalfThresholdNeg))
+                return EvaluateSeries(x, expMinus1RatioMinus1RatioMinusHalfAt0);
+            else if (x.IsInf() && x.IsPositive())
             {
                 return BigFloatFactory.Create(x);
             }
