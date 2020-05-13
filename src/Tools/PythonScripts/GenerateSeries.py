@@ -382,6 +382,10 @@ def big_float_main():
     x_minus_log_1_plus_coefficients = [x_minus_log_1_plus_coefficient(k) for k in range(0, 26)]
     print_big_float_array(x_minus_log_1_plus_coefficients, 50, 500)
 
+    print_heading_comment(exp_minus_1_ratio_minus_1_ratio_minus_half_indent, "14: ((exp(x) - 1) / x - 1) / x - 0.5")
+    exp_minus_1_ratio_minus_1_ratio_minus_half_coefficients = [exp_minus_1_ratio_minus_1_ratio_minus_half_coefficient(k) for k in range(0, 19)]
+    print_big_float_array(exp_minus_1_ratio_minus_1_ratio_minus_half_coefficients, 50, 500)
+
     print_heading_comment(normcdfln_asymptotic_indent, "16: normcdfln asymptotic")
     normcdfln_asymptotic_coefficients = [normcdfln_asymptotic_coefficient(k) for k in range(0, 19)]
     print_big_float_array(normcdfln_asymptotic_coefficients, 50, 500)
