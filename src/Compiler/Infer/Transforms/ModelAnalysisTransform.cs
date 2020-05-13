@@ -239,8 +239,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (converted is IMethodInvokeExpression)
             {
                 var mie = (IMethodInvokeExpression)converted;
-                bool isAnd = Recognizer.IsStaticMethod(converted, new Func<bool, bool, bool>(Microsoft.ML.Probabilistic.Factors.Factor.And));
-                bool isOr = Recognizer.IsStaticMethod(converted, new Func<bool, bool, bool>(Microsoft.ML.Probabilistic.Factors.Factor.Or));
+                bool isAnd = Recognizer.IsStaticMethod(converted, new Func<bool, bool, bool>(Factors.Factor.And));
+                bool isOr = Recognizer.IsStaticMethod(converted, new Func<bool, bool, bool>(Factors.Factor.Or));
                 bool anyArgumentIsLiteral = mie.Arguments.Any(arg => arg is ILiteralExpression);
                 if (anyArgumentIsLiteral)
                 {
@@ -262,7 +262,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         if (reducedArguments.Count() == 1) return reducedArguments.First();
                         else return Builder.LiteralExpr(false);
                     }
-                    else if (Recognizer.IsStaticMethod(converted, new Func<bool, bool>(Microsoft.ML.Probabilistic.Factors.Factor.Not)))
+                    else if (Recognizer.IsStaticMethod(converted, new Func<bool, bool>(Factors.Factor.Not)))
                     {
                         bool allArgumentsAreLiteral = mie.Arguments.All(arg => arg is ILiteralExpression);
                         if (allArgumentsAreLiteral)

@@ -896,7 +896,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             else if (
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Factor.Copy)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Diode.Copy)) ||
-                Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Factor.Cut)) ||
+                Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Cut.Backward)) ||
+                Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, bool, PlaceHolder>(Cut.ForwardWhen)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, double, PlaceHolder>(PowerPlate.Enter)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, double, PlaceHolder>(Damp.Forward)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, double, PlaceHolder>(Damp.Backward)) ||

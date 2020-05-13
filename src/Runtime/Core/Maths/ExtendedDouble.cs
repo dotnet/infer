@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Utilities;
 
-namespace Microsoft.ML.Probabilistic.Core.Maths
+namespace Microsoft.ML.Probabilistic.Math
 {
     /// <summary>
     /// Represents a number as Mantissa * exp(Exponent).
@@ -61,7 +61,17 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
 
         public double ToDouble()
         {
-            return Mantissa * System.Math.Exp(Exponent);
+            if (System.Math.Abs(Exponent) >= 700)
+            {
+                // avoid overflow/underflow when computing Exp(Exponent)
+                // Abs(Exponent)/2 <= 1e-16 causes loss of precision here.
+                double expHalf = System.Math.Exp(Exponent / 2);
+                return Mantissa * expHalf * expHalf;
+            }
+            else
+            {
+                return Mantissa * System.Math.Exp(Exponent);
+            }
         }
 
         public double Log()
@@ -79,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             return new ExtendedDouble(Mantissa, Exponent + logarithm);
         }
 
-        public static ExtendedDouble operator*(ExtendedDouble x, ExtendedDouble y)
+        public static ExtendedDouble operator *(ExtendedDouble x, ExtendedDouble y)
         {
             return new ExtendedDouble(x.Mantissa * y.Mantissa, x.Exponent + y.Exponent);
         }
@@ -99,7 +109,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             return new ExtendedDouble(x.Mantissa / y, x.Exponent);
         }
 
-        public static ExtendedDouble operator+(ExtendedDouble x, ExtendedDouble y)
+        public static ExtendedDouble operator +(ExtendedDouble x, ExtendedDouble y)
         {
             if (x.Mantissa == 0)
             {
@@ -121,7 +131,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             }
         }
 
-        public static ExtendedDouble operator-(ExtendedDouble x)
+        public static ExtendedDouble operator -(ExtendedDouble x)
         {
             return new ExtendedDouble(-x.Mantissa, x.Exponent);
         }

@@ -15,10 +15,6 @@ using Microsoft.ML.Probabilistic.Models;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning disable 1591
-#endif
-
     /// <summary>
     /// THIS TRANSFORM IS DEPRECATED.  Use VariableTransform and Channel2Transform instead.
     /// Transforms variable references into channels, by duplicating variables.  
@@ -62,7 +58,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             context.SetPrimaryOutput(fs);
             // Check condition is valid
             fs.Condition = ifs.Condition;
-            if ((!(fs.Condition is IBinaryExpression)) || (((IBinaryExpression) fs.Condition).Operator != BinaryOperator.LessThan))
+            if ((!(fs.Condition is IBinaryExpression)) || (((IBinaryExpression)fs.Condition).Operator != BinaryOperator.LessThan))
                 Error("For statement condition must be of the form 'indexVar<loopSize', was " + fs.Condition);
 
             // Check increment is valid
@@ -73,13 +69,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (ies.Expression is IAssignExpression)
                 {
-                    IAssignExpression iae = (IAssignExpression) ies.Expression;
+                    IAssignExpression iae = (IAssignExpression)ies.Expression;
                     IBinaryExpression ibe = RemoveCast(iae.Expression) as IBinaryExpression;
                     validIncrement = (ibe != null) && (ibe.Operator == BinaryOperator.Add);
                 }
                 else if (ies.Expression is IUnaryExpression)
                 {
-                    IUnaryExpression iue = (IUnaryExpression) ies.Expression;
+                    IUnaryExpression iue = (IUnaryExpression)ies.Expression;
                     validIncrement = (iue.Operator == UnaryOperator.PostIncrement);
                 }
             }
@@ -104,7 +100,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 else
                 {
-                    IAssignExpression iae2 = (IAssignExpression) ies.Expression;
+                    IAssignExpression iae2 = (IAssignExpression)ies.Expression;
                     if (!(iae2.Target is IVariableDeclarationExpression)) Error("For statement initializer must be a variable declaration, was " + iae2.Target.GetType().Name);
                     if (!Recognizer.IsLiteral(iae2.Expression, 0)) Error("Loop index must start at 0, was " + iae2.Expression);
                 }
@@ -117,7 +113,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal static IExpression RemoveCast(IExpression expr)
         {
             // used to remove spurious casts
-            if (expr is ICastExpression) return ((ICastExpression) expr).Expression;
+            if (expr is ICastExpression) return ((ICastExpression)expr).Expression;
             return expr;
         }
 
@@ -136,7 +132,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IExpression targ = Recognizer.StripIndexers(iae.Target);
             if (targ is IArgumentReferenceExpression)
             {
-                IArgumentReferenceExpression iare = (IArgumentReferenceExpression) targ;
+                IArgumentReferenceExpression iare = (IArgumentReferenceExpression)targ;
                 if (!(iae.Expression is IMethodInvokeExpression)) Error("Cannot redefine the value of parameter '" + iare.Parameter.Name + "'.");
             }
             IAssignExpression ae;
@@ -150,7 +146,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             else
             {
-                ae = (IAssignExpression) base.ConvertAssign(iae);
+                ae = (IAssignExpression)base.ConvertAssign(iae);
             }
             if (ae.Target == null) return null;
             return ae;
@@ -170,30 +166,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        protected override IParameterDeclaration ConvertMethodParameter(IParameterDeclaration ipd, int index)
-        {
-            ProcessConstant(ipd);
-            return base.ConvertMethodParameter(ipd, index);
-        }
-
-        private void ProcessConstant(object decl)
-        {
-            if (context.InputAttributes.Has<IsInferred>(decl))
-            {
-                VariableInformation vi = VariableInformation.GetVariableInformation(context, decl);
-                vi.DefineAllIndexVars(context);
-                MarginalPrototype mpa = Context.InputAttributes.Get<MarginalPrototype>(decl);
-                if (!vi.SetMarginalPrototypeFromAttribute(mpa, throwIfMissing: false))
-                {
-                    IExpression varRef = null;
-                    if (decl is IVariableDeclaration) varRef = Builder.VarRefExpr((IVariableDeclaration) decl);
-                    else if (decl is IParameterDeclaration) varRef = Builder.ParamRef((IParameterDeclaration) decl);
-                    else throw new NotImplementedException();
-                    vi.marginalPrototypeExpression = Builder.NewObject(typeof (PointMass<>).MakeGenericType(vi.varType), varRef);
-                }
-            }
-        }
-
         /// <summary>
         /// Converts a variable declaration by creating definition, marginal and uses channel variables.
         /// </summary>
@@ -203,21 +175,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
 
             // If the variable is deterministic, return
+            bool isInferred = context.InputAttributes.Has<IsInferred>(ivd);
             if (!vi.IsStochastic)
             {
-                ProcessConstant(ivd);
-                context.OutputAttributes.Set(ivd, new DescriptionAttribute("The constant '" + ivd.Name + "'"));
                 return ivde;
             }
             bool suppressVariableFactor = context.InputAttributes.Has<SuppressVariableFactor>(ivd);
             bool isDerived = context.InputAttributes.Has<DerivedVariable>(ivd);
-            bool isConstant = false;
-            bool isInferred = context.InputAttributes.Has<IsInferred>(ivd);
+            bool isStochastic = vi.IsStochastic;
             int useCount;
             ChannelAnalysisTransform.UsageInfo info;
             if (!analysis.usageInfo.TryGetValue(ivd, out info)) useCount = 0;
             else useCount = info.NumberOfUsesOld;
-            if (!(algorithm is Algorithms.GibbsSampling) && !isConstant && !suppressVariableFactor && (useCount == 1) && !isInferred && isDerived)
+            if (!(algorithm is Algorithms.GibbsSampling) && isStochastic && !suppressVariableFactor && (useCount <= 1) && !isInferred && isDerived)
             {
                 // this is optional
                 suppressVariableFactor = true;
@@ -227,76 +197,36 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             context.InputAttributes.Set(ivd, new LoopContext(context));
 
             // Create variable-to-channel information for the variable.
-            VariableToChannelInformation vtc = new VariableToChannelInformation();
-            vtc.shareAllUses = (useCount == 1);
-            Context.InputAttributes.Set(ivd, vtc);
-
-            // Ensure the marginal prototype is set.
-            MarginalPrototype mpa = Context.InputAttributes.Get<MarginalPrototype>(ivd);
-            try
-            {
-                vi.SetMarginalPrototypeFromAttribute(mpa);
-            }
-            catch (ArgumentException ex)
-            {
-                Error(ex.Message);
-            }
+            VariableToChannelInformation vtci = new VariableToChannelInformation();
+            vtci.shareAllUses = (useCount <= 1);
+            Context.InputAttributes.Set(ivd, vtci);
 
             // Create the definition channel 
-            vtc.defChannel = ChannelInfo.DefChannel(vi);
-            vtc.defChannel.decl = ivd;
+            vtci.defChannel = ChannelInfo.DefChannel(vi);
+            vtci.defChannel.decl = ivd;
             // Always create a variable factor for a stochastic variable
-            if (!isConstant && !suppressVariableFactor)
+            if (isInferred || (isStochastic && !suppressVariableFactor))
             {
                 vi.DefineAllIndexVars(context);
                 IList<IStatement> stmts = Builder.StmtCollection();
 
                 // Create marginal channel
-                vtc.marginalChannel = ChannelInfo.MarginalChannel(vi);
-                vtc.marginalChannel.decl = vi.DeriveIndexedVariable(stmts, context, vi.Name + "_marginal");
-                context.InputAttributes.CopyObjectAttributesTo<InitialiseTo>(vi.declaration, context.OutputAttributes, vtc.marginalChannel.decl);
-                context.OutputAttributes.Set(vtc.marginalChannel.decl, vtc.marginalChannel);
-                context.OutputAttributes.Set(vtc.marginalChannel.decl, new DescriptionAttribute("marginal of '" + ivd.Name + "'"));
-                SetMarginalPrototype(vtc.marginalChannel.decl);
-                if (algorithm is GibbsSampling && ((GibbsSampling) algorithm).UseSideChannels)
+                CreateMarginalChannel(vi, vtci, stmts);
+                if (algorithm is GibbsSampling && ((GibbsSampling)algorithm).UseSideChannels)
                 {
-                    Type marginalType = MessageTransform.GetDistributionType(vi.varType, vi.InnermostElementType,
-                                                                             vi.marginalPrototypeExpression.GetExpressionType(), true);
-                    Type domainType = ivd.VariableType.DotNetType;
-
-                    vtc.samplesChannel = ChannelInfo.MarginalChannel(vi);
-                    vtc.samplesChannel.decl = vi.DeriveIndexedVariable(stmts, context, vi.Name + "_samples");
-                    context.OutputAttributes.Remove<InitialiseTo>(vtc.samplesChannel.decl);
-                    context.OutputAttributes.Set(vtc.samplesChannel.decl, vtc.samplesChannel);
-                    context.OutputAttributes.Set(vtc.samplesChannel.decl, new DescriptionAttribute("samples of '" + ivd.Name + "'"));
-                    Type samplesType = typeof (List<>).MakeGenericType(domainType);
-                    IExpression samples_mpe = Builder.NewObject(samplesType);
-                    VariableInformation samples_vi = VariableInformation.GetVariableInformation(context, vtc.samplesChannel.decl);
-                    samples_vi.marginalPrototypeExpression = samples_mpe;
-
-                    vtc.conditionalsChannel = ChannelInfo.MarginalChannel(vi);
-                    vtc.conditionalsChannel.decl = vi.DeriveIndexedVariable(stmts, context, vi.Name + "_conditionals");
-                    context.OutputAttributes.Remove<InitialiseTo>(vtc.conditionalsChannel.decl);
-                    context.OutputAttributes.Set(vtc.conditionalsChannel.decl, vtc.conditionalsChannel);
-                    context.OutputAttributes.Set(vtc.conditionalsChannel.decl, new DescriptionAttribute("conditionals of '" + ivd.Name + "'"));
-                    Type conditionalsType = typeof (List<>).MakeGenericType(marginalType);
-                    IExpression conditionals_mpe = Builder.NewObject(conditionalsType);
-                    VariableInformation conditionals_vi = VariableInformation.GetVariableInformation(context, vtc.conditionalsChannel.decl);
-                    conditionals_vi.marginalPrototypeExpression = conditionals_mpe;
+                    CreateSamplesChannel(vi, vtci, stmts);
+                    CreateConditionalsChannel(vi, vtci, stmts);
                 }
                 else
                 {
-                    vtc.samplesChannel = vtc.marginalChannel;
-                    vtc.conditionalsChannel = vtc.marginalChannel;
+                    vtci.samplesChannel = vtci.marginalChannel;
+                    vtci.conditionalsChannel = vtci.marginalChannel;
                 }
-
-                // Create uses channel
-                vtc.usageChannel = ChannelInfo.UseChannel(vi);
-                vtc.usageChannel.decl = vi.DeriveArrayVariable(stmts, context, vi.Name + "_uses", Builder.LiteralExpr(useCount), Builder.VarDecl("_ind", typeof (int)), useLiteralIndices: true);
-                context.InputAttributes.CopyObjectAttributesTo<InitialiseTo>(vi.declaration, context.OutputAttributes, vtc.usageChannel.decl);
-                context.OutputAttributes.Set(vtc.usageChannel.decl, vtc.usageChannel);
-                context.OutputAttributes.Set(vtc.usageChannel.decl, new DescriptionAttribute("uses of '" + ivd.Name + "'"));
-                SetMarginalPrototype(vtc.usageChannel.decl);
+                if (isStochastic)
+                {
+                    // Create uses channel
+                    CreateUsesChannel(vi, useCount, vtci, stmts);
+                }
 
                 //setAllGroupRoots(context, ivd, false);
 
@@ -304,29 +234,28 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
                 // Append usageDepth indices to def/marginal/use expressions
                 IExpression defExpr = Builder.VarRefExpr(ivd);
-                IExpression marginalExpr = Builder.VarRefExpr(vtc.marginalChannel.decl);
-                IExpression usageExpr = Builder.VarRefExpr(vtc.usageChannel.decl);
+                IExpression marginalExpr = Builder.VarRefExpr(vtci.marginalChannel.decl);
                 IExpression countExpr = Builder.LiteralExpr(useCount);
 
                 // Add clone factor tying together all of the channels 
-                IMethodInvokeExpression usesEqualDefExpression;
-                Type[] genArgs = new Type[] {vi.varType};
-                if (algorithm is GibbsSampling && ((GibbsSampling) algorithm).UseSideChannels)
+                IMethodInvokeExpression variableFactorExpr;
+                Type[] genArgs = new Type[] { vi.varType };
+                if (algorithm is GibbsSampling && ((GibbsSampling)algorithm).UseSideChannels)
                 {
-                    GibbsSampling gs = (GibbsSampling) algorithm;
+                    GibbsSampling gs = (GibbsSampling)algorithm;
                     IExpression burnInExpr = Builder.LiteralExpr(gs.BurnIn);
                     IExpression thinExpr = Builder.LiteralExpr(gs.Thin);
-                    IExpression samplesExpr = Builder.VarRefExpr(vtc.samplesChannel.decl);
-                    IExpression conditionalsExpr = Builder.VarRefExpr(vtc.conditionalsChannel.decl);
+                    IExpression samplesExpr = Builder.VarRefExpr(vtci.samplesChannel.decl);
+                    IExpression conditionalsExpr = Builder.VarRefExpr(vtci.conditionalsChannel.decl);
                     if (isDerived)
                     {
                         Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Factor.ReplicateWithMarginalGibbs);
-                        usesEqualDefExpression = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, burnInExpr, thinExpr, marginalExpr, samplesExpr, conditionalsExpr);
+                        variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, burnInExpr, thinExpr, marginalExpr, samplesExpr, conditionalsExpr);
                     }
                     else
                     {
                         Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Factor.UsesEqualDefGibbs);
-                        usesEqualDefExpression = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, burnInExpr, thinExpr, marginalExpr, samplesExpr, conditionalsExpr);
+                        variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, burnInExpr, thinExpr, marginalExpr, samplesExpr, conditionalsExpr);
                     }
                 }
                 else
@@ -340,58 +269,98 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     {
                         d = new FuncOut<PlaceHolder, int, PlaceHolder, PlaceHolder[]>(Factor.UsesEqualDef<PlaceHolder>);
                     }
-                    usesEqualDefExpression = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, marginalExpr);
+                    variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, marginalExpr);
                 }
-                if (isDerived) context.OutputAttributes.Set(usesEqualDefExpression, new DerivedVariable()); // used by Gibbs
+                if (isDerived) context.OutputAttributes.Set(variableFactorExpr, new DerivedVariable()); // used by Gibbs
                 // Mark this as a pseudo-factor
-                context.OutputAttributes.Set(usesEqualDefExpression, new IsVariableFactor());
-                if (useCount == 1)
-                    context.OutputAttributes.Set(usesEqualDefExpression, new DivideMessages(false));
+                context.OutputAttributes.Set(variableFactorExpr, new IsVariableFactor());
+                if (useCount <= 1)
+                    context.OutputAttributes.Set(variableFactorExpr, new DivideMessages(false));
                 else
-                    context.InputAttributes.CopyObjectAttributesTo<DivideMessages>(ivd, context.OutputAttributes, usesEqualDefExpression);
-                context.InputAttributes.CopyObjectAttributesTo<GivePriorityTo>(ivd, context.OutputAttributes, usesEqualDefExpression);
-                IAssignExpression assignExpr = Builder.AssignExpr(usageExpr, usesEqualDefExpression);
-
-                // Copy attributes across from input to output
-                Context.InputAttributes.CopyObjectAttributesTo<Algorithm>(ivd, context.OutputAttributes, assignExpr);
-                context.OutputAttributes.Remove<InitialiseTo>(ivd);
-                if (vi.ArrayDepth == 0)
+                    context.InputAttributes.CopyObjectAttributesTo<DivideMessages>(ivd, context.OutputAttributes, variableFactorExpr);
+                context.InputAttributes.CopyObjectAttributesTo<GivePriorityTo>(ivd, context.OutputAttributes, variableFactorExpr);
+                if (vtci.usageChannel != null)
                 {
-                    // Insert the UsesEqualDef statement after the declaration.
-                    // Note the variable will not have been defined yet.
-                    context.AddStatementAfterCurrent(Builder.ExprStatement(assignExpr));
-                }
-                else
-                {
-                    // For an array, the UsesEqualDef statement should be inserted after the array is allocated.
-                    // Store the statement for later use by ConvertArrayCreate.
-                    context.InputAttributes.Remove<LoopContext>(ivd);
-                    context.InputAttributes.Set(ivd, new LoopContext(context));
-                    context.InputAttributes.Remove<Containers>(ivd);
-                    context.InputAttributes.Set(ivd, new Containers(context));
-                    vtc.usesEqualDefsStatements = Builder.StmtCollection();
-                    vtc.usesEqualDefsStatements.Add(Builder.ExprStatement(assignExpr));
+                    IExpression usageExpr = Builder.VarRefExpr(vtci.usageChannel.decl);
+                    IAssignExpression assignExpr = Builder.AssignExpr(usageExpr, variableFactorExpr);
+                    // Copy attributes across from input to output
+                    Context.InputAttributes.CopyObjectAttributesTo<Algorithm>(ivd, context.OutputAttributes, assignExpr);
+                    context.OutputAttributes.Remove<InitialiseTo>(ivd);
+                    if (vi.ArrayDepth == 0)
+                    {
+                        // Insert the UsesEqualDef statement after the declaration.
+                        // Note the variable will not have been defined yet.
+                        context.AddStatementAfterCurrent(Builder.ExprStatement(assignExpr));
+                    }
+                    else
+                    {
+                        // For an array, the UsesEqualDef statement should be inserted after the array is allocated.
+                        // Store the statement for later use by ConvertArrayCreate.
+                        context.InputAttributes.Remove<LoopContext>(ivd);
+                        context.InputAttributes.Set(ivd, new LoopContext(context));
+                        context.InputAttributes.Remove<Containers>(ivd);
+                        context.InputAttributes.Set(ivd, new Containers(context));
+                        vtci.usesEqualDefsStatements = Builder.StmtCollection();
+                        vtci.usesEqualDefsStatements.Add(Builder.ExprStatement(assignExpr));
+                    }
                 }
             }
             // These must be set after the above or they will be copied to the other channels
-            context.OutputAttributes.Set(ivd, vtc.defChannel);
-            context.OutputAttributes.Set(vtc.defChannel.decl, new DescriptionAttribute("definition of '" + ivd.Name + "'"));
+            if(isStochastic)
+                context.OutputAttributes.Set(ivd, vtci.defChannel);
+            if (!context.InputAttributes.Has<DescriptionAttribute>(vtci.defChannel.decl))
+                context.OutputAttributes.Set(vtci.defChannel.decl, new DescriptionAttribute("definition of '" + ivd.Name + "'"));
             return ivde;
         }
 
-        private void SetMarginalPrototype(IVariableDeclaration ivd)
+        private void CreateUsesChannel(VariableInformation vi, int useCount, VariableToChannelInformation vtci, IList<IStatement> stmts)
         {
-            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
-            // Ensure the marginal prototype is set.
-            MarginalPrototype mpa = Context.InputAttributes.Get<MarginalPrototype>(ivd);
-            try
-            {
-                vi.SetMarginalPrototypeFromAttribute(mpa);
-            }
-            catch (ArgumentException ex)
-            {
-                Error(ex.Message);
-            }
+            vtci.usageChannel = ChannelInfo.UseChannel(vi);
+            vtci.usageChannel.decl = vi.DeriveArrayVariable(stmts, context, vi.Name + "_uses", Builder.LiteralExpr(useCount), Builder.VarDecl("_ind", typeof(int)), useLiteralIndices: true);
+            context.InputAttributes.CopyObjectAttributesTo<InitialiseTo>(vi.declaration, context.OutputAttributes, vtci.usageChannel.decl);
+            context.OutputAttributes.Set(vtci.usageChannel.decl, vtci.usageChannel);
+            context.OutputAttributes.Set(vtci.usageChannel.decl, new DescriptionAttribute("uses of '" + vi.Name + "'"));
+        }
+
+        private void CreateConditionalsChannel(VariableInformation vi, VariableToChannelInformation vtci, IList<IStatement> stmts)
+        {
+            vtci.conditionalsChannel = ChannelInfo.MarginalChannel(vi);
+            vtci.conditionalsChannel.decl = vi.DeriveIndexedVariable(stmts, context, vi.Name + "_conditionals");
+            context.OutputAttributes.Remove<InitialiseTo>(vtci.conditionalsChannel.decl);
+            context.OutputAttributes.Set(vtci.conditionalsChannel.decl, vtci.conditionalsChannel);
+            context.OutputAttributes.Set(vtci.conditionalsChannel.decl, new DescriptionAttribute("conditionals of '" + vi.Name + "'"));
+            Type marginalType = MessageTransform.GetDistributionType(vi.varType, vi.InnermostElementType,
+                                                                     vi.marginalPrototypeExpression.GetExpressionType(), true);
+            Type conditionalsType = typeof(List<>).MakeGenericType(marginalType);
+            IExpression conditionals_mpe = Builder.NewObject(conditionalsType);
+            VariableInformation conditionals_vi = VariableInformation.GetVariableInformation(context, vtci.conditionalsChannel.decl);
+            conditionals_vi.marginalPrototypeExpression = conditionals_mpe;
+        }
+
+        private void CreateSamplesChannel(VariableInformation vi, VariableToChannelInformation vtci, IList<IStatement> stmts)
+        {
+            vtci.samplesChannel = ChannelInfo.MarginalChannel(vi);
+            vtci.samplesChannel.decl = vi.DeriveIndexedVariable(stmts, context, vi.Name + "_samples");
+            context.OutputAttributes.Remove<InitialiseTo>(vtci.samplesChannel.decl);
+            context.OutputAttributes.Set(vtci.samplesChannel.decl, vtci.samplesChannel);
+            context.OutputAttributes.Set(vtci.samplesChannel.decl, new DescriptionAttribute("samples of '" + vi.Name + "'"));
+            Type domainType = vi.VariableType.DotNetType;
+            Type samplesType = typeof(List<>).MakeGenericType(domainType);
+            IExpression samples_mpe = Builder.NewObject(samplesType);
+            VariableInformation samples_vi = VariableInformation.GetVariableInformation(context, vtci.samplesChannel.decl);
+            samples_vi.marginalPrototypeExpression = samples_mpe;
+        }
+
+        private void CreateMarginalChannel(VariableInformation vi, VariableToChannelInformation vtc, IList<IStatement> stmts)
+        {
+            IVariableDeclaration marginalDecl = vi.DeriveIndexedVariable(stmts, context, vi.Name + "_marginal");
+            vtc.marginalChannel = ChannelInfo.MarginalChannel(vi);
+            vtc.marginalChannel.decl = marginalDecl;
+            context.InputAttributes.CopyObjectAttributesTo<InitialiseTo>(vi.declaration, context.OutputAttributes, vtc.marginalChannel.decl);
+            context.OutputAttributes.Set(vtc.marginalChannel.decl, vtc.marginalChannel);
+            context.OutputAttributes.Set(vtc.marginalChannel.decl, new DescriptionAttribute("marginal of '" + vi.Name + "'"));
+            VariableInformation marginalInformation = VariableInformation.GetVariableInformation(context, marginalDecl);
+            marginalInformation.IsStochastic = true;
         }
 
         /// <summary>
@@ -448,19 +417,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns></returns>
         protected IExpression ConvertInfer(IMethodInvokeExpression imie)
         {
-            IVariableReferenceExpression ivre = imie.Arguments[0] as IVariableReferenceExpression;
-            if (ivre == null)
-            {
-                //Error("Argument to Infer() must be a variable reference, was " + imie.Arguments[0] + ".");
-                return imie;
-            }
+            IExpression arg = imie.Arguments[0];
+            object decl = AddMarginalStatements(arg);
             // Find expression for the marginal of interest
-            IVariableDeclaration ivd = ivre.Variable.Resolve();
-            VariableToChannelInformation vtci = context.InputAttributes.Get<VariableToChannelInformation>(ivd);
+            VariableToChannelInformation vtci = context.InputAttributes.Get<VariableToChannelInformation>(decl);
             if (vtci == null) return imie; // The argument is constant
             ExpressionEvaluator eval = new ExpressionEvaluator();
-            QueryType query = (QueryType) eval.Evaluate(imie.Arguments[2]);
-            IVariableDeclaration inferDecl = null;
+            QueryType query = (QueryType)eval.Evaluate(imie.Arguments[2]);
+            IVariableDeclaration inferDecl;
             if (query == QueryTypes.Marginal) inferDecl = vtci.marginalChannel.decl;
             else if (query == QueryTypes.Samples) inferDecl = vtci.samplesChannel.decl;
             else if (query == QueryTypes.Conditionals) inferDecl = vtci.conditionalsChannel.decl;
@@ -473,13 +437,62 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 mie.Arguments.Add(imie.Arguments[i]);
             }
             // move the IsInferred attribute to the inferred channel
-            context.OutputAttributes.Remove<IsInferred>(ivd);
+            context.OutputAttributes.Remove<IsInferred>(decl);
             if (!context.OutputAttributes.Has<IsInferred>(inferDecl))
             {
                 context.OutputAttributes.Set(inferDecl, new IsInferred());
                 context.OutputAttributes.Add(inferDecl, new QueryTypeCompilerAttribute(query));
             }
             return mie;
+        }
+
+        private object AddMarginalStatements(IExpression expr)
+        {
+            object decl = Recognizer.GetDeclaration(expr);
+            if (!context.InputAttributes.Has<VariableToChannelInformation>(decl))
+            {
+                VariableInformation vi = VariableInformation.GetVariableInformation(context, decl);
+                vi.DefineAllIndexVars(context);
+                IList<IStatement> stmts = Builder.StmtCollection();
+
+                VariableToChannelInformation vtci = new VariableToChannelInformation();
+                vtci.shareAllUses = true;
+                Context.InputAttributes.Set(decl, vtci);
+
+                CreateMarginalChannel(vi, vtci, stmts);
+                IExpression marginalExpr = Builder.VarRefExpr(vtci.marginalChannel.decl);
+                Type[] genArgs = new Type[] { expr.GetExpressionType() };
+                IExpression countExpr = Builder.LiteralExpr(0);
+                IExpression variableFactorExpr;
+                if (algorithm is GibbsSampling && ((GibbsSampling)algorithm).UseSideChannels)
+                {
+                    CreateSamplesChannel(vi, vtci, stmts);
+                    CreateConditionalsChannel(vi, vtci, stmts);
+
+                    IExpression burnInExpr = Builder.LiteralExpr(0);
+                    IExpression thinExpr = Builder.LiteralExpr(1);
+                    IExpression samplesExpr = Builder.VarRefExpr(vtci.samplesChannel.decl);
+                    IExpression conditionalsExpr = Builder.VarRefExpr(vtci.conditionalsChannel.decl);
+                    Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Factor.ReplicateWithMarginalGibbs);
+                    variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, expr, countExpr, burnInExpr, thinExpr, marginalExpr, samplesExpr, conditionalsExpr);
+                }
+                else
+                {
+                    vtci.samplesChannel = vtci.marginalChannel;
+                    vtci.conditionalsChannel = vtci.marginalChannel;
+
+                    Delegate d = new FuncOut<PlaceHolder, int, PlaceHolder, PlaceHolder[]>(Factor.ReplicateWithMarginal);
+                    variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, expr, countExpr, marginalExpr);
+                }
+                CreateUsesChannel(vi, 0, vtci, stmts);
+                IExpression usesExpr = Builder.VarRefExpr(vtci.usageChannel.decl);
+                vtci.usageChannel = null;
+                stmts.Add(Builder.AssignStmt(usesExpr, variableFactorExpr));
+                context.OutputAttributes.Set(variableFactorExpr, new IsVariableFactor());
+
+                context.AddStatementsBeforeCurrent(stmts);
+            }
+            return decl;
         }
 
         /// <summary>
@@ -545,223 +558,4 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             internal bool shareAllUses;
         }
     }
-
-    /// <summary>
-    /// Describes a channel, i.e. an edge in a factor graph.
-    /// </summary>
-    /// <remarks><para>
-    /// A channel connects a model variable to a factor.
-    /// A channel is either a definition, a use, or a replicated use of a model variable.
-    /// </para><para>
-    /// A definition channel connects a model variable to its unique defining factor.
-    /// A definition channel appears in the inference program as a program variable having the same type as the model variable.
-    /// </para><para>
-    /// A use channel connects a model variable to a child factor.
-    /// A use channel appears in the inference program as an array of the variable type.
-    /// It is indexed via [usage indices][variable indices] where the variable indices are only needed
-    /// if the variable is an array.
-    /// </para>
-    /// <para>
-    /// All uses of a model variable are given the same ChannelInfo and packed into an array in the inference program.
-    /// For example, if a model variable x has type <c>double</c>  and 2 uses, its usage channels will be declared together as <c>double[] x_uses = new double[3];</c> and referred to as x_uses[0] and x_uses[1].
-    /// </para><para>
-    /// The model variable type can be an array, in which case each channel is an array.
-    /// For example, if a model variable x has type <c>double[]</c> and 2 uses, its usage channels will be declared together
-    /// as <c>double[][] x_uses = new double[2][];</c>  and referred to as x_uses[0] and x_uses[1].
-    /// </para><para>
-    /// If the model variable is inside of a plate, then all instances of the channel share the same ChannelInfo and are
-    /// packed into a nested array in the inference program.
-    /// For example, if a model variable x is in a plate of size 3 and has 2 uses, its usage channels will be
-    /// declared together as  <c>double[][] x_uses = new double[2][];</c> and x_uses[0] refers to the first use of x in the plate.
-    /// </para></remarks>
-    public class ChannelInfo : ICompilerAttribute
-    {
-        /// <summary>
-        /// Helps build class declarations
-        /// </summary>
-        private static CodeBuilder Builder = CodeBuilder.Instance;
-
-        /// <summary>
-        /// Helps recognize code patterns
-        /// </summary>
-        private static CodeRecognizer Recognizer = CodeRecognizer.Instance;
-
-        /// <summary>
-        /// Information about the original variable from which the channels were created.
-        /// </summary>
-        internal readonly VariableInformation varInfo;
-
-        /// <summary>
-        /// Declaration of the channel.
-        /// </summary>
-        internal IVariableDeclaration decl;
-
-        /// <summary>
-        /// Flag to distinguish def/use channels.
-        /// </summary>
-        private readonly bool isUsage = false;
-
-        /// <summary>
-        /// Marks a channel as a marginal 
-        /// </summary>
-        public readonly bool IsMarginal;
-
-        /// <summary>
-        /// The type of the channel
-        /// </summary>
-        internal Type channelType
-        {
-            get { return decl.VariableType.DotNetType; }
-        }
-
-        /// <summary>
-        /// True if the channel is a definition channel.
-        /// </summary>
-        public bool IsDef
-        {
-            get { return !IsMarginal && !isUsage; }
-        }
-
-        /// <summary>
-        /// True if the channel is a usage channel.
-        /// </summary>
-        public bool IsUse
-        {
-            get { return isUsage; }
-        }
-
-        internal static ChannelInfo DefChannel(VariableInformation vi)
-        {
-            return new ChannelInfo(vi, false);
-        }
-
-        internal static ChannelInfo UseChannel(VariableInformation vi)
-        {
-            return new ChannelInfo(vi);
-        }
-
-        internal static ChannelInfo MarginalChannel(VariableInformation vi)
-        {
-            return new ChannelInfo(vi, true);
-        }
-
-        /// <summary>
-        /// Creates information about a normal uses or defs channel.
-        /// </summary>
-        private ChannelInfo(VariableInformation vi)
-        {
-            this.varInfo = vi;
-            this.isUsage = true;
-            this.IsMarginal = false;
-        }
-
-
-        /// <summary>
-        /// Creates information about a simple channel.
-        /// There is no outer array.
-        /// The inner array has size given by the varinfo.
-        /// </summary>
-        private ChannelInfo(VariableInformation vi, bool isMarginal)
-        {
-            this.varInfo = vi;
-            this.IsMarginal = isMarginal;
-        }
-
-        ///// <summary>
-        ///// Convert an array type into a distribution type.
-        ///// </summary>
-        ///// <param name="arrayType">A scalar, array, multidimensional array, or IList type.</param>
-        ///// <param name="innermostElementType">Type of innermost array element (may be itself an array, if the array is compound).</param>
-        ///// <param name="newInnermostElementType">Distribution type to use for the innermost array elements.</param>
-        ///// <param name="useDistributionArrays">Convert outer arrays to DistributionArrays.</param>
-        ///// <returns>A distribution type with the same structure as <paramref name="arrayType"/> but whose element type is <paramref name="newInnermostElementType"/>.</returns>
-        ///// <remarks>
-        ///// Similar to <see cref="Util.ChangeElementType"/> but converts arrays to DistributionArrays.
-        ///// </remarks>
-        //public static Type GetDistributionType(Type arrayType, Type innermostElementType, Type newInnermostElementType, bool useDistributionArrays)
-        //{
-        //   if (arrayType == innermostElementType) return newInnermostElementType;
-        //   int rank;
-        //   Type elementType = Util.GetElementType(arrayType, out rank);
-        //   if (elementType == null) throw new ArgumentException(arrayType + " is not an array type with innermost element type " + innermostElementType);
-        //   Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, useDistributionArrays);
-        //   if (useDistributionArrays)
-        //   {
-        //      return Distribution.MakeDistributionArrayType(innerType, rank);
-        //   }
-        //   else
-        //   {
-        //      return CodeBuilder.MakeArrayType(innerType, rank);
-        //   }
-        //}
-
-        ///// <summary>
-        ///// Convert an array type into a distribution type, converting a specified number of inner arrays to DistributionArrays.
-        ///// </summary>
-        ///// <param name="arrayType"></param>
-        ///// <param name="innermostElementType"></param>
-        ///// <param name="newInnermostElementType"></param>
-        ///// <param name="depth">The current depth from the declaration type.</param>
-        ///// <param name="useDistributionArraysDepth">The number of inner arrays to convert to DistributionArrays</param>
-        ///// <returns></returns>
-        //public static Type GetDistributionType(Type arrayType, Type innermostElementType, Type newInnermostElementType, int depth, int useDistributionArraysDepth)
-        //{
-        //   if (arrayType == innermostElementType) return newInnermostElementType;
-        //   int rank;
-        //   Type elementType = Util.GetElementType(arrayType, out rank);
-        //   if (elementType == null) throw new ArgumentException(arrayType + " is not an array type.");
-        //   Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, depth + 1, useDistributionArraysDepth);
-        //   if ((depth >= useDistributionArraysDepth) && (useDistributionArraysDepth >= 0))
-        //   {
-        //      return Distribution.MakeDistributionArrayType(innerType, rank);
-        //   }
-        //   else
-        //   {
-        //      return CodeBuilder.MakeArrayType(innerType, rank);
-        //   }
-        //}
-
-        //public Type GetMessageType()
-        //{
-        //   int distArraysDepth = 0;
-        //   if (IsUse) distArraysDepth = 1; // first array is [], then distribution arrays
-        //   Type domainType = Distribution.GetDomainType(varInfo.marginalType);
-        //   Type messageType = GetDistributionType(channelType, domainType, varInfo.marginalType, 0, distArraysDepth);
-        //   return messageType;
-        //}
-
-        public IExpression ReplaceWithUsesChannel(IExpression expr, IExpression usageIndex)
-        {
-            IExpression target;
-            List<IList<IExpression>> indices = Recognizer.GetIndices(expr, out target);
-            IExpression newExpr = null;
-            if (target is IVariableDeclarationExpression) newExpr = (usageIndex == null) ? (IExpression) Builder.VarDeclExpr(decl) : Builder.VarRefExpr(decl);
-            else if (target is IVariableReferenceExpression) newExpr = Builder.VarRefExpr(decl);
-            else throw new Exception("Unexpected indexing target: " + target);
-            newExpr = Builder.ArrayIndex(newExpr, usageIndex);
-            // append the remaining indices
-            for (int i = 0; i < indices.Count; i++)
-            {
-                newExpr = Builder.ArrayIndex(newExpr, indices[i]);
-            }
-            return newExpr;
-        }
-
-        public override string ToString()
-        {
-            if (decl == null) return "ChannelInfo(decl=null)";
-            return String.Format("ChannelInfo({0},isUse={1},isMarginal={2})", decl.ToString(), IsUse, IsMarginal);
-        }
-    }
-
-    /// <summary>
-    /// Attribute used to mark pseudo-factors corresponding to variables in the factor graph
-    /// </summary>
-    internal class IsVariableFactor : ICompilerAttribute
-    {
-    }
-
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning restore 1591
-#endif
 }

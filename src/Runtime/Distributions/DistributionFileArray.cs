@@ -15,6 +15,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Utilities;
     using Microsoft.ML.Probabilistic.Serialization;
     using System.Runtime.Serialization;
+    using System.Collections.Generic;
 
     /// <summary>
     /// A distribution over an array of type <typeparamref name="DomainType"/>, where each element is independent and has distribution of type <typeparamref name="T"/>, all stored in a file.
@@ -23,7 +24,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <typeparam name="DomainType"></typeparam>
     [Serializable]
     [Quality(QualityBand.Experimental)]
-    public class DistributionFileArray<T, DomainType> : FileArray<T>, IDistribution<DomainType[]>, Sampleable<DomainType[]>
+    public class DistributionFileArray<T, DomainType> : FileArray<T>, IDistribution<DomainType[]>, Sampleable<DomainType[]>, HasPoint<IList<DomainType>>
 #if SpecializeInterfaces
                                                         , SettableTo<DistributionFileArray<T, DomainType>>,
                                                         SettableToProduct<DistributionFileArray<T, DomainType>>,
@@ -138,15 +139,31 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public DomainType[] Point
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get => Util.ArrayInit(count, i => this[i].Point);
+            set { ((HasPoint<IList<DomainType>>)this).Point = value; }
         }
 
         [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
-            get { throw new NotImplementedException(); }
+            get => Enumerable.Range(0, count).All(i => this[i].IsPointMass);
         }
+
+        IList<DomainType> HasPoint<IList<DomainType>>.Point
+        {
+            get => ((HasPoint<DomainType[]>)this).Point;
+            set
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    T item = this[i];
+                    item.Point = value[i];
+                    this[i] = item;
+                }
+            }
+        }
+
+        bool HasPoint<IList<DomainType>>.IsPointMass => ((HasPoint<DomainType[]>)this).IsPointMass;
 
         public double MaxDiff(object that)
         {

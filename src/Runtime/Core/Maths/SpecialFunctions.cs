@@ -10,7 +10,6 @@ namespace Microsoft.ML.Probabilistic.Math
     using System.Linq;
     using System.Numerics;
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Core.Maths;
     using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -4009,16 +4008,16 @@ rr = mpf('-0.99999824265582826');
                 return 1.0;
             // sigma(|m|,v) <= 0.5 + |m| sigma'(0,v)
             // sigma'(0,v) <= N(0;0,v+8/pi)
-            double d0Upper = MMath.InvSqrt2PI / Math.Sqrt(variance + 8 / Math.PI);
-            if (mean * mean / (variance + 8 / Math.PI) < 2e-20 * Math.PI)
+            //double d0Upper = MMath.InvSqrt2PI / Math.Sqrt(variance + 8 / Math.PI);
+            if (mean * mean / (variance + 8 / Math.PI) < 1e-8)
             {
-                double deriv = LogisticGaussianDerivative(mean, variance);
+                double deriv = LogisticGaussianDerivative(0, variance);
                 return 0.5 + mean * deriv;
             }
 
             // Handle tail cases using the following exact formulas:
             // sigma(m,v) = 1 - exp(-m+v/2) + exp(-2m+2v) - exp(-3m+9v/2) sigma(m-3v,v)
-            if (-mean + variance < logEpsilon)
+            if (2 * (variance - mean) < logEpsilon)
                 return 1.0 - Math.Exp(halfVariance - mean);
             if (-3 * mean + 9 * halfVariance < logEpsilon)
                 return 1.0 - Math.Exp(halfVariance - mean) + Math.Exp(2 * (variance - mean));
@@ -4030,13 +4029,17 @@ rr = mpf('-0.99999824265582826');
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
+                double sqrtv = System.Math.Sqrt(variance);
+                double meanInvSqrtV = mean / sqrtv;
+                double shift = (mean < 0) ? Gaussian.GetLogProb(0, meanInvSqrtV, 1) : 0;
                 double f(double x)
                 {
-                    return Math.Exp(MMath.LogisticLn(x) + Gaussian.GetLogProb(x, mean, variance));
+                    double diff = x - meanInvSqrtV;
+                    return Math.Exp(MMath.LogisticLn(x * sqrtv) - diff * diff / 2 - MMath.LnSqrt2PI - shift);
                 }
                 double upperBound = mean + Math.Sqrt(variance);
-                upperBound = Math.Max(upperBound, 10);
-                return Quadrature.AdaptiveClenshawCurtis(f, upperBound, 32, 1e-10);
+                double scale = Math.Max(upperBound, 10) / sqrtv;
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, scale, 32, 1e-13), shift).ToDouble();
             }
             else
             {
@@ -4051,56 +4054,6 @@ rr = mpf('-0.99999824265582826');
                 }
                 return Integrate(weightedIntegrand, nodes, weights);
             }
-            /*
-else {
-double s = Math.Sqrt(v);
-// Region for which posterior is not moved much by the logistic function
-// so can use Gauss-Hermite quadrature on the input Gaussian
-if ((m/s > 5.0) || (m < -15.0-25.0/4.0*s)) {
-    Vector nodes = Vector.Zero(QuadratureNodeCount);
-    Vector weights = Vector.Zero(QuadratureNodeCount);
-    Quadrature.GaussianNodesAndWeights(m, v, nodes, weights);
-    return integrate(MMath.Logistic, nodes, weights);
-}
-    // Region where variance is not big enough for the big v approximation to
-    // apply, but need to find the mode before doing quadrature
-else if (m < 20.0 - 60.0/11.0 * s) {
-    // Newton-Raphson to quickly find the mode of the Converter<double,double> N(x;m,v)logistic(x)
-    double x = Math.Max(m, 0.0); // initialise x
-    double tolerance = s/10; // the tolerance can be bigger at higher input variance
-    int max_iterations=10;
-    bool success=false;
-    double h=1; // the "Hessian", here just the second derivative
-    for (int i=0; i<max_iterations; i++) {
-            double l = MMath.Logistic(x);
-            double xOld = x;
-            double g = -(x-m)/v + 1-l; // gradient
-            h = -1.0/v -  l * (1.0-l); // second derivative
-            x = x - g / h; // Newton step
-            if (Math.Abs(x - xOld) < tolerance) {
-                    success=true;
-                    break;
-            }
-    }
-    if (!success)
-            Console.WriteLine("Warning: mini-newton did not converge");
-    double m_p=x;
-    double v_p=-1.0/h; // ala Laplace approximation
-    // Gauss-Hermite quadrature
-    Vector nodes = Vector.Zero(QuadratureNodeCount);
-    Vector weights = Vector.Zero(QuadratureNodeCount);
-    Quadrature.GaussianNodesAndWeights(m_p, v_p, nodes, weights);
-    Converter<double,double> weightedIntegrand = delegate(double z)
-    {
-            return Math.Exp(MMath.LogisticLn(z) + Gaussian.GetLogProb(z, m, v)-Gaussian.GetLogProb(z, m_p, v_p));
-    };
-    return integrate(weightedIntegrand, nodes, weights);
-} else {
-    // Big v approximation
-    return MMath.NormalCdf(m / Math.Sqrt(v + Math.PI * Math.PI / 3.0));
-}
-
-}*/
         }
 
         /// <summary>
@@ -4139,11 +4092,12 @@ else if (m < 20.0 - 60.0/11.0 * s) {
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
+                double shift = Gaussian.GetLogProb(0, mean, variance);
                 double f(double x)
                 {
-                    return Math.Exp(MMath.LogisticLn(x) + MMath.LogisticLn(-x) + Gaussian.GetLogProb(x, mean, variance));
+                    return Math.Exp(MMath.LogisticLn(x) + MMath.LogisticLn(-x) + Gaussian.GetLogProb(x, mean, variance) - shift);
                 }
-                return Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10);
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10), shift).ToDouble();
             }
             else
             {
@@ -4158,48 +4112,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 }
                 return Integrate(weightedIntegrand, nodes, weights);
             }
-
-            /*
-            double s = Math.Sqrt(v);
-            // Region where bigv approximation does badly
-            if ((Math.Abs(m)+5.0)/s>4.0) {
-                    // Newton-Raphson to quickly find the mode of the Converter<double,double> xN(x;m,v)logistic(x)
-                    double x = 0.0; // initialise x
-                    double tolerance = s / 10.0;// the tolerance can be bigger at higher input variance
-                    int max_iterations=10;
-                    bool success=false;
-                    double h=1;
-                    for (int i=0; i<max_iterations; i++) {
-                            double l = MMath.Logistic(x);
-                            double xOld = x;
-                            double g = -(x - m) / v + 1.0 - 2.0 * l;// gradient
-                            h = -1.0 / v - 2.0 * l * (1.0 - l);// second derivative
-                            x = x - g / h;// Newton step
-                            if (Math.Abs(x - xOld) < tolerance) {
-                                    success=true;
-                                    break;
-                            }
-                    }
-                    if (!success)
-                            Console.WriteLine("Warning: mini-newton did not converge");
-                    double m_p=x;
-                    // Here we make the "proposal" distribution a bit wider since
-                    // there are problems with skewed integrands not being covered
-                    // well otherwise
-                    double v_p = -4.0 / h; // ala Laplace approximation
-                    // Gauss-Hermite quadrature
-                    Vector nodes = Vector.Zero(QuadratureNodeCount);
-                    Vector weights = Vector.Zero(QuadratureNodeCount);
-                    Quadrature.GaussianNodesAndWeights(m_p, v_p, nodes, weights);
-                    Converter<double,double> weightedIntegrand = delegate(double z)
-                    {
-                            return LogisticPrime(z)*Math.Exp(Gaussian.GetLogProb(z, m, v)-Gaussian.GetLogProb(z, m_p, v_p));
-                    };
-                    return integrate(weightedIntegrand, nodes, weights);
-            } else {
-                    // Big variance approximation
-                    return Math.Exp(Gaussian.GetLogProb(m, 0, v + Math.PI * Math.PI / 3.0));
-            } */
         }
 
 
@@ -4246,14 +4158,15 @@ else if (m < 20.0 - 60.0/11.0 * s) {
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
+                double shift = Gaussian.GetLogProb(0, mean, variance);
                 double f(double x)
                 {
                     double logSigma = MMath.LogisticLn(x);
                     double log1MinusSigma = MMath.LogisticLn(-x);
                     double OneMinus2Sigma = -Math.Tanh(x / 2);
-                    return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(x, mean, variance));
+                    return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(x, mean, variance) - shift);
                 }
-                return Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10);
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10), shift).ToDouble();
             }
             else
             {
@@ -4271,26 +4184,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 }
                 return Integrate(weightedIntegrand, nodes, weights);
             }
-
-            /*
-            double s = Math.Sqrt(v);
-            // Region where bigv approximation does badly
-            if (Math.Abs(m)/v > 1.0) {
-                    // Gauss-Hermite quadrature
-                    Vector nodes = Vector.Zero(QuadratureNodeCount);
-                    Vector weights = Vector.Zero(QuadratureNodeCount);
-                    Quadrature.GaussianNodesAndWeights(m, v, nodes, weights);
-                    Converter<double,double> logisticPrimePrime = delegate(double z)
-                    {
-                            double l = MMath.Logistic(z);
-                            return l * (1.0 - l) * (1.0 - 2.0 * l);
-                    };
-                    return integrate(logisticPrimePrime, nodes, weights);
-            } else {
-                    // Big variance approximation
-                    double v2 = v + Math.PI * Math.PI / 3.0;
-                    return -m / v2 * Math.Exp(Gaussian.GetLogProb(m, 0, v2));
-            } */
         }
 
         /// <summary>
@@ -4874,7 +4767,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         {
             if (double.IsNaN(x) || double.IsInfinity(x) || x == 0) return x.ToString(System.Globalization.CultureInfo.InvariantCulture);
             long bits = BitConverter.DoubleToInt64Bits(x);
-            ulong fraction = Convert.ToUInt64(bits & 0x000fffffffffffff);
+            ulong fraction = Convert.ToUInt64(bits & 0x000fffffffffffff); // 52 bits
             short exponent = Convert.ToInt16((bits & 0x7ff0000000000000) >> 52);
             if (exponent == 0)
             {
@@ -4915,7 +4808,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 {
                     BigInteger pow10 = BigInteger.Pow(10, -exponent);
                     BigInteger integerPart = big / pow10;
-                    BigInteger fractionalPart = big - integerPart*pow10;
+                    BigInteger fractionalPart = big - integerPart * pow10;
                     string zeros = new string('0', -exponent);
                     return $"{sign}{integerPart}.{fractionalPart.ToString(zeros)}";
                 }

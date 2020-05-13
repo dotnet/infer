@@ -60,7 +60,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             y.SetMarginalPrototype(yLikeVar);
             InferenceEngine engine = new InferenceEngine();
 
-            foreach(var powerValue in linspace(1, 10, 10))
+            foreach (var powerValue in linspace(1, 10, 10))
             {
                 TruncatedGamma xPrior = new TruncatedGamma(Gamma.FromShapeAndRate(3, 3), 1, double.PositiveInfinity);
                 xPriorVar.ObservedValue = xPrior;
@@ -83,7 +83,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double weight = System.Math.Exp(logWeight);
                     xEstimator.Add(xSample, weight);
                     yEstimator.Add(ySample, weight);
-                    yExpectedInverse.Add(1/ySample, weight);
+                    yExpectedInverse.Add(1 / ySample, weight);
                 }
                 Gamma xExpected = xEstimator.GetDistribution(new Gamma());
                 Gamma yExpected = yEstimator.GetDistribution(yLike);
@@ -259,7 +259,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
                 GammaPower xExpected = xEstimator.GetDistribution(xPrior);
                 GammaPower yExpected = yEstimator.GetDistribution(yLike);
-                if(yLike.Power == -1)
+                if (yLike.Power == -1)
                     yExpected = GammaPower.FromMeanAndVariance(yMva.Mean, yMva.Variance, yLike.Power);
 
                 var xActual = engine.Infer<GammaPower>(x);
@@ -1133,6 +1133,65 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine("tau=" + engine.Infer(tau));
         }
 
+        internal void IsBetweenErrorBoundTest()
+        {
+            Gaussian prior = new Gaussian(0, 1);
+            double lowerBound = -1;
+            double upperBound = 1;
+            Bernoulli isBetween = Bernoulli.PointMass(true);
+            Gaussian lowerMsg = Gaussian.Uniform();
+            Gaussian upperMsg = Gaussian.Uniform();
+            for (int iter = 0; iter < 10; iter++)
+            {
+                Trace.WriteLine($"iter {iter}: lowerMsg = {lowerMsg} upperMsg = {upperMsg}");
+                IsBetweenErrorBound(prior, lowerBound, upperBound, lowerMsg, upperMsg);
+                //lowerMsg = DoubleIsBetweenOp.XAverageConditional(isBetween, prior * upperMsg, lowerBound, double.PositiveInfinity);
+                //lowerMsg = new Gaussian(0.6947, 0.2002+ (9-iter)*0.01);
+                //lowerMsg = new Gaussian(0.6947, (prior * upperMsg).GetVariance());
+                //lowerMsg = new Gaussian(0.3503, 1 + (9 - iter) * 1);
+                upperMsg = DoubleIsBetweenOp.XAverageConditional(isBetween, prior * lowerMsg, double.NegativeInfinity, upperBound);
+                //upperMsg = new Gaussian(-0.3503, 1 + (9 - iter) * 1);
+            }
+        }
+
+        internal double IsBetweenErrorBound(Gaussian prior, double lowerBound, double upperBound, Gaussian lowerMsg, Gaussian upperMsg)
+        {
+            // msgs are scaled by normalizer
+            double Z = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(prior, lowerBound, upperBound));
+            double lowerLogNormalizer = lowerMsg.GetLogNormalizer();
+            double lowerPriorLogScale = prior.GetLogAverageOf(lowerMsg) + lowerLogNormalizer;
+            double upperLogNormalizer = upperMsg.GetLogNormalizer();
+            double upperPriorLogScale = prior.GetLogAverageOf(upperMsg) + upperLogNormalizer;
+            Gaussian upperPrior = prior * upperMsg;
+            double lowerLogZ = DoubleIsBetweenOp.LogProbBetween(upperPrior, lowerBound, double.PositiveInfinity) + upperPriorLogScale;
+            Gaussian lowerPrior = prior * lowerMsg;
+            double upperLogZ = DoubleIsBetweenOp.LogProbBetween(lowerPrior, double.NegativeInfinity, upperBound) + lowerPriorLogScale;
+            double qLogScale = lowerPriorLogScale + lowerPrior.GetLogAverageOf(upperMsg) + upperLogNormalizer;
+            double qLogScale2 = upperPriorLogScale + upperPrior.GetLogAverageOf(lowerMsg) + lowerLogNormalizer;
+            double Zt = System.Math.Exp(lowerLogZ + upperLogZ - qLogScale);
+            Trace.WriteLine($"Z = {Z} Zt = {Zt} qLogScale = {qLogScale} {qLogScale2}");
+            double error = System.Math.Pow(Z - Zt, 2);
+            double lowerDenomLogScale = upperPrior.GetLogAverageOfPower(lowerMsg, -1) - lowerLogNormalizer + upperPriorLogScale;
+            Gaussian lowerDenom = upperPrior / lowerMsg;
+            double lowerZ2;
+            if (lowerDenom.IsProper())
+                lowerZ2 = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(lowerDenom, lowerBound, double.PositiveInfinity) + lowerDenomLogScale);
+            else
+                lowerZ2 = double.PositiveInfinity;
+            double upperDenomLogScale = lowerPrior.GetLogAverageOfPower(upperMsg, -1) - upperLogNormalizer + lowerPriorLogScale;
+            Gaussian upperDenom = lowerPrior / upperMsg;
+            double upperZ2;
+            if (upperDenom.IsProper())
+                upperZ2 = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(upperDenom, double.NegativeInfinity, upperBound) + upperDenomLogScale);
+            else
+                upperZ2 = double.PositiveInfinity;
+            Trace.WriteLine($"lowerDenom = {lowerDenom} upperDenom = {upperDenom}");
+            double errorBoundLower = lowerZ2 - System.Math.Exp(2 * lowerLogZ - qLogScale);
+            double errorBoundUpper = upperZ2 - System.Math.Exp(2 * upperLogZ - qLogScale);
+            double errorBound = errorBoundLower * errorBoundUpper;
+            Trace.WriteLine($"error = {error} errorBound = {errorBound}");
+            return errorBound;
+        }
 
         // example of inference failure due to deterministic loops
         internal void DecodingTest()
@@ -1944,7 +2003,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                             if (iter % 1000000 == 0) Trace.WriteLine($"iter = {iter}");
                             double bSample = bPrior.Sample();
                             double aSample = aPrior.Sample();
-                            if(productPrior.Rate > 1e100)
+                            if (productPrior.Rate > 1e100)
                             {
                                 bSample = 0;
                                 aSample = 0;
@@ -1997,9 +2056,9 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         internal static void LogEvidenceShift(GammaPower sum, GammaPower a, GammaPower b)
         {
-            double logz100 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape-1, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape, b.Rate, b.Power));
-            double logz010 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape-1, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape, b.Rate, b.Power));
-            double logz001 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape-1, b.Rate, b.Power));
+            double logz100 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape - 1, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape, b.Rate, b.Power));
+            double logz010 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape - 1, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape, b.Rate, b.Power));
+            double logz001 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape - 1, b.Rate, b.Power));
             double lhs = logz100 + System.Math.Log(sum.Rate / (sum.Shape - 1));
             double rhs1 = logz010 + System.Math.Log(a.Rate / (a.Shape - 1));
             double rhs2 = logz001 + System.Math.Log(b.Rate / (b.Shape - 1));

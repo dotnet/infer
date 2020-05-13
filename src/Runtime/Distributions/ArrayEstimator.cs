@@ -622,7 +622,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             where T : IDistribution<TDomain>
         {
             // Check if distribution is scalar
-            if (!typeof (TDomain).IsArray)
+            if (dist is PointMass<TDomain> || !typeof (TDomain).IsArray)
                 return EstimatorFactory.Instance.CreateEstimator<T, TDomain>(dist);
 
             // Domain types at each depth

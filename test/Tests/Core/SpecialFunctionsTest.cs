@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -13,8 +14,6 @@ using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
-using Microsoft.ML.Probabilistic.Core.Maths;
-using System.IO;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -1980,15 +1979,13 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 }
                 double fx = pairs[i, x.Count];
                 double result = (double)Util.DynamicInvoke(fcn, args);
-                if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0)
+                if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0 && result != 0)
                 {
                     string strMsg = $"{name}({x:g17})\t has wrong sign (result = {result:g17})";
                     Trace.WriteLine(strMsg);
                     Assert.True(false, strMsg);
                 }
-                double err = System.Math.Abs(result - fx);
-                if (fx != 0)
-                    err /= System.Math.Abs(fx);
+                double err = MMath.AbsDiff(result, fx, 1e14*double.Epsilon);
                 if (Double.IsInfinity(fx))
                 {
                     err = (result == fx) ? 0 : Double.PositiveInfinity;

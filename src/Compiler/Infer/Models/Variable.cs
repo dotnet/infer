@@ -3747,6 +3747,22 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
+        /// Creates a copy of the argument where the forward message is uniform when <paramref name="shouldCut"/> is true.  Used to control inference.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="x"></param>
+        /// <param name="shouldCut"></param>
+        /// <returns></returns>
+        public static Variable<T> CutForwardWhen<T>(Variable<T> x, Variable<bool> shouldCut)
+        {
+            Variable<T> result = Variable<T>.Factor(Factors.Cut.ForwardWhen, x, shouldCut);
+            Range valueRange = x.GetValueRange(false);
+            if (valueRange != null)
+                result.AddAttribute(new ValueRange(valueRange));
+            return result;
+        }
+
+        /// <summary>
         /// Returns a cut of the argument. Cut is equivalent to random(infer()).
         /// </summary>
         /// <typeparam name="T">The domain type.</typeparam>
@@ -3755,7 +3771,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <remarks>Cut allows forward messages to pass through unchanged, whereas backward messages are cut off.</remarks>
         public static Variable<T> Cut<T>(Variable<T> x)
         {
-            Variable<T> result = Variable<T>.Factor(Factor.Cut<T>, x);
+            Variable<T> result = Variable<T>.Factor(Factors.Cut.Backward, x);
             Range valueRange = x.GetValueRange(false);
             if (valueRange != null)
                 result.AddAttribute(new ValueRange(valueRange));

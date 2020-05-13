@@ -106,7 +106,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             foreach (ICompilerAttribute attr in attributes)
             {
-                if (attr is AttributeType) yield return (AttributeType) attr;
+                if (attr is AttributeType attributeType) yield return attributeType;
             }
         }
 
@@ -161,11 +161,13 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             get
             {
-                if (!(Size is Variable<int>)) throw new InvalidOperationException("The Range does not have constant size.  Set IsReadOnly=true on the range size.");
-                Variable<int> sizeVar = (Variable<int>) Size;
-                if (!(sizeVar.IsObserved && sizeVar.IsReadOnly))
-                    throw new InvalidOperationException("The Range does not have constant size.  To use SizeAsInt, set IsReadOnly=true on the range size.");
-                return sizeVar.ObservedValue;
+                if (Size is Variable<int> sizeVar)
+                {
+                    if (!(sizeVar.IsObserved && sizeVar.IsReadOnly))
+                        throw new InvalidOperationException("The Range does not have constant size.  To use SizeAsInt, set IsReadOnly=true on the range size.");
+                    return sizeVar.ObservedValue;
+                }
+                else throw new InvalidOperationException("The Range does not have constant size.  Set IsReadOnly=true on the range size.");
             }
         }
 
@@ -200,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         internal IVariableDeclaration GetIndexDeclaration()
         {
-            if (index == null) index = Builder.VarDecl(NameInGeneratedCode, typeof (int));
+            if (index == null) index = Builder.VarDecl(NameInGeneratedCode, typeof(int));
             return index;
         }
 
@@ -233,6 +235,18 @@ namespace Microsoft.ML.Probabilistic.Models
             return root;
         }
 
+        /// <summary>
+        /// Get an expression that evaluates to true when this loop counter is increasing in the currently executing loop.
+        /// </summary>
+        /// <returns></returns>
+        public Variable<bool> IsIncreasing()
+        {
+            Variable<bool> v = new Variable<bool>();
+            v.SetTo(new Func<int, bool>(Factors.InferNet.IsIncreasing).Method, this);
+            v.Inline = true;
+            return v;
+        }
+
         private static Range ReplaceExpressions(Range r, Dictionary<IModelExpression, IModelExpression> replacements)
         {
             IModelExpression<int> newSize = (IModelExpression<int>)ReplaceExpressions(r.Size, replacements);
@@ -247,17 +261,16 @@ namespace Microsoft.ML.Probabilistic.Models
         private static IModelExpression ReplaceExpressions(IModelExpression expr, Dictionary<IModelExpression, IModelExpression> replacements)
         {
             if (replacements.ContainsKey(expr)) return replacements[expr];
-            if (expr is Range)
+            if (expr is Range range)
             {
-                return ReplaceExpressions((Range)expr, replacements);
+                return ReplaceExpressions(range, replacements);
             }
-            else if (expr is Variable)
+            else if (expr is Variable v)
             {
-                Variable v = (Variable) expr;
                 if (v.IsArrayElement)
                 {
                     bool changed = false;
-                    IVariableArray newArray = (IVariableArray) ReplaceExpressions(v.ArrayVariable, replacements);
+                    IVariableArray newArray = (IVariableArray)ReplaceExpressions(v.ArrayVariable, replacements);
                     if (!ReferenceEquals(newArray, v.ArrayVariable)) changed = true;
                     IModelExpression[] newIndices = new IModelExpression[v.indices.Count];
                     for (int i = 0; i < newIndices.Length; i++)
@@ -294,13 +307,12 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <exclude/>
         internal bool IsCompatibleWith(IModelExpression index)
         {
-            if (index is Range) return (((Range) index).GetRoot() == GetRoot());
-            else if (index is Variable)
+            if (index is Range range) return (range.GetRoot() == GetRoot());
+            else if (index is Variable indexVar)
             {
-                Variable indexVar = (Variable) index;
-                Range range = indexVar.GetValueRange(false);
-                if (range == null) return true;
-                return IsCompatibleWith(range);
+                Range valueRange = indexVar.GetValueRange(false);
+                if (valueRange == null) return true;
+                return IsCompatibleWith(valueRange);
             }
             else
             {

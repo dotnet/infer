@@ -892,6 +892,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             tc.AddTransform(new ArrayAnalysisTransform());
             tc.AddTransform(new EqualityPropagationTransform());
             tc.AddTransform(new StocAnalysisTransform(true));
+            tc.AddTransform(new MarginalAnalysisTransform());
 
             tc.AddTransform(new GateTransform(algorithm));
             tc.AddTransform(new IndexingTransform());
@@ -981,6 +982,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             tc.AddTransform(new IterativeProcessTransform(this, algorithm));
             // LoopMerging is required to support offset indexing (see GateModelTests.CaseLoopIndexTest2)
             tc.AddTransform(new LoopMergingTransform());
+            tc.AddTransform(new IsIncreasingTransform());
             // Local is required for DistributedTests
             tc.AddTransform(new LocalTransform(this));
             if (OptimiseInferenceCode)
