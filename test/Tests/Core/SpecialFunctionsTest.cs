@@ -105,7 +105,6 @@ digamma(mpf('9.5'))
         public void SpecialFunctionsTest()
         {
             double[,] logistic_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Logistic.csv"));
-
             CheckFunctionValues("Logistic", MMath.Logistic, logistic_pairs);
 
             double[,] logisticln_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "LogisticLn.csv"));
