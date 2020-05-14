@@ -26,7 +26,6 @@ from __future__ import division
 import os
 import csv
 from mpmath import *
-import mpmath
 import time
 
 mp.pretty = True
@@ -107,12 +106,16 @@ def safe_quad(f, points):
     if verbose:
         print(f"Rescaling integrand by {nstr(1/estimate)}")
     result, err = quad(lambda x: f(x)/estimate, points, error=True, verbose=verbose)
+    result *= estimate
+    err *= estimate
     if mpf(10)**output_dps * abs(err) > abs(result):
         estimate = result
         if verbose:
             print(f"Rescaling integrand by {nstr(1/estimate)}")
-        result, err = quad(lambda x: f(x)/result, points, error=True, verbose=verbose)
-    return result*estimate, err*estimate
+        result, err = quad(lambda x: f(x)/estimate, points, error=True, verbose=verbose)
+        result *= estimate
+        err *= estimate
+    return result, err
 
 def normal_cdf2_ln(x, y, r):
     return ln(normal_cdf2(x, y, r))
