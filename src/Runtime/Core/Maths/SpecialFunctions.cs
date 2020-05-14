@@ -3976,10 +3976,10 @@ rr = mpf('-0.99999824265582826');
             vf = Ex2 - mf * mf;
         }
 
-        // Math.Exp(-745.14) == 0
-        private const double log0 = -745.14;
-        // 1-Math.Exp(-38) == 1
-        private const double logEpsilon = -38;
+        // Math.Exp(log0) == 0
+        private static readonly double log0 = Math.Log(double.Epsilon) - Ln2;
+        // 1-Math.Exp(logHalfUlpPrev1) == 1
+        private static readonly double logHalfUlpPrev1 = Math.Log((1.0 - PreviousDouble(1.0)) / 2);
 
         /// <summary>
         /// Calculate sigma(m,v) = \int N(x;m,v) logistic(x) dx
@@ -4001,14 +4001,14 @@ rr = mpf('-0.99999824265582826');
             // use the upper bound exp(m+v/2) to prune cases that must be zero or one
             if (mean + halfVariance < log0)
                 return 0.0;
-            if (-mean + halfVariance < logEpsilon)
+            if (-mean + halfVariance < logHalfUlpPrev1)
                 return 1.0;
 
             // use the upper bound 0.5 exp(-0.5 m^2/v) to prune cases that must be zero or one
             double q = -0.5 * mean * mean / variance - MMath.Ln2;
             if (mean <= 0 && mean + variance >= 0 && q < log0)
                 return 0.0;
-            if (mean >= 0 && variance - mean >= 0 && q < logEpsilon)
+            if (mean >= 0 && variance - mean >= 0 && q < logHalfUlpPrev1)
                 return 1.0;
             // sigma(|m|,v) <= 0.5 + |m| sigma'(0,v)
             // sigma'(0,v) <= N(0;0,v+8/pi)
@@ -4021,14 +4021,14 @@ rr = mpf('-0.99999824265582826');
 
             // Handle tail cases using the following exact formulas:
             // sigma(m,v) = 1 - exp(-m+v/2) + exp(-2m+2v) - exp(-3m+9v/2) sigma(m-3v,v)
-            if (2 * (variance - mean) < logEpsilon)
+            if (2 * (variance - mean) < logHalfUlpPrev1)
                 return 1.0 - Math.Exp(halfVariance - mean);
-            if (-3 * mean + 9 * halfVariance < logEpsilon)
+            if (-3 * mean + 9 * halfVariance < logHalfUlpPrev1)
                 return 1.0 - Math.Exp(halfVariance - mean) + Math.Exp(2 * (variance - mean));
             // sigma(m,v) = exp(m+v/2) - exp(2m+2v) + exp(3m + 9v/2) (1 - sigma(m+3v,v))
-            if (mean + 1.5 * variance < logEpsilon)
+            if (mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance);
-            if (2 * mean + 4 * variance < logEpsilon)
+            if (2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance) * (1 - Math.Exp(mean + 1.5 * variance));
 
             if (variance > LogisticGaussianVarianceThreshold)
@@ -4089,9 +4089,9 @@ rr = mpf('-0.99999824265582826');
 
             // Handle the tail cases using the following exact formula:
             // sigma'(m,v) = exp(-m+v/2) -2 exp(-2m+2v) +3 exp(-3m+9v/2) sigma(m-3v,v) - exp(-3m+9v/2) sigma'(m-3v,v)
-            if (-mean + 1.5 * variance < logEpsilon)
+            if (-mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(halfVariance - mean);
-            if (-2 * mean + 4 * variance < logEpsilon)
+            if (-2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(halfVariance - mean) - 2 * Math.Exp(2 * (variance - mean));
 
             if (variance > LogisticGaussianVarianceThreshold)
@@ -4150,14 +4150,14 @@ rr = mpf('-0.99999824265582826');
 
             // Handle the tail cases using the following exact formulas:
             // sigma''(m,v) = -exp(-m+v/2) +4 exp(-2m+2v) -9 exp(-3m+9v/2) sigma(m-3v,v) +6 exp(-3m+9v/2) sigma'(m-3v,v) - exp(-3m+9v/2) sigma''(m-3v,v)
-            if (-mean + 1.5 * variance < logEpsilon)
+            if (-mean + 1.5 * variance < logHalfUlpPrev1)
                 return -Math.Exp(halfVariance - mean);
-            if (-2 * mean + 4 * variance < logEpsilon)
+            if (-2 * mean + 4 * variance < logHalfUlpPrev1)
                 return -Math.Exp(halfVariance - mean) + 4 * Math.Exp(2 * (variance - mean));
             // sigma''(m,v) = exp(m+v/2) -4 exp(2m+2v) +9 exp(3m + 9v/2) (1 - sigma(m+3v,v)) - 6 exp(3m+9v/2) sigma'(m+3v,v) - exp(3m + 9v/2) sigma''(m+3v,v)
-            if (mean + 1.5 * variance < logEpsilon)
+            if (mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance);
-            if (2 * mean + 4 * variance < logEpsilon)
+            if (2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance) * (1 - 4 * Math.Exp(mean + 1.5 * variance));
 
             if (variance > LogisticGaussianVarianceThreshold)
