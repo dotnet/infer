@@ -21,6 +21,11 @@ dictionary within the script.
 
 To add a new test case, add a new row to the csv file using zero for the expectedresult.
 Then run this script to replace the dummy value.
+
+TODO: stop using sympy and just use mpmath directly for all functions.
+Currently all funtions in this file accept sympy numbers as their arguments,
+except when their names are prefixed with 'mpmath_', in which case they
+accept mpmath mpf numbers.
 """
 from __future__ import division
 from sympy import *
@@ -29,8 +34,10 @@ import csv
 import mpmath
 import time
 
-mpmath.mp.pretty = true
+mpmath.mp.pretty = True
 mpmath.mp.dps = 500
+
+trace_print = False
 
 def normal_cdf_moment_ratio(n, x):
     xmpf = to_mpmath(x)
@@ -104,18 +111,18 @@ def logistic_gaussian(m, v):
     if m == oo:
         if v == oo:
             return oo
-        return Float('1.0')
+        return S(1)
     if v == oo:
-        return Float('0.5')
+        return S(1) / 2
     mmpf = to_mpmath(m)
     vmpf = to_mpmath(v)
     logEpsilon = log(mpmath.mpf('1e-500'))
     if 2*mmpf + 4*vmpf < logEpsilon:
-        return Float(exp(mmpf + vmpf/2) * (1 - exp(mmpf + 1.5 * vmpf) * (1 - exp(mmpf + 2.5 * vmpf))))
+        return exp(mmpf + vmpf/2) * (1 - exp(mmpf + 1.5 * vmpf) * (1 - exp(mmpf + 2.5 * vmpf)))
     tanhm = mpmath.tanh(mmpf)
     # Not really a precise threshold, but fine for our data
     if tanhm == mpmath.mpf('1.0'):
-        return Float('1.0')
+        return S(1)
     # The integration routine below is obtained by substituting x = atanh(t)*sqrt(v)
     # into the definition of logistic_gaussian
     #
@@ -127,7 +134,7 @@ def logistic_gaussian(m, v):
     sqrtv = mpmath.sqrt(vmpf)
     misqrtv = mmpf/sqrtv
     scale = max(10, mmpf + sqrtv)/sqrtv
-    def f(t): 
+    def f(t):
         x = scale*mpmath.atanh(t)
         return mpmath.exp(-(x - misqrtv) ** 2 / 2) / (1 + mpmath.exp(-x*sqrtv)) / (1 - t * t)
     coef = scale / mpmath.sqrt(2 * mpmath.pi)
@@ -144,7 +151,7 @@ def logistic_gaussian(m, v):
 
 def logistic_gaussian_deriv(m, v):
     if m.is_infinite or v.is_infinite:
-        return Float('0.0')
+        return S(0)
     mmpf = to_mpmath(m)
     vmpf = to_mpmath(v)
     # The integration routine below is obtained by substituting x = atanh(t)
@@ -170,7 +177,7 @@ def logistic_gaussian_deriv(m, v):
 
 def logistic_gaussian_deriv2(m, v):
     if m.is_infinite or v.is_infinite:
-        return Float('0.0')
+        return S(0)
     mmpf = to_mpmath(m)
     vmpf = to_mpmath(v)
     # The integration routine below is obtained by substituting x = atanh(t)
@@ -209,7 +216,7 @@ def normal_pdf_ln(x):
 
 def normal_cdf_integral(x, y, r):
     if x == -oo or y == -oo:
-        return Float('0.0')
+        return S(0)
     if x == oo:
         return oo
     if y == oo:
@@ -217,13 +224,13 @@ def normal_cdf_integral(x, y, r):
         if x > 0:
             return result * x + exp(normal_pdf_ln(x) - log(normal_cdf(x)))
         else:
-            return result * normal_cdf_moment_ratio(Float('1.0'), x) * exp(normal_pdf_ln(x) - log(normal_cdf(x)))
+            return result * normal_cdf_moment_ratio(S(1), x) * exp(normal_pdf_ln(x) - log(normal_cdf(x)))
     if r == S(1):
         if x <= y:
-            return normal_cdf_moment_ratio(Float('1.0'), x) * exp(normal_pdf_ln(x))
+            return normal_cdf_moment_ratio(S(1), x) * exp(normal_pdf_ln(x))
         else:
             npdfy = exp(normal_pdf_ln(y))
-            return (normal_cdf_moment_ratio(Float('1.0'), y) + (x - y) * normal_cdf(y) / npdfy) * npdfy
+            return (normal_cdf_moment_ratio(S(1), y) + (x - y) * normal_cdf(y) / npdfy) * npdfy
     if r == S(-1):
         if x + y <= 0:
             return S(0)
@@ -259,9 +266,9 @@ def normal_cdf_integral_ratio(x, y, r):
 
 def beta_cdf(x, a, b):
     if x <= S(0):
-        return Float('0.0')
+        return S(0)
     if x >= S(1):
-        return Float('1.0')
+        return S(1)
     result = mpmath.betainc(to_mpmath(a), to_mpmath(b), 0, to_mpmath(x), regularized=True)
     return Float(result)
 
@@ -318,7 +325,7 @@ def float_str_python_to_csharp(s):
 dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', '..', 'test', 'Tests', 'data', 'SpecialFunctionsValues')
 with os.scandir(dir) as it:
     for entry in it:
-        if entry.name.endswith('.csv') and entry.is_file() and entry.name == "logisticGaussian.csv":
+        if entry.name.endswith('.csv') and entry.is_file():
             print(f'Processing {entry.name}...')
             if entry.name not in pair_info.keys() or pair_info[entry.name] == None:
                 print("Don't know how to process. Skipping.")
@@ -333,18 +340,21 @@ with os.scandir(dir) as it:
                     newrow = dict(row)
                     args = []
                     for i in range(arg_count):
-                        args.append(Float(float_str_csharp_to_python(row[f'arg{i}'])))
+                        args.append(Float(float_str_csharp_to_python(row[f'arg{i}']), mpmath.mp.dps))
                     result_in_file = row['expectedresult']
                     if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN':
                         newrow['expectedresult'] = result_in_file
                     else:
-                        print(f'{entry.name}{args}')
+                        if trace_print:
+                            print(f'{entry.name}{args}')
                         try:
-                            startTime = time.time()
+                            if trace_print:
+                                startTime = time.time()
                             result = f(*args).evalf(50, maxn=500)
-                            elapsed = time.time() - startTime
-                            print(f'({elapsed} seconds elapsed)')
-                            print(result)
+                            if trace_print:
+                                elapsed = time.time() - startTime
+                                print(f'({elapsed} seconds elapsed)')
+                                print(result)
                             if abs(result) < Float('1e-20000'):
                                 result = Float('0')
                         except ValueError:
