@@ -21,6 +21,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class SpecialFunctionsTests
     {
         public const double TOLERANCE = 1e-15;
+        const double defaultAssertTolerance = 1e-11;
 
         public delegate double MathFcn(double arg);
         public delegate double MathFcn2(double arg1, double arg2);
@@ -105,7 +106,6 @@ digamma(mpf('9.5'))
         public void SpecialFunctionsTest()
         {
             double[,] logistic_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Logistic.csv"));
-
             CheckFunctionValues("Logistic", MMath.Logistic, logistic_pairs);
 
             double[,] logisticln_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "LogisticLn.csv"));
@@ -1910,22 +1910,22 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             }
         }
 
-        private static void CheckFunctionValues(string name, MathFcn fcn, double[,] pairs, double assertTolerance = 1e-11)
+        private static void CheckFunctionValues(string name, MathFcn fcn, double[,] pairs, double assertTolerance = defaultAssertTolerance)
         {
             CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
         }
 
-        private static void CheckFunctionValues(string name, MathFcn2 fcn, double[,] pairs, double assertTolerance = 1e-11)
+        private static void CheckFunctionValues(string name, MathFcn2 fcn, double[,] pairs, double assertTolerance = defaultAssertTolerance)
         {
             CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
         }
 
-        private static void CheckFunctionValues(string name, MathFcn3 fcn, double[,] pairs, double assertTolerance = 1e-11)
+        private static void CheckFunctionValues(string name, MathFcn3 fcn, double[,] pairs, double assertTolerance = defaultAssertTolerance)
         {
             CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
         }
 
-        private static void CheckFunctionValues(string name, MathFcn4 fcn, double[,] pairs, double assertTolerance = 1e-11)
+        private static void CheckFunctionValues(string name, MathFcn4 fcn, double[,] pairs, double assertTolerance = defaultAssertTolerance)
         {
             CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
         }
