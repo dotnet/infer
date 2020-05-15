@@ -132,7 +132,7 @@ def logistic_gaussian(m, v):
     if v == inf:
         return mpf('0.5')
     logEpsilon = log(eps)
-    if 2*mmpf + 4*vmpf < logEpsilon:
+    if 2*m + 4*v < logEpsilon:
         return mpf(exp(m + v/2) * (1 - exp(m + 1.5 * v) * (1 - exp(m + 2.5 * v))))
     tanhm = tanh(m)
     # Not really a precise threshold, but fine for our data
@@ -153,19 +153,19 @@ def logistic_gaussian(m, v):
         x = scale*atanh(t)
         return exp(-(x - misqrtv) ** 2 / 2) / (1 + exp(-x*sqrtv)) / (1 - t * t)
     coef = scale / sqrt(2 * pi)
-    points = [-1, 1]
+    points = [-1, 0, 1]
     int, err = safe_quad(f, points)
     result = coef * int
     if mpf(10)**output_dps * abs(err) > abs(int):
-        print(f"Suspiciously big error when evaluating an integral for logistic_gaussian({m}, {v}).")
-        print(f"Integral: {int}")
-        print(f"integral error estimate: {err}")
-        print(f"Coefficient: {coef}")
-        print(f"Result (Coefficient * Integral): {result}")
+        print(f"Suspiciously big error when evaluating an integral for logistic_gaussian({nstr(m)}, {nstr(v)}).")
+        print(f"Integral: {nstr(int)}")
+        print(f"integral error estimate: {nstr(err)}")
+        print(f"Coefficient: {nstr(coef)}")
+        print(f"Result (Coefficient * Integral): {nstr(result)}")
     return result
 
 def logistic_gaussian_deriv(m, v):
-    if m.is_infinite or v.is_infinite:
+    if m == inf or m == -inf or v == inf:
         return mpf('0.0')
     # The integration routine below is obtained by substituting x = atanh(t)
     # into the definition of logistic_gaussian'
@@ -189,7 +189,7 @@ def logistic_gaussian_deriv(m, v):
     return result
 
 def logistic_gaussian_deriv2(m, v):
-    if m.is_infinite or v.is_infinite:
+    if m == inf or m == -inf or v == inf:
         return mpf(0)
     # The integration routine below is obtained by substituting x = atanh(t)
     # into the definition of logistic_gaussian''
@@ -317,7 +317,7 @@ pair_info = {
     'NormalCdfLn2.csv': normal_cdf2_ln,
     'NormalCdfLogit.csv': lambda x: log(ncdf(x)) - log(ncdf(-x)),
     'NormalCdfMomentRatio.csv': normal_cdf_moment_ratio,
-    'NormalCdfRatioLn2.csv': normal_cdf2_ratio_ln,
+    #'NormalCdfRatioLn2.csv': normal_cdf2_ratio_ln,
     'Tetragamma.csv': lambda x: polygamma(2, x),
     'Trigamma.csv': lambda x: polygamma(1, x),
     'ulp.csv': None
@@ -332,7 +332,7 @@ def float_str_python_to_csharp(s):
 dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', '..', 'test', 'Tests', 'data', 'SpecialFunctionsValues')
 with os.scandir(dir) as it:
     for entry in it:
-        if entry.name.endswith('.csv') and entry.is_file():
+        if entry.name.endswith('.csv') and entry.is_file() and entry.name == 'logisticGaussian.csv':
             print(f'Processing {entry.name}...')
             if entry.name not in pair_info.keys() or pair_info[entry.name] == None:
                 print("Don't know how to process. Skipping.")
@@ -350,7 +350,7 @@ with os.scandir(dir) as it:
                         args.append(mpf(float_str_csharp_to_python(row[f'arg{i}'])))
                     result_in_file = row['expectedresult']
                     verbose = True
-                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN':
+                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN' or len(newrows) != 127:
                         newrow['expectedresult'] = result_in_file
                     else:
                         try:
@@ -361,11 +361,11 @@ with os.scandir(dir) as it:
                             if verbose:
                                 elapsed = time.time() - startTime
                                 print(f'({elapsed} seconds elapsed)')
-                                nprint(result, 50)
+                                nprint(result, output_dps)
                         except ValueError:
                             print(f'ValueError for args {args}. Setting result to NaN.')
                             result = mpf('nan')
-                        newrow['expectedresult'] = float_str_python_to_csharp(nstr(result, 50))
+                        newrow['expectedresult'] = float_str_python_to_csharp(nstr(result, output_dps))
                     newrows.append(newrow)
 
             with open(entry.path, 'w', newline='') as csvfile:
