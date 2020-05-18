@@ -3521,7 +3521,11 @@ rr = mpf('-0.99999824265582826');
         /// particularly when x &lt; -36 or x > 50.</remarks>
         public static double Log1PlusExp(double x)
         {
-            if (x > 50)
+            // The error of approximating log(1+exp(x)) by x is:
+            //   log(1+exp(x))-x = log(1+exp(-x)) <= exp(-x)
+            // Thus we should use the approximation when exp(-x) <= ulp(x)/2
+            // ulp(1) < ulp(x)  therefore x > -log(ulp(1)/2)
+            if (x > -logEpsilon)
                 return x;
             else
                 return Log1Plus(Math.Exp(x));
