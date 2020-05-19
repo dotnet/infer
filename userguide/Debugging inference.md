@@ -46,4 +46,5 @@ engine.Compiler.WriteSourceFiles = true;
 engine.Compiler.IncludeDebugInformation = true;
 ```
 
-**Hint:** to step through the messages being passed during inference, open the generated source file, set a breakpoint at the start of **Execute** method. Then use the debugger as normal to step through the code.
+To print out the messages being passed during inference, use the [TraceMessages](Adding attributes to your model.md) attribute or [TraceAllMessages](inference engine settings.md) compiler option.
+To step through the messages being passed during inference, open the generated source file, set a breakpoint at the start of **Execute** method. Then use the debugger as normal to step through the code.
