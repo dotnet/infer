@@ -13,6 +13,7 @@ The class is an ordinary C# class of name **\[ModelName\]_\[Algorithm\]**, for e
 
 *   all requested marginals
 *   all forward and backwards messages needed to compute requested marginals
+(`x_uses_F[i]` is a message from a variable x to its ith use, while `x_uses_B[i]` is a message to a variable x from its ith use.  A gate block counts as a single use.)
 *   invalidation flags to track which parts of the schedule need to be recomputed when observed values change
 
 Methods are created for:

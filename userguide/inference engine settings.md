@@ -48,7 +48,7 @@ This property holds the compiler that the inference engine uses to compile the m
 | **WriteSourceFiles** | Specifies whether the generated source code should be written to disk. <br /><br />To prevent writing source files to disk, so that instead they are only generated in memory, use: `engine.Compiler.WriteSourceFiles = false;` | true |
 | **GenerateInMemory** | Specifies whether the inference assembly should be generated in memory or on disk. Generating the assembly in memory can avoid security exceptions if you are running your inference from a network drive. If you want to debug into your generated inference code, you must set this to `false`: `engine.Compiler.GenerateInMemory = false;` | true |
 | **IncludeDebugInformation** | Specifies whether the inference assembly should be compiled with debugging symbols. If you want to debug into your generated inference code, you must set this to `true`: `engine.Compiler.IncludeDebugInformation = true;` | false |
-| **TraceAllMessages** | If true, all variables will implicitly have a [TraceMessages](Adding attributes to your model.md) attribute. | false |
+| <a name="traceallmessages">**TraceAllMessages**</a> | If true, all variables will implicitly have a [TraceMessages](Adding attributes to your model.md#tracemessages) attribute. | false |
 | **ReturnCopies** | If true, code will be generated to return copies of the internal marginal distributions. If this is not done, modifying returned marginals in place may affect the result of future inference calculations. Even when set to true, the copying is only done during inference; when Infer returns a cached result, this will be the same object previously returned. <br /><br />If you want to save memory by avoiding creating these copies, you can set this to `false`: `engine.Compiler.ReturnCopies = false;` | true |
 | **FreeMemory** | If true, internal message arrays will be freed and re-allocated every time inference is run. This minimizes the memory overhead of inference. If false, internal message arrays will be kept alive between runs. To speed up inference when running the same model many times with different data, you can set this to false: `engine.Compiler.FreeMemory = false;` | true |
 | **AddComments** | If true, the generated code will contain comments describing each statement. To reduce the size of the generated code, you can set this to `false`. | true |
@@ -127,7 +127,7 @@ engine.OptimiseForVariables = new[] {x,y,z};
 
 Setting this property to null reverts the engine to its normal behaviour where it will automatically choose which variables to perform inference on.
 
-#### **ResetOnObservedValueChanged**
+#### ResetOnObservedValueChanged
 
 This option is useful for reducing the number of iterations required when observed values change. If true (the default), calling Infer() resets messages to their initial values if an observed value has changed. This ensures that the result of inference is always the same for the same set of observed values, but requires a full set of iterations to be performed each time. If false, the messages will not be reset when an observed value has changed. Thus the result of inference may depend on the previous observed values, but convergence can be faster. This option effectively switches between using **Update** instead of **Execute** on the underlying generated algorithm (see [Controlling how inference is performed](Controlling how inference is performed.md)).
 

@@ -46,5 +46,6 @@ engine.Compiler.WriteSourceFiles = true;
 engine.Compiler.IncludeDebugInformation = true;
 ```
 
-To print out the messages being passed during inference, use the [TraceMessages](Adding attributes to your model.md) attribute or [TraceAllMessages](inference engine settings.md) compiler option.
+To print out the messages being passed during inference, use the [TraceMessages](Adding attributes to your model.md#tracemessages) attribute or [TraceAllMessages](inference engine settings.md#traceallmessages) compiler option.
 To step through the messages being passed during inference, open the generated source file, set a breakpoint at the start of **Execute** method. Then use the debugger as normal to step through the code.
+See the page describing the [structure of generated inference code](Structure of generated inference code.md).  It may help to [show the factor graph](inference engine settings.md#showfactorgraph) or the [MSL](inference engine settings.md#showmsl).
