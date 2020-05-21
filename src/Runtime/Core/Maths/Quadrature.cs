@@ -15,6 +15,8 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </summary>
     public static class Quadrature
     {
+        private const int AdaptiveQuadratureMaxNodes = 10000;
+
         /// <summary>
         /// Integrate the function f from -Infinity to Infinity
         /// </summary>
@@ -35,7 +37,103 @@ namespace Microsoft.ML.Probabilistic.Math
                 double sinX = System.Math.Sin(x);
                 return f(scale / System.Math.Tan(x)) / (sinX * sinX);
             }
-            return scale * AdaptiveTrapeziumRule(fInvTan, nodeCount, 0, System.Math.PI, relTol, 10000);
+            return scale * AdaptiveTrapeziumRule(fInvTan, nodeCount, 0, System.Math.PI, relTol, AdaptiveQuadratureMaxNodes);
+        }
+
+        /// <summary>
+        /// Integrate the function f from 0 to +Infinity using exp-sinh quadrature.
+        /// </summary>
+        /// <param name="f">The function to integrate</param>
+        /// <param name="scale">A positive tuning parameter.
+        /// <paramref name="f"/> is assumed to be continuous and at least one of <paramref name="f"/>(0) and
+        /// cosh(arsinh(2 * ln(scale)/pi)) * scale * <paramref name="f"/>(<paramref name="scale"/>) to be non-zero.</param>
+        /// <param name="relTol">A threshold to stop subdividing</param>
+        /// <returns></returns>
+        public static double AdaptiveExpSinh(Converter<double, double> f, double scale, double relTol)
+        {
+            const double halfPi = System.Math.PI / 2;
+            const double ln2ByHalfPi = MMath.Ln2 / halfPi;
+            // Let g(x) = f(exp(pi/2 * sinh(x))) * cosh(x) * exp(pi/2 * sinh(x)),
+            // fExpSinh(x) = g(x) + g(-x), when x != 0, fExpSinh(0) = g(0),
+            // then int_-inf^+inf g(x) dx = int_0^+inf fExpSinh(x) dx
+            double fExpSinh(double x)
+            {
+                if (x == 0)
+                    return f(1);
+                double halfPiSinhX = halfPi * System.Math.Sinh(x);
+                double expHalfPiSinhX = System.Math.Exp(halfPiSinhX);
+                double expHalfPiSinhNegX = System.Math.Exp(-halfPiSinhX);
+                return System.Math.Cosh(x) * (expHalfPiSinhX * f(expHalfPiSinhX) + expHalfPiSinhNegX * f(expHalfPiSinhNegX));
+            }
+            double invHalfPiLnScale = System.Math.Log(scale) / halfPi;
+            double rescale = System.Math.Abs(System.Math.Log(invHalfPiLnScale + System.Math.Sqrt(invHalfPiLnScale * invHalfPiLnScale + 1))); // abs . arsinh
+            while (fExpSinh(rescale) == 0)
+            {
+                invHalfPiLnScale -= ln2ByHalfPi;
+                rescale = System.Math.Abs(System.Math.Log(invHalfPiLnScale + System.Math.Sqrt(invHalfPiLnScale * invHalfPiLnScale + 1)));
+            }
+            return halfPi * AdaptivePositiveHalfAxisTrapeziumRule(fExpSinh, rescale, relTol, AdaptiveQuadratureMaxNodes / 2 + 1);
+        }
+
+        /// <summary>
+        /// Integrate the function f from 0 to +Infinity
+        /// </summary>
+        /// <param name="f">The function to integrate. Must have at most one extremum.</param>
+        /// <param name="scale">A positive tuning parameter.
+        /// <paramref name="f"/> is assumed to be continuous on (0, + Infinity) and non-negligible somewhere on (0, <paramref name="scale"/>]</param>
+        /// <param name="relTol">A threshold to stop subdividing</param>
+        /// <param name="maxNodes">Another threshold to stop subdividing</param>
+        /// <returns></returns>
+        public static double AdaptivePositiveHalfAxisTrapeziumRule(Converter<double, double> f, double scale, double relTol, int maxNodes)
+        {
+            double intervalWidth = 1.0 / 8;
+            double sumf2 = 0;
+            double sumf1 = f(0);
+            double x = 0;
+            double oldSum;
+            int usedNodes = 1;
+            do
+            {
+                ++usedNodes;
+                x += intervalWidth;
+                oldSum = sumf1;
+                sumf1 += f(x);
+            }
+            while (!MMath.AreEqual(oldSum, sumf1) || x < scale);
+
+            if (x > scale)
+                scale = x;
+
+            while (usedNodes < maxNodes)
+            {
+                intervalWidth /= 2;
+                sumf2 = sumf1;
+                x = intervalWidth;
+                sumf2 += f(x);
+                do
+                {
+                    ++usedNodes;
+                    if (x < scale)
+                        x += 2 * intervalWidth;
+                    else
+                        x += intervalWidth;
+                    oldSum = sumf2;
+                    sumf2 += f(x);
+                }
+                while (!MMath.AreEqual(oldSum, sumf2) || x < scale);
+                if (x > scale)
+                    scale = x;
+                double i1 = sumf1 * intervalWidth * 2;
+                double i2 = sumf2 * intervalWidth;
+                double err_est = System.Math.Abs((i1 - i2) / i2);
+                if (err_est < relTol)
+                {
+                    return i2;
+                }
+                sumf1 = sumf2;
+            }
+
+            return sumf1 * intervalWidth;
         }
 
         /// <summary>
