@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using Collections;
     using Distributions;
@@ -326,6 +327,30 @@ namespace Microsoft.ML.Probabilistic.Factors
                     j = k;
                 }
             }
+        }
+
+        public static void MaxOfOthers_MonteCarlo(IList<Gaussian> array, IList<Gaussian> result)
+        {
+            if (array.Count == 0)
+                return;
+            if (array.Count == 1)
+            {
+                result[0] = Gaussian.Uniform();
+                return;
+            }
+            int iterCount = 1000000;
+            double[] x = new double[array.Count];
+            var est = new ArrayEstimator<GaussianEstimator, IList<Gaussian>, Gaussian, double>(array.Count, i => new GaussianEstimator());
+            for (int iter = 0; iter < iterCount; iter++)
+            {
+                for (int i = 0; i < x.Length; i++)
+                {
+                    x[i] = array[i].Sample();
+                }
+                double[] maxOfOthers = Factor.MaxOfOthers(x);
+                est.Add(maxOfOthers);
+            }
+            est.GetDistribution(result);
         }
 
         public static void MaxOfOthers_Quadratic(IList<Gaussian> array, IList<Gaussian> result)
