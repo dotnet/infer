@@ -196,7 +196,7 @@ def logistic_gaussian_deriv(m, v):
     return result
 
 def logistic_gaussian_deriv2(m, v):
-    if m == inf or m == -inf or v == inf:
+    if m == inf or m == -inf or v == inf or m == mpf(0):
         return mpf(0)
     # The integration routine below is obtained by substituting x = atanh(t)
     # into the definition of logistic_gaussian''
