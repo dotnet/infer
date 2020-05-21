@@ -748,7 +748,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             CheckFunctionValues("NormalCdfLn2", new MathFcn3(MMath.NormalCdfLn), normalcdfln2_pairs);
 
             double[,] normalcdfRatioLn2_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfRatioLn2.csv"));
-            CheckFunctionValues("NormalCdfRatioLn2", new MathFcn4(MMath.NormalCdfRatioLn), normalcdfRatioLn2_pairs);
+            CheckFunctionValues("NormalCdfRatioLn2", new MathFcn4(NormalCdfRatioLn), normalcdfRatioLn2_pairs);
 
             // The true values are computed using
             // x * MMath.NormalCdf(x, y, r) + System.Math.Exp(Gaussian.GetLogProb(x, 0, 1) + MMath.NormalCdfLn(ymrx)) + r * System.Math.Exp(Gaussian.GetLogProb(y, 0, 1) + MMath.NormalCdfLn(xmry))
@@ -760,6 +760,32 @@ exp(x*x/4)*pcfu(0.5+n,-x)
 
             double[,] normalcdfIntegralRatio_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "NormalCdfIntegralRatio.csv"));
             CheckFunctionValues("NormalCdfIntegralRatio", new MathFcn3(MMath.NormalCdfIntegralRatio), normalcdfIntegralRatio_pairs);
+        }
+
+        // Same as MMath.NormalCdfRatioLn but avoids inconsistent values of r and sqrtomr2 when using arbitrary precision.
+        private static double NormalCdfRatioLn(double x, double y, double r, double sqrtomr2)
+        {
+            if (sqrtomr2 < 0.618)
+            {
+                // In this regime, it is more accurate to compute r from sqrtomr2.
+                // Proof:  
+                // In the presence of roundoff, sqrt(1 - sqrtomr2^2) becomes 
+                // sqrt(1 - sqrtomr2^2*(1+eps)) 
+                // = sqrt(1 - sqrtomr2^2 - sqrtomr2^2*eps)
+                // =approx sqrt(1 - sqrtomr2^2) - sqrtomr2^2*eps*0.5/sqrt(1-sqrtomr2^2)
+                // The error is below machine precision when
+                // sqrtomr2^2/sqrt(1-sqrtomr2^2) < 1
+                // which is equivalent to sqrtomr2 < (sqrt(5)-1)/2 =approx 0.618
+                double omr2 = sqrtomr2 * sqrtomr2;
+                r = System.Math.Sign(r) * System.Math.Sqrt(1 - omr2);
+            }
+            else
+            {
+                // In this regime, it is more accurate to compute sqrtomr2 from r.
+                double omr2 = 1 - r * r;
+                sqrtomr2 = System.Math.Sqrt(omr2);
+            }
+            return MMath.NormalCdfRatioLn(x, y, r, sqrtomr2);
         }
 
         [Fact]

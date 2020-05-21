@@ -2427,7 +2427,7 @@ f = gamma(x)-1/x
             {
                 return NormalCdfRatioLn(Math.Min(x, y)) + MMath.LnSqrt2PI;
             }
-            else if (r == -1)
+            else if (r == -1 && sqrtomr2 == 0)
             {
                 // In this case, we should subtract log N(y;0,1)
                 bool shouldThrow = true;
