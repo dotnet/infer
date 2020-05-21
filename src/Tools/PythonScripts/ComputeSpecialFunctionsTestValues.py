@@ -65,12 +65,12 @@ def normal_cdf2(x, y, r):
         y = z
 
     # Avoid quadrature with r < 0 since it is sometimes inaccurate.
-    if r < 0 and x-y <= 0:
+    if r < 0 and x - y <= 0:
         # phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
         # phi(x,y,r) = phi(x,inf,r) - phi(x,-y,-r)
         return ncdf(x) - normal_cdf2(x, -y, -r)
 
-    if x > 0 and x + y > 0 and False:
+    if x > 0 and -x + y <= 0:
         return ncdf(y) - normal_cdf2(-x,y,-r)
 
     if x + y > 0:
@@ -86,15 +86,16 @@ def normal_cdf2(x, y, r):
         return 1 / (2 * pi * sqrt(omt2)) * exp(-(x * x + y * y - 2 * t * x * y) / (2 * omt2))
 
     omr2 = (1+r)*(1-r)
+    ymrx = y - r*x
     def f2(t):
-        return npdf(t - x) * normal_cdf((y - r*(x-t))/omr2)
+        return npdf(t - x) * normal_cdf((ymrx + r*t)/omr2)
 
     # This integral excludes normal_cdf2(x,y,-1)
     # which will be zero when x+y <= 0
     result, err = safe_quad(f, [-1, r])
     
     if mpf(10)**output_dps * abs(err) > abs(result):
-        result, err = safe_quad(f2, [0, inf])  # this method has no offset
+        result, err = safe_quad(f2, [0, inf])
         if mpf(10)**output_dps * abs(err) > abs(result):
             print(f"Suspiciously big error when evaluating an integral for normal_cdf2({nstr(x)}, {nstr(y)}, {nstr(r)}).")
             print(f"Integral: {nstr(result)}")
@@ -361,7 +362,7 @@ with os.scandir(dir) as it:
                         args.append(mpf(float_str_csharp_to_python(row[f'arg{i}'])))
                     result_in_file = row['expectedresult']
                     verbose = True
-                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN' or True:
+                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN':
                         newrow['expectedresult'] = result_in_file
                     else:
                         try:
