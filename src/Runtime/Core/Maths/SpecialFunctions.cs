@@ -1172,7 +1172,7 @@ namespace Microsoft.ML.Probabilistic.Math
             return result;
         }
 
-        private const double Ulp1 = 2.2204460492503131e-16; // Ulp(1.0);
+        private static readonly double Ulp1 = Ulp(1.0);
 
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
@@ -2718,7 +2718,7 @@ rr = mpf('-0.99999824265582826');
         }
 
         internal static bool TraceConFrac;
-        private const double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
+        private static readonly double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
 
         /// <summary>
         /// Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale.
@@ -3525,7 +3525,7 @@ rr = mpf('-0.99999824265582826');
             //   log(1+exp(x))-x = log(1+exp(-x)) <= exp(-x)
             // Thus we should use the approximation when exp(-x) <= ulp(x)/2
             // ulp(1) < ulp(x)  therefore x > -log(ulp(1)/2)
-            if (x > -logEpsilon)
+            if (x > -logHalfUlpPrev1)
                 return x;
             else
                 return Log1Plus(Math.Exp(x));
@@ -3980,6 +3980,9 @@ rr = mpf('-0.99999824265582826');
         private static readonly double log0 = Math.Log(double.Epsilon) - Ln2;
         // 1-Math.Exp(logHalfUlpPrev1) == 1
         private static readonly double logHalfUlpPrev1 = Math.Log((1.0 - PreviousDouble(1.0)) / 2);
+        private static readonly double logisticGaussianQuadratureRelativeTolerance = 512 * Ulp1;
+        private static readonly double logisticGaussianDerivativeQuadratureRelativeTolerance = 1024 * 512 * Ulp1;
+        private static readonly double logisticGaussianSeriesApproximmationThreshold = 1e-8;
 
         /// <summary>
         /// Calculate sigma(m,v) = \int N(x;m,v) logistic(x) dx
@@ -4013,7 +4016,7 @@ rr = mpf('-0.99999824265582826');
             // sigma(|m|,v) <= 0.5 + |m| sigma'(0,v)
             // sigma'(0,v) <= N(0;0,v+8/pi)
             //double d0Upper = MMath.InvSqrt2PI / Math.Sqrt(variance + 8 / Math.PI);
-            if (mean * mean / (variance + 8 / Math.PI) < 1e-8)
+            if (mean * mean / (variance + 8 / Math.PI) < logisticGaussianSeriesApproximmationThreshold)
             {
                 double deriv = LogisticGaussianDerivative(0, variance);
                 return 0.5 + mean * deriv;
@@ -4043,7 +4046,8 @@ rr = mpf('-0.99999824265582826');
                 }
                 double upperBound = mean + Math.Sqrt(variance);
                 double scale = Math.Max(upperBound, 10) / sqrtv;
-                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, scale, 32, 1e-13), shift).ToDouble();
+                return new ExtendedDouble(Quadrature.AdaptiveExpSinh(f, scale, logisticGaussianQuadratureRelativeTolerance / 2) +
+                    Quadrature.AdaptiveExpSinh(x => f(-x), scale, logisticGaussianQuadratureRelativeTolerance / 2), shift).ToDouble();
             }
             else
             {
@@ -4101,7 +4105,7 @@ rr = mpf('-0.99999824265582826');
                 {
                     return Math.Exp(MMath.LogisticLn(x) + MMath.LogisticLn(-x) + Gaussian.GetLogProb(x, mean, variance) - shift);
                 }
-                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10), shift).ToDouble();
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, logisticGaussianDerivativeQuadratureRelativeTolerance), shift).ToDouble();
             }
             else
             {
@@ -4170,7 +4174,7 @@ rr = mpf('-0.99999824265582826');
                     double OneMinus2Sigma = -Math.Tanh(x / 2);
                     return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(x, mean, variance) - shift);
                 }
-                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10), shift).ToDouble();
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, logisticGaussianDerivativeQuadratureRelativeTolerance), shift).ToDouble();
             }
             else
             {
