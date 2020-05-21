@@ -65,7 +65,7 @@ def normal_cdf2(x, y, r):
         y = z
 
     # Avoid quadrature with r < 0 since it is sometimes inaccurate.
-    if r < 0 and x - y <= 0:
+    if r < 0 and x - y < 0:
         # phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
         # phi(x,y,r) = phi(x,inf,r) - phi(x,-y,-r)
         return ncdf(x) - normal_cdf2(x, -y, -r)
