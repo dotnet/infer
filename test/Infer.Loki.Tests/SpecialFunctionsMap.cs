@@ -38,6 +38,7 @@ namespace Infer.Loki.Tests
 
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDouble, NextBigFloat);
             mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDouble, PreviousBigFloat);
+            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Ulp, Ulp);
 
             mappers.MethodMapper.CreateMap
             (
@@ -80,8 +81,14 @@ namespace Infer.Loki.Tests
                 typeof(MMath).GetField("DefaultBetaEpsilon", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(DefaultBetaEpsilon)));
             mappers.MemberMapper.CreateMap(
-                typeof(MMath).GetField("Ulp1", BindingFlags.NonPublic | BindingFlags.Static),
-                typeof(SpecialFunctionsMethods).GetField(nameof(Ulp1)));
+                typeof(MMath).GetField("LogisticGaussianVarianceThreshold", BindingFlags.NonPublic | BindingFlags.Static),
+                typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianVarianceThreshold)));
+            mappers.MemberMapper.CreateMap(
+                typeof(Quadrature).GetField("AdaptiveQuadratureMaxNodes", BindingFlags.NonPublic | BindingFlags.Static),
+                typeof(SpecialFunctionsMethods).GetField(nameof(AdaptiveQuadratureMaxNodes)));
+            mappers.MemberMapper.CreateMap(
+                typeof(MMath).GetField("logisticGaussianSeriesApproximmationThreshold", BindingFlags.NonPublic | BindingFlags.Static),
+                typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianSeriesApproximmationThreshold)));
         }
     }
 }

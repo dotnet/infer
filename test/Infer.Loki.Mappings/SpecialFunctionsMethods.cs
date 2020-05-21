@@ -19,6 +19,10 @@ namespace Infer.Loki.Mappings
         public static readonly BigFloat Ln2;
         public static readonly BigFloat DefaultBetaEpsilon = BigFloatFactory.Create("1e-38");
         public static readonly BigFloat Ulp1;
+        public static readonly BigFloat LogisticGaussianVarianceThreshold = BigFloatFactory.NegativeInfinity;
+        public static readonly BigFloat LogisticGaussianSeriesApproximmationThreshold = BigFloatFactory.Create("1e-18");
+        public const int AdaptiveQuadratureMaxNodes = 1000000;
+        public static readonly BigFloat LogisticGaussianQuadratureRelativeTolerance = BigFloatFactory.Create("1e-38");
 
         static SpecialFunctionsMethods()
         {
@@ -1063,6 +1067,26 @@ namespace Infer.Loki.Mappings
             var result = BigFloatFactory.Create(x);
             result.NextBelow();
             return result;
+        }
+
+        /// <summary>
+        /// Returns the positive distance between a value and the next representable value that is larger in magnitude.
+        /// </summary>
+        /// <param name="value">Any double-precision value.</param>
+        /// <returns></returns>
+        public static BigFloat Ulp(BigFloat value)
+        {
+            if (value.IsNan())
+                return BigFloatFactory.Create(value);
+            if (value.IsInf())
+                return BigFloatFactory.Create(0);
+            using (var absValue = BigFloatFactory.Create(value))
+            {
+                absValue.Abs();
+                var result = NextBigFloat(absValue);
+                result.Sub(absValue);
+                return result;
+            }
         }
 
         #endregion
