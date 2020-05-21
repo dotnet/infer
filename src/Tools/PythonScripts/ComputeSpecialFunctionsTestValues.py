@@ -64,12 +64,13 @@ def normal_cdf2(x, y, r):
         x = y
         y = z
 
-    if r < 0 and False:
+    # Avoid quadrature with r < 0 since it is sometimes inaccurate.
+    if r < 0 and x - y <= 0:
         # phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
         # phi(x,y,r) = phi(x,inf,r) - phi(x,-y,-r)
         return ncdf(x) - normal_cdf2(x, -y, -r)
 
-    if x > 0 and x + y > 0 and False:
+    if x > 0 and -x + y <= 0:
         return ncdf(y) - normal_cdf2(-x,y,-r)
 
     if x + y > 0:
@@ -85,18 +86,20 @@ def normal_cdf2(x, y, r):
         return 1 / (2 * pi * sqrt(omt2)) * exp(-(x * x + y * y - 2 * t * x * y) / (2 * omt2))
 
     omr2 = (1+r)*(1-r)
+    ymrx = y - r*x
     def f2(t):
-        return npdf(t - x) * normal_cdf((y - r*(x-t))/omr2)
+        return npdf(t - x) * normal_cdf((ymrx + r*t)/omr2)
 
     # This integral excludes normal_cdf2(x,y,-1)
     # which will be zero when x+y <= 0
     result, err = safe_quad(f, [-1, r])
-    #result, err = safe_quad(f2, [0, inf])  # this method has no offset
     
     if mpf(10)**output_dps * abs(err) > abs(result):
-        print(f"Suspiciously big error when evaluating an integral for normal_cdf2({nstr(x)}, {nstr(y)}, {nstr(r)}).")
-        print(f"Integral: {nstr(result)}")
-        print(f"Integral error estimate: {nstr(err)}")
+        result, err = safe_quad(f2, [0, inf])
+        if mpf(10)**output_dps * abs(err) > abs(result):
+            print(f"Suspiciously big error when evaluating an integral for normal_cdf2({nstr(x)}, {nstr(y)}, {nstr(r)}).")
+            print(f"Integral: {nstr(result)}")
+            print(f"Integral error estimate: {nstr(err)}")
     return result
 
 def safe_quad(f, points):
@@ -121,7 +124,11 @@ def normal_cdf2_ln(x, y, r):
     return ln(normal_cdf2(x, y, r))
 
 def normal_cdf2_ratio_ln(x, y, r, sqrtomr2):
-    omr2 = 1-r*r
+    if sqrtomr2 < 0.618:
+        omr2 = sqrtomr2*sqrtomr2
+        r = sign(r)*sqrt(1 - omr2)
+    else:
+        omr2 = 1-r*r
     return normal_cdf2_ln(x, y, r) + (x*x+y*y-2*r*x*y)/2/omr2 + log(2*pi)
 
 def logistic_gaussian(m, v):
@@ -317,7 +324,7 @@ pair_info = {
     'NormalCdfLn2.csv': normal_cdf2_ln,
     'NormalCdfLogit.csv': lambda x: log(ncdf(x)) - log(ncdf(-x)),
     'NormalCdfMomentRatio.csv': normal_cdf_moment_ratio,
-    #'NormalCdfRatioLn2.csv': normal_cdf2_ratio_ln,
+    'NormalCdfRatioLn2.csv': normal_cdf2_ratio_ln,
     'Tetragamma.csv': lambda x: polygamma(2, x),
     'Trigamma.csv': lambda x: polygamma(1, x),
     'ulp.csv': None
@@ -332,7 +339,7 @@ def float_str_python_to_csharp(s):
 dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', '..', 'test', 'Tests', 'data', 'SpecialFunctionsValues')
 with os.scandir(dir) as it:
     for entry in it:
-        if entry.name.endswith('.csv') and entry.is_file() and entry.name == 'logisticGaussian.csv':
+        if entry.name.endswith('.csv') and entry.is_file():
             print(f'Processing {entry.name}...')
             if entry.name not in pair_info.keys() or pair_info[entry.name] == None:
                 print("Don't know how to process. Skipping.")
@@ -344,13 +351,18 @@ with os.scandir(dir) as it:
                 arg_count = len(fieldnames) - 1
                 newrows = []
                 for row in reader:
+                    if entry.name == 'NormalCdfRatioLn2.csv':
+                        sqrtomr2 = mpf(float_str_csharp_to_python(row['arg3']))
+                        r = mpf(float_str_csharp_to_python(row['arg2']))
+                        if sqrtomr2 < 0.618:
+                            row['arg2'] = nstr(sign(r)*sqrt(1-sqrtomr2*sqrtomr2), output_dps)
                     newrow = dict(row)
                     args = []
                     for i in range(arg_count):
                         args.append(mpf(float_str_csharp_to_python(row[f'arg{i}'])))
                     result_in_file = row['expectedresult']
                     verbose = True
-                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN' or len(newrows) != 127:
+                    if result_in_file == 'Infinity' or result_in_file == '-Infinity' or result_in_file == 'NaN':
                         newrow['expectedresult'] = result_in_file
                     else:
                         try:
