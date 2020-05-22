@@ -18,9 +18,11 @@ steps:
     useSameBranch: false
     waitForQueuedBuildsToFinish: false
     storeInEnvironmentVariable: false
-    authenticationMethod: 'Personal Access Token'
+    authenticationMethod: 'OAuth Token'
     enableBuildInQueueCondition: false
     dependentOnSuccessfulBuildCondition: false
     dependentOnFailedBuildCondition: false
     checkbuildsoncurrentbranch: false
     failTaskIfConditionsAreNotFulfilled: false
+  env:
+    system_accesstoken: $(System.AccessToken)
