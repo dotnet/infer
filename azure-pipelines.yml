@@ -8,6 +8,7 @@ pool:
 
 steps:
 - task: TriggerBuild@3
+  displayName: 'Trigger Infer.NET Update build'
   inputs:
     definitionIsInCurrentTeamProject: true
     buildDefinition: '400'
@@ -26,3 +27,5 @@ steps:
     failTaskIfConditionsAreNotFulfilled: false
   env:
     system_accesstoken: $(System.AccessToken)
+
+- template: cleanup_agent.yaml
