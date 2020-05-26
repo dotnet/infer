@@ -750,7 +750,7 @@ namespace Infer.Loki.Mappings
                     tmp1.Neg();
                     tmp1.Add(0.5);
                     tmp1.Floor();
-                    var j = tmp1.ToInt64();
+                    var j = (int)tmp1.ToDouble(); // .ToInt64() is buggy
                     if (j >= c_normcdf_table.Length)
                         j = c_normcdf_table.Length - 1;
                     var result = BigFloatFactory.Create(c_normcdf_table[j]);
