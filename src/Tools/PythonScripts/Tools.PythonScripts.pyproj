@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CheckMathLibraries.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ComputeSpecialFunctionsTestValues.py" />
     <Compile Include="GenerateSeries.py" />
   </ItemGroup>
