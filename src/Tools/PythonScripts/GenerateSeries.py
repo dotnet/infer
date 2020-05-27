@@ -358,4 +358,12 @@ def big_float_main():
     tetragamma_asymptotic_coefficients = [tetragamma_asymptotic_coefficient(k) for k in range(0, 32)]
     print_big_float_array(tetragamma_asymptotic_coefficients, 50, 500)
 
-if __name__ == '__main__': main()
+    print_heading_comment(log_1_minus_indent, "11: log(1 - x)")
+    log_1_minus_coefficients = [log_1_minus_coefficient(k) for k in range(0, 50)]
+    print_big_float_array(log_1_minus_coefficients, 50, 500)
+
+    print_heading_comment(normcdfln_asymptotic_indent, "16: normcdfln asymptotic")
+    normcdfln_asymptotic_coefficients = [normcdfln_asymptotic_coefficient(k) for k in range(0, 19)]
+    print_big_float_array(normcdfln_asymptotic_coefficients, 50, 500)
+
+if __name__ == '__main__': big_float_main()
