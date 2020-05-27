@@ -5,8 +5,8 @@ from __future__ import division
 from sympy import zeta, evalf, bernoulli, symbols, Poly, series, factorial, factorial2, S, log, exp, gamma, digamma, sqrt
 
 # configuration
-decimal_precision = 30
-evalf_inner_precision = 500
+default_decimal_precision = 30
+default_evalf_inner_precision = 500
 
 gamma_at_2_series_length = 26
 gamma_at_2_variable_name = "dx"
@@ -80,12 +80,16 @@ reciprocal_factorial_minus_1_series_length = 17
 reciprocal_factorial_minus_1_variable_name = "x"
 reciprocal_factorial_minus_1_indent = "                "
 
+gamma_minus_reciprocal_series_length = 7
+gamma_minus_reciprocal_variable_name = "x"
+gamma_minus_reciprocal_indent = "                    "
+
 def print_heading_comment(indent, header):
     print(f"{indent}// Truncated series {header}")
     print(f"{indent}// Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py")
 
-def format_real_coefficient(coefficient):
-    return str(coefficient)
+def format_real_coefficient(coefficient, decimal_precision = default_decimal_precision, evalf_inner_precision = default_evalf_inner_precision):
+    return str(coefficient.evalf(decimal_precision, maxn=evalf_inner_precision))
 
 def print_polynomial_with_real_coefficients(varname, coefficients, indent):
     if len(coefficients) <= 1:
@@ -110,6 +114,19 @@ def print_polynomial_with_real_coefficients(varname, coefficients, indent):
     for i in range(0, parentheses):
         print(")", end='')
     print()
+
+def print_big_float_array(coefficients, decimal_precision, evalf_inner_precision):
+    print("new BigFloat[]")
+    print("{")
+    last_non_zero_idx = len(coefficients) - 1
+    while coefficients[last_non_zero_idx] == 0.0:
+        last_non_zero_idx = last_non_zero_idx - 1
+    idx = 0
+    while idx < last_non_zero_idx:
+        print(f'    BigFloatFactory.Create("{format_real_coefficient(coefficients[idx], decimal_precision, evalf_inner_precision)}"),')
+        idx = idx + 1
+    print(f'    BigFloatFactory.Create("{format_real_coefficient(coefficients[last_non_zero_idx], decimal_precision, evalf_inner_precision)}")')
+    print("};")
 
 def format_rational_coefficient(coefficient):
     return str(coefficient).replace("/", ".0 / ") + ".0"
@@ -143,38 +160,38 @@ def print_polynomial_with_rational_coefficients(varname, coefficients, indent):
 
 def gamma_at_2_coefficient(k):
     if k == 0:
-        return 0.0
-    return ((-1)**(k + 1)*(zeta(k + 1) - 1)/(k + 1)).evalf(decimal_precision, maxn=evalf_inner_precision)
+        return S(0)
+    return ((-1)**(k + 1)*(zeta(k + 1) - 1)/(k + 1))
 
 def digamma_at_1_coefficient(k):
     if k == 0:
-        return digamma(1).evalf(decimal_precision, maxn=evalf_inner_precision)
-    return ((-1)**(k + 1) * zeta(k + 1)).evalf(decimal_precision, maxn=evalf_inner_precision)
+        return digamma(1)
+    return ((-1)**(k + 1) * zeta(k + 1))
 
 def digamma_at_2_coefficient(k):
     if k == 0:
-        return 0.0
-    return ((-1)**(k + 1)*(zeta(k + 1) - 1)).evalf(decimal_precision, maxn=evalf_inner_precision)
+        return S(0)
+    return ((-1)**(k + 1)*(zeta(k + 1) - 1))
 
 def digamma_asymptotic_coefficient(k):
     if k == 0:
-        return 0.0
+        return S(0)
     return bernoulli(2 * k) / (2 * k)
 
 def trigamma_at_1_coefficient(k):
-    return ((-1)**k * (k + 1) * zeta(k + 2)).evalf(decimal_precision, maxn=evalf_inner_precision)
+    return ((-1)**k * (k + 1) * zeta(k + 2))
 
 def trigamma_asymptotic_coefficient(k):
     if k == 0:
-        return 0.0
+        return S(0)
     return bernoulli(2 * k)
 
 def tetragamma_at_1_coefficient(k):
-    return ((-1)**(k + 1) * (k + 1) * (k + 2) * zeta(k + 3)).evalf(decimal_precision, maxn=evalf_inner_precision)
+    return ((-1)**(k + 1) * (k + 1) * (k + 2) * zeta(k + 3))
 
 def tetragamma_asymptotic_coefficient(k):
     if k == 0:
-        return 0.0
+        return S(0)
     return -(2 * k - 1) * bernoulli(2 * k - 2)
 
 def gammaln_asymptotic_coefficient(k):
@@ -182,7 +199,7 @@ def gammaln_asymptotic_coefficient(k):
 
 def log_1_plus_coefficient(k):
     if k == S(0):
-        return 0
+        return S(0)
     if k % 2 == 0:
         return S(-1) / k
     return S(1) / k
@@ -218,7 +235,7 @@ def get_log_exp_minus_1_ratio_coefficients(count):
 # Can be obtained by composing the Taylor expansion for log(1 + x) and asymtotic expansion for erfc
 def normcdfln_asymptotic_coefficient(m):
     if m == 0:
-        return 0
+        return S(0)
     def next(v):
         idx = 1
         while idx < len(v) and v[idx] == 0:
@@ -253,7 +270,11 @@ def get_one_minus_sqrt_one_minus_coefficients(count):
 
 def get_reciprocal_factorial_minus_1_coefficients(count):
     x = symbols('x')
-    return list(reversed(Poly((1 / gamma(x + 1) - 1).series(x, 0, count).removeO().evalf(decimal_precision, maxn=evalf_inner_precision), x).all_coeffs()))
+    return list(reversed(Poly((1 / gamma(x + 1) - 1).series(x, 0, count).removeO(), x).all_coeffs()))
+
+def get_gamma_minus_reciprocal_coefficients(count):
+    x = symbols('x')
+    return list(reversed(Poly((gamma(x) - 1 / x).series(x, 0, count).removeO(), x).all_coeffs()))
 
 def main():
     print_heading_comment(gamma_at_2_indent, "1: Gamma at 2")
@@ -327,5 +348,54 @@ def main():
     print_heading_comment(reciprocal_factorial_minus_1_indent, "18: Reciprocal factorial minus 1")
     reciprocal_factorial_minus_1_coefficients = get_reciprocal_factorial_minus_1_coefficients(reciprocal_factorial_minus_1_series_length)
     print_polynomial_with_real_coefficients(reciprocal_factorial_minus_1_variable_name, reciprocal_factorial_minus_1_coefficients, reciprocal_factorial_minus_1_indent)
+    
+    print_heading_comment(gamma_minus_reciprocal_indent, "19: Gamma(x) - 1/x")
+    gamma_minus_reciprocal_coefficients = get_gamma_minus_reciprocal_coefficients(gamma_minus_reciprocal_series_length)
+    print_polynomial_with_real_coefficients(gamma_minus_reciprocal_variable_name, gamma_minus_reciprocal_coefficients, gamma_minus_reciprocal_indent)
 
-if __name__ == '__main__': main()
+def big_float_main():
+    print_heading_comment(trigamma_at_1_indent, "5: Trigamma at 1")
+    trigamma_at_1_coefficients = [trigamma_at_1_coefficient(k) for k in range(0, 10)]
+    print_big_float_array(trigamma_at_1_coefficients, 50, 500)
+
+    print_heading_comment(trigamma_asymptotic_indent, "6: Trigamma asymptotic")
+    trigamma_asymptotic_coefficients = [trigamma_asymptotic_coefficient(k) for k in range(0, 32)]
+    print_big_float_array(trigamma_asymptotic_coefficients, 50, 500)
+
+    print_heading_comment(tetragamma_at_1_indent, "7: Tetragamma at 1")
+    tetragamma_at_1_coefficients = [tetragamma_at_1_coefficient(k) for k in range(0, 11)]
+    print_big_float_array(tetragamma_at_1_coefficients, 50, 500)
+
+    print_heading_comment(tetragamma_asymptotic_indent, "8: Tetragamma asymptotic")
+    tetragamma_asymptotic_coefficients = [tetragamma_asymptotic_coefficient(k) for k in range(0, 32)]
+    print_big_float_array(tetragamma_asymptotic_coefficients, 50, 500)
+
+    print_heading_comment(gammaln_asymptotic_indent, "9: GammaLn asymptotic")
+    gammaln_asymptotic_coefficients = [gammaln_asymptotic_coefficient(k) for k in range(0, 31)]
+    print_big_float_array(gammaln_asymptotic_coefficients, 50, 500)
+
+    print_heading_comment(log_1_minus_indent, "11: log(1 - x)")
+    log_1_minus_coefficients = [log_1_minus_coefficient(k) for k in range(0, 50)]
+    print_big_float_array(log_1_minus_coefficients, 50, 500)
+
+    print_heading_comment(x_minus_log_1_plus_indent, "12: x - log(1 + x)")
+    x_minus_log_1_plus_coefficients = [x_minus_log_1_plus_coefficient(k) for k in range(0, 26)]
+    print_big_float_array(x_minus_log_1_plus_coefficients, 50, 500)
+
+    print_heading_comment(exp_minus_1_ratio_minus_1_ratio_minus_half_indent, "14: ((exp(x) - 1) / x - 1) / x - 0.5")
+    exp_minus_1_ratio_minus_1_ratio_minus_half_coefficients = [exp_minus_1_ratio_minus_1_ratio_minus_half_coefficient(k) for k in range(0, 19)]
+    print_big_float_array(exp_minus_1_ratio_minus_1_ratio_minus_half_coefficients, 50, 500)
+
+    print_heading_comment(normcdfln_asymptotic_indent, "16: normcdfln asymptotic")
+    normcdfln_asymptotic_coefficients = [normcdfln_asymptotic_coefficient(k) for k in range(0, 19)]
+    print_big_float_array(normcdfln_asymptotic_coefficients, 50, 500)
+    
+    print_heading_comment(reciprocal_factorial_minus_1_indent, "18: Reciprocal factorial minus 1")
+    reciprocal_factorial_minus_1_coefficients = get_reciprocal_factorial_minus_1_coefficients(22)
+    print_big_float_array(reciprocal_factorial_minus_1_coefficients, 50, 500)
+    
+    print_heading_comment(gamma_minus_reciprocal_indent, "19: Gamma(x) - 1/x")
+    gamma_minus_reciprocal_coefficients = get_gamma_minus_reciprocal_coefficients(30)
+    print_big_float_array(gamma_minus_reciprocal_coefficients, 50, 500)
+
+if __name__ == '__main__': big_float_main()

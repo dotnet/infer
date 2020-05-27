@@ -65,7 +65,7 @@ def normal_cdf2(x, y, r):
         y = z
 
     # Avoid quadrature with r < 0 since it is sometimes inaccurate.
-    if r < 0 and x - y <= 0:
+    if r < 0 and x - y < 0:
         # phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
         # phi(x,y,r) = phi(x,inf,r) - phi(x,-y,-r)
         return ncdf(x) - normal_cdf2(x, -y, -r)
@@ -196,7 +196,7 @@ def logistic_gaussian_deriv(m, v):
     return result
 
 def logistic_gaussian_deriv2(m, v):
-    if m == inf or m == -inf or v == inf:
+    if m == inf or m == -inf or v == inf or m == mpf(0):
         return mpf(0)
     # The integration routine below is obtained by substituting x = atanh(t)
     # into the definition of logistic_gaussian''
