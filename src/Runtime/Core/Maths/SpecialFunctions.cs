@@ -156,7 +156,7 @@ namespace Microsoft.ML.Probabilistic.Math
         private static double BGRat(double x, double a, double b, double epsilon)
         {
             List<double> p = new List<double>();
-            List<int> twoNPlus1Factorial = new List<int>();
+            List<double> twoNPlus1Factorial = new List<double>();
             p.Add(1.0);
             twoNPlus1Factorial.Add(1);
             double T = a + 0.5 * (b - 1);
@@ -180,6 +180,8 @@ namespace Microsoft.ML.Probabilistic.Math
                 bPlus2n += 2;
                 bPlus2nPlus1 += 2;
                 lnXTerm *= lnXOver2Sq;
+                // This can overflow, which will result in infinity. This is OK, because
+                // it will mean only that some of the terms added to currP will be zero.
                 twoNPlus1Factorial.Add(twoNPlus1Factorial.Last() * (2 * n) * (2 * n + 1));
 
                 double currP = 0.0;
@@ -499,6 +501,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return mult * result;
         }
 
+        private const double DefaultBetaEpsilon = 1e-15;
+
         /// <summary>
         /// Computes the regularized incomplete beta function: int_0^x t^(a-1) (1-t)^(b-1) dt / Beta(a,b)
         /// </summary>
@@ -508,7 +512,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="epsilon">A tolerance for terminating the series calculation.</param>
         /// <returns>The incomplete beta function at (<paramref name="x"/>, <paramref name="a"/>, <paramref name="b"/>).</returns>
         /// <remarks>The beta function is obtained by setting x to 1.</remarks>
-        public static double Beta(double x, double a, double b, double epsilon = 1e-15)
+        public static double Beta(double x, double a, double b, double epsilon = DefaultBetaEpsilon)
         {
             double result = 0.0;
             bool swap = false;
@@ -1168,6 +1172,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return result;
         }
 
+        private static readonly double Ulp1 = Ulp(1.0);
+
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
         /// </summary>
@@ -1209,7 +1215,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 return GammaAsympt(a, x, true);
             else if (x > 1.5)
                 return GammaUpperConFrac(a, x);
-            else if (a <= 1e-16)
+            else if (a <= Ulp1)
                 // Gamma(a) = 1/a for a <= 1e-16
                 return a * GammaUpperSeries(a, x, false);
             else
@@ -1430,7 +1436,7 @@ namespace Microsoft.ML.Probabilistic.Math
             }
             else
             {
-                if (Math.Abs(alogx) <= 1e-16) offset = GammaSeries(a) - logx;
+                if (Math.Abs(alogx) <= Ulp1) offset = GammaSeries(a) - logx;
                 else offset = GammaSeries(a) - xaMinus1 / a;
                 scale = 1 + xaMinus1;
                 term = x;
@@ -1465,14 +1471,17 @@ var('x');
 f = gamma(x)-1/x
 [c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
                  */
-                return Digamma1
-                    + x * (0.98905599532797255539539565150
-                    + x * (-0.90747907608088628901656016736
-                    + x * (0.98172808683440018733638029402
-                    + x * (-0.98199506890314520210470141379
-                    + x * (0.99314911462127619315386725333
-                    + x * (-0.99600176044243153397007841966
-                    ))))));
+                return
+                    // Truncated series 19: Gamma(x) - 1/x
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    -0.577215664901532860606512090082 +
+                    x * (0.989055995327972555395395651501 +
+                    x * (-0.907479076080886289016560167356 +
+                    x * (0.981728086834400187336380294022 +
+                    x * (-0.981995068903145202104701413791 +
+                    x * (0.993149114621276193153867253329 +
+                    x * -0.996001760442431533970078419665)))))
+                    ;
         }
 
         /// <summary>
@@ -2181,7 +2190,7 @@ f = gamma(x)-1/x
             const double smallestNormalized = 1e-308;
             const double smallestNormalizedOverEpsilon = smallestNormalized / double.Epsilon;
             // the number of iterations required may grow with n, so we need to explicitly test for convergence.
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 double numerNew = numer + a * numerPrev;
                 double denomNew = denom + a * denomPrev;
@@ -2607,7 +2616,8 @@ f = gamma(x)-1/x
             // Second term of the Taylor series
             sum += Qderiv * rPowerN;
             double sumOld = sum;
-            for (int n = 2; n <= 100; n++)
+            int maxIterations = 1000;
+            for (int n = 2; n <= maxIterations; n++)
             {
                 //Console.WriteLine($"n = {n - 1} sum = {sum:g17}");
                 double dlogphiOverFactorial;
@@ -2623,7 +2633,7 @@ f = gamma(x)-1/x
                 Qderivs.Add(QderivOverFactorial);
                 rPowerN *= r;
                 sum += QderivOverFactorial * rPowerN;
-                if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= 100)
+                if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= maxIterations)
                     throw new Exception($"NormalCdfRatioTaylor not converging for x={x:g17}, y={y:g17}, r={r:g17}");
                 if (AreEqual(sum, sumOld)) break;
                 sumOld = sum;
@@ -2708,6 +2718,7 @@ rr = mpf('-0.99999824265582826');
         }
 
         internal static bool TraceConFrac;
+        private static readonly double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
 
         /// <summary>
         /// Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale.
@@ -2921,7 +2932,7 @@ rr = mpf('-0.99999824265582826');
                 b /= x;
             }
             double bIncr = sqrtomr2 / x;
-            const int iterationCount = 1000;
+            const int iterationCount = 10000;
             for (int i = 1; i <= iterationCount; i++)
             {
                 double numerNew, denomNew;
@@ -3013,7 +3024,7 @@ rr = mpf('-0.99999824265582826');
                         Trace.WriteLine($"iter {i}: result={result:g17} c={c:g17} cOdd={cOdd:g17} numer={numer:g17} numer2={numer2:g17} denom={denom:g17} numerPrev={numerPrev:g17}");
                     if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= iterationCount - 1)
                         throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:g17} y={y:g17} r={r:g17} sqrtomr2={sqrtomr2:g17} scale={scale:g17}");
-                    if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < 1e-13)
+                    if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < NormalCdfRatioConfracTolerance)
                         break;
                     resultPrev = result;
                 }
@@ -3514,7 +3525,7 @@ rr = mpf('-0.99999824265582826');
             //   log(1+exp(x))-x = log(1+exp(-x)) <= exp(-x)
             // Thus we should use the approximation when exp(-x) <= ulp(x)/2
             // ulp(1) < ulp(x)  therefore x > -log(ulp(1)/2)
-            if (x > -logEpsilon)
+            if (x > -logHalfUlpPrev1)
                 return x;
             else
                 return Log1Plus(Math.Exp(x));
@@ -3965,10 +3976,13 @@ rr = mpf('-0.99999824265582826');
             vf = Ex2 - mf * mf;
         }
 
-        // Math.Exp(-745.14) == 0
-        private const double log0 = -745.14;
-        // 1-Math.Exp(-38) == 1
-        private const double logEpsilon = -38;
+        // Math.Exp(log0) == 0
+        private static readonly double log0 = Math.Log(double.Epsilon) - Ln2;
+        // 1-Math.Exp(logHalfUlpPrev1) == 1
+        private static readonly double logHalfUlpPrev1 = Math.Log((1.0 - PreviousDouble(1.0)) / 2);
+        private static readonly double logisticGaussianQuadratureRelativeTolerance = 512 * Ulp1;
+        private static readonly double logisticGaussianDerivativeQuadratureRelativeTolerance = 1024 * 512 * Ulp1;
+        private static readonly double logisticGaussianSeriesApproximmationThreshold = 1e-8;
 
         /// <summary>
         /// Calculate sigma(m,v) = \int N(x;m,v) logistic(x) dx
@@ -3990,19 +4004,19 @@ rr = mpf('-0.99999824265582826');
             // use the upper bound exp(m+v/2) to prune cases that must be zero or one
             if (mean + halfVariance < log0)
                 return 0.0;
-            if (-mean + halfVariance < logEpsilon)
+            if (-mean + halfVariance < logHalfUlpPrev1)
                 return 1.0;
 
             // use the upper bound 0.5 exp(-0.5 m^2/v) to prune cases that must be zero or one
             double q = -0.5 * mean * mean / variance - MMath.Ln2;
             if (mean <= 0 && mean + variance >= 0 && q < log0)
                 return 0.0;
-            if (mean >= 0 && variance - mean >= 0 && q < logEpsilon)
+            if (mean >= 0 && variance - mean >= 0 && q < logHalfUlpPrev1)
                 return 1.0;
             // sigma(|m|,v) <= 0.5 + |m| sigma'(0,v)
             // sigma'(0,v) <= N(0;0,v+8/pi)
             //double d0Upper = MMath.InvSqrt2PI / Math.Sqrt(variance + 8 / Math.PI);
-            if (mean * mean / (variance + 8 / Math.PI) < 1e-8)
+            if (mean * mean / (variance + 8 / Math.PI) < logisticGaussianSeriesApproximmationThreshold)
             {
                 double deriv = LogisticGaussianDerivative(0, variance);
                 return 0.5 + mean * deriv;
@@ -4010,14 +4024,14 @@ rr = mpf('-0.99999824265582826');
 
             // Handle tail cases using the following exact formulas:
             // sigma(m,v) = 1 - exp(-m+v/2) + exp(-2m+2v) - exp(-3m+9v/2) sigma(m-3v,v)
-            if (2 * (variance - mean) < logEpsilon)
+            if (2 * (variance - mean) < logHalfUlpPrev1)
                 return 1.0 - Math.Exp(halfVariance - mean);
-            if (-3 * mean + 9 * halfVariance < logEpsilon)
+            if (-3 * mean + 9 * halfVariance < logHalfUlpPrev1)
                 return 1.0 - Math.Exp(halfVariance - mean) + Math.Exp(2 * (variance - mean));
             // sigma(m,v) = exp(m+v/2) - exp(2m+2v) + exp(3m + 9v/2) (1 - sigma(m+3v,v))
-            if (mean + 1.5 * variance < logEpsilon)
+            if (mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance);
-            if (2 * mean + 4 * variance < logEpsilon)
+            if (2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance) * (1 - Math.Exp(mean + 1.5 * variance));
 
             if (variance > LogisticGaussianVarianceThreshold)
@@ -4032,7 +4046,8 @@ rr = mpf('-0.99999824265582826');
                 }
                 double upperBound = mean + Math.Sqrt(variance);
                 double scale = Math.Max(upperBound, 10) / sqrtv;
-                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, scale, 32, 1e-13), shift).ToDouble();
+                return new ExtendedDouble(Quadrature.AdaptiveExpSinh(f, scale, logisticGaussianQuadratureRelativeTolerance / 2) +
+                    Quadrature.AdaptiveExpSinh(x => f(-x), scale, logisticGaussianQuadratureRelativeTolerance / 2), shift).ToDouble();
             }
             else
             {
@@ -4078,9 +4093,9 @@ rr = mpf('-0.99999824265582826');
 
             // Handle the tail cases using the following exact formula:
             // sigma'(m,v) = exp(-m+v/2) -2 exp(-2m+2v) +3 exp(-3m+9v/2) sigma(m-3v,v) - exp(-3m+9v/2) sigma'(m-3v,v)
-            if (-mean + 1.5 * variance < logEpsilon)
+            if (-mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(halfVariance - mean);
-            if (-2 * mean + 4 * variance < logEpsilon)
+            if (-2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(halfVariance - mean) - 2 * Math.Exp(2 * (variance - mean));
 
             if (variance > LogisticGaussianVarianceThreshold)
@@ -4090,7 +4105,7 @@ rr = mpf('-0.99999824265582826');
                 {
                     return Math.Exp(MMath.LogisticLn(x) + MMath.LogisticLn(-x) + Gaussian.GetLogProb(x, mean, variance) - shift);
                 }
-                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10), shift).ToDouble();
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, logisticGaussianDerivativeQuadratureRelativeTolerance), shift).ToDouble();
             }
             else
             {
@@ -4139,14 +4154,14 @@ rr = mpf('-0.99999824265582826');
 
             // Handle the tail cases using the following exact formulas:
             // sigma''(m,v) = -exp(-m+v/2) +4 exp(-2m+2v) -9 exp(-3m+9v/2) sigma(m-3v,v) +6 exp(-3m+9v/2) sigma'(m-3v,v) - exp(-3m+9v/2) sigma''(m-3v,v)
-            if (-mean + 1.5 * variance < logEpsilon)
+            if (-mean + 1.5 * variance < logHalfUlpPrev1)
                 return -Math.Exp(halfVariance - mean);
-            if (-2 * mean + 4 * variance < logEpsilon)
+            if (-2 * mean + 4 * variance < logHalfUlpPrev1)
                 return -Math.Exp(halfVariance - mean) + 4 * Math.Exp(2 * (variance - mean));
             // sigma''(m,v) = exp(m+v/2) -4 exp(2m+2v) +9 exp(3m + 9v/2) (1 - sigma(m+3v,v)) - 6 exp(3m+9v/2) sigma'(m+3v,v) - exp(3m + 9v/2) sigma''(m+3v,v)
-            if (mean + 1.5 * variance < logEpsilon)
+            if (mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance);
-            if (2 * mean + 4 * variance < logEpsilon)
+            if (2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance) * (1 - 4 * Math.Exp(mean + 1.5 * variance));
 
             if (variance > LogisticGaussianVarianceThreshold)
@@ -4159,7 +4174,7 @@ rr = mpf('-0.99999824265582826');
                     double OneMinus2Sigma = -Math.Tanh(x / 2);
                     return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(x, mean, variance) - shift);
                 }
-                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10), shift).ToDouble();
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, logisticGaussianDerivativeQuadratureRelativeTolerance), shift).ToDouble();
             }
             else
             {
