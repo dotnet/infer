@@ -76,7 +76,7 @@ And there you have it - a fully Bayesian multivariate Gaussian mixture model.
 
 ### Breaking symmetry 
 
-We can now attach some data and run inference. For example data, we use a function which generates data from a known mixture of Gaussians model (see the tutorial file for the code of this function). We then use an inference engine to infer posterior distributions over the weights, means and precisions.
+We can now attach some data and run inference.  The [GenerateData](https://github.com/dotnet/infer/blob/master/src/Tutorials/MixtureOfGaussians.cs#L70) function lets us generate data from a known mixture of Gaussians model.  We then use an inference engine to infer posterior distributions over the weights, means and precisions.  (Generating data from a known model is a good way to check that inference is working properly.)
 
 ```csharp
 // Attach some generated data  
@@ -103,7 +103,7 @@ Dist over precs=
                  -0.002167 0.006726
 ```
 
-This is not helpful - the two mixture components are identical! The reason for this is that the model is _symmetrical_ \- the mixture components are all defined the same way and the inference updates never distinguish them. 
+This is not helpful - the two mixture components are identical! The reason is that the model is _symmetrical_ \- the mixture components are all defined the same way and the inference updates never distinguish them. 
 
 We can break symmetry in this case by randomly initialising the messages used in message passing. Infer.NET does not do this automatically, because it normally guarantees to give the same result each time you perform inference - introducing random initialisation would break this contract. If you want to break symmetry, you must do it explicitly. In this example, we can achieve this using **InitialiseTo()** to randomise the initial message for **z**, as follows:
 
