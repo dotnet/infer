@@ -791,15 +791,9 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         [Fact]
         public void NormalCdfIntegralTest()
         {
-            double sqrtomr2 = 0.817880416082724044547388352452631856079457366800004151664125953519049673808376291470533145141236089924006896061006277409614237094627499958581030715374379576478204968748786874650796450332240045653919846557755590765736997127532958984375e-78;
-            double rn = -System.Math.Sqrt((1 - sqrtomr2) * (1 + sqrtomr2));
-            Assert.True(0 <= MMath.NormalCdfIntegral(190187183095334850882507750944849586799124505055478568794871547478488387682304.0, -190187183095334850882507750944849586799124505055478568794871547478488387682304.0, rn, sqrtomr2).Mantissa);
-            sqrtomr2 = 0.72893668811495072384656764856902984306419313043079455383121967315673828125e-9;
-            rn = -System.Math.Sqrt((1 - sqrtomr2) * (1 + sqrtomr2));
-            Assert.True(0 <= MMath.NormalCdfIntegral(213393529.2046706974506378173828125, -213393529.2046706974506378173828125, rn, sqrtomr2).Mantissa);
-            sqrtomr2 = 0.62292398855983019004972723654291189010479001808562316000461578369140625e-8;
-            rn = -System.Math.Sqrt((1 - sqrtomr2) * (1 + sqrtomr2));
-            Assert.True(0 < MMath.NormalCdfIntegral(-0.421468532207607216033551367218024097383022308349609375, 0.42146843802130329326161017888807691633701324462890625, rn, sqrtomr2).Mantissa);
+            Assert.True(0 <= NormalCdfIntegral(190187183095334850882507750944849586799124505055478568794871547478488387682304.0, -190187183095334850882507750944849586799124505055478568794871547478488387682304.0, -1, 0.817880416082724044547388352452631856079457366800004151664125953519049673808376291470533145141236089924006896061006277409614237094627499958581030715374379576478204968748786874650796450332240045653919846557755590765736997127532958984375e-78).Mantissa);
+            Assert.True(0 <= NormalCdfIntegral(213393529.2046706974506378173828125, -213393529.2046706974506378173828125, -1, 0.72893668811495072384656764856902984306419313043079455383121967315673828125e-9).Mantissa);
+            Assert.True(0 < NormalCdfIntegral(-0.421468532207607216033551367218024097383022308349609375, 0.42146843802130329326161017888807691633701324462890625, -0.99999999999999989, 0.62292398855983019004972723654291189010479001808562316000461578369140625e-8).Mantissa);
  
             Parallel.ForEach (OperatorTests.Doubles(), x =>
             {
@@ -811,6 +805,24 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     }
                 }
             });
+        }
+
+        // Same as MMath.NormalCdfIntegral but avoids inconsistent values of r and sqrtomr2 when using arbitrary precision.
+        public static ExtendedDouble NormalCdfIntegral(double x, double y, double r, double sqrtomr2)
+        {
+            if (sqrtomr2 < 0.618)
+            {
+                // In this regime, it is more accurate to compute r from sqrtomr2.
+                // See NormalCdfRatioLn
+                r = System.Math.Sign(r) * System.Math.Sqrt((1 - sqrtomr2) * (1 + sqrtomr2));
+            }
+            else
+            {
+                // In this regime, it is more accurate to compute sqrtomr2 from r.
+                double omr2 = 1 - r * r;
+                sqrtomr2 = System.Math.Sqrt(omr2);
+            }
+            return MMath.NormalCdfIntegral(x, y, r, sqrtomr2);
         }
 
         internal void NormalCdfIntegralTest2()
