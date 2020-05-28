@@ -753,38 +753,37 @@ namespace Microsoft.ML.Probabilistic.Math
                 }
                 // 1.5 <= x <= 2.5
                 // Use Taylor series at x=2
-                // Reference: https://dlmf.nist.gov/5.7#E3
                 double dx = x - 2;
                 double sum =
-                    // Truncated series 1: Gamma at 2
+                    // Truncated series 1: Gammaln at 2
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
-                    dx * (0.322467033424113218236207583323 +
-                    dx * (-0.0673523010531980951332460538371 +
-                    dx * (0.0205808084277845478790009241353 +
-                    dx * (-0.00738555102867398526627309729141 +
-                    dx * (0.00289051033074152328575298829849 +
-                    dx * (-0.00119275391170326097711393569283 +
-                    dx * (0.000509669524743042422335654813582 +
-                    dx * (-0.000223154758453579379761418803601 +
-                    dx * (0.0000994575127818085337145958900319 +
-                    dx * (-0.0000449262367381331417002075024064 +
-                    dx * (0.0000205072127756706915531665039783 +
-                    dx * (-0.00000943948827526839590398742510441 +
-                    dx * (0.00000437486678990748780418179322395 +
-                    dx * (-0.00000203921575380136623678190070967 +
-                    dx * (0.000000955141213040741983285717977295 +
-                    dx * (-0.000000449246919876456604329429033119 +
-                    dx * (0.000000212071848055546658692313590108 +
-                    dx * (-0.000000100432248239680996087208305005 +
-                    dx * (0.0000000476981016936398056576019341725 +
-                    dx * (-0.0000000227110946089431649103199811606 +
-                    dx * (0.0000000108386592148969540910749175797 +
-                    dx * (-0.00000000518347504197004665512124864706 +
-                    dx * (0.00000000248367454380247831718500866399 +
-                    dx * (-0.00000000119214014058609120744254820277 +
-                    dx * 5.73136724167886201333019485796e-10))))))))))))))))))))))))
+                    // Error is at most 1.1921401405860912e-09*dx**25 when dx >= 0
+                    // which is at most Ulp(0.42278433509846713*dx)/2 when 0 <= dx <= 0.4914357448219413
+                    dx * (0.42278433509846713 +
+                    dx * (0.3224670334241132 +
+                    dx * (-0.067352301053198102 +
+                    dx * (0.020580808427784546 +
+                    dx * (-0.0073855510286739857 +
+                    dx * (0.0028905103307415234 +
+                    dx * (-0.001192753911703261 +
+                    dx * (0.00050966952474304245 +
+                    dx * (-0.00022315475845357939 +
+                    dx * (9.9457512781808531e-05 +
+                    dx * (-4.4926236738133142e-05 +
+                    dx * (2.0507212775670691e-05 +
+                    dx * (-9.4394882752683967e-06 +
+                    dx * (4.3748667899074882e-06 +
+                    dx * (-2.0392157538013662e-06 +
+                    dx * (9.5514121304074194e-07 +
+                    dx * (-4.4924691987645662e-07 +
+                    dx * (2.1207184805554665e-07 +
+                    dx * (-1.0043224823968099e-07 +
+                    dx * (4.7698101693639804e-08 +
+                    dx * (-2.2711094608943164e-08 +
+                    dx * (1.0838659214896955e-08 +
+                    dx * (-5.1834750419700466e-09 +
+                    dx * 2.4836745438024785e-09)))))))))))))))))))))))
                     ;
-                sum = dx * (1 + Digamma1 + sum);
                 result += sum;
                 return result;
             }
@@ -889,20 +888,6 @@ namespace Microsoft.ML.Probabilistic.Math
                 return DigammaLookup[xAsInt];
             }
 
-            // The threshold for applying de Moivre's expansion for the digamma function.
-            const double c_digamma_small = 1e-6;
-
-            /* Shift the argument and use Taylor series near 1 if argument <= S */
-            if (x <= c_digamma_small)
-            {
-                return -1 / x +
-                    // Truncated series 2: Digamma at 1
-                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
-                    -0.577215664901532860606512090082 +
-                    x * 1.64493406684822643647241516665
-                    ;
-            }
-
             if (x <= 2.5)
             {
                 double result2 = 1 + Digamma1;
@@ -911,35 +896,40 @@ namespace Microsoft.ML.Probabilistic.Math
                     result2 -= 1 / x;
                     x++;
                 }
+                // 1.5 <= x <= 2.5
+                // Use Taylor series at x=2
                 double dx = x - 2;
                 double sum2 =
                     // Truncated series 3: Digamma at 2
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
-                    dx * (0.644934066848226436472415166646 +
-                    dx * (-0.202056903159594285399738161511 +
-                    dx * (0.0823232337111381915160036965412 +
-                    dx * (-0.0369277551433699263313654864570 +
-                    dx * (0.0173430619844491397145179297909 +
-                    dx * (-0.00834927738192282683979754984980 +
-                    dx * (0.00407735619794433937868523850865 +
-                    dx * (-0.00200839282608221441785276923241 +
-                    dx * (0.000994575127818085337145958900319 +
-                    dx * (-0.000494188604119464558702282526470 +
-                    dx * (0.000246086553308048298637998047740 +
-                    dx * (-0.000122713347578489146751836526357 +
-                    dx * (0.0000612481350587048292585451051353 +
-                    dx * (-0.0000305882363070204935517285106451 +
-                    dx * (0.0000152822594086518717325714876367 +
-                    dx * (-0.00000763719763789976227360029356303 +
-                    dx * (0.00000381729326499983985646164462194 +
-                    dx * (-0.00000190821271655393892565695779510 +
-                    dx * (0.000000953962033872796113152038683449 +
-                    dx * (-0.000000476932986787806463116719604373 +
-                    dx * (0.000000238450502727732990003648186753 +
-                    dx * (-0.000000119219925965311073067788718882 +
-                    dx * (0.0000000596081890512594796124402079358 +
-                    dx * (-0.0000000298035035146522801860637050694 +
-                    dx * 0.0000000149015548283650412346585066307))))))))))))))))))))))))
+                    // Error is at most 3.7253340247884573e-09*dx**27 when dx >= 0
+                    // which is at most Ulp(1)/2 when 0 <= dx <= 0.52634237250421645
+                    dx * (0.64493406684822641 +
+                    dx * (-0.20205690315959429 +
+                    dx * (0.082323233711138186 +
+                    dx * (-0.036927755143369927 +
+                    dx * (0.01734306198444914 +
+                    dx * (-0.0083492773819228271 +
+                    dx * (0.0040773561979443396 +
+                    dx * (-0.0020083928260822143 +
+                    dx * (0.00099457512781808526 +
+                    dx * (-0.00049418860411946453 +
+                    dx * (0.00024608655330804832 +
+                    dx * (-0.00012271334757848915 +
+                    dx * (6.1248135058704828e-05 +
+                    dx * (-3.0588236307020493e-05 +
+                    dx * (1.5282259408651871e-05 +
+                    dx * (-7.6371976378997626e-06 +
+                    dx * (3.8172932649998402e-06 +
+                    dx * (-1.908212716553939e-06 +
+                    dx * (9.5396203387279621e-07 +
+                    dx * (-4.7693298678780645e-07 +
+                    dx * (2.38450502727733e-07 +
+                    dx * (-1.1921992596531106e-07 +
+                    dx * (5.960818905125948e-08 +
+                    dx * (-2.9803503514652279e-08 +
+                    dx * (1.4901554828365043e-08 +
+                    dx * -7.4507117898354301e-09)))))))))))))))))))))))))
                     ;
                 result2 += sum2;
                 return result2;
@@ -963,13 +953,16 @@ namespace Microsoft.ML.Probabilistic.Math
             double sum =
                 // Truncated series 4: Digamma asymptotic
                 // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                // Error is at most 0.44325980392156861*invX2**8 when invX2 >= 0
+                // which is at most Ulp(1)/2 when 0 <= invX2 <= 0.011216154551723961
                 invX2 * (1.0 / 12.0 +
                 invX2 * (-1.0 / 120.0 +
                 invX2 * (1.0 / 252.0 +
                 invX2 * (-1.0 / 240.0 +
                 invX2 * (1.0 / 132.0 +
                 invX2 * (-691.0 / 32760.0 +
-                invX2 * 1.0 / 12.0))))))
+                invX2 * (1.0 / 12.0
+                )))))))
                 ;
             result -= sum;
             return result;
@@ -1010,8 +1003,10 @@ namespace Microsoft.ML.Probabilistic.Math
                 return 1.0 / (x * x) +
                     // Truncated series 5: Trigamma at 1
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
-                    1.64493406684822643647241516665 +
-                    x * -2.40411380631918857079947632302
+                    // Error is at most 3.2469697011334144*x**2 when x >= 0
+                    // which is at most Ulp(1e8)/2 when 0 <= x <= 5.8474429974674805e-05
+                    1.6449340668482264 +
+                    x * -2.4041138063191885
                     ;
             }
 
@@ -1031,6 +1026,8 @@ namespace Microsoft.ML.Probabilistic.Math
             double sum =
                     // Truncated series 6: Trigamma asymptotic
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 54.971177944862156*invX2**9 when invX2 >= 0
+                    // which is at most Ulp(1)/2 when 0 <= invX2 <= 0.010812334306109761
                     invX2 * (1.0 / 6.0 +
                     invX2 * (-1.0 / 30.0 +
                     invX2 * (1.0 / 42.0 +
@@ -1038,7 +1035,8 @@ namespace Microsoft.ML.Probabilistic.Math
                     invX2 * (5.0 / 66.0 +
                     invX2 * (-691.0 / 2730.0 +
                     invX2 * (7.0 / 6.0 +
-                    invX2 * -3617.0 / 510.0)))))))
+                    invX2 * (-3617.0 / 510.0
+                    ))))))))
                     ;
             result += (1 + sum) / x;
             return result;
@@ -1059,12 +1057,16 @@ namespace Microsoft.ML.Probabilistic.Math
                          c_tetragamma_small = 1e-4;
             /* Use Taylor series if argument <= small */
             if (x < c_tetragamma_small)
+            {
                 return -2 / (x * x * x) +
                     // Truncated series 7: Tetragamma at 1
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
-                    -2.40411380631918857079947632302 +
-                    x * 6.49393940226682914909602217925
+                    // Error is at most 12.44313306172044*x**2 when x >= 0
+                    // which is at most Ulp(2e12)/2 when 0 <= x <= 0.0042243047356963293
+                    -2.4041138063191885 +
+                    x * 6.4939394022668289
                     ;
+            }
             double result = 0;
             /* Reduce to Tetragamma(x+n) where ( X + N ) >= L */
             while (x < c_tetragamma_large)
@@ -1080,6 +1082,8 @@ namespace Microsoft.ML.Probabilistic.Math
             double sum =
                 // Truncated series 8: Tetragamma asymptotic
                 // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                // Error is at most 120.56666666666666*invX2**9 when invX2 >= 0
+                // which is at most Ulp(0.00057870370370370367)/2 when 0 <= invX2 <= 0.0043280597593257338
                 invX2 * (-1.0 +
                 invX2 * (-1.0 / 2.0 +
                 invX2 * (1.0 / 6.0 +
@@ -1087,7 +1091,8 @@ namespace Microsoft.ML.Probabilistic.Math
                 invX2 * (3.0 / 10.0 +
                 invX2 * (-5.0 / 6.0 +
                 invX2 * (691.0 / 210.0 +
-                invX2 * -35.0 / 2.0)))))))
+                invX2 * (-35.0 / 2.0
+                ))))))))
                 ;
             result += sum;
             return result;
@@ -1262,24 +1267,39 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </summary>
         /// <param name="x">Any real number &gt;= -1</param>
         /// <returns>A real number &gt;= 0</returns>
-        private static double XMinusLog1Plus(double x)
+        internal static double XMinusLog1Plus(double x)
         {
             if (Math.Abs(x) < 1e-1)
             {
                 return
                     // Truncated series 12: x - log(1 + x)
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.055555555555555552*x**18 when x >= 0
+                    // which is at most Ulp(0.5*x*x)/2 when 0 <= x <= 0.11547242760872471
                     x * x * (1.0 / 2.0 +
                     x * (-1.0 / 3.0 +
                     x * (1.0 / 4.0 +
                     x * (-1.0 / 5.0 +
-                    x * (1.0 / 6.0
-                    )))));
+                    x * (1.0 / 6.0 +
+                    x * (-1.0 / 7.0 +
+                    x * (1.0 / 8.0 +
+                    x * (-1.0 / 9.0 +
+                    x * (1.0 / 10.0 +
+                    x * (-1.0 / 11.0 +
+                    x * (1.0 / 12.0 +
+                    x * (-1.0 / 13.0 +
+                    x * (1.0 / 14.0 +
+                    x * (-1.0 / 15.0 +
+                    x * (1.0 / 16.0 +
+                    x * (-1.0 / 17.0
+                    ))))))))))))))))
+                    ;
             }
-            else
+            else if (x >= -1)
             {
                 return x - MMath.Log1Plus(x);
             }
+            else throw new ArgumentOutOfRangeException(nameof(x), x, "x < -1");
         }
 
         // Reference:
@@ -1466,21 +1486,18 @@ namespace Microsoft.ML.Probabilistic.Math
             if (x > GammaSmallX)
                 return MMath.Gamma(x) - 1 / x;
             else
-                /* using http://sagecell.sagemath.org/ (must not be indented)
-var('x');
-f = gamma(x)-1/x
-[c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
-                 */
                 return
                     // Truncated series 19: Gamma(x) - 1/x
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
-                    -0.577215664901532860606512090082 +
-                    x * (0.989055995327972555395395651501 +
-                    x * (-0.907479076080886289016560167356 +
-                    x * (0.981728086834400187336380294022 +
-                    x * (-0.981995068903145202104701413791 +
-                    x * (0.993149114621276193153867253329 +
-                    x * -0.996001760442431533970078419665)))))
+                    // Error is at most 0.99810569378312897*x**7 when x >= 0
+                    // which is at most Ulp(0.57721566490153287)/2 when 0 <= x <= 0.0048617874947108133
+                    -0.57721566490153287 +
+                    x * (0.9890559953279725 +
+                    x * (-0.90747907608088629 +
+                    x * (0.98172808683440016 +
+                    x * (-0.98199506890314525 +
+                    x * (0.9931491146212762 +
+                    x * -0.99600176044243149)))))
                     ;
         }
 
@@ -1598,7 +1615,7 @@ f = gamma(x)-1/x
         /// </summary>
         /// <param name="x">A real number &gt;= 10</param>
         /// <returns></returns>
-        private static double GammaLnSeries(double x)
+        internal static double GammaLnSeries(double x)
         {
             // GammaLnSeries(10) = 0.008330563433362871
             if (x < GammaLnLargeX)
@@ -1613,6 +1630,8 @@ f = gamma(x)-1/x
                 double sum = invX * (
                     // Truncated series 9: GammaLn asymptotic
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.029550653594771242*invX2**7 when invX2 >= 0
+                    // which is at most Ulp(0.083333333333333329)/2 when 0 <= invX2 <= 0.0060966962219634185
                     1.0 / 12.0 +
                     invX2 * (-1.0 / 360.0 +
                     invX2 * (1.0 / 1260.0 +
@@ -1620,7 +1639,8 @@ f = gamma(x)-1/x
                     invX2 * (1.0 / 1188.0 +
                     invX2 * (-691.0 / 360360.0 +
                     invX2 * (1.0 / 156.0
-                    )))))));
+                    ))))))
+                    );
                 return sum;
             }
         }
@@ -3471,11 +3491,11 @@ rr = mpf('-0.99999824265582826');
             Assert.IsTrue(Double.IsNaN(x) || x >= -1);
             if (x > -1e-3 && x < 6e-2)
             {
-                // use the Taylor series for log(1+x) around x=0
-                // Maple command: series(log(1+x),x);
                 return
                     // Truncated series 10: log(1 + x)
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.076923076923076927*x**13 when x >= 0
+                    // which is at most Ulp(1*x)/2 when 0 <= x <= 0.057980167435117531
                     x * (1.0 +
                     x * (-1.0 / 2.0 +
                     x * (1.0 / 3.0 +
@@ -3487,7 +3507,8 @@ rr = mpf('-0.99999824265582826');
                     x * (1.0 / 9.0 +
                     x * (-1.0 / 10.0 +
                     x * (1.0 / 11.0 +
-                    x * -1.0 / 12.0)))))))))))
+                    x * (-1.0 / 12.0
+                    ))))))))))))
                     ;
             }
             else
@@ -3651,9 +3672,11 @@ rr = mpf('-0.99999824265582826');
                 return Math.Log(x) +
                     // Truncated series 15: log(exp(x) - 1) / x
                     // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.00034722222222222224*x**4 when x >= 0
+                    // which is at most Ulp(6.9077552789821368)/2 when 0 <= x <= 0.0012190876039316647
                     x * (1.0 / 2.0 +
-                    x * (1.0 / 24.0 +
-                    x * x * -1.0 / 2880.0))
+                    x * (1.0 / 24.0
+                    ))
                     ;
             }
             else if (x > 50)
@@ -3662,7 +3685,7 @@ rr = mpf('-0.99999824265582826');
             }
             else
             {
-                return Math.Log(Math.Exp(x) - 1.0);
+                return Math.Log(ExpMinus1(x));
             }
         }
 

@@ -6,7 +6,7 @@
 This scripts looks for .csv files in /test/Tests/Data/SpecialFunctionsValues.
 These files are expected to contain sets of arguments and expected result values
 for some special functions.
-Whenever the script encounters a file for which it has a defined funtion,
+Whenever the script encounters a file for which it has a defined function,
 it evaluates that function for every set of arguments present in that file
 and replaces the expected result in the file with the one it computed,
 except for Infinite or NaN results, which are preserved.
@@ -298,16 +298,17 @@ pair_info = {
     'BetaCdf.csv': beta_cdf,
     'Digamma.csv': digamma,
     'Erfc.csv': erfc,
-    'ExpMinus1.csv': lambda x: exp(x) - 1,
+    'ExpMinus1.csv': expm1,
     'ExpMinus1RatioMinus1RatioMinusHalf.csv': lambda x: ((exp(x) - 1) / x - 1) / x - 0.5 if x != mpf(0) else mpf(0),
     'Gamma.csv': gamma,
     'GammaLn.csv': loggamma,
-    'GammaLower.csv': lambda s, x: gammainc(s, 0, x) / gamma(s) if s != inf else mpf(0),
+    'GammaLnSeries.csv': lambda x: loggamma(x) - (x-0.5)*log(x) + x - 0.5*log(2*pi),
+    'GammaLower.csv': lambda s, x: gammainc(s, 0, x, regularized=True) if s != inf else mpf(0),
     'GammaUpper.csv': lambda s, x: gammainc(s, x, inf),
-    'GammaUpperRegularized.csv': lambda s, x: gammainc(s, x, inf) / gamma(s) if s != inf else mpf(1),
+    'GammaUpperRegularized.csv': lambda s, x: gammainc(s, x, inf, regularized=True) if s != inf else mpf(1),
     'GammaUpperScale.csv' : lambda s, x: x ** s * exp(-x) / gamma(s),
     'Log1MinusExp.csv': lambda x: log(1 - exp(x)),
-    'Log1Plus.csv': lambda x: log(1 + x),
+    'Log1Plus.csv': log1p,
     'LogExpMinus1.csv': lambda x: log(exp(x) - 1),
     'Logistic.csv': lambda x: 1 / (1 + exp(-x)),
     'logisticGaussian.csv': logistic_gaussian,
@@ -327,7 +328,7 @@ pair_info = {
     'NormalCdfRatioLn2.csv': normal_cdf2_ratio_ln,
     'Tetragamma.csv': lambda x: polygamma(2, x),
     'Trigamma.csv': lambda x: polygamma(1, x),
-    'ulp.csv': None
+    'XMinusLog1Plus.csv': lambda x: x - log(1+x),
     }
 
 def float_str_csharp_to_python(s):
