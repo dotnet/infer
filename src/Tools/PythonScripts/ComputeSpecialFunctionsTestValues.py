@@ -302,6 +302,7 @@ pair_info = {
     'ExpMinus1RatioMinus1RatioMinusHalf.csv': lambda x: ((exp(x) - 1) / x - 1) / x - 0.5 if x != mpf(0) else mpf(0),
     'Gamma.csv': gamma,
     'GammaLn.csv': loggamma,
+    'GammaLnSeries.csv': lambda x: loggamma(x) - (x-0.5)*log(x) + x - 0.5*log(2*pi),
     'GammaLower.csv': lambda s, x: gammainc(s, 0, x, regularized=True) if s != inf else mpf(0),
     'GammaUpper.csv': lambda s, x: gammainc(s, x, inf),
     'GammaUpperRegularized.csv': lambda s, x: gammainc(s, x, inf, regularized=True) if s != inf else mpf(1),
@@ -327,7 +328,7 @@ pair_info = {
     'NormalCdfRatioLn2.csv': normal_cdf2_ratio_ln,
     'Tetragamma.csv': lambda x: polygamma(2, x),
     'Trigamma.csv': lambda x: polygamma(1, x),
-    'ulp.csv': None
+    'XMinusLog1Plus.csv': lambda x: x - log(1+x),
     }
 
 def float_str_csharp_to_python(s):

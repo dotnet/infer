@@ -67,12 +67,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             double[,] GammaLn_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLn.csv"));
             CheckFunctionValues("GammaLn", new MathFcn(MMath.GammaLn), GammaLn_pairs);
 
-            /* In python mpmath:
-from mpmath import *
-mp.dps = 500
-mp.pretty = True
-digamma(mpf('9.5'))
-            */
+            double[,] GammaLnSeries_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLnSeries.csv"));
+            CheckFunctionValues("GammaLnSeries", MMath.GammaLnSeries, GammaLnSeries_pairs);
+
             double[,] digamma_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Digamma.csv"));
             CheckFunctionValues("Digamma", new MathFcn(MMath.Digamma), digamma_pairs);
 
@@ -111,34 +108,18 @@ digamma(mpf('9.5'))
             double[,] logisticln_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "LogisticLn.csv"));
             CheckFunctionValues("LogisticLn", MMath.LogisticLn, logisticln_pairs);
 
-            /* In python mpmath:
-from mpmath import *
-mp.dps = 500
-mp.pretty = True
-log(1+mpf('1e-3'))
-             */
             double[,] log1plus_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Log1Plus.csv"));
             CheckFunctionValues("Log1Plus", MMath.Log1Plus, log1plus_pairs);
 
-            /* In python mpmath:
-from mpmath import *
-mp.dps = 500
-mp.pretty = True
-log(1-exp(mpf('-3')))
-            */
+
+            double[,] xMinusLog1Plus_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "XMinusLog1Plus.csv"));
+            CheckFunctionValues("XMinusLog1Plus", MMath.XMinusLog1Plus, xMinusLog1Plus_pairs);
             double[,] log1MinusExp_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Log1MinusExp.csv"));
             CheckFunctionValues("Log1MinusExp", MMath.Log1MinusExp, log1MinusExp_pairs);
 
             double[,] expminus1_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "ExpMinus1.csv"));
             CheckFunctionValues("ExpMinus1", MMath.ExpMinus1, expminus1_pairs);
 
-            /* In python mpmath:
-from mpmath import *
-mp.dps = 500
-mp.pretty = True
-x = mpf("1e-4")
-((exp(x)-1)/x - 1)/x - 0.5
-            */
             double[,] expMinus1RatioMinus1RatioMinusHalf_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "ExpMinus1RatioMinus1RatioMinusHalf.csv"));
             CheckFunctionValues("ExpMinus1RatioMinus1RatioMinusHalf", MMath.ExpMinus1RatioMinus1RatioMinusHalf, expMinus1RatioMinus1RatioMinusHalf_pairs);
 
