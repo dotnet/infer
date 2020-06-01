@@ -9,7 +9,7 @@ This tutorial introduces the basics of Infer.NET: creating random variables, lin
 
 You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and executing **FirstExample.cs**.
 
-The code for this tutorial is also available in: **[F#](Two coins.md)**, **[C++](CPlusPlus Two coins.md)**, **[IronPython](Two coins in IronPython.md), [Matlab](Two coins in Matlab.md)**.
+The code for this tutorial is also available in: **[F#](https://github.com/dotnet/infer/blob/master/test/TestFSharp/TwoCoins.fs)**, **[C++](CPlusPlus Two coins.md)**, **[IronPython](Two coins in IronPython.md), [Matlab](Two coins in Matlab.md)**.
 
 ### Variables, random and otherwise
 
