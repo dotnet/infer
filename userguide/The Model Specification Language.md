@@ -7,7 +7,7 @@ layout: default
 
 **IMPORTANT NOTE: Writing models directly in MSL is not supported - this page is a reference to give a better understanding of how Infer.NET works.**
 
-The model specification language (MSL) is used by Infer.NET internally to define a probabilistic model. If you use [the Infer.NET modelling API](The Infer.NET modelling API.md), it internally constructs a model in MSL. The modelling API takes care of making sure that all language constraints are met and that the model is well formed. If desired, you can print out (to the console) the internally-generated MSL for your model, by setting **ShowMsl** to true in the [inference engine settings](inference engine settings.md). 
+The model specification language (MSL) is used by Infer.NET internally to define a probabilistic model. If you use [the Infer.NET modelling API](The Infer.NET modelling API.md), it internally constructs a model in MSL. The modelling API takes care of making sure that all language constraints are met and that the model is well formed. If desired, you can print out (to the console) the internally-generated MSL for your model, by setting **ShowMsl** to true in the [inference engine settings](inference engine settings.md). In order for this code to be readable, you should [attach names](Creating variables.md) to the variables in the model.
 
 MSL is a subset of C# and is written as a special C# method, called a _model method_. The model method must be void, but can take any number of parameters. These parameters will allow quantities such as prior distributions, observed data and plate sizes to be passed to the model - they correspond to observed variables in the modelling API. Model methods can contain only the following types of statement:
 

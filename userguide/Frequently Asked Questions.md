@@ -132,7 +132,7 @@ Common questions and answers about the Infer.NET framework.
 
 *   **ImproperMessageException during inference**
 
-    To avoid this, depending on your model, use initialization (for an example of initialization, see the [Mixture of Gaussians tutorial](Mixture of Gaussians tutorial.md)), try changing priors or reorder the data.
+    To avoid this, depending on your model, use initialization (for an example of initialization, see the [Mixture of Gaussians tutorial](Mixture of Gaussians tutorial.md)), try changing priors or reorder the data.  If you attach names to your variables and [enable debugging of generated code](Debugging inference.md), then the line in the generated code where the exception is raised will tell you which message is improper.
 
 *   **AllZeroException during inference**
 
