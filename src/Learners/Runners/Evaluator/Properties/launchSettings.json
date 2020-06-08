@@ -2,7 +2,7 @@
   "profiles": {
     "Evaluator": {
       "commandName": "Project",
-      "commandLineArgs": "c:\\users\\minka\\Downloads\\Config.xml"
+      "commandLineArgs": "MovieLens.xml"
     }
   }
 }
