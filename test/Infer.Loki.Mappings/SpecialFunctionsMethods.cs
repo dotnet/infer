@@ -542,6 +542,13 @@ namespace Infer.Loki.Mappings
             }
             return result;
         }
+        public static BigFloat LogExpMinus1(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            result.Expm1();
+            result.Log();
+            return result;
+        }
 
         public static BigFloat ExpMinus1(BigFloat x)
         {
