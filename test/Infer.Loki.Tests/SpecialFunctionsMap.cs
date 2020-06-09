@@ -55,6 +55,17 @@ namespace Infer.Loki.Tests
             mappers.MethodMapper.CreateMap
             (
                 typeof(MMath).GetMethod(
+                    "GammaLnSeries",
+                    BindingFlags.Static | BindingFlags.NonPublic,
+                    null,
+                    new Type[] { typeof(double) },
+                    null),
+                new Func<BigFloat, BigFloat>(GammaLnSeries).Method
+            );
+
+            mappers.MethodMapper.CreateMap
+            (
+                typeof(MMath).GetMethod(
                     "XMinusLog1Plus",
                     BindingFlags.Static | BindingFlags.NonPublic,
                     null,

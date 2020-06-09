@@ -91,8 +91,6 @@ namespace Infer.Loki.Mappings
             return result;
         }
 
-        // RisingFactorialLnOverN
-
         public static BigFloat Digamma(BigFloat x)
         {
             var result = BigFloatFactory.Empty();
@@ -936,7 +934,7 @@ namespace Infer.Loki.Mappings
         /// </summary>
         /// <param name="x">A real number &gt;= 10</param>
         /// <returns></returns>
-        private static BigFloat GammaLnSeries(BigFloat x)
+        public static BigFloat GammaLnSeries(BigFloat x)
         {
             if (x.IsLesser(gammaLnSeriesThreshold))
             {
