@@ -132,22 +132,23 @@ namespace Infer.Loki.Mappings
 
         public static void FindThresholds()
         {
-            using (var tmp1 = BigFloatFactory.Create("0.6"))
+            using (var tmp1 = BigFloatFactory.Create("1.5"))
             using (var invX = BigFloatFactory.Create(1))
             using (var invX2 = BigFloatFactory.Empty())
             {
-                //invX.Div(tmp1);
-                //int conv = FindConvergencePoint(expMinus1RatioMinus1RatioMinusHalfThresholdPos, expMinus1RatioMinus1RatioMinusHalfAt0);
-                //Console.WriteLine($"Convergence point at {tmp1}: {conv}");
-                //var result = EvaluateSeries(tmp1, gammaMinusReciprocalAt0.Take(conv).ToArray());
+                invX.Div(tmp1);
+                int conv = FindConvergencePoint(tmp1, expMinus1RatioMinus1RatioMinusHalfAt0);
+                Console.WriteLine($"Convergence point at {tmp1}: {conv}");
+                var result = EvaluateSeries(tmp1, expMinus1RatioMinus1RatioMinusHalfAt0.Take(conv).ToArray());
+                var f = ExpMinus1RatioMinus1RatioMinusHalf(tmp1);
                 //var f = BigFloatFactory.Create(tmp1);
                 //f.Gamma();
                 //f.Sub(invX);
-                //Console.WriteLine($"Polynomial: {result}");
-                //Console.WriteLine($"Algebraic:  {f}");
-                //f.Sub(result);
-                //f.Abs();
-                //Console.WriteLine($"Diff:       {f}");
+                Console.WriteLine($"Polynomial: {result}");
+                Console.WriteLine($"Algebraic:  {f}");
+                f.Sub(result);
+                f.Abs();
+                Console.WriteLine($"Diff:       {f}");
                 //for (int i = 10; i < 70; ++i)
                 //{
                 //    BigFloat.Set(tmp1, i);
@@ -178,32 +179,32 @@ namespace Infer.Loki.Mappings
                 //        }
                 //    }
                 //}
-                for (int i = 0; i < 11; ++i)
-                {
-                    int conv = FindConvergencePoint(tmp1, expMinus1RatioMinus1RatioMinusHalfAt0);
-                    Console.WriteLine($"Convergence point at {tmp1}: {conv}");
-                    //if (conv < 0)
-                    //    conv = xMinusLog1PlusAt0.Length;
-                    if (conv > 0)
-                    {
-                        using (var result = EvaluateSeries(tmp1, expMinus1RatioMinus1RatioMinusHalfAt0.Take(conv).ToArray()))
-                        using (var x = BigFloatFactory.Create(tmp1))
-                        using (var f = BigFloatFactory.Create(tmp1))
-                        {
-                            f.Expm1();
-                            f.Div(x);
-                            f.Sub(1);
-                            f.Div(x);
-                            f.Sub(0.5);
-                            Console.WriteLine($"Polynomial: {result}");
-                            Console.WriteLine($"Algebraic:  {f}");
-                            f.Sub(result);
-                            f.Abs();
-                            Console.WriteLine($"Diff:       {f}");
-                        }
-                    }
-                    tmp1.Div2(1);
-                }
+                //for (int i = 0; i < 11; ++i)
+                //{
+                //    int conv = FindConvergencePoint(tmp1, expMinus1RatioMinus1RatioMinusHalfAt0);
+                //    Console.WriteLine($"Convergence point at {tmp1}: {conv}");
+                //    //if (conv < 0)
+                //    //    conv = xMinusLog1PlusAt0.Length;
+                //    if (conv > 0)
+                //    {
+                //        using (var result = EvaluateSeries(tmp1, expMinus1RatioMinus1RatioMinusHalfAt0.Take(conv).ToArray()))
+                //        using (var x = BigFloatFactory.Create(tmp1))
+                //        using (var f = BigFloatFactory.Create(tmp1))
+                //        {
+                //            f.Expm1();
+                //            f.Div(x);
+                //            f.Sub(1);
+                //            f.Div(x);
+                //            f.Sub(0.5);
+                //            Console.WriteLine($"Polynomial: {result}");
+                //            Console.WriteLine($"Algebraic:  {f}");
+                //            f.Sub(result);
+                //            f.Abs();
+                //            Console.WriteLine($"Diff:       {f}");
+                //        }
+                //    }
+                //    tmp1.Div2(1);
+                //}
             }
         }
 
@@ -556,31 +557,52 @@ namespace Infer.Loki.Mappings
         }
 
 
-        private static readonly BigFloat expMinus1RatioMinus1RatioMinusHalfThresholdNeg = BigFloatFactory.Create("-0.075");
-        private static readonly BigFloat expMinus1RatioMinus1RatioMinusHalfThresholdPos = BigFloatFactory.Create("0.075");
+        private static readonly BigFloat expMinus1RatioMinus1RatioMinusHalfThresholdNeg = BigFloatFactory.Create("-2.0");
+        private static readonly BigFloat expMinus1RatioMinus1RatioMinusHalfThresholdPos = BigFloatFactory.Create("2.0");
         // Truncated series 12: x - log(1 + x)
         // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
         private static readonly BigFloat[] expMinus1RatioMinus1RatioMinusHalfAt0 = new BigFloat[]
         {
             BigFloatFactory.Create("0"),
-            BigFloatFactory.Create("0.16666666666666666666666666666666666666666666666667"),
-            BigFloatFactory.Create("0.041666666666666666666666666666666666666666666666667"),
-            BigFloatFactory.Create("0.0083333333333333333333333333333333333333333333333333"),
-            BigFloatFactory.Create("0.0013888888888888888888888888888888888888888888888889"),
-            BigFloatFactory.Create("0.00019841269841269841269841269841269841269841269841270"),
-            BigFloatFactory.Create("0.000024801587301587301587301587301587301587301587301587"),
-            BigFloatFactory.Create("0.0000027557319223985890652557319223985890652557319223986"),
-            BigFloatFactory.Create("0.00000027557319223985890652557319223985890652557319223986"),
-            BigFloatFactory.Create("0.000000025052108385441718775052108385441718775052108385442"),
-            BigFloatFactory.Create("0.0000000020876756987868098979210090321201432312543423654535"),
-            BigFloatFactory.Create("0.00000000016059043836821614599392377170154947932725710503488"),
-            BigFloatFactory.Create("0.000000000011470745597729724713851697978682105666232650359634"),
-            BigFloatFactory.Create("0.00000000000076471637318198164759011319857880704441551002397563"),
-            BigFloatFactory.Create("0.000000000000047794773323873852974382074911175440275969376498477"),
-            BigFloatFactory.Create("0.0000000000000028114572543455207631989455830103200162334927352045"),
-            BigFloatFactory.Create("1.5619206968586226462216364350057333423519404084470e-16"),
-            BigFloatFactory.Create("8.2206352466243297169559812368722807492207389918261e-18"),
-            BigFloatFactory.Create("4.1103176233121648584779906184361403746103694959131e-19")
+            BigFloatFactory.Create("0.1666666666666666666666666666666666666667"),
+            BigFloatFactory.Create("0.04166666666666666666666666666666666666667"),
+            BigFloatFactory.Create("0.008333333333333333333333333333333333333333"),
+            BigFloatFactory.Create("0.001388888888888888888888888888888888888889"),
+            BigFloatFactory.Create("0.0001984126984126984126984126984126984126984"),
+            BigFloatFactory.Create("0.00002480158730158730158730158730158730158730"),
+            BigFloatFactory.Create("0.000002755731922398589065255731922398589065256"),
+            BigFloatFactory.Create("0.0000002755731922398589065255731922398589065256"),
+            BigFloatFactory.Create("0.00000002505210838544171877505210838544171877505"),
+            BigFloatFactory.Create("0.000000002087675698786809897921009032120143231254"),
+            BigFloatFactory.Create("0.0000000001605904383682161459939237717015494793273"),
+            BigFloatFactory.Create("0.00000000001147074559772972471385169797868210566623"),
+            BigFloatFactory.Create("7.647163731819816475901131985788070444155e-13"),
+            BigFloatFactory.Create("4.779477332387385297438207491117544027597e-14"),
+            BigFloatFactory.Create("2.811457254345520763198945583010320016233e-15"),
+            BigFloatFactory.Create("1.561920696858622646221636435005733342352e-16"),
+            BigFloatFactory.Create("8.220635246624329716955981236872280749221e-18"),
+            BigFloatFactory.Create("4.110317623312164858477990618436140374610e-19"),
+            BigFloatFactory.Create("1.957294106339126123084757437350543035529e-20"),
+            BigFloatFactory.Create("8.896791392450573286748897442502468343312e-22"),
+            BigFloatFactory.Create("3.868170170630684037716911931522812323179e-23"),
+            BigFloatFactory.Create("1.611737571096118349048713304801171801325e-24"),
+            BigFloatFactory.Create("6.446950284384473396194853219204687205299e-26"),
+            BigFloatFactory.Create("2.479596263224797460074943545847956617423e-27"),
+            BigFloatFactory.Create("9.183689863795546148425716836473913397862e-29"),
+            BigFloatFactory.Create("3.279889237069837910152041727312111927808e-30"),
+            BigFloatFactory.Create("1.130996288644771693155876457693831699244e-31"),
+            BigFloatFactory.Create("3.769987628815905643852921525646105664147e-33"),
+            BigFloatFactory.Create("1.216125041553517949629974685692292149725e-34"),
+            BigFloatFactory.Create("3.800390754854743592593670892788412967890e-36"),
+            BigFloatFactory.Create("1.151633562077195028058688149329822111482e-37"),
+            BigFloatFactory.Create("3.387157535521161847231435733323006210241e-39"),
+            BigFloatFactory.Create("9.677592958631890992089816380922874886402e-41"),
+            BigFloatFactory.Create("2.688220266286636386691615661367465246223e-42"),
+            BigFloatFactory.Create("7.265460179153071315382745030722879043845e-44"),
+            BigFloatFactory.Create("1.911963205040281925100722376506020801012e-45"),
+            BigFloatFactory.Create("4.902469756513543397694159939759027694902e-47"),
+            BigFloatFactory.Create("1.225617439128385849423539984939756923726e-48"),
+            BigFloatFactory.Create("2.989310827142404510789121914487212009087e-50")
         };
 
         public static BigFloat ExpMinus1RatioMinus1RatioMinusHalf(BigFloat x)
