@@ -2172,7 +2172,7 @@ zL = (L - mx)*sqrt(prec)
             yield return long.MaxValue;
             yield return 0L;
             yield return long.MinValue;
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < 63; i++)
             {
                 double bigValue = System.Math.Pow(2, i);
                 yield return -(long)bigValue;
