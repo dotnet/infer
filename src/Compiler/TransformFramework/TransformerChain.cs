@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 if (transformer.OutputEqualsInput)
                     continue;
                 count++;
-                string filename = outputFolder + @"\" + count.ToString() + " " + transformer.Transform.Name + ".txt";
+                string filename = Path.Combine(outputFolder, count.ToString() + " " + transformer.Transform.Name + ".txt");
                 using (var writer = new StreamWriter(filename))
                 {
                     foreach (ITypeDeclaration itd in transformer.transformMap.Values)
