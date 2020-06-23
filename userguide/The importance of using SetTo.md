@@ -12,11 +12,13 @@ Variable<int> c = Variable.Discrete(new double[] { 0.5, 0.5 });
 Variable<double> x = Variable.New<double>();  
 using (Variable.Case(c,0))  
 {  
-  // incorrect!! x = Variable.GaussianFromMeanAndVariance(1,1);  
+  // incorrect!!
+	x = Variable.GaussianFromMeanAndVariance(1,1);  
 }  
 using (Variable.Case(c,1))  
 {  
-  // incorrect!! - clobbers the assignment to x above x = Variable.GaussianFromMeanAndVariance(2,1);  
+  // incorrect!! - clobbers the assignment to x above
+	x = Variable.GaussianFromMeanAndVariance(2,1);  
 }
 ```
 
