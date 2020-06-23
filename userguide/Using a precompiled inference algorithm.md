@@ -15,6 +15,8 @@ Internally Infer.NET compiles a model into a C# class for performing inference o
 
 *   **Speed-up.** Inclusion of the compiled algorithm avoids compilation on first time usage.
 
+*   **Long-running applications.** Every time Infer.NET compiles a model, it generates a new assembly and loads it. Once an assembly is loaded, it cannot be unloaded.  If a long-running application repeatedly compiles a model, the application will eventually run out of memory.
+
 *   **To manually edit and alter the created output code.** For advanced usage of Infer.Net it might be desired to alter the generated code. This mainly applies when specific features are not available in Infer.Net and you want to use the compiler to get a starting point for your own implementation of inference algorithms. This is only recommended if you know what you are doing!
 
 #### Example
