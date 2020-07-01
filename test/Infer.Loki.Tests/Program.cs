@@ -71,15 +71,10 @@ namespace Infer.Loki.Tests
             settings.Mappers.AddMap(new SpecialFunctionsMap());
             settings.Mappers.AddMap(new TestHelpersMap());
 
-            var runner = new TestRunner(settings);
-            //var testResult = await TestRunner.BuildAndRunTest(settings, new SpecialFunctionsTests().GammaSpecialFunctionsTest);
-            //var testResult = await TestRunner.BuildAndRunTest(settings, new SpecialFunctionsTests().LogisticGaussianTest);
-
-            //Assert.True(testResult.DoublePrecisionPassed);
-            //Assert.True(testResult.HighPrecisionPassed);
-            await runner.Build();
+            var transformer = new TestTransformer(settings);
+            await transformer.Build();
             Environment.CurrentDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "Tests");
-            var testResult = runner.RunTest(new OperatorTests().ExpMinus1RatioMinus1RatioMinusHalf_IsIncreasing, 0);
+            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new OperatorTests().ExpMinus1RatioMinus1RatioMinusHalf_IsIncreasing), 0);
             Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
         }
     }
