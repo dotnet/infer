@@ -305,7 +305,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     lowerBound = -1.0 / v;
                 }
                 else // mean.Precision < 0
-                {  
+                {
                     if (sample.Precision < 0)
                     {
                         precisionIsBetween = true;
@@ -941,7 +941,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="MeanAverageLogarithm(Gaussian, Gamma)"]/*'/>
-        public static Gaussian MeanAverageLogarithm([Proper] Gaussian sample, [Proper]Gamma precision)
+        public static Gaussian MeanAverageLogarithm([Proper] Gaussian sample, [Proper] Gamma precision)
         {
             return SampleAverageLogarithm(sample, precision);
         }
@@ -956,7 +956,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="MeanAverageLogarithm(double, Gamma)"]/*'/>
-        public static Gaussian MeanAverageLogarithm(double sample, [Proper]Gamma precision)
+        public static Gaussian MeanAverageLogarithm(double sample, [Proper] Gamma precision)
         {
             return SampleAverageLogarithm(sample, precision);
         }
@@ -968,7 +968,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="PrecisionAverageLogarithm(Gaussian, Gaussian)"]/*'/>
-        public static Gamma PrecisionAverageLogarithm([Proper]Gaussian sample, [Proper]Gaussian mean)
+        public static Gamma PrecisionAverageLogarithm([Proper] Gaussian sample, [Proper] Gaussian mean)
         {
             if (sample.IsUniform())
                 throw new ImproperMessageException(sample);
@@ -989,7 +989,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="PrecisionAverageLogarithm(Gaussian, double)"]/*'/>
-        public static Gamma PrecisionAverageLogarithm([Proper]Gaussian sample, double mean)
+        public static Gamma PrecisionAverageLogarithm([Proper] Gaussian sample, double mean)
         {
             if (sample.IsUniform())
                 throw new ImproperMessageException(sample);
@@ -1003,7 +1003,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="PrecisionAverageLogarithm(double, Gaussian)"]/*'/>
-        public static Gamma PrecisionAverageLogarithm(double sample, [Proper]Gaussian mean)
+        public static Gamma PrecisionAverageLogarithm(double sample, [Proper] Gaussian mean)
         {
             return PrecisionAverageLogarithm(mean, sample);
         }
@@ -1807,18 +1807,22 @@ namespace Microsoft.ML.Probabilistic.Factors
             double ddlogf = dlogf[1];
             double dddlogf = dlogf[2];
             double dx = dg * x / b;
-            double a1 = -2 * x * ddlogf - x * x * dddlogf;
-            double da = -x * x * ddg + dx * a1;
+            double a1 = -2 * x * ddlogf - dddlogf * x * x;
+            double da = -ddg * x * x + dx * a1;
             m = g[0] + (MMath.Digamma(a) - Math.Log(a)) * da;
             if (double.IsNaN(m)) throw new Exception("m is nan");
-            if (g.Length > 3)
+            if (da > double.MaxValue || da < double.MinValue)
+            {
+                v = double.PositiveInfinity;
+            }
+            else if (g.Length > 3)
             {
                 double dddg = g[3];
                 double d4logf = dlogf[3];
-                double db = -dg + da / x;
-                double ddx = (dg + x * ddg) / b * dx - x * dg / (b * b) * db;
-                double a2 = -2 * ddlogf - 4 * x * dddlogf - x * x * d4logf;
-                double dda = (-2 * x * ddg - x * x * dddg) * dx + a2 * dx * dx + a1 * ddx;
+                double db = -dg + da / x; // da/x = -ddg*x + dg/b*a1
+                double ddx = (dg + x * ddg) / b * dx - x * dg / b / b * db;
+                double a2 = -2 * ddlogf - 4 * x * dddlogf - d4logf * x * x;
+                double dda = (-2 * x * ddg - dddg * x * x) * dx + a2 * dx * dx + a1 * ddx;
                 v = dg * dx + (MMath.Trigamma(a) - 1 / a) * da * da + (MMath.Digamma(a) - Math.Log(a)) * dda;
                 //if (v < 0)
                 //    throw new Exception("v < 0");
