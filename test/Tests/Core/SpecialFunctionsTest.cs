@@ -67,12 +67,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             double[,] GammaLn_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLn.csv"));
             CheckFunctionValues("GammaLn", new MathFcn(MMath.GammaLn), GammaLn_pairs);
 
-            /* In python mpmath:
-from mpmath import *
-mp.dps = 500
-mp.pretty = True
-digamma(mpf('9.5'))
-            */
+            double[,] GammaLnSeries_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLnSeries.csv"));
+            CheckFunctionValues("GammaLnSeries", MMath.GammaLnSeries, GammaLnSeries_pairs);
+
             double[,] digamma_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Digamma.csv"));
             CheckFunctionValues("Digamma", new MathFcn(MMath.Digamma), digamma_pairs);
 
@@ -111,34 +108,18 @@ digamma(mpf('9.5'))
             double[,] logisticln_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "LogisticLn.csv"));
             CheckFunctionValues("LogisticLn", MMath.LogisticLn, logisticln_pairs);
 
-            /* In python mpmath:
-from mpmath import *
-mp.dps = 500
-mp.pretty = True
-log(1+mpf('1e-3'))
-             */
             double[,] log1plus_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Log1Plus.csv"));
             CheckFunctionValues("Log1Plus", MMath.Log1Plus, log1plus_pairs);
 
-            /* In python mpmath:
-from mpmath import *
-mp.dps = 500
-mp.pretty = True
-log(1-exp(mpf('-3')))
-            */
+
+            double[,] xMinusLog1Plus_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "XMinusLog1Plus.csv"));
+            CheckFunctionValues("XMinusLog1Plus", MMath.XMinusLog1Plus, xMinusLog1Plus_pairs);
             double[,] log1MinusExp_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Log1MinusExp.csv"));
             CheckFunctionValues("Log1MinusExp", MMath.Log1MinusExp, log1MinusExp_pairs);
 
             double[,] expminus1_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "ExpMinus1.csv"));
             CheckFunctionValues("ExpMinus1", MMath.ExpMinus1, expminus1_pairs);
 
-            /* In python mpmath:
-from mpmath import *
-mp.dps = 500
-mp.pretty = True
-x = mpf("1e-4")
-((exp(x)-1)/x - 1)/x - 0.5
-            */
             double[,] expMinus1RatioMinus1RatioMinusHalf_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "ExpMinus1RatioMinus1RatioMinusHalf.csv"));
             CheckFunctionValues("ExpMinus1RatioMinus1RatioMinusHalf", MMath.ExpMinus1RatioMinus1RatioMinusHalf, expMinus1RatioMinus1RatioMinusHalf_pairs);
 
@@ -791,9 +772,9 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         [Fact]
         public void NormalCdfIntegralTest()
         {
-            Assert.True(0 <= MMath.NormalCdfIntegral(1.9018718309533485E+77, -1.9018718309533485E+77, -1, 8.17880416082724E-79).Mantissa);
-            Assert.True(0 <= MMath.NormalCdfIntegral(213393529.2046707, -213393529.2046707, -1, 7.2893668811495072E-10).Mantissa);
-            Assert.True(0 < MMath.NormalCdfIntegral(-0.42146853220760722, 0.42146843802130329, -0.99999999999999989, 6.2292398855983019E-09).Mantissa);
+            Assert.True(0 <= NormalCdfIntegral(190187183095334850882507750944849586799124505055478568794871547478488387682304.0, -190187183095334850882507750944849586799124505055478568794871547478488387682304.0, -1, 0.817880416082724044547388352452631856079457366800004151664125953519049673808376291470533145141236089924006896061006277409614237094627499958581030715374379576478204968748786874650796450332240045653919846557755590765736997127532958984375e-78).Mantissa);
+            Assert.True(0 <= NormalCdfIntegral(213393529.2046706974506378173828125, -213393529.2046706974506378173828125, -1, 0.72893668811495072384656764856902984306419313043079455383121967315673828125e-9).Mantissa);
+            Assert.True(0 < NormalCdfIntegral(-0.421468532207607216033551367218024097383022308349609375, 0.42146843802130329326161017888807691633701324462890625, -0.99999999999999989, 0.62292398855983019004972723654291189010479001808562316000461578369140625e-8).Mantissa);
  
             Parallel.ForEach (OperatorTests.Doubles(), x =>
             {
@@ -805,6 +786,24 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     }
                 }
             });
+        }
+
+        // Same as MMath.NormalCdfIntegral but avoids inconsistent values of r and sqrtomr2 when using arbitrary precision.
+        public static ExtendedDouble NormalCdfIntegral(double x, double y, double r, double sqrtomr2)
+        {
+            if (sqrtomr2 < 0.618)
+            {
+                // In this regime, it is more accurate to compute r from sqrtomr2.
+                // See NormalCdfRatioLn
+                r = System.Math.Sign(r) * System.Math.Sqrt((1 - sqrtomr2) * (1 + sqrtomr2));
+            }
+            else
+            {
+                // In this regime, it is more accurate to compute sqrtomr2 from r.
+                double omr2 = 1 - r * r;
+                sqrtomr2 = System.Math.Sqrt(omr2);
+            }
+            return MMath.NormalCdfIntegral(x, y, r, sqrtomr2);
         }
 
         internal void NormalCdfIntegralTest2()
