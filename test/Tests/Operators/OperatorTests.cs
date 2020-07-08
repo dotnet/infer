@@ -24,6 +24,12 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class OperatorTests
     {
         [Fact]
+        public void GammaPowerProductOp_LaplaceTest()
+        {
+            GammaPowerProductOp_Laplace.ProductAverageConditional(GammaPower.Uniform(-1), new GammaPower(22, 0.04762, -1), new GammaPower(4.984e+10, 9.32e-120, -1), new Gamma(4.984e+10, 9.32e-120), GammaPower.Uniform(-1));
+        }
+
+        [Fact]
         public void GaussianPlusOpTest()
         {
             Assert.False(DoublePlusOp.BAverageConditional(Gaussian.FromNatural(-8.6696467442044984E+102, 0.43834920434350727), Gaussian.FromNatural(2.193337045017726E+205, 2.193337045017726E+205)).MeanTimesPrecision < double.MinValue);
