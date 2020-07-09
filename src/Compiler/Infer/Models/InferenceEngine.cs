@@ -223,7 +223,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 if (SaveFactorGraphToFolder != null && Visualizer?.GraphWriter != null)
                 {
                     Directory.CreateDirectory(SaveFactorGraphToFolder);
-                    Visualizer.GraphWriter.WriteGraph(mb, SaveFactorGraphToFolder + @"\" + ModelName);
+                    Visualizer.GraphWriter.WriteGraph(mb, Path.Combine(SaveFactorGraphToFolder, ModelName));
                 }
                 if (ShowFactorGraph && Visualizer?.FactorGraphVisualizer != null)
                     Visualizer.FactorGraphVisualizer.VisualizeFactorGraph(mb);
