@@ -1,4 +1,5 @@
 ﻿using Loki;
+using Loki.Shared;
 using Microsoft.ML.Probabilistic.Tests;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Infer.Loki.Tests
             var settings = new Settings(solutionPath);
             settings.WriteGeneratedSource = true;
             settings.GeneratedSourceDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "LokiGeneratedSource");
+            //settings.OverwriteGeneratedProgram = true;
 
             // Examples
             settings.ExcludeProject(new Regex("^ClickThroughModel"));
@@ -74,8 +76,44 @@ namespace Infer.Loki.Tests
             var transformer = new TestTransformer(settings);
             await transformer.Build();
             Environment.CurrentDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "Tests");
-            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new OperatorTests().ExpMinus1RatioMinus1RatioMinusHalf_IsIncreasing), 0);
-            Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
+            //var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new OperatorTests().ExpMinus1RatioMinus1RatioMinusHalf_IsIncreasing), 0);
+            //Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
+
+            var tests = transformer.EnumerateTransformedTests()
+                .Where(ti => ti.Method.ReflectedType.Name == typeof(SpecialFunctionsTests).Name /*&& ti.Method.Name != "NormalCdfIntegralTest"*/)
+                //.Skip(4)
+                //.Skip(100)
+                //.Take(100)
+                ;
+
+            ////var tests = new[] { TestInfo.FromDelegate(new SpecialFunctionsTests().LogisticGaussianTest) };
+
+            var testRun = TestSuiteRunner.RunTestSuite(
+                tests,
+                new[] { 0ul, ulong.MaxValue },
+                //"log2.csv",
+                //true,
+                TimeSpan.FromMinutes(0.5),
+                4,
+                new Progress<TestSuiteRunStatus>(s => Console.Title = $"Completed {s.CompletedTests} tests."));
+
+            var testResultEnumerator = testRun.GetAsyncEnumerator();
+            try
+            {
+                while (await testResultEnumerator.MoveNextAsync())
+                {
+                    var result = testResultEnumerator.Current;
+                    Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
+                }
+            }
+            finally
+            {
+                await testResultEnumerator.DisposeAsync();
+            }
+            //var test = transformer.GetCorrespondingTransformedTest(new OperatorTests().ExpMinus1RatioMinus1RatioMinusHalf_IsIncreasing);
+            //var result = await TestRunner.RunTestIsolatedAsync(test, 0);
+            //Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}");
+            //Console.WriteLine(result.Message);
         }
     }
 }
