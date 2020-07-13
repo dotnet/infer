@@ -73,20 +73,24 @@ namespace Infer.Loki.Tests
             settings.Mappers.AddMap(new SpecialFunctionsMap());
             settings.Mappers.AddMap(new TestHelpersMap());
 
+            settings.CSharpParseOptions = settings.CSharpParseOptions.WithPreprocessorSymbols(new[] { "NETFULL", "ROSLYN", "CODEDOM", "TRACE", "SUPPRESS_XMLDOC_WARNINGS", "SUPPRESS_UNREACHABLE_CODE_WARNINGS", "SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS" });
+
+            settings.PostprocessReferences = refs => refs.Where(r => !r.Display.Contains("System.CodeDom"));
+
             var transformer = new TestTransformer(settings);
             await transformer.Build();
             Environment.CurrentDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "Tests");
             //var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new OperatorTests().ExpMinus1RatioMinus1RatioMinusHalf_IsIncreasing), 0);
             //Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
 
-            var tests = transformer.EnumerateTransformedTests()
-                .Where(ti => ti.Method.ReflectedType.Name == typeof(SpecialFunctionsTests).Name /*&& ti.Method.Name != "NormalCdfIntegralTest"*/)
-                //.Skip(4)
-                //.Skip(100)
-                //.Take(100)
-                ;
+            //var tests = transformer.EnumerateTransformedTests()
+            //    .Where(ti => ti.Method.ReflectedType.Name == typeof(SpecialFunctionsTests).Name /*&& ti.Method.Name != "NormalCdfIntegralTest"*/)
+            //    .Skip(4)
+            //    .Skip(100)
+            //    .Take(100)
+            //    ;
 
-            ////var tests = new[] { TestInfo.FromDelegate(new SpecialFunctionsTests().LogisticGaussianTest) };
+            var tests = new[] { TestInfo.FromDelegate(new Microsoft.ML.Probabilistic.Tests.CodeCompilerTests.RoslynCodeCompilerValidSourceFileTests().DefaultCompileSourceFileTest) };
 
             var testRun = TestSuiteRunner.RunTestSuite(
                 tests,
