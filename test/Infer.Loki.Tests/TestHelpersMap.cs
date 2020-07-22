@@ -17,7 +17,7 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            mappers.MethodMapper.CreateMap
+            mappers.FuelBasedMethodMapper.CreateMap
             (
                 typeof(SpecialFunctionsTests).GetMethod(
                     "DoubleTryParseWithWorkarounds",

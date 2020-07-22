@@ -17,31 +17,31 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Gamma, Gamma);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.GammaLn, GammaLn);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Digamma, Digamma);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Trigamma, Trigamma);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Tetragamma, Tetragamma);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ReciprocalFactorialMinus1, ReciprocalFactorialMinus1);
-            mappers.MethodMapper.CreateMap<Func<double, double, double>, Func<BigFloat, BigFloat, BigFloat>>(MMath.GammaUpperLogScale, GammaUpperLogScale);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Gamma, Gamma);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.GammaLn, GammaLn);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Digamma, Digamma);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Trigamma, Trigamma);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Tetragamma, Tetragamma);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ReciprocalFactorialMinus1, ReciprocalFactorialMinus1);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double, double>, Func<BigFloat, BigFloat, BigFloat>>(MMath.GammaUpperLogScale, GammaUpperLogScale);
 
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1Plus, Log1Plus);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1PlusExp, Log1PlusExp);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1MinusExp, Log1MinusExp);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.LogExpMinus1, LogExpMinus1);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1, ExpMinus1);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1RatioMinus1RatioMinusHalf, ExpMinus1RatioMinus1RatioMinusHalf);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1Plus, Log1Plus);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1PlusExp, Log1PlusExp);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1MinusExp, Log1MinusExp);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.LogExpMinus1, LogExpMinus1);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1, ExpMinus1);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1RatioMinus1RatioMinusHalf, ExpMinus1RatioMinus1RatioMinusHalf);
 
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Erfc, Erfc);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdf, NormalCdf);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfLn, NormalCdfLn);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfRatio, NormalCdfRatio);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Erfc, Erfc);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdf, NormalCdf);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfLn, NormalCdfLn);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfRatio, NormalCdfRatio);
 
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDouble, NextBigFloat);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDouble, PreviousBigFloat);
-            mappers.MethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Ulp, Ulp);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDouble, NextBigFloat);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDouble, PreviousBigFloat);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Ulp, Ulp);
 
-            mappers.MethodMapper.CreateMap
+            mappers.FuelBasedMethodMapper.CreateMap
             (
                 typeof(MMath).GetMethod(
                     "GammaSeries",
@@ -52,7 +52,7 @@ namespace Infer.Loki.Tests
                 new Func<BigFloat, BigFloat>(GammaSeries).Method
             );
 
-            mappers.MethodMapper.CreateMap
+            mappers.FuelBasedMethodMapper.CreateMap
             (
                 typeof(MMath).GetMethod(
                     "GammaLnSeries",
@@ -63,7 +63,7 @@ namespace Infer.Loki.Tests
                 new Func<BigFloat, BigFloat>(GammaLnSeries).Method
             );
 
-            mappers.MethodMapper.CreateMap
+            mappers.FuelBasedMethodMapper.CreateMap
             (
                 typeof(MMath).GetMethod(
                     "XMinusLog1Plus",

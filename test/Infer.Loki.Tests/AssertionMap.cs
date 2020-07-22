@@ -15,7 +15,7 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            mappers.MethodMapper.CreateMap<Func<double, double, bool>, Func<BigFloat, BigFloat, bool>>(SpecialFunctionsTests.IsErrorSignificant, IsErrorSignificantPreciser);
+            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double, bool>, Func<BigFloat, BigFloat, bool>>(SpecialFunctionsTests.IsErrorSignificant, IsErrorSignificantPreciser);
         }
     }
 }

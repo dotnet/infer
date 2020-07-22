@@ -90,30 +90,31 @@ namespace Infer.Loki.Tests
             //    .Take(100)
             //    ;
 
-            var tests = new[] { TestInfo.FromDelegate(new Microsoft.ML.Probabilistic.Tests.CodeCompilerTests.RoslynCodeCompilerValidSourceFileTests().DefaultCompileSourceFileTest) };
+            //var tests = new[] { transformer.GetCorrespondingTransformedTest(new Microsoft.ML.Probabilistic.Tests.CodeCompilerTests.RoslynCodeCompilerValidSourceFileTests().DefaultCompileSourceFileTest) };
+            //var tests = new[] { transformer.GetCorrespondingTransformedTest(new BayesPointMachineTests().BayesPointEvidence2) };
 
-            var testRun = TestSuiteRunner.RunTestSuite(
-                tests,
-                new[] { 0ul, ulong.MaxValue },
-                //"log2.csv",
-                //true,
-                TimeSpan.FromMinutes(0.5),
-                4,
-                new Progress<TestSuiteRunStatus>(s => Console.Title = $"Completed {s.CompletedTests} tests."));
+            //var testRun = TestSuiteRunner.RunTestSuite(
+            //    tests,
+            //    new[] { 0ul, ulong.MaxValue },
+            //    //"log2.csv",
+            //    //true,
+            //    TimeSpan.FromMinutes(2),
+            //    4,
+            //    new Progress<TestSuiteRunStatus>(s => Console.Title = $"Completed {s.CompletedTests} tests."));
 
-            var testResultEnumerator = testRun.GetAsyncEnumerator();
-            try
-            {
-                while (await testResultEnumerator.MoveNextAsync())
-                {
-                    var result = testResultEnumerator.Current;
-                    Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
-                }
-            }
-            finally
-            {
-                await testResultEnumerator.DisposeAsync();
-            }
+            //var testResultEnumerator = testRun.GetAsyncEnumerator();
+            //try
+            //{
+            //    while (await testResultEnumerator.MoveNextAsync())
+            //    {
+            //        var result = testResultEnumerator.Current;
+            //        Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
+            //    }
+            //}
+            //finally
+            //{
+            //    await testResultEnumerator.DisposeAsync();
+            //}
             //var test = transformer.GetCorrespondingTransformedTest(new OperatorTests().ExpMinus1RatioMinus1RatioMinusHalf_IsIncreasing);
             //var result = await TestRunner.RunTestIsolatedAsync(test, 0);
             //Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}");
