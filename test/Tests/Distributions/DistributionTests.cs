@@ -523,11 +523,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             g.SetMeanAndPrecision(double.PositiveInfinity, 2.2);
             Assert.Equal(g, Gaussian.PointMass(double.PositiveInfinity));
 
-            g.SetMeanAndPrecision(1e4, 1e306);
-            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), g);
-            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), new Gaussian(1e4, 1E-306));
-            Assert.Equal(Gaussian.PointMass(1e-155), new Gaussian(1e-155, 1E-312));
-            Gaussian.FromNatural(1, 1e-309).GetMeanAndVarianceImproper(out m, out v);
+            double mean = 1024;
+            double precision = double.MaxValue / mean * 2;
+            // precision * mean > double.MaxValue
+            g.SetMeanAndPrecision(mean, precision);
+            g2 = Gaussian.FromMeanAndPrecision(mean, double.MaxValue / mean);
+            Assert.Equal(g2, g);
+            Assert.Equal(g2, new Gaussian(mean, 1 / precision));
+            double inverseIsInfinity = 0.5 / double.MaxValue;
+            Assert.Equal(Gaussian.PointMass(mean), new Gaussian(mean, inverseIsInfinity));
+            Gaussian.FromNatural(1, inverseIsInfinity).GetMeanAndVarianceImproper(out m, out v);
             if (v > double.MaxValue)
                 Assert.Equal(0, m);
             Gaussian.Uniform().GetMeanAndVarianceImproper(out m, out v);

@@ -31,8 +31,6 @@
     <PackageReference Include="Microsoft.Msagl.GraphViewerGdi" Version="1.1.1" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    
-    <Compile Update="FactorManagerView.cs" SubType="UserControl" />
     <EmbeddedResource Update="*.resx">
       <DependentUpon>%(FileName).cs</DependentUpon>
     </EmbeddedResource>

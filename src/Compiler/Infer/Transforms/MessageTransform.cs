@@ -1012,7 +1012,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             prefix = CodeBuilder.MakeValid(prefix);
             IVariableDeclaration bufferDecl = Builder.VarDecl(VariableInformation.GenerateName(context, prefix + "_" + name), type);
-            context.OutputAttributes.Set(bufferDecl, new DescriptionAttribute("Buffer for " + StringUtil.MethodFullNameToXmlString(fcninfo.Method)));
+            context.OutputAttributes.Set(bufferDecl, new DescriptionAttribute("Buffer for " + StringUtil.EscapeXmlCharacters(StringUtil.MethodFullNameToString(fcninfo.Method))));
             context.OutputAttributes.Set(bufferDecl, new Containers(context));
             IExpression msg = Builder.VarRefExpr(bufferDecl);
             MessageInfo mi = new MessageInfo();

@@ -133,7 +133,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                         foreach(var line in StringUtil.Lines(error.ToString()))
                         {
                             htmlWriter.Append("// ");
-                            htmlWriter.Append(ToHtmlContent(line));
+                            htmlWriter.Append(StringUtil.EscapeXmlCharacters(line));
                             htmlWriter.Append(Environment.NewLine);
                         }
                         htmlWriter.Append(Environment.NewLine);
@@ -146,7 +146,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                     {
                         SourceNode node = languageWriter.GeneratePartialSource(itd);
                         LanguageWriter.WriteSourceNode(writer, node);
-                        string code = ToHtmlContent(writer.ToString().Trim());
+                        string code = StringUtil.EscapeXmlCharacters(writer.ToString().Trim());
                         htmlWriter.Append(code);
                     }
                 }
@@ -171,13 +171,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             htmlWriter.CloseTag();
 
             htmlWriter.SaveToFile(Path.Combine(path, fileName));
-        }
-
-        private static string ToHtmlContent(string text)
-        {
-            return text.Replace("&", "&amp;")
-                       .Replace("<", "&lt;")
-                       .Replace(">", "&gt;");
         }
 
         private void OpenFiles(string path)
