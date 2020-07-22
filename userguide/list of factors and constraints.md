@@ -21,4 +21,4 @@ The background colours for each factor and algorithm give an indication of the [
 |   Experimental   |     red     |
 |   Not supported  |    white    |
 
-![FactorManager screenshot](FactorManager.png)
+{% include factorTable.html %}
