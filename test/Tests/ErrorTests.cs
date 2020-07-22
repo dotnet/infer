@@ -187,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         [Trait("Category", "OpenBug")]
         [Trait("Category", "CsoftModel")]
-        public void DoubleDefinitionError()
+        public void TestDoubleDefinitionError()
         {
             try
             {

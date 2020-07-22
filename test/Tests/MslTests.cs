@@ -20,13 +20,13 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Algorithms;
     using Microsoft.ML.Probabilistic.Models;
 
-    /*public abstract class MslTestsBase
+    public abstract class MslTestsBase
     {
-        public abstract void MethodOverrideModel(double[] prec);
-    }*/
+        internal abstract void MethodOverrideModel(double[] prec);
+    }
 
 
-    public class MslTests// : MslTestsBase
+    public class MslTests : MslTestsBase
     {
         /// <summary>
         /// Dummy property to test that properties in MSL are handled correctly.
@@ -51,12 +51,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void MethodOverrideTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(MethodOverrideModel, new double[] { 10.0 });
             ca.Execute(engine.NumberOfIterations);
         }
 
-        private /*override*/ void MethodOverrideModel(double[] prec)
+        internal override void MethodOverrideModel(double[] prec)
         {
             double x = Factor.Random(new Gaussian(0, 1));
             double[] y = new double[prec.Length];
@@ -68,6 +68,28 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferNet.Infer(y, nameof(y), QueryTypes.Marginal);
         }
 
+        [Fact]
+        [Trait("Category", "CsoftModel")]
+        [Trait("Category", "OpenBug")]
+        public void MethodInAnotherFileTest()
+        {
+            Assert.Throws<CompilationFailedException>(() =>
+            {
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
+                engine.Compiler.RequiredQuality = Factors.Attributes.QualityBand.Unknown;
+                var ca = engine.Compiler.Compile(MethodInAnotherFileModel);
+                ca.Execute(engine.NumberOfIterations);
+            });
+        }
+
+        private static void MethodInAnotherFileModel()
+        {
+            // Could also use EpTests.IsPositive
+            bool b = Factor.Bernoulli(0.5);
+            FactorManagerTests.MissingBufferMethodsFailureFactorAndOp.Factor(b);
+        }
+
         /// <summary>
         /// Test compiling a model method containing checked arithmetic.
         /// </summary>
@@ -76,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void CheckedArithmeticTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(CheckedArithmeticModel);
             ca.Execute(engine.NumberOfIterations);
         }
@@ -95,7 +117,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ParityCheckTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             double[] y = Util.ArrayInit(6, i => 1.0);
             double variance = 1;
             var ca = engine.Compiler.Compile(ParityCheckModel, y, variance);
@@ -193,7 +215,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void TwoCoinsTest()
         {
             InferenceEngine engine = new InferenceEngine(new ExpectationPropagation());
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(TwoCoinsModel);
             ca.Execute(1);
             Console.WriteLine("Marginal for bothHeads=" + ca.Marginal("bothHeads"));
@@ -212,7 +234,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void TrueSkillTest()
         {
             InferenceEngine engine = new InferenceEngine(new ExpectationPropagation());
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(TrueSkillModel);
             ca.Execute(10);
             Console.WriteLine("Marginal for skill1=" + ca.Marginal("skill1"));
@@ -265,7 +287,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void TrueSkillTest2()
         {
             InferenceEngine engine = new InferenceEngine(new ExpectationPropagation());
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             int[] games_Item1 = new int[] {0};
             int[] games_Item2 = new int[] {1};
             int[] outcome = new int[] {0};
@@ -334,7 +356,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             int dimension = 3;
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(DirichletVariableSizeModel, dimension);
             ca.Execute(engine.NumberOfIterations);
             Dirichlet cActual = ca.Marginal<Dirichlet>("c");
@@ -355,7 +377,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void InitialiseToIgnoredTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(InitialiseToIgnoredModel);
             ca.Execute(1);
             DistributionArray<Bernoulli> cActual = ca.Marginal<DistributionArray<Bernoulli>>("c");
@@ -394,7 +416,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             IArray2D<Bernoulli> priors = (IArray2D<Bernoulli>) Distribution<bool>.Array(priorsArray);
 
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(PropertyIndexerModel, priors, size1, size2);
             ca.Execute(engine.NumberOfIterations);
         }
@@ -422,7 +444,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             priors[0, 0] = new Gaussian(0, 1);
 
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(TwoDimStructArrayModel, priors, size1, size2);
             ca.Execute(engine.NumberOfIterations);
         }
@@ -594,7 +616,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void LiteralIndexingTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(LiteralIndexingModel);
             ca.Execute(engine.NumberOfIterations);
             var xActual = ca.Marginal<Gaussian>("x");
@@ -634,7 +656,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void LiteralIndexing2Test()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(LiteralIndexing2Model);
             ca.Execute(engine.NumberOfIterations);
             Gaussian xExpected = new Gaussian(1.0, 1/2.0 + 1/9.0);
@@ -686,7 +708,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void LiteralIndexing3Test()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(LiteralIndexing3);
             ca.Execute(engine.NumberOfIterations);
         }
@@ -715,7 +737,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void DeclarationInLoopTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(DeclarationInLoopModel);
             ca.Execute(engine.NumberOfIterations);
         }
@@ -741,7 +763,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ParameterAsFactorArgumentTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(ParameterAsFactorArgumentModel, new double[] {10.0});
             ca.Execute(engine.NumberOfIterations);
         }
@@ -766,14 +788,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             data[0] = new double[] {0, 1, 2};
             data[1] = new double[] {5, 6, 7, 8, 9};
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(JaggedArraysModel, data);
             ca.Execute(engine.NumberOfIterations);
             Console.WriteLine("means=" + ca.Marginal("means"));
             Console.WriteLine("precs=" + ca.Marginal("precs"));
         }
 
-        private void JaggedArraysModel(double[][] data)
+        internal static void JaggedArraysModel(double[][] data)
         {
             double[] means = new double[data.Length];
             double[] precs = new double[data.Length];
@@ -798,7 +820,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             data[0] = new double[] {0, 1, 2};
             data[1] = new double[] {5, 6, 7, 8, 9};
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(JaggedArrays2Model, data);
             ca.Execute(engine.NumberOfIterations);
             Console.WriteLine("means=" + ca.Marginal("means"));
@@ -833,7 +855,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian xPrior = new Gaussian(1.2, 3.4);
 
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(JaggedArrayModel, sizes, xPrior);
             ca.Execute(engine.NumberOfIterations);
 
@@ -871,7 +893,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void JaggedReplicationTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(JaggedReplicationModel);
             ca.Execute(1);
             object marg = ca.Marginal("b");
@@ -918,7 +940,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void JaggedReplication2Test()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(JaggedReplication2Model, 1, 1, 1);
             ca.Execute(10);
             DistributionArray<GaussianArray2D> array123Actual = ca.Marginal<DistributionArray<GaussianArray2D>>("array123");
@@ -956,7 +978,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void JaggedReplication3Test()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(JaggedReplication3Model, 1, 2, 3);
             ca.Execute(10);
             DistributionArray<GaussianArray2D> array123Actual = ca.Marginal<DistributionArray<GaussianArray2D>>("array123");
@@ -998,7 +1020,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void JaggedReplication4Test()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(JaggedReplication4Model, 1, 2, 3, 4);
             ca.Execute(10);
             DistributionArray2D<GaussianArray2D> array1234Actual = ca.Marginal<DistributionArray2D<GaussianArray2D>>("array1234");
@@ -1042,7 +1064,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void JaggedLiteralIndexingTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(JaggedLiteralIndexingModel);
             ca.Execute(engine.NumberOfIterations);
             DistributionArray<GaussianArray> dist = ca.Marginal<DistributionArray<GaussianArray>>("b2");
@@ -1117,7 +1139,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ConstrainEqualArrayTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             var ca = engine.Compiler.Compile(ConstrainEqualArrayModel, new double[3], Util.ArrayInit(6, i => Vector.Zero(3)), new bool[6]);
             ca.Execute(engine.NumberOfIterations);
         }
@@ -1150,7 +1172,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ConstrainEqualVectorArrayTest()
         {
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             engine.Algorithm = new VariationalMessagePassing();
             var ca = engine.Compiler.Compile(ConstrainEqualVectorArrayModel, new double[2], Util.ArrayInit(4, i => Vector.Zero(2)));
             ca.Execute(engine.NumberOfIterations);
