@@ -9,6 +9,7 @@
   </ItemGroup>-->
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\src\Loki\src\Loki.Shared\Loki.Shared.csproj" />
   </ItemGroup>
 
