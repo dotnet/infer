@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private static readonly string comma = InsertSpaceAfterComma ? ", " : ",";
 
-        private static readonly long NegativeZeroBits = BitConverter.DoubleToInt64Bits(-1.0 * 0.0);
+        private static readonly long NegativeZeroBits = GetNegativeZeroBits();
 
         /// <summary>
         /// static constructor
@@ -229,7 +229,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             IType innermostElementType = iat.ElementType;
             while (innermostElementType is IArrayType)
             {
-                innermostElementType = ((IArrayType) innermostElementType).ElementType;
+                innermostElementType = ((IArrayType)innermostElementType).ElementType;
             }
             AppendType(sb, innermostElementType);
 
@@ -237,7 +237,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 AppendArrayRank(sb, iat.Rank);
                 IType elementType = iat.ElementType;
-                if (elementType is IArrayType) iat = (IArrayType) elementType;
+                if (elementType is IArrayType) iat = (IArrayType)elementType;
                 else break;
             }
         }
@@ -253,7 +253,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             IType innermostElementType = iae.Type;
             while (innermostElementType is IArrayType)
             {
-                innermostElementType = ((IArrayType) innermostElementType).ElementType;
+                innermostElementType = ((IArrayType)innermostElementType).ElementType;
             }
             AppendType(sb, innermostElementType);
 
@@ -269,7 +269,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             IType elementType = iae.Type;
             while (elementType is IArrayType)
             {
-                IArrayType iat = (IArrayType) elementType;
+                IArrayType iat = (IArrayType)elementType;
                 AppendArrayRank(sb, iat.Rank);
                 elementType = iat.ElementType;
             }
@@ -504,10 +504,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
 
             Type t = ile.GetExpressionType();
-            if (t == typeof (string))
+            if (t == typeof(string))
             {
                 sb.Append("\"");
-                string val = (string) ile.Value;
+                string val = (string)ile.Value;
                 val = val.Replace("\\", @"\\"); // must be done first
                 val = val.Replace("\"", "\\\"");
                 val = val.Replace("\'", @"\'");
@@ -523,25 +523,25 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 sb.Append(val);
                 sb.Append("\"");
             }
-            else if (t == typeof (char))
+            else if (t == typeof(char))
             {
-                char ch = (char) ile.Value;
+                char ch = (char)ile.Value;
                 if (Char.IsLetterOrDigit(ch) || Char.IsSymbol(ch))
                 {
                     sb.Append("'" + ch + "'");
                 }
                 else
                 {
-                    sb.AppendFormat(@"'\u{0:x4}'", (int) ch);
+                    sb.AppendFormat(@"'\u{0:x4}'", (int)ch);
                 }
             }
-            else if (t == typeof (bool))
+            else if (t == typeof(bool))
             {
-                sb.Append(((bool) ile.Value) ? "true" : "false");
+                sb.Append(((bool)ile.Value) ? "true" : "false");
             }
-            else if (t == typeof (double))
+            else if (t == typeof(double))
             {
-                double d = (double) ile.Value;
+                double d = (double)ile.Value;
                 if (double.IsNegativeInfinity(d))
                 {
                     sb.Append("double.NegativeInfinity");
@@ -575,9 +575,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         sb.Append(".0");
                 }
             }
-            else if (t == typeof (float))
+            else if (t == typeof(float))
             {
-                float f = (float) ile.Value;
+                float f = (float)ile.Value;
                 if (float.IsNegativeInfinity(f))
                 {
                     sb.Append("float.NegativeInfinity");
@@ -598,7 +598,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 {
                     sb.Append("float.MinValue");
                 }
-                else if (IsNegativeZero((double) f))
+                else if (IsNegativeZero((double)f))
                 {
                     // some build configurations result in -0.0 producing a positive zero
                     sb.Append("(-1F * 0F)");
@@ -609,9 +609,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     sb.Append("F");
                 }
             }
-            else if (t == typeof (decimal))
+            else if (t == typeof(decimal))
             {
-                decimal m = (decimal) ile.Value;
+                decimal m = (decimal)ile.Value;
                 if (m.Equals(decimal.MaxValue))
                 {
                     sb.Append("decimal.MaxValue");
@@ -626,9 +626,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     sb.Append("M");
                 }
             }
-            else if (t == typeof (int))
+            else if (t == typeof(int))
             {
-                int i = (int) ile.Value;
+                int i = (int)ile.Value;
                 if (i.Equals(int.MaxValue))
                 {
                     sb.Append("int.MaxValue");
@@ -642,9 +642,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     sb.Append(i.ToString(CultureInfo.InvariantCulture));
                 }
             }
-            else if (t == typeof (uint))
+            else if (t == typeof(uint))
             {
-                uint u = (uint) ile.Value;
+                uint u = (uint)ile.Value;
                 if (u.Equals(uint.MaxValue))
                 {
                     sb.Append("uint.MaxValue");
@@ -655,9 +655,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     sb.Append("U");
                 }
             }
-            else if (t == typeof (long))
+            else if (t == typeof(long))
             {
-                long l = (long) ile.Value;
+                long l = (long)ile.Value;
                 if (l.Equals(long.MaxValue))
                 {
                     sb.Append("long.MaxValue");
@@ -672,9 +672,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     sb.Append("L");
                 }
             }
-            else if (t == typeof (ulong))
+            else if (t == typeof(ulong))
             {
-                ulong ul = (ulong) ile.Value;
+                ulong ul = (ulong)ile.Value;
                 if (ul.Equals(ulong.MaxValue))
                 {
                     sb.Append("ulong.MaxValue");
@@ -685,31 +685,31 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     sb.Append("UL");
                 }
             }
-            else if (t == typeof (byte))
+            else if (t == typeof(byte))
             {
                 sb.Append("((byte)");
                 sb.Append(ile.Value.ToString());
                 sb.Append(")");
             }
-            else if (t == typeof (sbyte))
+            else if (t == typeof(sbyte))
             {
                 sb.Append("((sbyte)");
                 sb.Append(ile.Value.ToString());
                 sb.Append(")");
             }
-            else if (t == typeof (short))
+            else if (t == typeof(short))
             {
                 sb.Append("((short)");
                 sb.Append(ile.Value.ToString());
                 sb.Append(")");
             }
-            else if (t == typeof (ushort))
+            else if (t == typeof(ushort))
             {
                 sb.Append("((ushort)");
                 sb.Append(ile.Value.ToString());
                 sb.Append(")");
             }
-            else if (typeof (Enum).IsAssignableFrom(t))
+            else if (typeof(Enum).IsAssignableFrom(t))
             {
                 AppendType(sb, t);
                 sb.Append(".");
@@ -1180,13 +1180,13 @@ namespace Microsoft.ML.Probabilistic.Compiler
             SourceNode sourceTree = new SourceNode();
             nodeStack.Push(sourceTree);
             bool hasNamespace = itd.Namespace != null && itd.Namespace.Length > 0;
-            if(hasNamespace)
+            if (hasNamespace)
                 currTab++;
 
             // Attach the type
             AttachTypeDeclaration(itd);
 
-            if(hasNamespace)
+            if (hasNamespace)
                 currTab--;
             nodeStack.Pop();
 
@@ -1204,7 +1204,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             sb.AppendLine("using System;");
 
             int count = 0;
-            if(hasNamespace)
+            if (hasNamespace)
                 namespaces.Add(itd.Namespace, count++);
             namespaces.Add("System", count++);
             foreach (string ns in typeReferenceMap.Values)
@@ -2069,7 +2069,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (imd.Static)
                 sb.Append("static ");
 
-            if (imd is IConstructorDeclaration) sb.Append(((ITypeDeclaration) imd.DeclaringType).Name);
+            if (imd is IConstructorDeclaration) sb.Append(((ITypeDeclaration)imd.DeclaringType).Name);
             else
             {
                 // The return type
@@ -2435,6 +2435,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
         private bool IsNegativeZero(double x)
         {
             return BitConverter.DoubleToInt64Bits(x) == NegativeZeroBits;
+        }
+
+        private static long GetNegativeZeroBits()
+        {
+            return BitConverter.DoubleToInt64Bits(-1.0 * 0.0);
         }
     }
 }
