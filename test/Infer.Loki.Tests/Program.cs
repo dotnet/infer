@@ -73,6 +73,7 @@ namespace Infer.Loki.Tests
             settings.Mappers.AddMap(new SpecialFunctionsMap());
             settings.Mappers.AddMap(new TestHelpersMap());
             settings.Mappers.AddMap(new ExpressionEvaluatorMap());
+            settings.Mappers.AddMap(new LanguageWriterMap());
 
             settings.CSharpParseOptions = settings.CSharpParseOptions.WithPreprocessorSymbols(new[] { "NETFULL", "ROSLYN", "CODEDOM", "TRACE", "SUPPRESS_XMLDOC_WARNINGS", "SUPPRESS_UNREACHABLE_CODE_WARNINGS", "SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS" });
 
