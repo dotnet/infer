@@ -34,6 +34,40 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class ModelTests
     {
         /// <summary>
+        /// The "Eight Schools" example from https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html
+        /// </summary>
+        [Fact]
+        public void EightSchoolsTest()
+        {
+            // "Normal(0,5)" in Stan corresponds to GaussianFromMeanAndVariance(0,5*5)
+            // "HalfCauchy(0,5)" in Stan corresponds to abs(N(0,1)/N(0,1))*5
+            var J = 8;
+            var JRange = new Range(J);
+            var sigma = Variable.Array<double>(JRange);
+            var mu = Variable.GaussianFromMeanAndVariance(0.0, 5.0*5.0);
+            var tau = HalfCauchySquared(1/(5.0*5.0));
+
+            var theta = Variable.Array<double>(JRange);
+            theta[JRange] = Variable.GaussianFromMeanAndPrecision(mu, tau).ForEach(JRange);
+
+            var y = Variable.Array<double>(JRange);
+            y[JRange] = Variable.GaussianFromMeanAndVariance(theta[JRange], sigma[JRange]);
+
+            y.ObservedValue = Util.ArrayInit(J, i => 3.0);
+            sigma.ObservedValue = Util.ArrayInit(J, i => 1.0);
+            tau.InitialiseTo(new Gamma(1, 1)); // needed by EP since moments of tau do not exist under the prior
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(mu);
+        }
+
+        internal Variable<double> HalfCauchySquared(Variable<double> scale)
+        {
+            // A half-Cauchy can be written as abs(N(0,1)/N(0,1)), or as sqrt(Gamma(0.5)/Gamma(0.5)).
+            // Therefore the square can be written as Gamma variable with shape 0.5 whose rate is given by a Gamma(0.5) variable.  
+            return Variable.GammaFromShapeAndRate(0.5, Variable.GammaFromShapeAndRate(0.5, scale)); 
+        }
+
+        /// <summary>
         /// Tests that C# compiler errors produce a CompilationFailedException.
         /// </summary>
         [Fact]

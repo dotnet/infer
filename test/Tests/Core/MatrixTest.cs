@@ -392,7 +392,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.Equal(3, v.IndexAtCumulativeSum(0.35));
                 Assert.Equal(4, v.IndexAtCumulativeSum(0.4));
                 Assert.Equal(4, v.IndexAtCumulativeSum(0.65));
-                Assert.Equal(5, v.IndexAtCumulativeSum(0.66));
                 Assert.Equal(5, v.IndexAtCumulativeSum(0.67));
                 Assert.Equal(6, v.IndexAtCumulativeSum(0.69));
                 Assert.Equal(7, v.IndexAtCumulativeSum(0.79));
