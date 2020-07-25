@@ -246,7 +246,7 @@ def __list_method_overloads(method):
 # pytest searches for tests in files named test_*.py or *_test.py
 # pytest collects functions with names prefixed by "test", either outside a class or in a class with name prefixed by "Test"
 
-def testTutorials():
+def test_tutorials():
     TwoCoins()
     TruncatedGaussianEfficient()
     LearningAGaussian()
@@ -256,4 +256,4 @@ def testTutorials():
     MixtureOfGaussians()
 
 if __name__ == '__main__':
-    testTutorials()
+    test_tutorials()

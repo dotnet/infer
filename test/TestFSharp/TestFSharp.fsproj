@@ -2,7 +2,9 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
 
   <PropertyGroup>
-		<OutputType>Exe</OutputType>
+    <AssemblyName>TestFSharp</AssemblyName>
+    <RootNamespace>TestFSharp</RootNamespace>
+    <OutputType>Exe</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
   </PropertyGroup>
@@ -26,11 +28,31 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
-  
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
+    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
+    <DefineConstants>$(DefineConstants);NET45;NETFULL</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' OR '$(Configuration)|$(Platform)'=='ReleaseFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='ReleaseCore|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="4.7.2" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Update="System.ValueTuple" Version="4.5.0" />
+    <Compile Include="..\..\src\Shared\SharedAssemblyFileVersion.fs">
+      <Link>SharedAssemblyFileVersion.fs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Runtime\Runtime.csproj" />
@@ -38,10 +60,17 @@
     <ProjectReference Include="..\..\src\FSharpWrapper\FSharpWrapper.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FSharp.Core" Version="4.7.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Update="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="DifficultyAbility.fs" />
-    <Compile Include="..\..\src\Shared\SharedAssemblyFileVersion.fs">
-      <Link>SharedAssemblyFileVersion.fs</Link>
-    </Compile>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="BayesPointMachine.fs" />
     <Compile Include="ClinicalTrial.fs" />
@@ -49,7 +78,7 @@
     <Compile Include="MixtureofGaussians.fs" />
     <Compile Include="TruncatedGaussian.fs" />
     <Compile Include="TwoCoins.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="TestTutorials.fs" />
     <None Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
