@@ -23,4 +23,4 @@ steps:
   displayName: 'Publishing test results'
   inputs:
     testResultsFormat: vstest
-    testResultsFiles: 'test/netcoretest-result*.trx'
+    testResultsFiles: 'test/**/netcoretest-result*.trx'

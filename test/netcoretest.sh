@@ -30,6 +30,7 @@ exitcode=0
 index=0
 
 echo -e "\033[44;37m=====================PARALLEL TESTS RUNNING============================\033[0m"
+cp "Tests/parallel.xunit.runner.json" "Tests/xunit.runner.json"
 for project in $projects
 do
     # Please note that due to xUnit issue we need to run tests for each project separately
@@ -45,7 +46,8 @@ do
 done
 
 echo -e "\033[44;37m=====================SEQUENTIAL TESTS RUNNING=========================\033[0m"
-mv "Tests/sequential.xunit.runner.json" "Tests/xunit.runner.json"
+# See https://xunit.github.io/docs/configuration-files
+cp "Tests/sequential.xunit.runner.json" "Tests/xunit.runner.json"
 dotnet test Tests -c "$configuration" $sequential_filter --logger "trx;logfilename=netcoretest-result${index}.trx"
 if [ 0 -ne $? ]
 then
@@ -54,5 +56,6 @@ then
 else
     echo -e "\033[32;1mSequential running success!\033[0m"
 fi
+cp "Tests/parallel.xunit.runner.json" "Tests/xunit.runner.json"
 
 exit $exitcode
