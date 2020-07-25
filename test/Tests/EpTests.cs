@@ -39,6 +39,29 @@ namespace Microsoft.ML.Probabilistic.Tests
             return Util.ArrayInit(count, i => (min + i * inc));
         }
 
+        /// <summary>
+        /// Demonstrate that EP can solve a linear program
+        /// </summary>
+        [Fact]
+        public void LinearProgrammingTest()
+        {
+            // Could repeat inference incrementally while decreasing precision
+            double precision = 1e-20;
+            // maximize x+y 
+            // subject to x + 2*y = 1
+            // x >= 0
+            // y >= 0
+            Variable<double> x = Variable.GaussianFromMeanAndPrecision(1.0/precision/precision, precision);
+            Variable<double> y = Variable.GaussianFromMeanAndPrecision(1.0/precision/precision, precision);
+            Variable.ConstrainEqual(x + 2 * y, 1);
+            Variable.ConstrainPositive(x);
+            Variable.ConstrainPositive(y);
+
+            InferenceEngine engine = new InferenceEngine();
+            Console.WriteLine($"x = {engine.Infer(x)}");
+            Console.WriteLine($"y = {engine.Infer(y)}");
+        }
+
         [Fact]
         public void TruncatedGammaPowerTest()
         {

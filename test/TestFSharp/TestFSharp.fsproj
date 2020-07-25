@@ -28,7 +28,8 @@
   </Choose>
   
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="4.3.4" />
+    <PackageReference Include="FSharp.Core" Version="4.7.2" />
+    <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>

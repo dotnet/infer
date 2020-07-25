@@ -4,7 +4,7 @@
 
 #light
 
-namespace ClinicalTrialTutorial
+namespace TestFSharp
 
 open System
 open Microsoft.ML.Probabilistic.Models
@@ -51,7 +51,7 @@ module clinical =
     Variable.IfBlock isEffective f1 f2
     ()
 
-    let clinicalTestFunc() = 
+    let clinicalTrialTutorial() = 
             Console.WriteLine("\n====================Running Clinical Trial Tutorial==========================\n");
             
             // The inference

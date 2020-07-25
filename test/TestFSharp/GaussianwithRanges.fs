@@ -4,7 +4,7 @@
 
 #light
 
-namespace GaussianRangesTutorial
+namespace TestFSharp
 
 open System
 open Microsoft.ML.Probabilistic
@@ -19,7 +19,7 @@ open Microsoft.ML.Probabilistic.FSharp
 
 // The model
 module ranges = 
-    let rangesTestFunc() = 
+    let learningAGaussianWithRanges() = 
         Console.WriteLine("\n======================Running Gaussian Ranges Tutorial=======================\n");
         // The model
         let len = Variable.New<int>()

@@ -98,6 +98,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnersNuGet", "src\Learne
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tools.PythonScripts", "src\Tools\PythonScripts\Tools.PythonScripts.pyproj", "{D7562CC3-D48A-481D-B40C-07EE51EBBF50}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TestPython", "test\TestPython\TestPython.pyproj", "{79B39D08-DF06-47B8-B7EE-15E30EB9A209}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -512,6 +514,12 @@ Global
 		{D7562CC3-D48A-481D-B40C-07EE51EBBF50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7562CC3-D48A-481D-B40C-07EE51EBBF50}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
 		{D7562CC3-D48A-481D-B40C-07EE51EBBF50}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
