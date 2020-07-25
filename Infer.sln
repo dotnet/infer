@@ -100,6 +100,27 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tools.PythonScripts", "src\
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TestPython", "test\TestPython\TestPython.pyproj", "{79B39D08-DF06-47B8-B7EE-15E30EB9A209}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5759CC85-729E-479A-BF7E-8A0B8937B123}"
+	ProjectSection(SolutionItems) = preProject
+		build\common.props = build\common.props
+		build\copyassemblies.sh = build\copyassemblies.sh
+		build\evaluator-netcore.yml = build\evaluator-netcore.yml
+		build\evaluator-netframework.yml = build\evaluator-netframework.yml
+		build\netcoretest-fast.yml = build\netcoretest-fast.yml
+		test\netcoretest.sh = test\netcoretest.sh
+		build\nightly-netcore.yml = build\nightly-netcore.yml
+		build\nightly-windows.yml = build\nightly-windows.yml
+		build\nuget-properties.props = build\nuget-properties.props
+		build\pr-factordocs.yml = build\pr-factordocs.yml
+		build\pr-msbuild.yml = build\pr-msbuild.yml
+		build\pr-netcore.yml = build\pr-netcore.yml
+		build\release.yml = build\release.yml
+		build\sign.proj = build\sign.proj
+		build\updateversion.sh = build\updateversion.sh
+		build\vstest-fast.yml = build\vstest-fast.yml
+		build\windows-msbuild.yml = build\windows-msbuild.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

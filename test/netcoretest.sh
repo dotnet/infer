@@ -19,7 +19,7 @@ compath=/bin/${configuration}/netcoreapp3.1/
 dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll"
 
 # dotnet command
-dotnet='dotnet'
+dotnet='dotnet --fx-version 3.1.6'
 
 # path to the xunit runner
 # Version number here must be kept up to date with nuget package version in Tests.csproj
