@@ -19,6 +19,7 @@ steps:
 
 - task: NuGetToolInstaller@1
   inputs:
+    versionSpec: '>=5.5.1'
 
 - task: NuGetCommand@2
   displayName: 'Restoring NuGet packages'

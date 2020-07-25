@@ -19,17 +19,20 @@ compath=/bin/${configuration}/netcoreapp3.1/
 dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll"
 
 # dotnet command
-dotnet='dotnet --fx-version 3.1.6'
+dotnet='dotnet'
 
 # path to the xunit runner
 # Version number here must be kept up to date with nuget package version in Tests.csproj
-runner=~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll
+#runner=~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll
+runner="test"
 
 # filter for parallel test run
-parallel_filter='-notrait Platform=x86 -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance'
+#parallel_filter='-notrait Platform=x86 -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance'
+parallel_filter='--filter Platform!=x86&Category!=OpenBug&Category!=BadTest&Category!=CompilerOptionsTest&Category!=CsoftModel&Category!=ModifiesGlobals&Category!=DistributedTest&Category!=Performance'
 
 # filter for sequential test run
-sequential_filter='-notrait Platform=x86 -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest'
+#sequential_filter='-notrait Platform=x86 -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest'
+sequential_filter='--filter Platform!=x86&Category!=OpenBug&Category!=BadTest&Category!=CompilerOptionsTest&(Category=CsoftModel|Category=ModifiesGlobals|Category=DistributedTests|Category=Performance)'
 
 exitcode=0
 index=0
