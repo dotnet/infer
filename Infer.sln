@@ -108,6 +108,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5759CC85
 		build\copyassemblies.sh = build\copyassemblies.sh
 		build\evaluator-netcore.yml = build\evaluator-netcore.yml
 		build\evaluator-netframework.yml = build\evaluator-netframework.yml
+		test\monotest.sh = test\monotest.sh
 		build\netcoretest-fast.yml = build\netcoretest-fast.yml
 		test\netcoretest.sh = test\netcoretest.sh
 		build\nightly-netcore.yml = build\nightly-netcore.yml

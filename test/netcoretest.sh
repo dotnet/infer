@@ -20,11 +20,11 @@ projects="Learners/LearnersTests Tests TestPublic TestFSharp"
 
 # filter for parallel test run
 #parallel_filter='-notrait Platform=x86 -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance'
-parallel_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)&(DisplayName=ImproperMixtureTest)'
+parallel_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)'
 
 # filter for sequential test run
 #sequential_filter='-notrait Platform=x86 -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest'
-sequential_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category=CsoftModel|Category=ModifiesGlobals|Category=DistributedTests|Category=Performance)&(DisplayName=BetaTest)'
+sequential_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category=CsoftModel|Category=ModifiesGlobals|Category=DistributedTests|Category=Performance)'
 
 exitcode=0
 index=0
