@@ -117,7 +117,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5759CC85
 		build\pr-msbuild.yml = build\pr-msbuild.yml
 		build\pr-netcore.yml = build\pr-netcore.yml
 		build\release.yml = build\release.yml
-		test\sequential.xunit.runner.json = test\sequential.xunit.runner.json
 		build\sign.proj = build\sign.proj
 		build\updateversion.sh = build\updateversion.sh
 		build\vstest-fast.yml = build\vstest-fast.yml

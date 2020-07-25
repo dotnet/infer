@@ -82,6 +82,12 @@
     <None Update="Data\IRT2PL_10_1000.mat" CopyToOutputDirectory="PreserveNewest" />
     <None Update="Data\IRT2PL_10_250.mat" CopyToOutputDirectory="PreserveNewest" />
     <None Update="Data\test.mat" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sequential.xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     
     <None Remove="Bugs\*.txt" />
     <Content Include="Bugs\*.txt" />
