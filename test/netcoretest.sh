@@ -22,6 +22,7 @@ dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.
 dotnet='dotnet'
 
 # path to the xunit runner
+# Version number here must be kept up to date with nuget package version in Tests.csproj
 runner=~/.nuget/packages/xunit.runner.console/2.4.1/tools/netcoreapp2.0/xunit.console.dll
 
 # filter for parallel test run
