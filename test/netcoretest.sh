@@ -16,7 +16,7 @@ then
 fi
 
 compath=/bin/${configuration}/netcoreapp3.1/
-dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll"
+dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll TestFSharp${compath}TestFSharp.dll"
 
 # dotnet command
 dotnet='dotnet'
@@ -28,11 +28,11 @@ runner="test"
 
 # filter for parallel test run
 #parallel_filter='-notrait Platform=x86 -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance'
-parallel_filter='--filter Platform!=x86&Category!=OpenBug&Category!=BadTest&Category!=CompilerOptionsTest&Category!=CsoftModel&Category!=ModifiesGlobals&Category!=DistributedTest&Category!=Performance'
+parallel_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)'
 
 # filter for sequential test run
 #sequential_filter='-notrait Platform=x86 -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest'
-sequential_filter='--filter Platform!=x86&Category!=OpenBug&Category!=BadTest&Category!=CompilerOptionsTest&(Category=CsoftModel|Category=ModifiesGlobals|Category=DistributedTests|Category=Performance)'
+sequential_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category=CsoftModel|Category=ModifiesGlobals|Category=DistributedTests|Category=Performance)'
 
 exitcode=0
 index=0
@@ -53,7 +53,8 @@ do
 done
 
 echo -e "\033[44;37m=====================SEQUENTIAL TESTS RUNNING=========================\033[0m"
-$dotnet "$runner" "Tests${compath}Microsoft.ML.Probabilistic.Tests.dll" $sequential_filter --logger "trx;logfilename=netcoretest-result${index}.trx -- RunConfiguration.MaxCpuCount=1"
+mv sequential.xunit.runner.json xunit.runner.json
+$dotnet "$runner" "Tests${compath}Microsoft.ML.Probabilistic.Tests.dll" $sequential_filter --logger "trx;logfilename=netcoretest-result${index}.trx"
 if [ 0 -ne $? ]
 then
     echo -e "\033[5;41;1;37mSequential running failure!\033[0m"
