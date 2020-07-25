@@ -17,8 +17,9 @@ steps:
     displayName: Run tests
     continueOnError: true
     
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=yaml
 - task: PublishTestResults@2
   displayName: 'Publishing test results'
   inputs:
-    testRunner: XUnit
-    testResultsFiles: 'test/netcoretest-result*.xml'
+    testResultsFormat: vstest
+    testResultsFiles: 'test/netcoretest-result*.trx'
