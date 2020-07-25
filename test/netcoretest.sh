@@ -41,7 +41,7 @@ echo -e "\033[44;37m=====================PARALLEL TESTS RUNNING=================
 for assembly in $dlls
 do
     # Please note that due to xUnit issue we need to run tests for each assembly separately
-    $dotnet "$runner" "$assembly" $parallel_filter -logger "trx;logfilename=netcoretest-result${index}.trx"
+    $dotnet "$runner" "$assembly" $parallel_filter --logger "trx;logfilename=netcoretest-result${index}.trx"
     if [ 0 -ne $? ]
     then
         echo -e "\033[5;41;1;37mParallel running failure!\033[0m"
@@ -53,7 +53,7 @@ do
 done
 
 echo -e "\033[44;37m=====================SEQUENTIAL TESTS RUNNING=========================\033[0m"
-$dotnet "$runner" "Tests${compath}Microsoft.ML.Probabilistic.Tests.dll" $sequential_filter -parallel none -logger "trx;logfilename=netcoretest-result${index}.trx"
+$dotnet "$runner" "Tests${compath}Microsoft.ML.Probabilistic.Tests.dll" $sequential_filter --logger "trx;logfilename=netcoretest-result${index}.trx -- RunConfiguration.MaxCpuCount=1"
 if [ 0 -ne $? ]
 then
     echo -e "\033[5;41;1;37mSequential running failure!\033[0m"
