@@ -4,7 +4,7 @@
 
 #light
 
-namespace BayesPointTutorial
+namespace TestFSharp
 
 open System
 open Microsoft.ML.Probabilistic.Distributions
@@ -18,7 +18,7 @@ open Microsoft.ML.Probabilistic.FSharp
 
 module bayes = 
     // The training model
-    let bayesTestFunc() =
+    let BayesPointMachineExample() =
         Console.WriteLine("\n=====================Running Bayes Point Machine Tutorial====================\n");
         let noise = 0.1
         let len = Variable.New<int>()

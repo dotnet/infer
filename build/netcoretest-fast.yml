@@ -8,6 +8,7 @@ parameters:
   Configuration: 'ReleaseCore' 
 
 steps:
+# TODO: Use .NET Core CLI Task instead: https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli?view=azure-devops
 - task: Bash@3
   displayName: 'Running tests'
   inputs:
@@ -17,8 +18,9 @@ steps:
     displayName: Run tests
     continueOnError: true
     
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=yaml
 - task: PublishTestResults@2
   displayName: 'Publishing test results'
   inputs:
-    testRunner: XUnit
-    testResultsFiles: 'test/netcoretest-result*.xml'
+    testResultsFormat: vstest
+    testResultsFiles: 'test/**/netcoretest-result*.trx'

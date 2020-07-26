@@ -71,6 +71,20 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
         }
 
         /// <summary>
+        /// Invoke the instance member which best matches the argument types.
+        /// </summary>
+        /// <param name="methodName"></param>
+        /// <param name="target"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static object InvokeInstance(string methodName, object target, params object[] args)
+        {
+            return InvokeMember(target.GetType(), methodName,
+                                BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetField | BindingFlags.GetProperty | BindingFlags.InvokeMethod |
+                                BindingFlags.FlattenHierarchy, target, args);
+        }
+
+        /// <summary>
         /// Get an element from an array or collection, or invoke a delegate.
         /// </summary>
         /// <param name="target">An array, collection, delegate, or method group.</param>

@@ -4,7 +4,7 @@
 
 #light
 
-namespace TruncatedGaussianTutorial
+namespace TestFSharp
 
 open System
 open Microsoft.ML.Probabilistic.Models
@@ -17,7 +17,7 @@ open Microsoft.ML.Probabilistic.FSharp
 
 // The Model
 module truncated =
-    let truncatedTestFunc() = 
+    let truncatedGaussianTutorial() = 
         Console.WriteLine("\n====================Running Truncated Gaussian Tutorial======================\n");
         let threshold = (Variable.New<float>()).Named("threshold")
         let x = Variable.GaussianFromMeanAndVariance(0.0,1.0).Named("x")
