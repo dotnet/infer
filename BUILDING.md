@@ -56,13 +56,11 @@ When not using Windows, expect build failure messages about examples that use WP
 
 Unit tests are written using the [XUnit](https://xunit.github.io/) framework.
 The easiest way to run all tests is to execute the script `netcoretest.sh` or `monotest.sh`.
-To run unit tests manually, build the test project and execute one of the following commands:
+To run unit tests manually from the command line:
 ```bash
-dotnet test Tests -c <configuration> <filter>
+dotnet test Infer.sln -c <configuration> <filter>
 ```
-```bash
-mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe <path to net461 assembly with tests> <filter>
-```
+See the scripts for example filters.
 
 There are three test assemblies in the solution:
 
@@ -73,12 +71,6 @@ There are three test assemblies in the solution:
 Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<netcoreapp3.1|net461>` or `bin/Release<Core|Full>/<netcoreapp3.1|net461>` subdirectories
 of the test project.
 
-`<filter>` is a rule to choose what tests will be run. You can specify them
-using `-trait Category=<category>` and `-notrait Category=<category>` parts
-of `<filter>`. The former selects tests of
-the given category, while the latter selects test that don't belong to the given
-category. These can be combined: several `-trait` options mean that _at least one_ of the listed traits has to be present, while several `-notrait` options mean that _none_ of such traits can be present on the filtered tests.
-
 Runner executes tests in parallel by default. However, some test category must be run
 sequentially. Such categories are:
 - _Performance_
@@ -86,14 +78,11 @@ sequentially. Such categories are:
 - _CsoftModel_
 - _ModifiesGlobals_
 
-Add the `-parallel none` argument to run them.
-
 _CompilerOptionsTest_ is a category for long running tests, so, for quick
-testing you must filter these out by `-notrait`.
+testing you must filter these out by `Category!=CompilerOptionsTest`.
 _BadTest_ is a category of tests that must fail.
 _OpenBug_ is a category of tests that can fail.
 
-See the scripts for example filters.
 
 ## Fast matrix operations with Intel MKL
 Matrix operations in Infer.NET can be significantly accelerated by building with Intel MKL support.
