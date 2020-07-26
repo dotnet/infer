@@ -45,10 +45,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
         /// </summary>
         public Conversion[] Conversions;
 
+        /// <summary>
+        /// Array indexing depth needed to obtain a match.
+        /// </summary>
+        public uint Depth;
+
         public void SetTo(Binding info)
         {
             foreach (KeyValuePair<Type, Type> entry in info.Types) Types[entry.Key] = entry.Value;
             info.Conversions.CopyTo(Conversions, 0);
+            Depth = info.Depth;
         }
 
         /// <summary>
@@ -91,6 +97,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             //if (a.Types.Count < b.Types.Count) return true;
             float aWeight = Conversion.GetWeight(a.Conversions);
             float bWeight = Conversion.GetWeight(b.Conversions);
+            if (aWeight == bWeight) return a.Depth > b.Depth;
             return (aWeight < bWeight);
         }
 
@@ -584,15 +591,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 }
                 Type formalElement = formal.GetElementType();
                 Type actualElement = actual.GetElementType();
+                binding.Depth++;
                 IEnumerator<Binding> iter3 = InferGenericParameters(formalElement, actualElement, binding, errors, position, allowSubtype, conversionOptions);
                 while (iter3.MoveNext())
                 {
                     binding = iter3.Current;
-                    Conversion oldConversion = new Conversion();
+                    Conversion elementConversion = default(Conversion);
                     if (position >= 0)
                     {
-                        oldConversion = binding.Conversions[position];
-                        Conversion elementConversion = binding.Conversions[position];
+                        elementConversion = binding.Conversions[position];
                         if (elementConversion.Converter != null)
                         {
                             // if there is an element conversion, promote it to an array conversion
@@ -605,8 +612,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                     }
                     yield return binding;
                     // restore previous state
-                    if (position >= 0) binding.Conversions[position] = oldConversion;
+                    if (position >= 0) binding.Conversions[position] = elementConversion;
                 }
+                binding.Depth--;
                 yield break;
             }
             else
@@ -628,6 +636,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 int subclassCount = 0;
                 bool anyMatch = false;
                 List<Exception> innerErrors = new List<Exception>();
+                binding.Depth++;
                 foreach (Type parent in choices)
                 {
                     if (!parent.IsGenericType || !formalGenericTypeDefinition.Equals(parent.GetGenericTypeDefinition()))
@@ -651,6 +660,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                     }
                     subclassCount++;
                 }
+                binding.Depth--;
                 if (!anyMatch || innerErrors.Count > 0)
                 {
                     string formalString = StringUtil.TypeToString(formal);
@@ -853,7 +863,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
 
         public override string ToString()
         {
-            return StringUtil.DictionaryToString(Types, Environment.NewLine);
+            return $"Binding({StringUtil.DictionaryToString(Types, Environment.NewLine)}, Conversions={StringUtil.ArrayToString(Conversions)}, Depth={Depth})";
         }
 
         /// <summary>

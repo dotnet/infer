@@ -1,4 +1,4 @@
-namespace DifficultyAbilityExample
+namespace TestFSharp
 
 open System.Collections.Generic
 open Microsoft.ML.Probabilistic

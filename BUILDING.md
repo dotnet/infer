@@ -55,9 +55,10 @@ When not using Windows, expect build failure messages about examples that use WP
 ### Run unit tests
 
 Unit tests are written using the [XUnit](https://xunit.github.io/) framework.
-In order to run unit tests, build the test project and execute one of the following commands:
+The easiest way to run all tests is to execute the script `netcoretest.sh` or `monotest.sh`.
+To run unit tests manually, build the test project and execute one of the following commands:
 ```bash
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll <path to netcoreapp3.1 assembly with tests> <filter>
+dotnet test Tests -c <configuration> <filter>
 ```
 ```bash
 mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe <path to net461 assembly with tests> <filter>
@@ -92,23 +93,7 @@ testing you must filter these out by `-notrait`.
 _BadTest_ is a category of tests that must fail.
 _OpenBug_ is a category of tests that can fail.
 
-
-An example of quick testing of `Microsoft.ML.Probabilistic.Tests.dll` in `Debug` configuration after changing working directory to
-the `Tests` project looks like:
-```bash
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll bin/DebugCore/netcoreapp3.1/Microsoft.ML.Probabilistic.Tests.dll -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=Platform -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance
-
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll bin/DebugCore/netcoreapp3.1/Microsoft.ML.Probabilistic.Tests.dll -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=Platform -parallel none
-```
-To run the same set of tests on Mono:
-
-```bash
-mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe bin/DebugFull/net461/Microsoft.ML.Probabilistic.Tests.dll -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=Platform -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance
-
-mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe bin/DebugFull/net461/Microsoft.ML.Probabilistic.Tests.dll -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=Platform -parallel none
-```
-
-Helper scripts `netcoretest.sh` and `monotest.sh` for running unit tests on .NET Core and Mono respectively are located in the `test` folder.
+See the scripts for example filters.
 
 ## Fast matrix operations with Intel MKL
 Matrix operations in Infer.NET can be significantly accelerated by building with Intel MKL support.
