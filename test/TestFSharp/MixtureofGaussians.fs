@@ -4,7 +4,7 @@
 
 #light
 
-namespace MixtureGaussiansTutorial
+namespace TestFSharp
 
 open System
 open Microsoft.ML.Probabilistic
@@ -35,7 +35,7 @@ module mixture =
     //-----------------------------------
     // The model
     //----------------------------------
-    let mixtureTestFunc() = 
+    let mixtureOfGaussiansTutorial() = 
         Console.WriteLine("\n=================Running Mixture of Gaussians Tutorial=======================\n");
         // Define a range for the number of mixture components
         let k = Range(2)

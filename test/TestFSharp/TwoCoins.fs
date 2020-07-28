@@ -4,7 +4,7 @@
 
 #light
 
-namespace TwoCoinsTutorial
+namespace TestFSharp
 
 open System
 open Microsoft.ML.Probabilistic.Models
@@ -16,8 +16,7 @@ open Microsoft.ML.Probabilistic.FSharp
 //-----------------------------------------------------------------------------------
 
 module coins = 
-   
-    let twoCoinsTestFunc() = 
+    let twoCoinsTutorial() = 
         Console.WriteLine("\n========================Running Two Coins Tutorial========================\n");
         let firstCoin = Variable.Bernoulli(0.5)
         let secondCoin = Variable.Bernoulli(0.5)

@@ -31,7 +31,7 @@ html_parallel=parallel.html
 html_sequential=sequential.html
 
 # path to the xunit runner
-runner=~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe
+runner=~/.nuget/packages/xunit.runner.console/2.4.1/tools/net452/xunit.console.exe
 
 # filter for parallel test run
 parallel_filter='-notrait Platform=x86 -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance'

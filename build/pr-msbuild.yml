@@ -19,9 +19,9 @@ jobs:
   pool:
     vmImage: windows-2019
   steps:
-  - task: NuGetToolInstaller@0
+  - task: NuGetToolInstaller@1
     inputs:
-      versionSpec: '5.5.1'
+      versionSpec: '>=5.5.1'
 
   - task: NuGetCommand@2
     inputs:
@@ -43,9 +43,9 @@ jobs:
   pool:
     vmImage: windows-2019
   steps:
-  - task: NuGetToolInstaller@0
+  - task: NuGetToolInstaller@1
     inputs:
-      versionSpec: '5.5.1'
+      versionSpec: '>=5.5.1'
 
   - task: NuGetCommand@2
     inputs:

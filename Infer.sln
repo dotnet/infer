@@ -4,7 +4,9 @@ VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A181C943-2E01-454D-9008-2E3C53AA09CC}"
 	ProjectSection(SolutionItems) = preProject
+		BUILDING.md = BUILDING.md
 		Infer.snk = Infer.snk
+		README.md = README.md
 		TestRunConfig1.testrunconfig = TestRunConfig1.testrunconfig
 	EndProjectSection
 	ProjectSection(FolderStartupServices) = postProject
@@ -97,6 +99,30 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnersNuGet", "src\Learners\LearnersNuGet\LearnersNuGet.csproj", "{6BC792EE-0436-494E-9F0C-63A3822320D0}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tools.PythonScripts", "src\Tools\PythonScripts\Tools.PythonScripts.pyproj", "{D7562CC3-D48A-481D-B40C-07EE51EBBF50}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TestPython", "test\TestPython\TestPython.pyproj", "{79B39D08-DF06-47B8-B7EE-15E30EB9A209}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5759CC85-729E-479A-BF7E-8A0B8937B123}"
+	ProjectSection(SolutionItems) = preProject
+		build\common.props = build\common.props
+		build\copyassemblies.sh = build\copyassemblies.sh
+		build\evaluator-netcore.yml = build\evaluator-netcore.yml
+		build\evaluator-netframework.yml = build\evaluator-netframework.yml
+		test\monotest.sh = test\monotest.sh
+		build\netcoretest-fast.yml = build\netcoretest-fast.yml
+		test\netcoretest.sh = test\netcoretest.sh
+		build\nightly-netcore.yml = build\nightly-netcore.yml
+		build\nightly-windows.yml = build\nightly-windows.yml
+		build\nuget-properties.props = build\nuget-properties.props
+		build\pr-factordocs.yml = build\pr-factordocs.yml
+		build\pr-msbuild.yml = build\pr-msbuild.yml
+		build\pr-netcore.yml = build\pr-netcore.yml
+		build\release.yml = build\release.yml
+		build\sign.proj = build\sign.proj
+		build\updateversion.sh = build\updateversion.sh
+		build\vstest-fast.yml = build\vstest-fast.yml
+		build\windows-msbuild.yml = build\windows-msbuild.yml
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loki", "src\Loki\src\Loki\Loki.csproj", "{72230E75-6FF0-4ED9-B9FD-ED7BD8000557}"
 EndProject
@@ -598,6 +624,12 @@ Global
 		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
 		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
 		{2B970A77-8A2F-4CF1-AFBB-127DE8525918}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
+		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
