@@ -74,31 +74,31 @@ namespace Infer.Loki.Tests
                 new Func<BigFloat, BigFloat>(XMinusLog1Plus).Method
             );
 
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.Sqrt2)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(Sqrt2)));
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.Sqrt2PI)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(Sqrt2PI)));
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.InvSqrt2PI)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(InvSqrt2PI)));
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.LnSqrt2PI)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LnSqrt2PI)));
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.Ln2)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(Ln2)));
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField("DefaultBetaEpsilon", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(DefaultBetaEpsilon)));
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField("LogisticGaussianVarianceThreshold", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianVarianceThreshold)));
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(Quadrature).GetField("AdaptiveQuadratureMaxNodes", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(AdaptiveQuadratureMaxNodes)));
-            mappers.MemberMapper.CreateMap(
+            mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField("logisticGaussianSeriesApproximmationThreshold", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianSeriesApproximmationThreshold)));
         }
