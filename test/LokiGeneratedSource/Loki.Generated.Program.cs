@@ -13,7 +13,6 @@ namespace Loki.Generated
         static async Task Main(string[] args)
         {
             var logFilePath = Path.Combine(Environment.CurrentDirectory, "log.csv");
-            Environment.CurrentDirectory = Path.GetFullPath(Path.Combine("..", "..", "..", "..", "Tests"));
 
             //var result = await TestRunner.RunTestAsync(new ConstrainEqualTests().ConstrainEqualCaseArrayTest, 0);
             //Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");

@@ -32,6 +32,10 @@ namespace Infer.Loki.Tests
                     new Type[] { typeof(string), typeof(BigFloat).MakeByRefType() },
                     null)
             );
+
+            mappers.PermanentMemberMapper.CreateMap(
+                typeof(TestUtils).GetProperty(nameof(TestUtils.DataFolderPath)),
+                typeof(TestHelpersMethods).GetField(nameof(TestHelpersMethods.DataFolderPath)));
         }
     }
 }

@@ -81,9 +81,8 @@ namespace Infer.Loki.Tests
 
             var transformer = new TestTransformer(settings);
             await transformer.Build();
-            Environment.CurrentDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "Tests");
-            //var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new OperatorTests().ExpMinus1RatioMinus1RatioMinusHalf_IsIncreasing), 0);
-            //Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
+            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new SpecialFunctionsTests().GammaSpecialFunctionsTest), 0);
+            Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
 
             //var tests = transformer.EnumerateTransformedTests()
             //    .Where(ti => ti.Method.ReflectedType.Name == typeof(SpecialFunctionsTests).Name /*&& ti.Method.Name != "NormalCdfIntegralTest"*/)
