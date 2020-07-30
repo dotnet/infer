@@ -9,7 +9,6 @@ namespace Infer.Loki.Mappings
     public static class ExpressionEvaluatorMethods
     {
         private static readonly CodeBuilder Builder = CodeBuilder.Instance;
-        private static readonly string formatString = $"b{BigFloatFactory.FloatingPointBase}d0";
 
         public static IExpression Quote(object p)
         {
@@ -17,7 +16,7 @@ namespace Infer.Loki.Mappings
             {
                 return Builder.NewObject(
                     Builder.TypeRef(typeof(DoubleWithTransformingPrecision)),
-                    Builder.LiteralExpr(dwtp.InternalValue.ToString(formatString, CultureInfo.InvariantCulture)));
+                    Builder.LiteralExpr(dwtp.ToInvariantRoundTrippingString()));
             }
             else
                 return ExpressionEvaluator.Quote(p);
