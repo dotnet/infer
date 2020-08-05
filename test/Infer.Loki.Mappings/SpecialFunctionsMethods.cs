@@ -519,7 +519,10 @@ namespace Infer.Loki.Mappings
         {
             var result = BigFloatFactory.Create(x);
             result.Exp();
-            result.Log1p();
+            if (result.IsInf())
+                BigFloat.Set(result, x);
+            else
+                result.Log1p();
             return result;
         }
 
@@ -545,7 +548,10 @@ namespace Infer.Loki.Mappings
         {
             var result = BigFloatFactory.Create(x);
             result.Expm1();
-            result.Log();
+            if (result.IsInf())
+                BigFloat.Set(result, x);
+            else
+                result.Log();
             return result;
         }
 
