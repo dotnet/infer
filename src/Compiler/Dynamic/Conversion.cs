@@ -474,9 +474,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 }
             }
             // check for custom conversions
-            MemberInfo[] implicits = fromType.FindMembers(MemberTypes.Method, BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, Type.FilterName,
+            MemberInfo[] implicitsOnFromType = fromType.FindMembers(MemberTypes.Method, BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, Type.FilterName,
                                                           "op_Implicit");
-            foreach (MemberInfo member in implicits)
+            foreach (MemberInfo member in implicitsOnFromType)
             {
                 MethodInfo method = (MethodInfo) member;
                 if (method.ReturnType == toType)
@@ -489,12 +489,45 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                     return true;
                 }
             }
-            MemberInfo[] explicits = fromType.FindMembers(MemberTypes.Method, BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, Type.FilterName,
+            MemberInfo[] implicitsOnToType = toType.FindMembers(MemberTypes.Method, BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, Type.FilterName,
+                                                          "op_Implicit");
+            foreach (MemberInfo member in implicitsOnToType)
+            {
+                MethodInfo method = (MethodInfo)member;
+                ParameterInfo[] parameters = method.GetParameters();
+                if (parameters.Length == 1 && parameters[0].ParameterType == fromType)
+                {
+                    info.SubclassCount = 1000;
+                    info.Converter = delegate (object value)
+                    {
+                        return Util.Invoke(method, null, value);
+                    };
+                    return true;
+                }
+            }
+            MemberInfo[] explicitsOnFromType = fromType.FindMembers(MemberTypes.Method, BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, Type.FilterName,
                                                           "op_Explicit");
-            foreach (MemberInfo member in explicits)
+            foreach (MemberInfo member in explicitsOnFromType)
             {
                 MethodInfo method = (MethodInfo) member;
                 if (method.ReturnType == toType)
+                {
+                    info.IsExplicit = true;
+                    info.Converter = delegate (object value)
+                    {
+                        return Util.Invoke(method, null, value);
+                    };
+                    return true;
+                }
+            }
+            MemberInfo[] explicitsOnToType = toType.FindMembers(MemberTypes.Method, BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, Type.FilterName,
+                                                          "op_Explicit");
+
+            foreach (MemberInfo member in explicitsOnToType)
+            {
+                MethodInfo method = (MethodInfo)member;
+                ParameterInfo[] parameters = method.GetParameters();
+                if (parameters.Length == 1 && parameters[0].ParameterType == fromType)
                 {
                     info.IsExplicit = true;
                     info.Converter = delegate (object value)
