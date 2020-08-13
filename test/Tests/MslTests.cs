@@ -70,7 +70,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         [Fact]
         [Trait("Category", "CsoftModel")]
-        [Trait("Category", "OpenBug")]
         public void MethodInAnotherFileTest()
         {
             Assert.Throws<CompilationFailedException>(() =>

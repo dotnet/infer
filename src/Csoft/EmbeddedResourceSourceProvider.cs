@@ -4,10 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -17,17 +16,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
     {
         public SourceCode TryGetSource(Type t)
         {
-            var asm = t.Assembly;
-            return asm.GetManifestResourceNames().Where(s => s.EndsWith(".cs")).Select(s =>
+            bool IsPrimaryFile(SourceFile sf)
             {
-                var stream = asm.GetManifestResourceStream(s);
-                using (var reader = new StreamReader(stream))
-                {
-                    return new SourceCode(s, reader.ReadToEnd());
-                }
-            }).FirstOrDefault(code =>
-            {
-                var tree = CSharpSyntaxTree.ParseText(code.SourceText, null, code.FilePath);
+                var tree = CSharpSyntaxTree.ParseText(sf.SourceText, null, sf.FilePath);
                 var root = tree.GetRoot();
                 var typeDecl = root.DescendantNodes()
                                  .OfType<NamespaceDeclarationSyntax>()
@@ -38,7 +29,24 @@ namespace Microsoft.ML.Probabilistic.Compiler
                                  .Where(md => md.Identifier.ValueText.Equals(t.Name))
                                  .FirstOrDefault();
                 return typeDecl != null;
-            });
+            }
+            var asm = t.Assembly;
+            SourceFile primaryFile = null;
+            List<SourceFile> additionalFiles = new List<SourceFile>();
+            foreach (var s in asm.GetManifestResourceNames().Where(s => s.EndsWith(".cs")))
+            {
+                SourceFile sf;
+                var stream = asm.GetManifestResourceStream(s);
+                using (var reader = new StreamReader(stream))
+                {
+                    sf = new SourceFile(s, reader.ReadToEnd());
+                }
+                if (primaryFile == null && IsPrimaryFile(sf))
+                    primaryFile = sf;
+                else
+                    additionalFiles.Add(sf);
+            }
+            return primaryFile == null ? null : new SourceCode(primaryFile, additionalFiles.ToImmutableArray());
         }
     }
 }
