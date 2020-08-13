@@ -143,6 +143,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(Conversion.TryGetConversion(typeof (Tester), typeof (int[]), out conv));
             o = conv.Converter(t);
             Console.WriteLine("{0}: {1}", o.GetType(), o);
+            Assert.True(Conversion.TryGetConversion(typeof(int), typeof(Tester), out conv));
+            Assert.True(conv.IsExplicit);
+            Assert.True(Conversion.TryGetConversion(typeof(int[]), typeof(Tester), out conv));
+            Assert.True(conv.IsExplicit);
+            Assert.True(Conversion.TryGetConversion(typeof(ImplicitlyConvertibleToTesterDefinesCast), typeof(Tester), out conv));
+            Assert.False(conv.IsExplicit);
+            Assert.True(Conversion.TryGetConversion(typeof(ImplicitlyConvertibleToTesterCastDefinedOnTester), typeof(Tester), out conv));
+            Assert.False(conv.IsExplicit);
 
             // conversion from null
             Assert.False(Conversion.TryGetConversion(typeof (Nullable), typeof (int), out conv));
@@ -842,7 +850,34 @@ namespace Microsoft.ML.Probabilistic.Tests
           {
             return t.arrayField;
           }
+
+            public static explicit operator Tester(int x)
+            {
+                var tester = new Tester
+                {
+                    intField = x
+                };
+                return tester;
+            }
+
+            public static explicit operator Tester(int[] x)
+            {
+                var tester = new Tester
+                {
+                    arrayField = x
+                };
+                return tester;
+            }
+
+            public static implicit operator Tester(ImplicitlyConvertibleToTesterCastDefinedOnTester _) => new Tester();
         }
+
+        public class ImplicitlyConvertibleToTesterDefinesCast
+        {
+            public static implicit operator Tester(ImplicitlyConvertibleToTesterDefinesCast _) => new Tester();
+        }
+
+        public class ImplicitlyConvertibleToTesterCastDefinedOnTester { }
 
         /// <summary>
         /// Help class of dynamically invoking methods.
