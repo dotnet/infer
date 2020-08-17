@@ -74,6 +74,7 @@ namespace Infer.Loki.Tests
             settings.Mappers.AddMap(new TestHelpersMap());
             settings.Mappers.AddMap(new ExpressionEvaluatorMap());
             settings.Mappers.AddMap(new LanguageWriterMap());
+            settings.Mappers.AddMap(new ConversionMap());
 
             settings.CSharpParseOptions = settings.CSharpParseOptions.WithPreprocessorSymbols(new[] { "NETFULL", "ROSLYN", "CODEDOM", "TRACE", "SUPPRESS_XMLDOC_WARNINGS", "SUPPRESS_UNREACHABLE_CODE_WARNINGS", "SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS" });
 
@@ -81,7 +82,7 @@ namespace Infer.Loki.Tests
 
             var transformer = new TestTransformer(settings);
             await transformer.Build();
-            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new SpecialFunctionsTests().GammaSpecialFunctionsTest), 0);
+            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new TypeInferenceTests().ConversionTest), 0);
             Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
 
             //var tests = transformer.EnumerateTransformedTests()
