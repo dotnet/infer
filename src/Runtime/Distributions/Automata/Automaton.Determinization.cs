@@ -297,8 +297,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 public WeightedState(int index, Weight weight)
                 {
                     this.Index = index;
-                    this.WeightHighBits = (int)(BitConverter.DoubleToInt64Bits(weight.LogValue) >> 32);
+                    this.WeightHighBits = GetWeightHighBits(weight.LogValue);
                     this.Weight = weight;
+                }
+
+                private static int GetWeightHighBits(double logWeight)
+                {
+                    return (int)(BitConverter.DoubleToInt64Bits(logWeight) >> 32);
                 }
 
                 public int CompareTo(object obj)
