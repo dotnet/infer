@@ -70,6 +70,7 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex(@"^Loki\.Mapping$"));
 
             settings.Mappers.AddMap(new AssertionMap());
+            settings.Mappers.AddMap(new AutomatonMap());
             settings.Mappers.AddMap(new SpecialFunctionsMap());
             settings.Mappers.AddMap(new TestHelpersMap());
             settings.Mappers.AddMap(new ExpressionEvaluatorMap());
