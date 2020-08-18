@@ -6,7 +6,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 {
     using System;
     using Xunit;
-    using Microsoft.ML.Probabilistic.Utilities;
+    //using Microsoft.ML.Probabilistic.Utilities;
 
     
 
@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void TestBatchSelection()
         {
-            var array = Util.ArrayInit(736, i => i);
+            var array = Microsoft.ML.Probabilistic.Utilities.Util.ArrayInit(736, i => i);
 
             // Test invalid arguments
             Assert.Throws<ArgumentNullException>(() => Utilities.GetBatch<int>(0, null, 1));
