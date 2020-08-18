@@ -13,13 +13,11 @@ namespace Infer.Loki.Tests
 {
     class Program
     {
-        enum TestProjects { Tests, LearnersTests }
-
         public static async Task Main()
         {
             //Infer.Loki.Mappings.SpecialFunctionsMethods.FindThresholds();
             //return;
-            Settings settings = GetSettings(TestProjects.Tests);
+            Settings settings = GetSettings();
 
             var transformer = new TestTransformer(settings);
             await transformer.Build();
@@ -64,12 +62,12 @@ namespace Infer.Loki.Tests
             //Console.WriteLine(result.Message);
         }
 
-        private static Settings GetSettings(TestProjects testProject)
+        private static Settings GetSettings()
         {
             var solutionPath = Path.GetFullPath(Path.Combine("..", "..", "..", "..", "..", "Infer.sln"));
             var settings = new Settings(solutionPath);
             settings.WriteGeneratedSource = true;
-            settings.GeneratedSourceDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "LokiGeneratedSource", testProject.ToString());
+            settings.GeneratedSourceDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "LokiGeneratedSource");
             //settings.OverwriteGeneratedProgram = true;
 
             // Examples
@@ -91,15 +89,6 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex("^Evaluator"));
             settings.ExcludeProject(new Regex("^LearnersNuGet"));
             settings.ExcludeProject(new Regex(@"^Microsoft\.ML\.Probabilistic\.Learners\.TestApp"));
-            if (testProject != TestProjects.LearnersTests)
-            {
-                settings.ExcludeProject(new Regex("^Core"));
-                settings.ExcludeProject(new Regex("^Recommender"));
-                settings.ExcludeProject(new Regex("^Classifier"));
-                settings.ExcludeProject(new Regex("^Common"));
-                settings.ExcludeProject(new Regex("^CommandLine"));
-                settings.ExcludeProject(new Regex("^LearnersTests"));
-            }
 
             settings.ExcludeProject(new Regex(@"^FSharpWrapper"));
             settings.ExcludeProject(new Regex(@"^TestApp"));
@@ -120,16 +109,9 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex(@"^Loki\.Tests$"));
             settings.ExcludeProject(new Regex(@"^Loki$"));
             settings.ExcludeProject(new Regex(@"^Loki\.Mapping$"));
-            if (testProject != TestProjects.Tests)
-            {
-                settings.ExcludeProject(new Regex(@"^Tests"));
-            }
 
-            if (testProject != TestProjects.Tests)
-            {
-                settings.Mappers.AddMap(new AssertionMap());
-                settings.Mappers.AddMap(new TestHelpersMap());
-            }
+            settings.Mappers.AddMap(new AssertionMap());
+            settings.Mappers.AddMap(new TestHelpersMap());
             settings.Mappers.AddMap(new AutomatonMap());
             settings.Mappers.AddMap(new SpecialFunctionsMap());
             settings.Mappers.AddMap(new ExpressionEvaluatorMap());
