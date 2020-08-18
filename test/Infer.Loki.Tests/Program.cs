@@ -13,73 +13,13 @@ namespace Infer.Loki.Tests
 {
     class Program
     {
+        enum TestProjects { Tests, LearnersTests }
+
         public static async Task Main()
         {
             //Infer.Loki.Mappings.SpecialFunctionsMethods.FindThresholds();
             //return;
-            var solutionPath = Path.GetFullPath(Path.Combine("..", "..", "..", "..", "..", "Infer.sln"));
-            var settings = new Settings(solutionPath);
-            settings.WriteGeneratedSource = true;
-            settings.GeneratedSourceDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "LokiGeneratedSource");
-            //settings.OverwriteGeneratedProgram = true;
-
-            // Examples
-            settings.ExcludeProject(new Regex("^ClickThroughModel"));
-            settings.ExcludeProject(new Regex("^ClinicalTrial"));
-            settings.ExcludeProject(new Regex("^Crowdsourcing"));
-            settings.ExcludeProject(new Regex("^CrowdsourcingWithWords"));
-            settings.ExcludeProject(new Regex("^Image_Classifier"));
-            settings.ExcludeProject(new Regex("^InferNET101"));
-            settings.ExcludeProject(new Regex("^LDA"));
-            settings.ExcludeProject(new Regex("^MontyHall"));
-            settings.ExcludeProject(new Regex("^MotifFinder"));
-            settings.ExcludeProject(new Regex("^ReviewerCalibration"));
-            settings.ExcludeProject(new Regex("^RobustGaussianProcess"));
-
-            // Learners
-            settings.ExcludeProject(new Regex("^ClassifierModels"));
-            settings.ExcludeProject(new Regex("^Core"));
-            settings.ExcludeProject(new Regex("^RecommenderModels"));
-            settings.ExcludeProject(new Regex("^Recommender"));
-            settings.ExcludeProject(new Regex("^Classifier"));
-            settings.ExcludeProject(new Regex("^Common"));
-            settings.ExcludeProject(new Regex("^CommandLine"));
-            settings.ExcludeProject(new Regex("^Evaluator"));
-            settings.ExcludeProject(new Regex("^LearnersTests"));
-            settings.ExcludeProject(new Regex("^LearnersNuGet"));
-            settings.ExcludeProject(new Regex(@"^Microsoft\.ML\.Probabilistic\.Learners\.TestApp"));
-
-            settings.ExcludeProject(new Regex(@"^FSharpWrapper"));
-            settings.ExcludeProject(new Regex(@"^TestApp"));
-            settings.ExcludeProject(new Regex(@"^TestFSharp"));
-            settings.ExcludeProject(new Regex(@"^TestPublic"));
-            settings.ExcludeProject(new Regex(@"^Tools\.BuildFactorDoc"));
-            settings.ExcludeProject(new Regex(@"^Tools\.GenerateSeries"));
-            settings.ExcludeProject(new Regex(@"^Tools\.PrepareSource"));
-            settings.ExcludeProject(new Regex("^Tutorials"));
-            settings.ExcludeProject(new Regex(@"^Visualizers\.Windows"));
-
-            settings.ExcludeProject(new Regex(@"^Infer\.Loki\.Tests"));
-
-            settings.ExcludeProject(new Regex("^generated"));
-
-            settings.PreserveNamespace(new Regex(@"^Infer\.Loki\.Mappings"));
-
-            settings.ExcludeProject(new Regex(@"^Loki\.Tests$"));
-            settings.ExcludeProject(new Regex(@"^Loki$"));
-            settings.ExcludeProject(new Regex(@"^Loki\.Mapping$"));
-
-            settings.Mappers.AddMap(new AssertionMap());
-            settings.Mappers.AddMap(new AutomatonMap());
-            settings.Mappers.AddMap(new SpecialFunctionsMap());
-            settings.Mappers.AddMap(new TestHelpersMap());
-            settings.Mappers.AddMap(new ExpressionEvaluatorMap());
-            settings.Mappers.AddMap(new LanguageWriterMap());
-            settings.Mappers.AddMap(new ConversionMap());
-
-            settings.CSharpParseOptions = settings.CSharpParseOptions.WithPreprocessorSymbols(new[] { "NETFULL", "ROSLYN", "CODEDOM", "TRACE", "SUPPRESS_XMLDOC_WARNINGS", "SUPPRESS_UNREACHABLE_CODE_WARNINGS", "SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS" });
-
-            settings.PostprocessReferences = refs => refs.Where(r => !r.Display.Contains("System.CodeDom"));
+            Settings settings = GetSettings(TestProjects.Tests);
 
             var transformer = new TestTransformer(settings);
             await transformer.Build();
@@ -122,6 +62,84 @@ namespace Infer.Loki.Tests
             //var result = await TestRunner.RunTestIsolatedAsync(test, 0);
             //Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}");
             //Console.WriteLine(result.Message);
+        }
+
+        private static Settings GetSettings(TestProjects testProject)
+        {
+            var solutionPath = Path.GetFullPath(Path.Combine("..", "..", "..", "..", "..", "Infer.sln"));
+            var settings = new Settings(solutionPath);
+            settings.WriteGeneratedSource = true;
+            settings.GeneratedSourceDirectory = Path.Combine(Path.GetDirectoryName(solutionPath), "test", "LokiGeneratedSource", testProject.ToString());
+            //settings.OverwriteGeneratedProgram = true;
+
+            // Examples
+            settings.ExcludeProject(new Regex("^ClickThroughModel"));
+            settings.ExcludeProject(new Regex("^ClinicalTrial"));
+            settings.ExcludeProject(new Regex("^Crowdsourcing"));
+            settings.ExcludeProject(new Regex("^CrowdsourcingWithWords"));
+            settings.ExcludeProject(new Regex("^Image_Classifier"));
+            settings.ExcludeProject(new Regex("^InferNET101"));
+            settings.ExcludeProject(new Regex("^LDA"));
+            settings.ExcludeProject(new Regex("^MontyHall"));
+            settings.ExcludeProject(new Regex("^MotifFinder"));
+            settings.ExcludeProject(new Regex("^ReviewerCalibration"));
+            settings.ExcludeProject(new Regex("^RobustGaussianProcess"));
+
+            // Learners
+            settings.ExcludeProject(new Regex("^ClassifierModels"));
+            settings.ExcludeProject(new Regex("^RecommenderModels"));
+            settings.ExcludeProject(new Regex("^Evaluator"));
+            settings.ExcludeProject(new Regex("^LearnersNuGet"));
+            settings.ExcludeProject(new Regex(@"^Microsoft\.ML\.Probabilistic\.Learners\.TestApp"));
+            if (testProject != TestProjects.LearnersTests)
+            {
+                settings.ExcludeProject(new Regex("^Core"));
+                settings.ExcludeProject(new Regex("^Recommender"));
+                settings.ExcludeProject(new Regex("^Classifier"));
+                settings.ExcludeProject(new Regex("^Common"));
+                settings.ExcludeProject(new Regex("^CommandLine"));
+                settings.ExcludeProject(new Regex("^LearnersTests"));
+            }
+
+            settings.ExcludeProject(new Regex(@"^FSharpWrapper"));
+            settings.ExcludeProject(new Regex(@"^TestApp"));
+            settings.ExcludeProject(new Regex(@"^TestFSharp"));
+            settings.ExcludeProject(new Regex(@"^TestPublic"));
+            settings.ExcludeProject(new Regex(@"^Tools\.BuildFactorDoc"));
+            settings.ExcludeProject(new Regex(@"^Tools\.GenerateSeries"));
+            settings.ExcludeProject(new Regex(@"^Tools\.PrepareSource"));
+            settings.ExcludeProject(new Regex("^Tutorials"));
+            settings.ExcludeProject(new Regex(@"^Visualizers\.Windows"));
+
+            settings.ExcludeProject(new Regex(@"^Infer\.Loki\.Tests"));
+
+            settings.ExcludeProject(new Regex("^generated"));
+
+            settings.PreserveNamespace(new Regex(@"^Infer\.Loki\.Mappings"));
+
+            settings.ExcludeProject(new Regex(@"^Loki\.Tests$"));
+            settings.ExcludeProject(new Regex(@"^Loki$"));
+            settings.ExcludeProject(new Regex(@"^Loki\.Mapping$"));
+            if (testProject != TestProjects.Tests)
+            {
+                settings.ExcludeProject(new Regex(@"^Tests"));
+            }
+
+            if (testProject != TestProjects.Tests)
+            {
+                settings.Mappers.AddMap(new AssertionMap());
+                settings.Mappers.AddMap(new TestHelpersMap());
+            }
+            settings.Mappers.AddMap(new AutomatonMap());
+            settings.Mappers.AddMap(new SpecialFunctionsMap());
+            settings.Mappers.AddMap(new ExpressionEvaluatorMap());
+            settings.Mappers.AddMap(new LanguageWriterMap());
+            settings.Mappers.AddMap(new ConversionMap());
+
+            settings.CSharpParseOptions = settings.CSharpParseOptions.WithPreprocessorSymbols(new[] { "NETFULL", "ROSLYN", "CODEDOM", "TRACE", "SUPPRESS_XMLDOC_WARNINGS", "SUPPRESS_UNREACHABLE_CODE_WARNINGS", "SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS" });
+
+            settings.PostprocessReferences = refs => refs.Where(r => !r.Display.Contains("System.CodeDom"));
+            return settings;
         }
     }
 }
