@@ -118,15 +118,15 @@ namespace Microsoft.ML.Probabilistic.Factors
     public static class Damp
     {
         /// <summary>
-        /// Copy a value and damp the backward message.
+        /// Copy a value and damp the message from the copy to the original.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <param name="stepsize">1.0 means no damping, 0.0 is infinite damping.</param>
         /// <returns></returns>
         /// <remarks>
-        /// If you use this factor, be sure to increase the number of algorithm iterations appropriately.
-        /// The number of iterations should increase according to the reciprocal of stepsize.
+        /// If you use this factor, be sure to multiply your convergence tolerance by stepsize.
+        /// Equivalently, use the same convergence tolerance but measure the difference between iterations spaced apart by 1/stepsize.
         /// </remarks>
         public static T Backward<T>([IsReturned] T value, double stepsize)
         {
@@ -134,15 +134,15 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <summary>
-        /// Copy a value and damp the forward message.
+        /// Copy a value and damp the message from the original to the copy.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <param name="stepsize">1.0 means no damping, 0.0 is infinite damping.</param>
         /// <returns></returns>
         /// <remarks>
-        /// If you use this factor, be sure to increase the number of algorithm iterations appropriately.
-        /// The number of iterations should increase according to the reciprocal of stepsize.
+        /// If you use this factor, be sure to multiply your convergence tolerance by stepsize.
+        /// Equivalently, use the same convergence tolerance but measure the difference between iterations spaced apart by 1/stepsize.
         /// </remarks>
         public static T Forward<T>([IsReturned] T value, double stepsize)
         {

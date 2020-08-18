@@ -18,6 +18,9 @@ namespace Microsoft.ML.Probabilistic.Tests
 {
     using GaussianArray = DistributionStructArray<Gaussian, double>;
 
+    /// <summary>
+    /// Measure the speed of different implementations of the Bayes Point Machine.
+    /// </summary>
     public class BpmSpeedTests
     {
         public class Instance
@@ -82,14 +85,15 @@ namespace Microsoft.ML.Probabilistic.Tests
 #pragma warning disable 162
 #endif
 
+        static readonly string dataFolder = @"c:\Users\minka\Downloads\rcv1";
+
         public static void Rcv1Test(double wVariance, double biasVariance)
         {
             int count = 0;
             if (false)
             {
                 int maxFeatureIndex = 0;
-                //TODO: change path
-                foreach (Instance instance in new VwReader(@"c:\Users\minka\Downloads\rcv1\rcv1.train.vw.gz"))
+                foreach (Instance instance in new VwReader(Path.Combine(dataFolder, "rcv1.train.vw.gz")))
                 {
                     count++;
                     if (count%10000 == 0) Console.WriteLine(count);
@@ -105,18 +109,15 @@ namespace Microsoft.ML.Probabilistic.Tests
             var predict = new BpmPredict2();
             train.SetPriors(nf, wVariance, biasVariance);
 
-            //TODO: change path
-            StreamWriter writer = new StreamWriter(@"c:\Users\minka\Downloads\rcv1\log.txt");
+            StreamWriter writer = new StreamWriter(Path.Combine(dataFolder, "log.txt"));
             int errors = 0;
             //int errors2 = 0;
-            //TODO: change path
-            //StreamReader reader = new StreamReader(@"c:\Users\minka\Downloads\rcv1\preds.txt");
+            //StreamReader reader = new StreamReader(Path.Combine(dataFolder, "preds.txt");
             // takes 92s to train
             // takes 74s just to read the data
             // takes 15s just to do 'wc' on the data
             // there are 781265 data points in train, 23149 in test
-            //TODO: change path
-            foreach (Instance instance in new VwReader(@"c:\Users\minka\Downloads\rcv1\rcv1.train.vw.gz"))
+            foreach (Instance instance in new VwReader(Path.Combine(dataFolder, "rcv1.train.vw.gz")))
             {
                 predict.SetPriors(train.wPost, train.biasPost);
                 bool yPred = predict.Predict(instance);
@@ -135,16 +136,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
             writer.Dispose();
-#if HAS_BINARY_FORMATTER
-        // In the .NET 5.0 BinaryFormatter is obsolete
-        // and would produce errors. This test code should be migrated. 
-        // See https://github.com/GrabYourPitchforks/docs/blob/bf_obsoletion_docs/docs/standard/serialization/resolving-binaryformatter-obsoletion-errors.md
+#if NETFULL
+            // In the .NET 5.0 BinaryFormatter is obsolete
+            // and would produce errors. This test code should be migrated. 
+            // See https://aka.ms/binaryformatter
 
             if (true)
             {
                 BinaryFormatter serializer = new BinaryFormatter();
-                //TODO: change path
-                using (Stream stream = File.Create(@"c:\Users\minka\Downloads\rcv1\weights.bin"))
+                using (Stream stream = File.Create(Path.Combine(dataFolder, "weights.bin")))
                 {
                     serializer.Serialize(stream, train.wPost);
                     serializer.Serialize(stream, train.biasPost);
@@ -170,17 +170,16 @@ namespace Microsoft.ML.Probabilistic.Tests
 #pragma warning restore 162
 #endif
 
-#if HAS_BINARY_FORMATTER
+#if NETFULL
         public static void Rcv1Test2()
         {
             GaussianArray wPost;
             Gaussian biasPost;
             BinaryFormatter serializer = new BinaryFormatter();
-            //TODO: change path
-            using (Stream stream = File.OpenRead(@"c:\Users\minka\Downloads\rcv1\weights.bin"))
+            using (Stream stream = File.OpenRead(Path.Combine(dataFolder, "weights.bin")))
             {
-                wPost = (GaussianArray) serializer.Deserialize(stream);
-                biasPost = (Gaussian) serializer.Deserialize(stream);
+                wPost = (GaussianArray)serializer.Deserialize(stream);
+                biasPost = (Gaussian)serializer.Deserialize(stream);
             }
             if (true)
             {
@@ -192,8 +191,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             predict.SetPriors(wPost, biasPost);
             int count = 0;
             int errors = 0;
-            //TODO: change path
-            foreach (Instance instance in new VwReader(@"c:\Users\minka\Downloads\rcv1\rcv1.test.vw.gz"))
+            foreach (Instance instance in new VwReader(Path.Combine(dataFolder, "rcv1.test.vw.gz")))
             {
                 bool yPred = predict.Predict(instance);
                 if (yPred != instance.label) errors++;
@@ -211,8 +209,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             double biasVariance = 10;
             train.SetPriors(nf, wVariance, biasVariance);
             int count = 0;
-            //TODO: change path
-            foreach (Instance instance in new VwReader(@"c:\Users\minka\Downloads\rcv1\rcv1.train.vw.gz"))
+            foreach (Instance instance in new VwReader(Path.Combine(dataFolder, "rcv1.train.vw.gz")))
             {
                 train.Train(instance);
                 count++;
