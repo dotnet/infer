@@ -1003,7 +1003,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             Range W = new Range(sizeVocab).Named("W");
             Range T = new Range(numTopics).Named("T");
-            var Theta = Variable<Vector>.DirichletSymmetric(numTopics, 0.1).Named("Theta");
+            var Theta = Variable<Vector>.DirichletSymmetric(numTopics, 0.125).Named("Theta");
             Theta.SetValueRange(T);
             var Phi = Variable.Array<Vector>(T).Named("Phi");
             Phi.SetValueRange(W);
@@ -1021,7 +1021,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.NumberOfIterations = 1;
 
             Word.ObservedValue = 0;
-            PhiPrior.ObservedValue = Util.ArrayInit(numTopics, d => Dirichlet.Symmetric(sizeVocab, 0.1));
+            PhiPrior.ObservedValue = Util.ArrayInit(numTopics, d => Dirichlet.Symmetric(sizeVocab, 0.125));
             Phi.AddAttribute(QueryTypes.Marginal);
             Phi.AddAttribute(QueryTypes.MarginalDividedByPrior);
             var PhiOutput = engine.Infer<Dirichlet[]>(Phi, QueryTypes.MarginalDividedByPrior)[0];
@@ -1029,6 +1029,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var phiManualOut = new Dirichlet(phiMarg);
             phiManualOut.SetToRatio(phiMarg, PhiPrior.ObservedValue[0], false);
 
+            // Since we check for exact equality here, the numbers in the problem must be exactly representable.
             Assert.Equal(phiManualOut, PhiOutput);
         }
     }
