@@ -1680,12 +1680,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma g = new Gamma(1.0, m);
             double median = -m * System.Math.Log(0.5);
             Assert.Equal(0.5, g.GetProbLessThan(median), 1e-4);
-            Assert.Equal(median, g.GetQuantile(0.5));
+            AssertAlmostEqual(median, g.GetQuantile(0.5));
 
             g = new Gamma(2, m);
             double probability = g.GetProbLessThan(median);
             double quantile = g.GetQuantile(probability);
             Assert.Equal(median, quantile, 1e-10);
+        }
+
+        internal static void AssertAlmostEqual(double x, double y)
+        {
+            Assert.False(SpecialFunctionsTests.IsErrorSignificant(1e-16, x - y));
         }
 
         [Fact]
