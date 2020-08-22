@@ -98,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// Controls if debug information is included in generated DLLs.  If true, debug information will 
         /// be included which allows stepping through the generated code in a debugger.
         /// </summary>
-        public bool IncludeDebugInformation { get; set; } = true;
+        public bool IncludeDebugInformation { get; set; } = false;
 
         /// <summary>
         /// If true, prints compilation progress information to the console during model compilation.

@@ -11,7 +11,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="FastSumOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "Sum", typeof(double[]), Default=true)]
+    [FactorMethod(typeof(Factor), "Sum", typeof(double[]), Default = true)]
     [Quality(QualityBand.Mature)]
     public static class FastSumOp
     {
@@ -97,7 +97,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 return result;
             }
-            double totalMean, totalVariance;
             double sumMean, sumVariance;
             sum.GetMeanAndVarianceImproper(out sumMean, out sumVariance);
 
@@ -123,39 +122,61 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (indexOfUniform >= 0)
             {
                 // exactly one element of array is uniform.
-                totalMean = 0;
-                totalVariance = 0;
                 for (int i = 0; i < array.Count; i++)
                 {
                     if (i == indexOfUniform)
                         continue;
-                    double meani, variancei;
-                    array[i].GetMeanAndVarianceImproper(out meani, out variancei);
-                    totalMean += meani;
-                    totalVariance += variancei;
                     result[i] = new Gaussian();
                 }
-                // totalMean = sum_{i except indexOfUniform} array[i].GetMean()
-                // totalVariance = sum_{i except indexOfUniform} array[i].GetVariance()
-                result[indexOfUniform] = new Gaussian(sumMean - totalMean, sumVariance + totalVariance);
+                var (sumExceptMean, sumExceptVariance) = SumExcept(array, indexOfUniform);
+                // sumExceptMean = sum_{i except indexOfUniform} array[i].GetMean()
+                // sumExceptVariance = sum_{i except indexOfUniform} array[i].GetVariance()
+                result[indexOfUniform] = new Gaussian(sumMean - sumExceptMean, sumVariance + sumExceptVariance);
                 return result;
             }
             // at this point, the array has no uniform elements.
 
             // get the mean and variance of sum of all the Gaussians;
+            double totalMean, totalVariance;
             to_sum.GetMeanAndVarianceImproper(out totalMean, out totalVariance);
 
             // subtract it off from the mean and variance of incoming Gaussian from Sum
-            totalMean = sumMean - totalMean;
-            totalVariance = sumVariance + totalVariance;
+            double totalMsgMean = sumMean - totalMean;
+            double totalMsgVariance = sumVariance + totalVariance;
 
             for (int i = 0; i < array.Count; i++)
             {
                 double meani, variancei;
                 array[i].GetMeanAndVarianceImproper(out meani, out variancei);
-                result[i] = new Gaussian(totalMean + meani, totalVariance - variancei);
+                double msgMean = totalMsgMean + meani;
+                double msgVariance = totalMsgVariance - variancei;
+                if (Math.Abs(msgVariance) < Math.Abs(totalMsgVariance) * 1e-10)
+                {
+                    // Avoid loss of precision by recalculating the sum
+                    // This should happen for at most one i
+                    var (sumExceptMean, sumExceptVariance) = SumExcept(array, i);
+                    msgMean = sumMean - sumExceptMean;
+                    msgVariance = sumVariance + sumExceptVariance;
+                }
+                result[i] = new Gaussian(msgMean, msgVariance);
             }
             return result;
+        }
+
+        public static (double, double) SumExcept(IList<Gaussian> array, int excludedIndex)
+        {
+            double totalMean = 0;
+            double totalVariance = 0;
+            for (int j = 0; j < array.Count; j++)
+            {
+                if (j == excludedIndex)
+                    continue;
+                double meanj, variancej;
+                array[j].GetMeanAndVarianceImproper(out meanj, out variancej);
+                totalMean += meanj;
+                totalVariance += variancej;
+            }
+            return (totalMean, totalVariance);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="FastSumOp"]/message_doc[@name="ArrayAverageConditional(Gaussian, Gaussian, Gaussian[], Gaussian[])"]/*'/>
@@ -459,19 +480,19 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static GaussianList ArrayAverageLogarithm4<GaussianList>([SkipIfUniform] Gaussian sum, [Proper] IList<Gaussian> array, GaussianList to_array)
             where GaussianList : IList<Gaussian>, ICloneable
         {
-            GaussianList array2 = (GaussianList) to_array.Clone();
+            GaussianList array2 = (GaussianList)to_array.Clone();
             for (int i = 0; i < array.Count; i++)
             {
                 array2[i] = array[i];
             }
-            GaussianList result = (GaussianList) to_array.Clone();
+            GaussianList result = (GaussianList)to_array.Clone();
             for (int iter = 0; iter < 10; iter++)
             {
-                GaussianList oldresult = (GaussianList) result.Clone();
+                GaussianList oldresult = (GaussianList)result.Clone();
                 result = ArrayAverageLogarithm1(sum, array2, result);
                 for (int i = 0; i < array2.Count; i++)
                 {
-                    array2[i] = array2[i]*(result[i]/oldresult[i]);
+                    array2[i] = array2[i] * (result[i] / oldresult[i]);
                 }
             }
             return result;
@@ -505,12 +526,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double mr, vr;
                 to_array[i].GetMeanAndVariance(out mr, out vr);
                 double mu1 = sumMean - partialSum;
-                newMarginal[i] = array[i]*(new Gaussian(mu1, sumVar)/to_array[i]);
-                double vpost = 1/(1/vi + 1/sumVar - 1/vr);
-                double m1 = vpost*(mi/vi + mu1/sumVar - mr/vr);
+                newMarginal[i] = array[i] * (new Gaussian(mu1, sumVar) / to_array[i]);
+                double vpost = 1 / (1 / vi + 1 / sumVar - 1 / vr);
+                double m1 = vpost * (mi / vi + mu1 / sumVar - mr / vr);
                 arraySumOfMean = partialSum + m1;
-                a[i] = -vpost/sumVar;
-                b[i] = m1 + vpost*(sumMean/sumVar) - vpost*mu1/sumVar;
+                a[i] = -vpost / sumVar;
+                b[i] = m1 + vpost * (sumMean / sumVar) - vpost * mu1 / sumVar;
             }
             Matrix x = new Matrix(n, n);
             for (int i = 0; i < n; i++)
@@ -548,16 +569,16 @@ namespace Microsoft.ML.Probabilistic.Factors
         // resultIndex version.  this should be the version that is used in the future but the compiler does not yet know how to schedule it correctly.
         public static Gaussian ArrayAverageLogarithm7([SkipIfUniform] Gaussian sum, [Proper, AllExceptIndex] IList<Gaussian> array, int resultIndex)
         {
-          double sumMean, sumVar;
-          sum.GetMeanAndVariance(out sumMean, out sumVar);
+            double sumMean, sumVar;
+            sum.GetMeanAndVariance(out sumMean, out sumVar);
 
-          double arraySumOfMean = 0;
-          for (int i = 0; i < array.Count; i++)
-          {
-            if(i != resultIndex) arraySumOfMean = arraySumOfMean + array[i].GetMean();
-          }
-          double partialSum = arraySumOfMean;
-          return new Gaussian(sumMean - partialSum, sumVar);
+            double arraySumOfMean = 0;
+            for (int i = 0; i < array.Count; i++)
+            {
+                if (i != resultIndex) arraySumOfMean = arraySumOfMean + array[i].GetMean();
+            }
+            double partialSum = arraySumOfMean;
+            return new Gaussian(sumMean - partialSum, sumVar);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="FastSumOp"]/message_doc[@name="ArrayAverageLogarithm{GaussianList}(double, IList{Gaussian}, GaussianList)"]/*'/>
@@ -587,7 +608,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     public static class SumOp3
     {
         // fully parallel version
-        
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="SumOp3"]/message_doc[@name="ArrayAverageLogarithm{GaussianList}(Gaussian, IList{Gaussian}, GaussianList)"]/*'/>
         /// <typeparam name="GaussianList">The type of the message to <c>array</c>.</typeparam>
         public static GaussianList ArrayAverageLogarithm<GaussianList>([SkipIfUniform] Gaussian sum, [Proper] IList<Gaussian> array, GaussianList result)
