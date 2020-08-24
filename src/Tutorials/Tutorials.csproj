@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
 
   <PropertyGroup>
@@ -25,7 +25,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net461</TargetFrameworks> 
+        <TargetFrameworks>netcoreapp3.1;net461</TargetFrameworks>
         <AddSyntheticProjectReferencesForSolutionDependencies>false</AddSyntheticProjectReferencesForSolutionDependencies>
       </PropertyGroup>
     </Otherwise>
@@ -56,16 +56,13 @@
     <ProjectReference Include="..\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\Runtime\Runtime.csproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition="$(DefineConstants.Contains('NETFULL'))">
-    <UseWindowsForms>true</UseWindowsForms>
-  </PropertyGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('NETFULL'))">
-    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App" IsWindowsOnly="false" />
-    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WPF" IsWindowsOnly="false" />
-    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WindowsForms" IsWindowsOnly="false" />
-    
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <ProjectReference Include="..\Visualizers\Windows\Visualizers.Windows.csproj" />
+    <Compile Update="ExamplesViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('NETCORE'))">
     <Compile Remove="ExamplesViewer.cs">
