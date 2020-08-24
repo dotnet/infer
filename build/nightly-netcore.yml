@@ -19,7 +19,8 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk' 
-    version: '5.x' 
+    version: '5.x'
+    includePreviewVersions: true
 
 - script: |
     dotnet build /p:DisableImplicitNuGetFallbackFolder=true  --configuration $(BuildConfiguration)Core Infer.sln
