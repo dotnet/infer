@@ -7,7 +7,7 @@ layout: default
 
 This tutorial shows how to make a mixture of multivariate Gaussians and fit it to some data. It will introduce the _switch block_ which allows variable-sized mixtures to be constructed.
 
-You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and executing [MixtureOfGaussians.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/MixtureOfGaussians.cs).
+You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and uncommenting the line to execute [MixtureOfGaussians.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/MixtureOfGaussians.cs).  Code is also available in [F#](https://github.com/dotnet/infer/blob/master/test/TestFSharp/MixtureofGaussians.fs) and [Python](https://github.com/dotnet/infer/blob/master/test/TestPython/test_tutorials.py).
 
 ### Parameters priors
 

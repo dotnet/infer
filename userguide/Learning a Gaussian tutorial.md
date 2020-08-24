@@ -7,7 +7,7 @@ layout: default
 
 This tutorial shows how to use _ranges_ to deal with large arrays of data, and how to visualise your model.
 
-You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and executing **LearningAGaussian.cs** and **LearningAGaussianWithRanges.cs**.
+You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and uncommenting the lines to execute [LearningAGaussian.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/LearningAGaussian.cs) and [LearningAGaussianWithRanges.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/LearningAGaussianWithRanges.cs).  Code is also available in [F#](https://github.com/dotnet/infer/blob/master/test/TestFSharp/GaussianwithRanges.fs) and [Python](https://github.com/dotnet/infer/blob/master/test/TestPython/test_tutorials.py).
 
 ### Thinking big
 

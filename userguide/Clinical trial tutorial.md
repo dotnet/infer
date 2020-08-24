@@ -7,7 +7,7 @@ layout: default
 
 This tutorial shows how to do Bayesian model selection in Infer.NET to determine if a new medical treatment is effective. We will construct two models, corresponding to an effective or ineffective treatment, and use model selection to determine the posterior probability of each, given some fictional clinical trial data.
 
-You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and executing **ClinicalTrial.cs**.
+You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and uncommenting the line to execute [ClinicalTrial.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/ClinicalTrial.cs).  Code is also available in [F#](https://github.com/dotnet/infer/blob/master/test/TestFSharp/ClinicalTrial.fs) and [Python](https://github.com/dotnet/infer/blob/master/test/TestPython/test_tutorials.py).
 
 ### A healthy challenge
 
