@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\common.props" />
 
   <PropertyGroup>
@@ -7,6 +7,8 @@
     <Configurations>Debug;DebugFull;DebugCore;Release;ReleaseFull;ReleaseCore</Configurations>
     <Prefer32Bit>false</Prefer32Bit>
     <ErrorReport>prompt</ErrorReport>
+    <UseWpf>true</UseWpf>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -43,29 +45,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ClassifierView.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\..\Shared\SharedAssemblyFileVersion.cs" />
     <Compile Include="..\..\Shared\SharedAssemblyInfo.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="ClassifierView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
