@@ -22,7 +22,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk' 
-      version: '3.x' 
+      version: '5.x' 
 
   - script: |
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
@@ -37,7 +37,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk' 
-      version: '3.x' 
+      version: '5.x' 
 
   - script: |
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
@@ -150,10 +150,10 @@ jobs:
     condition: in(variables.SignType, 'real', 'test')
 
   - task: UseDotNet@2
-    displayName: Get dotnet 3.x
+    displayName: Get dotnet 5.x
     inputs:
       packageType: 'sdk'
-      version: '3.x'
+      version: '5.x'
 
   - task: DotNetCoreCLI@2
     displayName: Restore Infer.sln to enable packaging.

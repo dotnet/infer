@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net50</TargetFramework>
     <RootNamespace>Microsoft.ML.Probabilistic.Tools.BuildFactorDoc</RootNamespace>
     <AssemblyName>Microsoft.ML.Probabilistic.Tools.BuildFactorDoc</AssemblyName>
   </PropertyGroup>
