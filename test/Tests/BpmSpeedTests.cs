@@ -81,6 +81,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS
 #pragma warning disable 162
 #endif
+
         public static void Rcv1Test(double wVariance, double biasVariance)
         {
             int count = 0;
