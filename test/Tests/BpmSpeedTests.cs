@@ -135,6 +135,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
             writer.Dispose();
+#if HAS_BINARY_FORMATTER
+        // In the .NET 5.0 BinaryFormatter is obsolete
+        // and would produce errors. This test code should be migrated. 
+        // See https://github.com/GrabYourPitchforks/docs/blob/bf_obsoletion_docs/docs/standard/serialization/resolving-binaryformatter-obsoletion-errors.md
+
             if (true)
             {
                 BinaryFormatter serializer = new BinaryFormatter();
@@ -145,6 +150,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     serializer.Serialize(stream, train.biasPost);
                 }
             }
+#endif
         }
 
         // (0.5,0.5):
@@ -164,6 +170,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 #pragma warning restore 162
 #endif
 
+#if HAS_BINARY_FORMATTER
         public static void Rcv1Test2()
         {
             GaussianArray wPost;
@@ -194,6 +201,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             Console.WriteLine("error rate = {0} = {1}/{2}", (double) errors/count, errors, count);
         }
+#endif
 
         public static void Rcv1Test3()
         {

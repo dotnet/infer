@@ -87,6 +87,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             mc.AssertEqualTo(mc2);
         }
 
+#if HAS_BINARY_FORMATTER
         [Fact]
         public void BinaryFormatterTest()
         {
@@ -96,6 +97,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var mc2 = CloneBinaryFormatter(mc);
             mc.AssertEqualTo(mc2);
         }
+#endif
 
         [Fact]
         public void JsonNetSerializerTest()
@@ -107,6 +109,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             mc.AssertEqualTo(mc2);
         }
 
+#if HAS_BINARY_FORMATTER
         [Fact]
         public void VectorSerializeTests()
         {
@@ -144,6 +147,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(3, vapprox2.SparseValues.Count);
             Assert.True(vapprox2.HasCommonElements);
         }
+#endif
 
         [DataContract]
         [Serializable]
@@ -307,6 +311,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+#if HAS_BINARY_FORMATTER
         private static T CloneBinaryFormatter<T>(T obj)
         {
             var bf = new BinaryFormatter();
@@ -317,6 +322,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 return (T)bf.Deserialize(ms);
             }
         }
+#endif
 
         private static T CloneJsonNet<T>(T obj)
         {
