@@ -411,7 +411,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         public class BpmTrain_EP : IGeneratedAlgorithm
         {
-#region Fields
+            #region Fields
 
             /// <summary>Field backing the NumberOfIterationsDone property</summary>
             private int numberOfIterationsDone;
@@ -485,9 +485,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             public Gaussian vdouble11_F;
             public Gaussian vdouble11_B;
 
-#endregion
+            #endregion
 
-#region Properties
+            #region Properties
 
             /// <summary>The number of iterations done from the initial state</summary>
             public int NumberOfIterationsDone
@@ -614,9 +614,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
 
-#endregion
+            #endregion
 
-#region Methods
+            #region Methods
 
             /// <summary>Get the observed value of the specified variable.</summary>
             /// <param name="variableName">Variable name</param>
@@ -911,14 +911,14 @@ namespace Microsoft.ML.Probabilistic.Tests
                 return this.wSparse_marginal_F;
             }
 
-#endregion
+            #endregion
 
-#region Events
+            #region Events
 
             /// <summary>Event that is fired when the progress of inference changes, typically at the end of one iteration of the inference algorithm.</summary>
             public event EventHandler<ProgressChangedEventArgs> ProgressChanged;
 
-#endregion
+            #endregion
         }
     }
 }
