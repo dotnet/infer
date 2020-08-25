@@ -1464,6 +1464,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine(engine.Infer(mean));
         }
 
+#if HAS_BINARY_FORMATTER
         internal void BinarySerializationExample()
         {
             Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);
@@ -1480,6 +1481,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Console.WriteLine(d2);
             }
         }
+#endif
 
         internal void XmlSerializationExample()
         {

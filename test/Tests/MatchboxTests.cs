@@ -679,6 +679,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
 
+#if HAS_BINARY_FORMATTER
                 if (false)
                 {
                     BinaryFormatter serializer = new BinaryFormatter();
@@ -691,6 +692,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         serializer.Serialize(writer, engine.Infer(itemTraits));
                     }
                 }
+#endif
 
                 // test resetting inference
                 if (engine.Compiler.ReturnCopies)

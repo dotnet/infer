@@ -81,7 +81,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS
 #pragma warning disable 162
 #endif
-
         public static void Rcv1Test(double wVariance, double biasVariance)
         {
             int count = 0;
@@ -135,6 +134,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
             writer.Dispose();
+#if HAS_BINARY_FORMATTER
+        // In the .NET 5.0 BinaryFormatter is obsolete
+        // and would produce errors. This test code should be migrated. 
+        // See https://github.com/GrabYourPitchforks/docs/blob/bf_obsoletion_docs/docs/standard/serialization/resolving-binaryformatter-obsoletion-errors.md
+
             if (true)
             {
                 BinaryFormatter serializer = new BinaryFormatter();
@@ -145,6 +149,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     serializer.Serialize(stream, train.biasPost);
                 }
             }
+#endif
         }
 
         // (0.5,0.5):
@@ -164,6 +169,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 #pragma warning restore 162
 #endif
 
+#if HAS_BINARY_FORMATTER
         public static void Rcv1Test2()
         {
             GaussianArray wPost;
@@ -194,6 +200,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             Console.WriteLine("error rate = {0} = {1}/{2}", (double) errors/count, errors, count);
         }
+#endif
 
         public static void Rcv1Test3()
         {
@@ -404,7 +411,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         public class BpmTrain_EP : IGeneratedAlgorithm
         {
-            #region Fields
+#region Fields
 
             /// <summary>Field backing the NumberOfIterationsDone property</summary>
             private int numberOfIterationsDone;
@@ -478,9 +485,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             public Gaussian vdouble11_F;
             public Gaussian vdouble11_B;
 
-            #endregion
+#endregion
 
-            #region Properties
+#region Properties
 
             /// <summary>The number of iterations done from the initial state</summary>
             public int NumberOfIterationsDone
@@ -607,9 +614,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
 
-            #endregion
+#endregion
 
-            #region Methods
+#region Methods
 
             /// <summary>Get the observed value of the specified variable.</summary>
             /// <param name="variableName">Variable name</param>
@@ -904,14 +911,14 @@ namespace Microsoft.ML.Probabilistic.Tests
                 return this.wSparse_marginal_F;
             }
 
-            #endregion
+#endregion
 
-            #region Events
+#region Events
 
             /// <summary>Event that is fired when the progress of inference changes, typically at the end of one iteration of the inference algorithm.</summary>
             public event EventHandler<ProgressChangedEventArgs> ProgressChanged;
 
-            #endregion
+#endregion
         }
     }
 }
