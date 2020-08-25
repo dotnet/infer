@@ -1005,6 +1005,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(dgaaa, dgaaa2);
         }
 
+#pragma warning disable CA2013
         [Fact]
         public void GaussianArrayTest()
         {
@@ -1048,6 +1049,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             b = new GaussianArray2D(new Gaussian(), 3, 3);
             Assert.True(!a.Equals(b));
         }
+#pragma warning restore
+
+#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
+#pragma warning disable 162
+#endif
 
 #if false
         [Fact]
