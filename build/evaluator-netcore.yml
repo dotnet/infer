@@ -14,6 +14,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: dotnet Evaluator.dll InferNetRunsOnly.xml
-    workingDirectory: ${{ format('src/Learners/Runners/Evaluator/bin/{0}/net50', parameters.Configuration) }}
+    workingDirectory: ${{ format('src/Learners/Runners/Evaluator/bin/{0}/net5.0', parameters.Configuration) }}
     displayName: Running Evaluator
     continueOnError: true

@@ -41,7 +41,7 @@ if (!(Test-Path $projPath)) {
 & "$dotnetExe" build "$projPath" /p:Configuration=Release
 
 Write-Host "Run PrepareSource for InferNet_Copy_Temp folder"
-$prepareSourcePath = [IO.Path]::GetFullPath((join-path $sourceDirectory 'src/Tools/PrepareSource/bin/Release/net50/Microsoft.ML.Probabilistic.Tools.PrepareSource.dll'))
+$prepareSourcePath = [IO.Path]::GetFullPath((join-path $sourceDirectory 'src/Tools/PrepareSource/bin/Release/net5.0/Microsoft.ML.Probabilistic.Tools.PrepareSource.dll'))
 & "$dotnetExe" "$prepareSourcePath" "$destinationDirectory"
 
 Write-Host "Install nuget package docfx.console"

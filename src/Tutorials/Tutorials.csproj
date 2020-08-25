@@ -20,12 +20,12 @@
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
       <PropertyGroup>
-        <TargetFramework>net50</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net50;net461</TargetFrameworks>
+        <TargetFrameworks>net5.0;net461</TargetFrameworks>
         <AddSyntheticProjectReferencesForSolutionDependencies>false</AddSyntheticProjectReferencesForSolutionDependencies>
       </PropertyGroup>
     </Otherwise>

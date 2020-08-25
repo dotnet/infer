@@ -15,7 +15,7 @@ then
     configuration=Release
 fi
 
-compath=/bin/${configuration}/net50/
+compath=/bin/${configuration}/net5.0/
 
 # filter for parallel test run
 #parallel_filter='-notrait Platform=x86 -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance'
