@@ -679,7 +679,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
 
-#if HAS_BINARY_FORMATTER
+#if NETFULL
                 if (false)
                 {
                     BinaryFormatter serializer = new BinaryFormatter();

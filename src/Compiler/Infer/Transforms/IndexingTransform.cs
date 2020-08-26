@@ -353,6 +353,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                     {
                                         innerLoops.Add(innerLoop2);
                                         indexTarget = index2.Target;
+                                        // This limit must match the number of handled cases below.
+                                        if (innerLoops.Count == 3) break;
                                     }
                                     else
                                         break;

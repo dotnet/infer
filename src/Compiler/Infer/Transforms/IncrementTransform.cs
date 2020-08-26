@@ -313,7 +313,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // forwardExpr = GetItemsOp<>.ItemsAverageConditional(backwardExpr[index], *, marginalExpr, indices, index, forwardExpr)
             // then when backwardExpr is updated, we insert the following statement:
             // MarginalIncrement(marginalExpr, forwardExpr, backwardExpr[index], indices, index)
-            if (Recognizer.IsStaticGenericMethod(imie, typeof(GetItemsOp<>), "ItemsAverageConditional"))
+            if (Recognizer.IsStaticGenericMethod(imie, typeof(GetItemsOp<>), "ItemsAverageConditional") ||
+                Recognizer.IsStaticGenericMethod(imie, typeof(GetJaggedItemsOp<>), "ItemsAverageConditional") ||
+                Recognizer.IsStaticGenericMethod(imie, typeof(GetDeepJaggedItemsOp<>), "ItemsAverageConditional"))
             {
                 IExpression backwardExpr = imie.Arguments[0];
                 object backwardDecl = Recognizer.GetArrayDeclaration(backwardExpr);
