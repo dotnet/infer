@@ -5,7 +5,7 @@
 import clr
 from System import Boolean, Double, Int32, Array
 
-folder = "../Tests/bin/DebugFull/net461/"
+folder = "../Tests/bin/DebugFull/net472/"
 clr.AddReference(folder+"Microsoft.ML.Probabilistic")
 clr.AddReference(folder+"Microsoft.ML.Probabilistic.Compiler")
 from Microsoft.ML.Probabilistic import *

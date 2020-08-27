@@ -13,7 +13,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net461</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -23,7 +23,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net461</TargetFrameworks>
+        <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -32,7 +32,7 @@
     <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net472'">
     <DefineConstants>$(DefineConstants);NET45;NETFULL</DefineConstants>
   </PropertyGroup>
 
