@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <Company>Microsoft Research Limited</Company>
-    <Copyright>Copyright © Microsoft Research Limited 2008-2014</Copyright>
+    <Copyright>Copyright © Microsoft Research Limited 2008-2020</Copyright>
     <Version>65534.0.0.0</Version>
     <FileVersion>65534.0.0.0</FileVersion>
   </PropertyGroup>
