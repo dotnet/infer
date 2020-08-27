@@ -4,10 +4,7 @@ using Loki.Mapping.Maps;
 using Loki.Shared;
 using Microsoft.ML.Probabilistic.Distributions.Automata;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Infer.Loki.Tests
 {
@@ -15,10 +12,9 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            // TODO: uncomment, when maps for generics are implemented in Loki
-            //mappers.PermanentMethodMapper.CreateMap(
-            //    typeof(Automaton<,,,,>).GetNestedType("Determinization", System.Reflection.BindingFlags.NonPublic).GetNestedType("WeightedState").GetMethod("GetWeightHighBits", System.Reflection.BindingFlags.NonPublic),
-            //    new Func<DoubleWithTransformingPrecision, int>(AutomatonMethods.GetWeightHighBits).Method);
+            mappers.PermanentMethodMapper.CreateMap(
+                typeof(Automaton<,,,,>).GetNestedType("Determinization", BindingFlags.NonPublic).GetNestedType("WeightedState").GetMethod("GetWeightHighBits", BindingFlags.NonPublic | BindingFlags.Static),
+                new Func<DoubleWithTransformingPrecision, int>(AutomatonMethods.GetWeightHighBits<int,int,int,int,int>).Method);
         }
     }
 }

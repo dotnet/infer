@@ -12,9 +12,9 @@ namespace Loki.Generated
     {
         static async Task Main(string[] args)
         {
-            var logFilePath = Path.Combine(Environment.CurrentDirectory, "log.csv");
+            var logFilePath = Path.Combine(Environment.CurrentDirectory, "logLearners.csv");
 
-            var result = await TestRunner.RunTestAsync(new OperatorTests().GaussianIsBetweenCRCC_IsSymmetricInXMean, uint.MaxValue);
+            var result = await TestRunner.RunTestAsync(new AutomatonTests().CountDeterminizedStates, 0);
             Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
             //var categoriesToSkip = new[] { "CompilerOptionsTest", "Performance", "OpenBug", "BadTest" };
             //var tests = TestInfo.FromAssembly(typeof(Program).Assembly)
@@ -35,7 +35,7 @@ namespace Loki.Generated
             //    logFilePath,
             //    false,
             //    TimeSpan.FromMinutes(10),
-            //    16,
+            //    2,
             //    true,
             //    new Progress<TestSuiteRunStatus>(s => Console.Title = $"Completed {s.CompletedTests} tests. OpCounts: {string.Join(" | ", s.CurrentTestStatuses.Select(cts => cts.CurrentRunStatus.OperationCount.ToString()))}"));
 

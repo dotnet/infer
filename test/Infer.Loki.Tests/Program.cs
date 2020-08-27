@@ -21,7 +21,7 @@ namespace Infer.Loki.Tests
 
             var transformer = new TestTransformer(settings);
             await transformer.Build();
-            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new TypeInferenceTests().ConversionTest), 0);
+            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new AutomatonTests().CountDeterminizedStates), 0);
             Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
 
             //var tests = transformer.EnumerateTransformedTests()
@@ -109,6 +109,8 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex(@"^Loki\.Tests$"));
             settings.ExcludeProject(new Regex(@"^Loki$"));
             settings.ExcludeProject(new Regex(@"^Loki\.Mapping$"));
+
+            //settings.ExcludeProject(new Regex(@"^Tests"));
 
             settings.Mappers.AddMap(new AssertionMap());
             settings.Mappers.AddMap(new TestHelpersMap());

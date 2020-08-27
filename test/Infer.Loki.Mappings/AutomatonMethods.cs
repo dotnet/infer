@@ -9,7 +9,7 @@ namespace Infer.Loki.Mappings
 {
     public static class AutomatonMethods
     {
-        public static int GetWeightHighBits(DoubleWithTransformingPrecision logWeight)
+        public static int GetWeightHighBits<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>(DoubleWithTransformingPrecision logWeight)
         {
             return (int)(BitConverter.DoubleToInt64Bits(logWeight.ToDouble()) >> 32);
         }
