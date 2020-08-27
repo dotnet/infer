@@ -29,7 +29,7 @@ and many others.
 
 ## Installing pre-built binaries
 
-Binaries for Infer.NET are located on [nuget.org](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic).  These binaries are cross-platform and work anywhere that .NET is supported, so there is no need to select your platform.  The core packages target .NET Standard 2.0, making them useable from any project that targets .NET framework version 4.6.1 or .NET Core 2.1, as explained at [.NET implementation support](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).  You do not need to clone the GitHub repository to use the pre-built binaries.
+Binaries for Infer.NET are located on [nuget.org](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic).  These binaries are cross-platform and work anywhere that .NET is supported, so there is no need to select your platform.  The core packages target .NET Standard 2.0, making them useable from any project that targets .NET framework version 4.6.1 or .NET Core 3.1, as explained at [.NET implementation support](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).  You do not need to clone the GitHub repository to use the pre-built binaries.
 
 There currently are [four maintained Infer.NET nuget packages](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic):
 
@@ -40,7 +40,7 @@ There currently are [four maintained Infer.NET nuget packages](https://www.nuget
 
 NuGet packages do not need to be manually downloaded.  Instead, you add the package name to your project file, and the binaries are downloaded automatically when the project is compiled.  Most code editors have an option to add a NuGet package reference to an existing project file.  For example, in [Visual Studio 2017 for Windows](https://docs.microsoft.com/en-us/visualstudio/install/install-visual-studio), you select `Project -> Manage NuGet packages`.
 
-[.NET Core 2.1](https://www.microsoft.com/net/download/) provides command-line tools for creating and editing project files.
+[.NET Core 3.1](https://www.microsoft.com/net/download/) provides command-line tools for creating and editing project files.
 Using the command line, you can add a NuGet package reference to an existing project file with:
 ```
 dotnet add package Microsoft.ML.Probabilistic
