@@ -597,15 +597,21 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian sum_B = Gaussian.FromMeanAndPrecision(0, 1e-310);
             GaussianArray array = new GaussianArray(2, i => new Gaussian(0, 1));
             var result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
-            Console.WriteLine(result);
             Assert.True(!double.IsNaN(result[0].MeanTimesPrecision));
 
             sum_B = new Gaussian(0, 1);
-            array[0] = Gaussian.FromMeanAndPrecision(0, 1e-310);
+            array[0] = Gaussian.FromMeanAndPrecision(0, 0);
+            sum_F = FastSumOp.SumAverageConditional(array);
             result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
-            Console.WriteLine(result);
-            Assert.True(!double.IsNaN(result[0].MeanTimesPrecision));
             Assert.True(result[0].MaxDiff(new Gaussian(0, 2)) < 1e-10);
+            Assert.True(result[1].IsUniform());
+            for (int i = 0; i < 1030; i++)
+            {
+                array[0] = Gaussian.FromMeanAndPrecision(0, System.Math.Pow(2, -i));
+                sum_F = FastSumOp.SumAverageConditional(array);
+                result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
+                Assert.True(result[0].MaxDiff(new Gaussian(0, 2)) < 1e-10);
+            }
         }
 
         [Fact]

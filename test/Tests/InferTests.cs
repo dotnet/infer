@@ -2137,6 +2137,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         // Gives the wrong answer due to an undetected deterministic loop.
+        // Chooses one of two possible solutions instead of averaging them.
         [Fact]
         [Trait("Category", "OpenBug")]
         public void AndOrXorTest()
@@ -2146,6 +2147,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var xt = x & (~y);
             var yt = (~x) & y;
             var z = yt | xt;
+            // This is an equivalent model that gets the right answer.
             //z = (x != y);
             z.ObservedValue = true;
             z.Name = "z";
@@ -2153,14 +2155,15 @@ namespace Microsoft.ML.Probabilistic.Tests
             Bernoulli xExpected = new Bernoulli(0.5);
             Bernoulli xActual = ie.Infer<Bernoulli>(x);
             Console.WriteLine("x = {0} should be {1}", xActual, xExpected);
+            Bernoulli yExpected = new Bernoulli(0.5);
+            Bernoulli yActual = ie.Infer<Bernoulli>(y);
+            Console.WriteLine("y = {0} should be {1}", yActual, yExpected);
             Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
         }
 
-        // An interesting failure case for belief propagation.
-        // Fails due to slow convergence around a deterministic loop.
+        // An interesting case for belief propagation.
         // Constant propagation would help to remove the final "and" factor and make the model simpler.
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void AndOrXorTest2()
         {
             Variable<bool> x = Variable.Bernoulli(0.5).Named("x");

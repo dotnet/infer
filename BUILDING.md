@@ -29,12 +29,12 @@ All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produ
 
 ## Building from the command line
 
-The core components of Infer&#46;NET run on .NET Core 2.1.  Some optional code, such as the [Examples Browser](https://dotnet.github.io/infer/userguide/The%20examples%20browser.html), use [Windows Forms](https://docs.microsoft.com/en-us/dotnet/framework/winforms/) and therefore require .NET framework or Mono. 
-Some samples, such as the [Monty Hall problem](https://dotnet.github.io/infer/userguide/Monty%20Hall%20problem.html), use [WPF](https://docs.microsoft.com/en-us/visualstudio/designers/introduction-to-wpf) and therefore require .NET framework.
+The core components of Infer&#46;NET run on .NET Core 3.1.  Some optional code, such as the [Examples Browser](https://dotnet.github.io/infer/userguide/The%20examples%20browser.html), use [Windows Forms](https://docs.microsoft.com/en-us/dotnet/framework/winforms/) and therefore require .NET framework or Mono. 
+Some samples, such as the [Monty Hall problem](https://dotnet.github.io/infer/userguide/Monty%20Hall%20problem.html), use [WPF](https://docs.microsoft.com/en-us/visualstudio/designers/introduction-to-wpf) and therefore require Windows.
 
 ### Prerequisites
 
-* **[.NET Core 2.1 SDK](https://www.microsoft.com/net/download/)** to build and run .NET Standard and .NET Core projects.
+* **[.NET Core 3.1 SDK](https://www.microsoft.com/net/download/)** to build and run .NET Standard and .NET Core projects.
 
 * (Optional) On Windows, the **[.NET framework developer pack](https://www.microsoft.com/net/download)**.  On other platforms, **[Mono](https://www.mono-project.com/download/stable/)** (version 5.0 and higher) and the **[NuGet](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools)** package manager.
 
