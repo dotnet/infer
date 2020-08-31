@@ -48,6 +48,11 @@ namespace Loki.Generated
                     Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("A FATAL ERROR OCCURED:");
+                Console.WriteLine(ex);
+            }
             finally
             {
                 await testResultEnumerator.DisposeAsync();
