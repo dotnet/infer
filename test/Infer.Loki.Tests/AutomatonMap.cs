@@ -15,6 +15,10 @@ namespace Infer.Loki.Tests
             mappers.PermanentMethodMapper.CreateMap(
                 typeof(Automaton<,,,,>).GetNestedType("Determinization", BindingFlags.NonPublic).GetNestedType("WeightedState").GetMethod("GetWeightHighBits", BindingFlags.NonPublic | BindingFlags.Static),
                 new Func<DoubleWithTransformingPrecision, int>(AutomatonMethods.GetWeightHighBits<int,int,int,int,int>).Method);
+
+            mappers.PermanentMethodMapper.CreateMap(
+                typeof(Automaton<,,,,>).GetMethod("GetHashCodeFromLogNorm", BindingFlags.NonPublic | BindingFlags.Static),
+                new Func<DoubleWithTransformingPrecision, int>(AutomatonMethods.GetHashCodeFromLogNorm<int, int, int, int, int>).Method);
         }
     }
 }

@@ -13,5 +13,10 @@ namespace Infer.Loki.Mappings
         {
             return (int)(BitConverter.DoubleToInt64Bits(logWeight.ToDouble()) >> 32);
         }
+
+        public static int GetHashCodeFromLogNorm<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>(DoubleWithTransformingPrecision logNorm)
+        {
+            return (BitConverter.DoubleToInt64Bits(logNorm.ToDouble()) >> 31).GetHashCode();
+        }
     }
 }
