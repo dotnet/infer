@@ -2041,6 +2041,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             double logNorm = thisAutomaton.Product(thisAutomaton).GetLogNormalizer();
 
             // Very similar automata will have almost identical norms and, thus, will almost always be hashed to the same bucket
+            return GetHashCodeFromLogNorm(logNorm);
+        }
+
+        private static int GetHashCodeFromLogNorm(double logNorm)
+        {
             return (BitConverter.DoubleToInt64Bits(logNorm) >> 31).GetHashCode();
         }
 
