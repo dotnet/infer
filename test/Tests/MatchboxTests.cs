@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 return;
             }
 
-            if (true)
+            for (int seed = 46; seed <= 46; seed++)
             {
                 for (int useBetweenFlag = 1; useBetweenFlag < 2; useBetweenFlag++)
                 {
@@ -102,10 +102,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                                         // gets stuck in a bad local minimum
                                         //model.learnThresholds = true;
 
-                                        // This test passes with all seeds in the range [0; 1000)
-                                        model.Run(46);
+                                        Trace.WriteLine($"seed = {seed}");
+                                        model.Run(seed);
                                         Assert.True(ValidateInferredTraits(model.trueItemTraits, model.learnedItemTraits));
-                                        Console.WriteLine();
+                                        Trace.WriteLine("");
                                     }
                                 }
                             }
@@ -148,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
             }
-            Console.WriteLine("maxDiff = {0:0.0}", maxDiff);
+            Trace.WriteLine($"maxDiff = {maxDiff:0.0}");
             return (maxDiff < 0.7);
         }
 
@@ -163,7 +163,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             public int numLevels = 4;
             // affinity noise must not be too large since this makes the problem too easy
             // affinity noise must not be too small since this slows down convergence
-            public double affinityNoiseVariance = 0.1; 
+            public double affinityNoiseVariance = 0.1;
             public double thresholdNoiseVariance = 0.0;
             public double traitVariance;
             public double biasVariance = 0; //1.0;
@@ -190,21 +190,21 @@ namespace Microsoft.ML.Probabilistic.Tests
             public void WriteSettings()
             {
                 if (useBetween)
-                    Console.WriteLine("useBetween");
+                    Trace.WriteLine("useBetween");
                 if (fixAllDegreesOfFreedom)
-                    Console.WriteLine("fixAllDegreesOfFreedom");
+                    Trace.WriteLine("fixAllDegreesOfFreedom");
                 if (observationSequentialAttribute)
-                    Console.WriteLine("observationSequentialAttribute");
+                    Trace.WriteLine("observationSequentialAttribute");
                 if (useArrayPriors)
-                    Console.WriteLine("useArrayPriors");
+                    Trace.WriteLine("useArrayPriors");
                 if (useFeatures)
-                    Console.WriteLine("useFeatures {0}", useSparseFeatures ? "sparse" : "");
+                    Trace.WriteLine($"useFeatures {(useSparseFeatures ? "sparse" : "")}");
                 if (initializeBackward)
-                    Console.WriteLine("initializeBackward");
+                    Trace.WriteLine("initializeBackward");
                 if (learnThresholds)
-                    Console.WriteLine("learnThresholds");
+                    Trace.WriteLine("learnThresholds");
                 if (useInstanceWeights)
-                    Console.WriteLine("useInstanceWeights");
+                    Trace.WriteLine("useInstanceWeights");
             }
 
             /// <summary>
@@ -221,7 +221,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 WriteSettings();
 
                 // Define counts
-                Variable<int> numObservations = Variable.Observed(numUsers*numItems).Named("numObservations");
+                Variable<int> numObservations = Variable.Observed(numUsers * numItems).Named("numObservations");
                 if (!useFeatures)
                 {
                     numUserFeatures = 0;
@@ -233,7 +233,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     // must have at least as many features as traits in order to get recovery
                     numUserFeatures = numTraits;
                     numItemFeatures = numTraits;
-                    traitVariance = 1.0/(numItemFeatures + 1);
+                    traitVariance = 1.0 / (numItemFeatures + 1);
                 }
 
                 var evidence = Variable.Bernoulli(0.5).Named("evidence");
@@ -281,10 +281,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var nonZeroUserFeatureIndices = Variable.Array(Variable.Array<int>(nonZeroUserFeature), user).Named("nonZeroUserFeatureIndices");
                 var nonZeroUserFeatureValues = Variable.Array(Variable.Array<double>(nonZeroUserFeature), user).Named("nonZeroUserFeatureValues");
 
-                Gaussian traitWeightPrior = Gaussian.FromMeanAndVariance(0.0, 1.0/(numItemFeatures + 1));
+                Gaussian traitWeightPrior = Gaussian.FromMeanAndVariance(0.0, 1.0 / (numItemFeatures + 1));
                 Gaussian biasWeightPrior = Gaussian.FromMeanAndVariance(0.0, 0.0);
                 double thresholdPriorVariance = learnThresholds ? 0.1 : 0;
-                Gaussian[] userThresholdPrior = Util.ArrayInit(numLevels, l => Gaussian.FromMeanAndVariance(l - (numLevels/2.0) + 0.5, thresholdPriorVariance));
+                Gaussian[] userThresholdPrior = Util.ArrayInit(numLevels, l => Gaussian.FromMeanAndVariance(l - (numLevels / 2.0) + 0.5, thresholdPriorVariance));
                 if (useBetween)
                 {
                     if (numLevels < 3)
@@ -351,14 +351,14 @@ namespace Microsoft.ML.Probabilistic.Tests
                             var userTraitFeatureWeightsDamped = Variable<double>.Factor<double, double>(
                                 Damp.Backward, nonZeroUserTraitFeatureWeights[nonZeroUserFeature], UserTraitFeatureWeightDamping);
                             var userTraitFeatureWeightProducts = Variable.Array(Variable.Array<double>(nonZeroUserFeature), trait);
-                            userTraitFeatureWeightProducts[trait][nonZeroUserFeature] = userTraitFeatureWeightsDamped*nonZeroUserFeatureValues[user][nonZeroUserFeature];
+                            userTraitFeatureWeightProducts[trait][nonZeroUserFeature] = userTraitFeatureWeightsDamped * nonZeroUserFeatureValues[user][nonZeroUserFeature];
                             userTraits[user][trait] = Variable.GaussianFromMeanAndVariance(Variable.Sum(userTraitFeatureWeightProducts[trait]), traitVariance);
 
                             var nonZeroUserBiasFeatureWeights = Variable.Subarray(userBiasFeatureWeights, nonZeroUserFeatureIndices[user]);
                             var userBiasFeatureWeightsDamped = Variable<double>.Factor<double, double>(
                                 Damp.Backward, nonZeroUserBiasFeatureWeights[nonZeroUserFeature], UserBiasFeatureWeightDamping);
                             var userBiasFeatureWeightProducts = Variable.Array<double>(nonZeroUserFeature);
-                            userBiasFeatureWeightProducts[nonZeroUserFeature] = userBiasFeatureWeightsDamped*nonZeroUserFeatureValues[user][nonZeroUserFeature];
+                            userBiasFeatureWeightProducts[nonZeroUserFeature] = userBiasFeatureWeightsDamped * nonZeroUserFeatureValues[user][nonZeroUserFeature];
                             userBias[user] = Variable.GaussianFromMeanAndVariance(Variable.Sum(userBiasFeatureWeightProducts), biasVariance);
                         }
                         else if (useFeatures)
@@ -366,13 +366,13 @@ namespace Microsoft.ML.Probabilistic.Tests
                             var userTraitFeatureWeightsDamped = Variable<double>.Factor<double, double>(
                                 Damp.Backward, userTraitFeatureWeights[trait][userFeature], UserTraitFeatureWeightDamping);
                             var userTraitFeatureWeightProducts = Variable.Array(Variable.Array<double>(userFeature), trait);
-                            userTraitFeatureWeightProducts[trait][userFeature] = userTraitFeatureWeightsDamped*userFeatureData[user][userFeature];
+                            userTraitFeatureWeightProducts[trait][userFeature] = userTraitFeatureWeightsDamped * userFeatureData[user][userFeature];
                             userTraits[user][trait] = Variable.GaussianFromMeanAndVariance(Variable.Sum(userTraitFeatureWeightProducts[trait]), traitVariance);
 
                             var userBiasFeatureWeightsDamped = Variable<double>.Factor<double, double>(
                                 Damp.Backward, userBiasFeatureWeights[userFeature], UserBiasFeatureWeightDamping);
                             var userBiasFeatureWeightProducts = Variable.Array<double>(userFeature).Named("userBiasFeatureWeightProducts");
-                            userBiasFeatureWeightProducts[userFeature] = userBiasFeatureWeightsDamped*userFeatureData[user][userFeature];
+                            userBiasFeatureWeightProducts[userFeature] = userBiasFeatureWeightsDamped * userFeatureData[user][userFeature];
                             var userBiasMean = Variable.Sum(userBiasFeatureWeightProducts).Named("userBiasMean");
                             userBias[user] = Variable.GaussianFromMeanAndVariance(userBiasMean, biasVariance);
                         }
@@ -397,14 +397,14 @@ namespace Microsoft.ML.Probabilistic.Tests
                             var itemTraitFeatureWeightsDamped = Variable<double>.Factor<double, double>(
                                 Damp.Backward, nonZeroItemTraitFeatureWeights[nonZeroItemFeature], ItemTraitFeatureWeightDamping);
                             var itemTraitFeatureWeightProducts = Variable.Array(Variable.Array<double>(nonZeroItemFeature), trait);
-                            itemTraitFeatureWeightProducts[trait][nonZeroItemFeature] = itemTraitFeatureWeightsDamped*nonZeroItemFeatureValues[item][nonZeroItemFeature];
+                            itemTraitFeatureWeightProducts[trait][nonZeroItemFeature] = itemTraitFeatureWeightsDamped * nonZeroItemFeatureValues[item][nonZeroItemFeature];
                             itemTraits[item][trait] = Variable.GaussianFromMeanAndVariance(Variable.Sum(itemTraitFeatureWeightProducts[trait]), traitVariance);
 
                             var nonZeroItemBiasFeatureWeights = Variable.Subarray(itemBiasFeatureWeights, nonZeroItemFeatureIndices[item]);
                             var itemBiasFeatureWeightsDamped = Variable<double>.Factor<double, double>(
                                 Damp.Backward, nonZeroItemBiasFeatureWeights[nonZeroItemFeature], ItemBiasFeatureWeightDamping);
                             var itemBiasFeatureWeightProducts = Variable.Array<double>(nonZeroItemFeature).Named("itemBiasFeatureWeightProducts");
-                            itemBiasFeatureWeightProducts[nonZeroItemFeature] = itemBiasFeatureWeightsDamped*nonZeroItemFeatureValues[item][nonZeroItemFeature];
+                            itemBiasFeatureWeightProducts[nonZeroItemFeature] = itemBiasFeatureWeightsDamped * nonZeroItemFeatureValues[item][nonZeroItemFeature];
                             itemBias[item] = Variable.GaussianFromMeanAndVariance(Variable.Sum(itemBiasFeatureWeightProducts), biasVariance);
                         }
                         else if (useFeatures)
@@ -412,13 +412,13 @@ namespace Microsoft.ML.Probabilistic.Tests
                             var itemTraitFeatureWeightsDamped = Variable<double>.Factor<double, double>(
                                 Damp.Backward, itemTraitFeatureWeights[trait][itemFeature], ItemTraitFeatureWeightDamping);
                             var itemTraitFeatureWeightProducts = Variable.Array(Variable.Array<double>(itemFeature), trait);
-                            itemTraitFeatureWeightProducts[trait][itemFeature] = itemTraitFeatureWeightsDamped*itemFeatureData[item][itemFeature];
+                            itemTraitFeatureWeightProducts[trait][itemFeature] = itemTraitFeatureWeightsDamped * itemFeatureData[item][itemFeature];
                             itemTraits[item][trait] = Variable.GaussianFromMeanAndVariance(Variable.Sum(itemTraitFeatureWeightProducts[trait]), traitVariance);
 
                             var itemBiasFeatureWeightsDamped = Variable<double>.Factor<double, double>(
                                 Damp.Backward, itemBiasFeatureWeights[itemFeature], ItemBiasFeatureWeightDamping);
                             var itemBiasFeatureWeightProducts = Variable.Array<double>(itemFeature).Named("itemBiasFeatureWeightProducts");
-                            itemBiasFeatureWeightProducts[itemFeature] = itemBiasFeatureWeightsDamped*itemFeatureData[item][itemFeature];
+                            itemBiasFeatureWeightProducts[itemFeature] = itemBiasFeatureWeightsDamped * itemFeatureData[item][itemFeature];
                             itemBias[item] = Variable.GaussianFromMeanAndVariance(Variable.Sum(itemBiasFeatureWeightProducts), biasVariance);
                         }
                         else
@@ -475,8 +475,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                     var bias = userBiasObs + itemBiasObs;
                     bias.Name = "bias";
                     // damping products allows us to use a non-sequential schedule for observations
-                    //var productsDamped = Variable<double>.Array(trait);
-                    //productsDamped[trait] = Variable<double>.Factor(Damp.Forward<double>, products[trait], 0.5);
+                    var productsDamped = Variable<double>.Array(trait);
+                    productsDamped[trait] = Variable<double>.Factor(Damp.Forward<double>, products[trait], observationSequentialAttribute ? 1.0 : 2 * 0.5);
                     var affinity = (bias + Variable.Sum(products).Named("productSum")).Named("affinity");
                     var noisyAffinity = Variable.GaussianFromMeanAndVariance(affinity, affinityNoiseVariance).Named("noisyAffinity");
                     var noisyThresholds = Variable.Array<double>(level).Named("noisyThresholds");
@@ -507,7 +507,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 ratingData.ObservedValue = generatedRatingData;
                 if (useBetween)
                 {
-                    ratingInt.ObservedValue = Util.ArrayInit(numObservations.ObservedValue, i => RatingFromBools(generatedRatingData[i])-1);
+                    ratingInt.ObservedValue = Util.ArrayInit(numObservations.ObservedValue, i => RatingFromBools(generatedRatingData[i]) - 1);
                 }
 
                 if (useFeatures)
@@ -565,7 +565,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     engine.Compiler.GivePriorityTo(typeof(SumOp_SHG09));
                     //trait.AddAttribute(new Sequential());
                 }
-                var toInfer = new List<IVariable>() {userTraits, userBias, itemTraits, itemBias, userThresholds, evidence, userTraitFeatureWeights, itemTraitFeatureWeights};
+                var toInfer = new List<IVariable>() { userTraits, userBias, itemTraits, itemBias, userThresholds, evidence, userTraitFeatureWeights, itemTraitFeatureWeights };
                 engine.OptimiseForVariables = toInfer;
                 if (initializeBackward)
                 {
@@ -607,13 +607,13 @@ namespace Microsoft.ML.Probabilistic.Tests
                     {
                         double delta = itemTraitsPost.MaxDiff(prevItemTraitsPost);
                         delta = Math.Max(delta, itemTraitFeatureWeightPost.MaxDiff(prevItemFeatureWeightsPost));
-                        Console.WriteLine("{0}: delta = {1} time = {2}ms", iter, delta.ToString("g4"), watch.ElapsedMilliseconds);
+                        Trace.WriteLine($"{iter}: delta = {delta.ToString("g4")} time = {watch.ElapsedMilliseconds}ms");
                         if (delta < 1e-3)
                             break;
-                        //Console.WriteLine("{0} {1}", ((GaussianArrayArray)itemTraitsPost)[10][0], ((GaussianArrayArray)prevItemTraitsPost)[10][0]);
+                        //Trace.WriteLine("{0} {1}", ((GaussianArrayArray)itemTraitsPost)[10][0], ((GaussianArrayArray)prevItemTraitsPost)[10][0]);
                     }
-                    prevItemTraitsPost = (IDistribution<double[][]>) itemTraitsPost.Clone();
-                    prevItemFeatureWeightsPost = (IDistribution<double[][]>) itemTraitFeatureWeightPost.Clone();
+                    prevItemTraitsPost = (IDistribution<double[][]>)itemTraitsPost.Clone();
+                    prevItemFeatureWeightsPost = (IDistribution<double[][]>)itemTraitFeatureWeightPost.Clone();
                     if (iter == 1) itemTraitsPost1 = prevItemTraitsPost;
                 }
                 var userTraitsPosterior = engine.Infer<Gaussian[][]>(userTraits);
@@ -627,44 +627,44 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 if (false)
                 {
-                    Console.WriteLine("Learned user traits: ");
+                    Trace.WriteLine("Learned user traits: ");
                     for (int i = 0; i < Math.Min(numUsers, 4); ++i)
                     {
                         for (int j = 0; j < numTraits; ++j)
-                            Console.Write(userTraitsPosterior[i][j].GetMean() + "\t");
-                        Console.WriteLine("");
+                            Trace.Write(userTraitsPosterior[i][j].GetMean() + "\t");
+                        Trace.WriteLine("");
                     }
                 }
                 if (numUserFeatures > 0)
                 {
-                    Console.WriteLine("Learned user trait feature weights:");
+                    Trace.WriteLine("Learned user trait feature weights:");
                     for (int i = 0; i < Math.Min(numUserFeatures, 4); ++i)
                     {
                         for (int j = 0; j < numTraits; ++j)
                         {
-                            Console.Write(userTraitFeatureWeightPosterior[j][i].GetMean() + "\t");
+                            Trace.Write(userTraitFeatureWeightPosterior[j][i].GetMean() + "\t");
                         }
-                        Console.WriteLine("");
+                        Trace.WriteLine("");
                     }
                 }
-                Console.WriteLine("Learned item traits: ");
+                Trace.WriteLine("Learned item traits: ");
                 for (int i = 0; i < Math.Min(4, numItems); ++i)
                 {
                     for (int j = 0; j < numTraits; ++j)
-                        Console.Write(itemTraitsPosterior[i][j].GetMean() + "\t");
-                    Console.WriteLine("");
+                        Trace.Write(itemTraitsPosterior[i][j].GetMean() + "\t");
+                    Trace.WriteLine("");
                 }
                 if (learnThresholds)
                 {
-                    Console.WriteLine("Learned thresholds:");
+                    Trace.WriteLine("Learned thresholds:");
                     for (int i = 0; i < Math.Min(numUsers, 4); ++i)
                     {
                         for (int j = 0; j < numLevels; ++j)
-                            Console.Write(userThresholdsPosterior[i][j].GetMean() + "\t");
-                        Console.WriteLine("");
+                            Trace.Write(userThresholdsPosterior[i][j].GetMean() + "\t");
+                        Trace.WriteLine("");
                     }
                 }
-                Console.WriteLine("evidence = {0}", engine.Infer<Bernoulli>(evidence).LogOdds);
+                Trace.WriteLine($"evidence = {engine.Infer<Bernoulli>(evidence).LogOdds}");
 
                 if (false)
                 {
@@ -674,7 +674,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         {
                             var prod0 = GaussianProductVmpOp.ProductAverageLogarithm(userTraitsPosterior[i][0], itemTraitsPosterior[j][0]);
                             var prod1 = GaussianProductVmpOp.ProductAverageLogarithm(userTraitsPosterior[i][1], itemTraitsPosterior[j][1]);
-                            Console.WriteLine("affinity({0},{1}) = {2}", i, j, DoublePlusOp.SumAverageConditional(prod0, prod1));
+                            Trace.WriteLine($"affinity({i},{j}) = {DoublePlusOp.SumAverageConditional(prod0, prod1)}");
                         }
                     }
                 }
@@ -733,19 +733,19 @@ namespace Microsoft.ML.Probabilistic.Tests
                     numUsers,
                     u => Util.ArrayInit(
                         numTraits,
-                        t => Gaussian.Sample(Util.ArrayInit(numUserFeatures, f => (userFeatureWeights[t][f]*userFeatures[u][f])).Sum(), 1.0/traitVariance)));
+                        t => Gaussian.Sample(Util.ArrayInit(numUserFeatures, f => (userFeatureWeights[t][f] * userFeatures[u][f])).Sum(), 1.0 / traitVariance)));
                 double[][] itemTraits = Util.ArrayInit(
                     numItems,
                     i => Util.ArrayInit(
                         numTraits,
-                        t => Gaussian.Sample(Util.ArrayInit(numItemFeatures, f => itemFeatureWeights[t][f]*itemFeatures[i][f]).Sum(), 1.0/traitVariance)));
+                        t => Gaussian.Sample(Util.ArrayInit(numItemFeatures, f => itemFeatureWeights[t][f] * itemFeatures[i][f]).Sum(), 1.0 / traitVariance)));
 
                 double[] userBias = Util.ArrayInit(
                     numUsers,
-                    u => Gaussian.Sample(Util.ArrayInit(numUserFeatures, f => userBiasFeatureWeights[f]*userFeatures[u][f]).Sum(), 1.0/biasVariance));
+                    u => Gaussian.Sample(Util.ArrayInit(numUserFeatures, f => userBiasFeatureWeights[f] * userFeatures[u][f]).Sum(), 1.0 / biasVariance));
                 double[] itemBias = Util.ArrayInit(
                     numItems,
-                    i => Gaussian.Sample(Util.ArrayInit(numItemFeatures, f => itemBiasFeatureWeights[f]*itemFeatures[i][f]).Sum(), 1.0/biasVariance));
+                    i => Gaussian.Sample(Util.ArrayInit(numItemFeatures, f => itemBiasFeatureWeights[f] * itemFeatures[i][f]).Sum(), 1.0 / biasVariance));
                 double[][] userThresholds = Util.ArrayInit(numUsers, u => Util.ArrayInit(userThresholdsPrior[u].Length, l => userThresholdsPrior[u][l].Sample()));
 
                 trueUserFeatureWeights = userFeatureWeights;
@@ -760,46 +760,46 @@ namespace Microsoft.ML.Probabilistic.Tests
                             mva.Add(itemTraits[i][j]);
                         }
                     }
-                    Console.WriteLine("itemTraits variance = {0}", mva.Variance);
+                    Trace.WriteLine($"itemTraits variance = {mva.Variance}");
                 }
 
                 if (false)
                 {
-                    Console.WriteLine("True user traits: ");
+                    Trace.WriteLine("True user traits: ");
                     for (int i = 0; i < Math.Min(numUsers, 4); ++i)
                     {
                         for (int j = 0; j < numTraits; ++j)
-                            Console.Write(userTraits[i][j] + "\t");
-                        Console.WriteLine("");
+                            Trace.Write(userTraits[i][j] + "\t");
+                        Trace.WriteLine("");
                     }
                 }
                 if (numUserFeatures > 0)
                 {
-                    Console.WriteLine("True user trait feature weights: ");
+                    Trace.WriteLine("True user trait feature weights: ");
                     for (int i = 0; i < Math.Min(numUserFeatures, 4); ++i)
                     {
                         for (int j = 0; j < numTraits; ++j)
                         {
-                            Console.Write(userFeatureWeights[j][i] + "\t");
+                            Trace.Write(userFeatureWeights[j][i] + "\t");
                         }
-                        Console.WriteLine("");
+                        Trace.WriteLine("");
                     }
                 }
-                Console.WriteLine("True item traits: ");
+                Trace.WriteLine("True item traits: ");
                 for (int i = 0; i < Math.Min(4, numItems); ++i)
                 {
                     for (int j = 0; j < numTraits; ++j)
-                        Console.Write(itemTraits[i][j] + "\t");
-                    Console.WriteLine("");
+                        Trace.Write(itemTraits[i][j] + "\t");
+                    Trace.WriteLine("");
                 }
                 if (learnThresholds)
                 {
-                    Console.WriteLine("True user thresholds: ");
+                    Trace.WriteLine("True user thresholds: ");
                     for (int i = 0; i < Math.Min(4, numUsers); ++i)
                     {
                         for (int j = 0; j < numLevels; ++j)
-                            Console.Write(userThresholds[i][j] + "\t");
-                        Console.WriteLine("");
+                            Trace.Write(userThresholds[i][j] + "\t");
+                        Trace.WriteLine("");
                     }
                 }
                 if (false)
@@ -808,7 +808,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     {
                         for (int j = 0; j < numItems; j++)
                         {
-                            Console.WriteLine("affinity({0},{1}) = {2}", i, j, userTraits[i][0]*itemTraits[j][0] + userTraits[i][1]*itemTraits[j][1]);
+                            Trace.WriteLine($"affinity({i},{j}) = {userTraits[i][0] * itemTraits[j][0] + userTraits[i][1] * itemTraits[j][1]}");
                         }
                     }
                 }
@@ -820,7 +820,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     int user = Rand.Int(numUsers);
                     int item = Rand.Int(numItems);
 
-                    int userItemPairID = user*numItems + item; // pair encoding
+                    int userItemPairID = user * numItems + item; // pair encoding
                     if (visited.Contains(userItemPairID) && uniqueObservations) // duplicate generated
                     {
                         observation--; // reject pair
@@ -828,7 +828,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                     visited.Add(userItemPairID);
 
-                    double[] products = Util.ArrayInit(numTraits, t => userTraits[user][t]*itemTraits[item][t]);
+                    double[] products = Util.ArrayInit(numTraits, t => userTraits[user][t] * itemTraits[item][t]);
                     double bias = userBias[user] + itemBias[item];
 
                     double affinity = bias + products.Sum();
@@ -844,18 +844,18 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             public void WriteData(string filename)
             {
-              using (StreamWriter writer = new StreamWriter(filename))
-              {
-                for (int i = 0; i < generatedRatingData.Length; i++)
+                using (StreamWriter writer = new StreamWriter(filename))
                 {
-                  writer.Write(generatedItemData[i]);
-                  writer.Write(",");
-                  writer.Write(generatedUserData[i]);
-                  writer.Write(",");
-                  int r = RatingFromBools(generatedRatingData[i])+1;
-                  writer.WriteLine(r);
+                    for (int i = 0; i < generatedRatingData.Length; i++)
+                    {
+                        writer.Write(generatedItemData[i]);
+                        writer.Write(",");
+                        writer.Write(generatedUserData[i]);
+                        writer.Write(",");
+                        int r = RatingFromBools(generatedRatingData[i]) + 1;
+                        writer.WriteLine(r);
+                    }
                 }
-              }
             }
 
             public static int RatingFromBools(bool[] greaterThan)
@@ -876,7 +876,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             public static Gaussian Perturb(Gaussian dist)
             {
                 //return Gaussian.FromNatural(dist.MeanTimesPrecision + Rand.Normal() / 100, Rand.Double());
-                return dist*Gaussian.FromMeanAndVariance(Rand.Normal(), 1.0);
+                return dist * Gaussian.FromMeanAndVariance(Rand.Normal(), 1.0);
             }
         }
     }

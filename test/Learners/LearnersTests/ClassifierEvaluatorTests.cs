@@ -141,25 +141,25 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Equal(0, confusionMatrix[LabelSet[2], LabelSet[2]]);
 
             // Precision
-            Assert.Equal(0.6, confusionMatrix.Precision(LabelSet[0]));
+            Assert.Equal(0.6, confusionMatrix.Precision(LabelSet[0]), Tolerance);
             Assert.Equal(double.NaN, confusionMatrix.Precision(LabelSet[1])); // undefined result
             Assert.Equal(double.NaN, confusionMatrix.Precision(LabelSet[2])); // undefined result
-            Assert.Equal(0.6, confusionMatrix.MacroPrecision);
-            Assert.Equal(0.36, confusionMatrix.MicroPrecision);
+            Assert.Equal(0.6, confusionMatrix.MacroPrecision, Tolerance);
+            Assert.Equal(0.36, confusionMatrix.MicroPrecision, Tolerance);
 
             // Recall
             Assert.Equal(1, confusionMatrix.Recall(LabelSet[0]));
             Assert.Equal(0, confusionMatrix.Recall(LabelSet[1]));
             Assert.Equal(0, confusionMatrix.Recall(LabelSet[2]));
-            Assert.Equal(1 / 3.0, confusionMatrix.MacroRecall);
-            Assert.Equal(0.6, confusionMatrix.MicroRecall);
+            Assert.Equal(1 / 3.0, confusionMatrix.MacroRecall, Tolerance);
+            Assert.Equal(0.6, confusionMatrix.MicroRecall, Tolerance);
 
             // Accuracy
             Assert.Equal(1, confusionMatrix.Accuracy(LabelSet[0]));
             Assert.Equal(0, confusionMatrix.Accuracy(LabelSet[1]));
             Assert.Equal(0, confusionMatrix.Accuracy(LabelSet[2]));
-            Assert.Equal(1 / 3.0, confusionMatrix.MacroAccuracy);
-            Assert.Equal(0.6, confusionMatrix.MicroAccuracy);
+            Assert.Equal(1 / 3.0, confusionMatrix.MacroAccuracy, Tolerance);
+            Assert.Equal(0.6, confusionMatrix.MicroAccuracy, Tolerance);
 
             // F1-measure
             Assert.Equal(0.75, confusionMatrix.F1(LabelSet[0]), Tolerance);

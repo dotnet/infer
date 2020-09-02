@@ -3092,7 +3092,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<double> noClick = Variable.GaussianFromMeanAndVariance(0, 100).Named("noClick");
             VariableArray<bool> clicks = Variable.Array<bool>(user).Named("clicks");
 
-            if (true)
+            // Sequential gives faster convergence than damping
+            bool useSequential = true;
+            int modelType = 0;
+            double stepsize = 0.5;
+            if (modelType == 0)
             {
                 // undamped oscillation
                 using (Variable.ForEach(user))
@@ -3103,27 +3107,37 @@ namespace Microsoft.ML.Probabilistic.Tests
                     clicks[user] = (y > Variable.Max(z, x));
                 }
             }
-            else if (false)
+            else if (modelType == 1)
             {
-                // damping the wrong variable 
-                double stepsize = 0.5;
+                // incorrect damping location
+                var noClickDamped = Variable<double>.Factor<double, double>(Damp.Forward, noClick, stepsize).Named("noClickDamped");
+                using (Variable.ForEach(user))
+                {
+                    Variable<double> x = Variable.GaussianFromMeanAndVariance(noClickDamped, 1);
+                    Variable<double> y = Variable.GaussianFromMeanAndVariance(.33, 1);
+                    Variable<double> z = Variable.GaussianFromMeanAndVariance(.33, 1);
+                    clicks[user] = (y > Variable.Max(z, x));
+                }
+            }
+            else if(modelType == 2)
+            {
+                // damping the wrong variable (still works in this case)
                 using (Variable.ForEach(user))
                 {
                     Variable<double> x = Variable.GaussianFromMeanAndVariance(noClick, 1);
                     Variable<double> y = Variable.GaussianFromMeanAndVariance(.33, 1);
                     Variable<double> z = Variable.GaussianFromMeanAndVariance(.33, 1);
-                    var xDamped = Variable<double>.Factor<double, double>(Damp.Backward, x, stepsize).Named("xDamped");
+                    var xDamped = Variable<double>.Factor<double, double>(Damp.Forward, x, stepsize).Named("xDamped");
                     clicks[user] = (y > Variable.Max(z, xDamped));
                 }
             }
             else
             {
                 // correct damping
-                double stepsize = 0.5;
                 using (Variable.ForEach(user))
                 {
-                    // does not work if this line is outside the ForEach loop
-                    var noClickDamped = Variable<double>.Factor<double, double>(Damp.Backward, noClick, stepsize).Named("noClickDamped");
+                    // Forward since noClick is the root of the fan
+                    var noClickDamped = Variable<double>.Factor<double, double>(Damp.Forward, noClick, stepsize).Named("noClickDamped");
                     Variable<double> x = Variable.GaussianFromMeanAndVariance(noClickDamped, 1);
                     Variable<double> y = Variable.GaussianFromMeanAndVariance(.33, 1);
                     Variable<double> z = Variable.GaussianFromMeanAndVariance(.33, 1);
@@ -3142,7 +3156,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             //GateEnterPartialOp.ForceProper = true;
             MaxGaussianOp.ForceProper = false; // must be false or else wrong answer
             InferenceEngine engine = new InferenceEngine();
-            if (true)
+            if (useSequential)
             {
                 // don't need damping if use sequential
                 user.AddAttribute(new Sequential());
