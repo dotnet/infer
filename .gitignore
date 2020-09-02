@@ -260,3 +260,4 @@ _site/
 
 **/GeneratedSource
 **/__pycache__
+*.png
