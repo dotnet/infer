@@ -23,6 +23,7 @@ namespace Infer.Loki.Mappings
         public static readonly BigFloat LogisticGaussianSeriesApproximmationThreshold = BigFloatFactory.Create("1e-18");
         public const int AdaptiveQuadratureMaxNodes = 1000000;
         public static readonly BigFloat LogisticGaussianQuadratureRelativeTolerance = BigFloatFactory.Create("1e-38");
+        public const int NormalCdfMomentRatioMaxTerms = 120;
 
         static SpecialFunctionsMethods()
         {

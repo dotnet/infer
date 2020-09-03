@@ -101,6 +101,9 @@ namespace Infer.Loki.Tests
             mappers.FuelBasedMemberMapper.CreateMap(
                 typeof(MMath).GetField("logisticGaussianSeriesApproximmationThreshold", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianSeriesApproximmationThreshold)));
+            mappers.FuelBasedMemberMapper.CreateMap(
+                typeof(MMath).GetField("NormalCdfMomentRatioMaxTerms", BindingFlags.NonPublic | BindingFlags.Static),
+                typeof(SpecialFunctionsMethods).GetField(nameof(NormalCdfMomentRatioMaxTerms)));
         }
     }
 }
