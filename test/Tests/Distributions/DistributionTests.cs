@@ -552,7 +552,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Throws<ImproperDistributionException>(() => g.GetMean());
 
             Gaussian g3 = new Gaussian();
-            g3.SetToSum(1.0, g, System.Math.Exp(800), g2);
+            g3.SetToSum(1.0, g, double.PositiveInfinity, g2);
             Assert.True(g3.Equals(g2));
         }
 
