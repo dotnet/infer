@@ -20,10 +20,15 @@ namespace Infer.Loki.Mappings
         public static readonly BigFloat DefaultBetaEpsilon = BigFloatFactory.Create("1e-38");
         public static readonly BigFloat Ulp1;
         public static readonly BigFloat LogisticGaussianVarianceThreshold = BigFloatFactory.NegativeInfinity;
-        public static readonly BigFloat LogisticGaussianSeriesApproximmationThreshold = BigFloatFactory.Create("1e-18");
         public const int AdaptiveQuadratureMaxNodes = 1000000;
-        public static readonly BigFloat LogisticGaussianQuadratureRelativeTolerance = BigFloatFactory.Create("1e-38");
         public const int NormalCdfMomentRatioMaxTerms = 120;
+        // Math.Exp(log0) == 0
+        public static readonly BigFloat Log0; // log(epsilon) - Ln2;
+        // 1-Math.Exp(logHalfUlpPrev1) == 1
+        public static readonly BigFloat LogHalfUlpPrev1; // log((1.0 - prev(1.0)) / 2);
+        public static readonly BigFloat LogisticGaussianQuadratureRelativeTolerance; //  512 * Ulp1;
+        public static readonly BigFloat LogisticGaussianDerivativeQuadratureRelativeTolerance; // 1024 * 512 * Ulp1;
+        public static readonly BigFloat LogisticGaussianSeriesApproximmationThreshold = BigFloatFactory.Create("1e-18");
 
         static SpecialFunctionsMethods()
         {
@@ -47,6 +52,23 @@ namespace Infer.Loki.Mappings
             Ulp1 = BigFloatFactory.Create(1);
             Ulp1.NextAbove();
             Ulp1.Sub(1);
+
+            Log0 = BigFloatFactory.Epsilon;
+            Log0.Log();
+            Log0.Sub(Ln2);
+
+            LogHalfUlpPrev1 = BigFloatFactory.Create(1);
+            LogHalfUlpPrev1.NextBelow();
+            LogHalfUlpPrev1.Neg();
+            LogHalfUlpPrev1.Add(1);
+            LogHalfUlpPrev1.Div2(1);
+            LogHalfUlpPrev1.Log();
+
+            LogisticGaussianQuadratureRelativeTolerance = BigFloatFactory.Create(Ulp1);
+            LogisticGaussianQuadratureRelativeTolerance.Mul2(9);
+
+            LogisticGaussianDerivativeQuadratureRelativeTolerance = BigFloatFactory.Create(LogisticGaussianQuadratureRelativeTolerance);
+            LogisticGaussianDerivativeQuadratureRelativeTolerance.Mul2(10);
         }
 
         public static BigFloat Gamma(BigFloat x)
@@ -1100,6 +1122,88 @@ namespace Infer.Loki.Mappings
         {
             var result = BigFloatFactory.Create(x);
             result.NextBelow();
+            return result;
+        }
+
+        public static BigFloat NextBigFloatWithPositiveDifference(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            if (!(result.IsNan() || (result.IsInf() && result.IsPositive())))
+            {
+                result.NextAbove();
+                using (var y = BigFloatFactory.Create(result))
+                {
+                    y.Sub(x);
+                    if (y.IsZero())
+                    {
+                        BigFloat.Mul2(result, x, 1);
+                        y.NextAbove(); // y = Epsilon
+                        result.Add(y);
+                        result.Div2(1);
+                        BigFloat.Sub(y, result, x);
+                        if (y.IsZero())
+                        {
+                            do
+                            {
+                                result.NextAbove();
+                                BigFloat.Sub(y, result, x);
+                            }
+                            while (y.IsZero());
+                        }
+                        else
+                        {
+                            do
+                            {
+                                result.NextBelow();
+                                BigFloat.Sub(y, result, x);
+                            }
+                            while (!y.IsZero());
+                            result.NextAbove();
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public static BigFloat PreviousBigFloatWithPositiveDifference(BigFloat x)
+        {
+            var result = BigFloatFactory.Create(x);
+            if (!(result.IsNan() || (result.IsInf() && result.IsNegative())))
+            {
+                result.NextBelow();
+                using (var y = BigFloatFactory.Create(x))
+                {
+                    y.Sub(result);
+                    if (y.IsZero())
+                    {
+                        BigFloat.Mul2(result, x, 1);
+                        y.NextAbove(); // y = Epsilon
+                        result.Sub(y);
+                        result.Div2(1);
+                        BigFloat.Sub(y, x, result);
+                        if (y.IsZero())
+                        {
+                            do
+                            {
+                                result.NextBelow();
+                                BigFloat.Sub(y, x, result);
+                            }
+                            while (y.IsZero());
+                        }
+                        else
+                        {
+                            do
+                            {
+                                result.NextAbove();
+                                BigFloat.Sub(y, x, result);
+                            }
+                            while (!y.IsZero());
+                            result.NextBelow();
+                        }
+                    }
+                }
+            }
             return result;
         }
 
