@@ -4511,6 +4511,18 @@ rr = mpf('-0.99999824265582826');
         }
 
         /// <summary>
+        /// Returns the smallest double precision number such that when value is subtracted from it,
+        /// the result is strictly greater than zero, if one exists.  Otherwise returns value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double NextDoubleWithPositiveDifference(double value)
+        {
+            // This relies on denormalization being enabled in .NET.
+            return NextDouble(value);
+        }
+
+        /// <summary>
         /// Returns the largest double precision number less than value, if one exists.  Otherwise returns value.
         /// </summary>
         /// <param name="value"></param>
@@ -4522,6 +4534,18 @@ rr = mpf('-0.99999824265582826');
             if (double.IsNegativeInfinity(value)) return value;
             long bits = BitConverter.DoubleToInt64Bits(value);
             return BitConverter.Int64BitsToDouble(bits - 1);
+        }
+
+        /// <summary>
+        /// Returns the biggest double precision number such that when it is subtracted from value,
+        /// the result is strictly greater than zero, if one exists.  Otherwise returns value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double PreviousDoubleWithPositiveDifference(double value)
+        {
+            // This relies on denormalization being enabled in .NET.
+            return PreviousDouble(value);
         }
 
         /// <summary>
@@ -4705,16 +4729,16 @@ rr = mpf('-0.99999824265582826');
                 else return double.PositiveInfinity;
             }
             if (double.IsPositiveInfinity(sum)) return sum;
-            double lowerBound = PreviousDouble(b + sum);
+            double lowerBound = PreviousDoubleWithPositiveDifference(b + sum);
             double upperBound;
             if (Math.Abs(sum) > Math.Abs(b))
             {
                 // Cast to double to prevent upperBound from landing between double.MaxValue and infinity on a 32-bit platform.
-                upperBound = (double)(b + NextDouble(sum));
+                upperBound = (double)(b + NextDoubleWithPositiveDifference(sum));
             }
             else
             {
-                upperBound = (double)(NextDouble(b) + sum);
+                upperBound = (double)(NextDoubleWithPositiveDifference(b) + sum);
             }
             int iterCount = 0;
             while (true)
