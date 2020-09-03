@@ -1177,7 +1177,7 @@ namespace Microsoft.ML.Probabilistic.Math
             return result;
         }
 
-        private static readonly double Ulp1 = Ulp(1.0);
+        public static readonly double Ulp1 = Ulp(1.0);
 
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
