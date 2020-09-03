@@ -2086,6 +2086,8 @@ namespace Microsoft.ML.Probabilistic.Math
             });
         }
 
+        const int NormalCdfMomentRatioMaxTerms = 60;
+
         /// <summary>
         /// Computes int_0^infinity t^n N(t;x,1) dt / (n! N(x;0,1))
         /// </summary>
@@ -2094,10 +2096,9 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public static double NormalCdfMomentRatio(int n, double x)
         {
-            const int maxTerms = 60;
             if (x >= -0.5)
                 return NormalCdfMomentRatioRecurrence(n, x);
-            else if (n <= NormalCdfMomentRatioTableSize - maxTerms && x > -8)
+            else if (n <= NormalCdfMomentRatioTableSize - NormalCdfMomentRatioMaxTerms && x > -8)
             {
                 int index = (int)(-x - 1.5); // index ranges from 0 to 6
                 double x0 = -index - 2;
