@@ -37,7 +37,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
-    <DefineConstants>$(DefineConstants);NETFULL</DefineConstants>
     <RunPostBuildNetFull>true</RunPostBuildNetFull>
   </PropertyGroup>
 

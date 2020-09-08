@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             mc.AssertEqualTo(mc2);
         }
 
-#if NETFULL
+#if NETFRAMEWORK
         [Fact]
         public void BinaryFormatterTest()
         {
@@ -109,7 +109,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             mc.AssertEqualTo(mc2);
         }
 
-#if NETFULL
+#if NETFRAMEWORK
         [Fact]
         public void VectorSerializeTests()
         {
@@ -311,7 +311,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-#if NETFULL
+#if NETFRAMEWORK
         private static T CloneBinaryFormatter<T>(T obj)
         {
             var bf = new BinaryFormatter();

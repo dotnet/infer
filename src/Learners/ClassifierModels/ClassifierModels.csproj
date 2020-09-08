@@ -37,7 +37,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
-    <DefineConstants>$(DefineConstants);NETFULL</DefineConstants>
     <RunPostBuildNetFull>true</RunPostBuildNetFull>
   </PropertyGroup>
 
@@ -70,7 +69,7 @@
     <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETFULL'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK'))">
     <ProjectReference Include="..\..\Visualizers\Windows\Visualizers.Windows.csproj" />
   </ItemGroup>
 

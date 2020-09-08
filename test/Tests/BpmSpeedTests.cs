@@ -136,7 +136,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
             writer.Dispose();
-#if NETFULL
+#if NETFRAMEWORK
             // In the .NET 5.0 BinaryFormatter is obsolete
             // and would produce errors. This test code should be migrated. 
             // See https://aka.ms/binaryformatter
@@ -170,7 +170,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 #pragma warning restore 162
 #endif
 
-#if NETFULL
+#if NETFRAMEWORK
         public static void Rcv1Test2()
         {
             GaussianArray wPost;
