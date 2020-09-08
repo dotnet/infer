@@ -9,10 +9,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+#if WINDOWS
 using OxyPlot.Wpf;
 using OxyPlot;
 using System.Threading;
 using Microsoft.ML.Probabilistic.Distributions;
+#endif
 
 namespace RobustGaussianProcess
 {
@@ -111,6 +113,7 @@ namespace RobustGaussianProcess
             return engine;
         }
 
+#if WINDOWS
         public static void PlotGraph(PlotModel model, string graphPath)
         {
             // Required for plotting
@@ -168,5 +171,6 @@ namespace RobustGaussianProcess
             PlotGraph(model, pngPath);
             Console.WriteLine($"Saved PNG to {Path.GetFullPath(pngPath)}");
         }
+#endif
     }
 }
