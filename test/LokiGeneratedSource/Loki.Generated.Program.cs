@@ -15,53 +15,54 @@ namespace Loki.Generated
     {
         static async Task Main(string[] args)
         {
-            DoublePrecisionFuel.SetFuel(0);
-            GaussianIsBetweenCRCC_IsMonotonicInXMean_IsolatedCase();
-            //var logFilePath = Path.Combine(Environment.CurrentDirectory, "log.csv");
+            //DoublePrecisionFuel.SetFuel(0);
+            //GaussianIsBetweenCRCC_IsMonotonicInXMean_IsolatedCase();
 
             //var result = await TestRunner.RunTestAsync(new OperatorTests().GaussianIsBetweenCRCC_IsMonotonicInXMean, 0/*, null, new CancellationTokenSource(TimeSpan.FromMinutes(10)).Token*/);
             //Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
-            //var categoriesToSkip = new[] { "CompilerOptionsTest", "Performance", "OpenBug", "BadTest" };
-            //var tests = TestInfo.FromAssembly(typeof(Program).Assembly)
-            //    .Where(ti => !ti.Traits.Any(trait => trait.Key == "Category" && categoriesToSkip.Contains(trait.Value)))
-            //    //.Skip(100)
-            //    //.Take(100)
-            //    ;
 
-            //////var tests = new TestInfo[] { TestInfo.FromDelegate(new BayesPointMachineTests().BayesPointEvidence2) }
-            //////    .Where(ti => !ti.Traits.Any(trait => trait.Key == "Category" && trait.Value == "CompilerOptionsTest"))
-            //////    //.Skip(100)
-            //////    //.Take(100)
-            //////    ;
+            var logFilePath = Path.Combine(Environment.CurrentDirectory, "log.csv");
+            var categoriesToSkip = new[] { "CompilerOptionsTest", "Performance", /*"OpenBug",*/ "BadTest" };
+            var tests = TestInfo.FromAssembly(typeof(Program).Assembly)
+                .Where(ti => !ti.Traits.Any(trait => trait.Key == "Category" && categoriesToSkip.Contains(trait.Value)))
+                //.Skip(100)
+                //.Take(100)
+                ;
 
-            //var testRun = TestSuiteRunner.RunTestSuite(
-            //    tests,
-            //    new[] { ulong.MaxValue, 0ul },
-            //    logFilePath,
-            //    false,
-            //    TimeSpan.FromMinutes(10),
-            //    16,
-            //    true,
-            //    new Progress<TestSuiteRunStatus>(s => Console.Title = $"Completed {s.CompletedTests} tests. OpCounts: {string.Join(" | ", s.CurrentTestStatuses.Select(cts => cts.CurrentRunStatus.OperationCount.ToString()))}"));
+            ////var tests = new TestInfo[] { TestInfo.FromDelegate(new BayesPointMachineTests().BayesPointEvidence2) }
+            ////    .Where(ti => !ti.Traits.Any(trait => trait.Key == "Category" && trait.Value == "CompilerOptionsTest"))
+            ////    //.Skip(100)
+            ////    //.Take(100)
+            ////    ;
 
-            //var testResultEnumerator = testRun.GetAsyncEnumerator();
-            //try
-            //{
-            //    while (await testResultEnumerator.MoveNextAsync())
-            //    {
-            //        var result = testResultEnumerator.Current;
-            //        Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("A FATAL ERROR OCCURED:");
-            //    Console.WriteLine(ex);
-            //}
-            //finally
-            //{
-            //    await testResultEnumerator.DisposeAsync();
-            //}
+            var testRun = TestSuiteRunner.RunTestSuite(
+                tests,
+                new[] { ulong.MaxValue, 0ul },
+                logFilePath,
+                false,
+                TimeSpan.FromMinutes(10),
+                16,
+                true,
+                new Progress<TestSuiteRunStatus>(s => Console.Title = $"Completed {s.CompletedTests} tests. OpCounts: {string.Join(" | ", s.CurrentTestStatuses.Select(cts => cts.CurrentRunStatus.OperationCount.ToString()))}"));
+
+            var testResultEnumerator = testRun.GetAsyncEnumerator();
+            try
+            {
+                while (await testResultEnumerator.MoveNextAsync())
+                {
+                    var result = testResultEnumerator.Current;
+                    Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("A FATAL ERROR OCCURED:");
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                await testResultEnumerator.DisposeAsync();
+            }
         }
 
         static void GaussianIsBetweenCRCC_IsMonotonicInXMean_IsolatedCase()
