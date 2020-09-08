@@ -577,7 +577,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     result -= rate;
                 }
-                else if (logxOverPower * logxOverPower <= MMath.Ulp1)
+                else if (logxOverPower <= MMath.SqrtUlp1)
                 {
                     // The part of the log-density that depends on x is:
                     //   (shape/power-1)*log(x) - rate*x^(1/power)
