@@ -813,12 +813,12 @@ namespace Microsoft.ML.Probabilistic.Math
             // To ensure that the result increases with n, we group terms in n.
             if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x), x, "x <= 0");
             else if (n == 0) return 0;
-            else if (x < 1e-16 && x + n < 1e-16)
+            else if (x < Ulp1 && x + n < Ulp1)
             {
                 // GammaLn(x) = -log(x)
                 return -Log1Plus(n / x) / n;
             }
-            else if (Math.Abs(n / x) < 1e-6)
+            else if (Math.Abs(n / x) < CbrtUlp1)
             {
                 // x >= 1e-6 ensures that Tetragamma doesn't overflow
                 // For small x, Digamma(x) = -1/x, Trigamma(x) = 1/x^2, Tetragamma(x) = -1/x^3
@@ -828,7 +828,7 @@ namespace Microsoft.ML.Probabilistic.Math
             else if (x > GammaLnLargeX && x + n > GammaLnLargeX)
             {
                 double nOverX = n / x;
-                if (Math.Abs(nOverX) < 1e-8)
+                if (Math.Abs(nOverX) < SqrtUlp1)
                     // log(1 + x) = x - 0.5*x^2  when x^2 << 1
                     return Log1Plus(nOverX) - 0.5 * (1 - 0.5 / x) * nOverX + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 0.5 / x + Math.Log(x);
                 else
@@ -1176,8 +1176,6 @@ namespace Microsoft.ML.Probabilistic.Math
             }
             return result;
         }
-
-        public static readonly double Ulp1 = Ulp(1.0);
 
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
@@ -4887,6 +4885,21 @@ rr = mpf('-0.99999824265582826');
         /// The Euler-Mascheroni Constant.
         /// </summary>
         public const double EulerGamma = 0.57721566490153286060651209;
+
+        /// <summary>
+        /// Ulp(1.0) == NextDouble(1.0) - 1.0
+        /// </summary>
+        public static readonly double Ulp1 = Ulp(1.0);
+
+        /// <summary>
+        /// Math.Sqrt(Ulp(1.0))
+        /// </summary>
+        public static readonly double SqrtUlp1 = Math.Sqrt(Ulp1);
+
+        /// <summary>
+        /// Math.Pow(Ulp(1.0), 1.0 / 3)
+        /// </summary>
+        public static readonly double CbrtUlp1 = Math.Pow(Ulp1, 1.0 / 3);
 
         /// <summary>
         /// Digamma(1)
