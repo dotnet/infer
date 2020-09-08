@@ -121,7 +121,7 @@ namespace Infer.Loki.Tests
             settings.Mappers.AddMap(new LanguageWriterMap());
             settings.Mappers.AddMap(new ConversionMap());
 
-            settings.CSharpParseOptions = settings.CSharpParseOptions.WithPreprocessorSymbols(new[] { "NETFULL", "ROSLYN", "CODEDOM", "TRACE", "SUPPRESS_XMLDOC_WARNINGS", "SUPPRESS_UNREACHABLE_CODE_WARNINGS", "SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS" });
+            settings.CSharpParseOptions = settings.CSharpParseOptions.WithPreprocessorSymbols(new[] { "NETFRAMEWORK", "ROSLYN", "CODEDOM", "TRACE", "SUPPRESS_XMLDOC_WARNINGS", "SUPPRESS_UNREACHABLE_CODE_WARNINGS", "SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS" });
 
             settings.PostprocessReferences = refs => refs.Where(r => !r.Display.Contains("System.CodeDom"));
             return settings;
