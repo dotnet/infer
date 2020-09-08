@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Tests.CodeCompilerTests
 
         protected override void CheckCompiling()
         {
-#if NETFULL
+#if NETFRAMEWORK
             base.CheckCompiling();
 #else
             Assert.Throws<PlatformNotSupportedException>(() => compiler.Compile(fileNames, sourceCodes, assemblies));
@@ -117,7 +117,7 @@ namespace Microsoft.ML.Probabilistic.Tests.CodeCompilerTests
 
         protected override void CheckCompiling()
         {
-#if NETFULL
+#if NETFRAMEWORK
             base.CheckCompiling();
 #else
             Assert.Throws<PlatformNotSupportedException>(() => compiler.Compile(fileNames, sourceCodes, assemblies));
@@ -194,7 +194,7 @@ namespace Microsoft.ML.Probabilistic.Tests.CodeCompilerTests
 
         protected override void CheckCompiling()
         {
-#if NETFULL
+#if NETFRAMEWORK
             base.CheckCompiling();
 #else
             Assert.Throws<PlatformNotSupportedException>(() => compiler.Compile(fileNames, sourceCodes, assemblies));
@@ -271,7 +271,7 @@ namespace Microsoft.ML.Probabilistic.Tests.CodeCompilerTests
 
         protected override void CheckCompiling()
         {
-#if NETFULL
+#if NETFRAMEWORK
             base.CheckCompiling();
 #else
             Assert.Throws<PlatformNotSupportedException>(() => compiler.Compile(fileNames, sourceCodes, assemblies));

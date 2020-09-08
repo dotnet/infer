@@ -3617,6 +3617,11 @@ rr = mpf('-0.99999824265582826');
                     x * (1.0 / 40320.0
                     ))))))));
             }
+            else if (x == Ln2)
+            {
+                // Math.Exp(Ln2) is not required to be exactly 2, so we force it.
+                return 1;
+            }
             else
             {
                 return Math.Exp(x) - 1.0;

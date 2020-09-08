@@ -765,12 +765,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 string[] serializedRecommenderFileNames =
                     {
                         Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                             Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                             "CustomSerializedLearners", "2015-11-20", "NativeRecommender-2015-11-20.bin"),
                         Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                             Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                             "CustomSerializedLearners", "2018-07-27", "NativeRecommender-2018-07-27.bin")
@@ -848,12 +848,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 string[] serializedRecommenderFileNames =
                     {
                         Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                             Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                             "CustomSerializedLearners", "2015-11-20", "StandardRecommender-2015-11-20.bin"),
                         Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                             Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                             "CustomSerializedLearners", "2018-07-27", "StandardRecommender-2018-07-27.bin")

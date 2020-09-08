@@ -46,7 +46,7 @@ namespace TestApp
             Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             var logWriter = new StreamWriter("debug.txt");
             Trace.Listeners.Add(new TextWriterTraceListener(logWriter));
-#if NETFULL
+#if NETFRAMEWORK
             InferenceEngine.Visualizer = new WindowsVisualizer();
 #endif
             Debug.AutoFlush = true;
@@ -100,7 +100,7 @@ namespace TestApp
                 //TestUtils.CheckTransformNames();
             }
             //InferenceEngine.ShowFactorManager(true);
-#if NETFULL
+#if NETFRAMEWORK
             logWriter.Dispose();
 #endif
             watch.Stop();

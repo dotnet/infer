@@ -638,7 +638,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetLogNormalizer()
         {
-            if (IsProper())
+            if (IsProper() && !IsPointMass)
             {
                 return MMath.GammaLn(Shape) - Shape * Math.Log(Rate);
             }
