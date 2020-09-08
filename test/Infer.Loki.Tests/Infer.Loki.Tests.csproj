@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\src\Loki\src\Loki.Shared\Loki.Shared.csproj" />
     <ProjectReference Include="..\..\src\Loki\src\Loki\Loki.csproj" />
     <ProjectReference Include="..\Infer.Loki.Mappings\Infer.Loki.Mappings.csproj" />
+    <ProjectReference Include="..\Learners\LearnersTests\LearnersTests.csproj" />
     <ProjectReference Include="..\Tests\Tests.csproj" />
   </ItemGroup>
 </Project>
