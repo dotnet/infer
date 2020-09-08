@@ -28,14 +28,6 @@
     </Otherwise>
   </Choose>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
-    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
-    <DefineConstants>$(DefineConstants);NETFULL</DefineConstants>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -47,7 +39,7 @@
     <PackageReference Include="ExcelDataReader" Version="3.4.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETCORE'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('NETCOREAPP'))">
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
   </ItemGroup>
 

@@ -51,6 +51,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             RatioWithPointMassTest(a, value);
             PointMassPowerTest(a, value);
             PointMassSampleTest(a, value);
+            PointMassGetLogProbTest(a, value);
 
             SamplingTest(a, 3);
         }
@@ -758,9 +759,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             GammaRoundoffTest(g);
             DistributionTest(g, Gamma.FromShapeAndRate(2e20, 2e20));
 
-            Assert.Equal(Gamma.FromMeanAndVariance(1e300, 1), Gamma.PointMass(1e300));
-            Assert.Equal(Gamma.FromMeanAndVariance(1e250, 1e-100), Gamma.PointMass(1e250));
-            Assert.Equal(Gamma.FromMeanAndVariance(1e-10, 1e-320), Gamma.PointMass(1e-10));
+            Assert.Equal(Gamma.FromMeanAndVariance(double.MaxValue, 1), Gamma.PointMass(double.MaxValue));
+            Assert.Equal(Gamma.FromMeanAndVariance(double.MaxValue / 1e100, 1e-100), Gamma.PointMass(double.MaxValue / 1e100));
+            Assert.Equal(Gamma.FromMeanAndVariance(1, double.Epsilon), Gamma.PointMass(1));
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndRate(2.5, double.PositiveInfinity));
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndScale(2.5, 1e-320));
             Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 1e-320));
@@ -1919,6 +1920,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             AverageLogPointMassTest(a, value);
             InnerProductPointMassTest(a, value);
             PointMassSampleTest(a, value);
+            PointMassGetLogProbTest(a, value);
         }
 
         internal static void UniformTest<T, DomainType>(T a, DomainType value)
@@ -1966,6 +1968,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 DomainType sample = b.Sample();
                 AssertEqual(sample, value);
             }
+        }
+
+        private static void PointMassGetLogProbTest<T, DomainType>(T a, DomainType value)
+            where T : HasPoint<DomainType>, CanGetLogProb<DomainType>, ICloneable
+        {
+            T b = (T)a.Clone();
+            b.Point = value;
+            Assert.Equal(0.0, b.GetLogProb(value));
+            Assert.Equal(double.NegativeInfinity, b.GetLogProb(default(DomainType)));
         }
 
         private static void AssertEqual(object a, object b)
