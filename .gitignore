@@ -260,3 +260,6 @@ _site/
 
 **/GeneratedSource
 **/__pycache__
+*.png
+/src/Examples/Crowdsourcing/Results
+/src/Examples/ImageClassifier/Images/Features.txt
