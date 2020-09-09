@@ -51,10 +51,15 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             try
             {
-                string configFile = DefaultConfigFile;
+                string configFile;
                 if (args.Length > 0)
                 {
                     configFile = args[0];
+                }
+                else
+                {
+                    configFile = DefaultConfigFile;
+                    Console.WriteLine($"Using default config file {configFile}");
                 }
 
                 RegisterTestRunHandlers();
@@ -68,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                     testRun.Execute();
                 }
             }
-            catch (Exception e)
+            catch (Exception e) when(string.Empty.Length>0)
             {
                 HasFailed = true;
                 PrintErrorMessage(e);
