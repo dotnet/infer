@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                     testRun.Execute();
                 }
             }
-            catch (Exception e) when(string.Empty.Length>0)
+            catch (Exception e)
             {
                 HasFailed = true;
                 PrintErrorMessage(e);
