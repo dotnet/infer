@@ -61,51 +61,27 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void MethodReferenceTest()
         {
             MethodInfo method;
-            try
+            Assert.Throws<AmbiguousMatchException>(() =>
             {
                 method = (new MethodReference(typeof(Array), "Copy")).GetMethodInfo();
-                Assert.True(false, "AmbiguousMatchException not thrown");
-            }
-            catch (AmbiguousMatchException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-                Console.WriteLine();
-            }
+            });
             method = (new MethodReference(typeof(Array), "Copy", null, null, typeof(Int32))).GetMethodInfo();
-            try
+            Assert.Throws<MissingMethodException>(() =>
             {
                 method = (new MethodReference(typeof(Array), "Find")).GetMethodInfo();
-                Assert.True(false, "MissingMethodException not thrown");
-            }
-            catch (MissingMethodException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-                Console.WriteLine();
-            }
+            });
             method = (new MethodReference(typeof(Array), "Find<>")).GetMethodInfo();
             method = (new MethodReference(typeof(Array), "Find<>", typeof(int))).GetMethodInfo();
-            try
+            Assert.Throws<AmbiguousMatchException>(() =>
             {
                 method = (new MethodReference(typeof(Array), "FindIndex<>")).GetMethodInfo();
-                Assert.True(false, "AmbiguousMatchException not thrown");
-            }
-            catch (AmbiguousMatchException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-                Console.WriteLine();
-            }
+            });
             method = (new MethodReference(typeof(Array), "FindIndex<>", null, null, null)).GetMethodInfo();
             // check that type parameter constraints are enforced
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 method = (new MethodReference(typeof(TypeInferenceTests), "ConstrainClass<>", typeof(double), typeof(double))).GetMethodInfo();
-                Assert.True(false, "ArgumentException not thrown");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-                Console.WriteLine();
-            }
+            });
         }
 
         [Fact]
@@ -358,16 +334,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             Console.WriteLine();
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 parameterTypes["result"] = typeof(double);
                 fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Difference", parameterTypes);
-                Assert.True(false, "Did not throw an exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
 
             Console.WriteLine();
             Console.WriteLine("All messages to A:");
@@ -451,15 +422,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine("Requirements:");
             Console.WriteLine(StringUtil.ToString(depInfo.Requirements));
 
-            try
+            Assert.Throws<NotSupportedException>(() =>
             {
                 fcninfo = info.GetMessageFcnInfo(factorManager, "AverageLogarithm", "x", parameterTypes);
-                Assert.True(false, "did not throw exception");
-            }
-            catch (NotSupportedException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             bool found = false;
             foreach (MessageFcnInfo fcninfo2 in info.GetMessageFcnInfos("AverageLogarithm", null, null))
             {
@@ -516,15 +482,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Dictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
             parameterTypes["factor"] = typeof(double);
             parameterTypes["result"] = typeof(double);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Variable", parameterTypes);
-                Assert.True(false, "Did not throw an exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -535,15 +496,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             parameterTypes["sample"] = typeof(Gaussian);
             parameterTypes["mean"] = typeof(Gaussian);
             parameterTypes["precision"] = typeof(Gaussian);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Sample", parameterTypes);
-                Assert.True(false, "Did not throw an exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
         }
 
         /// <summary>

@@ -4188,16 +4188,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<double> abcabd = (abc * abd).Named("abcabd");
             Variable.ConstrainEqualRandom(abcabd, Gaussian.FromMeanAndVariance(4.0, 1.0));
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
-            try
+            Assert.Throws<InferRuntimeException>(() =>
             {
                 Gaussian abcabdMarginal = engine.Infer<Gaussian>(abcabd);
                 Console.WriteLine("abcabd = " + abcabdMarginal);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (InferRuntimeException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
         }
 
         [Fact]
