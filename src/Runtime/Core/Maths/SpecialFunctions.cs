@@ -4941,6 +4941,11 @@ rr = mpf('-0.99999824265582826');
         public const double Sqrt2 = 1.41421356237309504880;
 
         /// <summary>
+        /// Math.Sqrt(3)
+        /// </summary>
+        public const double Sqrt3 = 1.7320508075688772935274463415059;
+
+        /// <summary>
         /// Math.Sqrt(0.5)
         /// </summary>
         public const double SqrtHalf = 0.70710678118654752440084436210485;
