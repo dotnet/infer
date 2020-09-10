@@ -1,8 +1,11 @@
-﻿using Loki.Shared;
+﻿using Loki.Mapping.Methods;
+using Loki.Shared;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Numerics.MPFR;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,5 +22,7 @@ namespace Infer.Loki.Mappings
                 slnDir = slnDir.Parent;
             DataFolderPath = Path.Combine(slnDir.FullName, "test", "Tests", "Data");
         }
+
+        public static bool TryParseInvariant(string value, out BigFloat result) => DoubleMethods.TryParse(value, System.Globalization.NumberStyles.Float, CultureInfo.InvariantCulture, out result);
     }
 }

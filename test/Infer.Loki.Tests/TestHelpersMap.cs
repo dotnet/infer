@@ -25,8 +25,8 @@ namespace Infer.Loki.Tests
                     null,
                     new Type[] { typeof(string), typeof(double).MakeByRefType() },
                     null),
-                typeof(DoubleMethods).GetMethod(
-                    "TryParse",
+                typeof(TestHelpersMethods).GetMethod(
+                    "TryParseInvariant",
                     BindingFlags.Static | BindingFlags.Public,
                     null,
                     new Type[] { typeof(string), typeof(BigFloat).MakeByRefType() },

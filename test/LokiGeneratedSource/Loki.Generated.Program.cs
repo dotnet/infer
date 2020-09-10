@@ -11,16 +11,16 @@ using Microsoft.ML.Probabilistic.Distributions;
 
 namespace Loki.Generated
 {
-    class Program
+    public class Program
     {
         static async Task Main(string[] args)
         {
-            DoublePrecisionFuel.SetFuel(0);
+            //DoublePrecisionFuel.SetFuel(0);
             //GaussianIsBetweenCRCC_IsMonotonicInXMean_IsolatedCase();
-            GaussianIsBetweenCRCC_IsMonotonicInXPrecision_IsolatedCase();
+            //GaussianIsBetweenCRCC_IsMonotonicInXPrecision_IsolatedCase();
 
-            //var result = await TestRunner.RunTestAsync(new OperatorTests().GaussianIsBetweenCRCC_IsMonotonicInXPrecision, 0/*, null, new CancellationTokenSource(TimeSpan.FromMinutes(10)).Token*/);
-            //Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
+            var result = await TestRunner.RunTestAsync(new OperatorTests().GaussianIsPositiveTest, 0/*, null, new CancellationTokenSource(TimeSpan.FromMinutes(10)).Token*/);
+            Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
 
             //var logFilePath = Path.Combine(Environment.CurrentDirectory, "log.csv");
             //var categoriesToSkip = new[] { "CompilerOptionsTest", "Performance", /*"OpenBug",*/ "BadTest" };
@@ -66,7 +66,8 @@ namespace Loki.Generated
             //}
         }
 
-        static void GaussianIsBetweenCRCC_IsMonotonicInXMean_IsolatedCase()
+        [Xunit.Fact]
+        public static void GaussianIsBetweenCRCC_IsMonotonicInXMean_IsolatedCase()
         {
             DoubleWithTransformingPrecision upperBound = 0;
             DoubleWithTransformingPrecision lowerBound = -1000;

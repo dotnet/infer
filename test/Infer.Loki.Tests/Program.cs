@@ -22,7 +22,7 @@ namespace Infer.Loki.Tests
 
             var transformer = new TestTransformer(settings);
             await transformer.Build();
-            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new EpTests().GammaPowerPowerTest), 0);
+            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new SpecialFunctionsTests().LogisticGaussianTest), 0);
             Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
 
             //var tests = transformer.EnumerateTransformedTests()
