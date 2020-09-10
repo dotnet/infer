@@ -235,7 +235,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GammaPowerPowerTest()
         {
             Assert.False(double.IsNaN(PowerOp.GammaPowerFromDifferentPower(new GammaPower(1.333, 1.5, 1), 0.01).Shape));
-            Assert.True(PowerOp.XAverageConditional(new GammaPower(7, 0.1111, -1), new GammaPower(16.19, 0.06154, 1), 2.2204460492503136E-16, GammaPower.Uniform(1)).IsProper());
+            for (int i = 1; i <= 10; i++)
+            {
+                // TODO: make this work
+                //Assert.True(PowerOp.XAverageConditional(new GammaPower(7, 0.1111, -1), new GammaPower(16.19, 0.06154, 1), 2.2204460492503136E-10/i, GammaPower.Uniform(1)).IsProper());
+            }
+            Assert.True(PowerOp.XAverageConditional(new GammaPower(7, 0.1111, -1), new GammaPower(16.19, 0.06154, 1), MMath.Ulp(1), GammaPower.Uniform(1)).IsProper());
             Assert.True(PowerOp.PowAverageConditional(GammaPower.FromShapeAndRate(9.0744065303642287, 8.7298765698182414, 1), 1.6327904641199278, GammaPower.Uniform(-1)).IsProper());
             Assert.False(PowerOp.XAverageConditional(GammaPower.Uniform(-1), GammaPower.FromShapeAndRate(1, 1, 1), 4.0552419045546273, GammaPower.Uniform(1)).IsPointMass);
 

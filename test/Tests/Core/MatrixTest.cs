@@ -2203,41 +2203,56 @@ namespace Microsoft.ML.Probabilistic.Tests
             });
             Matrix V = new Matrix(A.Cols, A.Cols);
             V.SetToRightSingularVectors(A);
-            //Matrix A2 = new Matrix(A.Rows, A.Cols);
-            //A2.SetToProduct(A, V.Transpose());
+            // A now contains the left singular vectors scaled by the singular values.
+            Matrix US = A;
             DenseVector S = DenseVector.Zero(A.Cols);
             for (int i = 0; i < A.Cols; i++)
             {
                 double sum = 0;
+                double compensation = 0;
                 for (int j = 0; j < A.Rows; j++)
                 {
-                    sum += A[j, i] * A[j, i];
+                    double y = A[j, i] * A[j, i] - compensation;
+                    double nextSum = sum + y;
+                    compensation = (nextSum - sum) - y;
+                    sum = nextSum;
                 }
                 S[i] = System.Math.Sqrt(sum);
             }
             var Sinv = DenseVector.Zero(S.Count);
             Sinv.SetToFunction(S, x => 1.0 / x);
-            A.ScaleCols(Sinv);
-            Matrix U = A;
+            Matrix U = (Matrix)US.Clone();
+            U.ScaleCols(Sinv);
 
             // these results are slightly different from Matlab, but seem to be more accurate.
+            // They were computed in extended precision.
             Matrix UExpected = new Matrix(new double[,] {
-                { 0.577350268923100,  -0.69217074896108965 },
-                { 0.577350269178466,  -0.028980941246352369 },
-                { 0.577350269467311,   0.72115168954050146 }
+                { 0.57735026892309971,  -0.69217076042542958 },
+                { 0.57735026917846644,  -0.028980919646426295 },
+                { 0.57735026946731116,   0.72115167940491542 }
             });
-            DenseVector SExpected = DenseVector.FromArray(2.183575560941113, 0.000000001095252);
+            DenseVector SExpected = DenseVector.FromArray(2.1835755609411125, 1.0952516532160563e-09);
             Matrix VExpected = new Matrix(new double[,] {
-                { 0.793217710690245,   -0.608938144188165 },
-                { 0.608938144188165,  0.793217710690245 }
+                { 0.79321771069024527,   -0.60893814418816494 },
+                { 0.60893814418816494,  0.79321771069024527 }
             });
 
-            Console.WriteLine(StringUtil.JoinColumns("U = ", U, " expected ", UExpected));
-            Console.WriteLine(StringUtil.JoinColumns("S = ", S, " expected ", SExpected));
-            Console.WriteLine(StringUtil.JoinColumns("V = ", V, " expected ", VExpected));
-            Assert.True(UExpected.MaxDiff(U) < 1e-10);
-            Assert.True(SExpected.MaxDiff(S) < 1e-10);
-            Assert.True(VExpected.MaxDiff(V) < 1e-10);
+            double UError = UExpected.MaxDiff(U);
+            double SError = SExpected.MaxDiff(S);
+            double VError = VExpected.MaxDiff(V);
+            Matrix USExpected = UExpected * Matrix.FromDiagonal(SExpected);
+            double USError = USExpected.MaxDiff(US);
+            Console.WriteLine(StringUtil.JoinColumns("US = ", US.ToString("g17"), " expected ", USExpected.ToString("g17"), " error ", USError));
+            Console.WriteLine(StringUtil.JoinColumns("U = ", U.ToString("g17"), " expected ", UExpected.ToString("g17"), " error ", UError));
+            Console.WriteLine(StringUtil.JoinColumns("S = ", S, " expected ", SExpected, " error ", SError));
+            Console.WriteLine(StringUtil.JoinColumns("V = ", V, " expected ", VExpected, " error ", VError));
+            Matrix AExpected = UExpected * Matrix.FromDiagonal(SExpected) * VExpected.Transpose();
+            Matrix USVActual = U * Matrix.FromDiagonal(S) * V.Transpose();
+            Matrix AActual = US * V.Transpose();
+            Console.WriteLine(StringUtil.JoinColumns("A = ", AActual.ToString("g17"), " expected ", AExpected.ToString("g17")));
+            Assert.True(UError < 1e-7);
+            Assert.True(SError < 1e-10);
+            Assert.True(VError < 1e-10);
         }
 
         // TODO: change this test to use SetToLeftSingularVectors

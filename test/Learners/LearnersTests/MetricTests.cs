@@ -98,7 +98,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             distribution = new Discrete(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1);
             Assert.Equal(0, distribution.GetMode());
             Assert.Equal(4.5, distribution.GetMean(), 1e-10);
-            Assert.Equal(4, distribution.GetMedian());
+            int median = distribution.GetMedian();
+            Assert.True(median == 4 || median == 5);
             Assert.Equal(3, PointEstimator.GetEstimate(distribution, this.LinearLossFunction(3, 2))); // 2nd quintile
             Assert.Equal(7, PointEstimator.GetEstimate(distribution, this.LinearLossFunction(1, 3))); // 3rd quartile
             Assert.Equal(9, PointEstimator.GetEstimate(distribution, this.LinearLossFunction(1, 999))); // 999th permille
