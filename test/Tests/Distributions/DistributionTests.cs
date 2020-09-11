@@ -763,10 +763,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(Gamma.FromMeanAndVariance(double.MaxValue / 1e100, 1e-100), Gamma.PointMass(double.MaxValue / 1e100));
             Assert.Equal(Gamma.FromMeanAndVariance(1, double.Epsilon), Gamma.PointMass(1));
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndRate(2.5, double.PositiveInfinity));
-            Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndScale(2.5, 1e-320));
-            Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 1e-320));
+            Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndScale(2.5, double.Epsilon));
+            Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, double.Epsilon));
             Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 0));
-            Assert.Equal(Gamma.PointMass(1e-300), Gamma.FromShapeAndRate(2, 1e300) ^ 1e10);
+            Assert.Equal(Gamma.PointMass(1e8 / double.MaxValue), Gamma.FromShapeAndRate(2, double.MaxValue / 1e8) ^ 1e10);
 
             ProductWithUniformTest(g);
             Gamma g2 = new Gamma();
