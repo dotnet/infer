@@ -561,7 +561,7 @@ namespace Infer.Loki.Mappings
             }
             else
             {
-                result.Expm1();
+                Expm1WithWorkaroundsInPlace(result);
                 result.Neg();
                 result.Log();
             }
@@ -570,7 +570,7 @@ namespace Infer.Loki.Mappings
         public static BigFloat LogExpMinus1(BigFloat x)
         {
             var result = BigFloatFactory.Create(x);
-            result.Expm1();
+            Expm1WithWorkaroundsInPlace(result);
             if (result.IsInf())
                 BigFloat.Set(result, x);
             else
@@ -578,10 +578,19 @@ namespace Infer.Loki.Mappings
             return result;
         }
 
+        private static void Expm1WithWorkaroundsInPlace(BigFloat x)
+        {
+            // Expm1 does not produce 1 for Ln2
+            if (x.IsEqual(Ln2))
+                x.Set(1.0);
+            else
+                x.Expm1();
+        }
+
         public static BigFloat ExpMinus1(BigFloat x)
         {
             var result = BigFloatFactory.Create(x);
-            result.Expm1();
+            Expm1WithWorkaroundsInPlace(result);
             return result;
         }
 
@@ -645,7 +654,7 @@ namespace Infer.Loki.Mappings
             else
             {
                 var result = BigFloatFactory.Create(x);
-                result.Expm1();
+                Expm1WithWorkaroundsInPlace(result);
                 result.Div(x);
                 result.Sub(1);
                 result.Div(x);
