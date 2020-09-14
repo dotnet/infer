@@ -1316,8 +1316,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(xBelief.MaxDiff(Gaussian.FromMeanAndVariance(0.15958, 0.97454)) < 1e-1);
             Assert.True(IsPositiveOp.XAverageConditional(isPositiveDist, uniform).Equals(uniform));
 
-            Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(127, 11)).Equals(uniform));
-            Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(-127, 11)).Equals(uniform));
+            // mean and variance are chosen to make MMath.NormalCdfRatio(mean/sqrt(variance)) overflow
+            double mean = 1e6;
+            double variance = 11;
+            Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(mean, variance)).Equals(uniform));
+            Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(-mean, variance)).Equals(uniform));
             Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(-1e5, 10)).IsProper());
             Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(1e5, 10)).IsProper());
         }
