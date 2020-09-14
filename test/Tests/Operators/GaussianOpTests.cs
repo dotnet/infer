@@ -431,9 +431,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian X, Mean;
             Gamma Precision;
 
-            X = Gaussian.FromNatural(-1.5098177152950143E-09, 1.061649960537027E-168);
+            double sqrtEpsilon = System.Math.Sqrt(double.Epsilon);
+            double sqrtMaxRepresentable = System.Math.Sqrt(double.MaxValue);
+            long twoTo30 = 1024 * 1024 * 1024;
+
+            X = Gaussian.FromNatural(-1.5098177152950143E-09, sqrtEpsilon / twoTo30);
             Mean = Gaussian.FromNatural(-3.6177299471249587, 0.11664740799025652);
-            Precision = Gamma.FromShapeAndRate(306.39423695125572, 1.8326832031565403E+170);
+            Precision = Gamma.FromShapeAndRate(306.39423695125572, sqrtMaxRepresentable * twoTo30);
             precMsg = Gamma.PointMass(0);
             precMsg2 = GaussianOp_Slow.PrecisionAverageConditional(X, Mean, Precision);
             Assert.True(precMsg.MaxDiff(precMsg2) < 1e-4);
