@@ -813,12 +813,12 @@ namespace Microsoft.ML.Probabilistic.Math
             // To ensure that the result increases with n, we group terms in n.
             if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x), x, "x <= 0");
             else if (n == 0) return 0;
-            else if (x < 1e-16 && x + n < 1e-16)
+            else if (x < Ulp1 && x + n < Ulp1)
             {
                 // GammaLn(x) = -log(x)
                 return -Log1Plus(n / x) / n;
             }
-            else if (Math.Abs(n / x) < 1e-6)
+            else if (Math.Abs(n / x) < CbrtUlp1)
             {
                 // x >= 1e-6 ensures that Tetragamma doesn't overflow
                 // For small x, Digamma(x) = -1/x, Trigamma(x) = 1/x^2, Tetragamma(x) = -1/x^3
@@ -828,7 +828,7 @@ namespace Microsoft.ML.Probabilistic.Math
             else if (x > GammaLnLargeX && x + n > GammaLnLargeX)
             {
                 double nOverX = n / x;
-                if (Math.Abs(nOverX) < 1e-8)
+                if (Math.Abs(nOverX) < SqrtUlp1)
                     // log(1 + x) = x - 0.5*x^2  when x^2 << 1
                     return Log1Plus(nOverX) - 0.5 * (1 - 0.5 / x) * nOverX + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 0.5 / x + Math.Log(x);
                 else
@@ -1176,8 +1176,6 @@ namespace Microsoft.ML.Probabilistic.Math
             }
             return result;
         }
-
-        private static readonly double Ulp1 = Ulp(1.0);
 
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
@@ -2086,6 +2084,8 @@ namespace Microsoft.ML.Probabilistic.Math
             });
         }
 
+        const int NormalCdfMomentRatioMaxTerms = 60;
+
         /// <summary>
         /// Computes int_0^infinity t^n N(t;x,1) dt / (n! N(x;0,1))
         /// </summary>
@@ -2094,10 +2094,9 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public static double NormalCdfMomentRatio(int n, double x)
         {
-            const int maxTerms = 60;
             if (x >= -0.5)
                 return NormalCdfMomentRatioRecurrence(n, x);
-            else if (n <= NormalCdfMomentRatioTableSize - maxTerms && x > -8)
+            else if (n <= NormalCdfMomentRatioTableSize - NormalCdfMomentRatioMaxTerms && x > -8)
             {
                 int index = (int)(-x - 1.5); // index ranges from 0 to 6
                 double x0 = -index - 2;
@@ -2743,7 +2742,6 @@ rr = mpf('-0.99999824265582826');
         }
 
         internal static bool TraceConFrac;
-        private static readonly double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
 
         /// <summary>
         /// Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale.
@@ -4009,14 +4007,6 @@ rr = mpf('-0.99999824265582826');
             vf = Ex2 - mf * mf;
         }
 
-        // Math.Exp(log0) == 0
-        private static readonly double log0 = Math.Log(double.Epsilon) - Ln2;
-        // 1-Math.Exp(logHalfUlpPrev1) == 1
-        private static readonly double logHalfUlpPrev1 = Math.Log((1.0 - PreviousDouble(1.0)) / 2);
-        private static readonly double logisticGaussianQuadratureRelativeTolerance = 512 * Ulp1;
-        private static readonly double logisticGaussianDerivativeQuadratureRelativeTolerance = 1024 * 512 * Ulp1;
-        private static readonly double logisticGaussianSeriesApproximmationThreshold = 1e-8;
-
         /// <summary>
         /// Calculate sigma(m,v) = \int N(x;m,v) logistic(x) dx
         /// </summary>
@@ -4510,6 +4500,18 @@ rr = mpf('-0.99999824265582826');
         }
 
         /// <summary>
+        /// Returns the smallest double precision number such that when value is subtracted from it,
+        /// the result is strictly greater than zero, if one exists.  Otherwise returns value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double NextDoubleWithPositiveDifference(double value)
+        {
+            // This relies on denormalization being enabled in .NET.
+            return NextDouble(value);
+        }
+
+        /// <summary>
         /// Returns the largest double precision number less than value, if one exists.  Otherwise returns value.
         /// </summary>
         /// <param name="value"></param>
@@ -4521,6 +4523,18 @@ rr = mpf('-0.99999824265582826');
             if (double.IsNegativeInfinity(value)) return value;
             long bits = BitConverter.DoubleToInt64Bits(value);
             return BitConverter.Int64BitsToDouble(bits - 1);
+        }
+
+        /// <summary>
+        /// Returns the biggest double precision number such that when it is subtracted from value,
+        /// the result is strictly greater than zero, if one exists.  Otherwise returns value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double PreviousDoubleWithPositiveDifference(double value)
+        {
+            // This relies on denormalization being enabled in .NET.
+            return PreviousDouble(value);
         }
 
         /// <summary>
@@ -4704,16 +4718,16 @@ rr = mpf('-0.99999824265582826');
                 else return double.PositiveInfinity;
             }
             if (double.IsPositiveInfinity(sum)) return sum;
-            double lowerBound = PreviousDouble(b + sum);
+            double lowerBound = PreviousDoubleWithPositiveDifference(b + sum);
             double upperBound;
             if (Math.Abs(sum) > Math.Abs(b))
             {
                 // Cast to double to prevent upperBound from landing between double.MaxValue and infinity on a 32-bit platform.
-                upperBound = (double)(b + NextDouble(sum));
+                upperBound = (double)(b + NextDoubleWithPositiveDifference(sum));
             }
             else
             {
-                upperBound = (double)(NextDouble(b) + sum);
+                upperBound = (double)(NextDoubleWithPositiveDifference(b) + sum);
             }
             int iterCount = 0;
             while (true)
@@ -4864,6 +4878,21 @@ rr = mpf('-0.99999824265582826');
         public const double EulerGamma = 0.57721566490153286060651209;
 
         /// <summary>
+        /// Ulp(1.0) == NextDouble(1.0) - 1.0
+        /// </summary>
+        public static readonly double Ulp1 = Ulp(1.0);
+
+        /// <summary>
+        /// Math.Sqrt(Ulp(1.0))
+        /// </summary>
+        public static readonly double SqrtUlp1 = Math.Sqrt(Ulp1);
+
+        /// <summary>
+        /// Math.Pow(Ulp(1.0), 1.0 / 3)
+        /// </summary>
+        public static readonly double CbrtUlp1 = Math.Pow(Ulp1, 1.0 / 3);
+
+        /// <summary>
         /// Digamma(1)
         /// </summary>
         public const double Digamma1 = -EulerGamma;
@@ -4901,6 +4930,11 @@ rr = mpf('-0.99999824265582826');
         /// Math.Sqrt(2)
         /// </summary>
         public const double Sqrt2 = 1.41421356237309504880;
+
+        /// <summary>
+        /// Math.Sqrt(3)
+        /// </summary>
+        public const double Sqrt3 = 1.7320508075688772935274463415059;
 
         /// <summary>
         /// Math.Sqrt(0.5)
@@ -4947,6 +4981,16 @@ rr = mpf('-0.99999824265582826');
         // Maple command: chebyshev( subs(x=2/y-2,log(erfc(x)*(1+x/2))+x*x), y=0..1, 1e-8);
         // more accurate, but more expensive
         //{ -1.265512122, 0.9999999460, 0.3750003113, 0.08331553737, -0.0857441378, -0.142407635, -0.1269326291, 0.295066080, -0.9476268748, 2.769131338, -3.938783592, 2.943051024, -1.142311460, 0.1837542133 };
+
+        private static readonly double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
+
+        // Math.Exp(log0) == 0
+        private static readonly double log0 = Math.Log(double.Epsilon) - Ln2;
+        // 1-Math.Exp(logHalfUlpPrev1) == 1
+        private static readonly double logHalfUlpPrev1 = Math.Log((1.0 - PreviousDouble(1.0)) / 2);
+        private static readonly double logisticGaussianQuadratureRelativeTolerance = 512 * Ulp1;
+        private static readonly double logisticGaussianDerivativeQuadratureRelativeTolerance = 1024 * 512 * Ulp1;
+        private static readonly double logisticGaussianSeriesApproximmationThreshold = 1e-8;
 
         #endregion
     }

@@ -577,15 +577,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     result -= rate;
                 }
-                else if (Math.Abs(logxOverPower) < 1e-8)
+                else if (Math.Abs(logxOverPower) < MMath.SqrtUlp1)
                 {
                     // The part of the log-density that depends on x is:
                     //   (shape/power-1)*log(x) - rate*x^(1/power)
                     // = (shape/power-1)*log(x) - rate*exp(log(x)/power))
-                    //   (when abs(log(x)/power) < 1e-8, exp(log(x)/power) = 1 + log(x)/power + 0.5*log(x)^2/power^2)
-                    // = (shape/power-1)*log(x) - rate*(1 + log(x)/power + 0.5*log(x)^2/power^2)
-                    // = ((shape - rate)/power - 1)*log(x) - rate*(1 + 0.5*log(x)^2/power^2)
-                    result += ((shape - rate) / power - 1) * logx - rate * (1 + 0.5 * logxOverPower * logxOverPower);
+                    //   (when abs(log(x)/power)^2 < ulp(1), exp(log(x)/power) can be approximated by 1 + log(x)/power, because
+                    //    the third term of this power series 0.5*log(x)^2/power^2 (as well as all other terms) is less than
+                    //    half-ulp of the first)
+                    // = (shape/power-1)*log(x) - rate*(1 + log(x)/power)
+                    // = ((shape - rate)/power - 1)*log(x) - rate
+                    result += ((shape - rate) / power - 1) * logx - rate;
                 }
                 else
                 {
