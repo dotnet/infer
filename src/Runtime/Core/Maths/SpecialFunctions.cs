@@ -2742,7 +2742,6 @@ rr = mpf('-0.99999824265582826');
         }
 
         internal static bool TraceConFrac;
-        private static readonly double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
 
         /// <summary>
         /// Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale.
@@ -4008,14 +4007,6 @@ rr = mpf('-0.99999824265582826');
             vf = Ex2 - mf * mf;
         }
 
-        // Math.Exp(log0) == 0
-        private static readonly double log0 = Math.Log(double.Epsilon) - Ln2;
-        // 1-Math.Exp(logHalfUlpPrev1) == 1
-        private static readonly double logHalfUlpPrev1 = Math.Log((1.0 - PreviousDouble(1.0)) / 2);
-        private static readonly double logisticGaussianQuadratureRelativeTolerance = 512 * Ulp1;
-        private static readonly double logisticGaussianDerivativeQuadratureRelativeTolerance = 1024 * 512 * Ulp1;
-        private static readonly double logisticGaussianSeriesApproximmationThreshold = 1e-8;
-
         /// <summary>
         /// Calculate sigma(m,v) = \int N(x;m,v) logistic(x) dx
         /// </summary>
@@ -4990,6 +4981,16 @@ rr = mpf('-0.99999824265582826');
         // Maple command: chebyshev( subs(x=2/y-2,log(erfc(x)*(1+x/2))+x*x), y=0..1, 1e-8);
         // more accurate, but more expensive
         //{ -1.265512122, 0.9999999460, 0.3750003113, 0.08331553737, -0.0857441378, -0.142407635, -0.1269326291, 0.295066080, -0.9476268748, 2.769131338, -3.938783592, 2.943051024, -1.142311460, 0.1837542133 };
+
+        private static readonly double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
+
+        // Math.Exp(log0) == 0
+        private static readonly double log0 = Math.Log(double.Epsilon) - Ln2;
+        // 1-Math.Exp(logHalfUlpPrev1) == 1
+        private static readonly double logHalfUlpPrev1 = Math.Log((1.0 - PreviousDouble(1.0)) / 2);
+        private static readonly double logisticGaussianQuadratureRelativeTolerance = 512 * Ulp1;
+        private static readonly double logisticGaussianDerivativeQuadratureRelativeTolerance = 1024 * 512 * Ulp1;
+        private static readonly double logisticGaussianSeriesApproximmationThreshold = 1e-8;
 
         #endregion
     }
