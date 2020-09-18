@@ -33,6 +33,21 @@ namespace Microsoft.ML.Probabilistic.Tests
     /// </summary>
     public class ModelTests
     {
+        [Fact]
+        public void MarginalDividedByPriorTest()
+        {
+            Variable<double> parameter = Variable.GaussianFromMeanAndVariance(0.2, 0.1);
+            parameter.Name = nameof(parameter);
+            parameter.AddAttribute(QueryTypes.Marginal);
+            parameter.AddAttribute(QueryTypes.MarginalDividedByPrior);
+            var previousDataMessage = Variable.Observed(default(Gaussian));
+            previousDataMessage.Name = parameter.Name + "PreviousDataMessage";
+            Variable.ConstrainEqualRandom(parameter, previousDataMessage);
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(parameter, QueryTypes.MarginalDividedByPrior);
+        }
+
         /// <summary>
         /// The "Eight Schools" example from https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html
         /// </summary>
