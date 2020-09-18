@@ -2361,13 +2361,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             using (ForEachBlock rowBlock = Variable.ForEach(rows))
             {
                 var index = rowBlock.Index;
-                var isLast = (index == lengthVar - 1);
-                var lengthVarMinus1 = (lengthVar - 1).Named("lengthVarMinus1");
-                using (Variable.If(index == lengthVarMinus1))
+                //var lengthVarMinus1 = (lengthVar - 1).Named("lengthVarMinus1");
+                //using (Variable.If(index == lengthVarMinus1))
+                using (Variable.If(index == lengthVar - 1))
                 {
                     states[rowBlock.Index] = Variable.GaussianFromMeanAndVariance(1, 1);
                 }
-                using (Variable.If(index < lengthVarMinus1))
+                //using (Variable.If(index < lengthVarMinus1))
+                using (Variable.If(index < lengthVar - 1))
                 {
                     states[rowBlock.Index] = Variable.GaussianFromMeanAndVariance(states[rowBlock.Index + 1], 1);
                 }
