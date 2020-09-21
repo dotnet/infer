@@ -2184,6 +2184,8 @@ namespace Microsoft.ML.Probabilistic.Math
             throw new Exception("Not converging for n=" + n + ",delta=" + delta);
         }
 
+        private const int NormalCdfMomentRatioConfracReqiredStabilityCount = 5;
+
         /// <summary>
         /// Computes int_0^infinity t^n N(t;x,1) dt / (n! N(x;0,1))
         /// </summary>
@@ -2199,47 +2201,114 @@ namespace Microsoft.ML.Probabilistic.Math
             // denom and denomPrev are always > 0
             double denom = 1;
             double denomPrev = 1;
-            double a = invX2;
+            double a;
             for (int i = 1; i <= n; i++)
             {
+                a = i * invX2;
                 numer *= -invX;
                 double denomNew = denom + a * denomPrev;
-                a += invX2;
                 denomPrev = denom;
                 denom = denomNew;
             }
             if (numer == 0) return 0;
-            // a = (n+1)*invX2
             double rOld = 0;
-            const double smallestNormalized = 1e-308;
-            const double smallestNormalizedOverEpsilon = smallestNormalized / double.Epsilon;
             // the number of iterations required may grow with n, so we need to explicitly test for convergence.
+            int stabilityCount = 0;
             for (int i = 0; i < 10000; i++)
             {
-                double numerNew = numer + a * numerPrev;
-                double denomNew = denom + a * denomPrev;
-                a += invX2;
-                // Rescale to avoid overflow or underflow.
-                // Let c=1e-308 be the smallest normalized number.
-                // We want to stay above this magnitude if possible.
-                // Thus we want to ensure that after rescaling, (|numerPrev|<c)==(|numer|<c)
-                // We know that |numerNew| > |numer| > 0 at this point.
-                // Thus we need |numer|*s >= c or |numerNew|*s < c, the latter only if |numerNew|/denomNew < double.Epsilon.
-                // Thus s >= c/|numer| and s >= c/double.Epsilon/denomNew.
-                // c/|numer| > c/double.Epsilon/denomNew when double.Epsilon*denomNew > |numer|
-                double s;
-                if (double.Epsilon * denomNew > Math.Abs(numer))
-                    s = smallestNormalized / Math.Abs(numer);
+                a = (i + n + 1) * invX2;
+                double aNumerPrev = a * numerPrev;
+                double absANumerPrev = Math.Abs(aNumerPrev);
+                double aDenomPrev = a * denomPrev;
+                double numerNew = numer + aNumerPrev;
+                double denomNew = denom + aDenomPrev;
+                if (denomNew > double.MaxValue || (i > 0 && absANumerPrev < SmallestNormalized) || Math.Abs(numerNew) < SmallestNormalized)
+                {
+                    // Rescale to avoid overflow or underflow.
+                    // We want to find a number s such that
+                    // 1. s * denom + a * s * denomPrev won't overflow (consequently, s * numer + a * s * numerPrev won't overflow too)
+                    // 2. If possible after satisfying 1, a * s * |numerPrev| (and, consequently, a * s * denomPrev) to be a normalized number
+                    // 3. If possible after satisfying 1, |s * numer + a * s * numerPrev| (and, consequently, s * denom + a * s * denomPrev) to be a normalized number
+                    // Let c be the smallest positive normalized number and
+                    // let fl(x) denote the result of evaluating expression x using double precision binary floating point arithmetic.
+                    // 1 is satisfied, when s <= double.MaxValue / (denom + a * denomPrev).  Unfortunately, we can evaluate only rounded numbers, but we can use the following bound:
+                    // double.MaxValue / (denom + a * denomPrev) >= PreviousDouble(fl(double.MaxValue / NextDouble(fl(denom + a * denomPrev))))
+                    // In case denom + a * denomPrev overflows, we can rewrite the formula as 1.0 / (denom / double.MaxValue + a / double.MaxValue * denomPrev).
+                    // To satisfy 2 we need s >= c / (a * |numerPrev|). We can bound it as follows:
+                    // c / (a * |numerPrev|) <= c / PreviousDouble(fl(a * |numerPrev|)) <= NextDouble(fl(c / PreviousDouble(fl(a * |numerPrev|))))
+                    // We would need to account for the possibility of PreviousDouble(fl(a * |numerPrev|)) being zero, though.
+                    // Now, let s = s1 * s2, s1 = NextDouble(fl(c / PreviousDouble(fl(a * |numerPrev|)))) and s2 >= 1.
+                    // To satisfy 3, we need s2 >= c / |s1 * numer + a * s1 * numerPrev|. Again, that can be bounded as follows:
+                    // c / |s1 * numer + a * s1 * numerPrev| <= c / (fl(|s1 * numer + a * s1 * numerPrev|) - ulp(fl(|s1 * numer|)) - 2 * ulp(fl(|a * s1 * numerPrev|))) <=
+                    // <= NextDouble(fl(c / (fl(|s1 * numer + a * s1 * numerPrev|) - ulp(fl(|s1 * numer|)) - 2 * ulp(fl(|a * s1 * numerPrev|)))))
+                    double s1;
+                    bool absANumerPrevShouldHaveBeenZero = false;
+                    if (absANumerPrev > double.Epsilon)
+                        s1 = NextDouble(SmallestNormalized / PreviousDouble(absANumerPrev));
+                    else
+                    {
+                        absANumerPrevShouldHaveBeenZero = a == 0.0 || numerPrev == 0.0;
+                        s1 = absANumerPrevShouldHaveBeenZero ? 1.0 : Math.Min(double.MaxValue, SmallestNormalized / a / Math.Abs(numerPrev));
+                    }
+                    double s1Numer = s1 * numer;
+                    double aS1NumerPrev = a * s1 * numerPrev;
+                    double s2 = NextDouble(SmallestNormalized / PreviousDouble(Math.Abs(s1Numer + aS1NumerPrev) - Ulp(s1Numer) - 2 * Ulp(aS1NumerPrev)));
+                    // If a * numerPrev is a true zero and not just an underflow, then we shouldn't try to normalize a * s * |numerPrev|
+                    if (!absANumerPrevShouldHaveBeenZero)
+                        s2 = Math.Max(s2, 1.0);
+                    double s0 = PreviousDouble(double.MaxValue / NextDouble(denom + aDenomPrev));
+                    if (s0 <= 0)
+                    {
+                        // denom + a * denomPrev overflows
+                        s0 = PreviousDouble(1.0 / NextDouble(denom / double.MaxValue + a / double.MaxValue * denomPrev));
+                    }
+                    double s1s2 = s1 * s2;
+                    double s;
+                    if (s1s2 >= s0)
+                        s = s0;
+                    else
+                    {
+                        double log2s1s2 = Math.Log(s1s2, 2.0);
+                        double log2s0 = Math.Log(s0, 2.0);
+                        double ceilLog2s1s2 = Math.Ceiling(log2s1s2);
+                        if (ceilLog2s1s2 <= log2s0)
+                            // Trying to use a power of 2 as a normalizing coefficient, if possible,
+                            // so that multiplying by it won't affect significands
+                            s = Math.Pow(2.0, ceilLog2s1s2);
+                        else
+                            s = s1s2;
+                    }
+                    double sNumer = s * numer;
+                    double sDenom = s * denom;
+                    double aS = a * s;
+                    numer = sNumer + aS * numerPrev;
+                    denom = sDenom + aS * denomPrev;
+                    numerPrev = sNumer;
+                    denomPrev = sDenom;
+                }
                 else
-                    s = smallestNormalizedOverEpsilon / denomNew;
-                numerPrev = numer * s;
-                numer = numerNew * s;
-                denomPrev = denom * s;
-                denom = denomNew * s;
+                {
+                    numerPrev = numer;
+                    numer = numerNew;
+                    denomPrev = denom;
+                    denom = denomNew;
+                }
                 double r = numer / denom;
                 if (AreEqual(r, rOld))
+                    ++stabilityCount;
+                else
+                {
+                    stabilityCount = 0;
+                    rOld = r;
+                }
+                // Algebraically, consequtive convergents approach the limit from different sides,
+                // so them being equal up to double precision would mean, that we've found the closest
+                // representable number.
+                // However, for reason yet to be found, that is not the case when convergents are
+                // computed in double precision using the algorithm above.
+                // Required count here is picked empirically to make the monotonicity test pass.
+                if (stabilityCount == NormalCdfMomentRatioConfracReqiredStabilityCount)
                     return r;
-                rOld = r;
             }
             throw new Exception($"Not converging for n={n},x={x:g17}");
         }
@@ -4891,6 +4960,15 @@ rr = mpf('-0.99999824265582826');
         /// Math.Pow(Ulp(1.0), 1.0 / 3)
         /// </summary>
         public static readonly double CbrtUlp1 = Math.Pow(Ulp1, 1.0 / 3);
+
+        /// <summary>
+        /// Smallest positive normalized number
+        /// </summary>
+        private const double SmallestNormalized = double.Epsilon * SmallestNormalizedOverEpsilon;
+        /// <summary>
+        /// 2^52
+        /// </summary>
+        private const double SmallestNormalizedOverEpsilon = 4503599627370496.0;
 
         /// <summary>
         /// Digamma(1)
