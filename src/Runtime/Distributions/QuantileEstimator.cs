@@ -52,6 +52,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         int reservoirCount;
 
         [DataMember]
+        Random rand;
+
+        [DataMember]
         public readonly double MaximumError;
 
         private int bufferLength
@@ -73,11 +76,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         private readonly int InterpolationType = 0;
 
-        /// <summary>
-        /// Creates a new QuantileEstimator.
-        /// </summary>
-        /// <param name="maximumError">The allowed error in the return value of GetProbLessThan.  Must be greater than 0 and less than 1.  As a rule of thumb, set this to the reciprocal of the number of desired quantiles.</param>
-        public QuantileEstimator(double maximumError)
+        public QuantileEstimator(double maximumError, int seed)
         {
             if (maximumError <= 0) throw new ArgumentOutOfRangeException(nameof(maximumError), "maximumError <= 0");
             if (maximumError >= 1) throw new ArgumentOutOfRangeException(nameof(maximumError), "maximumError >= 1");
@@ -88,6 +87,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (bufferCount < 2) throw new Exception("bufferCount < 2");
             buffers = new double[bufferCount][];
             countInBuffer = new int[bufferCount];
+
+            rand = new Random(seed);
+        }
+
+        /// <summary>
+        /// Creates a new QuantileEstimator.
+        /// </summary>
+        /// <param name="maximumError">The allowed error in the return value of GetProbLessThan.  Must be greater than 0 and less than 1.  As a rule of thumb, set this to the reciprocal of the number of desired quantiles.</param>
+        public QuantileEstimator(double maximumError)
+            : this(maximumError, Rand.Int())
+        {
         }
 
         /// <summary>
@@ -457,7 +467,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (nextBufferIndex == lowestBufferIndex)
                 throw new Exception("Out of buffers");
             Array.Sort(buffer, 0, count);
-            int firstIndex = Rand.Int(2);
+            int firstIndex = rand.Next(2);
             if (count == 1 && firstIndex == 1) countInBuffer[bufferIndex] = 0;
             for (int i = firstIndex; i < count; i += 2)
             {
@@ -471,7 +481,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             // reservoir sampling
             reservoirCount = checked(reservoirCount + 1);
-            if (Rand.Int(reservoirCount) == 0)
+            if (rand.Next(reservoirCount) == 0)
             {
                 // item is the new sample
                 nextSample = item;
@@ -503,7 +513,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (newCount <= lowestBufferWeight)
             {
                 reservoirCount = newCount;
-                if (Rand.Int(reservoirCount) < weight)
+                if (rand.Next(reservoirCount) < weight)
                 {
                     // item is the new sample
                     nextSample = item;
@@ -524,7 +534,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     {
                         throw new ArgumentOutOfRangeException(nameof(weight), "weight > lowestBufferWeight");
                     }
-                    if (Rand.Int(lowestBufferWeight) < weight)
+                    if (rand.Next(lowestBufferWeight) < weight)
                     {
                         AddAtHeight(item, lowestBufferHeight);
                     }
@@ -537,7 +547,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     // must do this before adding, since the sample may end up back in the reservoir.
                     nextSample = item;
                     reservoirCount = weight;
-                    if (Rand.Int(lowestBufferWeight) < sampleWeight)
+                    if (rand.Next(lowestBufferWeight) < sampleWeight)
                     {
                         AddAtHeight(sample, lowestBufferHeight);
                     }

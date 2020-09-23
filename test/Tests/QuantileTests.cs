@@ -13,6 +13,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Math;
     using Math = System.Math;
     using Assert = AssertHelper;
+    using System.Linq;
 
     public class QuantileTests
     {
@@ -374,6 +375,42 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.Equal(1.0, est.GetProbLessThan(next));
                 Assert.Equal(next, est.GetQuantile(1.0));
             }
+        }
+
+        [Fact]
+        public void QuantileSeedTest()
+        {
+            var seed = Rand.Int();
+
+            double[] GetRandomQuantiles()
+            {
+                var rand = new Random(seed);
+                var estimator = new QuantileEstimator(rand.NextDouble(), rand.Next());
+
+                var numbers =
+                    Enumerable.Range(0, rand.Next(100))
+                    .Select(x => rand.Next())
+                    .ToArray();
+
+                foreach (var item in numbers)
+                {
+                    estimator.Add(item, 1 + rand.Next(20));
+                }
+
+                var quantiles =
+                    numbers
+                    .Select(x => estimator.GetProbLessThan(x))
+                    .ToArray();
+
+                return quantiles;
+            }
+
+            // Run the same estimation run twice with the same seed to test
+            // that the results are the same.
+            var firstRun = GetRandomQuantiles();
+            var secondRun = GetRandomQuantiles();
+
+            Assert.Equal(firstRun, secondRun);
         }
 
         [Fact]
