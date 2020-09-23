@@ -52,7 +52,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         int reservoirCount;
 
         [DataMember]
-        Random rand;
+        SerializableRandom rand;
 
         [DataMember]
         public readonly double MaximumError;
@@ -92,7 +92,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             buffers = new double[bufferCount][];
             countInBuffer = new int[bufferCount];
 
-            rand = new Random(Rand.Int());
+            rand = SerializableRandom.CreateNew(Rand.Int());
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="seed">Specify the seed to use for random number generation.</param>
         public void SetRandomSeed(int seed) =>
-            rand = new Random(seed);
+            rand = SerializableRandom.CreateNew(seed);
 
         /// <summary>
         /// Returns the quantile rank of x.  This is a probability such that GetQuantile(probability) == x, whenever x is inside the support of the distribution.  May be discontinuous due to duplicates.
@@ -643,6 +643,118 @@ namespace Microsoft.ML.Probabilistic.Distributions
             lowestBufferIndex = (lowestBufferIndex + 1) % buffers.Length;
             lowestBufferHeight++;
             if (lowestBufferHeight > 30) throw new Exception("Exceeded the limit on number of items");
+        }
+
+        /// <summary>
+        /// Similar to <see cref="Random"/> but serializable so that
+        /// the quantile estimator can be serialized and still produces
+        /// reproducible results.
+        /// </summary>
+        /// <remarks>
+        /// Based on <see cref="Random"/>.
+        /// </remarks>
+        [Serializable]
+        private sealed class SerializableRandom
+        {
+            const int MBIG = Int32.MaxValue;
+            const int MSEED = 161803398;
+
+            [DataMember]
+            int inext;
+
+            [DataMember]
+            int inextp;
+
+            [DataMember]
+            int[] seedArray = new int[56];
+
+            public static SerializableRandom CreateNew(int seed)
+            {
+                var rand = new SerializableRandom();
+
+                int ii;
+                int mj, mk;
+
+                int subtraction = (seed == Int32.MinValue) ? Int32.MaxValue : Math.Abs(seed);
+                mj = MSEED - subtraction;
+                rand.seedArray[55] = mj;
+                mk = 1;
+                for (int i = 1; i < 55; i++)
+                {
+                    ii = (21 * i) % 55;
+                    rand.seedArray[ii] = mk;
+                    mk = mj - mk;
+                    if (mk < 0) mk += MBIG;
+                    mj = rand.seedArray[ii];
+                }
+                for (int k = 1; k < 5; k++)
+                {
+                    for (int i = 1; i < 56; i++)
+                    {
+                        rand.seedArray[i] -= rand.seedArray[1 + (i + 30) % 55];
+                        if (rand.seedArray[i] < 0) rand.seedArray[i] += MBIG;
+                    }
+                }
+                rand.inext = 0;
+                rand.inextp = 21;
+
+                return rand;
+            }
+
+            double Sample()
+            {
+                //Including this division at the end gives us significantly improved
+                //random number distribution.
+                return (InternalSample() * (1.0 / MBIG));
+            }
+
+            private int InternalSample()
+            {
+                int retVal;
+                int locINext = inext;
+                int locINextp = inextp;
+
+                if (++locINext >= 56) locINext = 1;
+                if (++locINextp >= 56) locINextp = 1;
+
+                retVal = seedArray[locINext] - seedArray[locINextp];
+
+                if (retVal == MBIG) retVal--;
+                if (retVal < 0) retVal += MBIG;
+
+                seedArray[locINext] = retVal;
+
+                inext = locINext;
+                inextp = locINextp;
+
+                return retVal;
+            }
+
+            public int Next()
+            {
+                int retVal;
+                int locINext = inext;
+                int locINextp = inextp;
+
+                if (++locINext >= 56) locINext = 1;
+                if (++locINextp >= 56) locINextp = 1;
+
+                retVal = seedArray[locINext] - seedArray[locINextp];
+
+                if (retVal == MBIG) retVal--;
+                if (retVal < 0) retVal += MBIG;
+
+                seedArray[locINext] = retVal;
+
+                inext = locINext;
+                inextp = locINextp;
+
+                return retVal;
+            }
+            public int Next(int maxValue)
+            {
+                return (int)(Sample() * maxValue);
+            }
         }
     }
 }
