@@ -80,8 +80,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Creates a new QuantileEstimator.
         /// </summary>
         /// <param name="maximumError">The allowed error in the return value of GetProbLessThan.  Must be greater than 0 and less than 1.  As a rule of thumb, set this to the reciprocal of the number of desired quantiles.</param>
-        /// <param name="seed">Specify the seed to use for random number generation.</param>
-        public QuantileEstimator(double maximumError, int seed)
+        public QuantileEstimator(double maximumError)
         {
             if (maximumError <= 0) throw new ArgumentOutOfRangeException(nameof(maximumError), "maximumError <= 0");
             if (maximumError >= 1) throw new ArgumentOutOfRangeException(nameof(maximumError), "maximumError >= 1");
@@ -93,17 +92,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
             buffers = new double[bufferCount][];
             countInBuffer = new int[bufferCount];
 
-            rand = new Random(seed);
+            rand = new Random(Rand.Int());
         }
 
         /// <summary>
-        /// Creates a new QuantileEstimator.
+        /// Sets the seed used for random number generation.
         /// </summary>
-        /// <param name="maximumError">The allowed error in the return value of GetProbLessThan.  Must be greater than 0 and less than 1.  As a rule of thumb, set this to the reciprocal of the number of desired quantiles.</param>
-        public QuantileEstimator(double maximumError)
-            : this(maximumError, Rand.Int())
-        {
-        }
+        /// <param name="seed">Specify the seed to use for random number generation.</param>
+        public void SetRandomSeed(int seed) =>
+            rand = new Random(seed);
 
         /// <summary>
         /// Returns the quantile rank of x.  This is a probability such that GetQuantile(probability) == x, whenever x is inside the support of the distribution.  May be discontinuous due to duplicates.
