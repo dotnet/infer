@@ -76,6 +76,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         private readonly int InterpolationType = 0;
 
+        /// <summary>
+        /// Creates a new QuantileEstimator.
+        /// </summary>
+        /// <param name="maximumError">The allowed error in the return value of GetProbLessThan.  Must be greater than 0 and less than 1.  As a rule of thumb, set this to the reciprocal of the number of desired quantiles.</param>
+        /// <param name="seed">Specify the seed to use for random number generation.</param>
         public QuantileEstimator(double maximumError, int seed)
         {
             if (maximumError <= 0) throw new ArgumentOutOfRangeException(nameof(maximumError), "maximumError <= 0");
