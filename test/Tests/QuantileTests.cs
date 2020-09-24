@@ -385,11 +385,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             var initialEstimator = new QuantileEstimator(Rand.Double());
             initialEstimator.SetRandomSeed(Rand.Int());
             var serialized = JsonConvert.SerializeObject(initialEstimator);
+            var deserialized = JsonConvert.DeserializeObject<QuantileEstimator>(serialized);
 
-            double[] GetRandomQuantiles()
+            double[] GetRandomQuantiles(QuantileEstimator estimator)
             {
                 var rand = new Random(seed);
-                var estimator = JsonConvert.DeserializeObject<QuantileEstimator>(serialized);
+
 
                 var numbers =
                     Enumerable.Range(0, rand.Next(100))
@@ -411,8 +412,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             // Run the same estimation run twice with the same serialized
             // object to use to test that the results are the same.
-            var firstRun = GetRandomQuantiles();
-            var secondRun = GetRandomQuantiles();
+            var firstRun = GetRandomQuantiles(initialEstimator);
+            var secondRun = GetRandomQuantiles(deserialized);
 
             Assert.Equal(firstRun, secondRun);
         }

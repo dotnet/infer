@@ -647,13 +647,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         /// <summary>
         /// Similar to <see cref="Random"/> but serializable so that
-        /// the quantile estimator can be serialized and still produces
-        /// reproducible results.
+        /// the quantile estimator can be serialized to JSON and still
+        /// produces reproducible results.
         /// </summary>
         /// <remarks>
         /// Based on <see cref="Random"/>.
         /// </remarks>
-        [Serializable]
+        [Serializable, DataContract]
         private sealed class SerializableRandom
         {
             const int MBIG = Int32.MaxValue;
