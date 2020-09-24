@@ -703,8 +703,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             double Sample()
             {
-                //Including this division at the end gives us significantly improved
-                //random number distribution.
                 return (InternalSample() * (1.0 / MBIG));
             }
 
