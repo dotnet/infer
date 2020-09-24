@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         Sampleable<int>, CanGetMean<double>, CanGetVariance<double>, CanGetMode<int>
     {
         private const double UniformEps = 1e-5;
-        
+
         /// <summary>
         /// Probability of each value (when not a point mass).
         /// </summary>
@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else
                 {
                     return prob.IndexOfMaximum();
-            }
+                }
             }
             set
             {
@@ -108,12 +108,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             get
             {
-                if (Dimension <= 1)
+                if (Dimension == 0)
+                {
+                    // For an empty sequence, All is true but Any is false.
+                    return false;
+                }
+                else if (Dimension == 1)
+                {
                     return true;
-
-                // If any element is not equal to 0 or 1 then this is not a point mass
-                // as probs are always normalized.
-                return !prob.Any(e => e < 1 && e > 0);
+                }
+                else
+                {
+                    // If any element is not equal to 0 or 1 then this is not a point mass
+                    // as probs are always normalized.
+                    return !prob.Any(e => e < 1 && e > 0);
+                }
             }
         }
 
@@ -158,9 +167,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetToUniform()
         {
-            this.prob.SetAllElementsTo(1.0/this.Dimension);
+            this.prob.SetAllElementsTo(1.0 / this.Dimension);
         }
-        
+
         /// <summary>
         /// Returns whether the discrete distribution is uniform or not
         /// </summary>
@@ -177,7 +186,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             this.SetToPartialUniformOf(this);
         }
-        
+
         /// <summary>
         /// Sets the distribution to be uniform over the support of a given distribution.
         /// </summary>
@@ -185,7 +194,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public void SetToPartialUniformOf(Discrete dist)
         {
             int nonZeroCount = dist.prob.CountAll(p => p > 0);
-            double uniformProb = 1.0/nonZeroCount;
+            double uniformProb = 1.0 / nonZeroCount;
             this.prob.SetToFunction(dist.prob, p => p > 0 ? uniformProb : 0);
         }
 
@@ -206,8 +215,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The log density</returns>
         public double GetLogProb(int value)
         {
-      if (value < 0 || value >= Dimension)
-        return double.NegativeInfinity;
+            if (value < 0 || value >= Dimension)
+                return double.NegativeInfinity;
             return Math.Log(prob[value]);
         }
 
@@ -227,8 +236,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The density</returns>
         public double Evaluate(int value)
         {
-      if (value < 0 || value >= Dimension)
-        return 0.0;
+            if (value < 0 || value >= Dimension)
+                return 0.0;
             return prob[value];
         }
 
@@ -263,6 +272,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The log inner product</returns>
         public double GetLogAverageOf(Discrete that)
         {
+            if (Dimension == 0) return 0;
             if (that.Dimension == Dimension)
             {
                 if (IsUniform() || that.IsUniform())
@@ -280,7 +290,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 int min = Math.Min(prob.Count, that.prob.Count);
                 for (int i = 0; i < min; i++)
                 {
-                    sum += prob[i]*that.prob[i];
+                    sum += prob[i] * that.prob[i];
                 }
                 return Math.Log(sum);
             }
@@ -296,17 +306,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsPointMass)
             {
-                return power*that.GetLogProb(Point);
+                return power * that.GetLogProb(Point);
             }
             else if (that.IsPointMass)
             {
                 if (power < 0) throw new DivideByZeroException("The exponent is negative and the distribution is a point mass");
                 return this.GetLogProb(that.Point);
             }
+            else if (Dimension == 0)
+            {
+                return 0.0;
+            }
             else
             {
-                return Math.Log(prob.Reduce(0.0, that.prob, (partial, thisp, thatp) => (partial + thisp*Math.Pow(thatp, power))));
-        }
+                return Math.Log(prob.Reduce(0.0, that.prob, (partial, thisp, thatp) => (partial + thisp * Math.Pow(thatp, power))));
+            }
         }
 
         /// <summary>
@@ -344,8 +358,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     return 1;
                 else
                     return prob[index];
-                }
             }
+        }
 
         /// <summary>
         /// Gets the probability at each index.
@@ -458,50 +472,50 @@ namespace Microsoft.ML.Probabilistic.Distributions
 #pragma warning restore 162
 #endif
 
-    /// <summary>
-    /// Set this distribution to match the given distribution, but possibly over a larger domain
-    /// </summary>
-    /// <param name="value"></param>
-    public void SetToPadded(Discrete value)
-    {
-      if (value.Dimension == Dimension)
-      {
-        prob.SetTo(value.prob);
-      }
-      else if (value.IsPointMass)
-      {
-        Point = value.Point;
-      }
-      else if (value.Dimension < Dimension)
-      {
-        SetToPadded(prob, value.prob);
-      }
-      else
+        /// <summary>
+        /// Set this distribution to match the given distribution, but possibly over a larger domain
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetToPadded(Discrete value)
+        {
+            if (value.Dimension == Dimension)
+            {
+                prob.SetTo(value.prob);
+            }
+            else if (value.IsPointMass)
+            {
+                Point = value.Point;
+            }
+            else if (value.Dimension < Dimension)
+            {
+                SetToPadded(prob, value.prob);
+            }
+            else
             {
                 // value.Dimension > Dimension
-        throw new ArgumentException("value.Dimension (" + value.Dimension + ") > this.Dimension (" + Dimension + ")");
-      }
-    }
-
-    private static void SetToPadded(Vector result, Vector value)
-    {
-      if (result.Count == value.Count)
-      {
-        result.SetTo(value);
-        return;
-      }
-      if (!result.IsDense)
-        result.SetAllElementsTo(0);
-      result.SetSubvector(0, value);
-      if (result.IsDense)
-      {
-        int resultCount = result.Count;
-        for (int i = value.Count; i < resultCount; i++)
-        {
-          result[i] = 0.0;
+                throw new ArgumentException("value.Dimension (" + value.Dimension + ") > this.Dimension (" + Dimension + ")");
+            }
         }
-      }
-    }
+
+        private static void SetToPadded(Vector result, Vector value)
+        {
+            if (result.Count == value.Count)
+            {
+                result.SetTo(value);
+                return;
+            }
+            if (!result.IsDense)
+                result.SetAllElementsTo(0);
+            result.SetSubvector(0, value);
+            if (result.IsDense)
+            {
+                int resultCount = result.Count;
+                for (int i = value.Count; i < resultCount; i++)
+                {
+                    result[i] = 0.0;
+                }
+            }
+        }
 
         /// <summary>
         /// Sets the parameters to represent the product of two discrete distributions.
@@ -614,7 +628,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                             if (numerator.prob[i] == 0.0) prob[i] = 0.0;
                             else throw new DivideByZeroException();
                         }
-                        else prob[i] = numerator.prob[i]/denominator.prob[i];
+                        else prob[i] = numerator.prob[i] / denominator.prob[i];
                     }
                 }
                 Normalize();
@@ -743,7 +757,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (Dimension == 1)
             {
                 double sum = prob[0];
-                prob[0] = 1.0; 
+                prob[0] = 1.0;
                 return sum;
             }
             else if (Dimension == 0)
@@ -753,7 +767,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double sum = prob.Sum();
                 if (double.IsInfinity(sum) || double.IsNaN(sum)) throw new DivideByZeroException();
                 if (sum == 0) throw new AllZeroException();
-                prob.Scale(1.0/sum);
+                prob.Scale(1.0 / sum);
                 return sum;
             }
         }
@@ -830,7 +844,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="that">The discrete instance to copy</param>
         public Discrete(Discrete that)
         {
-            prob = (Vector) that.prob.Clone();
+            prob = (Vector)that.prob.Clone();
         }
 
         /// <summary>
@@ -850,7 +864,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="probs"></param>
         public Discrete(params double[] probs)
         {
-            if (probs.Length == 0) throw new ArgumentOutOfRangeException("probs.Length == 0");
+            //if (probs.Length == 0) throw new ArgumentOutOfRangeException("probs.Length == 0");
             prob = Vector.FromArray(probs);
             Normalize();
         }
@@ -864,7 +878,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [Construction("Point", "Dimension", UseWhen = "IsPointMass")]
         public static Discrete PointMass(int value, int numValues)
         {
-            if (value < 0 || value >= numValues) throw new ArgumentException(String.Format("value ({0}) is not in the range [0, numValues-1 ({1})]", value, numValues-1));
+            if (value < 0 || value >= numValues) throw new ArgumentException(String.Format("value ({0}) is not in the range [0, numValues-1 ({1})]", value, numValues - 1));
             Discrete d = Discrete.Uniform(numValues);
             d.Point = value;
             return d;
@@ -921,7 +935,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>Discrete which is uniform over the specified ranges (and zero elsewhere).</returns>
         public static Discrete UniformInRanges(int numValues, params int[] startEndPairs)
         {
-            return UniformInRanges(numValues, (IEnumerable<int>) startEndPairs);
+            return UniformInRanges(numValues, (IEnumerable<int>)startEndPairs);
         }
 
         /// <summary>
@@ -971,7 +985,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetMean()
         {
-            if (IsPointMass) return (double) Point;
+            if (IsPointMass) return (double)Point;
             return prob.SumI();
         }
 
@@ -1014,7 +1028,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 double mean = GetMean();
-                return prob.SumISq() - mean*mean;
+                return prob.SumISq() - mean * mean;
             }
         }
     }

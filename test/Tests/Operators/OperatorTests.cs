@@ -918,8 +918,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Gaussian a = Gaussian.FromMeanAndPrecision(point, System.Math.Pow(10, i));
                 Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, b);
-                //Console.WriteLine($"{a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17}");
                 double diff = toPoint.MaxDiff(to_a);
+                //Console.WriteLine($"{a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17} {diff:g17}");
                 if (diff < 1e-14) diff = 0;
                 Assert.True(diff <= oldDiff);
                 oldDiff = diff;
