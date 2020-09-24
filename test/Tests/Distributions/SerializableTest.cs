@@ -27,11 +27,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
-
     public class SerializableTests
     {
         // How to serialize derived classes: http://www.codeproject.com/Articles/8644/XmlSerializer-and-not-expected-Inherited-Types
@@ -379,8 +374,4 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
     }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 }
