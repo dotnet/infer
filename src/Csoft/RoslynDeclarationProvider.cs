@@ -71,10 +71,12 @@ namespace Microsoft.ML.Probabilistic.Compiler
             var source = SourceProvider.TryGetSource(t);
             if (source == null)
                 throw new InvalidOperationException($"Cannot find source code for the type {t.Name}");
-            var tree = CSharpSyntaxTree.ParseText(source.SourceText, null, source.FilePath, Encoding.UTF8);
+            var primaryTree = CSharpSyntaxTree.ParseText(source.PrimaryFile.SourceText, null, source.PrimaryFile.FilePath, Encoding.UTF8);
+            var allTrees = source.AddtionalFiles.Select(f => CSharpSyntaxTree.ParseText(f.SourceText, null, f.FilePath, Encoding.UTF8)).ToList();
+            allTrees.Add(primaryTree);
             
             var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
-            var targetAssemblyName = Path.GetFileNameWithoutExtension(tree.FilePath);
+            var targetAssemblyName = Path.GetFileNameWithoutExtension(primaryTree.FilePath);
             var asmName = t.Assembly.GetName();
             var pk = asmName.GetPublicKey();
             if (pk != null && pk.Length > 0)
@@ -86,8 +88,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     .WithPublicSign(true)
                     .WithCryptoPublicKey(System.Collections.Immutable.ImmutableArray.Create(pk));
             }
-            var compilation = CSharpCompilation.Create(targetAssemblyName, new[] { tree }, references, options);
-            var model = compilation.GetSemanticModel(tree);
+            var compilation = CSharpCompilation.Create(targetAssemblyName, allTrees, references, options);
+            var model = compilation.GetSemanticModel(primaryTree);
 
             var errors = compilation.GetDiagnostics().ToList();
 

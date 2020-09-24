@@ -692,14 +692,22 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <summary>
         /// Find the maximum of the function shape1*log(x) - shape2*log(x + yRate) - x*rateRate
         /// </summary>
-        /// <param name="shape1">Must be &gt;= 0</param>
+        /// <param name="shape1"></param>
         /// <param name="shape2"></param>
         /// <param name="yRate">Must be &gt;= 0</param>
-        /// <param name="rateRate">Must be &gt;= 0</param>
+        /// <param name="rateRate"></param>
         /// <returns></returns>
         internal static double FindMaximum(double shape1, double shape2, double yRate, double rateRate)
         {
-            if (shape2 == 0)
+            if (shape1 < 0)
+            {
+                return 0;
+            }
+            else if (rateRate < 0)
+            {
+                return double.PositiveInfinity;
+            }
+            else if (shape2 == 0)
             {
                 return shape1 / rateRate;
             }
@@ -763,8 +771,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 throw new ArgumentException("sample.Rate <= 0");
             if (rate.Rate < 0)
                 throw new ArgumentException("rate.Rate < 0");
-            if (shape < 0)
-                throw new ArgumentException("shape < 0");
             if (rate.Shape < 0)
                 throw new ArgumentException("rate.Shape < 0");
             // this routine assumes integration is done in log(r), so the Jacobian log(r) is added, turning (s-1)*log(r) into s*log(r)

@@ -29,14 +29,6 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
-  
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
-    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
-    <DefineConstants>$(DefineConstants);NET45;NETFULL</DefineConstants>
-  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -66,11 +58,11 @@
     <ProjectReference Include="..\TestPublic\TestPublic.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETFULL'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK'))">
     <ProjectReference Include="..\..\src\Visualizers\Windows\Visualizers.Windows.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETCORE'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('NETCOREAPP'))">
     <Compile Remove="Properties/**" />
   </ItemGroup>
 </Project>

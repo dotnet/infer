@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Learners.TestApp
             ////recommenderTests.UserItemFeaturesRegressionTest();
             ////recommenderTests.StandardDataFormatCustomSerializationTest();
 
-#if NETFULL
+#if NETFRAMEWORK
             logWriter.Dispose();
 #endif
         }

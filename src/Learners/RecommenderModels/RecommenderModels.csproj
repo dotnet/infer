@@ -32,12 +32,10 @@
   </Choose>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
-    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
     <RunPostBuildNetCore Condition="$(IgnorePostBuildNetCore) != 'true'">true</RunPostBuildNetCore>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
-    <DefineConstants>$(DefineConstants);NETFULL</DefineConstants>
     <RunPostBuildNetFull>true</RunPostBuildNetFull>
   </PropertyGroup>
 

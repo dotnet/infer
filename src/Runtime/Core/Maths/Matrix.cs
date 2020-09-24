@@ -658,6 +658,18 @@ namespace Microsoft.ML.Probabilistic.Math
             return this;
         }
 
+        /// <summary>
+        /// Creates a new diagonal matrix with diagonal values specified in the given vector
+        /// </summary>
+        /// <param name="diag"></param>
+        /// <returns></returns>
+        public static Matrix FromDiagonal(Vector diag)
+        {
+            int count = diag.Count;
+            Matrix m = new Matrix(count, count);
+            m.SetDiagonal(diag);
+            return m;
+        }
 
         /// <summary>
         /// Creates a vector from the diagonal values in the matrix

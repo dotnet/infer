@@ -246,7 +246,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double GetLogProb(double value)
         {
             if (value < LowerBound || value > UpperBound)
+            {
                 return double.NegativeInfinity;
+            }
             else
             {
                 return this.Gamma.GetLogProb(value) + (this.Gamma.GetLogNormalizer() - GetLogNormalizer());

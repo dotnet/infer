@@ -39,6 +39,29 @@ namespace Microsoft.ML.Probabilistic.Tests
             return Util.ArrayInit(count, i => (min + i * inc));
         }
 
+        /// <summary>
+        /// Demonstrate that EP can solve a linear program
+        /// </summary>
+        [Fact]
+        public void LinearProgrammingTest()
+        {
+            // Could repeat inference incrementally while decreasing precision
+            double precision = 1e-20;
+            // maximize x+y 
+            // subject to x + 2*y = 1
+            // x >= 0
+            // y >= 0
+            Variable<double> x = Variable.GaussianFromMeanAndPrecision(1.0/precision/precision, precision);
+            Variable<double> y = Variable.GaussianFromMeanAndPrecision(1.0/precision/precision, precision);
+            Variable.ConstrainEqual(x + 2 * y, 1);
+            Variable.ConstrainPositive(x);
+            Variable.ConstrainPositive(y);
+
+            InferenceEngine engine = new InferenceEngine();
+            Console.WriteLine($"x = {engine.Infer(x)}");
+            Console.WriteLine($"y = {engine.Infer(y)}");
+        }
+
         [Fact]
         public void TruncatedGammaPowerTest()
         {
@@ -212,7 +235,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GammaPowerPowerTest()
         {
             Assert.False(double.IsNaN(PowerOp.GammaPowerFromDifferentPower(new GammaPower(1.333, 1.5, 1), 0.01).Shape));
-            Assert.True(PowerOp.XAverageConditional(new GammaPower(7, 0.1111, -1), new GammaPower(16.19, 0.06154, 1), 2.2204460492503136E-16, GammaPower.Uniform(1)).IsProper());
+            for (int i = 1; i <= 10; i++)
+            {
+                // TODO: make this work
+                //Assert.True(PowerOp.XAverageConditional(new GammaPower(7, 0.1111, -1), new GammaPower(16.19, 0.06154, 1), 2.2204460492503136E-10/i, GammaPower.Uniform(1)).IsProper());
+            }
+            Assert.True(PowerOp.XAverageConditional(new GammaPower(7, 0.1111, -1), new GammaPower(16.19, 0.06154, 1), MMath.Ulp(1), GammaPower.Uniform(1)).IsProper());
             Assert.True(PowerOp.PowAverageConditional(GammaPower.FromShapeAndRate(9.0744065303642287, 8.7298765698182414, 1), 1.6327904641199278, GammaPower.Uniform(-1)).IsProper());
             Assert.False(PowerOp.XAverageConditional(GammaPower.Uniform(-1), GammaPower.FromShapeAndRate(1, 1, 1), 4.0552419045546273, GammaPower.Uniform(1)).IsPointMass);
 

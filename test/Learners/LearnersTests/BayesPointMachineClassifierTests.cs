@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var bpm = BayesPointMachineClassifier.CreateBinaryClassifier(new CsvGzipMapping());
             bpm.Train(Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "Data", "W5ANormalized.csv.gz"));
@@ -477,7 +477,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "DenseBinaryNativeClassifier-2015-03-20.bin") };
@@ -777,7 +777,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "SparseBinaryNativeClassifier-2015-03-20.bin") };
@@ -1036,7 +1036,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "DenseMulticlassNativeClassifier-2015-03-20.bin") };
@@ -1318,7 +1318,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "SparseMulticlassNativeClassifier-2015-03-20.bin") };
@@ -1528,7 +1528,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "DenseBinaryStandardClassifier-2015-03-20.bin") };
@@ -1760,7 +1760,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "SparseBinaryStandardClassifier-2015-03-20.bin") };
@@ -1983,7 +1983,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "DenseMulticlassStandardClassifier-2015-03-20.bin") };
@@ -2225,7 +2225,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "SparseMulticlassStandardClassifier-2015-03-20.bin") };
@@ -2478,7 +2478,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseBinaryNativeClassifier-2015-03-20.bin") };
@@ -2748,7 +2748,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseBinaryNativeClassifier-2015-03-20.bin") };
@@ -3008,7 +3008,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseMulticlassNativeClassifier-2015-03-20.bin") };
@@ -3291,7 +3291,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseMulticlassNativeClassifier-2015-03-20.bin") };
@@ -3502,7 +3502,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseBinaryStandardClassifier-2015-03-20.bin") };
@@ -3735,7 +3735,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseBinaryStandardClassifier-2015-03-20.bin") };
@@ -3959,7 +3959,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseMulticlassStandardClassifier-2015-03-20.bin") };
@@ -4202,7 +4202,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Ensure backward compatibility for all classifier versions
             string[] serializedClassifiers = { Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseMulticlassStandardClassifier-2015-03-20.bin") };

@@ -57,8 +57,7 @@ namespace RobustGaussianProcess
 
                 // Infer the posterior Sparse GP
                 SparseGP sgp = engine.Infer<SparseGP>(gaussianProcessRegressor.F);
-
-#if NETFULL
+#if WINDOWS
                 string datasetName = useSynthetic ? "Synthetic" : "AIS";
                 Utilities.PlotPredictions(sgp, trainingInputs, trainingOutputs, useStudentTLikelihood, datasetName);
 #endif

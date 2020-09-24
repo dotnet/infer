@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-#if NETFULL
+#if WINDOWS
 using OxyPlot.Wpf;
 using OxyPlot;
 using System.Threading;
@@ -113,7 +113,7 @@ namespace RobustGaussianProcess
             return engine;
         }
 
-#if NETFULL
+#if WINDOWS
         public static void PlotGraph(PlotModel model, string graphPath)
         {
             // Required for plotting

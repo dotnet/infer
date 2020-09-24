@@ -391,7 +391,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     double delta = diffs * deltaOverDiffs;
                     double deltaSqrtVx = diff * deltaOverDiffs; // delta / sqrtPrec
                     if (delta < 0) throw new Exception($"{nameof(delta)} < 0");
-                    if (delta < 1e-16 && (mx <= lowerBound || mx >= upperBound))
+                    if (delta < MMath.Ulp1 && (mx <= lowerBound || mx >= upperBound))
                     {
                         double variance = diff * diff / 12;
                         return new Gaussian(center, variance) / X;
@@ -418,13 +418,13 @@ namespace Microsoft.ML.Probabilistic.Factors
                     double rU = MMath.NormalCdfRatio(zU);
                     double r1U = MMath.NormalCdfMomentRatio(1, zU);
                     double r3U = MMath.NormalCdfMomentRatio(3, zU) * 6;
-                    if (zU < -173205080)
+                    if (zU < -(MMath.Sqrt2 * MMath.Sqrt3) / MMath.SqrtUlp1)
                     {
                         // in this regime, rU = -1/zU, r1U = rU*rU
                         // because rU = -1/zU + 1/zU^3 + ...
                         // and r1U = 1/zU^2 - 3/zU^4 + ...
                         // The second term is smaller by a factor of 3/zU^2.
-                        // The threshold satisfies 3/zU^2 == 1e-16 or zU < -sqrt(3e16)
+                        // The threshold satisfies 3/zU^2 < 0.5 * ulp(1) or zU < -sqrt(6 / ulp(1))
                         if (expMinus1 > 1e100)
                         {
                             double invzUs = 1 / (zU * sqrtPrec);

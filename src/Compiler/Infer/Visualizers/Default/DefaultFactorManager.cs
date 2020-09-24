@@ -19,22 +19,35 @@ using Microsoft.ML.Probabilistic.Compiler.Reflection;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 {
-    
+    /// <summary>
+    /// Provides a view of the factors available to Infer.NET and their level of support
+    /// for different inference algorithms.
+    /// </summary>
     internal class DefaultFactorManager
     {
         private FactorManager factorManager = new FactorManager();
+
         public IAlgorithm[] algs = { new VariationalMessagePassing(), new ExpectationPropagation() };
-        public bool ShowMissingEvidences = false;
-        public DefaultFactorManager(IAlgorithm[] algs) {
+
+        /// <summary>
+        /// If true, evidence methods are required in order to have "Full Support".
+        /// </summary>
+        public bool ShowMissingEvidences;
+
+        public DefaultFactorManager(IAlgorithm[] algs)
+        {
             this.algs = algs;
         }
-        public void Show () {
+
+        public void Show()
+        {
             var generatedHtml = GenerateNewFactorTable();
             var filename = SaveHtml(generatedHtml);
             OpenFactorTable(filename);
         }
-        private string GenerateNewFactorTable() {
 
+        private string GenerateNewFactorTable()
+        {
             List<Tuple<string, Compiler.Transforms.FactorManager.FactorInfo>> factorList = new List<Tuple<string, Compiler.Transforms.FactorManager.FactorInfo>>();
             IEnumerable<Compiler.Transforms.FactorManager.FactorInfo> factorInfos = Compiler.Transforms.FactorManager.GetFactorInfos();
 
@@ -50,7 +63,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 factorList.Add(new Tuple<string, Compiler.Transforms.FactorManager.FactorInfo>(itemName, info));
             }
             factorList.Sort((elem1, elem2) => elem1.Item1.CompareTo(elem2.Item1));
-           
+
             string html = $@"<!DOCTYPE html>
 <html>
     <head>
@@ -61,123 +74,129 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             <div class=""box-header"">Factor</div>
             <div class=""box-header"">Arguments</div>  
             {AddAlgorithmsHeaders()}
-            {String.Join(String.Empty, factorList.Select(i => AddFactor(i.Item1, i.Item2)))}
+            {String.Join(String.Empty, factorList.Select(i => GetFactorHtml(i.Item1, i.Item2)))}
         </div>
     </body>
 </html>";
             return html;
         }
-        private string AddAlgorithmsHeaders() {
+
+        private string AddAlgorithmsHeaders()
+        {
             var headers = new StringBuilder();
             foreach (IAlgorithm alg in this.algs) headers.Append($@"<div class=""box-header"">{alg.Name}</div>");
             return headers.ToString();
         }
-        private string AddFactor(string name, Compiler.Transforms.FactorManager.FactorInfo info) {
 
-                var currentFactor = new StringBuilder();
-                MethodInfo method = info.Method;
-                //if (method.Name != "Logistic") continue;
-              
-                StringBuilder args = new StringBuilder();
-                foreach (ParameterInfo pi in method.GetParameters())
+        private string GetFactorHtml(string name, Compiler.Transforms.FactorManager.FactorInfo info)
+        {
+            Console.WriteLine($"Scanning {info}");
+            var currentFactor = new StringBuilder();
+            MethodInfo method = info.Method;
+            //if (method.Name != "Logistic") continue;
+
+            StringBuilder args = new StringBuilder();
+            foreach (ParameterInfo pi in method.GetParameters())
+            {
+                if (args.Length > 0) args.Append(",</span> ");
+                args.Append($"<span>{StringUtil.EscapeXmlCharacters(StringUtil.TypeToString(pi.ParameterType)) + " " + pi.Name}");
+            }
+            args.Append("</span>");
+
+            string boldString = info.IsDeterministicFactor ? "" : " text-bold";
+            currentFactor.Append($@"<div class=""box-left{boldString}"">{StringUtil.EscapeXmlCharacters(name)}</div><div class=""box-left"">{args.ToString()}</div>");
+
+            foreach (IAlgorithm alg in this.algs)
+            {
+                QualityBand minQB, modeQB, maxQB;
+                ICollection<StochasticityPattern> patterns =
+                    GetAlgorithmPatterns(alg, info, ShowMissingEvidences, out minQB, out modeQB, out maxQB);
+                if (patterns.Count == 0)
                 {
-                    if (args.Length > 0) args.Append(",</span> ");
-                    args.Append($"<span>{StringUtil.TypeToString(pi.ParameterType) + " " + pi.Name}");
-                    //args.Append(pi);
+                    // not implemented
+                    currentFactor.Append($@"<div class=""box""></div>");
+                    continue;
                 }
-                args.Append("</span>");
-             
-                if (!info.IsDeterministicFactor) currentFactor.Append($@"<div class=""box-left text-bold"">{name}</div><div class=""box-left"">{args.ToString()}</div>");
-                else currentFactor.Append($@"<div class=""box-left"">{name}</div><div class=""box-left"">{args.ToString()}</div>");
+                // Use maximum quality band for the background colour
+                QualityBand qb = maxQB;
 
-                foreach (IAlgorithm alg in this.algs)
+                var algorithmDiv = new StringBuilder();
+                algorithmDiv.Append($@"<div class=""box content-{(
+                            qb == QualityBand.Mature
+                                ? "mature"
+                                : qb == QualityBand.Stable
+                                    ? "stable"
+                                    : qb == QualityBand.Preview ? "preview" : "experimental")}");
+
+                int partialCount = 0;
+                int notSupportedCount = 0;
+                StringBuilder sb = new StringBuilder();
+                int evidenceCount = 0;
+                foreach (StochasticityPattern sp in patterns)
                 {
-                    QualityBand minQB, modeQB, maxQB;
-                    ICollection<StochasticityPattern> patterns =
-                        GetAlgorithmPatterns(alg, info, ShowMissingEvidences, out minQB, out modeQB, out maxQB);
-                    if (patterns.Count == 0)
+                    if (sp.notSupported != null)
                     {
-                        // not implemented
-                        currentFactor.Append($@"<div class=""box""></div>"); 
+                        notSupportedCount++;
                         continue;
                     }
-                    // Use maximum quality band for the background colour
-                    QualityBand qb = maxQB;
-
-                    var algorithmDiv = new StringBuilder();
-                    algorithmDiv.Append($@"<div class=""box content-{(
-                                qb == QualityBand.Mature
-                                    ? "mature"
-                                    : qb == QualityBand.Stable
-                                        ? "stable"
-                                        : qb == QualityBand.Preview ? "preview" : "experimental")}");
-                  
-                    int partialCount = 0;
-                    int notSupportedCount = 0;
-                    StringBuilder sb = new StringBuilder();
-                    int evidenceCount = 0;
+                    if (sp.Partial) partialCount++;
+                    if (sp.evidenceFound) evidenceCount++;
+                    if (sb.Length > 0) sb.Append(",</span> ");
+                    sb.Append($"<span>{sp.ToString()}");
+                }
+                sb.Append("</span>");
+                if (notSupportedCount > 0)
+                {
+                    sb.Append(" <span> Cannot support:</span>");
+                    int ct = 0;
                     foreach (StochasticityPattern sp in patterns)
                     {
-                        if (sp.notSupported != null)
-                        {
-                            notSupportedCount++;
-                            continue;
-                        }
-                        if (sp.Partial) partialCount++;
-                        if (sp.evidenceFound) evidenceCount++;
-                        if (sb.Length > 0) sb.Append(",</span> ");
-                        sb.Append($"<span>{sp.ToString()}");
+                        if (sp.notSupported == null) continue;
+                        if (ct > 0) sb.Append(",</span> ");
+                        sb.Append($"<span>{sp}");
+                        ct++;
                     }
                     sb.Append("</span>");
-                    if (notSupportedCount > 0)
-                    {
-                        sb.Append(" <span> Cannot support:</span>");
-                        int ct = 0;
-                        foreach (StochasticityPattern sp in patterns)
-                        {
-                            if (sp.notSupported == null) continue;
-                            if (ct > 0) sb.Append(",</span> ");
-                            sb.Append($"<span>{sp}");
-                            ct++;
-                        }
-                        sb.Append("</span>");
-                    }
+                }
 
-                    string algorithmText = sb.ToString();
-                    int argCount = info.Method.GetParameters().Length;
-                    if (info.Method.ReturnType != typeof(void)) argCount++;
-                    int maxPatterns = (int)System.Math.Pow(2, argCount);
-                   
-                    if ((partialCount == 0) && (patterns.Count >= maxPatterns) && (notSupportedCount == 0))
-                    {
-                        algorithmText = "<span>Full support</span>";
-                        if (notSupportedCount > 0) algorithmText = " <span>As supported as possible</span>";
-                        if (evidenceCount != patterns.Count) algorithmText += "*";
-                        algorithmDiv.Append($@" text-green text-bold"">{algorithmText}</div>");
-                        currentFactor.Append(algorithmDiv.ToString());
-                        continue;
-                    }
-                    else if ((notSupportedCount == patterns.Count) && (notSupportedCount > 0))
-                    {
-                        algorithmText = "<span>Cannot support</span>";
-                        algorithmDiv.Append($@" text-bold"">{algorithmText}</div>");
-                        currentFactor.Append(algorithmDiv.ToString());
-                        continue;
-                    }
-                    else if (partialCount > 0)
-                    {
-                        algorithmDiv.Append($@" text-red text-bold"">{algorithmText}</div>");
-                        currentFactor.Append(algorithmDiv.ToString());
-                    }
-                    else {
-                        algorithmDiv.Append($@" {((notSupportedCount > 0) ? "" : "text-green")}"">{algorithmText}</div>");
-                        currentFactor.Append(algorithmDiv.ToString());
+                string algorithmText = sb.ToString();
+                int argCount = info.Method.GetParameters().Length;
+                if (info.Method.ReturnType != typeof(void)) argCount++;
+                int maxPatterns = (int)System.Math.Pow(2, argCount);
+
+                if ((partialCount == 0) && (patterns.Count >= maxPatterns) && (notSupportedCount == 0))
+                {
+                    algorithmText = "<span>Full support</span>";
+                    if (notSupportedCount > 0) algorithmText = " <span>As supported as possible</span>";
+                    if (evidenceCount != patterns.Count) algorithmText += "*";
+                    algorithmDiv.Append($@" text-green text-bold"">{algorithmText}</div>");
+                    currentFactor.Append(algorithmDiv.ToString());
+                    continue;
+                }
+                else if ((notSupportedCount == patterns.Count) && (notSupportedCount > 0))
+                {
+                    algorithmText = "<span>Cannot support</span>";
+                    algorithmDiv.Append($@" text-bold"">{algorithmText}</div>");
+                    currentFactor.Append(algorithmDiv.ToString());
+                    continue;
+                }
+                else if (partialCount > 0)
+                {
+                    algorithmDiv.Append($@" text-red text-bold"">{algorithmText}</div>");
+                    currentFactor.Append(algorithmDiv.ToString());
+                }
+                else
+                {
+                    algorithmDiv.Append($@" {((notSupportedCount > 0) ? "" : "text-green")}"">{algorithmText}</div>");
+                    currentFactor.Append(algorithmDiv.ToString());
                 }
             }
 
             return currentFactor.ToString();
         }
-        private string AddStyles(int columnsNumber) {
+
+        private string AddStyles(int columnsNumber)
+        {
             var gridTemplate = new StringBuilder();
             for (var i = 0; i < columnsNumber; i++)
             {
@@ -279,28 +298,35 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
   </style>";
             return styles;
         }
-        private string SaveHtml(string htmlCode) {
+
+        private string SaveHtml(string htmlCode)
+        {
             string filename = $"factorTable.html";
             System.IO.File.WriteAllText(filename, htmlCode);
             return filename;
         }
-        private void OpenFactorTable(string filename) {
+
+        private void OpenFactorTable(string filename)
+        {
             try
             {
                 var p = new Process();
                 p.StartInfo = new ProcessStartInfo(filename);
                 p.StartInfo.UseShellExecute = true;
                 p.Start();
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine($"Couldn't find a browser. {ex.Message}");
             }
         }
+
         /// <summary>
         /// Returns a collection of possible type patterns for the fields of info.  Patterns may be incomplete.
         /// </summary>
         /// <param name="alg"></param>
         /// <param name="info"></param>
-        /// <param name="ShowMissingEvidences"></param>
+        /// <param name="ShowMissingEvidences">If true, evidence methods are included in <see cref="StochasticityPattern.neededCount"/> and <see cref="StochasticityPattern.foundCount"/>.</param>
         /// <param name="minQB">The minimum quality band attached to an operator for this factor</param>
         /// <param name="modeQB">The most common quality band attached to operators for this factor</param>
         /// <param name="maxQB">The maximum quality band attached to operators for this factor</param>
@@ -704,6 +730,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             return -1;
         }
 
+        /// <summary>
+        /// Fills in fields of each StochasticityPattern
+        /// </summary>
+        /// <param name="patterns"></param>
+        /// <param name="suffix"></param>
+        /// <param name="evidenceMethodName">The algorithm-specific suffix for an evidence method.</param>
+        /// <param name="ShowMissingEvidences">If true, evidence methods are included in <see cref="StochasticityPattern.neededCount"/> and <see cref="StochasticityPattern.foundCount"/>.</param>
         private void VerifyPatterns(IEnumerable<StochasticityPattern> patterns,
                                     string suffix, string evidenceMethodName, bool ShowMissingEvidences)
         {

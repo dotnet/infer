@@ -27,14 +27,6 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
-  
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
-    <DefineConstants>$(DefineConstants);NET45;NETFULL</DefineConstants>
-  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
     <DebugType>full</DebugType>
@@ -49,28 +41,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    <PackageReference Include="xunit.abstractions" Version="2.0.1" />
-    <PackageReference Include="xunit.analyzers" Version="0.9.0" />
-    <PackageReference Include="xunit.assert" Version="2.3.1" />
-    <PackageReference Include="xunit.core" Version="2.3.1" />
-    <PackageReference Include="xunit.extensibility.core" Version="2.3.1" />
-    <PackageReference Include="xunit.extensibility.execution" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.console" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.utility" Version="2.3.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.abstractions" Version="2.0.3" />
+    <PackageReference Include="xunit.analyzers" Version="0.10.0" />
+    <PackageReference Include="xunit.assert" Version="2.4.1" />
+    <PackageReference Include="xunit.core" Version="2.4.1" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
+    <PackageReference Include="xunit.extensibility.execution" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.utility" Version="2.4.1" />
     <ProjectReference Include="..\..\src\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\src\Csoft\Csoft.csproj" />
     <ProjectReference Include="..\..\src\Runtime\Runtime.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETFULL'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK'))">
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   
-  <ItemGroup Condition="$(DefineConstants.Contains('NETCORE'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('NETCOREAPP'))">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
   </ItemGroup>
@@ -79,6 +74,12 @@
     <None Update="Data\IRT2PL_10_1000.mat" CopyToOutputDirectory="PreserveNewest" />
     <None Update="Data\IRT2PL_10_250.mat" CopyToOutputDirectory="PreserveNewest" />
     <None Update="Data\test.mat" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sequential.xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     
     <None Remove="Bugs\*.txt" />
     <Content Include="Bugs\*.txt" />

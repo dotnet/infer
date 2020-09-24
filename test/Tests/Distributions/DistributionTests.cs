@@ -51,6 +51,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             RatioWithPointMassTest(a, value);
             PointMassPowerTest(a, value);
             PointMassSampleTest(a, value);
+            PointMassGetLogProbTest(a, value);
 
             SamplingTest(a, 3);
         }
@@ -523,11 +524,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             g.SetMeanAndPrecision(double.PositiveInfinity, 2.2);
             Assert.Equal(g, Gaussian.PointMass(double.PositiveInfinity));
 
-            g.SetMeanAndPrecision(1e4, 1e306);
-            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), g);
-            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), new Gaussian(1e4, 1E-306));
-            Assert.Equal(Gaussian.PointMass(1e-155), new Gaussian(1e-155, 1E-312));
-            Gaussian.FromNatural(1, 1e-309).GetMeanAndVarianceImproper(out m, out v);
+            double mean = 1024;
+            double precision = double.MaxValue / mean * 2;
+            // precision * mean > double.MaxValue
+            g.SetMeanAndPrecision(mean, precision);
+            g2 = Gaussian.FromMeanAndPrecision(mean, double.MaxValue / mean);
+            Assert.Equal(g2, g);
+            Assert.Equal(g2, new Gaussian(mean, 1 / precision));
+            double inverseIsInfinity = 0.5 / double.MaxValue;
+            Assert.Equal(Gaussian.PointMass(mean), new Gaussian(mean, inverseIsInfinity));
+            Gaussian.FromNatural(1, inverseIsInfinity).GetMeanAndVarianceImproper(out m, out v);
             if (v > double.MaxValue)
                 Assert.Equal(0, m);
             Gaussian.Uniform().GetMeanAndVarianceImproper(out m, out v);
@@ -547,7 +553,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Throws<ImproperDistributionException>(() => g.GetMean());
 
             Gaussian g3 = new Gaussian();
-            g3.SetToSum(1.0, g, System.Math.Exp(800), g2);
+            g3.SetToSum(1.0, g, double.PositiveInfinity, g2);
             Assert.True(g3.Equals(g2));
         }
 
@@ -753,9 +759,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             GammaRoundoffTest(g);
             DistributionTest(g, Gamma.FromShapeAndRate(2e20, 2e20));
 
-            Assert.Equal(Gamma.FromMeanAndVariance(1e300, 1), Gamma.PointMass(1e300));
-            Assert.Equal(Gamma.FromMeanAndVariance(1e250, 1e-100), Gamma.PointMass(1e250));
-            Assert.Equal(Gamma.FromMeanAndVariance(1e-10, 1e-320), Gamma.PointMass(1e-10));
+            Assert.Equal(Gamma.FromMeanAndVariance(double.MaxValue, 1), Gamma.PointMass(double.MaxValue));
+            Assert.Equal(Gamma.FromMeanAndVariance(double.MaxValue / 1e100, 1e-100), Gamma.PointMass(double.MaxValue / 1e100));
+            Assert.Equal(Gamma.FromMeanAndVariance(1, double.Epsilon), Gamma.PointMass(1));
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndRate(2.5, double.PositiveInfinity));
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndScale(2.5, 1e-320));
             Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 1e-320));
@@ -1000,6 +1006,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(dgaaa, dgaaa2);
         }
 
+#pragma warning disable CA2013
         [Fact]
         public void GaussianArrayTest()
         {
@@ -1043,6 +1050,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             b = new GaussianArray2D(new Gaussian(), 3, 3);
             Assert.True(!a.Equals(b));
         }
+#pragma warning restore
+
+#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
+#pragma warning disable 162
+#endif
 
 #if false
         [Fact]
@@ -1675,12 +1687,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma g = new Gamma(1.0, m);
             double median = -m * System.Math.Log(0.5);
             Assert.Equal(0.5, g.GetProbLessThan(median), 1e-4);
-            Assert.Equal(median, g.GetQuantile(0.5));
+            AssertAlmostEqual(median, g.GetQuantile(0.5));
 
             g = new Gamma(2, m);
             double probability = g.GetProbLessThan(median);
             double quantile = g.GetQuantile(probability);
             Assert.Equal(median, quantile, 1e-10);
+        }
+
+        internal static void AssertAlmostEqual(double x, double y)
+        {
+            Assert.False(SpecialFunctionsTests.IsErrorSignificant(1e-16, x - y));
         }
 
         [Fact]
@@ -1903,6 +1920,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             AverageLogPointMassTest(a, value);
             InnerProductPointMassTest(a, value);
             PointMassSampleTest(a, value);
+            PointMassGetLogProbTest(a, value);
         }
 
         internal static void UniformTest<T, DomainType>(T a, DomainType value)
@@ -1950,6 +1968,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 DomainType sample = b.Sample();
                 AssertEqual(sample, value);
             }
+        }
+
+        private static void PointMassGetLogProbTest<T, DomainType>(T a, DomainType value)
+            where T : HasPoint<DomainType>, CanGetLogProb<DomainType>, ICloneable
+        {
+            T b = (T)a.Clone();
+            b.Point = value;
+            Assert.Equal(0.0, b.GetLogProb(value));
+            Assert.Equal(double.NegativeInfinity, b.GetLogProb(default(DomainType)));
         }
 
         private static void AssertEqual(object a, object b)

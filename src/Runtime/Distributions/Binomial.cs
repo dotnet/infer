@@ -99,20 +99,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double GetMean()
         {
             if (A != 1 || B != 1) throw new NotImplementedException("A != 1 or B !=1 not implemented");
-            return TrialCount*ProbSuccess;
+            return TrialCount * ProbSuccess;
         }
 
         public double GetVariance()
         {
             if (A != 1 || B != 1) throw new NotImplementedException("A != 1 or B !=1 not implemented");
-            return TrialCount*ProbSuccess*ProbFailure;
+            return TrialCount * ProbSuccess * ProbFailure;
         }
 
         public void GetMeanAndVariance(out double mean, out double variance)
         {
             if (A != 1 || B != 1) throw new NotImplementedException("A != 1 or B !=1 not implemented");
-            mean = TrialCount*ProbSuccess;
-            variance = mean*ProbFailure;
+            mean = TrialCount * ProbSuccess;
+            variance = mean * ProbFailure;
         }
 
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS
@@ -290,7 +290,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double MaxDiff(object that)
         {
             if (!(that is Binomial)) return double.PositiveInfinity;
-            Binomial thatd = (Binomial) that;
+            Binomial thatd = (Binomial)that;
             if (IsPointMass)
             {
                 if (thatd.IsPointMass)
@@ -316,8 +316,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double GetLogProb(int value)
         {
             if (value < 0 || value > TrialCount) return double.NegativeInfinity;
-            if (IsPointMass) return (value == Point) ? 1.0 : 0.0;
-            return MMath.GammaLn(TrialCount + 1) - A*MMath.GammaLn(value + 1) - B*MMath.GammaLn(TrialCount - value + 1) + value*LogOdds + TrialCount*MMath.LogisticLn(-LogOdds);
+            if (IsPointMass) return (value == Point) ? 0.0 : double.NegativeInfinity;
+            return MMath.GammaLn(TrialCount + 1) - A * MMath.GammaLn(value + 1) - B * MMath.GammaLn(TrialCount - value + 1) + value * LogOdds + TrialCount * MMath.LogisticLn(-LogOdds);
         }
 
         public override string ToString()

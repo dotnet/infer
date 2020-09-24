@@ -16,6 +16,21 @@ namespace Microsoft.ML.Probabilistic.Tests
 #if NETCOREAPP3_1
     public class FloatTests
     {
+        /// <summary>
+        /// Tests whether two expressions are equal for all floating-point values.
+        /// </summary>
+        internal void EqualTest()
+        {
+            float x = float.Epsilon;
+            while(x < float.PositiveInfinity)
+            {
+                if ((float)(x + x + x) + x != 4 * x) throw new Exception();
+                //if (x + x + x + x + x + x != 6 * x) throw new Exception();
+                //if ((x + x) + (x + x) + (x + x) != 6 * x) throw new Exception();
+                x = NextFloat(x);
+            }
+        }
+
         internal void SincTest()
         {
             float x = float.Epsilon;
@@ -49,21 +64,23 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         public static float NextFloat(float value)
         {
-            if (value < 0) return -PreviousFloat(-value);
-            value = System.Math.Abs(value); // needed to handle -0
-            if (float.IsNaN(value)) return value;
-            if (float.IsPositiveInfinity(value)) return value;
-            int bits = BitConverter.SingleToInt32Bits(value);
-            return BitConverter.Int32BitsToSingle(bits + 1);
+            return MathF.BitIncrement(value);
+            //if (value < 0) return -PreviousFloat(-value);
+            //value = System.Math.Abs(value); // needed to handle -0
+            //if (float.IsNaN(value)) return value;
+            //if (float.IsPositiveInfinity(value)) return value;
+            //int bits = BitConverter.SingleToInt32Bits(value);
+            //return BitConverter.Int32BitsToSingle(bits + 1);
         }
 
         public static float PreviousFloat(float value)
         {
-            if (value <= 0) return -NextFloat(-value);
-            if (float.IsNaN(value)) return value;
-            if (float.IsNegativeInfinity(value)) return value;
-            int bits = BitConverter.SingleToInt32Bits(value);
-            return BitConverter.Int32BitsToSingle(bits - 1);
+            return MathF.BitDecrement(value);
+            //if (value <= 0) return -NextFloat(-value);
+            //if (float.IsNaN(value)) return value;
+            //if (float.IsNegativeInfinity(value)) return value;
+            //int bits = BitConverter.SingleToInt32Bits(value);
+            //return BitConverter.Int32BitsToSingle(bits - 1);
         }
 
         [Fact]

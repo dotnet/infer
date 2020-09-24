@@ -98,7 +98,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// The language that we'll compile
         /// </summary>
         protected string language = "C#";
-        protected bool runningOnNetCore = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET Core", StringComparison.OrdinalIgnoreCase);
+        protected bool runningOnNetCore = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET Core", StringComparison.OrdinalIgnoreCase)
+            || System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET 5", StringComparison.OrdinalIgnoreCase)
+            || System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET 6", StringComparison.OrdinalIgnoreCase);
         protected bool runningOnMono = Type.GetType("Mono.Runtime") != null;
 
         /// <summary>
