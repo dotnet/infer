@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Reflection;
 using Microsoft.ML.Probabilistic.Compiler;
@@ -151,7 +152,7 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
-        /// True if the expression contains a loop index and all other variable references are givens.
+        /// True if the expression is an operator applied to a loop index and all other variable references are observed.
         /// </summary>
         /// <returns></returns>
         internal bool CanBeInlined()
@@ -160,15 +161,27 @@ namespace Microsoft.ML.Probabilistic.Models
             bool hasLoopIndex = false;
             for (int i = 0; i < args.Count; i++)
             {
-                if (args[i] is Variable<int>)
+                if (args[i] is Variable<int> v)
                 {
-                    Variable<int> v = (Variable<int>) args[i];
                     if (v.IsLoopIndex) hasLoopIndex = true;
-                    else if (!v.IsObserved) return false;
+                    else if (!IsDeterminedByObservations(v)) return false;
                 }
                 else return false;
             }
             return hasLoopIndex;
+        }
+
+        private static bool IsDeterminedByObservations(Variable<int> v)
+        {
+            if (v.IsObserved) return true;
+            else if (v.definition != null) return v.definition.AllVariablesAreObserved();
+            else return v.conditionalDefinitions.Values.All(condDef => condDef.AllVariablesAreObserved());
+        }
+
+        private bool AllVariablesAreObserved()
+        {
+            if (op == null) return false;
+            return args.All(arg => (arg is Variable<int> v) && IsDeterminedByObservations(v));
         }
 
         internal IExpression GetMethodInvokeExpression(bool inline = false)

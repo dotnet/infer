@@ -2350,6 +2350,100 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void SimplestBackwardChainTest3()
+        {
+            int length = 10;
+            var lengthVar = Variable.Observed(length).Named("length");
+
+            Range rows = new Range(lengthVar).Named("i");
+            VariableArray<double> states = Variable.Array<double>(rows).Named("states");
+
+            using (ForEachBlock rowBlock = Variable.ForEach(rows))
+            {
+                var index = rowBlock.Index;
+                //var lengthVarMinus1 = (lengthVar - 1).Named("lengthVarMinus1");
+                //using (Variable.If(index == lengthVarMinus1))
+                using (Variable.If(index == lengthVar - 1))
+                {
+                    states[rowBlock.Index] = Variable.GaussianFromMeanAndVariance(1, 1);
+                }
+                //using (Variable.If(index < lengthVarMinus1))
+                using (Variable.If(index < lengthVar - 1))
+                {
+                    states[rowBlock.Index] = Variable.GaussianFromMeanAndVariance(states[rowBlock.Index + 1], 1);
+                }
+            }
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.NumberOfIterations = 1;
+            Console.WriteLine("After {0} Iterations", engine.NumberOfIterations);
+            var result1 = engine.Infer<Gaussian[]>(states);
+            for (int i = 0; i < length; i++)
+            {
+                Console.WriteLine("state[{0}] = {1}", i, result1[i]);
+            }
+            for (int i = 0; i < length; i++)
+            {
+                Assert.Equal(result1[i].GetVariance(), length - i, 1e-8);
+            }
+            engine.NumberOfIterations = 10;
+            int count = 0;
+            engine.ProgressChanged += delegate (InferenceEngine sender, InferenceProgressEventArgs progress)
+            {
+                count++;
+            };
+            engine.Infer(states);
+            Console.WriteLine("iter count = {0} should be 0", count);
+            Assert.Equal(0, count);
+        }
+
+        [Fact]
+        public void DeterministicChainTest()
+        {
+            int length = 10;
+            var lengthVar = Variable.Observed(length).Named("length");
+
+            Range rows = new Range(lengthVar).Named("i");
+            VariableArray<double> states = Variable.Array<double>(rows).Named("states");
+
+            using (ForEachBlock rowBlock = Variable.ForEach(rows))
+            {
+                var index = rowBlock.Index;
+                using (Variable.If(index == 0))
+                {
+                    states[rowBlock.Index] = 1;
+                }
+                using (Variable.If(index > 0))
+                {
+                    states[rowBlock.Index] = states[rowBlock.Index - 1] + 1;
+                }
+            }
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.NumberOfIterations = 1;
+            Console.WriteLine("After {0} Iterations", engine.NumberOfIterations);
+            var result1 = engine.Infer<Gaussian[]>(states);
+            for (int i = 0; i < length; i++)
+            {
+                Console.WriteLine("state[{0}] = {1}", i, result1[i]);
+            }
+            for (int i = 0; i < length; i++)
+            {
+                Assert.True(result1[i].IsPointMass);
+                Assert.Equal(i+1, result1[i].Point);
+            }
+            engine.NumberOfIterations = 10;
+            int count = 0;
+            engine.ProgressChanged += delegate (InferenceEngine sender, InferenceProgressEventArgs progress)
+            {
+                count++;
+            };
+            engine.Infer(states);
+            Console.WriteLine("iter count = {0} should be 0", count);
+            Assert.Equal(0, count);
+        }
+
+        [Fact]
         public void SimplestChainWithObservationsTest()
         {
             int length = 10;

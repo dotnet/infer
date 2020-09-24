@@ -864,18 +864,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (compiler.ReturnCopies)
                 {
                     IStatement ist = nodes[node];
-                    if (ist is IExpressionStatement)
+                    if (ist is IExpressionStatement ies)
                     {
-                        IExpressionStatement ies = (IExpressionStatement)ist;
-                        if (ies.Expression is IMethodInvokeExpression)
+                        if (ies.Expression is IMethodInvokeExpression imie)
                         {
-                            IMethodInvokeExpression imie = (IMethodInvokeExpression)ies.Expression;
                             if (CodeRecognizer.IsInfer(imie))
                             {
                                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(imie.Arguments[0]);
-                                NodeIndex allocation = allocationOfVariable[ivd];
-                                if (parameterDeps == parameterDependencies[allocation])
-                                    reallocatedVariables.Add(ivd.Name);
+                                if (ivd != null)
+                                {
+                                    NodeIndex allocation = allocationOfVariable[ivd];
+                                    if (parameterDeps == parameterDependencies[allocation])
+                                        reallocatedVariables.Add(ivd.Name);
+                                }
                             }
                         }
                     }
@@ -1665,9 +1666,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private IExpression ConvertInfer(IMethodInvokeExpression imie)
         {
-            IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(imie.Arguments[0]);
-            if (ivd == null)
-                return null;
             string varName = (string)((ILiteralExpression)imie.Arguments[1]).Value;
             ExpressionEvaluator eval = new ExpressionEvaluator();
             QueryType query = (imie.Arguments.Count < 3) ? null : (QueryType)eval.Evaluate(imie.Arguments[2]);

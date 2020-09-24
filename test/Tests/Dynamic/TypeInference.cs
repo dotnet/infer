@@ -72,15 +72,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine("{0}: {1}", o.GetType(), d);
             Assert.True(Conversion.TryGetConversion(typeof (double), typeof (int), out conv));
             Assert.True(conv.IsExplicit);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 o = conv.Converter(d);
-                Assert.True(false, "double to int conversion should not have succeeded.");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
 
             // enums
             Assert.True(Conversion.TryGetConversion(typeof (string), typeof (BindingFlags), out conv));
@@ -236,15 +231,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Type[] args1 = {typeof (Matrix)};
             TestInferGenericParameters(method, args1, 1);
             Console.WriteLine("Inferring {0} from {1}: ", method, typeof (double));
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 Invoker.Invoke(method, null, 4.4);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
 
             method = typeof (TypeInferenceTests).GetMethod("DelayedSetTo");
             Type[] args2 = {typeof (Matrix), typeof (Matrix)};
