@@ -320,14 +320,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             IfBlock evidenceBlock = Variable.If(evidence);
             Variable<double> mean = Variable.GaussianFromMeanAndVariance(0, 1).Named("mean");
             Variable<double> prec = Variable.GammaFromShapeAndScale(1, 1).Named("prec");
-            //Variable<double> mean = Variable.Constant(0.0).Named("mean");
-            //Variable<double> prec = Variable.Constant(1.0).Named("prec");
             Variable<int> dataCount = Variable.New<int>().Named("dataCount");
             Range item = new Range(dataCount).Named("item");
             VariableArray<double> data = Variable.Array<double>(item).Named("data");
             data[item] = Variable.GaussianFromMeanAndPrecision(mean, prec).ForEach(item);
             evidenceBlock.CloseBlock();
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
+            engine.ShowProgress = false;
             data.ObservedValue = dataSet;
             dataCount.ObservedValue = dataSet.Length;
 
@@ -359,7 +358,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             evidenceBlock.CloseBlock();
 
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
-            //engine.Compiler.WriteSourceFiles = false;
+            engine.ShowProgress = false;
 
             for (int pass = 0; pass < 15; pass++)
             {
@@ -376,9 +375,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma actualPrec = prec.Marginal<Gamma>();
             //double actualEvidence = evidence.Marginal<Bernoulli>().LogOdds + model.GetEvidenceCorrectionForVmp();
             double actualEvidence = Model.GetEvidenceForAll(model);
-            Console.WriteLine(" mean marginal = {0} (should be {1})", actualMean, expectedMean);
-            Console.WriteLine(" prec marginal = {0} (should be {1})", actualPrec, expectedPrec);
-            Console.WriteLine(" evidence = {0} (should be {1})", actualEvidence, expectedEvidence);
+            bool verbose = false;
+            if (verbose)
+            {
+                Console.WriteLine(" mean marginal = {0} (should be {1})", actualMean, expectedMean);
+                Console.WriteLine(" prec marginal = {0} (should be {1})", actualPrec, expectedPrec);
+                Console.WriteLine(" evidence = {0} (should be {1})", actualEvidence, expectedEvidence);
+            }
             Assert.True(expectedMean.MaxDiff(actualMean) < 1e-4);
             Assert.True(expectedPrec.MaxDiff(actualPrec) < 1e-2);
             Assert.Equal(expectedEvidence, actualEvidence, 1e-4);
@@ -414,7 +417,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 dataCountForModel[i] = dataCount;
                 models[i] = model;
                 engines[i] = new InferenceEngine(new VariationalMessagePassing());
-                //engines[i].Compiler.WriteSourceFiles = false;
+                engines[i].ShowProgress = false;
             }
 
             for (int pass = 0; pass < 200; pass++)
@@ -431,9 +434,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma actualPrec = prec.Marginal();
             //double actualEvidence = evidence.Marginal<Bernoulli>().LogOdds;
             double actualEvidence = Model.GetEvidenceForAll(models);
-            Console.WriteLine(" mean marginal = {0} (should be {1})", actualMean, expectedMean);
-            Console.WriteLine(" prec marginal = {0} (should be {1})", actualPrec, expectedPrec);
-            Console.WriteLine(" evidence = {0} (should be {1})", actualEvidence, expectedEvidence);
+            bool verbose = false;
+            if (verbose)
+            {
+                Console.WriteLine(" mean marginal = {0} (should be {1})", actualMean, expectedMean);
+                Console.WriteLine(" prec marginal = {0} (should be {1})", actualPrec, expectedPrec);
+                Console.WriteLine(" evidence = {0} (should be {1})", actualEvidence, expectedEvidence);
+            }
             Assert.True(expectedMean.MaxDiff(actualMean) < 1e-4);
             Assert.True(expectedPrec.MaxDiff(actualPrec) < 1e-2);
             Assert.Equal(expectedEvidence, actualEvidence, 1e-4);

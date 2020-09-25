@@ -1047,7 +1047,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             catch (CompilationFailedException ex)
             {
                 if (ex.Message.StartsWith("Indexing"))
-                    Console.WriteLine("Correctly failed with exception: " + ex);
+                    Console.WriteLine("Correctly threw " + ex);
                 else
                     Assert.True(false, "Wrong exception");
             }

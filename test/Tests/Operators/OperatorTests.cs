@@ -918,8 +918,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Gaussian a = Gaussian.FromMeanAndPrecision(point, System.Math.Pow(10, i));
                 Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, b);
-                //Console.WriteLine($"{a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17}");
                 double diff = toPoint.MaxDiff(to_a);
+                //Console.WriteLine($"{a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17} {diff:g17}");
                 if (diff < 1e-14) diff = 0;
                 Assert.True(diff <= oldDiff);
                 oldDiff = diff;
@@ -973,42 +973,22 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), true).GetProbTrue());
             Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, true).GetProbTrue());
 
-            try
+            Assert.Throws<AllZeroException>(() =>
             {
                 BooleanAndOp.AAverageConditional(true, false);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<AllZeroException>(() =>
             {
                 BooleanAndOp.AAverageConditional(Bernoulli.PointMass(true), false);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<AllZeroException>(() =>
             {
                 BooleanAndOp.AAverageConditional(true, Bernoulli.PointMass(false));
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<AllZeroException>(() =>
             {
                 BooleanAndOp.AAverageConditional(Bernoulli.PointMass(true), Bernoulli.PointMass(false));
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -1056,15 +1036,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.True(new Beta(1, 2).MaxDiff(BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist)) < 1e-4);
                 sampleDist = new Bernoulli(0.9);
                 Assert.True(new Beta(1.724, 0.9598).MaxDiff(BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist)) < 1e-3);
-                try
+                Assert.Throws<ImproperMessageException>(() =>
                 {
                     BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, new Beta(1, -2));
-                    Assert.True(false, "Did not throw exception");
-                }
-                catch (ImproperMessageException ex)
-                {
-                    Console.WriteLine("Correctly failed with exception: " + ex);
-                }
+                });
             }
         }
 
@@ -2040,24 +2015,15 @@ zL = (L - mx)*sqrt(prec)
             actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound.Point, upperBound.Point).GetProbTrue();
             expected = MMath.NormalCdf(1) - MMath.NormalCdf(0);
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            try
+            Assert.Throws<AllZeroException>(() =>
             {
                 Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(0.5), 1, 0).GetProbTrue());
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<AllZeroException>(() =>
             {
                 Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), 1, 0).GetProbTrue());
                 Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(0), 0, 1).GetProbTrue());
             Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(-1), Gaussian.PointMass(0), Gaussian.FromMeanAndVariance(1, 1)).GetProbTrue());
             Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(1), 0, 1).GetProbTrue());
