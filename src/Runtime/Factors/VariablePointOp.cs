@@ -352,7 +352,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (currDist.IsPointMass)
             {
                 if (double.IsInfinity(currDist.Point) || double.IsNaN(currDist.Point))
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(currDist), currDist.Point, $"use = {use}, def = {def}");
                 if (VariablePointOp_RpropGamma.UseMean)
                     bufferTGa.nextPoint = Math.Log(currDist.Point);
                 else
