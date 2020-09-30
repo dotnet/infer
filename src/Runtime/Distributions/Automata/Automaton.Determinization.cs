@@ -329,24 +329,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// A mapping from state ids to weights. This array is sorted by state Id.
                 /// </summary>
-                private readonly ImmutableArray<WeightedState> weightedStates;
+                private readonly ReadOnlyArray<WeightedState> weightedStates;
 
                 private readonly int singleStateIndex;
 
                 public WeightedStateSet(int stateIndex)
                 {
-                    this.weightedStates = default(ImmutableArray<WeightedState>);
+                    this.weightedStates = default(ReadOnlyArray<WeightedState>);
                     this.singleStateIndex = stateIndex;
                 }
 
-                public WeightedStateSet(ImmutableArray<WeightedState> weightedStates)
+                public WeightedStateSet(ReadOnlyArray<WeightedState> weightedStates)
                 {
                     Debug.Assert(weightedStates.Count > 0);
                     Debug.Assert(IsSorted(weightedStates));
                     if (weightedStates.Count == 1)
                     {
                         Debug.Assert(weightedStates[0].Weight == Weight.One);
-                        this.weightedStates = default(ImmutableArray<WeightedState>);
+                        this.weightedStates = default(ReadOnlyArray<WeightedState>);
                         this.singleStateIndex = weightedStates[0].Index;
                     }
                     else
@@ -357,12 +357,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 public int Count =>
-                    (this.weightedStates == default(ImmutableArray<WeightedState>))
+                    (this.weightedStates == default(ReadOnlyArray<WeightedState>))
                         ? 1
                         : this.weightedStates.Count;
 
                 public WeightedState this[int index] =>
-                    (this.weightedStates == default(ImmutableArray<WeightedState>))
+                    (this.weightedStates == default(ReadOnlyArray<WeightedState>))
                         ? new WeightedState(this.singleStateIndex, Weight.One)
                         : this.weightedStates[index];
 
@@ -444,7 +444,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Checks weather states array is sorted in ascending order by Index.
                 /// </summary>
-                private static bool IsSorted(ImmutableArray<WeightedState> array)
+                private static bool IsSorted(ReadOnlyArray<WeightedState> array)
                 {
                     for (var i = 1; i < array.Count; ++i)
                     {
@@ -520,7 +520,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     MergeRepeatedEntries(weightsClone);
                     var maxWeight = NormalizeWeights(weightsClone);
 
-                    return (new WeightedStateSet(weightsClone.ToImmutableArray()), maxWeight);
+                    return (new WeightedStateSet(weightsClone.ToReadOnlyArray()), maxWeight);
                 }
 
                 private static void MergeRepeatedEntries(List<WeightedState> weightedStates)

@@ -414,8 +414,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var usesGroups = false;
                 var hasOnlyForwardTransitions = true;
 
-                var resultStates = ImmutableArray.CreateBuilder<StateData>(this.states.Count);
-                var resultTransitions = ImmutableArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
+                var resultStates = ReadOnlyArray.CreateBuilder<StateData>(this.states.Count);
+                var resultTransitions = ReadOnlyArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
                 var nextResultTransitionIndex = 0;
 
                 for (var i = 0; i < resultStates.Count; ++i)

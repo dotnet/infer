@@ -24,17 +24,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </remarks>
         public struct State : IEquatable<State>
         {
-            private readonly ImmutableArray<StateData> states;
+            private readonly ReadOnlyArray<StateData> states;
 
-            private readonly ImmutableArray<Transition> transitions;
+            private readonly ReadOnlyArray<Transition> transitions;
 
             /// <summary>
             /// Initializes a new instance of <see cref="State"/> class. Used internally by automaton implementation
             /// to wrap StateData for use in public Automaton APIs.
             /// </summary>
             internal State(
-                ImmutableArray<StateData> states,
-                ImmutableArray<Transition> transitions,
+                ReadOnlyArray<StateData> states,
+                ReadOnlyArray<Transition> transitions,
                 int index)
             {
                 this.states = states;
@@ -57,8 +57,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public bool CanEnd => this.Data.CanEnd;
 
-            public ImmutableArraySegment<Transition> Transitions =>
-                new ImmutableArraySegment<Transition>(
+            public ReadOnlyArraySegment<Transition> Transitions =>
+                new ReadOnlyArraySegment<Transition>(
                     this.transitions,
                     this.Data.FirstTransitionIndex,
                     this.Data.TransitionsCount);

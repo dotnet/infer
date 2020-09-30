@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -86,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 targetAssemblyName = asmName.Name;
                 options = options
                     .WithPublicSign(true)
-                    .WithCryptoPublicKey(System.Collections.Immutable.ImmutableArray.Create(pk));
+                    .WithCryptoPublicKey(ImmutableArray.Create(pk));
             }
             var compilation = CSharpCompilation.Create(targetAssemblyName, allTrees, references, options);
             var model = compilation.GetSemanticModel(primaryTree);
