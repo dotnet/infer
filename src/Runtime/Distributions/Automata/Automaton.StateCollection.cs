@@ -25,12 +25,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Cached value of this.owner.Data.states. Cached for performance.
             /// </summary>
-            internal readonly ImmutableArray<StateData> states;
+            internal readonly ReadOnlyArray<StateData> states;
 
             /// <summary>
             /// Cached value of this.owner.Data.states. Cached for performance.
             /// </summary>
-            internal readonly ImmutableArray<Transition> transitions;
+            internal readonly ReadOnlyArray<Transition> transitions;
 
             /// <summary>
             /// Initializes instance of <see cref="StateCollection"/>.

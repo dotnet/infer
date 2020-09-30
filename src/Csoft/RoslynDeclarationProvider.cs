@@ -86,7 +86,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 targetAssemblyName = asmName.Name;
                 options = options
                     .WithPublicSign(true)
-                    .WithCryptoPublicKey(System.Collections.Immutable.ImmutableArray.Create(pk));
+                    .WithCryptoPublicKey(System.Collections.Immutable.ReadOnlyArray.Create(pk));
             }
             var compilation = CSharpCompilation.Create(targetAssemblyName, allTrees, references, options);
             var model = compilation.GetSemanticModel(primaryTree);

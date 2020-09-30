@@ -46,7 +46,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 else
                     additionalFiles.Add(sf);
             }
-            return primaryFile == null ? null : new SourceCode(primaryFile, additionalFiles.ToImmutableArray());
+            return primaryFile == null ? null : new SourceCode(primaryFile, additionalFiles.ToReadOnlyArray());
         }
     }
 }

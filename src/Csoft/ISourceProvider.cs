@@ -29,9 +29,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// Additional files that contain the definitions of some of the types referenced in the primary file.
         /// Should be used to build a more complete semantic model.
         /// </summary>
-        public ImmutableArray<SourceFile> AddtionalFiles { get; }
+        public ReadOnlyArray<SourceFile> AddtionalFiles { get; }
 
-        public SourceCode(SourceFile primaryFile, ImmutableArray<SourceFile> additionalFiles)
+        public SourceCode(SourceFile primaryFile, ReadOnlyArray<SourceFile> additionalFiles)
         {
             PrimaryFile = primaryFile;
             AddtionalFiles = additionalFiles;

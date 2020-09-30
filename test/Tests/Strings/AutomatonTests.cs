@@ -929,10 +929,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton1 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
                     0,
-                    ImmutableArray.Create(
+                    ReadOnlyArray.Create(
                         new StringAutomaton.StateData(0, 1, Weight.One),
                         new StringAutomaton.StateData(1, 0, Weight.One)),
-                    ImmutableArray.Create(
+                    ReadOnlyArray.Create(
                         new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1)),
                     isEpsilonFree: true,
                     usesGroups: false,
@@ -947,8 +947,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton2 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
                     0,
-                    ImmutableArray.Create(new StringAutomaton.StateData(0, 0, Weight.Zero)),
-                    ImmutableArray<StringAutomaton.Transition>.Empty,
+                    ReadOnlyArray.Create(new StringAutomaton.StateData(0, 0, Weight.Zero)),
+                    ReadOnlyArray<StringAutomaton.Transition>.Empty,
                     isEpsilonFree: true,
                     usesGroups: false,
                     isDeterminized: true,
@@ -961,8 +961,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        ImmutableArray<StringAutomaton.StateData>.Empty,
-                        ImmutableArray<StringAutomaton.Transition>.Empty,
+                        ReadOnlyArray<StringAutomaton.StateData>.Empty,
+                        ReadOnlyArray<StringAutomaton.Transition>.Empty,
                         isEpsilonFree: true,
                         usesGroups: false,
                         isDeterminized: false,
@@ -974,8 +974,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        ImmutableArray.Create(new StringAutomaton.StateData(0, 0, Weight.Zero)),
-                        ImmutableArray<StringAutomaton.Transition>.Empty,
+                        ReadOnlyArray.Create(new StringAutomaton.StateData(0, 0, Weight.Zero)),
+                        ReadOnlyArray<StringAutomaton.Transition>.Empty,
                         isEpsilonFree: false,
                         usesGroups: false,
                         isDeterminized: null,
@@ -987,8 +987,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        ImmutableArray.Create(new StringAutomaton.StateData(0, 1, Weight.Zero)),
-                        ImmutableArray.Create(new StringAutomaton.Transition(Option.None, Weight.One, 1)),
+                        ReadOnlyArray.Create(new StringAutomaton.StateData(0, 1, Weight.Zero)),
+                        ReadOnlyArray.Create(new StringAutomaton.Transition(Option.None, Weight.One, 1)),
                         isEpsilonFree: false,
                         usesGroups: false,
                         isDeterminized: null,
@@ -1000,8 +1000,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        ImmutableArray.Create(new StringAutomaton.StateData(0, 1, Weight.One)),
-                        ImmutableArray.Create(new StringAutomaton.Transition(Option.None, Weight.One, 2)),
+                        ReadOnlyArray.Create(new StringAutomaton.StateData(0, 1, Weight.One)),
+                        ReadOnlyArray.Create(new StringAutomaton.Transition(Option.None, Weight.One, 2)),
                         true,
                         false,
                         isDeterminized: null,
