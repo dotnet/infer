@@ -24,7 +24,7 @@ variables:
 
 jobs:
 - job: Test
-  timeout: 1000
+  timeoutInMinutes: 1000
   steps:
   - checkout: self
     clean: true
