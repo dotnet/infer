@@ -44,7 +44,6 @@ steps:
 
 - script: |
     test\TestAllCompilerOptions\bin\Release\net461\TestAllCompilerOptions.exe
-    exit 123
   displayName: 'Run test'
 
 - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
