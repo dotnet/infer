@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configurations>Debug;Release;DebugFull;ReleaseFull</Configurations>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,0 +1,80 @@
+# Licensed to the .NET Foundation under one or more agreements.
+# The .NET Foundation licenses this file to you under the MIT license.
+# See the LICENSE file in the project root for more information.
+
+# Run all-compiler-options-test.
+
+pool:
+  name: InferNet
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+
+trigger: none
+
+variables:
+  Configuration: Release
+
+schedules:
+- cron: "30 23 * * *"
+  branches:
+    include:
+    - master
+
+steps:
+- checkout: self
+  clean: true
+  submodules: recursive
+
+- task: MSBuild@1
+  displayName: 'Restore solution Infer.sln'
+  inputs:
+    solution: Infer.sln
+    platform: 'Any CPU'
+    configuration: '$(Configuration)'
+    msbuildArguments: '/t:Restore'
+
+- task: VSBuild@1
+  displayName: 'Build solution Infer'
+  inputs:
+    solution: Infer.sln
+    platform: 'Any CPU'
+    configuration: '$(Configuration)'
+
+- script: |
+    test\TestAllCompilerOptions\bin\Release\net461\TestAllCompilerOptions.exe
+    exit 123
+
+- task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+  displayName: 'Component Detection'
+
+- powershell: |
+   # Each agent does its work in directories named after small unsigned numbers.
+   # These directories are not reliably cleaned up and over time the consumed
+   # space eventually grows without bound.
+   # Note that SilentlyContinue suppresses any deletion errors. This is because
+   # errors in deleting the directory currently in use are expected and there
+   # doesn't seem to be any way around it.
+   dir .\_work -Directory
+   dir .\_work -Directory |
+    ? { [UInt32]::TryParse($_.Name, [ref] 0) } |
+    % { del $_.FullName -Force -Recurse -ErrorAction SilentlyContinue }
+  errorActionPreference: continue
+  ignoreLASTEXITCODE: true
+  workingDirectory: '$(Agent.HomeDirectory)'
+  displayName: 'Clean-up agent working directories'
+  condition: always()
+
+- script: |
+   rem Deleting the tasks directory must be done by 'script' because
+   rem this is the only task that does not require code in the tasks
+   rem directory itself.
+   rem The reason to delete the tasks directory is that it is never cleaned
+   rem up otherwise, and each version of each task has a separate directory,
+   rem and some tasks are published daily -- so over time this directory
+   rem grows in size without bound.
+   del $(Agent.HomeDirectory)\_work\_tasks /S /F /Q
+  workingDirectory: '$(Agent.HomeDirectory)'
+  displayName: 'Clean-up agent tasks directory'
+  condition: always()
