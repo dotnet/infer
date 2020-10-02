@@ -11,16 +11,16 @@ pool:
   - visualstudio
   - vstest
 
-trigger: none
+trigger: none # disable CI build
 
 variables:
   Configuration: Release
 
-schedules:
-- cron: "30 23 * * *"
-  branches:
-    include:
-    - master
+# schedules:
+# - cron: "30 23 * * *"
+#   branches:
+#     include:
+#     - master
 
 steps:
 - checkout: self
@@ -45,6 +45,7 @@ steps:
 - script: |
     test\TestAllCompilerOptions\bin\Release\net461\TestAllCompilerOptions.exe
     exit 123
+  displayName: 'Run test'
 
 - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
   displayName: 'Component Detection'

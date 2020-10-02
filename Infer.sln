@@ -104,6 +104,7 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TestPython", "test\TestPyth
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5759CC85-729E-479A-BF7E-8A0B8937B123}"
 	ProjectSection(SolutionItems) = preProject
+		build\all-compiler-options.yml = build\all-compiler-options.yml
 		build\common.props = build\common.props
 		build\copyassemblies.sh = build\copyassemblies.sh
 		build\evaluator-netcore.yml = build\evaluator-netcore.yml
