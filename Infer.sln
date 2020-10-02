@@ -124,6 +124,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5759CC85
 		build\windows-msbuild.yml = build\windows-msbuild.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAllCompilerOptions", "test\TestAllCompilerOptions\TestAllCompilerOptions.csproj", "{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -544,6 +546,18 @@ Global
 		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
 		{79B39D08-DF06-47B8-B7EE-15E30EB9A209}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.DebugCore|Any CPU.Build.0 = Debug|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.DebugFull|Any CPU.ActiveCfg = DebugFull|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.DebugFull|Any CPU.Build.0 = DebugFull|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.ReleaseFull|Any CPU.ActiveCfg = ReleaseFull|Any CPU
+		{5A3A6D71-03FF-44CC-92CD-C0977B592F8E}.ReleaseFull|Any CPU.Build.0 = ReleaseFull|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
