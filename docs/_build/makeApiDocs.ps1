@@ -17,8 +17,9 @@ $destinationDirectory = [IO.Path]::GetFullPath((join-path $scriptDir '../../Infe
 $dotnetExe = 'dotnet'
 
 Write-Host $sourceDirectory
-Write-Host "Copy src to InferNet_Copy_Temp directory"
+Write-Host "Copy src and build to InferNet_Copy_Temp directory"
 Copy-Item -Path "$sourceDirectory/src/" -Destination "$destinationDirectory/src/" -Recurse -Force
+Copy-Item -Path "$sourceDirectory/build/" -Destination "$destinationDirectory/build/" -Recurse -Force
 
 Write-Host "Copy root files to InferNet_Copy_Temp directory"
 Get-ChildItem -Path $sourceDirectory -Filter "*.*" | Copy-Item -Destination $destinationDirectory -Force 
@@ -36,30 +37,28 @@ if (!(Test-Path $projPath)) {
     Write-Error -Message ('ERROR: Failed to locate PrepareSource project file at ' + $projPath)
     exit 1
 }
-$BuildArgs = @{
-  FilePath = $dotnetExe
-  ArgumentList = "build", $projPath, "/p:Configuration=Release"
-}
-Start-Process @BuildArgs -NoNewWindow -Wait
+
+& "$dotnetExe" build "$projPath" /p:Configuration=Release
 
 Write-Host "Run PrepareSource for InferNet_Copy_Temp folder"
-$prepareSourcePath = [IO.Path]::GetFullPath((join-path $sourceDirectory 'src/Tools/PrepareSource/bin/Release/netcoreapp2.1/Microsoft.ML.Probabilistic.Tools.PrepareSource.dll'))
-$prepareSourceCmd = "& $dotnetExe ""$prepareSourcePath"" ""$destinationDirectory"""
-Invoke-Expression $prepareSourceCmd
+$prepareSourcePath = [IO.Path]::GetFullPath((join-path $sourceDirectory 'src/Tools/PrepareSource/bin/Release/netcoreapp3.1/Microsoft.ML.Probabilistic.Tools.PrepareSource.dll'))
+& "$dotnetExe" "$prepareSourcePath" "$destinationDirectory"
 
 Write-Host "Install nuget package docfx.console"
-Install-Package -Name docfx.console -provider Nuget -Source https://nuget.org/api/v2 -RequiredVersion 2.38.0 -Destination $scriptDir\..\..\packages -Force
+Install-Package -Name docfx.console -provider Nuget -Source https://nuget.org/api/v2 -RequiredVersion 2.48.1 -Destination $scriptDir\..\..\packages -Force
 Write-Host "Run docfx"
-$docFXPath = [IO.Path]::GetFullPath((join-path $scriptDir '../../packages/docfx.console.2.38.0/tools/docfx.exe'))
+$docFXPath = [IO.Path]::GetFullPath((join-path $scriptDir '../../packages/docfx.console.2.48.1/tools/docfx.exe'))
 $docFxJsonPath = "$scriptDir/../docfx.json"
-$docFxCmd = "& ""$docFXPath"" ""$docFxJsonPath"""
-if(!(Invoke-Expression $docFxCmd))
+& "$docFXPath" "$docFxJsonPath"
+if($LASTEXITCODE)
 {
     if(!(Invoke-Expression "& mono ""$docFXPath"" ""$docFxJsonPath"""))
     {
         Write-Error -Message ("ERROR: Unable to evaluate """ + $docFxCmd + """. Maybe Mono hasn't been installed")
     }
 }
+
+Write-Warning "Three warnings about invalid file links in toc.yml are expected and benign, because those files don't exist yet. However, the links are still set up correctly."
 
 if ((Test-Path $destinationDirectory)) {
     Write-Host "Remove temp repository"

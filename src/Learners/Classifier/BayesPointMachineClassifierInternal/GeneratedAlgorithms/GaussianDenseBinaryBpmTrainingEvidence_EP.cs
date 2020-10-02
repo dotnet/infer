@@ -49,8 +49,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Bernoulli ModelSelector_selector_B;
 		public Bernoulli ModelSelector_selector_cases_0_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep3_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep3'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep3_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep8_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0'</summary>
 		public Bernoulli[] ModelSelector_selector_cases_0_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_B;
 		public DistributionStructArray<Gaussian,double> NoisyScore_F;
@@ -67,18 +69,18 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Field backing the WeightPriors property</summary>
 		private DistributionStructArray<Gaussian,double> weightPriors;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public DistributionStructArray<Gaussian,double> Weights_depth1_rep_B_toDef;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public DistributionStructArray<Gaussian,double> Weights_depth1_rep_F_marginal;
 		/// <summary>Message to marginal of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double> Weights_marginal_F;
 		/// <summary>Message from use of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double> Weights_use_B;
-		/// <summary>Messages from use of 'Weights'</summary>
+		/// <summary>Messages from uses of 'Weights_use'</summary>
 		public DistributionStructArray<Gaussian,double>[] Weights_uses_B;
-		/// <summary>Messages to use of 'Weights'</summary>
+		/// <summary>Messages to uses of 'Weights_use'</summary>
 		public DistributionStructArray<Gaussian,double>[] Weights_uses_F;
 		#endregion
 

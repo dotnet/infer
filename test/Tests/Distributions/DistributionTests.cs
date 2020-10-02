@@ -51,6 +51,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             RatioWithPointMassTest(a, value);
             PointMassPowerTest(a, value);
             PointMassSampleTest(a, value);
+            PointMassGetLogProbTest(a, value);
 
             SamplingTest(a, 3);
         }
@@ -133,7 +134,46 @@ namespace Microsoft.ML.Probabilistic.Tests
                     (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max)
                     );
                 Interlocked.Add(ref count, 1);
-                if(count % 100000 == 0)
+                if (count % 100000 == 0)
+                    Trace.WriteLine($"{count} cases passed");
+            });
+            Trace.WriteLine($"{count} cases passed");
+        }
+
+        [Fact]
+        public void TruncatedGamma_GetMode_MaximizesGetLogProb()
+        {
+            long count = 0;
+            Parallel.ForEach(OperatorTests.TruncatedGammas().Take(100000), dist =>
+            {
+                double argmax = double.NaN;
+                double max = double.NegativeInfinity;
+                foreach (var x in OperatorTests.DoublesAtLeastZero())
+                {
+                    double logProb = dist.GetLogProb(x);
+                    Assert.False(double.IsNaN(logProb));
+                    if (logProb > max)
+                    {
+                        max = logProb;
+                        argmax = x;
+                    }
+                }
+                double mode = dist.GetMode();
+                Assert.False(double.IsNaN(mode));
+                double logProbBelowMode = dist.GetLogProb(MMath.PreviousDouble(mode));
+                Assert.False(double.IsNaN(logProbBelowMode));
+                double logProbAboveMode = dist.GetLogProb(MMath.NextDouble(mode));
+                Assert.False(double.IsNaN(logProbAboveMode));
+                double logProbAtMode = dist.GetLogProb(mode);
+                Assert.False(double.IsNaN(logProbAtMode));
+                logProbAtMode = System.Math.Max(System.Math.Max(logProbAtMode, logProbAboveMode), logProbBelowMode);
+                const double smallestNormalized = 1e-308;
+                Assert.True(logProbAtMode >= max ||
+                    MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-8 ||
+                    (mode <= double.Epsilon && dist.GetLogProb(smallestNormalized) >= max)
+                    );
+                Interlocked.Add(ref count, 1);
+                if (count % 100000 == 0)
                     Trace.WriteLine($"{count} cases passed");
             });
             Trace.WriteLine($"{count} cases passed");
@@ -188,7 +228,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerMeanAndVarianceFuzzTest()
         {
-            foreach(var gammaPower in OperatorTests.GammaPowers().Take(100000))
+            foreach (var gammaPower in OperatorTests.GammaPowers().Take(100000))
             {
                 gammaPower.GetMeanAndVariance(out double mean, out double variance);
                 Assert.False(double.IsNaN(mean));
@@ -289,6 +329,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             g = new TruncatedGamma(2, 1, 3, 3);
             Assert.True(g.IsPointMass);
             Assert.Equal(3.0, g.Point);
+
+            g = new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e14);
+            Assert.True(g.Sample() >= 0);
         }
 
         /// <summary>
@@ -303,7 +346,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 TruncatedGamma g = new TruncatedGamma(1, System.Math.Exp(-i), target, double.PositiveInfinity);
                 var mean = g.GetMean();
-                Console.WriteLine($"GetNormalizer = {g.GetNormalizer()} GetMean = {g.GetMean()}");
+                //Trace.WriteLine($"GetNormalizer = {g.GetNormalizer()} GetMean = {g.GetMean()}");
                 Assert.False(double.IsInfinity(mean));
                 Assert.False(double.IsNaN(mean));
                 double diff = System.Math.Abs(mean - target);
@@ -318,7 +361,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 TruncatedGamma g = new TruncatedGamma(System.Math.Exp(i), 1, 0, target);
                 var mean = g.GetMean();
-                Console.WriteLine($"GetNormalizer = {g.GetNormalizer()} GetMean = {g.GetMean()}");
+                //Trace.WriteLine($"GetNormalizer = {g.GetNormalizer()} GetMean = {g.GetMean()}");
                 Assert.False(double.IsInfinity(mean));
                 Assert.False(double.IsNaN(mean));
                 double diff = System.Math.Abs(mean - target);
@@ -341,11 +384,79 @@ namespace Microsoft.ML.Probabilistic.Tests
             for (int i = 0; i < 100; i++)
             {
                 var meanPower = g.GetMeanPower(-i);
-                Trace.WriteLine($"GetMeanPower({-i}) = {meanPower}");
+                //Trace.WriteLine($"GetMeanPower({-i}) = {meanPower}");
                 Assert.False(double.IsNaN(meanPower));
                 Assert.False(double.IsInfinity(meanPower));
-                if (i == 1) Assert.Equal(MMath.GammaUpper(shape-1, 1, false)/MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
+                if (i == 1) Assert.Equal(MMath.GammaUpper(shape - 1, 1, false) / MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
             }
+        }
+
+        [Fact]
+        public void TruncatedGamma_GetMeanAndVariance_WithinBounds()
+        {
+            long count = 0;
+            Parallel.ForEach(OperatorTests.LowerTruncatedGammas()
+                .Take(100000), dist =>
+                {
+                    dist.GetMeanAndVariance(out double mean, out double variance);
+                    // Compiler.Quoter.Quote(dist)
+                    Assert.True(mean >= dist.LowerBound);
+                    Assert.True(mean <= dist.UpperBound);
+                    Assert.Equal(mean, dist.GetMean());
+                    Assert.True(variance >= 0);
+                    Interlocked.Add(ref count, 1);
+                    if (count % 100000 == 0)
+                        Trace.WriteLine($"{count} cases passed");
+                });
+            Trace.WriteLine($"{count} cases passed");
+        }
+
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        public void TruncatedGamma_GetMeanPower_WithinBounds()
+        {
+            var g = new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e14);
+            Assert.True(g.GetMean() <= g.UpperBound);
+            for (int i = 0; i < 308; i++)
+            {
+                double power = System.Math.Pow(10, i);
+                //Trace.WriteLine($"GetMeanPower({power}) = {g.GetMeanPower(power)}");
+                Assert.True(g.GetMeanPower(power) <= g.UpperBound);
+            }
+            Assert.True(g.GetMeanPower(1.7976931348623157E+308) <= g.UpperBound);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e9).GetMeanPower(1.7976931348623157E+308) <= 1e9);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 1e6).GetMeanPower(1.7976931348623157E+308) <= 1e6);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(4.94065645841247E-324, 4.94065645841247E-324), 0, 100).GetMeanPower(4.94065645841247E-324) <= 100);
+
+            long count = 0;
+            Parallel.ForEach(OperatorTests.LowerTruncatedGammas()
+                .Take(100000), dist =>
+            {
+                foreach (var power in OperatorTests.Doubles())
+                {
+                    if (dist.Gamma.Shape <= -power && dist.LowerBound == 0) continue;
+                    double meanPower = dist.GetMeanPower(power);
+                    if (power >= 0)
+                    {
+                        // Compiler.Quoter.Quote(dist)
+                        Assert.True(meanPower >= System.Math.Pow(dist.LowerBound, power));
+                        Assert.True(meanPower <= System.Math.Pow(dist.UpperBound, power));
+                    }
+                    else
+                    {
+                        Assert.True(meanPower <= System.Math.Pow(dist.LowerBound, power));
+                        Assert.True(meanPower >= System.Math.Pow(dist.UpperBound, power));
+                    }
+                    if (power == 1)
+                    {
+                        Assert.Equal(meanPower, dist.GetMean());
+                    }
+                }
+                Interlocked.Add(ref count, 1);
+                if (count % 100000 == 0)
+                    Trace.WriteLine($"{count} cases passed");
+            });
+            Trace.WriteLine($"{count} cases passed");
         }
 
         [Fact]
@@ -413,11 +524,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             g.SetMeanAndPrecision(double.PositiveInfinity, 2.2);
             Assert.Equal(g, Gaussian.PointMass(double.PositiveInfinity));
 
-            g.SetMeanAndPrecision(1e4, 1e306);
-            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), g);
-            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), new Gaussian(1e4, 1E-306));
-            Assert.Equal(Gaussian.PointMass(1e-155), new Gaussian(1e-155, 1E-312));
-            Gaussian.FromNatural(1, 1e-309).GetMeanAndVarianceImproper(out m, out v);
+            double mean = 1024;
+            double precision = double.MaxValue / mean * 2;
+            // precision * mean > double.MaxValue
+            g.SetMeanAndPrecision(mean, precision);
+            g2 = Gaussian.FromMeanAndPrecision(mean, double.MaxValue / mean);
+            Assert.Equal(g2, g);
+            Assert.Equal(g2, new Gaussian(mean, 1 / precision));
+            double inverseIsInfinity = 0.5 / double.MaxValue;
+            Assert.Equal(Gaussian.PointMass(mean), new Gaussian(mean, inverseIsInfinity));
+            Gaussian.FromNatural(1, inverseIsInfinity).GetMeanAndVarianceImproper(out m, out v);
             if (v > double.MaxValue)
                 Assert.Equal(0, m);
             Gaussian.Uniform().GetMeanAndVarianceImproper(out m, out v);
@@ -437,7 +553,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Throws<ImproperDistributionException>(() => g.GetMean());
 
             Gaussian g3 = new Gaussian();
-            g3.SetToSum(1.0, g, System.Math.Exp(800), g2);
+            g3.SetToSum(1.0, g, double.PositiveInfinity, g2);
             Assert.True(g3.Equals(g2));
         }
 
@@ -643,9 +759,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             GammaRoundoffTest(g);
             DistributionTest(g, Gamma.FromShapeAndRate(2e20, 2e20));
 
-            Assert.Equal(Gamma.FromMeanAndVariance(1e300, 1), Gamma.PointMass(1e300));
-            Assert.Equal(Gamma.FromMeanAndVariance(1e250, 1e-100), Gamma.PointMass(1e250));
-            Assert.Equal(Gamma.FromMeanAndVariance(1e-10, 1e-320), Gamma.PointMass(1e-10));
+            Assert.Equal(Gamma.FromMeanAndVariance(double.MaxValue, 1), Gamma.PointMass(double.MaxValue));
+            Assert.Equal(Gamma.FromMeanAndVariance(double.MaxValue / 1e100, 1e-100), Gamma.PointMass(double.MaxValue / 1e100));
+            Assert.Equal(Gamma.FromMeanAndVariance(1, double.Epsilon), Gamma.PointMass(1));
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndRate(2.5, double.PositiveInfinity));
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndScale(2.5, 1e-320));
             Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 1e-320));
@@ -890,6 +1006,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(dgaaa, dgaaa2);
         }
 
+#pragma warning disable CA2013
         [Fact]
         public void GaussianArrayTest()
         {
@@ -933,6 +1050,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             b = new GaussianArray2D(new Gaussian(), 3, 3);
             Assert.True(!a.Equals(b));
         }
+#pragma warning restore
+
+#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
+#pragma warning disable 162
+#endif
 
 #if false
         [Fact]
@@ -1108,6 +1230,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             PointMassMomentTest(d, 0, 0.2, 0.1);
             d.SetToUniform();
             GetMomentTest(d, 0.0, 0.0);
+
+            d = Discrete.Uniform(0);
+            DistributionTest(d, new Discrete());
 
             // Sampling when probability vector is sparse
             double[] pcd1 = new double[] { 0.1, 0.3, 0.4, 0.1, 0.1 };
@@ -1565,12 +1690,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma g = new Gamma(1.0, m);
             double median = -m * System.Math.Log(0.5);
             Assert.Equal(0.5, g.GetProbLessThan(median), 1e-4);
-            Assert.Equal(median, g.GetQuantile(0.5));
+            AssertAlmostEqual(median, g.GetQuantile(0.5));
 
             g = new Gamma(2, m);
             double probability = g.GetProbLessThan(median);
             double quantile = g.GetQuantile(probability);
             Assert.Equal(median, quantile, 1e-10);
+        }
+
+        internal static void AssertAlmostEqual(double x, double y)
+        {
+            Assert.False(SpecialFunctionsTests.IsErrorSignificant(1e-16, x - y));
         }
 
         [Fact]
@@ -1793,6 +1923,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             AverageLogPointMassTest(a, value);
             InnerProductPointMassTest(a, value);
             PointMassSampleTest(a, value);
+            PointMassGetLogProbTest(a, value);
         }
 
         internal static void UniformTest<T, DomainType>(T a, DomainType value)
@@ -1840,6 +1971,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 DomainType sample = b.Sample();
                 AssertEqual(sample, value);
             }
+        }
+
+        private static void PointMassGetLogProbTest<T, DomainType>(T a, DomainType value)
+            where T : HasPoint<DomainType>, CanGetLogProb<DomainType>, ICloneable
+        {
+            T b = (T)a.Clone();
+            b.Point = value;
+            Assert.Equal(0.0, b.GetLogProb(value));
+            Assert.Equal(double.NegativeInfinity, b.GetLogProb(default(DomainType)));
         }
 
         private static void AssertEqual(object a, object b)
@@ -2212,7 +2352,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             T c = (T)a.Clone();
             c.SetToSum(0.5, a, 0.5, b);
-            if (!(c is Discrete && ((Discrete)(object)c).Dimension == 1))
+            if (!(c is Discrete && ((Discrete)(object)c).Dimension <= 1))
             {
                 Assert.False(c.Equals(a));
                 Assert.False(c.Equals(b));

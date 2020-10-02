@@ -16,6 +16,7 @@ using Microsoft.ML.Probabilistic.Factors.Attributes;
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 using Microsoft.ML.Probabilistic.Compiler;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -24,9 +25,10 @@ namespace Microsoft.ML.Probabilistic.Tests
     using GaussianArray = DistributionStructArray<Gaussian, double>;
     using VectorGaussianArray = DistributionRefArray<VectorGaussian, Vector>;
 
-
     public class GatedFactorTests
     {
+        private static bool verbose = false;
+
         [Fact]
         public void TruncatedGaussianIsBetweenTest()
         {
@@ -2854,14 +2856,18 @@ namespace Microsoft.ML.Probabilistic.Tests
                     catch (CompilationFailedException ex)
                     {
                         if (yPrior.ObservedValue.IsPointMass)
-                            Console.WriteLine("Correctly failed with " + ex);
+                        {
+                           if(verbose) Console.WriteLine("Correctly threw " + ex);
+                        }
                         else
                             throw;
                     }
                     catch (NotSupportedException ex)
                     {
                         if (yPrior.ObservedValue.IsPointMass)
-                            Console.WriteLine("Correctly failed with " + ex);
+                        {
+                            if (verbose) Console.WriteLine("Correctly threw " + ex);
+                        }
                         else
                             throw;
                     }
@@ -2979,14 +2985,18 @@ namespace Microsoft.ML.Probabilistic.Tests
                     catch (CompilationFailedException ex)
                     {
                         if (alg is VariationalMessagePassing && sumPrior.ObservedValue.IsPointMass)
-                            Console.WriteLine("Correctly failed with " + ex);
+                        {
+                            if (verbose) Console.WriteLine("Correctly threw " + ex);
+                        }
                         else
                             throw;
                     }
                     catch (NotSupportedException ex)
                     {
                         if (alg is VariationalMessagePassing && sumPrior.ObservedValue.IsPointMass)
-                            Console.WriteLine("Correctly failed with " + ex);
+                        {
+                            if (verbose) Console.WriteLine("Correctly threw " + ex);
+                        }
                         else
                             throw;
                     }
@@ -3168,7 +3178,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     {
                         if (algorithm is VariationalMessagePassing && sumPrior.ObservedValue.IsPointMass)
                         {
-                            Console.WriteLine("Correctly failed with " + compilationFailedException);
+                            if (verbose) Console.WriteLine("Correctly threw " + compilationFailedException);
                         }
                         else
                         {
@@ -3179,7 +3189,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     {
                         if (algorithm is VariationalMessagePassing && sumPrior.ObservedValue.IsPointMass)
                         {
-                            Console.WriteLine("Correctly failed with " + notSupportedException);
+                            if (verbose) Console.WriteLine("Correctly threw " + notSupportedException);
                         }
                         else
                         {
@@ -3388,14 +3398,18 @@ namespace Microsoft.ML.Probabilistic.Tests
                         catch (CompilationFailedException ex)
                         {
                             if (alg is VariationalMessagePassing && bPrior.ObservedValue.IsPointMass)
-                                Console.WriteLine("Correctly failed with " + ex);
+                            {
+                                if (verbose) Console.WriteLine("Correctly threw " + ex);
+                            }
                             else
                                 throw;
                         }
                         catch (NotSupportedException ex)
                         {
                             if (alg is VariationalMessagePassing && bPrior.ObservedValue.IsPointMass)
-                                Console.WriteLine("Correctly failed with " + ex);
+                            {
+                                if (verbose) Console.WriteLine("Correctly threw " + ex);
+                            }
                             else
                                 throw;
                         }

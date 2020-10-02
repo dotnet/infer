@@ -307,8 +307,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var secondStartState = this[oldStateCount + automaton.Start.Index];
 
-                if (avoidEpsilonTransitions &&
-                    (AllEndStatesHaveNoTransitions() || !automaton.Start.HasIncomingTransitions))
+                if (avoidEpsilonTransitions && CanMergeEndAndStart())
                 {
                     // Remove start state of appended automaton and copy all its transitions to previous end states
                     for (var i = 0; i < oldStateCount; ++i)
@@ -359,7 +358,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                bool AllEndStatesHaveNoTransitions()
+                bool CanMergeEndAndStart() =>
+                    AllOldEndStatesHaveNoOutgoingTransitions() || !SecondStartStateHasIncomingTransitions();
+
+                bool AllOldEndStatesHaveNoOutgoingTransitions()
                 {
                     for (var i = 0; i < oldStateCount; ++i)
                     {
@@ -371,6 +373,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     return true;
+                }
+
+                bool SecondStartStateHasIncomingTransitions()
+                {
+                    foreach (var transition in automaton.Data.Transitions)
+                    {
+                        if (transition.DestinationStateIndex == automaton.Data.StartStateIndex)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
                 }
             }
 
@@ -397,11 +412,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var hasEpsilonTransitions = false;
                 var usesGroups = false;
-                var resultStates = new StateData[this.states.Count];
-                var resultTransitions = new Transition[this.transitions.Count - this.numRemovedTransitions];
+                var hasOnlyForwardTransitions = true;
+
+                var resultStates = ReadOnlyArray.CreateBuilder<StateData>(this.states.Count);
+                var resultTransitions = ReadOnlyArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
                 var nextResultTransitionIndex = 0;
 
-                for (var i = 0; i < resultStates.Length; ++i)
+                for (var i = 0; i < resultStates.Count; ++i)
                 {
                     var firstResultTransitionIndex = nextResultTransitionIndex;
                     var transitionIndex = this.states[i].FirstTransitionIndex;
@@ -410,12 +427,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var node = this.transitions[transitionIndex];
                         var transition = node.Transition;
                         Debug.Assert(
-                            transition.DestinationStateIndex < resultStates.Length,
+                            transition.DestinationStateIndex < resultStates.Count,
                             "Destination indexes must be in valid range");
                         resultTransitions[nextResultTransitionIndex] = transition;
                         ++nextResultTransitionIndex;
                         hasEpsilonTransitions = hasEpsilonTransitions || transition.IsEpsilon;
                         usesGroups = usesGroups || (transition.Group != 0);
+
+                        if (transition.DestinationStateIndex <= i)
+                        {
+                            hasOnlyForwardTransitions = false;
+                        }
 
                         transitionIndex = node.Next;
                     }
@@ -427,17 +449,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 Debug.Assert(
-                    nextResultTransitionIndex == resultTransitions.Length,
+                    nextResultTransitionIndex == resultTransitions.Count,
                     "number of copied transitions must match result array size");
+
+                // Detect two very common automata shapes
+                var isEnumerable = hasOnlyForwardTransitions ? true : (bool?)null;
 
                 return new DataContainer(
                     this.StartStateIndex,
-                    resultStates,
-                    resultTransitions,
+                    resultStates.MoveToImmutable(),
+                    resultTransitions.MoveToImmutable(),
                     !hasEpsilonTransitions,
                     usesGroups,
                     isDeterminized,
-                    isZero: null);
+                    isZero: null,
+                    isEnumerable: isEnumerable);
             }
 
             #endregion
@@ -552,7 +578,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     state.LastTransitionIndex = transitionIndex;
                     this.builder.states[this.Index] = state;
 
-                    
                     return new StateBuilder(this.builder, transition.DestinationStateIndex);
                 }
 

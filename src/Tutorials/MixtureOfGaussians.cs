@@ -7,6 +7,7 @@ using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
@@ -57,10 +58,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             z[n].InitialiseTo(zInit[n]); 
 
             // The inference
-            InferenceEngine ie = new InferenceEngine();
-            Console.WriteLine("Dist over pi=" + ie.Infer(weights));
-            Console.WriteLine("Dist over means=\n" + ie.Infer(means));
-            Console.WriteLine("Dist over precs=\n" + ie.Infer(precs));
+            InferenceEngine engine = new InferenceEngine();
+            Console.WriteLine("Dist over pi=" + engine.Infer(weights));
+            Console.WriteLine("Dist over means=\n" + engine.Infer(means));
+            Console.WriteLine("Dist over precs=\n" + engine.Infer(precs));
         }
 
         /// <summary>

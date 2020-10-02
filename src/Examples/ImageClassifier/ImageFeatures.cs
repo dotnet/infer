@@ -3,11 +3,12 @@
 // See the LICENSE file in the project root for more information.
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
-using System.Linq;
 
 namespace ImageClassifier
 {
@@ -33,7 +34,7 @@ namespace ImageClassifier
             StreamWriter writer = new StreamWriter(folder + "Features.txt");
             foreach (string filename in filenames)
             {
-                writer.WriteLine(filename + "," + StringUtil.CollectionToString(features[filename], ","));
+                writer.WriteLine(filename + "," + StringUtil.CollectionToString(features[filename].Select(d => d.ToString("r", CultureInfo.InvariantCulture)), ","));
             }
 
             writer.Close();

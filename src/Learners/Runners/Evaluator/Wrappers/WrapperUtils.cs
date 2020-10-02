@@ -6,7 +6,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 {
     using System;
     using System.Diagnostics;
-#if !NETFULL
+#if !NETFRAMEWORK
     using System.Runtime.InteropServices;
 #endif
 
@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         private static string detectedOSDescription = null;
         private static OS DetectOS(out string description)
         {
-#if NETFULL
+#if NETFRAMEWORK
             description = Environment.OSVersion.Platform.ToString();
             switch (Environment.OSVersion.Platform)
             {

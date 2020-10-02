@@ -16,6 +16,7 @@ using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Models.Attributes;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -2136,6 +2137,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         // Gives the wrong answer due to an undetected deterministic loop.
+        // Chooses one of two possible solutions instead of averaging them.
         [Fact]
         [Trait("Category", "OpenBug")]
         public void AndOrXorTest()
@@ -2145,6 +2147,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var xt = x & (~y);
             var yt = (~x) & y;
             var z = yt | xt;
+            // This is an equivalent model that gets the right answer.
             //z = (x != y);
             z.ObservedValue = true;
             z.Name = "z";
@@ -2152,14 +2155,15 @@ namespace Microsoft.ML.Probabilistic.Tests
             Bernoulli xExpected = new Bernoulli(0.5);
             Bernoulli xActual = ie.Infer<Bernoulli>(x);
             Console.WriteLine("x = {0} should be {1}", xActual, xExpected);
+            Bernoulli yExpected = new Bernoulli(0.5);
+            Bernoulli yActual = ie.Infer<Bernoulli>(y);
+            Console.WriteLine("y = {0} should be {1}", yActual, yExpected);
             Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
         }
 
-        // An interesting failure case for belief propagation.
-        // Fails due to slow convergence around a deterministic loop.
+        // An interesting case for belief propagation.
         // Constant propagation would help to remove the final "and" factor and make the model simpler.
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void AndOrXorTest2()
         {
             Variable<bool> x = Variable.Bernoulli(0.5).Named("x");
@@ -3088,7 +3092,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<double> noClick = Variable.GaussianFromMeanAndVariance(0, 100).Named("noClick");
             VariableArray<bool> clicks = Variable.Array<bool>(user).Named("clicks");
 
-            if (true)
+            // Sequential gives faster convergence than damping
+            bool useSequential = true;
+            int modelType = 0;
+            double stepsize = 0.5;
+            if (modelType == 0)
             {
                 // undamped oscillation
                 using (Variable.ForEach(user))
@@ -3099,27 +3107,37 @@ namespace Microsoft.ML.Probabilistic.Tests
                     clicks[user] = (y > Variable.Max(z, x));
                 }
             }
-            else if (false)
+            else if (modelType == 1)
             {
-                // damping the wrong variable 
-                double stepsize = 0.5;
+                // incorrect damping location
+                var noClickDamped = Variable<double>.Factor<double, double>(Damp.Forward, noClick, stepsize).Named("noClickDamped");
+                using (Variable.ForEach(user))
+                {
+                    Variable<double> x = Variable.GaussianFromMeanAndVariance(noClickDamped, 1);
+                    Variable<double> y = Variable.GaussianFromMeanAndVariance(.33, 1);
+                    Variable<double> z = Variable.GaussianFromMeanAndVariance(.33, 1);
+                    clicks[user] = (y > Variable.Max(z, x));
+                }
+            }
+            else if(modelType == 2)
+            {
+                // damping the wrong variable (still works in this case)
                 using (Variable.ForEach(user))
                 {
                     Variable<double> x = Variable.GaussianFromMeanAndVariance(noClick, 1);
                     Variable<double> y = Variable.GaussianFromMeanAndVariance(.33, 1);
                     Variable<double> z = Variable.GaussianFromMeanAndVariance(.33, 1);
-                    var xDamped = Variable<double>.Factor<double, double>(Damp.Backward, x, stepsize).Named("xDamped");
+                    var xDamped = Variable<double>.Factor<double, double>(Damp.Forward, x, stepsize).Named("xDamped");
                     clicks[user] = (y > Variable.Max(z, xDamped));
                 }
             }
             else
             {
                 // correct damping
-                double stepsize = 0.5;
                 using (Variable.ForEach(user))
                 {
-                    // does not work if this line is outside the ForEach loop
-                    var noClickDamped = Variable<double>.Factor<double, double>(Damp.Backward, noClick, stepsize).Named("noClickDamped");
+                    // Forward since noClick is the root of the fan
+                    var noClickDamped = Variable<double>.Factor<double, double>(Damp.Forward, noClick, stepsize).Named("noClickDamped");
                     Variable<double> x = Variable.GaussianFromMeanAndVariance(noClickDamped, 1);
                     Variable<double> y = Variable.GaussianFromMeanAndVariance(.33, 1);
                     Variable<double> z = Variable.GaussianFromMeanAndVariance(.33, 1);
@@ -3138,7 +3156,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             //GateEnterPartialOp.ForceProper = true;
             MaxGaussianOp.ForceProper = false; // must be false or else wrong answer
             InferenceEngine engine = new InferenceEngine();
-            if (true)
+            if (useSequential)
             {
                 // don't need damping if use sequential
                 user.AddAttribute(new Sequential());
@@ -4170,16 +4188,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<double> abcabd = (abc * abd).Named("abcabd");
             Variable.ConstrainEqualRandom(abcabd, Gaussian.FromMeanAndVariance(4.0, 1.0));
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
-            try
+            Assert.Throws<InferRuntimeException>(() =>
             {
                 Gaussian abcabdMarginal = engine.Infer<Gaussian>(abcabd);
                 Console.WriteLine("abcabd = " + abcabdMarginal);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (InferRuntimeException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -4256,29 +4269,45 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void InferObservedDiscreteTest()
         {
-            Variable<int> b = Variable.Discrete(0.1, 0.2, 0.3, 0.4).Named("b");
-            b.ObservedValue = 2;
-
-            InferenceEngine engine = new InferenceEngine();
-            Discrete bActual = engine.Infer<Discrete>(b);
-            Discrete bExpected = Discrete.PointMass(b.ObservedValue, 4);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+            foreach (bool readOnly in new[] { true, false, true })
+            {
+                foreach (bool useCompiledAlgorithm in new[] { false, true })
+                {
+                    InferObservedDiscrete(readOnly, useCompiledAlgorithm);
+                }
+            }
         }
 
-        [Fact]
-        public void InferObservedDiscreteTest2()
+        private void InferObservedDiscrete(bool readOnly, bool useCompiledAlgorithm)
         {
             Variable<int> b = Variable.Discrete(0.1, 0.2, 0.3, 0.4).Named("b");
             b.ObservedValue = 2;
+            b.IsReadOnly = readOnly;
+            b.AddAttribute(QueryTypes.Marginal);
+            b.AddAttribute(QueryTypes.MarginalDividedByPrior);
 
             InferenceEngine engine = new InferenceEngine();
-            IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
-            gen.Execute(10);
-            Discrete bActual = gen.Marginal<Discrete>(b.NameInGeneratedCode);
+            Discrete bActual;
+            Discrete marginalDividedByPrior;
+            if (useCompiledAlgorithm)
+            {
+                IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
+                gen.Execute(10);
+                bActual = gen.Marginal<Discrete>(b.NameInGeneratedCode);
+                marginalDividedByPrior = gen.Marginal<Discrete>(b.NameInGeneratedCode, QueryTypes.MarginalDividedByPrior.Name);
+            }
+            else
+            {
+                bActual = engine.Infer<Discrete>(b);
+                marginalDividedByPrior = engine.Infer<Discrete>(b, QueryTypes.MarginalDividedByPrior);
+            }
             Discrete bExpected = Discrete.PointMass(b.ObservedValue, 4);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+            Discrete marginalDividedByPriorExpected = Discrete.Uniform(4);
+            Console.WriteLine($"b = {bActual} should be {bExpected}");
+            Console.WriteLine($"marginalDividedByPrior = {marginalDividedByPrior} should be {marginalDividedByPriorExpected}");
+            Assert.Equal(bExpected, bActual);
+            if (!readOnly)
+                Assert.Equal(marginalDividedByPriorExpected, marginalDividedByPrior);
         }
 
         [Fact]
@@ -4293,29 +4322,41 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(bActual, bExpected);
         }
 
+        readonly IAlgorithm[] algorithms = new IAlgorithm[] {
+            new ExpectationPropagation(),
+            new VariationalMessagePassing(),
+            new GibbsSampling(),
+        };
+
         [Fact]
         public void InferConstantTest2()
         {
-            Variable<bool> b = Variable.Constant(false).Named("b");
+            foreach (var algorithm in algorithms)
+            {
+                Variable<bool> b = Variable.Constant(false).Named("b");
 
-            InferenceEngine engine = new InferenceEngine();
-            Bernoulli bActual = engine.Infer<Bernoulli>(b);
-            Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+                InferenceEngine engine = new InferenceEngine(algorithm);
+                Bernoulli bActual = engine.Infer<Bernoulli>(b);
+                Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
+                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                Assert.Equal(bExpected, bActual);
+            }
         }
 
         [Fact]
         public void InferConstantTest4()
         {
-            Variable<int> b = Variable.Constant(4).Named("b");
-            b.AddAttribute(new MarginalPrototype(Discrete.Uniform(6)));
+            foreach (var algorithm in algorithms)
+            {
+                Variable<int> b = Variable.Constant(4).Named("b");
+                b.AddAttribute(new MarginalPrototype(Discrete.Uniform(6)));
 
-            InferenceEngine engine = new InferenceEngine();
-            Discrete bActual = engine.Infer<Discrete>(b);
-            Discrete bExpected = Discrete.PointMass(b.ObservedValue, 6);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+                InferenceEngine engine = new InferenceEngine(algorithm);
+                Discrete bActual = engine.Infer<Discrete>(b);
+                Discrete bExpected = Discrete.PointMass(b.ObservedValue, 6);
+                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                Assert.Equal(bExpected, bActual);
+            }
         }
 
         [Fact]
@@ -4334,43 +4375,52 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void InferObservedTest()
         {
-            Variable<bool> b = Variable.Bernoulli(0.1).Named("b");
-            b.ObservedValue = true;
+            foreach (var algorithm in algorithms)
+            {
+                Variable<bool> b = Variable.Bernoulli(0.1).Named("b");
+                b.ObservedValue = true;
 
-            InferenceEngine engine = new InferenceEngine();
-            Bernoulli bActual = engine.Infer<Bernoulli>(b);
-            Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+                InferenceEngine engine = new InferenceEngine(algorithm);
+                Bernoulli bActual = engine.Infer<Bernoulli>(b);
+                Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
+                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                Assert.Equal(bActual, bExpected);
+            }
         }
 
         [Fact]
         public void InferConstantTest()
         {
-            Variable<bool> b = Variable.Bernoulli(0.1).Named("b");
-            b.ObservedValue = true;
-            b.IsReadOnly = true;
+            foreach (var algorithm in algorithms)
+            {
+                Variable<bool> b = Variable.Bernoulli(0.1).Named("b");
+                b.ObservedValue = true;
+                b.IsReadOnly = true;
 
-            InferenceEngine engine = new InferenceEngine();
-            Bernoulli bActual = engine.Infer<Bernoulli>(b);
-            Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+                InferenceEngine engine = new InferenceEngine(algorithm);
+                Bernoulli bActual = engine.Infer<Bernoulli>(b);
+                Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
+                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                Assert.Equal(bActual, bExpected);
+            }
         }
 
         [Fact]
         public void InferObservedTest2()
         {
-            Variable<bool> b = Variable.Bernoulli(0.1).Named("b");
-            b.ObservedValue = true;
+            foreach (var algorithm in algorithms)
+            {
+                Variable<bool> b = Variable.Bernoulli(0.1).Named("b");
+                b.ObservedValue = true;
 
-            InferenceEngine engine = new InferenceEngine();
-            IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
-            gen.Execute(10);
-            Bernoulli bActual = gen.Marginal<Bernoulli>(b.NameInGeneratedCode);
-            Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+                InferenceEngine engine = new InferenceEngine(algorithm);
+                IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
+                gen.Execute(10);
+                Bernoulli bActual = gen.Marginal<Bernoulli>(b.NameInGeneratedCode);
+                Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
+                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                Assert.Equal(bActual, bExpected);
+            }
         }
 
         [Fact]
@@ -4411,75 +4461,89 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void InferObservedArrayTest()
         {
-            Range item = new Range(2);
-            VariableArray<bool> b = Variable.Array<bool>(item).Named("b");
-            b[item] = Variable.Bernoulli(0.1).ForEach(item);
-            b.ObservedValue = new bool[] { true, false };
-
-            InferenceEngine engine = new InferenceEngine();
-            Bernoulli[] bActual = engine.Infer<Bernoulli[]>(b);
-            Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
-            for (int i = 0; i < bActual.Length; i++)
+            foreach (var readOnly in new[] { false, true })
             {
-                Assert.Equal(b.ObservedValue[i], bActual[i].Point);
+                foreach (var algorithm in algorithms)
+                {
+                    Range item = new Range(2);
+                    VariableArray<bool> b = Variable.Array<bool>(item).Named("b");
+                    b[item] = Variable.Bernoulli(0.1).ForEach(item);
+                    b.ObservedValue = new bool[] { true, false };
+                    b.IsReadOnly = readOnly;
+
+                    InferenceEngine engine = new InferenceEngine(algorithm);
+                    Bernoulli[] bActual;
+                    foreach (var useGeneratedAlgorithm in new[] { false, true })
+                    {
+                        if (useGeneratedAlgorithm)
+                        {
+                            IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
+                            gen.Execute(1);
+                            bActual = gen.Marginal<Bernoulli[]>(b.NameInGeneratedCode);
+                        }
+                        else bActual = engine.Infer<Bernoulli[]>(b);
+                        Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
+                        for (int i = 0; i < bActual.Length; i++)
+                        {
+                            Assert.Equal(b.ObservedValue[i], bActual[i].Point);
+                        }
+                    }
+                }
             }
         }
 
         [Fact]
-        public void InferObservedArrayTest2()
+        public void InferObservedSubarrayTest()
         {
-            Range item = new Range(2);
-            VariableArray<bool> b = Variable.Array<bool>(item).Named("b");
-            b[item] = Variable.Bernoulli(0.1).ForEach(item);
-            b.ObservedValue = new bool[] { true, false };
-
-            InferenceEngine engine = new InferenceEngine();
-            IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
-            gen.Execute(0);
-            Bernoulli[] bActual = gen.Marginal<Bernoulli[]>(b.NameInGeneratedCode);
-            Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
-            for (int i = 0; i < bActual.Length; i++)
+            foreach (var readOnly in new[] { false, true })
             {
-                Assert.Equal(b.ObservedValue[i], bActual[i].Point);
+                foreach (var algorithm in algorithms)
+                {
+                    Range item = new Range(2);
+                    VariableArray<bool> array = Variable.Array<bool>(item).Named("array");
+                    array[item] = Variable.Bernoulli(0.1).ForEach(item);
+                    VariableArray<int> indices = Variable.Observed(new int[] { 1 }).Named("indices");
+                    VariableArray<bool> b = Variable.Subarray(array, indices).Named("b");
+                    b.ObservedValue = new bool[] { false };
+                    b.IsReadOnly = readOnly;
+
+                    InferenceEngine engine = new InferenceEngine(algorithm);
+                    Bernoulli[] bActual;
+                    foreach (var useGeneratedAlgorithm in new[] { false, true })
+                    {
+                        if (useGeneratedAlgorithm)
+                        {
+                            IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
+                            gen.Execute(1);
+                            bActual = gen.Marginal<Bernoulli[]>(b.NameInGeneratedCode);
+                        }
+                        else bActual = engine.Infer<Bernoulli[]>(b);
+                        Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
+                        for (int i = 0; i < bActual.Length; i++)
+                        {
+                            Assert.Equal(b.ObservedValue[i], bActual[i].Point);
+                        }
+                    }
+                }
             }
         }
 
         [Fact]
-        public void InferConstantArrayTest()
+        [Trait("Category", "CsoftModel")]
+        public void InferObservedArray3DTest()
         {
-            Range item = new Range(2);
-            VariableArray<bool> b = Variable.Array<bool>(item).Named("b");
-            b[item] = Variable.Bernoulli(0.1).ForEach(item);
-            b.ObservedValue = new bool[] { true, false };
-            b.IsReadOnly = true;
-
-            InferenceEngine engine = new InferenceEngine();
-            Bernoulli[] bActual = engine.Infer<Bernoulli[]>(b);
-            Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
-            for (int i = 0; i < bActual.Length; i++)
-            {
-                Assert.Equal(b.ObservedValue[i], bActual[i].Point);
-            }
+            InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
+            engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
+            double[,,] array3D = new double[,,] { { { 2.5 } } };
+            var ca = engine.Compiler.Compile(Array3DModel, array3D);
+            ca.Execute(1);
+            var actual = ca.Marginal<PointMass<double[,,]>>("array3D");
+            Assert.Equal(array3D[0, 0, 0], actual.Point[0, 0, 0]);
         }
 
-        [Fact]
-        public void InferConstantArrayTest2()
+        private void Array3DModel(double[,,] array3D)
         {
-            Range item = new Range(2);
-            VariableArray<bool> b = Variable.Array<bool>(item).Named("b");
-            b[item] = Variable.Bernoulli(0.1).ForEach(item);
-            b.ObservedValue = new bool[] { true, false };
-            b.IsReadOnly = true;
-
-            InferenceEngine engine = new InferenceEngine();
-            IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
-            gen.Execute(0);
-            Bernoulli[] bActual = gen.Marginal<Bernoulli[]>(b.NameInGeneratedCode);
-            Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
-            for (int i = 0; i < bActual.Length; i++)
-            {
-                Assert.Equal(b.ObservedValue[i], bActual[i].Point);
-            }
+            InferNet.Infer(array3D, nameof(array3D));
         }
 
         [Fact]
@@ -4787,6 +4851,30 @@ namespace Microsoft.ML.Probabilistic.Tests
             expected[0] = Gaussian.FromMeanAndPrecision(0, 0.5);
             expected[1] = Gaussian.Uniform();
             IList<Gaussian> actual = engine.Infer<IList<Gaussian>>(x);
+            Console.WriteLine(actual);
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public void PartiallyUniformArrayTest2()
+        {
+            var item = new Range(2).Named("item");
+            var inner = new Range(2).Named("inner");
+            var arrays = Variable.Array(Variable.Array<double>(inner), item).Named("arrays");
+            arrays[0][0] = Variable.GaussianFromMeanAndPrecision(0, 1);
+            arrays[0][1] = Variable.GaussianFromMeanAndPrecision(0, 1);
+            arrays[1][0] = Variable.Random(Gaussian.Uniform());
+            arrays[1][1] = Variable.Random(Gaussian.Uniform());
+            var sums = Variable.Array<double>(item).Named("sums");
+            using (Variable.ForEach(item))
+            {
+                sums[item] = Variable.Sum(arrays[item]);
+            }
+            InferenceEngine engine = new InferenceEngine();
+            GaussianArray expected = new GaussianArray(2);
+            expected[0] = Gaussian.FromMeanAndPrecision(0, 0.5);
+            expected[1] = Gaussian.Uniform();
+            IList<Gaussian> actual = engine.Infer<IList<Gaussian>>(sums);
             Console.WriteLine(actual);
             Assert.Equal(actual, expected);
         }

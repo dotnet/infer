@@ -198,6 +198,15 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (T)Def.Clone();
         }
 
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        /// <typeparam name="T">The type of the incoming message from <c>Def</c>.</typeparam>
+        public static TDist UseMaxConditional<TDist, T>(T Def, TDist result)
+            where TDist : HasPoint<T>
+        {
+            result.Point = Def;
+            return result;
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariableMaxOp"]/message_doc[@name="DefMaxConditional{T}(T)"]/*'/>
         /// <typeparam name="T">The type of the marginal of the variable.</typeparam>
         public static T DefMaxConditional<T>([IsReturned] T Use)
@@ -224,6 +233,15 @@ namespace Microsoft.ML.Probabilistic.Factors
             where T : ICloneable
         {
             return (T)def.Clone();
+        }
+
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        /// <typeparam name="T">The type of the incoming message from <c>Def</c>.</typeparam>
+        public static TDist MarginalMaxConditional<TDist, T>(T Def, TDist result)
+            where TDist : HasPoint<T>
+        {
+            result.Point = Def;
+            return result;
         }
     }
 
@@ -414,7 +432,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableOp"]/message_doc[@name="LogEvidenceRatio()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableOp"]/message_doc[@name="LogEvidenceRatio{T}(T)"]/*'/>
         [Skip]
         public static double LogEvidenceRatio<T>(T use)
         {
@@ -432,6 +450,15 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        /// <typeparam name="T">The type of the incoming message from <c>Def</c>.</typeparam>
+        public static TDist MarginalAverageConditional<TDist,T>(T Def, TDist result)
+            where TDist : HasPoint<T>
+        {
+            result.Point = Def;
+            return result;
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableOp"]/message_doc[@name="MarginalAverageConditionalInit{T}(T)"]/*'/>
         /// <typeparam name="T">The type of the marginal of the variable.</typeparam>
         [Skip]
@@ -439,6 +466,15 @@ namespace Microsoft.ML.Probabilistic.Factors
             where T : ICloneable
         {
             return (T)def.Clone();
+        }
+
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        /// <typeparam name="T">The type of the incoming message from <c>Def</c>.</typeparam>
+        public static TDist UseAverageConditional<TDist, T>(T Def, TDist result)
+            where TDist : HasPoint<T>
+        {
+            result.Point = Def;
+            return result;
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableOp"]/message_doc[@name="UseAverageConditional{T}(T)"]/*'/>
@@ -612,7 +648,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [FactorMethod(typeof(Factor), "DerivedVariableVmp<>", Default = true)]
     [FactorMethod(typeof(Factor), "DerivedVariableInitVmp<>", Default = true)]
     [Quality(QualityBand.Preview)]
-    public static class DerivedVariableVmpOp
+    public static class DerivedVariableVmpOp<T>
     {
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableVmpOp"]/message_doc[@name="AverageLogFactor()"]/*'/>
         [Skip]
@@ -622,48 +658,69 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableVmpOp"]/message_doc[@name="MarginalAverageLogarithm{T, TDef}(TDef, T)"]/*'/>
-        /// <typeparam name="T">The type of the marginal of the variable.</typeparam>
-        /// <typeparam name="TDef">The type of the incoming message from <c>Def</c>.</typeparam>
-        public static T MarginalAverageLogarithm<T, TDef>([IsReturned] TDef Def, T result)
-            where T : SettableTo<TDef>
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        public static TDist MarginalAverageLogarithm<TDist>([IsReturned] TDist Def, TDist result)
+            where TDist : SettableTo<TDist>
         {
             result.SetTo(Def);
+            return result;
+        }
+
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        /// <typeparam name="TPoint">The domain type of <typeparamref name="TDist"/></typeparam>
+        public static TDist MarginalAverageLogarithm<TDist,TPoint>(TPoint Def, TDist result)
+            where TDist : HasPoint<TPoint>
+        {
+            result.Point = Def;
             return result;
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableVmpOp"]/message_doc[@name="MarginalAverageLogarithmInit{T}(T)"]/*'/>
-        /// <typeparam name="T">The type of the marginal of the variable.</typeparam>
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         [Skip]
-        public static T MarginalAverageLogarithmInit<T>([IgnoreDependency] T def)
-            where T : ICloneable
+        public static TDist MarginalAverageLogarithmInit<TDist>([IgnoreDependency] TDist def)
+            where TDist : ICloneable
         {
-            return (T)def.Clone();
+            return (TDist)def.Clone();
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableVmpOp"]/message_doc[@name="UseAverageLogarithm{T, TDef}(TDef, T)"]/*'/>
-        /// <typeparam name="T">The type of the marginal of the variable.</typeparam>
-        /// <typeparam name="TDef"></typeparam>
-        public static T UseAverageLogarithm<T, TDef>([IsReturned] TDef Def, T result)
-            where T : SettableTo<TDef>
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        public static TDist UseAverageLogarithm<TDist>([IsReturned] TDist Def, TDist result)
+            where TDist : SettableTo<TDist>
         {
             result.SetTo(Def);
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableVmpOp"]/message_doc[@name="UseAverageLogarithmInit{T}(T)"]/*'/>
-        /// <typeparam name="T">The type of the marginal of the variable.</typeparam>
-        [Skip]
-        public static T UseAverageLogarithmInit<T>([IgnoreDependency] T def)
-            where T : ICloneable
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        /// <typeparam name="TPoint">The domain type of <typeparamref name="TDist"/></typeparam>
+        public static TDist UseAverageLogarithm<TDist, TPoint>(TPoint Def, TDist result)
+            where TDist : HasPoint<TPoint>
         {
-            return (T)def.Clone();
+            result.Point = Def;
+            return result;
+        }
+
+        public static T UseAverageLogarithm([IsReturned] T Def)
+        {
+            return Def;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableVmpOp"]/message_doc[@name="UseAverageLogarithmInit{T}(T)"]/*'/>
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        [Skip]
+        public static TDist UseAverageLogarithmInit<TDist>([IgnoreDependency] TDist def)
+            where TDist : ICloneable
+        {
+            return (TDist)def.Clone();
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableVmpOp"]/message_doc[@name="DefAverageLogarithm{T}(T, T)"]/*'/>
-        /// <typeparam name="T">The type of the marginal of the variable.</typeparam>
-        public static T DefAverageLogarithm<T>(
-            [IsReturned] T Use, T result) // must have upward Trigger to match the Trigger on UsesEqualDef.UsesAverageLogarithm
-            where T : SettableTo<T>
+        /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
+        public static TDist DefAverageLogarithm<TDist>(
+            [IsReturned] TDist Use, TDist result) // must have upward Trigger to match the Trigger on UsesEqualDef.UsesAverageLogarithm
+            where TDist : SettableTo<TDist>
         {
             result.SetTo(Use);
             return result;

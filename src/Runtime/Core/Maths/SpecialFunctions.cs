@@ -2,17 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.ML.Probabilistic.Utilities;
-using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
-
 namespace Microsoft.ML.Probabilistic.Math
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
+    using System.Numerics;
+
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Core.Maths;
+    using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
+    using Microsoft.ML.Probabilistic.Utilities;
+
 
     /// <summary>
     /// This class provides mathematical constants and special functions, 
@@ -156,7 +157,7 @@ namespace Microsoft.ML.Probabilistic.Math
         private static double BGRat(double x, double a, double b, double epsilon)
         {
             List<double> p = new List<double>();
-            List<int> twoNPlus1Factorial = new List<int>();
+            List<double> twoNPlus1Factorial = new List<double>();
             p.Add(1.0);
             twoNPlus1Factorial.Add(1);
             double T = a + 0.5 * (b - 1);
@@ -180,6 +181,8 @@ namespace Microsoft.ML.Probabilistic.Math
                 bPlus2n += 2;
                 bPlus2nPlus1 += 2;
                 lnXTerm *= lnXOver2Sq;
+                // This can overflow, which will result in infinity. This is OK, because
+                // it will mean only that some of the terms added to currP will be zero.
                 twoNPlus1Factorial.Add(twoNPlus1Factorial.Last() * (2 * n) * (2 * n + 1));
 
                 double currP = 0.0;
@@ -499,6 +502,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return mult * result;
         }
 
+        private const double DefaultBetaEpsilon = 1e-15;
+
         /// <summary>
         /// Computes the regularized incomplete beta function: int_0^x t^(a-1) (1-t)^(b-1) dt / Beta(a,b)
         /// </summary>
@@ -508,7 +513,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="epsilon">A tolerance for terminating the series calculation.</param>
         /// <returns>The incomplete beta function at (<paramref name="x"/>, <paramref name="a"/>, <paramref name="b"/>).</returns>
         /// <remarks>The beta function is obtained by setting x to 1.</remarks>
-        public static double Beta(double x, double a, double b, double epsilon = 1e-15)
+        public static double Beta(double x, double a, double b, double epsilon = DefaultBetaEpsilon)
         {
             double result = 0.0;
             bool swap = false;
@@ -687,7 +692,6 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Gamma(x).</returns>
         public static double Gamma(double x)
         {
-            /* Negative values */
             if (x < 0)
             {
                 // this test also catches -inf
@@ -700,6 +704,11 @@ namespace Microsoft.ML.Probabilistic.Math
                 return -Math.PI / (x * Math.Sin(Math.PI * x) * Gamma(-x));
             }
 
+            if (x <= GammaSmallX)
+            {
+                return 1 / x + GammaSeries(x);
+            }
+
             if (x > 180)
             {
                 return Double.PositiveInfinity;
@@ -707,6 +716,8 @@ namespace Microsoft.ML.Probabilistic.Math
 
             return Math.Exp(GammaLn(x));
         }
+
+        private const double GammaSmallX = 1e-3;
 
         /// <summary>
         /// Computes the natural logarithm of the Gamma function.
@@ -743,14 +754,37 @@ namespace Microsoft.ML.Probabilistic.Math
                 }
                 // 1.5 <= x <= 2.5
                 // Use Taylor series at x=2
-                // Reference: https://dlmf.nist.gov/5.7#E3
                 double dx = x - 2;
-                double sum = 0;
-                for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                {
-                    sum = dx * (gammaTaylorCoefficients[i] + sum);
-                }
-                sum = dx * (1 + Digamma1 + sum);
+                double sum =
+                    // Truncated series 1: Gammaln at 2
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 1.1921401405860912e-09*dx**25 when dx >= 0
+                    // which is at most Ulp(0.42278433509846713*dx)/2 when 0 <= dx <= 0.4914357448219413
+                    dx * (0.42278433509846713 +
+                    dx * (0.3224670334241132 +
+                    dx * (-0.067352301053198102 +
+                    dx * (0.020580808427784546 +
+                    dx * (-0.0073855510286739857 +
+                    dx * (0.0028905103307415234 +
+                    dx * (-0.001192753911703261 +
+                    dx * (0.00050966952474304245 +
+                    dx * (-0.00022315475845357939 +
+                    dx * (9.9457512781808531e-05 +
+                    dx * (-4.4926236738133142e-05 +
+                    dx * (2.0507212775670691e-05 +
+                    dx * (-9.4394882752683967e-06 +
+                    dx * (4.3748667899074882e-06 +
+                    dx * (-2.0392157538013662e-06 +
+                    dx * (9.5514121304074194e-07 +
+                    dx * (-4.4924691987645662e-07 +
+                    dx * (2.1207184805554665e-07 +
+                    dx * (-1.0043224823968099e-07 +
+                    dx * (4.7698101693639804e-08 +
+                    dx * (-2.2711094608943164e-08 +
+                    dx * (1.0838659214896955e-08 +
+                    dx * (-5.1834750419700466e-09 +
+                    dx * 2.4836745438024785e-09)))))))))))))))))))))))
+                    ;
                 result += sum;
                 return result;
             }
@@ -779,12 +813,12 @@ namespace Microsoft.ML.Probabilistic.Math
             // To ensure that the result increases with n, we group terms in n.
             if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x), x, "x <= 0");
             else if (n == 0) return 0;
-            else if (x < 1e-16 && x + n < 1e-16)
+            else if (x < Ulp1 && x + n < Ulp1)
             {
                 // GammaLn(x) = -log(x)
                 return -Log1Plus(n / x) / n;
             }
-            else if (Math.Abs(n / x) < 1e-6)
+            else if (Math.Abs(n / x) < CbrtUlp1)
             {
                 // x >= 1e-6 ensures that Tetragamma doesn't overflow
                 // For small x, Digamma(x) = -1/x, Trigamma(x) = 1/x^2, Tetragamma(x) = -1/x^3
@@ -794,7 +828,7 @@ namespace Microsoft.ML.Probabilistic.Math
             else if (x > GammaLnLargeX && x + n > GammaLnLargeX)
             {
                 double nOverX = n / x;
-                if (Math.Abs(nOverX) < 1e-8)
+                if (Math.Abs(nOverX) < SqrtUlp1)
                     // log(1 + x) = x - 0.5*x^2  when x^2 << 1
                     return Log1Plus(nOverX) - 0.5 * (1 - 0.5 / x) * nOverX + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 0.5 / x + Math.Log(x);
                 else
@@ -803,40 +837,18 @@ namespace Microsoft.ML.Probabilistic.Math
             else return (MMath.GammaLn(x + n) - MMath.GammaLn(x)) / n;
         }
 
-        /* Python code to generate this table (must not be indented):
-for k in range(2,26):
-		print("            %0.20g," % ((-1)**k*(zeta(k)-1)/k))
-         */
-        private static readonly double[] gammaTaylorCoefficients =
-        {
-            0.32246703342411320303,
-            -0.06735230105319810201,
-            0.020580808427784546416,
-            -0.0073855510286739856768,
-            0.0028905103307415229257,
-            -0.0011927539117032610189,
-            0.00050966952474304234172,
-            -0.00022315475845357938579,
-            9.945751278180853098e-05,
-            -4.4926236738133142046e-05,
-            2.0507212775670691067e-05,
-            -9.4394882752683967152e-06,
-            4.3748667899074873274e-06,
-            -2.0392157538013666132e-06,
-            9.551412130407419353e-07,
-            -4.4924691987645661855e-07,
-            2.1207184805554664645e-07,
-            -1.0043224823968100408e-07,
-            4.7698101693639803983e-08,
-            -2.2711094608943166813e-08,
-            1.0838659214896952939e-08,
-            -5.1834750419700474714e-09,
-            2.4836745438024780616e-09,
-            -1.1921401405860913615e-09,
-            5.7313672416788612175e-10,
-        };
+        const int DigammaTableLength = 100;
+        private static readonly Lazy<double[]> DigammaTable = new Lazy<double[]>(MakeDigammaTable);
 
-        private static double[] DigammaLookup;
+        private static double[] MakeDigammaTable()
+        {
+            double[] table = new double[DigammaTableLength];
+            table[0] = double.NegativeInfinity;
+            table[1] = Digamma1;
+            for (int i = 2; i < table.Length; i++)
+                table[i] = table[i - 1] + 1.0 / (i - 1);
+            return table;
+        }
 
         /// <summary>
         /// Evaluates Digamma(x), the derivative of ln(Gamma(x)).
@@ -870,31 +882,10 @@ for k in range(2,26):
             }
 
             /* Lookup table for when x is an integer */
-            const int tableLength = 100;
             int xAsInt = (int)x;
-            if ((xAsInt == x) && (xAsInt < tableLength))
+            if ((xAsInt == x) && (xAsInt < DigammaTableLength))
             {
-                if (DigammaLookup == null)
-                {
-                    double[] table = new double[tableLength];
-                    table[0] = double.NegativeInfinity;
-                    table[1] = Digamma1;
-                    for (int i = 2; i < table.Length; i++)
-                        table[i] = table[i - 1] + 1.0 / (i - 1);
-                    // This is thread-safe because read/write to a reference type is atomic. See
-                    // http://msdn.microsoft.com/en-us/library/aa691278%28VS.71%29.aspx
-                    DigammaLookup = table;
-                }
-                return DigammaLookup[xAsInt];
-            }
-
-            // The threshold for applying de Moivre's expansion for the digamma function.
-            const double c_digamma_small = 1e-6;
-
-            /* Use Taylor series if argument <= S */
-            if (x <= c_digamma_small)
-            {
-                return (Digamma1 - 1 / x + Zeta2 * x);
+                return DigammaTable.Value[xAsInt];
             }
 
             if (x <= 2.5)
@@ -905,12 +896,41 @@ for k in range(2,26):
                     result2 -= 1 / x;
                     x++;
                 }
+                // 1.5 <= x <= 2.5
+                // Use Taylor series at x=2
                 double dx = x - 2;
-                double sum2 = 0;
-                for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                {
-                    sum2 = dx * (gammaTaylorCoefficients[i] * (i + 2) + sum2);
-                }
+                double sum2 =
+                    // Truncated series 3: Digamma at 2
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 3.7253340247884573e-09*dx**27 when dx >= 0
+                    // which is at most Ulp(1)/2 when 0 <= dx <= 0.52634237250421645
+                    dx * (0.64493406684822641 +
+                    dx * (-0.20205690315959429 +
+                    dx * (0.082323233711138186 +
+                    dx * (-0.036927755143369927 +
+                    dx * (0.01734306198444914 +
+                    dx * (-0.0083492773819228271 +
+                    dx * (0.0040773561979443396 +
+                    dx * (-0.0020083928260822143 +
+                    dx * (0.00099457512781808526 +
+                    dx * (-0.00049418860411946453 +
+                    dx * (0.00024608655330804832 +
+                    dx * (-0.00012271334757848915 +
+                    dx * (6.1248135058704828e-05 +
+                    dx * (-3.0588236307020493e-05 +
+                    dx * (1.5282259408651871e-05 +
+                    dx * (-7.6371976378997626e-06 +
+                    dx * (3.8172932649998402e-06 +
+                    dx * (-1.908212716553939e-06 +
+                    dx * (9.5396203387279621e-07 +
+                    dx * (-4.7693298678780645e-07 +
+                    dx * (2.38450502727733e-07 +
+                    dx * (-1.1921992596531106e-07 +
+                    dx * (5.960818905125948e-08 +
+                    dx * (-2.9803503514652279e-08 +
+                    dx * (1.4901554828365043e-08 +
+                    dx * -7.4507117898354301e-09)))))))))))))))))))))))))
+                    ;
                 result2 += sum2;
                 return result2;
             }
@@ -930,24 +950,23 @@ for k in range(2,26):
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = 0;
-            for (int i = c_digamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_digamma_series[i] + sum);
-            }
+            double sum =
+                // Truncated series 4: Digamma asymptotic
+                // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                // Error is at most 0.44325980392156861*invX2**8 when invX2 >= 0
+                // which is at most Ulp(1)/2 when 0 <= invX2 <= 0.011216154551723961
+                invX2 * (1.0 / 12.0 +
+                invX2 * (-1.0 / 120.0 +
+                invX2 * (1.0 / 252.0 +
+                invX2 * (-1.0 / 240.0 +
+                invX2 * (1.0 / 132.0 +
+                invX2 * (-691.0 / 32760.0 +
+                invX2 * (1.0 / 12.0
+                )))))))
+                ;
             result -= sum;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the digamma function.
-        /// Each coefficient is B_{2j}/(2j) where B_{2j} are the Bernoulli numbers, starting from j=1
-        /// </summary>
-        private static readonly double[] c_digamma_series =
-        {
-            1.0/12, -1.0/120, 1.0/252, -1.0/240, 1.0/132,
-            -691.0/32760, 1.0/12, /* -3617.0/8160, 43867.0/14364, -174611.0/6600 */
-        };
 
         /// <summary>
         /// Evaluates Trigamma(x), the derivative of Digamma(x).
@@ -978,10 +997,17 @@ for k in range(2,26):
             const double c_trigamma_large = 8;
             const double c_trigamma_small = 1e-4;
 
-            /* Use Taylor series if argument <= small */
+            /* Shift the argument and use Taylor series at 1 if argument <= small */
             if (x <= c_trigamma_small)
             {
-                return (1.0 / (x * x) + Zeta2 + M2Zeta3 * x);
+                return 1.0 / (x * x) +
+                    // Truncated series 5: Trigamma at 1
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 3.2469697011334144*x**2 when x >= 0
+                    // which is at most Ulp(1e8)/2 when 0 <= x <= 5.8474429974674805e-05
+                    1.6449340668482264 +
+                    x * -2.4041138063191885
+                    ;
             }
 
             result = 0.0;
@@ -997,20 +1023,24 @@ for k in range(2,26):
             // This expansion can be computed in Maple via asympt(Psi(1,x),x)
             double invX2 = 1 / (x * x);
             result += 0.5 * invX2;
-            double sum = 0;
-            for (int i = c_trigamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_trigamma_series[i] + sum);
-            }
+            double sum =
+                    // Truncated series 6: Trigamma asymptotic
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 54.971177944862156*invX2**9 when invX2 >= 0
+                    // which is at most Ulp(1)/2 when 0 <= invX2 <= 0.010812334306109761
+                    invX2 * (1.0 / 6.0 +
+                    invX2 * (-1.0 / 30.0 +
+                    invX2 * (1.0 / 42.0 +
+                    invX2 * (-1.0 / 30.0 +
+                    invX2 * (5.0 / 66.0 +
+                    invX2 * (-691.0 / 2730.0 +
+                    invX2 * (7.0 / 6.0 +
+                    invX2 * (-3617.0 / 510.0
+                    ))))))))
+                    ;
             result += (1 + sum) / x;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the trigamma function.
-        /// Each coefficient is B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=1
-        /// </summary>
-        private static readonly double[] c_trigamma_series = { 1.0 / 6, -1.0 / 30, 1.0 / 42, -1.0 / 30, 5.0 / 66, -691.0 / 2730, 7.0 / 6, -3617.0 / 510 };
 
         /// <summary>
         ///  Evaluates Tetragamma, the forth derivative of logGamma(x)
@@ -1027,7 +1057,16 @@ for k in range(2,26):
                          c_tetragamma_small = 1e-4;
             /* Use Taylor series if argument <= small */
             if (x < c_tetragamma_small)
-                return -2 / (x * x * x) + M2Zeta3 + 6 * Zeta4 * x;
+            {
+                return -2 / (x * x * x) +
+                    // Truncated series 7: Tetragamma at 1
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 12.44313306172044*x**2 when x >= 0
+                    // which is at most Ulp(2e12)/2 when 0 <= x <= 0.0042243047356963293
+                    -2.4041138063191885 +
+                    x * 6.4939394022668289
+                    ;
+            }
             double result = 0;
             /* Reduce to Tetragamma(x+n) where ( X + N ) >= L */
             while (x < c_tetragamma_large)
@@ -1040,20 +1079,24 @@ for k in range(2,26):
             // Milton Abramowitz and Irene A. Stegun, Handbook of Mathematical Functions, Section 6.4
             double invX2 = 1 / (x * x);
             result += -invX2 / x;
-            double sum = 0;
-            for (int i = c_tetragamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_tetragamma_series[i] + sum);
-            }
+            double sum =
+                // Truncated series 8: Tetragamma asymptotic
+                // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                // Error is at most 120.56666666666666*invX2**9 when invX2 >= 0
+                // which is at most Ulp(0.00057870370370370367)/2 when 0 <= invX2 <= 0.0043280597593257338
+                invX2 * (-1.0 +
+                invX2 * (-1.0 / 2.0 +
+                invX2 * (1.0 / 6.0 +
+                invX2 * (-1.0 / 6.0 +
+                invX2 * (3.0 / 10.0 +
+                invX2 * (-5.0 / 6.0 +
+                invX2 * (691.0 / 210.0 +
+                invX2 * (-35.0 / 2.0
+                ))))))))
+                ;
             result += sum;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the quadgamma function.
-        /// Each coefficient is -(2j+1) B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=0
-        /// </summary>
-        private static readonly double[] c_tetragamma_series = { -1, -.5, +1 / 6.0, -1 / 6.0, +3 / 10.0, -5 / 6.0, 691.0 / 210, -35.0 / 2 };
 
         /// <summary>
         /// Computes the natural logarithm of the multivariate Gamma function.
@@ -1113,7 +1156,7 @@ for k in range(2,26):
         /// <returns></returns>
         public static double ChooseLn(double n, double k)
         {
-            if (k < 0 || k > n)
+            if (k <= -1 || k >= n + 1)
                 return Double.NegativeInfinity;
             return GammaLn(n + 1) - GammaLn(k + 1) - GammaLn(n - k + 1);
         }
@@ -1151,20 +1194,20 @@ for k in range(2,26):
                 throw new ArgumentException($"x ({x}) < 0");
             if (!regularized)
             {
-                if (a < 1) return GammaUpperConFrac(a, x, regularized);
+                if (a < 1 && x >= 1) return GammaUpperConFrac(a, x, regularized);
+                else if (a <= GammaSmallX) return GammaUpperSeries(a, x, regularized);
                 else return Gamma(a) * GammaUpper(a, x, true);
             }
             if (a <= 0)
                 throw new ArgumentException($"a ({a}) <= 0");
             if (x == 0) return 1; // avoid 0/0
             // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
-            // useLower = true means that GammaLower is smaller.
-            bool useLower;
+            bool lowerIsSmaller;
             if (x > 0.25)
-                useLower = (a > x + 0.25);
+                lowerIsSmaller = (a > x + 0.25);
             else
-                useLower = (a > -MMath.Ln2 / Math.Log(x));
-            if (useLower)
+                lowerIsSmaller = (a > -MMath.Ln2 / Math.Log(x));
+            if (lowerIsSmaller)
             {
                 if (x < 0.5 * a + 67)
                     return 1 - GammaLowerSeries(a, x);
@@ -1175,6 +1218,9 @@ for k in range(2,26):
                 return GammaAsympt(a, x, true);
             else if (x > 1.5)
                 return GammaUpperConFrac(a, x);
+            else if (a <= Ulp1)
+                // Gamma(a) = 1/a for a <= 1e-16
+                return a * GammaUpperSeries(a, x, false);
             else
                 return GammaUpperSeries(a, x);
         }
@@ -1194,13 +1240,12 @@ for k in range(2,26):
                 throw new ArgumentException($"a ({a}) <= 0");
             if (x == 0) return 0; // avoid 0/0
             // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
-            // useLower = true means that GammaLower is smaller.
-            bool useLower;
+            bool lowerIsSmaller;
             if (x > 0.25)
-                useLower = (a > x + 0.25);
+                lowerIsSmaller = (a > x + 0.25);
             else
-                useLower = (a > -MMath.Ln2 / Math.Log(x));
-            if (useLower)
+                lowerIsSmaller = (a > -MMath.Ln2 / Math.Log(x));
+            if (lowerIsSmaller)
             {
                 if (x < 0.5 * a + 67)
                     return GammaLowerSeries(a, x);
@@ -1213,6 +1258,46 @@ for k in range(2,26):
                 return 1 - GammaUpperConFrac(a, x);
             else
                 return 1 - GammaUpperSeries(a, x);
+        }
+
+        /// <summary>
+        /// Computes <c>x - log(1+x)</c> to high accuracy.
+        /// </summary>
+        /// <param name="x">Any real number &gt;= -1</param>
+        /// <returns>A real number &gt;= 0</returns>
+        internal static double XMinusLog1Plus(double x)
+        {
+            if (Math.Abs(x) < 1e-1)
+            {
+                return
+                    // Truncated series 12: x - log(1 + x)
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.055555555555555552*x**18 when x >= 0
+                    // which is at most Ulp(0.5*x*x)/2 when 0 <= x <= 0.11547242760872471
+                    x * x * (1.0 / 2.0 +
+                    x * (-1.0 / 3.0 +
+                    x * (1.0 / 4.0 +
+                    x * (-1.0 / 5.0 +
+                    x * (1.0 / 6.0 +
+                    x * (-1.0 / 7.0 +
+                    x * (1.0 / 8.0 +
+                    x * (-1.0 / 9.0 +
+                    x * (1.0 / 10.0 +
+                    x * (-1.0 / 11.0 +
+                    x * (1.0 / 12.0 +
+                    x * (-1.0 / 13.0 +
+                    x * (1.0 / 14.0 +
+                    x * (-1.0 / 15.0 +
+                    x * (1.0 / 16.0 +
+                    x * (-1.0 / 17.0
+                    ))))))))))))))))
+                    ;
+            }
+            else if (x >= -1)
+            {
+                return x - MMath.Log1Plus(x);
+            }
+            else throw new ArgumentOutOfRangeException(nameof(x), x, "x < -1");
         }
 
         // Reference:
@@ -1228,7 +1313,7 @@ for k in range(2,26):
         /// Compute the regularized lower incomplete Gamma function: <c>int_0^x t^(a-1) exp(-t) dt / Gamma(a)</c>
         /// </summary>
         /// <param name="a">Must be &gt; 20</param>
-        /// <param name="x"></param>
+        /// <param name="x">A real number &gt;= 0</param>
         /// <param name="upper">If true, compute the upper incomplete Gamma function</param>
         /// <returns></returns>
         private static double GammaAsympt(double a, double x, bool upper)
@@ -1236,22 +1321,28 @@ for k in range(2,26):
             if (a <= 20)
                 throw new Exception("a <= 20");
             double xOverAMinus1 = (x - a) / a;
-            double phi = xOverAMinus1 - MMath.Log1Plus(xOverAMinus1);
+            double phi = XMinusLog1Plus(xOverAMinus1);
+            // phi >= 0
             double y = a * phi;
             double z = Math.Sqrt(2 * phi);
             if (x <= a)
                 z *= -1;
-            double[] b = new double[GammaLowerAsympt_C0.Length];
-            b[b.Length - 1] = GammaLowerAsympt_C0[b.Length - 1];
-            double sum = b[b.Length - 1];
-            b[b.Length - 2] = GammaLowerAsympt_C0[b.Length - 2];
-            sum = z * sum + b[b.Length - 2];
-            for (int i = b.Length - 3; i >= 0; i--)
+            int length = GammaLowerAsympt_C0.Length;
+            double bEven = GammaLowerAsympt_C0[length - 1];
+            double sum = bEven;
+            double bOdd = GammaLowerAsympt_C0[length - 2];
+            sum = z * sum + bOdd;
+            for (int i = length - 3; i >= 0; i -= 2)
             {
-                b[i] = b[i + 2] * (i + 2) / a + GammaLowerAsympt_C0[i];
-                sum = z * sum + b[i];
+                bEven = bEven * (i + 2) / a + GammaLowerAsympt_C0[i];
+                sum = z * sum + bEven;
+                if (i > 0)
+                {
+                    bOdd = bOdd * (i + 1) / a + GammaLowerAsympt_C0[i - 1];
+                    sum = z * sum + bOdd;
+                }
             }
-            sum *= a / (a + b[1]);
+            sum *= a / (a + bOdd);
             if (x <= a)
                 sum *= -1;
             double result = 0.5 * Erfc(Math.Sqrt(y)) + sum * Math.Exp(-y) / (Math.Sqrt(a) * MMath.Sqrt2PI);
@@ -1264,7 +1355,7 @@ for k in range(2,26):
         // ACM Transactions on Mathematical Software (TOMS)
         // Volume 12 Issue 4, Dec. 1986  
         // http://dl.acm.org/citation.cfm?id=23109
-        private static double[] GammaLowerAsympt_C0 =
+        private static readonly double[] GammaLowerAsympt_C0 =
         {
             -.333333333333333333333333333333E+00,
             .833333333333333333333333333333E-01,
@@ -1322,47 +1413,90 @@ for k in range(2,26):
                 if (AreEqual(sum, oldSum))
                     return sum * scale;
             }
-            throw new Exception(string.Format("GammaLowerSeries not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaLowerSeries not converging for a={a:g17} x={x:g17}");
         }
 
         /// <summary>
-        /// Compute the regularized upper incomplete Gamma function by a series expansion
+        /// Compute the upper incomplete Gamma function by a series expansion
         /// </summary>
         /// <param name="a">The shape parameter, &gt; 0</param>
         /// <param name="x">The lower bound of the integral, &gt;= 0</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
         /// <returns></returns>
-        private static double GammaUpperSeries(double a, double x)
+        private static double GammaUpperSeries(double a, double x, bool regularized = true)
         {
             // this series should only be applied when x is small
-            // the series is: 1 - x^a sum_{k=0}^inf (-x)^k /(k! Gamma(a+k+1))
-            // = (1 - 1/Gamma(a+1)) + (1 - x^a)/Gamma(a+1) - x^a sum_{k=1}^inf (-x)^k/(k! Gamma(a+k+1))
-            double xaMinus1 = MMath.ExpMinus1(a * Math.Log(x));
-            double aReciprocalFactorial, aReciprocalFactorialMinus1;
-            if (a > 0.3)
+            // the regularized series is: 1 - x^a/Gamma(a) sum_{k=0}^inf (-x)^k /(k! (a+k))
+            // = (1 - 1/Gamma(a+1)) + (1 - x^a)/Gamma(a+1) - x^a/Gamma(a) sum_{k=1}^inf (-x)^k/(k! (a+k))
+            // The unregularized series is:
+            // = (Gamma(a) - 1/a) + (1 - x^a)/a - x^a sum_{k=1}^inf (-x)^k/(k! (a+k))
+            double logx = Math.Log(x);
+            double alogx = a * logx;
+            double xaMinus1 = MMath.ExpMinus1(alogx);
+            double offset, scale, term;
+            if (regularized)
             {
-                aReciprocalFactorial = 1 / MMath.Gamma(a + 1);
-                aReciprocalFactorialMinus1 = aReciprocalFactorial - 1;
+                double aReciprocalFactorial, aReciprocalFactorialMinus1;
+                if (a > 0.3)
+                {
+                    aReciprocalFactorial = 1 / MMath.Gamma(a + 1);
+                    aReciprocalFactorialMinus1 = aReciprocalFactorial - 1;
+                }
+                else
+                {
+                    aReciprocalFactorialMinus1 = ReciprocalFactorialMinus1(a);
+                    aReciprocalFactorial = 1 + aReciprocalFactorialMinus1;
+                }
+                // offset = 1 - x^a/Gamma(a+1)
+                offset = -xaMinus1 * aReciprocalFactorial - aReciprocalFactorialMinus1;
+                scale = 1 - offset;
+                term = x * a;
             }
             else
             {
-                aReciprocalFactorialMinus1 = ReciprocalFactorialMinus1(a);
-                aReciprocalFactorial = 1 + aReciprocalFactorialMinus1;
+                if (Math.Abs(alogx) <= Ulp1) offset = GammaSeries(a) - logx;
+                else offset = GammaSeries(a) - xaMinus1 / a;
+                scale = 1 + xaMinus1;
+                term = x;
             }
-            // offset = 1 - x^a/Gamma(a+1)
-            double offset = -xaMinus1 * aReciprocalFactorial - aReciprocalFactorialMinus1;
-            double scale = 1 - offset;
-            double term = x / (a + 1) * a;
-            double sum = term;
+            double sum = term / (a + 1);
             for (int i = 1; i < 1000; i++)
             {
-                term *= -(a + i) * x / ((a + i + 1) * (i + 1));
+                term *= -x / (i + 1);
                 double sumOld = sum;
-                sum += term;
+                sum += term / (a + i + 1);
                 //Console.WriteLine("{0}: {1}", i, sum);
                 if (AreEqual(sum, sumOld))
+                {
                     return scale * sum + offset;
+                }
             }
-            throw new Exception(string.Format("GammaUpperSeries not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaUpperSeries not converging for a={a:g17} x={x:g17} regularized={regularized}");
+        }
+
+        /// <summary>
+        /// Compute <c>Gamma(x) - 1/x</c> to high accuracy
+        /// </summary>
+        /// <param name="x">A real number &gt;= 0</param>
+        /// <returns></returns>
+        private static double GammaSeries(double x)
+        {
+            if (x > GammaSmallX)
+                return MMath.Gamma(x) - 1 / x;
+            else
+                return
+                    // Truncated series 19: Gamma(x) - 1/x
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.99810569378312897*x**7 when x >= 0
+                    // which is at most Ulp(0.57721566490153287)/2 when 0 <= x <= 0.0048617874947108133
+                    -0.57721566490153287 +
+                    x * (0.9890559953279725 +
+                    x * (-0.90747907608088629 +
+                    x * (0.98172808683440016 +
+                    x * (-0.98199506890314525 +
+                    x * (0.9931491146212762 +
+                    x * -0.99600176044243149)))))
+                    ;
         }
 
         /// <summary>
@@ -1374,40 +1508,28 @@ for k in range(2,26):
         {
             if (x > 0.3)
                 return 1 / MMath.Gamma(x + 1) - 1;
-            double sum = 0;
-            double term = x;
-            for (int i = 0; i < reciprocalFactorialMinus1Coeffs.Length; i++)
-            {
-                sum += reciprocalFactorialMinus1Coeffs[i] * term;
-                term *= x;
-            }
-            return sum;
-        }
 
-        /* using http://sagecell.sagemath.org/ (must not be indented)
-var('x');
-f = 1/gamma(x+1)-1
-[c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
-         */
-        private static readonly double[] reciprocalFactorialMinus1Coeffs =
-        {
-            0.57721566490153286060651209008,
-            -0.65587807152025388107701951515,
-            -0.042002635034095235529003934875,
-            0.16653861138229148950170079510,
-            -0.042197734555544336748208301289,
-            -0.0096219715278769735621149216721,
-            0.0072189432466630995423950103404,
-            -0.0011651675918590651121139710839,
-            -0.00021524167411495097281572996312,
-            0.00012805028238811618615319862640,
-            -0.000020134854780788238655689391375,
-            -1.2504934821426706573453594884e-6,
-            1.1330272319816958823741296196e-6,
-            -2.0563384169776071034501526118e-7,
-            6.1160951044814158178625767024e-9,
-            5.0020076444692229300557063872e-9
-        };
+            return
+                // Truncated series 18: Reciprocal factorial minus 1
+                // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                x * (0.577215664901532860606512090082 +
+                x * (-0.655878071520253881077019515145 +
+                x * (-0.0420026350340952355290039348754 +
+                x * (0.166538611382291489501700795102 +
+                x * (-0.0421977345555443367482083012891 +
+                x * (-0.00962197152787697356211492167231 +
+                x * (0.00721894324666309954239501034044 +
+                x * (-0.00116516759185906511211397108402 +
+                x * (-0.000215241674114950972815729963027 +
+                x * (0.000128050282388116186153198626338 +
+                x * (-0.0000201348547807882386556893913662 +
+                x * (-0.00000125049348214267065734535945301 +
+                x * (0.00000113302723198169588237412961344 +
+                x * (-0.000000205633841697760710345015364430 +
+                x * (0.00000000611609510448141581786252410878 +
+                x * 0.00000000500200764446922293005568923640)))))))))))))))
+                ;
+        }
 
         /// <summary>
         /// Computes <c>x^a e^(-x)/Gamma(a)</c> to high accuracy.
@@ -1415,20 +1537,32 @@ f = 1/gamma(x+1)-1
         /// <param name="a">A positive real number</param>
         /// <param name="x"></param>
         /// <returns></returns>
-        private static double GammaUpperScale(double a, double x)
+        public static double GammaUpperScale(double a, double x)
+        {
+            return Math.Exp(GammaUpperLogScale(a, x));
+        }
+
+        /// <summary>
+        /// Computes <c>log(x^a e^(-x)/Gamma(a))</c> to high accuracy.
+        /// </summary>
+        /// <param name="a">A positive real number</param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static double GammaUpperLogScale(double a, double x)
         {
             if (double.IsPositiveInfinity(x) || double.IsPositiveInfinity(a))
-                return 0;
-            double scale;
+                return double.NegativeInfinity;
             if (a < 10)
-                scale = Math.Exp(a * Math.Log(x) - x - GammaLn(a));
+            {
+                return a * Math.Log(x) - x - GammaLn(a);
+            }
             else
             {
-                double xia = x / a;
-                double phi = xia - 1 - Math.Log(xia);
-                scale = Math.Exp(0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi);
+                // Result is inaccurate for a=100, x=3
+                double xOverAMinus1 = (x - a) / a;
+                double phi = XMinusLog1Plus(xOverAMinus1);
+                return 0.5 * Math.Log(a) - MMath.LnSqrt2PI - GammaLnSeries(a) - a * phi;
             }
-            return scale;
         }
 
         // Origin: James McCaffrey, http://msdn.microsoft.com/en-us/magazine/dn520240.aspx
@@ -1437,7 +1571,7 @@ f = 1/gamma(x+1)-1
         /// </summary>
         /// <param name="a">A real number.  Must be &gt; 0 if regularized is true.</param>
         /// <param name="x">A real number &gt;= 1.1</param>
-        /// <param name="regularized">If true, result is divded by Gamma(a)</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
         /// <returns></returns>
         private static double GammaUpperConFrac(double a, double x, bool regularized = true)
         {
@@ -1449,29 +1583,29 @@ f = 1/gamma(x+1)-1
             // a_i = -i*(i-a)
             // b_i = x+1-a+2*i
             // the confrac is evaluated using Lentz's algorithm
-            double b = x + 1.0 - a;
+            double b = x - a + 1.0;
             const double tiny = 1e-30;
             double c = 1.0 / tiny;
-            double d = 1.0 / b;
-            double h = d * scale;
+            double d = b;
+            double h = scale / d;
             for (int i = 1; i < 1000; ++i)
             {
                 double an = -i * (i - a);
                 b += 2.0;
-                d = an * d + b;
+                d = an / d + b;
                 if (Math.Abs(d) < tiny)
                     d = tiny;
                 c = b + an / c;
                 if (Math.Abs(c) < tiny)
                     c = tiny;
-                d = 1.0 / d;
-                double del = d * c;
+                double del = c / d;
                 double oldH = h;
                 h *= del;
+                //Trace.WriteLine($"h = {h} del = {del}");
                 if (AreEqual(h, oldH))
                     return h;
             }
-            throw new Exception(string.Format("GammaUpperConFrac not converging for a={0} x={1}", a, x));
+            throw new Exception($"GammaUpperConFrac not converging for a={a:g17} x={x:g17}");
         }
 
         /// <summary>
@@ -1479,7 +1613,7 @@ f = 1/gamma(x+1)-1
         /// </summary>
         /// <param name="x">A real number &gt;= 10</param>
         /// <returns></returns>
-        private static double GammaLnSeries(double x)
+        internal static double GammaLnSeries(double x)
         {
             // GammaLnSeries(10) = 0.008330563433362871
             if (x < GammaLnLargeX)
@@ -1489,23 +1623,25 @@ f = 1/gamma(x+1)-1
             else
             {
                 // the series is:  sum_{i=1}^inf B_{2i} / (2i*(2i-1)*x^(2i-1))
-                double sum = 0;
-                double term = 1.0 / x;
-                double delta = term * term;
-                for (int i = 0; i < c_gammaln_series.Length; i++)
-                {
-                    sum += c_gammaln_series[i] * term;
-                    term *= delta;
-                }
+                double invX = 1.0 / x;
+                double invX2 = invX * invX;
+                double sum = invX * (
+                    // Truncated series 9: GammaLn asymptotic
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.029550653594771242*invX2**7 when invX2 >= 0
+                    // which is at most Ulp(0.083333333333333329)/2 when 0 <= invX2 <= 0.0060966962219634185
+                    1.0 / 12.0 +
+                    invX2 * (-1.0 / 360.0 +
+                    invX2 * (1.0 / 1260.0 +
+                    invX2 * (-1.0 / 1680.0 +
+                    invX2 * (1.0 / 1188.0 +
+                    invX2 * (-691.0 / 360360.0 +
+                    invX2 * (1.0 / 156.0
+                    ))))))
+                    );
                 return sum;
             }
         }
-
-        private static double[] c_gammaln_series =
-        {
-            1.0 / (6 * 2), -1.0 / (30 * 4 * 3), 1.0 / (42 * 6 * 5), -1.0 / (30 * 8 * 7),
-            5.0/(66*10*9), -691.0/(2730*12*11), 7.0/(6*14*13)
-        };
 
         #endregion
 
@@ -1832,13 +1968,20 @@ f = 1/gamma(x+1)-1
         /// <remarks>This function provides higher accuracy than <c>Math.Log(NormalCdf(x))</c>, which can fail for x &lt; -7.</remarks>
         public static double NormalCdfLn(double x)
         {
-            const double large = -8;
+            const double large = -10;
             if (x > 4)
             {
                 // log(NormalCdf(x)) = log(1-NormalCdf(-x))
                 double y = NormalCdf(-x);
                 // log(1-y)
-                return -y * (1 + y * (0.5 + y * (1.0 / 3 + y * (0.25))));
+                return
+                    // Truncated series 11: log(1 - x)
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    y * (-1.0 +
+                    y * (-1.0 / 2.0 +
+                    y * (-1.0 / 3.0 +
+                    y * -1.0 / 4.0)))
+                    ;
             }
             else if (x >= large)
             {
@@ -1848,15 +1991,46 @@ f = 1/gamma(x+1)-1
             {
                 // x < large
                 double z = 1 / (x * x);
-                // asymptotic series for log(normcdf)
-                // Maple command: subs(x=-x,asympt(log(normcdf(-x)),x));
-                double s = z * (c_normcdfln_series[0] + z *
-                              (c_normcdfln_series[1] + z *
-                               (c_normcdfln_series[2] + z *
-                                (c_normcdfln_series[3] + z *
-                                 (c_normcdfln_series[4] + z *
-                                  (c_normcdfln_series[5] + z *
-                                   c_normcdfln_series[6]))))));
+                double s;
+                if (x > -16)
+                    // This truncated series provides a good approximation
+                    // for x <= -10
+                    s =
+                        // Truncated series 16: normcdfln asymptotic
+                        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                        z * (-1.0 +
+                        z * (5.0 / 2.0 +
+                        z * (-37.0 / 3.0 +
+                        z * (353.0 / 4.0 +
+                        z * (-4081.0 / 5.0 +
+                        z * (55205.0 / 6.0 +
+                        z * (-854197.0 / 7.0 +
+                        z * (14876033.0 / 8.0 +
+                        z * (-288018721.0 / 9.0 +
+                        z * (1227782785.0 / 2.0 +
+                        z * (-142882295557.0 / 11.0 +
+                        z * (3606682364513.0 / 12.0 +
+                        z * (-98158402127761.0 / 13.0 +
+                        z * (2865624738913445.0 / 14.0 +
+                        z * (-89338394736560917.0 / 15.0
+                        )))))))))))))))
+                        ;
+                else
+                    // This truncated series provides a good approximation
+                    // for x <= -16
+                    s =
+                        // Truncated series 16: normcdfln asymptotic
+                        // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                        z * (-1.0 +
+                        z * (5.0 / 2.0 +
+                        z * (-37.0 / 3.0 +
+                        z * (353.0 / 4.0 +
+                        z * (-4081.0 / 5.0 +
+                        z * (55205.0 / 6.0 +
+                        z * (-854197.0 / 7.0 +
+                        z * (14876033.0 / 8.0
+                        ))))))))
+                        ;
                 return s - LnSqrt2PI - 0.5 * x * x - Math.Log(-x);
             }
         }
@@ -1888,9 +2062,29 @@ f = 1/gamma(x+1)-1
 
         #region NormalCdf functions
 
+        const int NormalCdfMomentRatioTableSize = 200;
+
         // [0] contains moments for x=-2
         // [1] contains moments for x=-3, etc.
-        private static readonly double[][] NormalCdfMomentRatioTable = new double[7][];
+        private static readonly Lazy<double[][]> NormalCdfMomentRatioTable = new Lazy<double[][]>(MakeNormalCdfMomentRatioTable);
+
+        private static double[][] MakeNormalCdfMomentRatioTable()
+        {
+            return Util.ArrayInit(7, index =>
+            {
+                double[] derivs = new double[NormalCdfMomentRatioTableSize];
+                double x0 = -index - 2;
+                var iter = NormalCdfMomentRatioSequence(0, x0, true);
+                for (int i = 0; i < NormalCdfMomentRatioTableSize; i++)
+                {
+                    iter.MoveNext();
+                    derivs[i] = iter.Current;
+                }
+                return derivs;
+            });
+        }
+
+        const int NormalCdfMomentRatioMaxTerms = 60;
 
         /// <summary>
         /// Computes int_0^infinity t^n N(t;x,1) dt / (n! N(x;0,1))
@@ -1900,27 +2094,13 @@ f = 1/gamma(x+1)-1
         /// <returns></returns>
         public static double NormalCdfMomentRatio(int n, double x)
         {
-            const int tableSize = 200;
-            const int maxTerms = 60;
             if (x >= -0.5)
                 return NormalCdfMomentRatioRecurrence(n, x);
-            else if (n <= tableSize - maxTerms && x > -8)
+            else if (n <= NormalCdfMomentRatioTableSize - NormalCdfMomentRatioMaxTerms && x > -8)
             {
                 int index = (int)(-x - 1.5); // index ranges from 0 to 6
                 double x0 = -index - 2;
-                if (NormalCdfMomentRatioTable[index] == null)
-                {
-                    double[] derivs = new double[tableSize];
-                    // this must not try to use the lookup table, since we are building it
-                    var iter = NormalCdfMomentRatioSequence(0, x0, true);
-                    for (int i = 0; i < derivs.Length; i++)
-                    {
-                        iter.MoveNext();
-                        derivs[i] = iter.Current;
-                    }
-                    NormalCdfMomentRatioTable[index] = derivs;
-                }
-                return NormalCdfMomentRatioTaylor(n, x - x0, NormalCdfMomentRatioTable[index]);
+                return NormalCdfMomentRatioTaylor(n, x - x0, NormalCdfMomentRatioTable.Value[index]);
             }
             else if (x > -2)
             {
@@ -2034,7 +2214,7 @@ f = 1/gamma(x+1)-1
             const double smallestNormalized = 1e-308;
             const double smallestNormalizedOverEpsilon = smallestNormalized / double.Epsilon;
             // the number of iterations required may grow with n, so we need to explicitly test for convergence.
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 double numerNew = numer + a * numerPrev;
                 double denomNew = denom + a * denomPrev;
@@ -2061,7 +2241,7 @@ f = 1/gamma(x+1)-1
                     return r;
                 rOld = r;
             }
-            throw new Exception($"Not converging for n={n},x={x:r}");
+            throw new Exception($"Not converging for n={n},x={x:g17}");
         }
 
         /// <summary>
@@ -2271,7 +2451,7 @@ f = 1/gamma(x+1)-1
             {
                 return NormalCdfRatioLn(Math.Min(x, y)) + MMath.LnSqrt2PI;
             }
-            else if (r == -1)
+            else if (r == -1 && sqrtomr2 == 0)
             {
                 // In this case, we should subtract log N(y;0,1)
                 bool shouldThrow = true;
@@ -2460,9 +2640,10 @@ f = 1/gamma(x+1)-1
             // Second term of the Taylor series
             sum += Qderiv * rPowerN;
             double sumOld = sum;
-            for (int n = 2; n <= 100; n++)
+            int maxIterations = 1000;
+            for (int n = 2; n <= maxIterations; n++)
             {
-                //Console.WriteLine($"n = {n - 1} sum = {sum:r}");
+                //Console.WriteLine($"n = {n - 1} sum = {sum:g17}");
                 double dlogphiOverFactorial;
                 if (n % 2 == 0) dlogphiOverFactorial = 1.0 / n - Halfx2y2;
                 else dlogphiOverFactorial = xy;
@@ -2476,8 +2657,8 @@ f = 1/gamma(x+1)-1
                 Qderivs.Add(QderivOverFactorial);
                 rPowerN *= r;
                 sum += QderivOverFactorial * rPowerN;
-                if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= 100)
-                    throw new Exception($"NormalCdfRatioTaylor not converging for x={x:r}, y={y:r}, r={r:r}");
+                if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= maxIterations)
+                    throw new Exception($"NormalCdfRatioTaylor not converging for x={x:g17}, y={y:g17}, r={r:g17}");
                 if (AreEqual(sum, sumOld)) break;
                 sumOld = sum;
             }
@@ -2696,7 +2877,7 @@ rr = mpf('-0.99999824265582826');
                             numerPrevPlusC = scale * (c1 * R1xmry - c2 * R2xmry - c3);
                             //numer3 = scale / 3 * x * (c1 * R1xmry - c2 * R2xmry - c3 + r * omr2 * R2xmry);
                             //numer4 = scale / 3 * ((3 + x * x) * c1 * R1xmry + x * r * sqrtomr2 * omr2 * R3xmry - (3 * c2 + x * x * (c2 - r * omr2)) * R2xmry - (3 + x * x) * c3);
-                            //Trace.WriteLine($"numerPrevPlusC = {numerPrevPlusC:r} numer4 = {numer4:r}");
+                            //Trace.WriteLine($"numerPrevPlusC = {numerPrevPlusC:g17} numer4 = {numer4:g17}");
                             //shiftNumer = omr2 * x * x > 100;
                             shiftNumer = true;
                         }
@@ -2774,7 +2955,7 @@ rr = mpf('-0.99999824265582826');
                 b /= x;
             }
             double bIncr = sqrtomr2 / x;
-            const int iterationCount = 1000;
+            const int iterationCount = 10000;
             for (int i = 1; i <= iterationCount; i++)
             {
                 double numerNew, denomNew;
@@ -2863,10 +3044,10 @@ rr = mpf('-0.99999824265582826');
                     else numer2 = numer;
                     double result = numer2 / (denom - 1);
                     if (TraceConFrac)
-                        Trace.WriteLine($"iter {i}: result={result:r} c={c:r} cOdd={cOdd:r} numer={numer:r} numer2={numer2:r} denom={denom:r} numerPrev={numerPrev:r}");
+                        Trace.WriteLine($"iter {i}: result={result:g17} c={c:g17} cOdd={cOdd:g17} numer={numer:g17} numer2={numer2:g17} denom={denom:g17} numerPrev={numerPrev:g17}");
                     if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= iterationCount - 1)
-                        throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:r} y={y:r} r={r:r} sqrtomr2={sqrtomr2:r} scale={scale:r}");
-                    if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < 1e-13)
+                        throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:g17} y={y:g17} r={r:g17} sqrtomr2={sqrtomr2:g17} scale={scale:g17}");
+                    if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < NormalCdfRatioConfracTolerance)
                         break;
                     resultPrev = result;
                 }
@@ -2912,9 +3093,9 @@ rr = mpf('-0.99999824265582826');
                 {
                     double result = numer / denom;
                     if (TraceConFrac)
-                        Trace.WriteLine($"iter {i}: result={result:r} c={c:g4} numer={numer:r} denom={denom:r} numerPrev={numerPrev:r}");
+                        Trace.WriteLine($"iter {i}: result={result:g17} c={c:g4} numer={numer:g17} denom={denom:g17} numerPrev={numerPrev:g17}");
                     if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= 1000)
-                        throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x:r} y={y:r} r={r:r} scale={scale}");
+                        throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x:g17} y={y:g17} r={r:g17} scale={scale}");
                     if (AreEqual(result, resultPrev))
                         break;
                     resultPrev = result;
@@ -2931,7 +3112,8 @@ rr = mpf('-0.99999824265582826');
         }
 
         /// <summary>
-        /// Computes the integral of the cumulative bivariate normal distribution wrt x.
+        /// Computes the integral of the cumulative bivariate normal distribution wrt x,
+        /// from -infinity to <paramref name="x"/>.
         /// </summary>
         /// <param name="x">First upper limit.</param>
         /// <param name="y">Second upper limit.</param>
@@ -3170,7 +3352,14 @@ rr = mpf('-0.99999824265582826');
             if (x > 1e-4)
                 return 1 - Math.Sqrt(1 - x);
             else
-                return x * (1.0 / 2 + x * (1.0 / 8 + x * (1.0 / 16 + x * 5.0 / 128)));
+                return
+                    // Truncated series 17: 1 - sqrt(1 - x)
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 8.0 +
+                    x * (1.0 / 16.0 +
+                    x * 5.0 / 128.0)))
+                    ;
         }
 
         /// <summary>
@@ -3303,11 +3492,27 @@ rr = mpf('-0.99999824265582826');
         public static double Log1Plus(double x)
         {
             Assert.IsTrue(Double.IsNaN(x) || x >= -1);
-            if (x > -1e-3 && x < 2e-3)
+            if (x > -1e-3 && x < 6e-2)
             {
-                // use the Taylor series for log(1+x) around x=0
-                // Maple command: series(log(1+x),x);
-                return x * (1 - x * (0.5 - x * (1.0 / 3 - x * (0.25 - x * (1.0 / 5)))));
+                return
+                    // Truncated series 10: log(1 + x)
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.076923076923076927*x**13 when x >= 0
+                    // which is at most Ulp(1*x)/2 when 0 <= x <= 0.057980167435117531
+                    x * (1.0 +
+                    x * (-1.0 / 2.0 +
+                    x * (1.0 / 3.0 +
+                    x * (-1.0 / 4.0 +
+                    x * (1.0 / 5.0 +
+                    x * (-1.0 / 6.0 +
+                    x * (1.0 / 7.0 +
+                    x * (-1.0 / 8.0 +
+                    x * (1.0 / 9.0 +
+                    x * (-1.0 / 10.0 +
+                    x * (1.0 / 11.0 +
+                    x * (-1.0 / 12.0
+                    ))))))))))))
+                    ;
             }
             else
             {
@@ -3340,7 +3545,11 @@ rr = mpf('-0.99999824265582826');
         /// particularly when x &lt; -36 or x > 50.</remarks>
         public static double Log1PlusExp(double x)
         {
-            if (x > 50)
+            // The error of approximating log(1+exp(x)) by x is:
+            //   log(1+exp(x))-x = log(1+exp(-x)) <= exp(-x)
+            // Thus we should use the approximation when exp(-x) <= ulp(x)/2
+            // ulp(1) < ulp(x)  therefore x > -log(ulp(1)/2)
+            if (x > -logHalfUlpPrev1)
                 return x;
             else
                 return Log1Plus(Math.Exp(x));
@@ -3352,15 +3561,28 @@ rr = mpf('-0.99999824265582826');
         /// <param name="x">A non-positive real number: -Inf &lt;= x &lt;= 0, or NaN.</param>
         /// <returns>log(1-exp(x)), which is always &lt;= 0.</returns>
         /// <remarks>This function provides higher accuracy than a direct evaluation of <c>log(1-exp(x))</c>,
-        /// particularly when x &lt; -7.5 or x > -1e-5.</remarks>
+        /// particularly when x &lt; -5 or x > -1e-5.</remarks>
         public static double Log1MinusExp(double x)
         {
             if (x > 0)
                 throw new ArgumentException("x (" + x + ") > 0");
-            if (x < -7.5)
+            if (x < -3.5)
             {
-                double y = Math.Exp(x);
-                return -y * (1 + y * (0.5 + y * (1.0 / 3 + y * (0.25))));
+                double expx = Math.Exp(x);
+                return
+                    // Truncated series 11: log(1 - x)
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    expx * (-1.0 +
+                    expx * (-1.0 / 2.0 +
+                    expx * (-1.0 / 3.0 +
+                    expx * (-1.0 / 4.0 +
+                    expx * (-1.0 / 5.0 +
+                    expx * (-1.0 / 6.0 +
+                    expx * (-1.0 / 7.0 +
+                    expx * (-1.0 / 8.0 +
+                    expx * (-1.0 / 9.0 +
+                    expx * -1.0 / 10.0)))))))))
+                    ;
             }
             else
             {
@@ -3379,9 +3601,25 @@ rr = mpf('-0.99999824265582826');
         /// </remarks>
         public static double ExpMinus1(double x)
         {
-            if (Math.Abs(x) < 2e-3)
+            if (Math.Abs(x) < 55e-3)
             {
-                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+                return
+                    // Truncated series 13: exp(x) - 1
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    x * (1.0 +
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 6.0 +
+                    x * (1.0 / 24.0 +
+                    x * (1.0 / 120.0 +
+                    x * (1.0 / 720.0 +
+                    x * (1.0 / 5040.0 +
+                    x * (1.0 / 40320.0
+                    ))))))));
+            }
+            else if (x == Ln2)
+            {
+                // Math.Exp(Ln2) is not required to be exactly 2, so we force it.
+                return 1;
             }
             else
             {
@@ -3398,9 +3636,22 @@ rr = mpf('-0.99999824265582826');
         {
             if (Math.Abs(x) < 6e-1)
             {
-                return x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0 / 120 + x * (1.0 / 720 +
-                    x * (1.0 / 5040 + x * (1.0 / 40320 + x * (1.0 / 362880 + x * (1.0 / 3628800 +
-                    x * (1.0 / 39916800 + x * (1.0 / 479001600 + x * (1.0 / 6227020800 + x * (1.0 / 87178291200))))))))))));
+                return
+                    // Truncated series 14: ((exp(x) - 1) / x - 1) / x - 0.5
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    x * (1.0 / 6.0 +
+                    x * (1.0 / 24.0 +
+                    x * (1.0 / 120.0 +
+                    x * (1.0 / 720.0 +
+                    x * (1.0 / 5040.0 +
+                    x * (1.0 / 40320.0 +
+                    x * (1.0 / 362880.0 +
+                    x * (1.0 / 3628800.0 +
+                    x * (1.0 / 39916800.0 +
+                    x * (1.0 / 479001600.0 +
+                    x * (1.0 / 6227020800.0 +
+                    x * 1.0 / 87178291200.0)))))))))))
+                    ;
             }
             else if (double.IsPositiveInfinity(x))
             {
@@ -3426,7 +3677,15 @@ rr = mpf('-0.99999824265582826');
         {
             if (x < 1e-3)
             {
-                return Math.Log(x) + x * (0.5 + x * (1.0 / 24 + x * (-1.0 / 2880)));
+                return Math.Log(x) +
+                    // Truncated series 15: log(exp(x) - 1) / x
+                    // Generated automatically by /src/Tools/PythonScripts/GenerateSeries.py
+                    // Error is at most 0.00034722222222222224*x**4 when x >= 0
+                    // which is at most Ulp(6.9077552789821368)/2 when 0 <= x <= 0.0012190876039316647
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 24.0
+                    ))
+                    ;
             }
             else if (x > 50)
             {
@@ -3434,7 +3693,7 @@ rr = mpf('-0.99999824265582826');
             }
             else
             {
-                return Math.Log(Math.Exp(x) - 1.0);
+                return Math.Log(ExpMinus1(x));
             }
         }
 
@@ -3748,11 +4007,6 @@ rr = mpf('-0.99999824265582826');
             vf = Ex2 - mf * mf;
         }
 
-        // Math.Exp(-745.14) == 0
-        private const double log0 = -745.14;
-        // 1-Math.Exp(-38) == 1
-        private const double logEpsilon = -38;
-
         /// <summary>
         /// Calculate sigma(m,v) = \int N(x;m,v) logistic(x) dx
         /// </summary>
@@ -3773,45 +4027,50 @@ rr = mpf('-0.99999824265582826');
             // use the upper bound exp(m+v/2) to prune cases that must be zero or one
             if (mean + halfVariance < log0)
                 return 0.0;
-            if (-mean + halfVariance < logEpsilon)
+            if (-mean + halfVariance < logHalfUlpPrev1)
                 return 1.0;
 
             // use the upper bound 0.5 exp(-0.5 m^2/v) to prune cases that must be zero or one
             double q = -0.5 * mean * mean / variance - MMath.Ln2;
             if (mean <= 0 && mean + variance >= 0 && q < log0)
                 return 0.0;
-            if (mean >= 0 && variance - mean >= 0 && q < logEpsilon)
+            if (mean >= 0 && variance - mean >= 0 && q < logHalfUlpPrev1)
                 return 1.0;
             // sigma(|m|,v) <= 0.5 + |m| sigma'(0,v)
             // sigma'(0,v) <= N(0;0,v+8/pi)
-            double d0Upper = MMath.InvSqrt2PI / Math.Sqrt(variance + 8 / Math.PI);
-            if (mean * mean / (variance + 8 / Math.PI) < 2e-20 * Math.PI)
+            //double d0Upper = MMath.InvSqrt2PI / Math.Sqrt(variance + 8 / Math.PI);
+            if (mean * mean / (variance + 8 / Math.PI) < logisticGaussianSeriesApproximmationThreshold)
             {
-                double deriv = LogisticGaussianDerivative(mean, variance);
+                double deriv = LogisticGaussianDerivative(0, variance);
                 return 0.5 + mean * deriv;
             }
 
             // Handle tail cases using the following exact formulas:
             // sigma(m,v) = 1 - exp(-m+v/2) + exp(-2m+2v) - exp(-3m+9v/2) sigma(m-3v,v)
-            if (-mean + variance < logEpsilon)
+            if (2 * (variance - mean) < logHalfUlpPrev1)
                 return 1.0 - Math.Exp(halfVariance - mean);
-            if (-3 * mean + 9 * halfVariance < logEpsilon)
+            if (-3 * mean + 9 * halfVariance < logHalfUlpPrev1)
                 return 1.0 - Math.Exp(halfVariance - mean) + Math.Exp(2 * (variance - mean));
             // sigma(m,v) = exp(m+v/2) - exp(2m+2v) + exp(3m + 9v/2) (1 - sigma(m+3v,v))
-            if (mean + 1.5 * variance < logEpsilon)
+            if (mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance);
-            if (2 * mean + 4 * variance < logEpsilon)
+            if (2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance) * (1 - Math.Exp(mean + 1.5 * variance));
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
+                double sqrtv = System.Math.Sqrt(variance);
+                double meanInvSqrtV = mean / sqrtv;
+                double shift = (mean < 0) ? Gaussian.GetLogProb(0, meanInvSqrtV, 1) : 0;
                 double f(double x)
                 {
-                    return Math.Exp(MMath.LogisticLn(x) + Gaussian.GetLogProb(x, mean, variance));
+                    double diff = x - meanInvSqrtV;
+                    return Math.Exp(MMath.LogisticLn(x * sqrtv) - diff * diff / 2 - MMath.LnSqrt2PI - shift);
                 }
                 double upperBound = mean + Math.Sqrt(variance);
-                upperBound = Math.Max(upperBound, 10);
-                return Quadrature.AdaptiveClenshawCurtis(f, upperBound, 32, 1e-10);
+                double scale = Math.Max(upperBound, 10) / sqrtv;
+                return new ExtendedDouble(Quadrature.AdaptiveExpSinh(f, scale, logisticGaussianQuadratureRelativeTolerance / 2) +
+                    Quadrature.AdaptiveExpSinh(x => f(-x), scale, logisticGaussianQuadratureRelativeTolerance / 2), shift).ToDouble();
             }
             else
             {
@@ -3826,56 +4085,6 @@ rr = mpf('-0.99999824265582826');
                 }
                 return Integrate(weightedIntegrand, nodes, weights);
             }
-            /*
-else {
-double s = Math.Sqrt(v);
-// Region for which posterior is not moved much by the logistic function
-// so can use Gauss-Hermite quadrature on the input Gaussian
-if ((m/s > 5.0) || (m < -15.0-25.0/4.0*s)) {
-    Vector nodes = Vector.Zero(QuadratureNodeCount);
-    Vector weights = Vector.Zero(QuadratureNodeCount);
-    Quadrature.GaussianNodesAndWeights(m, v, nodes, weights);
-    return integrate(MMath.Logistic, nodes, weights);
-}
-    // Region where variance is not big enough for the big v approximation to
-    // apply, but need to find the mode before doing quadrature
-else if (m < 20.0 - 60.0/11.0 * s) {
-    // Newton-Raphson to quickly find the mode of the Converter<double,double> N(x;m,v)logistic(x)
-    double x = Math.Max(m, 0.0); // initialise x
-    double tolerance = s/10; // the tolerance can be bigger at higher input variance
-    int max_iterations=10;
-    bool success=false;
-    double h=1; // the "Hessian", here just the second derivative
-    for (int i=0; i<max_iterations; i++) {
-            double l = MMath.Logistic(x);
-            double xOld = x;
-            double g = -(x-m)/v + 1-l; // gradient
-            h = -1.0/v -  l * (1.0-l); // second derivative
-            x = x - g / h; // Newton step
-            if (Math.Abs(x - xOld) < tolerance) {
-                    success=true;
-                    break;
-            }
-    }
-    if (!success)
-            Console.WriteLine("Warning: mini-newton did not converge");
-    double m_p=x;
-    double v_p=-1.0/h; // ala Laplace approximation
-    // Gauss-Hermite quadrature
-    Vector nodes = Vector.Zero(QuadratureNodeCount);
-    Vector weights = Vector.Zero(QuadratureNodeCount);
-    Quadrature.GaussianNodesAndWeights(m_p, v_p, nodes, weights);
-    Converter<double,double> weightedIntegrand = delegate(double z)
-    {
-            return Math.Exp(MMath.LogisticLn(z) + Gaussian.GetLogProb(z, m, v)-Gaussian.GetLogProb(z, m_p, v_p));
-    };
-    return integrate(weightedIntegrand, nodes, weights);
-} else {
-    // Big v approximation
-    return MMath.NormalCdf(m / Math.Sqrt(v + Math.PI * Math.PI / 3.0));
-}
-
-}*/
         }
 
         /// <summary>
@@ -3907,18 +4116,19 @@ else if (m < 20.0 - 60.0/11.0 * s) {
 
             // Handle the tail cases using the following exact formula:
             // sigma'(m,v) = exp(-m+v/2) -2 exp(-2m+2v) +3 exp(-3m+9v/2) sigma(m-3v,v) - exp(-3m+9v/2) sigma'(m-3v,v)
-            if (-mean + 1.5 * variance < logEpsilon)
+            if (-mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(halfVariance - mean);
-            if (-2 * mean + 4 * variance < logEpsilon)
+            if (-2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(halfVariance - mean) - 2 * Math.Exp(2 * (variance - mean));
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
+                double shift = Gaussian.GetLogProb(0, mean, variance);
                 double f(double x)
                 {
-                    return Math.Exp(MMath.LogisticLn(x) + MMath.LogisticLn(-x) + Gaussian.GetLogProb(x, mean, variance));
+                    return Math.Exp(MMath.LogisticLn(x) + MMath.LogisticLn(-x) + Gaussian.GetLogProb(x, mean, variance) - shift);
                 }
-                return Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10);
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, logisticGaussianDerivativeQuadratureRelativeTolerance), shift).ToDouble();
             }
             else
             {
@@ -3933,48 +4143,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 }
                 return Integrate(weightedIntegrand, nodes, weights);
             }
-
-            /*
-            double s = Math.Sqrt(v);
-            // Region where bigv approximation does badly
-            if ((Math.Abs(m)+5.0)/s>4.0) {
-                    // Newton-Raphson to quickly find the mode of the Converter<double,double> xN(x;m,v)logistic(x)
-                    double x = 0.0; // initialise x
-                    double tolerance = s / 10.0;// the tolerance can be bigger at higher input variance
-                    int max_iterations=10;
-                    bool success=false;
-                    double h=1;
-                    for (int i=0; i<max_iterations; i++) {
-                            double l = MMath.Logistic(x);
-                            double xOld = x;
-                            double g = -(x - m) / v + 1.0 - 2.0 * l;// gradient
-                            h = -1.0 / v - 2.0 * l * (1.0 - l);// second derivative
-                            x = x - g / h;// Newton step
-                            if (Math.Abs(x - xOld) < tolerance) {
-                                    success=true;
-                                    break;
-                            }
-                    }
-                    if (!success)
-                            Console.WriteLine("Warning: mini-newton did not converge");
-                    double m_p=x;
-                    // Here we make the "proposal" distribution a bit wider since
-                    // there are problems with skewed integrands not being covered
-                    // well otherwise
-                    double v_p = -4.0 / h; // ala Laplace approximation
-                    // Gauss-Hermite quadrature
-                    Vector nodes = Vector.Zero(QuadratureNodeCount);
-                    Vector weights = Vector.Zero(QuadratureNodeCount);
-                    Quadrature.GaussianNodesAndWeights(m_p, v_p, nodes, weights);
-                    Converter<double,double> weightedIntegrand = delegate(double z)
-                    {
-                            return LogisticPrime(z)*Math.Exp(Gaussian.GetLogProb(z, m, v)-Gaussian.GetLogProb(z, m_p, v_p));
-                    };
-                    return integrate(weightedIntegrand, nodes, weights);
-            } else {
-                    // Big variance approximation
-                    return Math.Exp(Gaussian.GetLogProb(m, 0, v + Math.PI * Math.PI / 3.0));
-            } */
         }
 
 
@@ -4009,26 +4177,27 @@ else if (m < 20.0 - 60.0/11.0 * s) {
 
             // Handle the tail cases using the following exact formulas:
             // sigma''(m,v) = -exp(-m+v/2) +4 exp(-2m+2v) -9 exp(-3m+9v/2) sigma(m-3v,v) +6 exp(-3m+9v/2) sigma'(m-3v,v) - exp(-3m+9v/2) sigma''(m-3v,v)
-            if (-mean + 1.5 * variance < logEpsilon)
+            if (-mean + 1.5 * variance < logHalfUlpPrev1)
                 return -Math.Exp(halfVariance - mean);
-            if (-2 * mean + 4 * variance < logEpsilon)
+            if (-2 * mean + 4 * variance < logHalfUlpPrev1)
                 return -Math.Exp(halfVariance - mean) + 4 * Math.Exp(2 * (variance - mean));
             // sigma''(m,v) = exp(m+v/2) -4 exp(2m+2v) +9 exp(3m + 9v/2) (1 - sigma(m+3v,v)) - 6 exp(3m+9v/2) sigma'(m+3v,v) - exp(3m + 9v/2) sigma''(m+3v,v)
-            if (mean + 1.5 * variance < logEpsilon)
+            if (mean + 1.5 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance);
-            if (2 * mean + 4 * variance < logEpsilon)
+            if (2 * mean + 4 * variance < logHalfUlpPrev1)
                 return Math.Exp(mean + halfVariance) * (1 - 4 * Math.Exp(mean + 1.5 * variance));
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
+                double shift = Gaussian.GetLogProb(0, mean, variance);
                 double f(double x)
                 {
                     double logSigma = MMath.LogisticLn(x);
                     double log1MinusSigma = MMath.LogisticLn(-x);
                     double OneMinus2Sigma = -Math.Tanh(x / 2);
-                    return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(x, mean, variance));
+                    return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(x, mean, variance) - shift);
                 }
-                return Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10);
+                return new ExtendedDouble(Quadrature.AdaptiveClenshawCurtis(f, 10, 32, logisticGaussianDerivativeQuadratureRelativeTolerance), shift).ToDouble();
             }
             else
             {
@@ -4046,26 +4215,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 }
                 return Integrate(weightedIntegrand, nodes, weights);
             }
-
-            /*
-            double s = Math.Sqrt(v);
-            // Region where bigv approximation does badly
-            if (Math.Abs(m)/v > 1.0) {
-                    // Gauss-Hermite quadrature
-                    Vector nodes = Vector.Zero(QuadratureNodeCount);
-                    Vector weights = Vector.Zero(QuadratureNodeCount);
-                    Quadrature.GaussianNodesAndWeights(m, v, nodes, weights);
-                    Converter<double,double> logisticPrimePrime = delegate(double z)
-                    {
-                            double l = MMath.Logistic(z);
-                            return l * (1.0 - l) * (1.0 - 2.0 * l);
-                    };
-                    return integrate(logisticPrimePrime, nodes, weights);
-            } else {
-                    // Big variance approximation
-                    double v2 = v + Math.PI * Math.PI / 3.0;
-                    return -m / v2 * Math.Exp(Gaussian.GetLogProb(m, 0, v2));
-            } */
         }
 
         /// <summary>
@@ -4140,22 +4289,24 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static int IndexOfMinimum<T>(IList<T> list)
+        public static int IndexOfMinimum<T>(IEnumerable<T> list)
             where T : IComparable<T>
         {
-            if (list.Count == 0)
+            IEnumerator<T> iter = list.GetEnumerator();
+            if (!iter.MoveNext())
                 return -1;
-            T min = list[0];
-            int pos = 0;
-            for (int i = 1; i < list.Count; i++)
+            T min = iter.Current;
+            int indexOfMinimum = 0;
+            for (int i = 1; iter.MoveNext(); i++)
             {
-                if (min.CompareTo(list[i]) > 0)
+                T item = iter.Current;
+                if (min.CompareTo(item) > 0)
                 {
-                    min = list[i];
-                    pos = i;
+                    min = item;
+                    indexOfMinimum = i;
                 }
             }
-            return pos;
+            return indexOfMinimum;
         }
 
         /// <summary>
@@ -4164,22 +4315,24 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static int IndexOfMaximum<T>(IList<T> list)
+        public static int IndexOfMaximum<T>(IEnumerable<T> list)
             where T : IComparable<T>
         {
-            if (list.Count == 0)
+            IEnumerator<T> iter = list.GetEnumerator();
+            if (!iter.MoveNext())
                 return -1;
-            T max = list[0];
-            int pos = 0;
-            for (int i = 1; i < list.Count; i++)
+            T max = iter.Current;
+            int indexOfMaximum = 0;
+            for (int i = 1; iter.MoveNext(); i++)
             {
-                if (max.CompareTo(list[i]) < 0)
+                T item = iter.Current;
+                if (max.CompareTo(item) < 0)
                 {
-                    max = list[i];
-                    pos = i;
+                    max = item;
+                    indexOfMaximum = i;
                 }
             }
-            return pos;
+            return indexOfMaximum;
         }
 
         /// <summary>
@@ -4347,6 +4500,18 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         }
 
         /// <summary>
+        /// Returns the smallest double precision number such that when value is subtracted from it,
+        /// the result is strictly greater than zero, if one exists.  Otherwise returns value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double NextDoubleWithPositiveDifference(double value)
+        {
+            // This relies on denormalization being enabled in .NET.
+            return NextDouble(value);
+        }
+
+        /// <summary>
         /// Returns the largest double precision number less than value, if one exists.  Otherwise returns value.
         /// </summary>
         /// <param name="value"></param>
@@ -4358,6 +4523,18 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             if (double.IsNegativeInfinity(value)) return value;
             long bits = BitConverter.DoubleToInt64Bits(value);
             return BitConverter.Int64BitsToDouble(bits - 1);
+        }
+
+        /// <summary>
+        /// Returns the biggest double precision number such that when it is subtracted from value,
+        /// the result is strictly greater than zero, if one exists.  Otherwise returns value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double PreviousDoubleWithPositiveDifference(double value)
+        {
+            // This relies on denormalization being enabled in .NET.
+            return PreviousDouble(value);
         }
 
         /// <summary>
@@ -4413,7 +4590,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                 if ((double)(value * denominator) <= numerator)
                 {
                     double value2 = NextDouble(value);
@@ -4428,14 +4605,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={numerator:g17}");
                 }
             }
         }
@@ -4495,7 +4672,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                 if ((double)(value / denominator) <= ratio)
                 {
                     double value2 = NextDouble(value);
@@ -4510,14 +4687,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, denominator={denominator:g17}, ratio={ratio:g17}");
                 }
             }
         }
@@ -4541,15 +4718,16 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 else return double.PositiveInfinity;
             }
             if (double.IsPositiveInfinity(sum)) return sum;
-            double lowerBound = PreviousDouble(b + sum);
+            double lowerBound = PreviousDoubleWithPositiveDifference(b + sum);
             double upperBound;
             if (Math.Abs(sum) > Math.Abs(b))
             {
-                upperBound = b + NextDouble(sum);
+                // Cast to double to prevent upperBound from landing between double.MaxValue and infinity on a 32-bit platform.
+                upperBound = (double)(b + NextDoubleWithPositiveDifference(sum));
             }
             else
             {
-                upperBound = NextDouble(b) + sum;
+                upperBound = (double)(NextDoubleWithPositiveDifference(b) + sum);
             }
             int iterCount = 0;
             while (true)
@@ -4557,7 +4735,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
                 //double value = RepresentationMidpoint(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                 if ((double)(value - b) <= sum)
                 {
                     double value2 = NextDouble(value);
@@ -4572,14 +4750,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:g17}, lowerBound={lowerBound:g17}, upperBound={upperBound:g17}, b={b:g17}, sum={sum:g17}");
                 }
             }
         }
@@ -4635,6 +4813,62 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             return BitConverter.Int64BitsToDouble(midpoint);
         }
 
+        /// <summary>
+        /// Returns a decimal string that exactly equals a double-precision number, unlike double.ToString which always returns a rounded result.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static string ToStringExact(double x)
+        {
+            if (double.IsNaN(x) || double.IsInfinity(x) || x == 0) return x.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            long bits = BitConverter.DoubleToInt64Bits(x);
+            ulong fraction = Convert.ToUInt64(bits & 0x000fffffffffffff); // 52 bits
+            short exponent = Convert.ToInt16((bits & 0x7ff0000000000000) >> 52);
+            if (exponent == 0)
+            {
+                // subnormal number
+                exponent = -1022 - 52;
+            }
+            else
+            {
+                // normal number
+                fraction += 0x0010000000000000;
+                exponent = Convert.ToInt16(exponent - 1023 - 52);
+            }
+            while ((fraction & 1) == 0)
+            {
+                fraction >>= 1;
+                exponent++;
+            }
+            string sign = (x >= 0) ? "" : "-";
+            BigInteger big;
+            if (exponent >= 0)
+            {
+                big = BigInteger.Pow(2, exponent) * fraction;
+                return $"{sign}{big}";
+            }
+            else
+            {
+                // Rewrite 2^-4 as 5^4 * 10^-4
+                big = BigInteger.Pow(5, -exponent) * fraction;
+                // At this point, we could output the big integer with an "E"{exponent} suffix.  
+                // However, double.Parse does not correctly parse such strings.
+                // Instead we insert a decimal point and eliminate the "E" suffix if possible.
+                int digitCount = big.ToString().Length;
+                if (digitCount < -exponent)
+                {
+                    return $"{sign}0.{big}e{exponent + digitCount}";
+                }
+                else
+                {
+                    BigInteger pow10 = BigInteger.Pow(10, -exponent);
+                    BigInteger integerPart = big / pow10;
+                    BigInteger fractionalPart = big - integerPart * pow10;
+                    string zeros = new string('0', -exponent);
+                    return $"{sign}{integerPart}.{fractionalPart.ToString(zeros)}";
+                }
+            }
+        }
 
         #region Enumerations and constants
 
@@ -4642,6 +4876,21 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// The Euler-Mascheroni Constant.
         /// </summary>
         public const double EulerGamma = 0.57721566490153286060651209;
+
+        /// <summary>
+        /// Ulp(1.0) == NextDouble(1.0) - 1.0
+        /// </summary>
+        public static readonly double Ulp1 = Ulp(1.0);
+
+        /// <summary>
+        /// Math.Sqrt(Ulp(1.0))
+        /// </summary>
+        public static readonly double SqrtUlp1 = Math.Sqrt(Ulp1);
+
+        /// <summary>
+        /// Math.Pow(Ulp(1.0), 1.0 / 3)
+        /// </summary>
+        public static readonly double CbrtUlp1 = Math.Pow(Ulp1, 1.0 / 3);
 
         /// <summary>
         /// Digamma(1)
@@ -4683,6 +4932,11 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         public const double Sqrt2 = 1.41421356237309504880;
 
         /// <summary>
+        /// Math.Sqrt(3)
+        /// </summary>
+        public const double Sqrt3 = 1.7320508075688772935274463415059;
+
+        /// <summary>
         /// Math.Sqrt(0.5)
         /// </summary>
         public const double SqrtHalf = 0.70710678118654752440084436210485;
@@ -4701,14 +4955,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// Zeta4 = pi^4/90 = polygamma(3,1)/6
         /// </summary>
         private const double Zeta4 = 1.0823232337111381915;
-
-        /// <summary>
-        /// Coefficients of the asymptotic expansion of NormalCdfLn.
-        /// </summary>
-        private static readonly double[] c_normcdfln_series =
-            {
-                -1, 5.0/2, -37.0/3, 353.0/4, -4081.0/5, 55205.0/6, -854197.0/7
-            };
 
         /// <summary>
         /// NormCdf(x)/NormPdf(x) for x = 0, -1, -2, -3, ..., -16
@@ -4735,6 +4981,16 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         // Maple command: chebyshev( subs(x=2/y-2,log(erfc(x)*(1+x/2))+x*x), y=0..1, 1e-8);
         // more accurate, but more expensive
         //{ -1.265512122, 0.9999999460, 0.3750003113, 0.08331553737, -0.0857441378, -0.142407635, -0.1269326291, 0.295066080, -0.9476268748, 2.769131338, -3.938783592, 2.943051024, -1.142311460, 0.1837542133 };
+
+        private static readonly double NormalCdfRatioConfracTolerance = Ulp1 * 1024;
+
+        // Math.Exp(log0) == 0
+        private static readonly double log0 = Math.Log(double.Epsilon) - Ln2;
+        // 1-Math.Exp(logHalfUlpPrev1) == 1
+        private static readonly double logHalfUlpPrev1 = Math.Log((1.0 - PreviousDouble(1.0)) / 2);
+        private static readonly double logisticGaussianQuadratureRelativeTolerance = 512 * Ulp1;
+        private static readonly double logisticGaussianDerivativeQuadratureRelativeTolerance = 1024 * 512 * Ulp1;
+        private static readonly double logisticGaussianSeriesApproximmationThreshold = 1e-8;
 
         #endregion
     }

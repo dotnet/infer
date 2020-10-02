@@ -335,7 +335,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 public WeightedStateSet(int stateIndex)
                 {
-                    this.weightedStates = null;
+                    this.weightedStates = default(ReadOnlyArray<WeightedState>);
                     this.singleStateIndex = stateIndex;
                 }
 
@@ -346,7 +346,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (weightedStates.Count == 1)
                     {
                         Debug.Assert(weightedStates[0].Weight == Weight.One);
-                        this.weightedStates = null;
+                        this.weightedStates = default(ReadOnlyArray<WeightedState>);
                         this.singleStateIndex = weightedStates[0].Index;
                     }
                     else
@@ -357,12 +357,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 public int Count =>
-                    this.weightedStates.IsNull
+                    (this.weightedStates == default(ReadOnlyArray<WeightedState>))
                         ? 1
                         : this.weightedStates.Count;
 
                 public WeightedState this[int index] =>
-                    this.weightedStates.IsNull
+                    (this.weightedStates == default(ReadOnlyArray<WeightedState>))
                         ? new WeightedState(this.singleStateIndex, Weight.One)
                         : this.weightedStates[index];
 
@@ -520,7 +520,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     MergeRepeatedEntries(weightsClone);
                     var maxWeight = NormalizeWeights(weightsClone);
 
-                    return (new WeightedStateSet(weightsClone.ToArray()), maxWeight);
+                    return (new WeightedStateSet(weightsClone.ToReadOnlyArray()), maxWeight);
                 }
 
                 private static void MergeRepeatedEntries(List<WeightedState> weightedStates)

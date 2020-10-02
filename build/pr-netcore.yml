@@ -17,10 +17,10 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DotNetCoreInstaller@0
+- task: UseDotNet@2
   inputs:
     packageType: 'sdk' 
-    version: '2.1.403' 
+    version: '3.x' 
 
 - script: |
     dotnet build /p:DisableImplicitNuGetFallbackFolder=true --configuration $(buildConfiguration)Core Infer.sln

@@ -896,7 +896,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             else if (
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Factor.Copy)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Diode.Copy)) ||
-                Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Factor.Cut)) ||
+                Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Cut.Backward)) ||
+                Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, bool, PlaceHolder>(Cut.ForwardWhen)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, double, PlaceHolder>(PowerPlate.Enter)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, double, PlaceHolder>(Damp.Forward)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, double, PlaceHolder>(Damp.Backward)) ||
@@ -1097,8 +1098,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 mpa.prototypeExpression = Builder.StaticMethod(new Func<Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian>(Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.Uniform));
                 return mpa;
             }
-            else if (Recognizer.IsStaticMethod(imie, new Func<double, double, double, double, double>(TruncatedGamma.Sample))
-                || Recognizer.IsStaticMethod(imie, new Func<double, double, double, double, double>(Factor.TruncatedGammaFromShapeAndRate))
+            else if (Recognizer.IsStaticMethod(imie, new Func<double, double, double, double, double>(Factor.TruncatedGammaFromShapeAndRate))
                 )
             {
                 MarginalPrototype mpa = new MarginalPrototype(null);

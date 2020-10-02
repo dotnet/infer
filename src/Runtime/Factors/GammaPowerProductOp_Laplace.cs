@@ -10,7 +10,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaPowerProductOp_Laplace"]/doc/*'/>
     [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
     [Buffers("Q")]
     [Quality(QualityBand.Experimental)]
@@ -74,9 +74,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                     double bOverDenom = b / denom;
                     double bOverDenom2 = bOverDenom * bOverDenom;
                     double dlogf = (s - c * bOverDenom) / b;
-                    double ddlogf = (-s + c * bOverDenom2) / b2;
-                    double dddlogf = (2 * s - 2 * c * bOverDenom * bOverDenom2) / (b * b2);
-                    double d4logf = (-6 * s + 6 * c * bOverDenom2 * bOverDenom2) / (b2 * b2);
+                    double ddlogf = (-s + c * bOverDenom2) / b / b;
+                    double dddlogf = (2 * s - 2 * c * bOverDenom * bOverDenom2) / b / b / b;
+                    double d4logf = (-6 * s + 6 * c * bOverDenom2 * bOverDenom2) / b / b / b / b;
                     return new double[] { dlogf, ddlogf, dddlogf, d4logf };
                 }
                 else
@@ -270,7 +270,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             double r = product.Rate;
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape) + (1 - A.Power);
             GammaPower productMarginal;
-            if (shape2 > 2 && result.Power < 0)
+            // threshold ensures 6/qPoint^4 does not overflow
+            double threshold = Math.Sqrt(Math.Sqrt(6 / double.MaxValue));
+            if (shape2 > 2 && result.Power < 0 && qPoint > threshold) 
             {
                 // Compute the moments of product^(-1/product.Power)
                 // Here q = b^(1/b.Power)

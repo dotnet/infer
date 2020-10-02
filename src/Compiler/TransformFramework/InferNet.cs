@@ -4,13 +4,6 @@
 
 namespace Microsoft.ML.Probabilistic.Factors
 {
-    using Microsoft.ML.Probabilistic;
-    using System;
-
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning disable 1591
-#endif
-
     /// <summary>
     /// Class used in MSL only.
     /// </summary>
@@ -18,37 +11,40 @@ namespace Microsoft.ML.Probabilistic.Factors
     public static class InferNet
     {
         /// <summary>
-        /// For use in MSL only.
+        /// Used in MSL to indicate that a variable will be inferred.
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="obj">A variable reference expression</param>
         public static void Infer(object obj)
         {
         }
 
+        /// <summary>
+        /// Used in MSL to indicate that a variable will be inferred under a specific name.
+        /// </summary>
+        /// <param name="obj">A variable reference expression</param>
+        /// <param name="name">The external name of the variable</param>
         public static void Infer(object obj, string name)
         {
         }
 
+        /// <summary>
+        /// Used in MSL to indicate that a variable will be inferred under a specific name and query type.
+        /// </summary>
+        /// <param name="obj">A variable reference expression</param>
+        /// <param name="name">The external name of the variable</param>
+        /// <param name="query">The query type</param>
         public static void Infer(object obj, string name, QueryType query)
         {
         }
 
-        /*public class Power : IDisposable
+        /// <summary>
+        /// Used in MSL to indicate that the loop counter is increasing in the currently executing loop.
+        /// </summary>
+        /// <param name="loopCounter"></param>
+        /// <returns></returns>
+        public static bool IsIncreasing(int loopCounter)
         {
-                double power;
-
-                public Power(double p)
-                {
-                        power = p;
-                }
-
-                public void Dispose()
-                {
-                }
-        }*/
+            return true;
+        }
     }
-
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning restore 1591
-#endif
 }

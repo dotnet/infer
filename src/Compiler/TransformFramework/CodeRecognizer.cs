@@ -2338,6 +2338,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
                    Instance.IsStaticMethod(expr, new Action<object, string, QueryType>(InferNet.Infer));
         }
 
+        internal static bool IsIsIncreasing(IExpression expr)
+        {
+            return Instance.IsStaticMethod(expr, new Func<int,bool>(InferNet.IsIncreasing));
+        }
+
         internal static FactorManager.FactorInfo GetFactorInfo(BasicTransformContext context, IMethodInvokeExpression imie)
         {
             if (!context.InputAttributes.Has<FactorManager.FactorInfo>(imie))

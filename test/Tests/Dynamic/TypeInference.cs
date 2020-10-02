@@ -72,15 +72,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine("{0}: {1}", o.GetType(), d);
             Assert.True(Conversion.TryGetConversion(typeof (double), typeof (int), out conv));
             Assert.True(conv.IsExplicit);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 o = conv.Converter(d);
-                Assert.True(false, "double to int conversion should not have succeeded.");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
 
             // enums
             Assert.True(Conversion.TryGetConversion(typeof (string), typeof (BindingFlags), out conv));
@@ -143,6 +138,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(Conversion.TryGetConversion(typeof (Tester), typeof (int[]), out conv));
             o = conv.Converter(t);
             Console.WriteLine("{0}: {1}", o.GetType(), o);
+            Assert.True(Conversion.TryGetConversion(typeof(int), typeof(Tester), out conv));
+            Assert.True(conv.IsExplicit);
+            Assert.True(Conversion.TryGetConversion(typeof(int[]), typeof(Tester), out conv));
+            Assert.True(conv.IsExplicit);
+            Assert.True(Conversion.TryGetConversion(typeof(ImplicitlyConvertibleToTesterDefinesCast), typeof(Tester), out conv));
+            Assert.False(conv.IsExplicit);
+            Assert.True(Conversion.TryGetConversion(typeof(ImplicitlyConvertibleToTesterCastDefinedOnTester), typeof(Tester), out conv));
+            Assert.False(conv.IsExplicit);
 
             // conversion from null
             Assert.False(Conversion.TryGetConversion(typeof (Nullable), typeof (int), out conv));
@@ -228,15 +231,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Type[] args1 = {typeof (Matrix)};
             TestInferGenericParameters(method, args1, 1);
             Console.WriteLine("Inferring {0} from {1}: ", method, typeof (double));
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 Invoker.Invoke(method, null, 4.4);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
 
             method = typeof (TypeInferenceTests).GetMethod("DelayedSetTo");
             Type[] args2 = {typeof (Matrix), typeof (Matrix)};
@@ -842,7 +840,34 @@ namespace Microsoft.ML.Probabilistic.Tests
           {
             return t.arrayField;
           }
+
+            public static explicit operator Tester(int x)
+            {
+                var tester = new Tester
+                {
+                    intField = x
+                };
+                return tester;
+            }
+
+            public static explicit operator Tester(int[] x)
+            {
+                var tester = new Tester
+                {
+                    arrayField = x
+                };
+                return tester;
+            }
+
+            public static implicit operator Tester(ImplicitlyConvertibleToTesterCastDefinedOnTester _) => new Tester();
         }
+
+        public class ImplicitlyConvertibleToTesterDefinesCast
+        {
+            public static implicit operator Tester(ImplicitlyConvertibleToTesterDefinesCast _) => new Tester();
+        }
+
+        public class ImplicitlyConvertibleToTesterCastDefinedOnTester { }
 
         /// <summary>
         /// Help class of dynamically invoking methods.

@@ -50,10 +50,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins6_isInitialised;
 		public Gamma CommonWeightPrecision_F;
 		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gamma></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_B_toDef;
 		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gamma></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_F_marginal;
 		/// <summary>True if Constant has executed. Set this to false to force re-execution of Constant</summary>
 		public bool Constant_isDone;
@@ -85,9 +85,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_F;
 		/// <summary>Message from use of 'SharedWeightPrecisionRates'</summary>
 		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_use_B;
-		/// <summary>Messages from use of 'SharedWeightPrecisionRates'</summary>
+		/// <summary>Messages from uses of 'SharedWeightPrecisionRates_use'</summary>
 		public Gamma[][] SharedWeightPrecisionRates_uses_B;
-		/// <summary>Messages to use of 'SharedWeightPrecisionRates'</summary>
+		/// <summary>Messages to uses of 'SharedWeightPrecisionRates_use'</summary>
 		public Gamma[][] SharedWeightPrecisionRates_uses_F;
 		/// <summary>Field backing the WeightConstraints property</summary>
 		private DistributionStructArray<Gaussian,double> weightConstraints;
@@ -98,14 +98,16 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Gamma,double> WeightPrecisionRates_depth0_F;
 		/// <summary>Message to marginal of 'WeightPrecisionRates_depth0'</summary>
 		public DistributionStructArray<Gamma,double> WeightPrecisionRates_depth0_marginal_F;
+		/// <summary>Messages from uses of 'WeightPrecisionRates_depth0'</summary>
 		public DistributionStructArray<Gamma,double>[] WeightPrecisionRates_depth0_uses_B;
+		/// <summary>Messages to uses of 'WeightPrecisionRates_depth0'</summary>
 		public DistributionStructArray<Gamma,double>[] WeightPrecisionRates_depth0_uses_F;
 		public Gamma WeightPrecisionRates_rpt_B_reduced;
 		/// <summary>Message from use of 'WeightPrecisionRates'</summary>
 		public DistributionStructArray<Gamma,double> WeightPrecisionRates_use_B;
-		/// <summary>Messages from use of 'WeightPrecisionRates'</summary>
+		/// <summary>Messages from uses of 'WeightPrecisionRates_use'</summary>
 		public Gamma[][] WeightPrecisionRates_uses_B;
-		/// <summary>Messages to use of 'WeightPrecisionRates'</summary>
+		/// <summary>Messages to uses of 'WeightPrecisionRates_use'</summary>
 		public Gamma[][] WeightPrecisionRates_uses_F;
 		public DistributionStructArray<Gamma,double> WeightPrecisions_B;
 		/// <summary>Buffer for GammaRatioOp_Laplace.AAverageConditional</summary>
@@ -116,7 +118,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_FeatureIndexes_F;
 		/// <summary>Message to marginal of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double> Weights_marginal_F;
+		/// <summary>Messages from uses of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double>[] Weights_uses_B;
+		/// <summary>Messages to uses of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double>[] Weights_uses_F;
 		public double Zero_reduced;
 		/// <summary>Field backing the ZeroFeatureValueInstanceCounts property</summary>

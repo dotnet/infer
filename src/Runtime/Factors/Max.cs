@@ -8,8 +8,9 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
+    using System.Diagnostics;
 
-    // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxGaussianOp"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxGaussianOp"]/doc/*'/>
     [FactorMethod(new string[] { "max", "a", "b" }, typeof(Math), "Max", typeof(double), typeof(double))]
     [Quality(QualityBand.Stable)]
     public static class MaxGaussianOp
@@ -48,6 +49,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                                           out double logw1, out double alpha1, out double vx1, out double mx1,
                                           out double logw2, out double alpha2, out double vx2, out double mx2)
         {
+            const double arbitraryNonZero = 1;
             double logPhi1, logPhi2;
             if (max.IsPointMass)
             {
@@ -78,6 +80,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                             else
                             {
                                 logw2 = 0;
+                                alpha2 = Math.Exp(a.GetLogProb(max.Point) - logw2);
                             }
                         }
                         else if (a.Precision == 0)
@@ -91,12 +94,15 @@ namespace Microsoft.ML.Probabilistic.Factors
                         }
                         else
                         {
-                            logw2 = MMath.NormalCdfLn((max.Point * a.Precision - a.MeanTimesPrecision) / Math.Sqrt(a.Precision));
+                            // z2 = (max.Point - a.GetMean)*sqrt(a.Prec)
+                            double sqrtAPrec = Math.Sqrt(a.Precision);
+                            double z2 = (max.Point * a.Precision - a.MeanTimesPrecision) / sqrtAPrec;
+                            logw2 = MMath.NormalCdfLn(z2);
+                            alpha2 = sqrtAPrec / MMath.NormalCdfRatio(z2);
                         }
                         logw1 = double.NegativeInfinity;
                         logz = logw2;
                         alpha1 = 0;
-                        alpha2 = Math.Exp(a.GetLogProb(max.Point) - logw2);
                         return;
                     }
                     else // b.Point < max.Point
@@ -105,7 +111,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         logw1 = a.GetLogProb(max.Point);
                         logw2 = double.NegativeInfinity;
                         logz = logw1;
-                        alpha1 = 0;
+                        alpha1 = arbitraryNonZero;
                         alpha2 = 0;
                         return;
                     }
@@ -128,11 +134,13 @@ namespace Microsoft.ML.Probabilistic.Factors
                         }
                         else
                         {
-                            logw1 = MMath.NormalCdfLn((max.Point * b.Precision - b.MeanTimesPrecision) / Math.Sqrt(b.Precision));
+                            double sqrtBPrec = Math.Sqrt(b.Precision);
+                            double z1 = (max.Point * b.Precision - b.MeanTimesPrecision) / sqrtBPrec;
+                            logw1 = MMath.NormalCdfLn(z1);
                             logw2 = double.NegativeInfinity;
                             logz = logw1;
                             alpha2 = 0;
-                            alpha1 = Math.Exp(b.GetLogProb(max.Point) - logw1);
+                            alpha1 = sqrtBPrec / MMath.NormalCdfRatio(z1);
                             return;
                         }
                     }
@@ -143,18 +151,20 @@ namespace Microsoft.ML.Probabilistic.Factors
                         logw1 = double.NegativeInfinity;
                         logz = logw2;
                         alpha1 = 0;
-                        alpha2 = 0;
+                        alpha2 = arbitraryNonZero;
                         return;
                     }
                 }
                 else // !a.IsPointMass && !b.IsPointMass
                 {
-                    double z1 = (mx1 * b.Precision - b.MeanTimesPrecision) / Math.Sqrt(b.Precision);
+                    double sqrtBPrec = Math.Sqrt(b.Precision);
+                    double z1 = (mx1 * b.Precision - b.MeanTimesPrecision) / sqrtBPrec;
                     logPhi1 = MMath.NormalCdfLn(z1);
-                    alpha1 = Math.Sqrt(b.Precision) / MMath.NormalCdfRatio(z1);
-                    double z2 = (mx2 * a.Precision - a.MeanTimesPrecision) / Math.Sqrt(a.Precision);
+                    alpha1 = sqrtBPrec / MMath.NormalCdfRatio(z1);
+                    double sqrtAPrec = Math.Sqrt(a.Precision);
+                    double z2 = (mx2 * a.Precision - a.MeanTimesPrecision) / sqrtAPrec;
                     logPhi2 = MMath.NormalCdfLn(z2);
-                    alpha2 = Math.Sqrt(a.Precision) / MMath.NormalCdfRatio(z2);
+                    alpha2 = sqrtAPrec / MMath.NormalCdfRatio(z2);
                 }
                 // fall through
             }
@@ -173,12 +183,18 @@ namespace Microsoft.ML.Probabilistic.Factors
                             logw1 = max.GetLogAverageOf(a);
                             logw2 = double.NegativeInfinity;
                             logz = logw1;
+                            alpha1 = arbitraryNonZero;
+                            alpha2 = 0;
+                            return;
                         }
                         else if (a.Point < b.Point)
                         {
                             logw2 = max.GetLogAverageOf(b);
                             logw1 = double.NegativeInfinity;
                             logz = logw2;
+                            alpha1 = 0;
+                            alpha2 = arbitraryNonZero;
+                            return;
                         }
                         else // a.Point == b.Point
                         {
@@ -189,13 +205,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                             alpha2 = double.PositiveInfinity;
                             return;
                         }
-                        alpha1 = 0;
-                        alpha2 = 0;
-                        return;
                     }
-                    double z1 = (a.Point * b.Precision - b.MeanTimesPrecision) / Math.Sqrt(b.Precision);
+                    double sqrtBPrec = Math.Sqrt(b.Precision);
+                    double z1 = (a.Point * b.Precision - b.MeanTimesPrecision) / sqrtBPrec;
                     logPhi1 = MMath.NormalCdfLn(z1);
-                    alpha1 = Math.Sqrt(b.Precision) / MMath.NormalCdfRatio(z1);
+                    alpha1 = sqrtBPrec / MMath.NormalCdfRatio(z1);
                 }
                 else // !a.IsPointMass
                 {
@@ -213,9 +227,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                 {
                     vx2 = 0.0;
                     mx2 = b.Point;
-                    double z2 = (b.Point * a.Precision - a.MeanTimesPrecision) / Math.Sqrt(a.Precision);
+                    double sqrtAPrec = Math.Sqrt(a.Precision);
+                    double z2 = (b.Point * a.Precision - a.MeanTimesPrecision) / sqrtAPrec;
                     logPhi2 = MMath.NormalCdfLn(z2);
-                    alpha2 = Math.Sqrt(a.Precision) / MMath.NormalCdfRatio(z2);
+                    alpha2 = sqrtAPrec / MMath.NormalCdfRatio(z2);
                 }
                 else // !b.IsPointMass
                 {
@@ -493,39 +508,6 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-#if false
-        public static void ComputeStats(Gaussian max, Gaussian a, Gaussian b, out double logz,
-            out double logw1, out double logPhi1, out double logu1, out double vx1, out double mx1,
-            out double logw2, out double logPhi2, out double logu2, out double vx2, out double mx2)
-        {
-            double mx, vx, ma, va, mb, vb;
-            max.GetMeanAndVariance(out mx, out vx);
-            a.GetMeanAndVariance(out ma, out va);
-            b.GetMeanAndVariance(out mb, out vb);
-            if (false) {
-                vx1 = 1.0 / (1.0 / vx + 1.0 / va);
-                mx1 = vx1 * (mx / vx + ma / va);
-                vx2 = 1.0 / (1.0 / vx + 1.0 / vb);
-                mx2 = vx2 * (mx / vx + mb / vb);
-            } else {
-                if(max.IsPointMass || a.IsPointMass || b.IsPointMass) throw new NotImplementedException();
-                vx1 = 1.0/(max.Precision + a.Precision);
-                mx1 = vx1*(max.MeanTimesPrecision + a.MeanTimesPrecision);
-                vx2 = 1.0/(max.Precision + b.Precision);
-                mx2 = vx2*(max.MeanTimesPrecision + b.MeanTimesPrecision);
-            }
-            logw1 = max.GetLogAverageOf(a);
-            logPhi1 = MMath.NormalCdfLn((mx1 - mb) / Math.Sqrt(vx1 + vb));
-            logu1 = Gaussian.GetLogProb(mx1, mb, vx1 + vb);
-
-            logw2 = max.GetLogAverageOf(b);
-            logPhi2 = MMath.NormalCdfLn((mx2 - ma) / Math.Sqrt(vx2 + va));
-            logu2 = Gaussian.GetLogProb(mx2, ma, vx2 + va);
-
-            logz = MMath.LogSumExp(logw1 + logPhi1, logw2 + logPhi2);
-        }
-#endif
-
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxGaussianOp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian max, [Proper] Gaussian a, [Proper] Gaussian b)
         {
@@ -539,8 +521,17 @@ namespace Microsoft.ML.Probabilistic.Factors
             double logz;
             ComputeStats(max, a, b, out logz, out logw1, out alpha1, out vx1, out mx1,
                          out logw2, out alpha2, out vx2, out mx2);
-            double w1 = Math.Exp(logw1 - logz);
-            double w2 = Math.Exp(logw2 - logz);
+            double w1,w2;
+            if (logz < double.MinValue)
+            {
+                w1 = (alpha1 > 0) ? 1.0 : 0.0;
+                w2 = (alpha2 > 0) ? 1.0 : 0.0;
+            }
+            else
+            {
+                w1 = Math.Exp(logw1 - logz);
+                w2 = Math.Exp(logw2 - logz);
+            }
             bool checkDerivatives = false;
             if (a.IsPointMass)
             {
@@ -590,7 +581,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                     z = max.Point * a.Precision - a.MeanTimesPrecision;
                     alpha = z * w1 - w2 * alpha2;
-                    beta = (z * z - a.Precision) * w1 - z * alpha2 * w2 - alpha * alpha;
+                    beta =  - z * alpha2 * w2 - alpha * alpha;
+                    if (w1 != 0) // avoid 0 * inf
+                        beta += (z * z - a.Precision) * w1;
                 }
                 else
                 {
@@ -640,7 +633,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 return GaussianOp.GaussianFromAlphaBeta(a, alpha, -beta, ForceProper);
             }
-            else
+            else // w1==0 && logw2 <= -100
             {
                 double m1, v1, m2, v2;
                 a.GetMeanAndVariance(out m1, out v1);
@@ -658,23 +651,43 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double mc2 = m1;
                 if (alpha2 != 0) // avoid 0*infinity
                     mc2 += alpha2 * v1;
-                // z2 = (mx2 - m1) / Math.Sqrt(vx2 + v1)
-                // logw2 = MMath.NormalCdfLn(z2);
-                // alpha2 = -Math.Exp(Gaussian.GetLogProb(mx2, m1, vx2 + v1) - logw2);
-                //        = -1/sqrt(vx2+v1)/NormalCdfRatio(z2)
-                // m1 + alpha2*v1 = sqrt(vx2+v1)*(m1/sqrt(vx2+v1) - v1/(vx2+v1)/NormalCdfRatio(z2))
-                //                = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - z2 - v1/(vx2+v1)/NormalCdfRatio(z2))
-                //                = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - dY/Y)  if vx2=0
-                double z2 = 0, Y = 0, dY = 0;
+                double z2 = 0, Y = 0, dY = 0, d2YiY = 0;
                 const double z2small = 0;
                 if (vx2 == 0)
                 {
-                    z2 = (mx2 - m1) / Math.Sqrt(vx2 + v1);
+                    double sqrtPrec = Math.Sqrt(a.Precision);
+                    z2 = (mx2 - m1) * sqrtPrec;
+                    // When max.IsPointMass, logw2 <= -100 implies NormalCdfLn(z2) <= -100 implies z2 < -13
                     if (z2 < z2small)
                     {
-                        Y = MMath.NormalCdfRatio(z2);
-                        dY = MMath.NormalCdfMomentRatio(1, z2);
-                        mc2 = mx2 - Math.Sqrt(v1) * dY / Y;
+                        // dY = 1 + z2*Y
+                        // d2Y = Y + z2*dY
+                        //     = Y + z2*(1 + z2*Y)
+                        //     = Y + z2^2*Y + z2
+                        double d2Y = 2 * MMath.NormalCdfMomentRatio(2, z2);
+                        // Y = (dY-1)/z2
+                        // d2Y = (dY-1)/z2 + z2*dY
+                        //     = dY*(z2 + 1/z2) - 1/z2
+                        // dY = (d2Y+1/z2)/(z2 + 1/z2)
+                        double invz2 = 1/z2;
+                        //dY = MMath.NormalCdfMomentRatio(1, z2);
+                        dY = (d2Y + invz2) / (z2 + invz2);
+                        //Y = MMath.NormalCdfRatio(z2);
+                        // Y = (d2Y - z2)/(1 + z2^2)
+                        Y = (dY - 1) / z2;
+                        d2YiY = d2Y / Y;
+                        // logw2 = MMath.NormalCdfLn(z2);
+                        // alpha2 = -Math.Exp(Gaussian.GetLogProb(mx2, m1, vx2 + v1) - logw2);
+                        //        = -1/sqrt(vx2+v1)/NormalCdfRatio(z2)
+                        // m1 = mx2 - sqrt(vx2 + v1)*z2
+                        // z2 + 1/NormalCdfRatio(z2) = z2 + 1/Y = (z2*Y + 1)/Y = dY/Y
+                        // mc2 = m1 + alpha2*v1 
+                        //     = sqrt(vx2+v1)*(m1/sqrt(vx2+v1) - v1/(vx2+v1)/NormalCdfRatio(z2))
+                        //     = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - z2 - v1/(vx2+v1)/NormalCdfRatio(z2))
+                        //     = sqrt(vx2+v1)*(mx2/sqrt(vx2+v1) - dY/Y)  if vx2=0
+                        //     = mx2 - sqrt(v1)*dY/Y
+                        // sqrt(v1)*dY/Y = sqrt(v)*(d2Y/Y - 1)/z2   (see IsPositiveOp)
+                        mc2 = mx2 - (d2YiY - 1) / (z2 * sqrtPrec);
                     }
                 }
                 double m = w1 * mc1 + w2 * mc2;
@@ -698,15 +711,46 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double vc2;
                 if (vx2 == 0 && z2 < z2small)
                 {
+                    // Since vx2 == 0,
                     // beta2 = alpha2 * (alpha2 - z2/sqrt(v1))
                     // vc2 = v1 - v1^2 * alpha2 * (alpha2 - z2/sqrt(v1))
+                    //     = v1 - v1^2 * -1/sqrt(v1)/Y * (-1/sqrt(v1)/Y - z2/sqrt(v1))
+                    //     = v1 - v1 * 1/Y * (1/Y + z2)
                     //     = v1 - v1*dY/Y^2
-                    //     =approx v1/z2^2
-                    // posterior E[x^2] = v - v*dY/Y^2 + v*dY^2/Y^2 = v - v*dY/Y^2*(1 - dY) = v + v*z*dY/Y = v*d2Y/Y
-                    //vc2 = v1 * (1 - dY / (Y * Y));
-                    double d2Y = 2 * MMath.NormalCdfMomentRatio(2, z2);
-                    double dYiY = dY / Y;
-                    vc2 = v1 * (d2Y / Y - dYiY * dYiY);
+                    //     = v1 * (1 - dY/Y^2)
+                    // Since vc1 == 0 and mx2 == 0,
+                    // posterior E[x^2] = v - v*dY/Y^2 + v*dY^2/Y^2 
+                    //                  = v - v*dY/Y^2*(1 - dY) 
+                    //                  = v + v*z*dY/Y 
+                    //                  = v * (1 + z*dY/Y)
+                    //                  = v * d2Y/Y
+                    if (z2 < -1e8)
+                    {
+                        // Y =approx -1/z2
+                        // dY =approx 1/z2^2
+                        // d2Y =approx -2/z2^3
+                        // d2Y/Y - (dY/Y)^2 =approx 2/z2^2 - 1/z2^2 = 1/z2^2
+                        // The exact formulas are:
+                        // d2Y/Y = 1 + z*dY/Y
+                        // dY = (d2Y - Y)/z
+                        // dY/Y = d2Y/Y/z - 1/z
+                        // d2Y = (d3Y - 2dY)/z
+                        // d2Y/Y = (d3Y/Y - 2dY/Y)/z
+                        //       = d3Y/Y/z - 2(d2Y/Y/z - 1/z)/z
+                        // d2Y/Y = (d3Y/Y + 2)/(2z + z^2)
+                        // (d2Y/Y - 1) = z*dY/Y
+                        // d2Y/Y - (dY/Y)^2 = (d3Y/Y + 2 - (2z+z^2)(dY/Y)^2)/(2z + z^2)
+                        //                  = (d3Y/Y + 2 - (2/z + 1)(d2Y/Y - 1)^2)/(2z + z^2)
+                        // d2Y/Y - (dY/Y)^2 = d3Y/Y/z - 2 d2Y/Y/z^2 + 2/z^2 - (d2Y^2/Y^2/z^2 - 2 d2Y/Y/z^2 + 1/z^2)
+                        //                  = d3Y/Y/z - d2Y^2/Y^2/z^2 + 1/z^2
+                        // Could rewrite using the method of NormalCdfRatioSqrMinusDerivative
+                        vc2 = dY / a.Precision;
+                    }
+                    else
+                    {
+                        double dYiY = dY / Y;
+                        vc2 = (d2YiY - dYiY * dYiY) / a.Precision;
+                    }
                 }
                 else if (beta2 == 0)
                 {
@@ -714,12 +758,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 else
                 {
-                    vc2 = v1 * (1 - v1 * beta2);
+                    vc2 = (1 - beta2 / a.Precision) / a.Precision;
                 }
                 double diff = mc1 - mc2;
                 double v = w1 * vc1 + w2 * vc2 + w1 * w2 * diff * diff;
                 Gaussian result = new Gaussian(m, v);
-                //Console.WriteLine($"z2={z2} m={m} v={v} vc2={vc2} diff={diff}");
+                //Console.WriteLine($"z2={z2:g17} m={m:g17} v={v:g17} vc2={vc2} diff={diff}");
                 result.SetToRatio(result, a, ForceProper);
                 if (Double.IsNaN(result.Precision) || Double.IsNaN(result.MeanTimesPrecision))
                     throw new InferRuntimeException($"result is NaN.  max={max}, a={a}, b={b}");

@@ -11,7 +11,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <summary>
     /// Indicates support for adding an item to a distribution estimator
     /// </summary>
-    /// <typeparam name="T">Type of item to add - could be a distribution type or a sample type</typeparam>
+    /// <typeparam name="T">Type of item to add.  Can be a distribution type or a sample type</typeparam>
     public interface Accumulator<in T>
     {
         /// <summary>
@@ -33,9 +33,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
     public interface Estimator<T>
     {
         /// <summary>
-        /// Retrieve the estimated distribution
+        /// Get the estimated distribution
         /// </summary>
-        /// <param name="result">Where to put the result - ignored if the distribution type is a value type</param>
+        /// <param name="result">Modified to contain the result.  Ignored if <typeparamref name="T"/> is a value type.</param>
         /// <returns>The resulting estimated distribution</returns>
         T GetDistribution(T result);
     }
@@ -48,9 +48,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// </summary>
     public sealed class EstimatorFactory
     {
-        private static readonly EstimatorFactory instance = new EstimatorFactory();
-        private Dictionary<Type, CreateEstimatorMethod> creators;
-        private Dictionary<Type, Type> estimatorTypes;
+        /// <summary>
+        /// Estimator factory singleton instance
+        /// </summary>
+        public static EstimatorFactory Instance { get; } = new EstimatorFactory();
+
+        private readonly Dictionary<Type, CreateEstimatorMethod> creators;
+        private readonly Dictionary<Type, Type> estimatorTypes;
 
         private EstimatorFactory()
         {
@@ -103,10 +107,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public Estimator<T> CreateEstimator<T, TDomain>(T distProto)
             where T : IDistribution<TDomain>
         {
-            if (creators.ContainsKey(typeof (T)))
-                return (Estimator<T>) creators[typeof (T)].Invoke(distProto);
+            if (creators.ContainsKey(typeof(T)))
+                return (Estimator<T>)creators[typeof(T)].Invoke(distProto);
+            //else if (typeof(T).Equals(typeof(PointMass<TDomain>)))
+            else if (distProto is PointMass<TDomain>)
+                return (Estimator<T>)new PointMassEstimator<TDomain>();
             else
-                throw new ArgumentException(StringUtil.TypeToString(typeof (T)) + " has no registered estimators");
+                throw new ArgumentException(StringUtil.TypeToString(typeof(T)) + " has no registered estimators");
         }
 
         /// <summary>
@@ -120,14 +127,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return estimatorTypes[distType];
             else
                 return null;
-        }
-
-        /// <summary>
-        /// Estimator factory singleton instance
-        /// </summary>
-        public static EstimatorFactory Instance
-        {
-            get { return instance; }
         }
     }
 }

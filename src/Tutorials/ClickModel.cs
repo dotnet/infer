@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Distributions;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
@@ -173,14 +174,14 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             int[] clicks;
             int[] exams;
             string fileName = Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                     Path.GetDirectoryName(typeof(ClickModel).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "TutorialData", "ClickModel.txt");
             if (!File.Exists(fileName))
             {
                 fileName = Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                     Path.GetDirectoryName(typeof(ClickModel).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
 #endif
                     "..", "Samples", "C#", "ExamplesBrowser", "TutorialData", "ClickModel.txt");
@@ -258,14 +259,14 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             int[] clicks;
             int[] exams;
             string fileName = Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                     Path.GetDirectoryName(typeof(ClickModel).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "TutorialData", "ClickModel.txt");
             if (!File.Exists(fileName))
             {
                 fileName = Path.Combine(
-#if NETCORE
+#if NETCOREAPP
                     Path.GetDirectoryName(typeof(ClickModel).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
 #endif
                     "..", "Samples", "C#", "ExamplesBrowser", "TutorialData", "ClickModel.txt");

@@ -23,8 +23,9 @@ namespace Microsoft.ML.Probabilistic.Tests
 {
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
     using GaussianArray = DistributionStructArray<Gaussian, double>;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
-    
+
     public class SerialTests
     {
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS
@@ -131,7 +132,134 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Test a model where inference can fail due to incorrect initial messages.
+        /// Failure only happens when ProductOp throws on uniform inputs.
+        /// Fails with "The distribution is improper" because Team1Perf_uses_F is uniform.
+        /// This happens because skill_uses_F[player][gameOfPlayer][1] is uniform for gameOfPlayer>0,
+        /// due to never being initialized in the initialization schedule.
+        /// </summary>
+        [Fact]
+        public void TrueSkill2Test()
+        {
+            var performancePrecision = Variable.GammaFromMeanAndVariance(1, 1e-3);
+            performancePrecision.Name = nameof(performancePrecision);
+            //performancePrecision.ObservedValue = 1;
+            var skillChangeWithMatchPrecision = Variable.GammaFromMeanAndVariance(1, 1e-3);
+            skillChangeWithMatchPrecision.Name = nameof(skillChangeWithMatchPrecision);
+            //skillChangeWithMatchPrecision.ObservedValue = 1;
+
+            var pKillW = Variable.GaussianFromMeanAndPrecision(0, 1);
+            pKillW.Name = nameof(pKillW);
+            pKillW.ObservedValue = 0;
+            var oKillW = Variable.GaussianFromMeanAndPrecision(0, 1);
+            oKillW.Name = nameof(oKillW);
+            //oKillW.ObservedValue = 0;
+            var killV = Variable.GammaFromMeanAndVariance(1, 1e-1);
+            killV.Name = nameof(killV);
+            killV.ObservedValue = 1;
+            var pDeathW = Variable.GaussianFromMeanAndPrecision(0, 1);
+            pDeathW.Name = nameof(pDeathW);
+            //pDeathW.ObservedValue = 0;
+            var oDeathW = Variable.GaussianFromMeanAndPrecision(0, 1);
+            oDeathW.Name = nameof(oDeathW);
+            //oDeathW.ObservedValue = 0;
+            var deathV = Variable.GammaFromMeanAndVariance(1, 1e-1);
+            deathV.Name = nameof(deathV);
+            //deathV.ObservedValue = 1;
+
+            Range player = new Range(4);
+            player.Name = nameof(player);
+
+            var gameCountOfPlayer = Variable.Observed(new int[] { 3, 1, 1, 1 }, player);
+            gameCountOfPlayer.Name = nameof(gameCountOfPlayer);
+            Range gameOfPlayer = new Range(gameCountOfPlayer[player]);
+            gameOfPlayer.Name = nameof(gameOfPlayer);
+
+            var priorSkill = Variable.Observed(new Gaussian[] { new Gaussian(0,1), new Gaussian(0, 1), new Gaussian(0, 1), new Gaussian(0, 1) }, player);
+            var skill = Variable.Array(Variable.Array<double>(gameOfPlayer), player);
+            skill.Name = nameof(skill);
+            using (var playerBlock = Variable.ForEach(player))
+            {
+                var p = playerBlock.Index;
+                using (var gameBlock = Variable.ForEach(gameOfPlayer))
+                {
+                    var g = gameBlock.Index;
+                    using (Variable.If(g == 0))
+                    {
+                        skill[player][gameOfPlayer] = Variable<double>.Random(priorSkill[player]);
+                    }
+                    using (Variable.If(g > 0))
+                    {
+                        skill[player][gameOfPlayer] = Variable.GaussianFromMeanAndPrecision(skill[player][g - 1], skillChangeWithMatchPrecision);
+                    }
+                }
+            }
+
+            Range game = new Range(3);
+            game.Name = nameof(game);
+            Range member = new Range(1);
+            member.Name = nameof(member);
+
+            var Team1Player = Variable.Observed(new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 0 } }, game, member);
+            Team1Player.Name = nameof(Team1Player);
+            var Team1Kill = Variable.Observed(new double[][] { new double[] { 1 }, new double[] { 1 }, new double[] { 1 } }, game, member);
+            var Team1Death = Variable.Observed(new double[][] { new double[] { 1 }, new double[] { 1 }, new double[] { 1 } }, game, member);
+            var Team1GameIndex = Variable.Observed(new int[][] { new int[] { 0 }, new int[] { 1 }, new int[] { 2 } }, game, member);
+            Team1GameIndex.Name = nameof(Team1GameIndex);
+
+            var Team2Player = Variable.Observed(new int[][] { new int[] { 1 }, new int[] { 2 }, new int[] { 3 } }, game, member);
+            Team2Player.Name = nameof(Team2Player);
+            var Team2GameIndex = Variable.Observed(new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 0 } }, game, member);
+            Team2GameIndex.Name = nameof(Team2GameIndex);
+
+            var Team1Perf = Variable.Array(Variable.Array<double>(member), game);
+            Team1Perf.Name = nameof(Team1Perf);
+            var Team2Perf = Variable.Array(Variable.Array<double>(member), game);
+            Team2Perf.Name = nameof(Team2Perf);
+
+            using (Variable.ForEach(game))
+            {
+                using (var playerBlock = Variable.ForEach(member))
+                {
+                    var PlayerIndex1 = Team1Player[game][member];
+                    var GameIndex1 = Team1GameIndex[game][member];
+                    Team1Perf[game][member] = Variable.GaussianFromMeanAndPrecision(skill[PlayerIndex1][GameIndex1], performancePrecision);
+
+                    var PlayerIndex2 = Team2Player[game][member];
+                    var GameIndex2 = Team2GameIndex[game][member];
+                    Team2Perf[game][member] = Variable.GaussianFromMeanAndPrecision(skill[PlayerIndex2][GameIndex2], performancePrecision);
+                }
+
+                Variable<double> Team1PerfSum = Variable.Sum(Team1Perf[game]);
+                Team1PerfSum.Name = nameof(Team1PerfSum);
+
+                Variable<double> Team2PerfSum = Variable.Sum(Team2Perf[game]);
+                Team2PerfSum.Name = nameof(Team2PerfSum);
+
+                using (var playerBlock = Variable.ForEach(member))
+                {
+                    Team1Kill[game][member] = Variable.Max(0.0, Variable.GaussianFromMeanAndPrecision(pKillW * Team1Perf[game][member] + oKillW * Team2PerfSum, killV));
+                    Team1Death[game][member] = Variable.Max(0.0, Variable.GaussianFromMeanAndPrecision(pDeathW * Team1Perf[game][member] + oDeathW * Team2PerfSum, deathV));
+                }
+            }
+            performancePrecision.AddAttribute(new PointEstimate());
+            skillChangeWithMatchPrecision.AddAttribute(new PointEstimate());
+            pKillW.AddAttribute(new PointEstimate());
+            oKillW.AddAttribute(new PointEstimate());
+            killV.AddAttribute(new PointEstimate());
+            pDeathW.AddAttribute(new PointEstimate());
+            oDeathW.AddAttribute(new PointEstimate());
+            deathV.AddAttribute(new PointEstimate());
+            game.AddAttribute(new Models.Attributes.Sequential());   // helps inference converge faster
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(performancePrecision);
+        }
+
+        /// <summary>
         /// Test a model where inference fails due to incorrect initial messages.
+        /// Fails with "The distribution is improper" because D_uses_F[4] is uniform.
+        /// This happens because D_uses_F[day][0] is not updated in the same loop as vdouble16_F which has an offset dependency on it.
         /// </summary>
         [Fact]
         [Trait("Category", "OpenBug")]
@@ -189,6 +317,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         /// <summary>
         /// Tests a model with complex chain dependencies.
+        /// Fails with "enemyStrengthAfter is not defined in all cases"
         /// </summary>
         [Fact]
         [Trait("Category", "OpenBug")]
@@ -227,7 +356,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 var teamIndex = block.Index;
                 var isLast = (teamIndex == teamCount - 1).Named("isLast");
-                //using(Variable.If(isLast))
+                //using(Variable.If(isLast)) // this version works
                 using (Variable.If(teamIndex == lastIndex))
                 {
                     enemyStrengthAfter[teamIndex] = 0.0;
@@ -344,9 +473,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine(engine.Infer(x));
         }
 
-        // Fails with a bad init schedule, if the product operator is sensitive to uniform inputs
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void ChangePointTest()
         {
             //double[] data = { 8, 7, -1, 7, 8, 6, 7, 9, 3, 1, 0, 4, 0, 0, 8, 9, 10, 7, 9, 10, 8, 10, 1, 1, 0, 5, 3, 6, 0, 0, 2 };
@@ -2223,6 +2350,100 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void SimplestBackwardChainTest3()
+        {
+            int length = 10;
+            var lengthVar = Variable.Observed(length).Named("length");
+
+            Range rows = new Range(lengthVar).Named("i");
+            VariableArray<double> states = Variable.Array<double>(rows).Named("states");
+
+            using (ForEachBlock rowBlock = Variable.ForEach(rows))
+            {
+                var index = rowBlock.Index;
+                //var lengthVarMinus1 = (lengthVar - 1).Named("lengthVarMinus1");
+                //using (Variable.If(index == lengthVarMinus1))
+                using (Variable.If(index == lengthVar - 1))
+                {
+                    states[rowBlock.Index] = Variable.GaussianFromMeanAndVariance(1, 1);
+                }
+                //using (Variable.If(index < lengthVarMinus1))
+                using (Variable.If(index < lengthVar - 1))
+                {
+                    states[rowBlock.Index] = Variable.GaussianFromMeanAndVariance(states[rowBlock.Index + 1], 1);
+                }
+            }
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.NumberOfIterations = 1;
+            Console.WriteLine("After {0} Iterations", engine.NumberOfIterations);
+            var result1 = engine.Infer<Gaussian[]>(states);
+            for (int i = 0; i < length; i++)
+            {
+                Console.WriteLine("state[{0}] = {1}", i, result1[i]);
+            }
+            for (int i = 0; i < length; i++)
+            {
+                Assert.Equal(result1[i].GetVariance(), length - i, 1e-8);
+            }
+            engine.NumberOfIterations = 10;
+            int count = 0;
+            engine.ProgressChanged += delegate (InferenceEngine sender, InferenceProgressEventArgs progress)
+            {
+                count++;
+            };
+            engine.Infer(states);
+            Console.WriteLine("iter count = {0} should be 0", count);
+            Assert.Equal(0, count);
+        }
+
+        [Fact]
+        public void DeterministicChainTest()
+        {
+            int length = 10;
+            var lengthVar = Variable.Observed(length).Named("length");
+
+            Range rows = new Range(lengthVar).Named("i");
+            VariableArray<double> states = Variable.Array<double>(rows).Named("states");
+
+            using (ForEachBlock rowBlock = Variable.ForEach(rows))
+            {
+                var index = rowBlock.Index;
+                using (Variable.If(index == 0))
+                {
+                    states[rowBlock.Index] = 1;
+                }
+                using (Variable.If(index > 0))
+                {
+                    states[rowBlock.Index] = states[rowBlock.Index - 1] + 1;
+                }
+            }
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.NumberOfIterations = 1;
+            Console.WriteLine("After {0} Iterations", engine.NumberOfIterations);
+            var result1 = engine.Infer<Gaussian[]>(states);
+            for (int i = 0; i < length; i++)
+            {
+                Console.WriteLine("state[{0}] = {1}", i, result1[i]);
+            }
+            for (int i = 0; i < length; i++)
+            {
+                Assert.True(result1[i].IsPointMass);
+                Assert.Equal(i+1, result1[i].Point);
+            }
+            engine.NumberOfIterations = 10;
+            int count = 0;
+            engine.ProgressChanged += delegate (InferenceEngine sender, InferenceProgressEventArgs progress)
+            {
+                count++;
+            };
+            engine.Infer(states);
+            Console.WriteLine("iter count = {0} should be 0", count);
+            Assert.Equal(0, count);
+        }
+
+        [Fact]
         public void SimplestChainWithObservationsTest()
         {
             int length = 10;
@@ -3537,7 +3758,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine("shift = {0}", shiftActual1);
 
             int maxIter = 200;
-            if (false)
+            if (!engine.ShowProgress)
             {
                 for (int iter = 1; iter <= maxIter; iter++)
                 {
@@ -3584,7 +3805,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ChainWithTransitionParameterTest()
         {
-            // without PointEstimator, EP doesn't converge unless length <= 700,
+            // without PointEstimate, EP doesn't converge unless length <= 700,
             // where it gets correct mean but variance = 1 (prior variance)
             int length = 1000;
 
@@ -3595,12 +3816,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<double> observation = Variable.Array<double>(rows).Named("observations");
             Variable<double> shift = Variable.GaussianFromMeanAndVariance(0, 1).Named("shift");
             shift.AddAttribute(new PointEstimate());
-            //Variable<double> shiftPoint = Variable<double>.Factor(PointEstimator.Forward<double>, shift).Named("shiftPoint");
-            //Variable<double> shiftPoint = Variable<double>.Factor(PointEstimator.Forward2<double>, shift, (double)length).Named("shiftPoint");
-            //Variable<double> shiftPoint = Variable<double>.Factor(Damp.Forward<double>, shift, 0.1).Named("shiftPoint");
-            // when using PointEstimator.Forward with Secant, should always initialize
-            //shiftPoint.InitialiseTo(Gaussian.PointMass(0));
-            //shift.InitialiseTo(Gaussian.PointMass(1));
 
             using (ForEachBlock rowBlock = Variable.ForEach(rows))
             {
@@ -3640,7 +3855,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine("shift = {0}", shiftActual1);
 
             int maxIter = 100;
-            if (false)
+            if (!engine.ShowProgress)
             {
                 for (int iter = 1; iter < maxIter; iter++)
                 {
@@ -3690,11 +3905,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<double> observation = Variable.Array<double>(rows).Named("observations");
             Variable<double> shift = Variable.GaussianFromMeanAndVariance(0, 1).Named("shift");
             Variable<double> shift2 = Variable.GaussianFromMeanAndVariance(0, 1).Named("shift2");
-            //Variable<double> shiftPoint = Variable<double>.Factor(PointEstimator.Forward<double>, shift).Named("shiftPoint");
-            //Variable<double> shift2Point = Variable<double>.Factor(PointEstimator.Forward<double>, shift2).Named("shift2Point");
-            // when using PointEstimator.Forward with Secant, should always initialize
-            shift.InitialiseTo(Gaussian.PointMass(0));
-            shift2.InitialiseTo(Gaussian.PointMass(0));
 
             using (ForEachBlock rowBlock = Variable.ForEach(rows))
             {
@@ -3723,6 +3933,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             observation.ObservedValue = observationValues;
 
             InferenceEngine engine = new InferenceEngine();
+            engine.ShowProgress = false;
             //engine.Compiler.GivePriorityTo(typeof(VariablePointOp_Secant));
             engine.OptimiseForVariables = new List<IVariable>() { states, shift, shift2 };
             engine.NumberOfIterations = 3;
@@ -3740,8 +3951,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian shift2Actual1 = engine.Infer<Gaussian>(shift2);
             Console.WriteLine("shift = {0}, shift2 = {1}", shiftActual1, shift2Actual1);
 
-            int maxIter = 100;
-            if (false)
+            int maxIter = engine.Compiler.OptimiseInferenceCode ? 100 : 200;
+            if (!engine.ShowProgress)
             {
                 for (int iter = 1; iter < maxIter; iter++)
                 {
@@ -3851,14 +4062,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             //const double shiftMeanExpected = 0.767681001959026;
             const double shiftMeanExpected = 0.746576051928051;
             int maxIter = 100;
-            if (false)
+            if (!engine.ShowProgress)
             {
                 for (int iter = 1; iter < maxIter; iter++)
                 {
                     engine.NumberOfIterations = iter;
                     var shiftTemp = engine.Infer<Gaussian>(shift);
                     var precisionTemp = engine.Infer<Gamma>(precision);
-                    Debug.WriteLine("{0} shift={1} prec={2}", iter, shiftTemp.GetMean(), precisionTemp.GetMean());
+                    Console.WriteLine("{0} shift={1} prec={2}", iter, shiftTemp.GetMean(), precisionTemp.GetMean());
                     //if (shiftTemp.GetMean() == shiftMeanExpected)
                     //    throw new Exception("converged at iter " + iter);
                 }
@@ -5804,7 +6015,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// This test fails due to a poor initialization schedule.
+        /// This test fails with "The distribution is improper" during initialization due to a poor initialization schedule.
+        /// receivingSkill_depth1_F[1] is uniform during the backward loop.  It needs to be initialized by a forward loop.
         /// Previously failed with "Internal: schedule splits group 278"
         /// This happens due to a mistake by the repair algorithm (and possibly also rotation).  Best seen via the TransformBrowser.
         /// Also fails because servingSkill_depth1_F doesn't have its requirements.  It has an Any requirement where the wrong option is chosen.

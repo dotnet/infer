@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 {
     using System;
     using System.Diagnostics;
+    using Microsoft.ML.Probabilistic.Compiler.Visualizers;
 
     /// <summary>
     /// A program which uses Infer.NET to compile various inference algorithms for Bayes point machine classifiers.
@@ -33,7 +34,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                 Trace.Listeners.Add(new TextWriterTraceListener(logWriter));
                 Debug.AutoFlush = true;
                 Trace.AutoFlush = true;
-                //InferenceEngine.DefaultEngine.BrowserMode = BrowserMode.Always;
+#if NETFRAMEWORK
+                Models.InferenceEngine.Visualizer = new WindowsVisualizer();
+#endif
+                Models.InferenceEngine.DefaultEngine.Compiler.BrowserMode = Compiler.BrowserMode.Always;
             }
 
             // The folder to drop the generated inference algorithms to
@@ -48,7 +52,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                     {
                         trainingAlgorithmFactory(generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistributions);
                     }
-                }                
+                }
             }
 
             // Generate all prediction algorithms

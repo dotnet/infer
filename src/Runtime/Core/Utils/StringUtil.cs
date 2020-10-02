@@ -260,6 +260,19 @@ namespace Microsoft.ML.Probabilistic.Utilities
         }
 
         /// <summary>
+        /// Get a string of the form "typeName.methodName&amp;lt;types&amp;gt;", suitable
+        /// for use as an XML element value.
+        /// </summary>
+        /// <param name="text">A string.</param>
+        /// <returns>A valid XML element value.</returns>
+        public static string EscapeXmlCharacters(string text)
+        {
+            return text.Replace("&", "&amp;")
+                       .Replace("<", "&lt;")
+                       .Replace(">", "&gt;");
+        }
+
+        /// <summary>
         /// Get a string of the form "typeName.methodName&lt;types&gt;".
         /// </summary>
         /// <param name="method"></param>

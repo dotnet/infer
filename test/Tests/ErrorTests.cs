@@ -12,7 +12,7 @@ using Microsoft.ML.Probabilistic.Models;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
-    
+
     public class ErrorTests
     {
         [Fact]
@@ -98,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void LoopStartError()
         {
-            double[] array = new double[4]; 
+            double[] array = new double[4];
             for (int l = 1; l < 4; l++) // loop starts at 1 instead of 0
             {
                 array[l] = Factor.Random(Gamma.FromShapeAndScale(1, 1));
@@ -110,29 +110,20 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "CsoftModel")]
         public void TestArrayDimError()
         {
-            try
+            Assert.Throws<CompilationFailedException>(() =>
             {
                 InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
                 engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
                 var ca = engine.Compiler.Compile(ArrayDimError);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (CompilationFailedException tfe)
-            {
-                // Number of errors in MSL should be 1
-                int numberOfErrors = tfe.Results.ErrorCount;
-                Console.WriteLine("Detected " + numberOfErrors + " errors");
-                Assert.True(numberOfErrors == 1);
-            }
+            });
         }
-
 
         private void ArrayDimError()
         {
-            double[,,] array3D = new double[2,3,4]; // invalid number of dims
+            double[,,] array3D = new double[1, 1, 1]; // invalid number of dims
+            array3D[0, 0, 0] = Factor.Gaussian(0, 1);
             InferNet.Infer(array3D, nameof(array3D));
         }
-
 
         [Fact]
         [Trait("Category", "BadTest")]
@@ -171,7 +162,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
                 engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
-                var ca = engine.Compiler.Compile(RedefineParameterElementError, new int[] {10});
+                var ca = engine.Compiler.Compile(RedefineParameterElementError, new int[] { 10 });
                 Assert.True(false, "Did not throw exception");
             }
             catch (CompilationFailedException tfe)
@@ -196,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         [Trait("Category", "OpenBug")]
         [Trait("Category", "CsoftModel")]
-        public void DoubleDefinitionError()
+        public void TestDoubleDefinitionError()
         {
             try
             {

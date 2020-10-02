@@ -26,12 +26,62 @@ namespace Microsoft.ML.Probabilistic.Tests
     using BernoulliArrayArray = DistributionRefArray<DistributionStructArray<Bernoulli, bool>, bool[]>;
     using DirichletArray = DistributionRefArray<Dirichlet, Vector>;
     using GaussianArray = DistributionStructArray<Gaussian, double>;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     /// <summary>
     /// Tests for the modelling API
     /// </summary>
     public class ModelTests
     {
+        [Fact]
+        public void MarginalDividedByPriorTest()
+        {
+            Variable<double> parameter = Variable.GaussianFromMeanAndVariance(0.2, 0.1);
+            parameter.Name = nameof(parameter);
+            parameter.AddAttribute(QueryTypes.Marginal);
+            parameter.AddAttribute(QueryTypes.MarginalDividedByPrior);
+            var previousDataMessage = Variable.Observed(default(Gaussian));
+            previousDataMessage.Name = parameter.Name + "PreviousDataMessage";
+            Variable.ConstrainEqualRandom(parameter, previousDataMessage);
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(parameter, QueryTypes.MarginalDividedByPrior);
+        }
+
+        /// <summary>
+        /// The "Eight Schools" example from https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html
+        /// </summary>
+        [Fact]
+        public void EightSchoolsTest()
+        {
+            // "Normal(0,5)" in Stan corresponds to GaussianFromMeanAndVariance(0,5*5)
+            // "HalfCauchy(0,5)" in Stan corresponds to abs(N(0,1)/N(0,1))*5
+            var J = 8;
+            var JRange = new Range(J);
+            var sigma = Variable.Array<double>(JRange);
+            var mu = Variable.GaussianFromMeanAndVariance(0.0, 5.0 * 5.0);
+            var tau = HalfCauchySquared(1 / (5.0 * 5.0));
+
+            var theta = Variable.Array<double>(JRange);
+            theta[JRange] = Variable.GaussianFromMeanAndPrecision(mu, tau).ForEach(JRange);
+
+            var y = Variable.Array<double>(JRange);
+            y[JRange] = Variable.GaussianFromMeanAndVariance(theta[JRange], sigma[JRange]);
+
+            y.ObservedValue = Util.ArrayInit(J, i => 3.0);
+            sigma.ObservedValue = Util.ArrayInit(J, i => 1.0);
+            tau.InitialiseTo(new Gamma(1, 1)); // needed by EP since moments of tau do not exist under the prior
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(mu);
+        }
+
+        internal Variable<double> HalfCauchySquared(Variable<double> scale)
+        {
+            // A half-Cauchy can be written as abs(N(0,1)/N(0,1)), or as sqrt(Gamma(0.5)/Gamma(0.5)).
+            // Therefore the square can be written as Gamma variable with shape 0.5 whose rate is given by a Gamma(0.5) variable.  
+            return Variable.GammaFromShapeAndRate(0.5, Variable.GammaFromShapeAndRate(0.5, scale));
+        }
+
         /// <summary>
         /// Tests that C# compiler errors produce a CompilationFailedException.
         /// </summary>
@@ -2729,18 +2779,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             x[r, r2] = !y[r, r2];
             InferenceEngine engine = new InferenceEngine();
             y.ObservedValue = Util.ArrayInit(1, 1, (i, j) => true);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 object xActual = engine.Infer(x);
-                Assert.True(false, "Did not throw exception");
                 IDistribution<bool[]> xExpected = Distribution<bool>.Array(r.SizeAsInt, i => new Bernoulli(0));
                 Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -2752,18 +2797,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             x[r] = !y[r];
             InferenceEngine engine = new InferenceEngine();
             y.ObservedValue = Util.ArrayInit(2, i => true);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 object xActual = engine.Infer(x);
-                Assert.True(false, "Did not throw exception");
                 IDistribution<bool[]> xExpected = Distribution<bool>.Array(r.SizeAsInt, i => new Bernoulli(0));
                 Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -2776,18 +2816,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             x[r] = !y[r];
             InferenceEngine engine = new InferenceEngine();
             y.ObservedValue = Util.ArrayInit(2, i => true);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 object xActual = engine.Infer(x);
-                Assert.True(false, "Did not throw exception");
                 IDistribution<bool[]> xExpected = Distribution<bool>.Array(size.ObservedValue, i => new Bernoulli(0));
                 Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -2800,18 +2835,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             x[r] = !y[r];
             InferenceEngine engine = new InferenceEngine();
             y.ObservedValue = Util.ArrayInit(2, i => true);
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 object xActual = engine.Infer(x);
-                Assert.True(false, "Did not throw exception");
                 IDistribution<bool[]> xExpected = Distribution<bool>.Array(size.ObservedValue, i => new Bernoulli(0));
                 Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with " + ex);
-            }
+            });
         }
 
         [Fact]
@@ -2995,167 +3025,92 @@ namespace Microsoft.ML.Probabilistic.Tests
             Range i = new Range(2).Named("i");
             Range n = new Range(2).Named("n");
 
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> bools = Variable.Array<bool>(n).Named("bools");
                 bools[n] = Variable.Bernoulli(0.5);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> bools = Variable.Array<bool>(n).Named("bools");
                 bools[n] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> bools = Variable.Array<bool>(n).Named("bools");
                 bools[n] = Variable.Bernoulli(0.5).ForEach(i, n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> bools = Variable.Array<bool>(n).Named("bools");
                 bools[i] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> bools = Variable.Array<bool>(n).Named("bools");
                 bools[i] = Variable.Bernoulli(0.5).ForEach(n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             if (true)
             {
                 VariableArray<bool> bools = Variable.Array<bool>(n).Named("bools");
                 bools[n] = Variable.Bernoulli(0.5).ForEach(n);
             }
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> constBools = Variable.Constant(new bool[] { true, false }, n).Named("constBools");
                 constBools[n] = Variable.Bernoulli(0.5);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> constBools = Variable.Constant(new bool[] { true, false }, n).Named("constBools");
                 constBools[n] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> constBools = Variable.Constant(new bool[] { true, false }, n).Named("constBools");
                 constBools[n] = Variable.Bernoulli(0.5).ForEach(i, n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> constBools = Variable.Constant(new bool[] { true, false }, n).Named("constBools");
                 constBools[i] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> constBools = Variable.Constant(new bool[] { true, false }, n).Named("constBools");
                 constBools[i] = Variable.Bernoulli(0.5).ForEach(n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             if (true)
             {
                 VariableArray<bool> constBools = Variable.Constant(new bool[] { true, false }, n).Named("constBools");
                 constBools[n] = Variable.Bernoulli(0.5).ForEach(n);
             }
 
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> givenBools = Variable.Observed(new bool[] { true, false }, n).Named("givenBools");
                 givenBools[n] = Variable.Bernoulli(0.5);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> givenBools = Variable.Observed(new bool[] { true, false }, n).Named("givenBools");
                 givenBools[n] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> givenBools = Variable.Observed(new bool[] { true, false }, n).Named("givenBools");
                 givenBools[n] = Variable.Bernoulli(0.5).ForEach(i, n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> givenBools = Variable.Observed(new bool[] { true, false }, n).Named("givenBools");
                 givenBools[i] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray<bool> givenBools = Variable.Observed(new bool[] { true, false }, n).Named("givenBools");
                 givenBools[i] = Variable.Bernoulli(0.5).ForEach(n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             if (true)
             {
                 VariableArray<bool> givenBools = Variable.Observed(new bool[] { true, false }, n).Named("givenBools");
@@ -3170,36 +3125,21 @@ namespace Microsoft.ML.Probabilistic.Tests
             Range n = new Range(2).Named("n");
             Range m = new Range(2).Named("m");
 
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> bools = Variable.Array<bool>(n, m).Named("bools");
                 bools[n, m] = Variable.Bernoulli(0.5);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> bools = Variable.Array<bool>(n, m).Named("bools");
                 bools[n, m] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> bools = Variable.Array<bool>(n, m).Named("bools");
                 bools[n, m] = Variable.Bernoulli(0.5).ForEach(i, n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             try
             {
                 VariableArray2D<bool> bools = Variable.Array<bool>(n, m).Named("bools");
@@ -3208,32 +3148,22 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             catch (NotSupportedException ex)
             {
-                Console.WriteLine("Correctly failed with exception: " + ex);
+                Console.WriteLine("Correctly threw " + ex);
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine("Correctly failed with exception: " + ex);
+                Console.WriteLine("Correctly threw " + ex);
             }
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> bools = Variable.Array<bool>(n, m).Named("bools");
                 bools[i, m] = Variable.Bernoulli(0.5).ForEach(i, m);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> bools = Variable.Array<bool>(n, m).Named("bools");
                 bools[i, m] = Variable.Bernoulli(0.5).ForEach(n, m);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             if (true)
             {
                 VariableArray2D<bool> bools = Variable.Array<bool>(n, m).Named("bools");
@@ -3241,36 +3171,21 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             bool[,] init2d = new bool[,] { { true, false }, { true, false } };
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> constBools = Variable.Constant(init2d, n, m).Named("constBools");
                 constBools[n, m] = Variable.Bernoulli(0.5);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> constBools = Variable.Constant(init2d, n, m).Named("constBools");
                 constBools[n, m] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> constBools = Variable.Constant(init2d, n, m).Named("constBools");
                 constBools[n, m] = Variable.Bernoulli(0.5).ForEach(i, n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             try
             {
                 VariableArray2D<bool> constBools = Variable.Constant(init2d, n, m).Named("constBools");
@@ -3279,68 +3194,43 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             catch (NotSupportedException ex)
             {
-                Console.WriteLine("Correctly failed with exception: " + ex);
+                Console.WriteLine("Correctly threw " + ex);
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine("Correctly failed with exception: " + ex);
+                Console.WriteLine("Correctly threw " + ex);
             }
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> constBools = Variable.Constant(init2d, n, m).Named("constBools");
                 constBools[i, m] = Variable.Bernoulli(0.5).ForEach(i, m);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> constBools = Variable.Constant(init2d, n, m).Named("constBools");
                 constBools[i, m] = Variable.Bernoulli(0.5).ForEach(n, m);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             if (true)
             {
                 VariableArray2D<bool> constBools = Variable.Constant(init2d, n, m).Named("constBools");
                 constBools[n, m] = Variable.Bernoulli(0.5).ForEach(n, m);
             }
 
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> givenBools = Variable.Observed(init2d, n, m).Named("givenBools");
                 givenBools[n, m] = Variable.Bernoulli(0.5);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> givenBools = Variable.Observed(init2d, n, m).Named("givenBools");
                 givenBools[n, m] = Variable.Bernoulli(0.5).ForEach(i);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> givenBools = Variable.Observed(init2d, n, m).Named("givenBools");
                 givenBools[n, m] = Variable.Bernoulli(0.5).ForEach(i, n);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             try
             {
                 VariableArray2D<bool> givenBools = Variable.Observed(init2d, n, m).Named("givenBools");
@@ -3349,32 +3239,22 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             catch (NotSupportedException ex)
             {
-                Console.WriteLine("Correctly failed with exception: " + ex);
+                Console.WriteLine("Correctly threw " + ex);
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine("Correctly failed with exception: " + ex);
+                Console.WriteLine("Correctly threw " + ex);
             }
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> givenBools = Variable.Observed(init2d, n, m).Named("givenBools");
                 givenBools[i, m] = Variable.Bernoulli(0.5).ForEach(i, m);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
-            try
+            });
+            Assert.Throws<ArgumentException>(() =>
             {
                 VariableArray2D<bool> givenBools = Variable.Observed(init2d, n, m).Named("givenBools");
                 givenBools[i, m] = Variable.Bernoulli(0.5).ForEach(n, m);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Correctly failed with exception: " + ex);
-            }
+            });
             if (true)
             {
                 VariableArray2D<bool> givenBools = Variable.Observed(init2d, n, m).Named("givenBools");

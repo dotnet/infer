@@ -72,7 +72,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners.DatasetGenerators
         /// <returns>User ID which ends generating.</returns>
         private int Generating(string inputFile, TextWriter writer, int user)
         {
-#if NETCORE
+#if NETCOREAPP
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 #endif
             using (var stream = File.Open(inputFile, FileMode.Open, FileAccess.Read))

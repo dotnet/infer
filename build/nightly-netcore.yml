@@ -16,10 +16,10 @@ queue:
 trigger: none # disable CI build
 
 steps:
-- task: DotNetCoreInstaller@0
+- task: UseDotNet@2
   inputs:
     packageType: 'sdk' 
-    version: '2.1.403' 
+    version: '3.x' 
 
 - script: |
     dotnet build /p:DisableImplicitNuGetFallbackFolder=true  --configuration $(BuildConfiguration)Core Infer.sln

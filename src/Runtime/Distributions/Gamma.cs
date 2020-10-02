@@ -174,14 +174,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="rate">rate = 1/scale</param>
         public void SetShapeAndRate(double shape, double rate)
         {
-            if (rate > double.MaxValue)
+            this.Shape = shape;
+            this.Rate = rate;
+            CheckForPointMass();
+        }
+
+        private void CheckForPointMass()
+        {
+            if (!IsPointMass && Rate > double.MaxValue)
             {
                 Point = 0;
-            }
-            else
-            {
-                this.Shape = shape;
-                this.Rate = rate;
             }
         }
 
@@ -225,14 +227,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="scale">Scale</param>
         public void SetShapeAndScale(double shape, double scale)
         {
-            if (scale == 0)
-            {
-                Point = 0;
-            }
-            else
-            {
-                SetShapeAndRate(shape, 1.0 / scale);
-            }
+            if (double.IsPositiveInfinity(shape)) throw new ArgumentOutOfRangeException(nameof(shape), "shape is infinite.  To create a point mass, set the Point property.");
+            SetShapeAndRate(shape, 1.0 / scale);
         }
 
         /// <summary>
@@ -538,15 +534,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Sets this instance to a point mass. The location of the
-        /// point mass is the existing Rate parameter
-        /// </summary>
-        private void SetToPointMass()
-        {
-            Shape = Double.PositiveInfinity;
-        }
-
-        /// <summary>
         /// Sets/gets the instance as a point mass
         /// </summary>
         [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
@@ -560,7 +547,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             set
             {
-                SetToPointMass();
+                Shape = Double.PositiveInfinity;
                 Rate = value;
             }
         }
@@ -599,7 +586,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (x < 0) return double.NegativeInfinity;
             if (x > double.MaxValue) // Avoid subtracting infinities below
-            {               
+            {
                 if (rate > 0) return -x;
                 else if (rate < 0) return x;
                 // fall through when rate == 0
@@ -651,7 +638,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetLogNormalizer()
         {
-            if (IsProper())
+            if (IsProper() && !IsPointMass)
             {
                 return MMath.GammaLn(Shape) - Shape * Math.Log(Rate);
             }

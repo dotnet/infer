@@ -15,42 +15,151 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </summary>
     public static class Quadrature
     {
+        private const int AdaptiveQuadratureMaxNodes = 10000;
+
         /// <summary>
         /// Integrate the function f from -Infinity to Infinity
         /// </summary>
         /// <param name="f">The function to integrate</param>
-        /// <param name="CCFactor">A positive tuning parameter</param>
-        /// <param name="numIntervals">The initial number of nodes</param>
+        /// <param name="scale">A positive tuning parameter.  f is assumed to be negligible outside of [-scale,scale]</param>
+        /// <param name="nodeCount">The initial number of nodes.  Should be at least 2 and a power of 2.</param>
         /// <param name="relTol">A threshold to stop subdividing</param>
         /// <returns></returns>
-        public static double AdaptiveClenshawCurtis(Converter<double, double> f, double CCFactor, int numIntervals, double relTol)
+        public static double AdaptiveClenshawCurtis(Converter<double, double> f, double scale, int nodeCount, double relTol)
         {
-            Converter<double, double> fnew = delegate(double x)
-                {
-                    if (x == 0 || x == System.Math.PI)
-                        return 0;
-                    double sinX = System.Math.Sin(x);
-                    return f(CCFactor / System.Math.Tan(x))/(sinX * sinX);
-                };
-            return CCFactor* AdaptiveTrapeziumRule(fnew, numIntervals, 0, System.Math.PI, relTol, 1000);
+            // To get fast convergence, the transformation function should grow like 1/x (or faster) near the endpoints of the integration.
+            // In this case, we use 1/tan(x) which is approximately 1/x when x is near 0 and approximately -1/x when x is near pi.
+            // The transformation function atanh(x) for x in [-1,1] would be a bad choice since it only grows like log(1/x) near the endpoints.
+            double fInvTan(double x)
+            {
+                if (x == 0 || x == System.Math.PI)
+                    return 0;
+                double sinX = System.Math.Sin(x);
+                return f(scale / System.Math.Tan(x)) / (sinX * sinX);
+            }
+            return scale * AdaptiveTrapeziumRule(fInvTan, nodeCount, 0, System.Math.PI, relTol, AdaptiveQuadratureMaxNodes);
         }
 
-        internal static double AdaptiveTrapeziumRule(Converter<double, double> f, int numIntervals, double a, double b, double relTol, int maxNodes)
+        /// <summary>
+        /// Integrate the function f from 0 to +Infinity using exp-sinh quadrature.
+        /// </summary>
+        /// <param name="f">The function to integrate</param>
+        /// <param name="scale">A positive tuning parameter.
+        /// <paramref name="f"/> is assumed to be continuous and at least one of <paramref name="f"/>(0) and
+        /// cosh(arsinh(2 * ln(scale)/pi)) * scale * <paramref name="f"/>(<paramref name="scale"/>) to be non-zero.</param>
+        /// <param name="relTol">A threshold to stop subdividing</param>
+        /// <returns></returns>
+        public static double AdaptiveExpSinh(Converter<double, double> f, double scale, double relTol)
         {
-            // Assume f(a)=f(b)=0
-            int n = numIntervals/2;
-            double intervalWidth = (b - a)/n;
+            const double halfPi = System.Math.PI / 2;
+            const double ln2ByHalfPi = MMath.Ln2 / halfPi;
+            // Let g(x) = f(exp(pi/2 * sinh(x))) * cosh(x) * exp(pi/2 * sinh(x)),
+            // fExpSinh(x) = g(x) + g(-x), when x != 0, fExpSinh(0) = g(0),
+            // then int_-inf^+inf g(x) dx = int_0^+inf fExpSinh(x) dx
+            double fExpSinh(double x)
+            {
+                if (x == 0)
+                    return f(1);
+                double halfPiSinhX = halfPi * System.Math.Sinh(x);
+                double expHalfPiSinhX = System.Math.Exp(halfPiSinhX);
+                double expHalfPiSinhNegX = System.Math.Exp(-halfPiSinhX);
+                return System.Math.Cosh(x) * (expHalfPiSinhX * f(expHalfPiSinhX) + expHalfPiSinhNegX * f(expHalfPiSinhNegX));
+            }
+            double invHalfPiLnScale = System.Math.Log(scale) / halfPi;
+            double rescale = System.Math.Abs(System.Math.Log(invHalfPiLnScale + System.Math.Sqrt(invHalfPiLnScale * invHalfPiLnScale + 1))); // abs . arsinh
+            while (fExpSinh(rescale) == 0)
+            {
+                invHalfPiLnScale -= ln2ByHalfPi;
+                rescale = System.Math.Abs(System.Math.Log(invHalfPiLnScale + System.Math.Sqrt(invHalfPiLnScale * invHalfPiLnScale + 1)));
+            }
+            return halfPi * AdaptivePositiveHalfAxisTrapeziumRule(fExpSinh, rescale, relTol, AdaptiveQuadratureMaxNodes / 2 + 1);
+        }
+
+        /// <summary>
+        /// Integrate the function f from 0 to +Infinity
+        /// </summary>
+        /// <param name="f">The function to integrate. Must have at most one extremum.</param>
+        /// <param name="scale">A positive tuning parameter.
+        /// <paramref name="f"/> is assumed to be continuous on (0, + Infinity) and non-negligible somewhere on (0, <paramref name="scale"/>]</param>
+        /// <param name="relTol">A threshold to stop subdividing</param>
+        /// <param name="maxNodes">Another threshold to stop subdividing</param>
+        /// <returns></returns>
+        public static double AdaptivePositiveHalfAxisTrapeziumRule(Converter<double, double> f, double scale, double relTol, int maxNodes)
+        {
+            double intervalWidth = 1.0 / 8;
+            double sumf2 = 0;
+            double sumf1 = f(0);
+            double x = 0;
+            double oldSum;
+            int usedNodes = 1;
+            do
+            {
+                ++usedNodes;
+                x += intervalWidth;
+                oldSum = sumf1;
+                sumf1 += f(x);
+            }
+            while (!MMath.AreEqual(oldSum, sumf1) || x < scale);
+
+            if (x > scale)
+                scale = x;
+
+            while (usedNodes < maxNodes)
+            {
+                intervalWidth /= 2;
+                sumf2 = sumf1;
+                x = intervalWidth;
+                sumf2 += f(x);
+                do
+                {
+                    ++usedNodes;
+                    if (x < scale)
+                        x += 2 * intervalWidth;
+                    else
+                        x += intervalWidth;
+                    oldSum = sumf2;
+                    sumf2 += f(x);
+                }
+                while (!MMath.AreEqual(oldSum, sumf2) || x < scale);
+                if (x > scale)
+                    scale = x;
+                double i1 = sumf1 * intervalWidth * 2;
+                double i2 = sumf2 * intervalWidth;
+                double err_est = System.Math.Abs((i1 - i2) / i2);
+                if (err_est < relTol)
+                {
+                    return i2;
+                }
+                sumf1 = sumf2;
+            }
+
+            return sumf1 * intervalWidth;
+        }
+
+        /// <summary>
+        /// Integrate the function f from a to b
+        /// </summary>
+        /// <param name="f">The function to integrate.  Must have f(a)=f(b)=0.</param>
+        /// <param name="nodeCount">The initial number of nodes.  Should be at least 2 and a power of 2.</param>
+        /// <param name="a">The lower bound</param>
+        /// <param name="b">The upper bound</param>
+        /// <param name="relTol">A threshold to stop subdividing</param>
+        /// <param name="maxNodes">Another threshold to stop subdividing</param>
+        /// <returns></returns>
+        internal static double AdaptiveTrapeziumRule(Converter<double, double> f, int nodeCount, double a, double b, double relTol, int maxNodes)
+        {
+            double intervalWidth = (b - a) / nodeCount;
             double sumf1 = 0, sumf2 = 0;
             for (double x = intervalWidth + a; x < b; x += intervalWidth)
             {
                 sumf1 += f(x);
             }
-            while (n < maxNodes)
+            while (nodeCount < maxNodes)
             {
-                n = n*2;
-                intervalWidth = (b - a)/n;
+                nodeCount *= 2;
+                intervalWidth /= 2;
                 sumf2 = sumf1;
-                for (double x = intervalWidth + a; x < b; x += intervalWidth*2)
+                for (double x = intervalWidth + a; x < b; x += intervalWidth * 2)
                 {
                     // skip already included nodes
                     double fx = f(x);
@@ -58,17 +167,18 @@ namespace Microsoft.ML.Probabilistic.Math
                     if (Double.IsInfinity(fx)) throw new Exception("f(x) is infinite, x = " + x);
                     sumf2 += fx;
                 }
-                double i1 = sumf1*intervalWidth*2;
-                double i2 = sumf2*intervalWidth;
-                //if (Math.Abs(i1-i2) < 3*relTol*i2)
-                double err_est = System.Math.Pow(System.Math.Abs((i1 - i2)/ i2), 1.5);
+                double i1 = sumf1 * intervalWidth * 2;
+                double i2 = sumf2 * intervalWidth;
+                double err_est = System.Math.Abs((i1 - i2) / i2);
                 if (err_est < relTol)
                 {
+                    //Trace.WriteLine($"Reached tolerance ({err_est} < {relTol})");
                     return i2;
                 }
                 sumf1 = sumf2;
             }
-            return sumf2*intervalWidth;
+            //Trace.WriteLine($"Reached maxNodes ({nodeCount} >= {maxNodes})");
+            return sumf2 * intervalWidth;
         }
 
         /// <summary>
@@ -97,31 +207,27 @@ namespace Microsoft.ML.Probabilistic.Math
             if (n < 2 || n > HermiteNodesAndWeights.Length + 1)
                 throw new Exception("The requested number of nodes is outside [2," + (HermiteNodesAndWeights.Length + 1) + "]");
             // these scale factors convert from the Hermite weight function to a Gaussian weight function.
-            double scale = System.Math.Sqrt(2* variance);
-            double weightScale = 1.0/ System.Math.Sqrt(System.Math.PI);
-            int firstHalf = n/2;
+            double scale = System.Math.Sqrt(2 * variance);
+            double weightScale = 1.0 / System.Math.Sqrt(System.Math.PI);
+            int firstHalf = n / 2;
             int secondHalf = firstHalf;
-            if (n%2 == 1) secondHalf++;
+            if (n % 2 == 1) secondHalf++;
             // first half: apply symmetry transformation
             int index = 0;
             for (int i = 0; i < firstHalf; i++)
             {
-                nodes[index] = -HermiteNodesAndWeights[n - 2][secondHalf - 1 - i, 0]*scale + mean;
-                weights[index] = HermiteNodesAndWeights[n - 2][secondHalf - 1 - i, 1]*weightScale;
+                nodes[index] = -HermiteNodesAndWeights[n - 2][secondHalf - 1 - i, 0] * scale + mean;
+                weights[index] = HermiteNodesAndWeights[n - 2][secondHalf - 1 - i, 1] * weightScale;
                 index++;
             }
             // second half
             for (int i = 0; i < secondHalf; i++)
             {
-                nodes[index] = HermiteNodesAndWeights[n - 2][i, 0]*scale + mean;
-                weights[index] = HermiteNodesAndWeights[n - 2][i, 1]*weightScale;
+                nodes[index] = HermiteNodesAndWeights[n - 2][i, 0] * scale + mean;
+                weights[index] = HermiteNodesAndWeights[n - 2][i, 1] * weightScale;
                 index++;
             }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
 
         /// <summary>
         /// Quadrature nodes for Gamma expectations.
@@ -148,26 +254,27 @@ namespace Microsoft.ML.Probabilistic.Math
             int n = nodes.Count;
             if (a + 1 < 0) throw new ArgumentOutOfRangeException("a is too small (" + a + ")");
             if (b <= 0) throw new ArgumentOutOfRangeException("b is too small (" + b + ")");
-            if (false)
+            bool useLaguerre = false;
+            if (useLaguerre)
             {
                 if (n < 2 || n > LaguerreNodesAndWeights.Length + 1)
                     throw new Exception("The requested number of nodes is outside [2," + (LaguerreNodesAndWeights.Length + 1) + "]");
                 // these scale factors convert from the Laguerre weight function to a Gamma weight function.
-                double scale = 1.0/b;
+                double scale = 1.0 / b;
                 double logWeightScale = -MMath.GammaLn(a + 1);
                 for (int i = 0; i < n; i++)
                 {
                     nodes[i] = LaguerreNodesAndWeights[n - 2][i, 0];
-                    logWeights[i] = System.Math.Log(LaguerreNodesAndWeights[n - 2][i, 1]) + a* System.Math.Log(nodes[i]) + logWeightScale;
+                    logWeights[i] = System.Math.Log(LaguerreNodesAndWeights[n - 2][i, 1]) + a * System.Math.Log(nodes[i]) + logWeightScale;
                     nodes[i] *= scale;
                 }
             }
             else
             {
                 // get nodes from exp-Normal and adjust to mimic a Gamma.
-                double v = MMath.Log1Plus(1/(a + 1));
+                double v = MMath.Log1Plus(1 / (a + 1));
                 if (v == 0) throw new Exception("v == 0");
-                double m = System.Math.Log(a + 1) - System.Math.Log(b) + v*0.5;
+                double m = System.Math.Log(a + 1) - System.Math.Log(b) + v * 0.5;
                 // pass 0 instead of m here for better numerical accuracy below
                 GaussianNodesAndWeights(0, v, nodes, logWeights);
                 //double z = (a + 1)*Math.Log(b) - MMath.GammaLn(a + 1) + MMath.LnSqrt2PI + 0.5*Math.Log(v);
@@ -176,7 +283,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 // could use MMath.GammaLnSeries here
                 double z2 = ((a + 1) * System.Math.Log(a + 1) + MMath.LnSqrt2PI - (a + 1) - MMath.GammaLn(a + 1)) + 0.5 * System.Math.Log(v)
                     + (a + 1) * (v * 0.5 - MMath.ExpMinus1(v * 0.5));
-                double s = 0.5/v;
+                double s = 0.5 / v;
                 for (int i = 0; i < n; i++)
                 {
                     double diff = nodes[i];
@@ -193,10 +300,6 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
-
         public static void LaguerreGammaNodesAndWeights(double a, double b, IList<double> nodes, IList<double> weights)
         {
             int n = nodes.Count;
@@ -205,12 +308,12 @@ namespace Microsoft.ML.Probabilistic.Math
             if (n < 2 || n > LaguerreNodesAndWeights.Length + 1)
                 throw new Exception("The requested number of nodes is outside [2," + (LaguerreNodesAndWeights.Length + 1) + "]");
             // these scale factors convert from the Laguerre weight function to a Gamma weight function.
-            double scale = 1.0/b;
+            double scale = 1.0 / b;
             double logweightScale = -MMath.GammaLn(a);
             for (int i = 0; i < n; i++)
             {
                 nodes[i] = LaguerreNodesAndWeights[n - 2][i, 0];
-                weights[i] = System.Math.Exp(System.Math.Log(LaguerreNodesAndWeights[n - 2][i, 1]) + (a - 1.0)* System.Math.Log(nodes[i]) + logweightScale);
+                weights[i] = System.Math.Exp(System.Math.Log(LaguerreNodesAndWeights[n - 2][i, 1]) + (a - 1.0) * System.Math.Log(nodes[i]) + logweightScale);
                 nodes[i] *= scale;
             }
         }
@@ -240,24 +343,24 @@ namespace Microsoft.ML.Probabilistic.Math
             int n = nodes.Count;
             if (n < 2 || n > LegendreNodesAndWeights.Length + 1)
                 throw new Exception("The requested number of nodes is outside [2," + (LegendreNodesAndWeights.Length + 1) + "]");
-            double scale = 0.5*(high - low), offset = low + scale;
+            double scale = 0.5 * (high - low), offset = low + scale;
             double weightScale = scale;
-            int firstHalf = n/2;
+            int firstHalf = n / 2;
             int secondHalf = firstHalf;
-            if (n%2 == 1) secondHalf++;
+            if (n % 2 == 1) secondHalf++;
             // first half: apply symmetry transformation
             int index = 0;
             for (int i = 0; i < firstHalf; i++)
             {
-                nodes[index] = -LegendreNodesAndWeights[n - 2][i, 0]*scale + offset;
-                weights[index] = LegendreNodesAndWeights[n - 2][i, 1]*weightScale;
+                nodes[index] = -LegendreNodesAndWeights[n - 2][i, 0] * scale + offset;
+                weights[index] = LegendreNodesAndWeights[n - 2][i, 1] * weightScale;
                 index++;
             }
             // second half
             for (int i = 0; i < secondHalf; i++)
             {
-                nodes[index] = LegendreNodesAndWeights[n - 2][secondHalf - 1 - i, 0]*scale + offset;
-                weights[index] = LegendreNodesAndWeights[n - 2][secondHalf - 1 - i, 1]*weightScale;
+                nodes[index] = LegendreNodesAndWeights[n - 2][secondHalf - 1 - i, 0] * scale + offset;
+                weights[index] = LegendreNodesAndWeights[n - 2][secondHalf - 1 - i, 1] * weightScale;
                 index++;
             }
         }

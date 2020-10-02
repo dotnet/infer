@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [ParameterNames("sample", "shape", "rate", "lowerBound", "upperBound")]
         public static double TruncatedGammaFromShapeAndRate(double shape, double rate, double lowerBound, double upperBound)
         {
-            return TruncatedGamma.Sample(shape, 1 / rate, lowerBound, upperBound);
+            return TruncatedGamma.Sample(Gamma.FromShapeAndRate(shape, rate), lowerBound, upperBound);
         }
 
         /// <summary>
@@ -1298,18 +1298,6 @@ namespace Microsoft.ML.Probabilistic.Factors
         [Fresh] // needed for CopyPropagationTransform
         [HasUnitDerivative]
         public static T Copy<T>([SkipIfUniform] T value)
-        {
-            return value;
-        }
-
-        /// <summary>
-        /// Passes the input through to the output. Used to set backward messages to uniform.
-        /// </summary>
-        /// <typeparam name="T">The type the input value.</typeparam>
-        /// <param name="value">The value to return.</param>
-        /// <returns>The supplied value.</returns>
-        [Hidden]
-        public static T Cut<T>([SkipIfUniform] T value)
         {
             return value;
         }

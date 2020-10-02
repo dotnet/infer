@@ -16,6 +16,7 @@ using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Serialization;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 using Microsoft.ML.Probabilistic.Compiler;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -35,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             // WARNING: If you change anything here, you must update the documentation            
             Variable<double> mean = Variable.GaussianFromMeanAndVariance(0, 100);
             Variable<double> precision = Variable.GammaFromShapeAndScale(1, 1);
-            VariableArray<double> data = Variable.Observed(new double[] {11, 5, 8, 9});
+            VariableArray<double> data = Variable.Observed(new double[] { 11, 5, 8, 9 });
             Range i = data.Range;
             data[i] = Variable.GaussianFromMeanAndPrecision(mean, precision).ForEach(i);
 
@@ -143,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable<double> precisionA = Variable.GammaFromShapeAndScale(1, 1);
                 Variable<double> meanB = Variable.GaussianFromMeanAndVariance(0, 100);
                 Variable<double> precisionB = Variable.GammaFromShapeAndScale(1, 1);
-                VariableArray<double> dataAB = Variable.Constant(new double[] {20, 12, 10, 12});
+                VariableArray<double> dataAB = Variable.Constant(new double[] { 20, 12, 10, 12 });
                 Range i = dataAB.Range;
                 VariableArray<double> dataA = Variable.Array<double>(i);
                 VariableArray<double> dataB = Variable.Array<double>(i);
@@ -245,7 +246,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             // WARNING: If you change anything here, you must update the documentation            
             Variable<double> mean = Variable.GaussianFromMeanAndVariance(0, 100);
             Variable<double> precision = Variable.GammaFromShapeAndScale(1, 1);
-            VariableArray<double> data = Variable.Constant(new double[] {11, 5, 8, 9});
+            VariableArray<double> data = Variable.Constant(new double[] { 11, 5, 8, 9 });
             Range i = data.Range;
             data[i] = Variable.GaussianFromMeanAndPrecision(mean, precision).ForEach(i);
 
@@ -265,10 +266,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         [Fact]
         public void CreatingVariables()
         {
@@ -277,16 +274,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<bool> b = Variable.Bernoulli(0.5).Named("b");
             Variable<double> y = Variable.Random<double>(new Gaussian(0, 1));
             Variable<double> z = Variable.GaussianFromMeanAndPrecision(x, 1);
-            if (true)
-            {
-                Variable<double> one = Variable.Constant(1.0);
-            }
-            else
-            {
-                Variable<double> one = Variable.New<double>();
-                one.ObservedValue = 1;
-                one.IsReadOnly = true;
-            }
+            Variable<double> one = Variable.Constant(1.0);
+            Variable<double> anotherOne = Variable.New<double>();
+            anotherOne.ObservedValue = 1;
+            anotherOne.IsReadOnly = true;
             Variable<double> z2 = Variable.GaussianFromMeanAndPrecision(x, Variable.Constant(1.0));
             Variable<int> size = Variable.New<int>().Named("size");
             size.ObservedValue = 10;
@@ -295,10 +286,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<double> x2 = Variable<double>.Random(priorOnX);
             priorOnX.ObservedValue = Gaussian.FromMeanAndPrecision(1.0, 2.0);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         [Fact]
         public void FactorsEtc()
@@ -313,7 +300,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<double> x2 = Variable.GaussianFromMeanAndPrecision(mean, precision);
             Variable<double> y = Variable<double>.Factor(Factor.Plus, a, b);
             Variable<double> y2 = a + b;
-            Variable<double> z = (a + b)*Variable.GaussianFromMeanAndPrecision(mean + x, precision);
+            Variable<double> z = (a + b) * Variable.GaussianFromMeanAndPrecision(mean + x, precision);
             Variable<bool> c = a > b;
             Variable.Constrain(Constrain.Equal, x, y);
             Variable.ConstrainPositive(x);
@@ -342,12 +329,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             //x[C] = Variable.GaussianFromMeanAndPrecision(y[C,D], 1); // runtime error
 
             // Constant array example
-            VariableArray<double> data = Variable.Constant(new double[] {1, 2, 3, 4});
-            VariableArray2D<double> data2D = Variable.Constant(new double[,] {{5, 6}, {7, 9}});
+            VariableArray<double> data = Variable.Constant(new double[] { 1, 2, 3, 4 });
+            VariableArray2D<double> data2D = Variable.Constant(new double[,] { { 5, 6 }, { 7, 9 } });
 
             // Observed array example 1
-            VariableArray<double> obs = Variable.Observed(new double[] {1, 2, 3, 4});
-            VariableArray2D<double> obs2D = Variable.Observed(new double[,] {{5, 6}, {7, 9}});
+            VariableArray<double> obs = Variable.Observed(new double[] { 1, 2, 3, 4 });
+            VariableArray2D<double> obs2D = Variable.Observed(new double[,] { { 5, 6 }, { 7, 9 } });
             Range r = obs.Range;
             Range r0 = obs2D.Range0;
             Range r1 = obs2D.Range1;
@@ -359,7 +346,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Range y = new Range(sizeX).Named("y");
             VariableArray2D<double> arrayXY = Variable.Array<double>(x, y).Named("ArrayXY");
 
-            double[,] obs2DData = new double[,] {{5, 6}, {7, 9}, {6, 7}};
+            double[,] obs2DData = new double[,] { { 5, 6 }, { 7, 9 }, { 6, 7 } };
             sizeX.ObservedValue = obs2DData.GetLength(0);
             sizeY.ObservedValue = obs2DData.GetLength(1);
             arrayXY.ObservedValue = obs2DData;
@@ -415,9 +402,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             Range i = new Range(3);
             Range j = i.Clone();
             VariableArray<double> y = Variable.Array<double>(i);
-            y.ObservedValue = new double[] {1, 2, 3};
+            y.ObservedValue = new double[] { 1, 2, 3 };
             VariableArray2D<double> outerProduct = Variable.Array<double>(i, j);
-            outerProduct[i, j] = y[i]*y[j];
+            outerProduct[i, j] = y[i] * y[j];
             InferenceEngine engine = new InferenceEngine();
             Console.WriteLine(engine.Infer(outerProduct));
         }
@@ -425,7 +412,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void JaggedArrayDocTests()
         {
-            int[] sizes = new int[] {2, 3};
+            int[] sizes = new int[] { 2, 3 };
             Range item = new Range(sizes.Length).Named("item");
             VariableArray<int> sizesVar = Variable.Constant(sizes, item).Named("sizes");
             Range feature = new Range(sizesVar[item]).Named("feature");
@@ -447,7 +434,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             // .NET  constant array of array of doubles
-            double[][] a = new double[][] {new double[] {1.1, 3.3}, new double[] {1.1, 2.2, 4.4}};
+            double[][] a = new double[][] { new double[] { 1.1, 3.3 }, new double[] { 1.1, 2.2, 4.4 } };
             int[] innerSizes = new int[a.Length];
             for (int i = 0; i < a.Length; i++)
                 innerSizes[i] = a[i].Length;
@@ -458,7 +445,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<VariableArray<double>, double[][]> aConst = Variable.Constant<double>(a, outer, inner);
 
             // 2D jagged array
-            int[,] sizes2D = new int[,] {{2, 3}, {4, 2}, {3, 1}};
+            int[,] sizes2D = new int[,] { { 2, 3 }, { 4, 2 }, { 3, 1 } };
             Range rx = new Range(sizes2D.GetLength(0)).Named("rx");
             Range ry = new Range(sizes2D.GetLength(1)).Named("ry");
             VariableArray2D<int> sizes2DVar = Variable.Constant(sizes2D, rx, ry);
@@ -538,7 +525,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             InferenceEngine engine = new InferenceEngine();
             numIndices.ObservedValue = 2;
-            indices.ObservedValue = new int[] {1, 2};
+            indices.ObservedValue = new int[] { 1, 2 };
             Console.WriteLine(engine.Infer(bools));
             // Result is:
             // [0] Bernoulli(0.7)
@@ -546,7 +533,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             // [2] Bernoulli(1)
             // [3] Bernoulli(0.7)
             numIndices.ObservedValue = 3;
-            indices.ObservedValue = new int[] {1, 2, 3};
+            indices.ObservedValue = new int[] { 1, 2, 3 };
             Console.WriteLine(engine.Infer(bools));
             // Result is:
             // [0] Bernoulli(0.7)
@@ -570,7 +557,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             InferenceEngine engine = new InferenceEngine();
             numIndices.ObservedValue = 2;
-            indices.ObservedValue = new int[] {1, 2};
+            indices.ObservedValue = new int[] { 1, 2 };
             Console.WriteLine(engine.Infer(bools));
             // Result is:
             // [0] Bernoulli(0.7)
@@ -578,7 +565,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             // [2] Bernoulli(1)
             // [3] Bernoulli(0.7)
             numIndices.ObservedValue = 3;
-            indices.ObservedValue = new int[] {1, 2, 3};
+            indices.ObservedValue = new int[] { 1, 2, 3 };
             Console.WriteLine(engine.Infer(bools));
             // Result is:
             // [0] Bernoulli(0.7)
@@ -604,7 +591,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable.ConstrainTrue(indexedBools[inner]);
             }
             InferenceEngine engine = new InferenceEngine();
-            indices.ObservedValue = new int[][] {new int[] {0}, new int[] {2}};
+            indices.ObservedValue = new int[][] { new int[] { 0 }, new int[] { 2 } };
             Console.WriteLine(engine.Infer(bools));
             // Result is:
             // [0] Bernoulli(1)
@@ -617,7 +604,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void JaggedGetItemExample()
         {
             Range item = new Range(2);
-            VariableArray<int> sizes = Variable.Constant(new int[] {3, 4}, item);
+            VariableArray<int> sizes = Variable.Constant(new int[] { 3, 4 }, item);
             Range inner = new Range(sizes[item]);
             var bools = Variable.Array(Variable.Array<bool>(inner), item);
             bools[item][inner] = Variable.Bernoulli(0.7).ForEach(item, inner);
@@ -648,8 +635,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             int nPlayers = 4;
             int nGames = 4;
-            int[] winner = new int[] {2, 2, 3, 3};
-            int[] loser = new int[] {0, 1, 0, 2};
+            int[] winner = new int[] { 2, 2, 3, 3 };
+            int[] loser = new int[] { 0, 1, 0, 2 };
             Variable<double>[] skill = new Variable<double>[nPlayers];
             for (int player = 0; player < nPlayers; player++)
             {
@@ -673,8 +660,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             int nPlayers = 4;
             int nGames = 4;
-            int[] winner = new int[] {2, 2, 3, 3};
-            int[] loser = new int[] {0, 1, 0, 2};
+            int[] winner = new int[] { 2, 2, 3, 3 };
+            int[] loser = new int[] { 0, 1, 0, 2 };
             Range player = new Range(nPlayers).Named("player");
             VariableArray<double> skill = Variable.Array<double>(player).Named("skill");
             skill[player] = Variable.GaussianFromMeanAndVariance(0, 100).ForEach(player);
@@ -730,7 +717,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void CaseExample()
         {
-            Variable<int> c = Variable.Discrete(new double[] {0.5, 0.5});
+            Variable<int> c = Variable.Discrete(new double[] { 0.5, 0.5 });
             Variable<double> x = Variable.New<double>();
             using (Variable.Case(c, 0))
             {
@@ -756,7 +743,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<int> c = Variable.Array<int>(i).Named("c");
             using (Variable.ForEach(i))
             {
-                c[i] = Variable.Discrete(new double[] {0.5, 0.5});
+                c[i] = Variable.Discrete(new double[] { 0.5, 0.5 });
                 using (Variable.Case(c[i], 0))
                 {
                     x[i] = Variable.GaussianFromMeanAndVariance(1, 1);
@@ -768,7 +755,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             // check inference
-            VariableArray<double> data = Variable.Constant(new double[] {0.9, 1.1, 1.9, 2.1}, i).Named("data");
+            VariableArray<double> data = Variable.Constant(new double[] { 0.9, 1.1, 1.9, 2.1 }, i).Named("data");
             Variable.ConstrainEqual(x[i], data[i]);
             InferenceEngine engine = new InferenceEngine(new Algorithms.VariationalMessagePassing());
             Console.WriteLine(engine.Infer(c));
@@ -779,15 +766,15 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             int mixtureSize = 2;
             Range k = new Range(mixtureSize).Named("k");
-            Variable<int> c = Variable.Discrete(k, new double[] {0.5, 0.5}).Named("c");
-            VariableArray<double> means = Variable.Observed(new double[] {1, 2}, k).Named("means");
+            Variable<int> c = Variable.Discrete(k, new double[] { 0.5, 0.5 }).Named("c");
+            VariableArray<double> means = Variable.Observed(new double[] { 1, 2 }, k).Named("means");
             Variable<double> x = Variable.New<double>().Named("x");
             using (Variable.Switch(c))
             {
                 x.SetTo(Variable.GaussianFromMeanAndVariance(means[c], 1));
             }
 
-            means.ObservedValue = new double[] {1, 2};
+            means.ObservedValue = new double[] { 1, 2 };
             InferenceEngine engine = new InferenceEngine();
             Gaussian expected = new Gaussian(1.5, 1.25);
             Gaussian actual = engine.Infer<Gaussian>(x);
@@ -810,8 +797,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 x.SetTo(Variable.GaussianFromMeanAndVariance(means[c], 1));
             }
 
-            means.ObservedValue = new double[] {1, 2};
-            weights.ObservedValue = Vector.FromArray(new double[] {0.5, 0.5});
+            means.ObservedValue = new double[] { 1, 2 };
+            weights.ObservedValue = Vector.FromArray(new double[] { 0.5, 0.5 });
             mixtureSize.ObservedValue = 2;
             InferenceEngine engine = new InferenceEngine();
             Gaussian expected = new Gaussian(1.5, 1.25);
@@ -823,7 +810,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void SetToExample()
         {
-            Variable<int> c = Variable.Discrete(new double[] {0.5, 0.5});
+            Variable<int> c = Variable.Discrete(new double[] { 0.5, 0.5 });
             Variable<double> x = Variable.New<double>();
             using (Variable.Case(c, 0))
             {
@@ -922,7 +909,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             int nItems = 10;
             int nFeatures = 5;
-            Vector[,] data = new Vector[nItems,nFeatures];
+            Vector[,] data = new Vector[nItems, nFeatures];
 
             Range item = new Range(nItems);
             Range feature = new Range(nFeatures);
@@ -938,7 +925,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Vector[][,] data = new Vector[nGroups][,];
             for (int g = 0; g < nGroups; g++)
             {
-                data[g] = new Vector[nItems,nFeatures];
+                data[g] = new Vector[nItems, nFeatures];
             }
             Range item = new Range(nItems);
             Range feature = new Range(nFeatures);
@@ -959,7 +946,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             int nItems = 10;
             int nPlaces = 5;
             int nGroups = 3;
-            Vector[,][] data = new Vector[nPlaces,nGroups][];
+            Vector[,][] data = new Vector[nPlaces, nGroups][];
             for (int p = 0; p < nPlaces; p++)
             {
                 for (int g = 0; g < nGroups; g++)
@@ -969,7 +956,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             Range item = new Range(nItems);
 
-            VariableArray<Vector>[,] dataGiven = new VariableArray<Vector>[nPlaces,nGroups];
+            VariableArray<Vector>[,] dataGiven = new VariableArray<Vector>[nPlaces, nGroups];
             for (int p = 0; p < nPlaces; p++)
             {
                 for (int g = 0; g < nGroups; g++)
@@ -1005,7 +992,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             InferenceEngine engine = new InferenceEngine();
             engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
-            var ca = engine.Compiler.Compile(ChannelTransformInput, 2, new int[] {0, 0});
+            var ca = engine.Compiler.Compile(ChannelTransformInput, 2, new int[] { 0, 0 });
             ca.Execute(engine.NumberOfIterations);
             Console.WriteLine(ca.Marginal("array2D"));
         }
@@ -1030,7 +1017,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             // passing whole array to method.
             // passing given array to method.
             items = Factor.GetItems(array, arrayGiven);
-            double[,] array2D = new double[arrayLength,scalarGiven];
+            double[,] array2D = new double[arrayLength, scalarGiven];
             for (int j = 0; j < arrayLength; j++)
             {
                 // using given for loop bound.
@@ -1310,13 +1297,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void HybridModelExample()
         {
-            double[] dataSet = new double[] {5, 5.1, 5.2, 4.9, -5.1, -5.2, -5.3, -4.9};
+            double[] dataSet = new double[] { 5, 5.1, 5.2, 4.9, -5.1, -5.2, -5.3, -4.9 };
             Gaussian actualMean, expectedMean;
             Gamma actualPrec, expectedPrec;
             EstimateGaussian(new InferenceEngine(new Algorithms.VariationalMessagePassing()), dataSet,
                              out expectedMean, out expectedPrec);
-            InferenceEngine engine1 = new InferenceEngine() {NumberOfIterations = 10};
-            InferenceEngine engine2 = new InferenceEngine(new Algorithms.VariationalMessagePassing()) {NumberOfIterations = 10};
+            InferenceEngine engine1 = new InferenceEngine() { NumberOfIterations = 10 };
+            InferenceEngine engine2 = new InferenceEngine(new Algorithms.VariationalMessagePassing()) { NumberOfIterations = 10 };
             EstimateGaussianSharedDefinition(dataSet, engine1, engine2, out actualMean, out actualPrec);
             Assert.True(expectedMean.MaxDiff(actualMean) < 1e-4);
             Assert.True(expectedPrec.MaxDiff(actualPrec) < 1e-2);
@@ -1477,6 +1464,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine(engine.Infer(mean));
         }
 
+#if NETFRAMEWORK
         internal void BinarySerializationExample()
         {
             Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);
@@ -1489,15 +1477,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             // read from disk
             using (FileStream stream = new FileStream("temp.bin", FileMode.Open))
             {
-                Dirichlet d2 = (Dirichlet) serializer.Deserialize(stream);
+                Dirichlet d2 = (Dirichlet)serializer.Deserialize(stream);
                 Console.WriteLine(d2);
             }
         }
+#endif
 
         internal void XmlSerializationExample()
         {
             Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);
-            DataContractSerializer serializer = new DataContractSerializer(typeof (Dirichlet), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Dirichlet), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
             // write to disk
             using (FileStream stream = new FileStream("temp.xml", FileMode.Create))
             {
@@ -1508,7 +1497,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             using (FileStream stream = new FileStream("temp.xml", FileMode.Open))
             {
                 XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas());
-                Dirichlet d2 = (Dirichlet) serializer.ReadObject(reader);
+                Dirichlet d2 = (Dirichlet)serializer.ReadObject(reader);
                 Console.WriteLine(d2);
             }
         }
@@ -1587,7 +1576,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void MarginalDividedByPriorExample()
         {
             Variable<double> weight = Variable.GaussianFromMeanAndVariance(0, 1);
-            Variable<Gaussian> weightInbox = Variable.Observed(new Gaussian(3,4));
+            Variable<Gaussian> weightInbox = Variable.Observed(new Gaussian(3, 4));
             Variable.ConstrainEqualRandom(weight, weightInbox);
             Variable<double> weightCopy = Variable.Copy(weight);
             weightCopy.AddAttribute(QueryTypes.MarginalDividedByPrior);

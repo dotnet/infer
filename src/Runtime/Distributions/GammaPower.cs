@@ -206,8 +206,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (!IsPointMass && Rate > double.MaxValue)
             {
-                Rate = Math.Pow(0, Power);
-                SetToPointMass();
+                Point = Math.Pow(0, Power);
             }
         }
 
@@ -283,7 +282,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double oldShape = shape;
                 logRate = MMath.RisingFactorialLnOverN(shape, power) - logMeanOverPower;
                 shape = Math.Exp(meanLogOverPower + logRate) + 0.5;
-                //Console.WriteLine($"shape = {shape:r}, logRate = {logRate:r}");
+                //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}");
                 if (MMath.AreEqual(oldLogRate, logRate) && MMath.AreEqual(oldShape, shape)) break;
                 if (double.IsNaN(shape)) throw new Exception("Failed to converge");
             }
@@ -451,15 +450,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Sets this instance to a point mass. The location of the
-        /// point mass is the existing Rate parameter
-        /// </summary>
-        private void SetToPointMass()
-        {
-            Shape = Double.PositiveInfinity;
-        }
-
-        /// <summary>
         /// Sets/gets the instance as a point mass
         /// </summary>
         [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
@@ -472,7 +462,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             set
             {
-                SetToPointMass();
+                // Change this instance to a point mass.
+                Shape = Double.PositiveInfinity;
                 Rate = value;
             }
         }
@@ -586,15 +577,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     result -= rate;
                 }
-                else if (Math.Abs(logxOverPower) < 1e-8)
+                else if (Math.Abs(logxOverPower) < MMath.SqrtUlp1)
                 {
                     // The part of the log-density that depends on x is:
                     //   (shape/power-1)*log(x) - rate*x^(1/power)
                     // = (shape/power-1)*log(x) - rate*exp(log(x)/power))
-                    //   (when abs(log(x)/power) < 1e-8, exp(log(x)/power) = 1 + log(x)/power + 0.5*log(x)^2/power^2)
-                    // = (shape/power-1)*log(x) - rate*(1 + log(x)/power + 0.5*log(x)^2/power^2)
-                    // = ((shape - rate)/power - 1)*log(x) - rate*(1 + 0.5*log(x)^2/power^2)
-                    result += ((shape - rate) / power - 1) * logx - rate * (1 + 0.5 * logxOverPower * logxOverPower);
+                    //   (when abs(log(x)/power)^2 < ulp(1), exp(log(x)/power) can be approximated by 1 + log(x)/power, because
+                    //    the third term of this power series 0.5*log(x)^2/power^2 (as well as all other terms) is less than
+                    //    half-ulp of the first)
+                    // = (shape/power-1)*log(x) - rate*(1 + log(x)/power)
+                    // = ((shape - rate)/power - 1)*log(x) - rate
+                    result += ((shape - rate) / power - 1) * logx - rate;
                 }
                 else
                 {

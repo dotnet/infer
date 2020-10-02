@@ -8,17 +8,19 @@ namespace Microsoft.ML.Probabilistic.Collections
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Runtime.Serialization;
 
     using Microsoft.ML.Probabilistic.Serialization;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
-    /// Represents a read only array.
+    /// Represents an immutable array.
     /// </summary>
     /// <remarks>
-    /// It is implemented as struct because it avoids extra allocations on heap.
-    /// <see cref="ReadOnlyArray{T}"/> doesn't have space overhead compared to regular arrays.
+    /// This is a partial reimplementation of System.Collections.Immutable.ReadOnlyArray.
+    /// Once we can move to netcore-only codebase, this type can be removed.
+    /// API is supposed to be a subset of the real thing to ease migration in future.
     /// </remarks>
     [Serializable]
     [DataContract]
@@ -33,16 +35,20 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadOnlyArray{T}"/> structure.
         /// </summary>
-        [Construction("CloneArray")]
-        public ReadOnlyArray(T[] array)
+        private ReadOnlyArray(T[] array)
         {
             this.array = array;
         }
 
         /// <summary>
-        /// Gets a boolean value which is true if this ReadOnlyArray wraps null array.
+        /// Creates a new instance of <see cref="ReadOnlyArray{T}"/> by copying elements of
+        /// <paramref name="sequence"/>.
         /// </summary>
-        public bool IsNull => this.array == null;
+        [Construction("CloneArray")]
+        public static ReadOnlyArray<T> CreateCopy(IEnumerable<T> sequence) =>
+            new ReadOnlyArray<T>(sequence.ToArray());
+
+        public static ReadOnlyArray<T> Empty => new ReadOnlyArray<T>(Array.Empty<T>());
 
         /// <inheritdoc/>
         public T this[int index] => this.array[index];
@@ -72,10 +78,38 @@ namespace Microsoft.ML.Probabilistic.Collections
         IEnumerator IEnumerable.GetEnumerator() =>
             new ReadOnlyArraySegmentEnumerator<T>(this, 0, this.array.Length);
 
-        /// <summary>
-        /// Helper method which allows to cast regular arrays to read only versions implicitly.
-        /// </summary>
-        public static implicit operator ReadOnlyArray<T>(T[] array) => new ReadOnlyArray<T>(array);
+        public override bool Equals(object o) => o is ReadOnlyArray<T> that && this == that;
+
+        public override int GetHashCode() => this.array.GetHashCode();
+
+        public static bool operator ==(ReadOnlyArray<T> left, ReadOnlyArray<T> right) =>
+            left.array == right.array;
+
+        public static bool operator !=(ReadOnlyArray<T> left, ReadOnlyArray<T> right) =>
+            left.array != right.array;
+
+        public class Builder
+        {
+            private T[] array;
+
+            public Builder(int size) =>
+                this.array = new T[size];
+
+            public T this[int index]
+            {
+                get => this.array[index];
+                set => this.array[index] = value;
+            }
+
+            public int Count => this.array.Length;
+
+            public ReadOnlyArray<T> MoveToImmutable()
+            {
+                var result = new ReadOnlyArray<T>(this.array);
+                this.array = Array.Empty<T>();
+                return result;
+            }
+        }
     }
 
     /// <summary>
@@ -103,7 +137,6 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// </summary>
         public ReadOnlyArraySegment(ReadOnlyArray<T> array, int begin, int length)
         {
-            Argument.CheckIfValid(!array.IsNull, nameof(array));
             Argument.CheckIfInRange(begin >= 0 && begin <= array.Count, nameof(begin), "Segment begin should be in the range [0, array.Count]");
             Argument.CheckIfInRange(length >= 0 && length <= array.Count - begin, nameof(length), "Segment length should be in the range [0, array.Count - begin]");
 
@@ -144,12 +177,12 @@ namespace Microsoft.ML.Probabilistic.Collections
     }
 
     /// <summary>
-    /// Enumerator for read only arrays and read only array segments.
+    /// Enumerator for immutable arrays and immutable array segments.
     /// </summary>
     public struct ReadOnlyArraySegmentEnumerator<T> : IEnumerator<T>
     {
         /// <summary>
-        /// Underlying read-only array.
+        /// Underlying immutable array.
         /// </summary>
         private readonly ReadOnlyArray<T> array;
 
@@ -202,5 +235,31 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             this.pointer = this.begin - 1;
         }
+    }
+
+    public static class ReadOnlyArray
+    {
+        public static ReadOnlyArray<T>.Builder CreateBuilder<T>(int size) =>
+            new ReadOnlyArray<T>.Builder(size);
+
+        public static ReadOnlyArray<T> Create<T>() => ReadOnlyArray<T>.Empty;
+
+        public static ReadOnlyArray<T> Create<T>(T elem)
+        {
+            var builder = new ReadOnlyArray<T>.Builder(1) {[0] = elem};
+            return builder.MoveToImmutable();
+        }
+
+        public static ReadOnlyArray<T> Create<T>(T elem1, T elem2)
+        {
+            var builder = new ReadOnlyArray<T>.Builder(2) {[0] = elem1, [1] = elem2};
+            return builder.MoveToImmutable();
+        }
+
+        /// <summary>
+        /// Syntactic sugar for `ReadOnlyArray{T}.CreateCopy(sequence)`
+        /// </summary>
+        public static ReadOnlyArray<T> ToReadOnlyArray<T>(this IEnumerable<T> sequence) =>
+            ReadOnlyArray<T>.CreateCopy(sequence);
     }
 }

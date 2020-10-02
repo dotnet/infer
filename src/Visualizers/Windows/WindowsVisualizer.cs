@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 {
     public class WindowsVisualizer : Visualizer
     {
-        internal override IFactorManager FactorManager { get; } = new FormsFactorManager();
+        internal override IFactorManager FactorManager { get; } = new DefaultVisualizer().FactorManager;
 
         internal override IDependencyGraphVisualizer DependencyGraphVisualizer { get; } = new FormsDependencyGraphVisualizer();
 
@@ -100,17 +100,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                     TransformChainView.ShowInWindow(modelName + " transform chain", tcv, false);
                 });
 #endif
-            }
-        }
-
-        internal class FormsFactorManager : IFactorManager
-        {
-            public void ShowFactorManager(bool showMissingEvidences, params IAlgorithm[] algorithms)
-            {
-                FactorManagerView fmv = new FactorManagerView(algorithms);
-                fmv.ShowMissingEvidences = showMissingEvidences;
-                fmv.OnFactorManagedChanged();
-                FormHelper.RunInForm(fmv, "Factor Manager", false);
             }
         }
 

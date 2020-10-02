@@ -1,15 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\nuget-properties.props" />
 
   <PropertyGroup>
     <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains visualization tools for exploring and analyzing models on Windows platform.</Description>
     <TargetFramework>net461</TargetFramework>
     <AssemblyName>Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows</AssemblyName>
+    <PackageId>Microsoft.ML.Probabilistic.Visualizers.Windows$(NuGetPackageIdSuffix)</PackageId>
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS, SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS</DefineConstants>
     <NoWarn>1591</NoWarn>
     <RootNamespace>Microsoft.ML.Probabilistic.Compiler.Visualizers</RootNamespace>
     <Configurations>Debug;Release</Configurations>
     <MonoSupport>false</MonoSupport>
+    <UseWindowsForms>true</UseWindowsForms>
     <DefineConstants Condition=" '$(MonoSupport)' == 'false' ">$(DefineConstants);INCLUDE_TRANSFORM_BROWSER</DefineConstants>
   </PropertyGroup>
 
@@ -28,32 +30,12 @@
     <PackageReference Include="Microsoft.Msagl" Version="1.1.1" />
     <PackageReference Include="Microsoft.Msagl.Drawing" Version="1.1.1" />
     <PackageReference Include="Microsoft.Msagl.GraphViewerGdi" Version="1.1.1" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    
-    <Compile Update="FactorManagerView.cs" SubType="UserControl" />
-    <EmbeddedResource Update="*.resx">
-      <DependentUpon>%(FileName).cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
 
   <PropertyGroup Condition=" $(DefineConstants.Contains('INCLUDE_TRANSFORM_BROWSER'))">
+    <UseWpf>true</UseWpf>
     <LanguageTargets Condition="Exists('$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets')">$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>
   </PropertyGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('INCLUDE_TRANSFORM_BROWSER'))">
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-    <!-- XAML elements -->
-    <!-- Workaround to make xamls appear in the VS solution explorer -->
-    <None Include="**\*.xaml" />
-    <Page Include="**\*.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Update="**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
-  </ItemGroup>
   <ItemGroup Condition=" !($(DefineConstants.Contains('INCLUDE_TRANSFORM_BROWSER')))">
     <!-- XAML elements -->
     <None Include="**\*.xaml" />

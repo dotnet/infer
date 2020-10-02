@@ -1,0 +1,9 @@
+arg0,arg1,expectedresult
+-Infinity,-Infinity,-Infinity
+-Infinity,-1000,-1000.0
+-Infinity,1000,1000.0
+0,0,0.69314718055994530941723212145817656807550013436026
+0,1000,1000.0
+1000,0,1000.0
+Infinity,Infinity,Infinity
+NaN,5,NaN

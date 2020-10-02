@@ -29,6 +29,12 @@ namespace Microsoft.ML.Probabilistic.Tests
 
     public static class TestUtils
     {
+        public static string DataFolderPath { get; } = Path.GetFullPath(Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(ClickTest).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netframework
+#endif
+                "Data"));
+
         public static void SetDebugOptions()
         {
             //MessageTransform.debug = true;

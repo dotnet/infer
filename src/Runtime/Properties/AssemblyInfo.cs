@@ -9,7 +9,6 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Microsoft.ML.Probabilistic")]
 [assembly: AssemblyDescription("Run-time library for Infer.NET")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -22,16 +21,8 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("b35ca8e5-42b7-4dc6-9c75-8b94393d4c1d")]
 
-// Compiler and Tests need to be friend assemblies
+// Tests need to be friend assemblies
 
-[assembly:
-    InternalsVisibleTo(
-        "Microsoft.ML.Probabilistic.Compiler,PublicKey=0024000004800000940000000602000000240000525341310004000001000100551f07a755a3e3f2901fa321ab631d13d6192b4e6ac9c87279500f49d6635cde6902587752eff20402f46f6ea9c3d80e827580a799840aaab9a49b1d2597e4c1798ee93c5cb66851e9d22f4d6e8110571f4a2e59f1d760f7be04fb10e7dc43ee7ed2831907731427b9815c5fe7f4888f9933ee7a1ad5d1f293fd8ab834fac1be"
-        )]
-[assembly:
-    InternalsVisibleTo(
-        "AzureML.Microsoft.ML.Probabilistic.Compiler,PublicKey=0024000004800000940000000602000000240000525341310004000001000100551f07a755a3e3f2901fa321ab631d13d6192b4e6ac9c87279500f49d6635cde6902587752eff20402f46f6ea9c3d80e827580a799840aaab9a49b1d2597e4c1798ee93c5cb66851e9d22f4d6e8110571f4a2e59f1d760f7be04fb10e7dc43ee7ed2831907731427b9815c5fe7f4888f9933ee7a1ad5d1f293fd8ab834fac1be"
-        )]
 [assembly:
     InternalsVisibleTo(
         "Microsoft.ML.Probabilistic.Tests,PublicKey=0024000004800000940000000602000000240000525341310004000001000100551f07a755a3e3f2901fa321ab631d13d6192b4e6ac9c87279500f49d6635cde6902587752eff20402f46f6ea9c3d80e827580a799840aaab9a49b1d2597e4c1798ee93c5cb66851e9d22f4d6e8110571f4a2e59f1d760f7be04fb10e7dc43ee7ed2831907731427b9815c5fe7f4888f9933ee7a1ad5d1f293fd8ab834fac1be"

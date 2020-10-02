@@ -128,11 +128,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
             engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
             double[,] dataIn = MatlabReader.ReadMatrix(new double[400,64],
-                Path.Combine(
-#if NETCORE
-                    Path.GetDirectoryName(typeof(VmpMslTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                    "Data", "pca.txt"),
+                Path.Combine(TestUtils.DataFolderPath, "pca.txt"),
                 ' ');
             int C = 8;
             engine.ShowProgress = true;

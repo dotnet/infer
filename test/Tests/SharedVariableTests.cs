@@ -18,6 +18,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using DirichletArray = DistributionRefArray<Dirichlet, Vector>;
     using GaussianArrayArrayArray = DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, double[][]>;
     using Microsoft.ML.Probabilistic.Algorithms;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     /// <summary>
     /// Provides test routines for shared variables on Gaussian and Discrete.
@@ -319,14 +320,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             IfBlock evidenceBlock = Variable.If(evidence);
             Variable<double> mean = Variable.GaussianFromMeanAndVariance(0, 1).Named("mean");
             Variable<double> prec = Variable.GammaFromShapeAndScale(1, 1).Named("prec");
-            //Variable<double> mean = Variable.Constant(0.0).Named("mean");
-            //Variable<double> prec = Variable.Constant(1.0).Named("prec");
             Variable<int> dataCount = Variable.New<int>().Named("dataCount");
             Range item = new Range(dataCount).Named("item");
             VariableArray<double> data = Variable.Array<double>(item).Named("data");
             data[item] = Variable.GaussianFromMeanAndPrecision(mean, prec).ForEach(item);
             evidenceBlock.CloseBlock();
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
+            engine.ShowProgress = false;
             data.ObservedValue = dataSet;
             dataCount.ObservedValue = dataSet.Length;
 
@@ -358,7 +358,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             evidenceBlock.CloseBlock();
 
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
-            //engine.Compiler.WriteSourceFiles = false;
+            engine.ShowProgress = false;
 
             for (int pass = 0; pass < 15; pass++)
             {
@@ -375,9 +375,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma actualPrec = prec.Marginal<Gamma>();
             //double actualEvidence = evidence.Marginal<Bernoulli>().LogOdds + model.GetEvidenceCorrectionForVmp();
             double actualEvidence = Model.GetEvidenceForAll(model);
-            Console.WriteLine(" mean marginal = {0} (should be {1})", actualMean, expectedMean);
-            Console.WriteLine(" prec marginal = {0} (should be {1})", actualPrec, expectedPrec);
-            Console.WriteLine(" evidence = {0} (should be {1})", actualEvidence, expectedEvidence);
+            bool verbose = false;
+            if (verbose)
+            {
+                Console.WriteLine(" mean marginal = {0} (should be {1})", actualMean, expectedMean);
+                Console.WriteLine(" prec marginal = {0} (should be {1})", actualPrec, expectedPrec);
+                Console.WriteLine(" evidence = {0} (should be {1})", actualEvidence, expectedEvidence);
+            }
             Assert.True(expectedMean.MaxDiff(actualMean) < 1e-4);
             Assert.True(expectedPrec.MaxDiff(actualPrec) < 1e-2);
             Assert.Equal(expectedEvidence, actualEvidence, 1e-4);
@@ -413,7 +417,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 dataCountForModel[i] = dataCount;
                 models[i] = model;
                 engines[i] = new InferenceEngine(new VariationalMessagePassing());
-                //engines[i].Compiler.WriteSourceFiles = false;
+                engines[i].ShowProgress = false;
             }
 
             for (int pass = 0; pass < 200; pass++)
@@ -430,9 +434,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma actualPrec = prec.Marginal();
             //double actualEvidence = evidence.Marginal<Bernoulli>().LogOdds;
             double actualEvidence = Model.GetEvidenceForAll(models);
-            Console.WriteLine(" mean marginal = {0} (should be {1})", actualMean, expectedMean);
-            Console.WriteLine(" prec marginal = {0} (should be {1})", actualPrec, expectedPrec);
-            Console.WriteLine(" evidence = {0} (should be {1})", actualEvidence, expectedEvidence);
+            bool verbose = false;
+            if (verbose)
+            {
+                Console.WriteLine(" mean marginal = {0} (should be {1})", actualMean, expectedMean);
+                Console.WriteLine(" prec marginal = {0} (should be {1})", actualPrec, expectedPrec);
+                Console.WriteLine(" evidence = {0} (should be {1})", actualEvidence, expectedEvidence);
+            }
             Assert.True(expectedMean.MaxDiff(actualMean) < 1e-4);
             Assert.True(expectedPrec.MaxDiff(actualPrec) < 1e-2);
             Assert.Equal(expectedEvidence, actualEvidence, 1e-4);
@@ -1002,7 +1010,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             Range W = new Range(sizeVocab).Named("W");
             Range T = new Range(numTopics).Named("T");
-            var Theta = Variable<Vector>.DirichletSymmetric(numTopics, 0.1).Named("Theta");
+            var Theta = Variable<Vector>.DirichletSymmetric(numTopics, 0.125).Named("Theta");
             Theta.SetValueRange(T);
             var Phi = Variable.Array<Vector>(T).Named("Phi");
             Phi.SetValueRange(W);
@@ -1020,7 +1028,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.NumberOfIterations = 1;
 
             Word.ObservedValue = 0;
-            PhiPrior.ObservedValue = Util.ArrayInit(numTopics, d => Dirichlet.Symmetric(sizeVocab, 0.1));
+            PhiPrior.ObservedValue = Util.ArrayInit(numTopics, d => Dirichlet.Symmetric(sizeVocab, 0.125));
             Phi.AddAttribute(QueryTypes.Marginal);
             Phi.AddAttribute(QueryTypes.MarginalDividedByPrior);
             var PhiOutput = engine.Infer<Dirichlet[]>(Phi, QueryTypes.MarginalDividedByPrior)[0];
@@ -1028,6 +1036,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var phiManualOut = new Dirichlet(phiMarg);
             phiManualOut.SetToRatio(phiMarg, PhiPrior.ObservedValue[0], false);
 
+            // Since we check for exact equality here, the numbers in the problem must be exactly representable.
             Assert.Equal(phiManualOut, PhiOutput);
         }
     }

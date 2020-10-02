@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\common.props" />
 
   <PropertyGroup>
@@ -7,6 +7,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <ErrorReport>prompt</ErrorReport>
     <OutputType>WinExe</OutputType>
+    <UseWpf>true</UseWpf>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -43,32 +44,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="App.xaml" />
-    <None Remove="ClinicalTrial.xaml" />
-    <None Remove="Images\Infer.ico" />
-    <None Remove="Images\patient.png" />
-    <None Remove="Images\pill-yellow.png" />
-    <None Remove="Images\placebo-blue.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
 
   <ItemGroup>
@@ -77,13 +54,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Include="ClinicalTrial.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\Infer.ico" />
-    <Resource Include="Images\patient.png" />
-    <Resource Include="Images\pill-yellow.png" />
-    <Resource Include="Images\placebo-blue.png" />
+    <Resource Include="Images\*" />
   </ItemGroup>
 </Project>

@@ -353,6 +353,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                     {
                                         innerLoops.Add(innerLoop2);
                                         indexTarget = index2.Target;
+                                        // This limit must match the number of handled cases below.
+                                        if (innerLoops.Count == 3) break;
                                     }
                                     else
                                         break;
@@ -631,9 +633,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected override IExpression ConvertAssign(IAssignExpression iae)
         {
             iae = (IAssignExpression)base.ConvertAssign(iae);
-            if (iae.Expression is IMethodInvokeExpression)
+            if (iae.Expression is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression)iae.Expression;
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(iae.Target);
                 if (ivd != null)
                 {

@@ -5,14 +5,11 @@
     <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains classes and methods needed to execute the inference code.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>$(AssemblyNamePrefix)Microsoft.ML.Probabilistic</AssemblyName>
+    <PackageId>$(AssemblyName)$(NuGetPackageIdSuffix)</PackageId>
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS</DefineConstants>
     <NoWarn>1591</NoWarn>
     <RootNamespace>Microsoft.ML.Probabilistic</RootNamespace>
     <Configurations>Debug;Release</Configurations>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,5 +30,11 @@
   <ItemGroup>
     <Compile Include="..\Shared\SharedAssemblyFileVersion.cs" />
     <Compile Include="..\Shared\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyNamePrefix)Microsoft.ML.Probabilistic.Compiler,PublicKey=0024000004800000940000000602000000240000525341310004000001000100551f07a755a3e3f2901fa321ab631d13d6192b4e6ac9c87279500f49d6635cde6902587752eff20402f46f6ea9c3d80e827580a799840aaab9a49b1d2597e4c1798ee93c5cb66851e9d22f4d6e8110571f4a2e59f1d760f7be04fb10e7dc43ee7ed2831907731427b9815c5fe7f4888f9933ee7a1ad5d1f293fd8ab834fac1be</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 </Project>

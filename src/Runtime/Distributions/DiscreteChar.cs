@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
@@ -182,6 +184,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Gets a value indicating whether this distribution equals the distribution created by <see cref="WordChar"/>.
         /// </summary>
         public bool IsWordChar => this.Data.IsWordChar;
+
+        /// <summary>
+        /// Gets a value indicating whether this distribution is broad - i.e. a general class of values.
+        /// </summary>
+        public bool IsBroad => this.Data.IsBroad;
+
+        /// <summary>
+        /// Gets a value indicating whether this distribution is partial uniform with a log probability override.
+        /// </summary>
+        public bool HasLogProbabilityOverride => this.Data.HasLogProbabilityOverride;
+
+        /// <summary>
+        /// Gets a value for the log probability override if it exists.
+        /// </summary>
+        public double? LogProbabilityOverride =>
+            this.HasLogProbabilityOverride ? this.Ranges.First().Probability.LogValue : (double?)null;
 
         #endregion
 
@@ -530,13 +548,34 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             var builder = StorageBuilder.Create();
+
             foreach (var pair in CharRangePair.IntersectRanges(distribution1, distribution2))
             {
                 var probProduct = pair.Probability1 * pair.Probability2;
                 builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probProduct));
             }
 
-            this.Data = builder.GetResult();
+            double? logProbabilityOverride = null;
+            var distribution1LogProbabilityOverride = distribution1.LogProbabilityOverride;
+            var distribution2LogProbabilityOverride = distribution2.LogProbabilityOverride;
+            if (distribution1LogProbabilityOverride.HasValue)
+            {
+                if (distribution2LogProbabilityOverride.HasValue)
+                {
+                    throw new ArgumentException("Only one distribution in a DiscreteChar product may have a log probability override");
+                }
+
+                if (distribution2.IsBroad)
+                {
+                    logProbabilityOverride = distribution1LogProbabilityOverride;
+                }
+            }
+            else if (distribution2LogProbabilityOverride.HasValue && distribution1.IsBroad)
+            {
+                logProbabilityOverride = distribution2LogProbabilityOverride;
+            }
+
+            this.Data = builder.GetResult(logProbabilityOverride);
         }
 
         /// <summary>
@@ -629,8 +668,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets the distribution to be uniform over the support of a given distribution.
         /// </summary>
-        /// <param name="distribution">The distribution which support will be used to setup the current distribution.</param>
+        /// <param name="distribution">The distribution whose support will be used to setup the current distribution.</param>
         public void SetToPartialUniformOf(DiscreteChar distribution)
+        {
+            SetToPartialUniformOf(distribution, null);
+        }
+
+        /// <summary>
+        /// Sets the distribution to be uniform over the support of a given distribution.
+        /// </summary>
+        /// <param name="distribution">The distribution whose support will be used to setup the current distribution.</param>
+        /// <param name="logProbabilityOverride">An optional value to override for the log probability calculation
+        /// against this distribution. If this is set, then the distribution will not be normalize;
+        /// i.e. the probabilities will not sum to 1 over the support.</param>
+        /// <remarks>Overriding the log probability calculation in this way is useful within the context of using <see cref="StringDistribution"/>
+        /// to create more realistic language model priors. Distributions with this override are always uncached.
+        /// </remarks>
+        public void SetToPartialUniformOf(DiscreteChar distribution, double? logProbabilityOverride)
         {
             var builder = StorageBuilder.Create();
             foreach (var range in distribution.Ranges)
@@ -642,7 +696,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         range.Probability.IsZero ? Weight.Zero : Weight.One));
             }
 
-            this.Data = builder.GetResult();
+            this.Data = builder.GetResult(logProbabilityOverride);
         }
 
         /// <summary>
@@ -1398,11 +1452,38 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             public char? Point { get; }
 
-            // Following 3 members are not immutable and can be recalculated on-demand
+            // Following members are not immutable and can be recalculated on-demand
             public CharClasses CharClasses { get; private set; }
+
             private string regexRepresentation;
             private string symbolRepresentation;
 
+            /// <summary>
+            /// Flags derived from ranges.
+            /// </summary>
+            /// <returns></returns>
+            private readonly Flags flags;
+
+            /// <summary>
+            /// Whether this distribution has broad support. We want to be able to
+            /// distinguish between specific distributions and general distributions.
+            /// Use the number of non-zero digits as a threshold.
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBroad => (this.flags & Flags.IsBroad) != 0;
+
+            /// <summary>
+            /// Whether this distribution is partial uniform with a log probability override.
+            /// </summary>
+            /// <returns></returns>
+            public bool HasLogProbabilityOverride => (this.flags & Flags.HasLogProbabilityOverride) != 0;
+
+            [Flags]
+            private enum Flags
+            {
+                HasLogProbabilityOverride = 0x01,
+                IsBroad = 0x02
+            }
             #endregion
 
             #region Constructor and factory methods
@@ -1419,6 +1500,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 this.CharClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
                 this.symbolRepresentation = symbolRepresentation;
+                var supportCount = this.Ranges.Where(range => !range.Probability.IsZero).Sum(range => range.EndExclusive - range.StartInclusive);
+                var isBroad = supportCount >= 9; // Number of non-zero digits.
+                var totalMass = this.Ranges.Sum(range =>
+                    range.Probability.Value * (range.EndExclusive - range.StartInclusive));
+                var isScaled = Math.Abs(totalMass - 1.0) > 1e-10;
+                this.flags = 0;
+                if (isBroad)
+                {
+                    flags |= Flags.IsBroad;
+                }
+
+                if (isScaled)
+                {
+                    flags |= Flags.HasLogProbabilityOverride;
+                }
             }
 
             public static Storage CreateUncached(
@@ -1447,7 +1543,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 StorageCache.GetPointMass(point, ranges);
 
             public static Storage CreatePoint(char point) =>
-                StorageCache.GetPointMass(point, new ReadOnlyArray<CharRange>(null));
+                StorageCache.GetPointMass(point, null);
 
             public static Storage CreateUniformInRanges(
                 IEnumerable<char> startEndPairs,
@@ -1561,10 +1657,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             #region Serialization
 
-            public static Storage FromSerializationInfo(SerializationInfo info) =>
-                Storage.Create(
-                    (CharRange[]) info.GetValue(nameof(Ranges), typeof(CharRange[])),
-                    (CharClasses) info.GetValue(nameof(CharClasses), typeof(CharClasses)));
+            public static Storage FromSerializationInfo(SerializationInfo info)
+            {
+                var ranges = (CharRange[]) info.GetValue(nameof(Ranges), typeof(CharRange[]));
+                var classes = (CharClasses) info.GetValue(nameof(CharClasses), typeof(CharClasses));
+                return Storage.Create(ranges.ToReadOnlyArray(), classes);
+            }
 
             public void GetObjectData(SerializationInfo info)
             {
@@ -1584,10 +1682,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// </summary>
             public static Storage Read(Func<int> readInt32, Func<double> readDouble)
             {
-                CharRange[] ranges = null;
-
                 var nRanges = readInt32();
-                ranges = new CharRange[nRanges];
+                var ranges = new CharRange[nRanges];
                 for (var i = 0; i < nRanges; i++)
                 {
                     ranges[i] = CharRange.Read(readInt32, readDouble);
@@ -1595,7 +1691,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
                 var charClasses = (CharClasses)readInt32();
 
-                return Storage.Create(ranges, charClasses);
+                return Storage.Create(ranges.ToReadOnlyArray(), charClasses);
             }
 
             #endregion
@@ -1777,7 +1873,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 string WordCharRanges(string baseRange) => baseRange + "09__";
 
                 Uniform = Storage.CreateUncached(
-                    new CharRange[] { new CharRange(char.MinValue, CharRangeEndExclusive, UniformProb) },
+                    ReadOnlyArray.Create(new CharRange(char.MinValue, CharRangeEndExclusive, UniformProb)),
                     null,
                     CharClasses.Uniform,
                     UniformRegexRepresentation,
@@ -1810,14 +1906,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
 
-            public static Storage GetPointMass(char point, ReadOnlyArray<CharRange> ranges)
+            public static Storage GetPointMass(char point, ReadOnlyArray<CharRange>? ranges)
             {
                 if (PointMasses[point] == null)
                 {
                     PointMasses[point] = Storage.CreateUncached(
-                        ranges.IsNull
-                            ? new ReadOnlyArray<CharRange>(new[] { new CharRange(point, point + 1, Weight.One) })
-                            : ranges,
+                        ranges.HasValue
+                            ? ranges.Value
+                            : ReadOnlyArray.Create(new CharRange(point, point + 1, Weight.One)),
                         point);
                 }
 
@@ -1896,7 +1992,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             private readonly List<CharRange> ranges;
 
             /// <summary>
-            /// Precomuted character class.
+            /// Precomputed character class.
             /// </summary>
             private readonly CharClasses charClasses;
 
@@ -1971,15 +2067,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <summary>
             /// Normalizes probabilities in ranges and returns build Storage.
             /// </summary>
-            public Storage GetResult()
+            public Storage GetResult(double? maximumProbability = null)
             {
                 this.MergeNeighboringRanges();
-                this.NormalizeProbabilities();
-                return Storage.Create(
-                    this.ranges.ToArray(),
-                    this.charClasses,
-                    this.regexRepresentation,
-                    this.symbolRepresentation);
+                NormalizeProbabilities(this.ranges, maximumProbability);
+                return
+                    maximumProbability.HasValue
+                        ? Storage.CreateUncached(
+                            this.ranges.ToReadOnlyArray(),
+                            null,
+                            this.charClasses,
+                            this.regexRepresentation,
+                            this.symbolRepresentation)
+                        : Storage.Create(
+                            this.ranges.ToReadOnlyArray(),
+                            this.charClasses,
+                            this.regexRepresentation,
+                            this.symbolRepresentation);
             }
 
             #endregion
@@ -2015,16 +2119,39 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             /// <summary>
-            /// Normalizes probabilities in ranges
+            /// Normalizes probabilities in ranges.
             /// </summary>
-            private void NormalizeProbabilities()
+            /// <param name="ranges">The ranges.</param>
+            /// <param name="logProbabilityOverride">Ignores the probabilities in the ranges and creates a non-normalized partial uniform distribution.</param>
+            /// <exception cref="ArgumentException">Thrown if logProbabilityOverride has value corresponding to a non-probability.</exception>
+            public static void NormalizeProbabilities(IList<CharRange> ranges, double? logProbabilityOverride = null)
             {
-                var normalizer = this.ComputeInvNormalizer();
-                for (int i = 0; i < this.ranges.Count; ++i)
+                if (logProbabilityOverride.HasValue)
                 {
-                    var range = this.ranges[i];
-                    this.ranges[i] = new CharRange(
-                        range.StartInclusive, range.EndExclusive, range.Probability * normalizer);
+                    var weight = Weight.FromLogValue(logProbabilityOverride.Value);
+                    if (weight.IsZero || weight.Value > 1)
+                    {
+                        throw new ArgumentException("Invalid log probability override.");
+                    }
+
+                    for (var i = 0; i < ranges.Count; ++i)
+                    {
+                        var range = ranges[i];
+                        ranges[i] = new CharRange(
+                            range.StartInclusive, range.EndExclusive, weight);
+                    }
+                }
+                else
+                {
+                    var normalizer = ComputeInvNormalizer(ranges);
+                    for (var i = 0; i < ranges.Count; ++i)
+                    {
+                        var range = ranges[i];
+                        var probability = range.Probability * normalizer;
+
+                        ranges[i] = new CharRange(
+                            range.StartInclusive, range.EndExclusive, probability);
+                    }
                 }
             }
 
@@ -2032,11 +2159,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// Computes the normalizer of this distribution.
             /// </summary>
             /// <returns>The computed normalizer.</returns>
-            private Weight ComputeInvNormalizer()
+            private static Weight ComputeInvNormalizer(IEnumerable<CharRange> ranges)
             {
-                Weight normalizer = Weight.Zero;
+                var normalizer = Weight.Zero;
 
-                foreach (var range in this.ranges)
+                foreach (var range in ranges)
                 {
                     normalizer += Weight.FromValue(range.EndExclusive - range.StartInclusive) * range.Probability;
                 }

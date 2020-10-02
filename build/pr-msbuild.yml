@@ -17,11 +17,11 @@ jobs:
 - job: Win64 # Hosted Windows agent, VS 2017, testing on x64
   timeoutInMinutes: 120
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
   steps:
-  - task: NuGetToolInstaller@0
+  - task: NuGetToolInstaller@1
     inputs:
-      versionSpec: '4.7.0'
+      versionSpec: '>=5.5.1'
 
   - task: NuGetCommand@2
     inputs:
@@ -41,11 +41,11 @@ jobs:
 - job: Win32 # Hosted Windows agent, VS 2017, testing on x86
   timeoutInMinutes: 120
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
   steps:
-  - task: NuGetToolInstaller@0
+  - task: NuGetToolInstaller@1
     inputs:
-      versionSpec: '4.7.0'
+      versionSpec: '>=5.5.1'
 
   - task: NuGetCommand@2
     inputs:

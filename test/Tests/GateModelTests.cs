@@ -10,6 +10,7 @@ using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
 using Xunit;
+using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -24,6 +25,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Algorithms;
     using Microsoft.ML.Probabilistic.Models.Attributes;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     public class GateModelTests
     {
@@ -1045,7 +1047,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             catch (CompilationFailedException ex)
             {
                 if (ex.Message.StartsWith("Indexing"))
-                    Console.WriteLine("Correctly failed with exception: " + ex);
+                    Console.WriteLine("Correctly threw " + ex);
                 else
                     Assert.True(false, "Wrong exception");
             }

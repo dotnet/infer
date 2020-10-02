@@ -65,22 +65,25 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		private int[] labels;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_0__B;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> MaxNoisyScore_rep_B_toDef;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> MaxNoisyScore_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gaussian></summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> MaxNoisyScore_rep_F_marginal;
 		/// <summary>Message to marginal of 'ModelSelector'</summary>
 		public Bernoulli ModelSelector_marginal_F;
 		public Bernoulli ModelSelector_selector_B;
 		public Bernoulli ModelSelector_selector_cases_0_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep11_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep11'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep11_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep16_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep23_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep23'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep23_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep27_B;
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> ModelSelector_selector_cases_0_rep27_rep_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep27_rep'</summary>
 		public Bernoulli[][][] ModelSelector_selector_cases_0_rep27_rep_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep28_B;
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> ModelSelector_selector_cases_0_rep28_rep_B;
@@ -89,7 +92,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Bernoulli ModelSelector_selector_cases_0_rep32_B_reduced;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep4_B;
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> ModelSelector_selector_cases_0_rep4_rep_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep4_rep'</summary>
 		public Bernoulli[][][] ModelSelector_selector_cases_0_rep4_rep_uses_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0'</summary>
 		public Bernoulli[] ModelSelector_selector_cases_0_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_B;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> NoisyScoreDeltas_B;
@@ -119,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth0_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_F;
-		/// <summary>Buffer for JaggedSubarrayOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for JaggedSubarrayOp&lt;double&gt;.ItemsAverageConditional&lt;DistributionStructArray&lt;Gaussian, double&gt;, Gaussian, DistributionStructArray&lt;Gaussian, double&gt;&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_F_ClassRange__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_F;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> Weights_FeatureIndexes_B;
@@ -128,9 +133,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_marginal_F;
 		/// <summary>Message from use of 'Weights'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_use_B;
-		/// <summary>Messages from use of 'Weights'</summary>
+		/// <summary>Messages from uses of 'Weights_use'</summary>
 		public Gaussian[][][] Weights_uses_B;
-		/// <summary>Messages to use of 'Weights'</summary>
+		/// <summary>Messages to uses of 'Weights_use'</summary>
 		public Gaussian[][][] Weights_uses_F;
 		#endregion
 

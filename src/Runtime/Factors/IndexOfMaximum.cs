@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using Collections;
     using Distributions;
@@ -152,7 +153,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Buffers;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IndexOfMaximumStochasticOp"]/message_doc[@name="listAverageConditional{GaussianList}(IndexOfMaximumBuffer[], GaussianList, Discrete, GaussianList)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IndexOfMaximumStochasticOp"]/message_doc[@name="ListAverageConditional{GaussianList}(IndexOfMaximumBuffer[], GaussianList, Discrete, GaussianList)"]/*'/>
         /// <typeparam name="GaussianList">The type of an incoming message from <c>list</c>.</typeparam>
         public static GaussianList ListAverageConditional<GaussianList>(
             [SkipIfUniform] IndexOfMaximumBuffer[] Buffers, GaussianList list, [SkipIfUniform] Discrete IndexOfMaximumDouble, GaussianList result)
@@ -326,6 +327,30 @@ namespace Microsoft.ML.Probabilistic.Factors
                     j = k;
                 }
             }
+        }
+
+        public static void MaxOfOthers_MonteCarlo(IList<Gaussian> array, IList<Gaussian> result)
+        {
+            if (array.Count == 0)
+                return;
+            if (array.Count == 1)
+            {
+                result[0] = Gaussian.Uniform();
+                return;
+            }
+            int iterCount = 1000000;
+            double[] x = new double[array.Count];
+            var est = new ArrayEstimator<GaussianEstimator, IList<Gaussian>, Gaussian, double>(array.Count, i => new GaussianEstimator());
+            for (int iter = 0; iter < iterCount; iter++)
+            {
+                for (int i = 0; i < x.Length; i++)
+                {
+                    x[i] = array[i].Sample();
+                }
+                double[] maxOfOthers = Factor.MaxOfOthers(x);
+                est.Add(maxOfOthers);
+            }
+            est.GetDistribution(result);
         }
 
         public static void MaxOfOthers_Quadratic(IList<Gaussian> array, IList<Gaussian> result)

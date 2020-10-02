@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Reflection;
 using Microsoft.ML.Probabilistic.Compiler;
@@ -39,13 +40,7 @@ namespace Microsoft.ML.Probabilistic.Models
         // Attributes of the method invocation i.e. the factor or constraint.
         internal List<ICompilerAttribute> attributes = new List<ICompilerAttribute>();
 
-        // The condition blocks this method is contained in
-        private List<IStatementBlock> containers;
-
-        internal List<IStatementBlock> Containers
-        {
-            get { return containers; }
-        }
+        internal List<IStatementBlock> Containers { get; }
 
         // Provides global ordering for ModelBuilder
         internal readonly int timestamp;
@@ -67,7 +62,7 @@ namespace Microsoft.ML.Probabilistic.Models
             this.timestamp = GetTimestamp();
             this.method = method;
             this.args.AddRange(args);
-            this.containers = new List<IStatementBlock>(containers);
+            this.Containers = new List<IStatementBlock>(containers);
             foreach (IModelExpression arg in args)
             {
                 if (ReferenceEquals(arg, null)) throw new ArgumentNullException();
@@ -77,10 +72,11 @@ namespace Microsoft.ML.Probabilistic.Models
                     if (v.IsObserved) continue;
                     foreach (ConditionBlock cb in v.GetContainers<ConditionBlock>())
                     {
-                        if (!this.containers.Contains(cb))
+                        if (!this.Containers.Contains(cb))
                         {
-                            throw new InvalidOperationException(arg + " was created in condition " + cb + " and cannot be used outside.  To give " + arg +
-                                                                " a conditional definition, use SetTo inside " + cb + " rather than assignment (=)");
+                            throw new InvalidOperationException($"{arg} was created in condition {cb} and cannot be used outside.  " +
+                                $"To give {arg} a conditional definition, use SetTo inside {cb} rather than assignment (=).  " +
+                                $"If you are using GetCopyFor, make sure you call GetCopyFor outside of conflicting conditional statements.");
                         }
                     }
                 }
@@ -156,7 +152,7 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
-        /// True if the expression contains a loop index and all other variable references are givens.
+        /// True if the expression is an operator applied to a loop index and all other variable references are observed.
         /// </summary>
         /// <returns></returns>
         internal bool CanBeInlined()
@@ -165,15 +161,27 @@ namespace Microsoft.ML.Probabilistic.Models
             bool hasLoopIndex = false;
             for (int i = 0; i < args.Count; i++)
             {
-                if (args[i] is Variable<int>)
+                if (args[i] is Variable<int> v)
                 {
-                    Variable<int> v = (Variable<int>) args[i];
                     if (v.IsLoopIndex) hasLoopIndex = true;
-                    else if (!v.IsObserved) return false;
+                    else if (!IsDeterminedByObservations(v)) return false;
                 }
                 else return false;
             }
             return hasLoopIndex;
+        }
+
+        private static bool IsDeterminedByObservations(Variable<int> v)
+        {
+            if (v.IsObserved) return true;
+            else if (v.definition != null) return v.definition.AllVariablesAreObserved();
+            else return v.conditionalDefinitions.Values.All(condDef => condDef.AllVariablesAreObserved());
+        }
+
+        private bool AllVariablesAreObserved()
+        {
+            if (op == null) return false;
+            return args.All(arg => (arg is Variable<int> v) && IsDeterminedByObservations(v));
         }
 
         internal IExpression GetMethodInvokeExpression(bool inline = false)
@@ -194,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 else if (op == Variable.Operator.Equal) return Builder.BinaryExpr(argExprs[0], BinaryOperator.ValueEquality, argExprs[1]);
                 else if (op == Variable.Operator.NotEqual) return Builder.BinaryExpr(argExprs[0], BinaryOperator.ValueInequality, argExprs[1]);
             }
-            IMethodInvokeExpression imie = null;
+            IMethodInvokeExpression imie;
             if (method.IsGenericMethod && !method.ContainsGenericParameters)
             {
                 imie = Builder.StaticGenericMethod(method, argExprs);
@@ -239,7 +247,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             Set<Range> ranges = new Set<Range>();
             foreach (IModelExpression arg in returnValueAndArgs()) ForEachRange(arg, ranges.Add);
-            foreach (IStatementBlock b in containers)
+            foreach (IStatementBlock b in Containers)
             {
                 if (b is HasRange)
                 {
@@ -261,7 +269,7 @@ namespace Microsoft.ML.Probabilistic.Models
             {
                 ForEachRange(arg, delegate(Range r) { if (!ranges.Contains(r)) ranges.Add(r); });
             }
-            foreach (IStatementBlock b in containers)
+            foreach (IStatementBlock b in Containers)
             {
                 if (b is HasRange)
                 {
