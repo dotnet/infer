@@ -49,7 +49,7 @@ jobs:
       test\TestAllCompilerOptions\bin\Release\net461\TestAllCompilerOptions.exe
     displayName: 'Run test'
   
-  - task: ms.vss-governance-buildtask.governance-build-task-component-  detection.ComponentGovernanceComponentDetection@0
+  - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: 'Component Detection'
   
   - powershell: |
