@@ -240,11 +240,11 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             TestUtils.SetBrowserMode(BrowserMode.Never);
             var stdout = Console.Out;
-#if MONO_SUPPORT
-            Console.SetOut(NullWriter.Instance); 
-#else
-            Console.SetOut(StreamWriter.Null);
-#endif
+//#if MONO_SUPPORT
+//            Console.SetOut(NullWriter.Instance); 
+//#else
+//            Console.SetOut(StreamWriter.Null);
+//#endif
             var failed = TestAllCompilerOptions(state =>
             {
                 Stopwatch watch = Stopwatch.StartNew();
