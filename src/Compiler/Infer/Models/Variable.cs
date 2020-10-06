@@ -327,7 +327,7 @@ namespace Microsoft.ML.Probabilistic.Models
             new Dictionary<IList<ConditionBlock>, MethodInvoke>(new ListComparer<ConditionBlock>());
 
         /// <summary>
-        /// 
+        /// Field backing the IsObserved property for base variables.  Unused for non-base variables.
         /// </summary>
         protected bool isObserved;
 

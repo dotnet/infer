@@ -1231,6 +1231,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             d.SetToUniform();
             GetMomentTest(d, 0.0, 0.0);
 
+            d = Discrete.Uniform(0);
+            DistributionTest(d, new Discrete());
+
             // Sampling when probability vector is sparse
             double[] pcd1 = new double[] { 0.1, 0.3, 0.4, 0.1, 0.1 };
             double[] pcd2 = new double[] { 0.0, 0.4, 0.6, 0.0, 0.0 };
@@ -2349,7 +2352,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             T c = (T)a.Clone();
             c.SetToSum(0.5, a, 0.5, b);
-            if (!(c is Discrete && ((Discrete)(object)c).Dimension == 1))
+            if (!(c is Discrete && ((Discrete)(object)c).Dimension <= 1))
             {
                 Assert.False(c.Equals(a));
                 Assert.False(c.Equals(b));
