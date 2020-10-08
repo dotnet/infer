@@ -26,6 +26,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Xunit.Sdk;
     using Microsoft.ML.Probabilistic.Models;
     using Microsoft.ML.Probabilistic.Factors;
+    using System.Threading;
 
     public static class TestUtils
     {
@@ -240,18 +241,12 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             TestUtils.SetBrowserMode(BrowserMode.Never);
             var stdout = Console.Out;
-//#if MONO_SUPPORT
-//            Console.SetOut(NullWriter.Instance); 
-//#else
-//            Console.SetOut(StreamWriter.Null);
-//#endif
-            var failed = TestAllCompilerOptions(state =>
-            {
-                Stopwatch watch = Stopwatch.StartNew();
-                var list = RunAllTests(tests).Select(m => new Tuple<string, MethodInfo>(state, m)).ToList();
-                Trace.WriteLine($"{state} completed in {watch.Elapsed}");
-                return list;
-            });
+#if MONO_SUPPORT
+            Console.SetOut(NullWriter.Instance); 
+#else
+            Console.SetOut(StreamWriter.Null);
+#endif
+            var failed = TestAllCompilerOptions(tests);
             Console.SetOut(stdout);
 
             Console.WriteLine("Executed {0} tests", tests.Length);
@@ -293,19 +288,19 @@ namespace Microsoft.ML.Probabilistic.Tests
             return testMethods;
         }
 
-        public static void TestAllCompilerOptions(string path)
+        private static List<Tuple<string, MethodInfo>> TestAllCompilerOptions(MethodInfo[] tests)
         {
-            TestAllCompilerOptions<string>(state =>
-            {
-                Console.WriteLine(state);
-                RunAllTests(path);
-                return null;
-            });
-        }
+            var sw = Stopwatch.StartNew();
 
-        private static List<T> TestAllCompilerOptions<T>(Func<string, IEnumerable<T>> operation)
-        {
-            var output = new List<T>();
+            var totalTests = 16.0 * tests.Length;
+            var testsDone = 0;
+            void TestFinished()
+            {
+                Interlocked.Increment(ref testsDone);
+                Console.WriteLine($"{100.0 * testsDone / totalTests}% Elapsed: {sw.Elapsed}");
+            }
+
+            var output = new List<Tuple<string, MethodInfo>>();
             foreach (var loops in new[] { true, false })
             {
                 InferenceEngine.DefaultEngine.Compiler.UseParallelForLoops = loops;
@@ -319,7 +314,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                         {
                             InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = optimise;
                             var state = string.Format("UseParallelForLoops={0} FreeMemory={1} ReturnCopies={2} OptimiseInferenceCode={3}", loops, free, copies, optimise);
-                            output.AddRange(operation(state));
+
+                            Stopwatch watch = Stopwatch.StartNew();
+                            var list = RunAllTests(TestFinished, tests).Select(m => new Tuple<string, MethodInfo>(state, m)).ToList();
+                            Trace.WriteLine($"{state} completed in {watch.Elapsed}");
+                            output.AddRange(list);
                         }
                     }
                 }
@@ -327,7 +326,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             return output;
         }
 
-        public static void RunAllTests(string path)
+        public static void RunAllTests(Action testFinished, string path)
         {
             List<string> testNames = ReadTestNames(path);
             var testMethods = testNames.Select(name =>
@@ -340,10 +339,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                 MethodInfo method = type.GetMethod(methodName, Type.EmptyTypes);
                 return method;
             }).ToArray();
-            RunAllTests(testMethods);
+            RunAllTests(testFinished, testMethods);
         }
 
-        private static IEnumerable<MethodInfo> RunAllTests(MethodInfo[] tests)
+        private static IEnumerable<MethodInfo> RunAllTests(Action testFinished, MethodInfo[] tests)
         {
             var failed = new ConcurrentQueue<MethodInfo>();
             var safeTests = new ConcurrentQueue<MethodInfo>();
@@ -363,6 +362,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             foreach (var test in unsafeTests)
             {
                 RunTest(test, failed);
+                testFinished();
             }
             var safeTestsArray = safeTests.ToArray();
             Array.Sort(safeTestsArray, (a, b) => a.Name.CompareTo(b.Name));
@@ -372,6 +372,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Parallel.ForEach(safeTestsArray, test =>
                 {
                     RunTest(test, failed);
+                    testFinished();
                 });
             }
             catch (AggregateException ex)
