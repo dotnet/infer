@@ -268,7 +268,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Console.SetOut(StreamWriter.Null);
                 InferenceEngine.DefaultEngine.Compiler.GeneratedSourceFolder = "GeneratedSource" + AppDomain.CurrentDomain.Id;
                 InferenceEngine.DefaultEngine.Compiler.WriteSourceFiles = false;
-                return !RunAllTests(new[] { mi }).Any();
+                return !RunAllTests(() => { }, new[] { mi }).Any();
             }
         }
 
