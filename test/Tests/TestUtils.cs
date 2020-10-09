@@ -246,7 +246,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 #else
             Console.SetOut(StreamWriter.Null);
 #endif
-            var failed = TestAllCompilerOptions(tests);
+            var failed = TestAllCompilerOptions(stdout.WriteLine, tests);
             Console.SetOut(stdout);
 
             Console.WriteLine("Executed {0} tests", tests.Length);
@@ -288,7 +288,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             return testMethods;
         }
 
-        private static List<Tuple<string, MethodInfo>> TestAllCompilerOptions(MethodInfo[] tests)
+        private static List<Tuple<string, MethodInfo>> TestAllCompilerOptions(
+            Action<string> log,
+            MethodInfo[] tests)
         {
             var sw = Stopwatch.StartNew();
 
@@ -297,7 +299,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             void TestFinished()
             {
                 Interlocked.Increment(ref testsDone);
-                Console.WriteLine($"{100.0 * testsDone / totalTests}% Elapsed: {sw.Elapsed}");
+                log($"{100.0 * testsDone / totalTests}% Elapsed: {sw.Elapsed}");
             }
 
             var output = new List<Tuple<string, MethodInfo>>();
