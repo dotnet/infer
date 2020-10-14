@@ -268,7 +268,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Console.SetOut(StreamWriter.Null);
                 InferenceEngine.DefaultEngine.Compiler.GeneratedSourceFolder = "GeneratedSource" + AppDomain.CurrentDomain.Id;
                 InferenceEngine.DefaultEngine.Compiler.WriteSourceFiles = false;
-                return !RunAllTests(() => { }, new[] { mi }).Any();
+                return !RunAllTests((_1, _2) => { }, new[] { mi }).Any();
             }
         }
 
@@ -296,10 +296,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var totalTests = 16.0 * tests.Length;
             var testsDone = 0;
-            void TestFinished()
+            void TestFinished(string name, TimeSpan testDuration)
             {
                 Interlocked.Increment(ref testsDone);
-                log($"{100.0 * testsDone / totalTests}% Elapsed: {sw.Elapsed}");
+                log($"{100.0 * testsDone / totalTests}% Elapsed: {sw.Elapsed} Name: {name} Duration: {sw.Elapsed}");
             }
 
             var output = new List<Tuple<string, MethodInfo>>();
@@ -328,7 +328,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             return output;
         }
 
-        public static void RunAllTests(Action testFinished, string path)
+        public static void RunAllTests(Action<string, TimeSpan> testFinished, string path)
         {
             List<string> testNames = ReadTestNames(path);
             var testMethods = testNames.Select(name =>
@@ -344,7 +344,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             RunAllTests(testFinished, testMethods);
         }
 
-        private static IEnumerable<MethodInfo> RunAllTests(Action testFinished, MethodInfo[] tests)
+        private static IEnumerable<MethodInfo> RunAllTests(Action<string, TimeSpan> testFinished, MethodInfo[] tests)
         {
             var failed = new ConcurrentQueue<MethodInfo>();
             var safeTests = new ConcurrentQueue<MethodInfo>();
@@ -363,8 +363,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             Trace.WriteLine($"Running {unsafeTests.Count} tests sequentially");
             foreach (var test in unsafeTests)
             {
+                var sw = Stopwatch.StartNew();
                 RunTest(test, failed);
-                testFinished();
+                testFinished(test.Name, sw.Elapsed);
             }
             var safeTestsArray = safeTests.ToArray();
             Array.Sort(safeTestsArray, (a, b) => a.Name.CompareTo(b.Name));
@@ -373,8 +374,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Parallel.ForEach(safeTestsArray, test =>
                 {
+                    var sw = Stopwatch.StartNew();
                     RunTest(test, failed);
-                    testFinished();
+                    testFinished(test.Name, sw.Elapsed);
                 });
             }
             catch (AggregateException ex)
