@@ -296,10 +296,12 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var totalTests = 16.0 * tests.Length;
             var testsDone = 0;
+            var previousElapsed = sw.Elapsed;
             void TestFinished(string name, TimeSpan testDuration)
             {
                 Interlocked.Increment(ref testsDone);
-                log($"{100.0 * testsDone / totalTests}% Elapsed: {sw.Elapsed} Name: {name} Duration: {sw.Elapsed}");
+                log($"{100.0 * testsDone / totalTests}% Elapsed: {sw.Elapsed} Name: {name} Duration: {sw.Elapsed.Subtract(previousElapsed)}");
+                previousElapsed = sw.Elapsed;
             }
 
             var output = new List<Tuple<string, MethodInfo>>();
