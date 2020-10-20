@@ -360,12 +360,20 @@ namespace Microsoft.ML.Probabilistic.Tests
                 RunAllTests(testFinished, testMethods);
             }
 
+            private static void ForEach<T>(IEnumerable<T> tests, Action<T> action)
+            {
+                foreach (var item in tests)
+                {
+                    action(item);
+                }
+            }
+
             private static IEnumerable<MethodInfo> RunAllTests(Action<string, TimeSpan> testFinished, MethodInfo[] tests)
             {
                 var failed = new ConcurrentQueue<MethodInfo>();
                 var safeTests = new ConcurrentQueue<MethodInfo>();
                 var unsafeTests = new ConcurrentQueue<MethodInfo>();
-                Parallel.ForEach(tests, test =>
+                ForEach(tests, test =>
                 {
                     var testCategories = TraitHelper.GetTraits(test)
                         .Where(trait => trait.Key == "Category")
