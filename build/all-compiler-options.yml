@@ -4,14 +4,14 @@
 
 # Run all-compiler-options-test.
 
-#pool:
-#  name: InferNet
-#  demands:
-#  - msbuild
-#  - visualstudio
-#  - vstest
 pool:
-  vmImage: 'windows-2019'
+  name: InferNet
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+#pool:
+#  vmImage: 'windows-2019'
 
 trigger: none # disable CI build
 

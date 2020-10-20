@@ -9,11 +9,11 @@
     <NoWarn>1591</NoWarn>
     <DefineConstants Condition=" '$(MonoSupport)' != 'false' ">$(DefineConstants);MONO_SUPPORT</DefineConstants>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
+      <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
-  <Choose>
+  <!--<Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net461</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -26,7 +26,7 @@
         <TargetFrameworks>netcoreapp3.1;net461</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
-  </Choose>
+  </Choose>-->
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
     <DebugType>full</DebugType>
