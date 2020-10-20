@@ -10,6 +10,8 @@
 #  - msbuild
 #  - visualstudio
 #  - vstest
+pool:
+  vmImage: 'windows-2019'
 
 trigger: none # disable CI build
 
