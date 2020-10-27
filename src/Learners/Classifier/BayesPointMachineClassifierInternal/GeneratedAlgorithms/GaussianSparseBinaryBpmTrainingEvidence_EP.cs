@@ -36,11 +36,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		private int featureCount;
 		/// <summary>Field backing the FeatureIndexes property</summary>
 		private int[][] featureIndexes;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> FeatureScores_B;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> FeatureScores_F;
+		public DistributionStructArray<Gaussian,double>[] FeatureScores_B;
+		public DistributionStructArray<Gaussian,double>[] FeatureScores_F;
 		/// <summary>Field backing the FeatureValues property</summary>
 		private double[][] featureValues;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> IndexedWeights_B;
+		public DistributionStructArray<Gaussian,double>[] IndexedWeights_B;
 		/// <summary>Field backing the InstanceCount property</summary>
 		private int instanceCount;
 		/// <summary>Field backing the InstanceFeatureCounts property</summary>
@@ -55,13 +55,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0'</summary>
 		public Bernoulli[] ModelSelector_selector_cases_0_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_B;
-		public DistributionStructArray<Gaussian,double> NoisyScore_F;
+		public Gaussian[] NoisyScore_F;
 		/// <summary>Message from use of 'NoisyScore'</summary>
-		public DistributionStructArray<Gaussian,double> NoisyScore_use_B;
+		public Gaussian[] NoisyScore_use_B;
 		/// <summary>Field backing the NumberOfIterationsDone property</summary>
 		private int numberOfIterationsDone;
-		public DistributionStructArray<Gaussian,double> Score_B;
-		public DistributionStructArray<Gaussian,double> Score_F;
+		public Gaussian[] Score_B;
+		public Gaussian[] Score_F;
 		/// <summary>The constant 'vBernoulli1'</summary>
 		public Bernoulli vBernoulli1;
 		/// <summary>Field backing the WeightConstraints property</summary>
@@ -69,6 +69,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Field backing the WeightPriors property</summary>
 		private DistributionStructArray<Gaussian,double> weightPriors;
 		public DistributionStructArray<Gaussian,double> Weights_B;
+		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_FeatureIndexes_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_FeatureIndexes_F;
 		/// <summary>Message to marginal of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double> Weights_marginal_F;
@@ -254,11 +255,14 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.OnProgressChanged(new ProgressChangedEventArgs(iteration));
 			}
+			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
+				this.Weights_FeatureIndexes_B[InstanceRange] = ArrayHelper.SetTo<DistributionStructArray<Gaussian,double>>(this.Weights_FeatureIndexes_B[InstanceRange], this.IndexedWeights_B[InstanceRange]);
+			}
 			this.Weights_uses_B[1] = JaggedSubarrayWithMarginalOp<double>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[1], this.Weights_marginal_F, this.Weights_uses_B[1]);
 			this.Weights_uses_F[0] = ReplicateOp_NoDivide.UsesAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_uses_B, this.weightPriors, 0, this.Weights_uses_F[0]);
 			this.ModelSelector_selector_cases_0_uses_B[3] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<DistributionStructArray<Gaussian,double>>(this.Weights_uses_B, this.weightPriors, this.Weights_uses_F));
 			this.ModelSelector_selector_cases_0_uses_B[4] = Bernoulli.FromLogOdds(ConstrainEqualRandomOp<double[]>.LogEvidenceRatio<DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[0], this.weightConstraints));
-			this.ModelSelector_selector_cases_0_uses_B[8] = Bernoulli.FromLogOdds(JaggedSubarrayWithMarginalOp<double>.LogEvidenceRatio<Gaussian,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,DistributionStructArray<Gaussian,double>>(this.IndexedWeights_B, this.Weights_uses_F[1], this.featureIndexes, this.Weights_FeatureIndexes_F));
+			this.ModelSelector_selector_cases_0_uses_B[8] = Bernoulli.FromLogOdds(JaggedSubarrayWithMarginalOp<double>.LogEvidenceRatio<Gaussian,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,DistributionStructArray<Gaussian,double>>(this.Weights_FeatureIndexes_B, this.Weights_uses_F[1], this.featureIndexes, this.Weights_FeatureIndexes_F));
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep9_B[InstanceRange] = Bernoulli.FromLogOdds(IsPositiveOp.LogEvidenceRatio(this.labels[InstanceRange], this.NoisyScore_F[InstanceRange]));
 			}
@@ -278,7 +282,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureIndexes_InstanceCount_InstanceFeatureCounts_numberOfIterationsDecreased_WeightConstra6_isDone&&((!initialise)||this.Changed_FeatureIndexes_InstanceCount_InstanceFeatureCounts_numberOfIterationsDecreased_WeightConstra6_isInitialised)) {
 				return ;
 			}
-			this.Weights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[1], this.IndexedWeights_B, this.featureIndexes, this.Weights_marginal_F);
+			this.Weights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[1], this.Weights_FeatureIndexes_B, this.featureIndexes, this.Weights_marginal_F);
 			this.Changed_FeatureIndexes_InstanceCount_InstanceFeatureCounts_numberOfIterationsDecreased_WeightConstra6_isDone = true;
 			this.Changed_FeatureIndexes_InstanceCount_InstanceFeatureCounts_numberOfIterationsDecreased_WeightConstra6_isInitialised = true;
 		}
@@ -290,25 +294,26 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			this.Weights_FeatureIndexes_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
-			this.FeatureScores_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
-			this.Score_F = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+			this.FeatureScores_F = new DistributionStructArray<Gaussian,double>[this.instanceCount];
+			this.Score_F = new Gaussian[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.Score_F[InstanceRange] = Gaussian.Uniform();
 			}
-			this.NoisyScore_F = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+			this.NoisyScore_F = new Gaussian[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.NoisyScore_F[InstanceRange] = Gaussian.Uniform();
 			}
-			this.NoisyScore_use_B = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+			this.NoisyScore_use_B = new Gaussian[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.NoisyScore_use_B[InstanceRange] = Gaussian.Uniform();
 			}
-			this.Score_B = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+			this.Score_B = new Gaussian[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.Score_B[InstanceRange] = Gaussian.Uniform();
 			}
-			this.FeatureScores_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
-			this.IndexedWeights_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
+			this.FeatureScores_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];
+			this.IndexedWeights_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];
+			this.Weights_FeatureIndexes_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
 			this.ModelSelector_selector_cases_0_rep9_B = new DistributionStructArray<Bernoulli,bool>(this.instanceCount);
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep9_B[InstanceRange] = Bernoulli.Uniform();
@@ -336,6 +341,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.FeatureScores_B[InstanceRange][InstanceFeatureRanges] = Gaussian.Uniform();
 				}
 				this.IndexedWeights_B[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.instanceFeatureCounts[InstanceRange]);
+				this.Weights_FeatureIndexes_B[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.instanceFeatureCounts[InstanceRange]);
 			}
 			this.Changed_InstanceCount_InstanceFeatureCounts_isDone = true;
 		}
@@ -350,6 +356,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				for(int InstanceFeatureRanges = 0; InstanceFeatureRanges<this.instanceFeatureCounts[InstanceRange]; InstanceFeatureRanges++) {
 					this.IndexedWeights_B[InstanceRange][InstanceFeatureRanges] = Gaussian.Uniform();
+					this.Weights_FeatureIndexes_B[InstanceRange][InstanceFeatureRanges] = Gaussian.Uniform();
 				}
 			}
 			this.Changed_InstanceCount_InstanceFeatureCounts_numberOfIterationsDecreased_Init_FeatureIndexes_FeatureV5_isDone = true;

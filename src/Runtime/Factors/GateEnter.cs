@@ -46,6 +46,17 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterPartialOp{T}"]/message_doc[@name="EnterPartialAverageConditional{TValue}(TValue, TValue[])"]/*'/>
+        /// <typeparam name="TValue">The type of the message from <c>value</c>.</typeparam>
+        public static TValue[] EnterPartialAverageConditional<TValue>([IsReturnedInEveryElement] TValue value, TValue[] result)
+        {
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = value;
+            }
+            return result;
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterPartialOp{T}"]/message_doc[@name="EnterPartialInit{TValue, TArray}(TValue, int[], IArrayFactory{TValue, TArray})"]/*'/>
         /// <typeparam name="TValue">The type of the incoming message from <c>value</c>.</typeparam>
         /// <typeparam name="TArray">The type of an array that can be produced by <paramref name="factory"/>.</typeparam>
@@ -472,12 +483,17 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterPartialOp{T}"]/message_doc[@name="EnterPartialAverageLogarithm{TValue, TResultList}(TValue, TResultList)"]/*'/>
         /// <typeparam name="TValue">The type of the message from <c>value</c>.</typeparam>
         /// <typeparam name="TResultList">The type of the outgoing message.</typeparam>
-        public static TResultList EnterPartialAverageLogarithm<TValue, TResultList>(
-            [IsReturnedInEveryElement] TValue value, TResultList result)
+        public static TResultList EnterPartialAverageLogarithm<TValue, TResultList>([IsReturnedInEveryElement] TValue value, TResultList result)
             where TResultList : CanSetAllElementsTo<TValue>
         {
-            result.SetAllElementsTo(value);
-            return result;
+            return EnterPartialAverageConditional(value, result);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterPartialOp{T}"]/message_doc[@name="EnterPartialAverageLogarithm{TValue}(TValue, TValue[])"]/*'/>
+        /// <typeparam name="TValue">The type of the message from <c>value</c>.</typeparam>
+        public static TValue[] EnterPartialAverageLogarithm<TValue>([IsReturnedInEveryElement] TValue value, TValue[] result)
+        {
+            return EnterPartialAverageConditional(value, result);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterPartialOp{T}"]/message_doc[@name="ValueAverageLogarithm{TDist}(IList{TDist}, int, int[], TDist)"]/*'/>

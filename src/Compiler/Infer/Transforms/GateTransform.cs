@@ -1083,6 +1083,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             IExpression[][] arraySizes = (arraySize == null) ? null : new IExpression[][] { new[] { arraySize } };
             IVariableDeclaration[][] indexVars = new IVariableDeclaration[][] { new[] { indexVar } };
+            // Cannot set useLiteralIndices=true because arraySize is initially zero and gets incremented later.
             cvi.arrayDecl = vi.DeriveArrayVariable(stBefore, context,
                                                    name, arraySizes, indexVars, exprIndices, cvi.wildcardVars);
             context.InputAttributes.Remove<ConditionInformation>(cvi.arrayDecl);

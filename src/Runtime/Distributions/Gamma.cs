@@ -244,6 +244,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return result;
         }
 
+        static readonly double largeShape = Math.Sqrt(Math.Sqrt(1.0 / 120 / MMath.Ulp1));
+
+        private static double LogMinusDigamma(double shape)
+        {
+            if (shape > largeShape)
+                // The next term in the series is -1/120/shape^4, which bounds the error.
+                return (0.5 - 1.0 / 12 / shape) / shape;
+            else
+                return Math.Log(shape) - MMath.Digamma(shape);
+        }
+
         /// <summary>
         /// Constructs a Gamma distribution with the given mean and mean logarithm.
         /// </summary>
@@ -259,16 +270,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static Gamma FromMeanAndMeanLog(double mean, double meanLog)
         {
             double delta = Math.Log(mean) - meanLog;
-            if (delta <= 2e-16) return Gamma.PointMass(mean);
+            if (delta <= 0) return Gamma.PointMass(mean);
             double shape = 0.5 / delta;
             for (int iter = 0; iter < 100; iter++)
             {
-                double oldShape = shape;
-                double g = Math.Log(shape) - delta - MMath.Digamma(shape);
+                double g = LogMinusDigamma(shape) - delta;
+                if (MMath.AreEqual(g, 0)) break;
                 shape /= 1 + g / (1 - shape * MMath.Trigamma(shape));
-                if (Math.Abs(shape - oldShape) < 1e-8) break;
             }
             if (Double.IsNaN(shape)) throw new Exception("shape is nan");
+            if (shape > double.MaxValue) return Gamma.PointMass(mean);
             return Gamma.FromShapeAndRate(shape, shape / mean);
         }
 

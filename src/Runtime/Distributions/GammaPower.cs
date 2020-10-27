@@ -131,10 +131,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 Point = mean;
             }
-            else if (Double.IsPositiveInfinity(variance))
-            {
-                SetToUniform();
-            }
             else if (variance < 0)
             {
                 throw new ArgumentException("variance < 0 (" + variance + ")");

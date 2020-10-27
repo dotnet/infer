@@ -2381,7 +2381,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="innermostElementType"></param>
         /// <param name="newInnermostElementType"></param>
         /// <param name="depth">The current depth from the declaration type.</param>
-        /// <param name="useDistributionArraysDepth">The number of inner arrays to convert to DistributionArrays</param>
+        /// <param name="useDistributionArraysDepth">The depth at which to start converting to DistributionArrays.  This can be overridden by <paramref name="useFileArrayAtDepth"/></param>
         /// <param name="useFileArrayAtDepth"></param>
         /// <returns></returns>
         public static Type GetDistributionType(Type arrayType, Type innermostElementType, Type newInnermostElementType, int depth, int useDistributionArraysDepth,
@@ -2393,13 +2393,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (elementType == null) throw new ArgumentException(arrayType + " is not an array type.");
             if (arrayType.IsAssignableFrom(Util.MakeArrayType(elementType, rank)))
             {
-                Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, depth + 1, useDistributionArraysDepth, useFileArrayAtDepth);
                 if (useFileArrayAtDepth(depth))
                 {
+                    Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, depth + 1, depth, useFileArrayAtDepth);
                     return Distribution.MakeDistributionFileArrayType(innerType, rank);
                 }
                 else
                 {
+                    Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, depth + 1, useDistributionArraysDepth, useFileArrayAtDepth);
                     if ((depth >= useDistributionArraysDepth) && (useDistributionArraysDepth >= 0))
                     {
                         return Distribution.MakeDistributionArrayType(innerType, rank);

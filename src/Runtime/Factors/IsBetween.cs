@@ -390,7 +390,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // this formula is more accurate than above
                     double delta = diffs * deltaOverDiffs;
                     double deltaSqrtVx = diff * deltaOverDiffs; // delta / sqrtPrec
-                    if (delta < 0) throw new Exception($"{nameof(delta)} < 0");
+                    if (delta < 0) throw new Exception($"{nameof(delta)} ({delta}) < 0");
                     if (delta < MMath.Ulp1 && (mx <= lowerBound || mx >= upperBound))
                     {
                         double variance = diff * diff / 12;
