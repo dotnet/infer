@@ -2453,7 +2453,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 ? VariableInformation.GetVariableInformation(context, ci.decl)
                 : ci.varInfo;
             // leading array is [] up to distArraysDepth, then distribution arrays
-            int distArraysDepth = vi.LiteralIndexingDepth;
+            int distArraysDepth = System.Math.Max(vi.DistArrayDepth, vi.LiteralIndexingDepth);
             bool useFileArrayAtDepth(int depth) => vi.IsPartitionedAtDepth(context, depth);
             for (int depth = 0; depth < distArraysDepth; depth++)
             {

@@ -109,6 +109,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         public int LiteralIndexingDepth;
 
         /// <summary>
+        /// The depth at which to start using distribution arrays in the message type.  Must be at least LiteralIndexingDepth.
+        /// </summary>
+        public int DistArrayDepth;
+
+        /// <summary>
         /// jagged array depth of varType
         /// </summary>
         private readonly int arrayDepth;
@@ -518,9 +523,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 }
             }
             int literalIndexingDepth = 0;
+            int distArrayDepth = 0;
             if (arraySize != null)
             {
                 newSizes.AddRange(arraySize);
+                distArrayDepth = newSizes.Count;
                 if (useLiteralIndices)
                     literalIndexingDepth = newSizes.Count;
                 newIndexVars.AddRange(newIndexVar);
@@ -579,6 +586,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             vi.IsStochastic = IsStochastic;
             vi.sizes = newSizes;
             vi.indexVars = newIndexVars;
+            vi.DistArrayDepth = distArrayDepth;
             if (useLiteralIndices)
                 vi.LiteralIndexingDepth = literalIndexingDepth;
             if (marginalPrototypeExpression != null)
