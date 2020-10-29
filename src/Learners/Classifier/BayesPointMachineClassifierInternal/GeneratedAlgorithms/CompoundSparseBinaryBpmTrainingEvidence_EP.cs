@@ -49,10 +49,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>True if Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins12 has performed initialisation. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins12</summary>
 		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins12_isInitialised;
 		public Gamma CommonWeightPrecision_F;
-		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_B;
+		public Gamma[] CommonWeightPrecision_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_B_toDef;
-		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_F;
+		public Gamma[] CommonWeightPrecision_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_F_marginal;
 		/// <summary>True if Constant has executed. Set this to false to force re-execution of Constant</summary>
@@ -77,23 +77,23 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Bernoulli ModelSelector_marginal_F;
 		public Bernoulli ModelSelector_selector_B;
 		public Bernoulli ModelSelector_selector_cases_0_B;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep10_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep10_B;
 		public Bernoulli[] ModelSelector_selector_cases_0_rep10_rpt_B;
 		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep10'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep10_uses_B;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep11_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep11_B;
 		public Bernoulli ModelSelector_selector_cases_0_rep11_rpt_B_reduced;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep20_B;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep3_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep20_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep3_B;
 		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep3'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep3_uses_B;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep4_B;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep5_B;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep6_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep4_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep5_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep6_B;
 		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep6'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep6_uses_B;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep8_B;
-		public DistributionStructArray<Bernoulli,bool>[] ModelSelector_selector_cases_0_rep8_rep_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep8_B;
+		public Bernoulli[][] ModelSelector_selector_cases_0_rep8_rep_B;
 		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0'</summary>
 		public Bernoulli[] ModelSelector_selector_cases_0_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_B;
@@ -371,7 +371,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			this.ModelSelector_selector_cases_0_rep3_uses_B = new Bernoulli[this.featureCount][];
-			this.ModelSelector_selector_cases_0_rep3_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
+			this.ModelSelector_selector_cases_0_rep3_B = new Bernoulli[this.featureCount];
 			this.Weights_uses_B[1] = new DistributionStructArray<Gaussian,double>(this.featureCount);
 			this.Weights_uses_F[1] = new DistributionStructArray<Gaussian,double>(this.featureCount);
 			this.Weights_marginal_F = new DistributionStructArray<Gaussian,double>(this.featureCount);
@@ -454,8 +454,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.WeightPrecisionRates_use_B[FeatureRange] = Gamma.Uniform();
 			}
 			this.WeightPrecisions_B_FeatureRange__Q = new Gamma[this.featureCount];
-			this.CommonWeightPrecision_rep_F = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.CommonWeightPrecision_rep_B = new DistributionStructArray<Gamma,double>(this.featureCount);
+			this.CommonWeightPrecision_rep_F = new Gamma[this.featureCount];
+			this.CommonWeightPrecision_rep_B = new Gamma[this.featureCount];
 			this.WeightPrecisions_B = new DistributionStructArray<Gamma,double>(this.featureCount);
 			this.WeightPrecisions_F = new DistributionStructArray<Gamma,double>(this.featureCount);
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
@@ -470,11 +470,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep3_uses_B[FeatureRange][2] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep3_B[FeatureRange] = Bernoulli.Uniform();
 			}
-			this.ModelSelector_selector_cases_0_rep4_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
+			this.ModelSelector_selector_cases_0_rep4_B = new Bernoulli[this.featureCount];
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep4_B[FeatureRange] = Bernoulli.Uniform();
 			}
-			this.ModelSelector_selector_cases_0_rep5_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
+			this.ModelSelector_selector_cases_0_rep5_B = new Bernoulli[this.featureCount];
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep5_B[FeatureRange] = Bernoulli.Uniform();
 			}
@@ -483,11 +483,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Weights_uses_F[0][FeatureRange] = Gaussian.Uniform();
 			}
 			this.ModelSelector_selector_cases_0_rep6_uses_B = new Bernoulli[this.featureCount][];
-			this.ModelSelector_selector_cases_0_rep10_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
+			this.ModelSelector_selector_cases_0_rep10_B = new Bernoulli[this.featureCount];
 			this.ModelSelector_selector_cases_0_rep10_uses_B = new Bernoulli[this.featureCount][];
 			this.WeightPrecisionRates_rpt_F = new Gamma[this.featureCount];
 			this.ModelSelector_selector_cases_0_rep10_rpt_B = new Bernoulli[this.featureCount];
-			this.ModelSelector_selector_cases_0_rep6_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
+			this.ModelSelector_selector_cases_0_rep6_B = new Bernoulli[this.featureCount];
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep6_uses_B[FeatureRange] = new Bernoulli[3];
 				this.ModelSelector_selector_cases_0_rep6_uses_B[FeatureRange][1] = Bernoulli.Uniform();
@@ -515,7 +515,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.featureCount>0) {
 				this.ModelSelector_selector_cases_0_rep11_rpt_B_reduced = Bernoulli.FromLogOdds(ConstrainEqualOp<double>.LogEvidenceRatio(this.Zero_reduced, 0.0));
 			}
-			this.ModelSelector_selector_cases_0_rep11_B = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
+			this.ModelSelector_selector_cases_0_rep11_B = new Bernoulli[this.featureCount];
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep11_B[FeatureRange] = Bernoulli.Uniform();
 			}
@@ -772,12 +772,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.FeatureScores_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];
 			this.WeightPrecisionRates_FeatureIndexes_F = new DistributionRefArray<DistributionStructArray<Gamma,double>,double[]>(this.instanceCount);
-			this.ModelSelector_selector_cases_0_rep8_rep_B = new DistributionStructArray<Bernoulli,bool>[this.instanceCount];
-			this.ModelSelector_selector_cases_0_rep8_B = new DistributionStructArray<Bernoulli,bool>(this.instanceCount);
+			this.ModelSelector_selector_cases_0_rep8_rep_B = new Bernoulli[this.instanceCount][];
+			this.ModelSelector_selector_cases_0_rep8_B = new Bernoulli[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep8_B[InstanceRange] = Bernoulli.Uniform();
 			}
-			this.ModelSelector_selector_cases_0_rep20_B = new DistributionStructArray<Bernoulli,bool>(this.instanceCount);
+			this.ModelSelector_selector_cases_0_rep20_B = new Bernoulli[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep20_B[InstanceRange] = Bernoulli.Uniform();
 			}
@@ -813,7 +813,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				for(int InstanceFeatureRanges = 0; InstanceFeatureRanges<this.instanceFeatureCounts[InstanceRange]; InstanceFeatureRanges++) {
 					this.WeightPrecisionRates_FeatureIndexes_F[InstanceRange][InstanceFeatureRanges] = Gamma.Uniform();
 				}
-				this.ModelSelector_selector_cases_0_rep8_rep_B[InstanceRange] = new DistributionStructArray<Bernoulli,bool>(this.instanceFeatureCounts[InstanceRange]);
+				this.ModelSelector_selector_cases_0_rep8_rep_B[InstanceRange] = new Bernoulli[this.instanceFeatureCounts[InstanceRange]];
 				for(int InstanceFeatureRanges = 0; InstanceFeatureRanges<this.instanceFeatureCounts[InstanceRange]; InstanceFeatureRanges++) {
 					this.ModelSelector_selector_cases_0_rep8_rep_B[InstanceRange][InstanceFeatureRanges] = Bernoulli.Uniform();
 				}

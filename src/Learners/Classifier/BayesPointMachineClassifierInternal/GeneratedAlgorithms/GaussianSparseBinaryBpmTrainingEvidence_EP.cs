@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Bernoulli ModelSelector_marginal_F;
 		public Bernoulli ModelSelector_selector_B;
 		public Bernoulli ModelSelector_selector_cases_0_B;
-		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_0_rep9_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep9_B;
 		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0'</summary>
 		public Bernoulli[] ModelSelector_selector_cases_0_uses_B;
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_B;
@@ -314,7 +314,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.FeatureScores_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];
 			this.IndexedWeights_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];
 			this.Weights_FeatureIndexes_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
-			this.ModelSelector_selector_cases_0_rep9_B = new DistributionStructArray<Bernoulli,bool>(this.instanceCount);
+			this.ModelSelector_selector_cases_0_rep9_B = new Bernoulli[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep9_B[InstanceRange] = Bernoulli.Uniform();
 			}

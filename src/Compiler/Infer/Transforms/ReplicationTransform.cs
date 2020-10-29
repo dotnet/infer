@@ -365,7 +365,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     context.InputAttributes.CopyObjectAttributesTo(loopVar, context.OutputAttributes, newIndexVar);
                 }
                 IVariableDeclaration repVar = varInfo.DeriveArrayVariable(stmts, context, VariableInformation.GenerateName(context, varInfo.Name + "_rep"),
-                                                                          loopSize, newIndexVar, inds);
+                                                                          loopSize, newIndexVar, inds, useArrays: true);
                 if (!context.InputAttributes.Has<DerivedVariable>(repVar))
                     context.OutputAttributes.Set(repVar, new DerivedVariable());
                 if (context.InputAttributes.Has<ChannelInfo>(baseVar))

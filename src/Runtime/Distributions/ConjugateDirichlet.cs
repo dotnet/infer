@@ -507,17 +507,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Constructs a Conjugate Dirichlet distribution with the given log mean and mean logarithm.
         /// </summary>
-        /// <param name="logMean">Log of desired expected value.</param>
+        /// <param name="mean">Desired expected value.</param>
         /// <param name="meanLog">Desired expected logarithm.</param>
+        /// <param name="logMean">Log of desired expected value.</param>
         /// <returns>A new Gamma distribution.</returns>
         /// <remarks>
         /// This function is significantly slower than the other constructors since it
         /// involves nonlinear optimization. The algorithm is a generalized Newton iteration, 
         /// described in "Estimating a Gamma distribution" by T. Minka, 2002.
         /// </remarks>
-        public static ConjugateDirichlet FromLogMeanAndMeanLog(double logMean, double meanLog)
+        public static ConjugateDirichlet FromMeanAndMeanLog(double mean, double meanLog, double logMean)
         {
-            var gamma = Gamma.FromLogMeanAndMeanLog(logMean, meanLog);
+            var gamma = Gamma.FromMeanAndMeanLog(mean, meanLog, logMean);
             return ConjugateDirichlet.FromShapeAndRate(gamma.Shape, gamma.Rate);
         }
 

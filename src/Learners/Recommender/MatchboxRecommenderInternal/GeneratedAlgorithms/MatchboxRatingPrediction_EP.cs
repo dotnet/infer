@@ -134,7 +134,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionStructArray<Gaussian,double>[] UserThresholds_0__gi_0__F;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public Gaussian[] UserThresholds_depth2_rep_B_toDef;
-		public DistributionStructArray<Gaussian,double>[] UserThresholds_depth2_rep_F;
+		public Gaussian[][] UserThresholds_depth2_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public Gaussian[] UserThresholds_depth2_rep_F_marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_itemUserIds_observation__F;
@@ -867,7 +867,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int _gi = 0; _gi<this.userThresholdCount; _gi++) {
 				if (this.useSharedUserThresholds) {
-					this.UserThresholds_depth2_rep_F[_gi] = new DistributionStructArray<Gaussian,double>(this.observationCount);
+					this.UserThresholds_depth2_rep_F[_gi] = new Gaussian[this.observationCount];
 				}
 			}
 			for(int observation = 0; observation<this.observationCount; observation++) {
@@ -963,7 +963,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				return ;
 			}
 			if (this.useSharedUserThresholds) {
-				this.UserThresholds_depth2_rep_F = new DistributionStructArray<Gaussian,double>[this.userThresholdCount];
+				this.UserThresholds_depth2_rep_F = new Gaussian[this.userThresholdCount][];
 				this.UserThresholds_depth2_rep_F_marginal = new Gaussian[this.userThresholdCount];
 				this.UserThresholds_depth2_rep_B_toDef = new Gaussian[this.userThresholdCount];
 			}
@@ -1013,7 +1013,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			if (this.Changed_UseSharedUserThresholds_isDone) {
 				return ;
 			}
-			this.UserThresholds_depth2_rep_F = default(DistributionStructArray<Gaussian,double>[]);
+			this.UserThresholds_depth2_rep_F = default(Gaussian[][]);
 			this.UserThresholds_depth2_rep_F_marginal = default(Gaussian[]);
 			this.UserThresholds_depth2_rep_B_toDef = default(Gaussian[]);
 			this.UserThresholds_itemUserIds_observation__F = default(DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>);

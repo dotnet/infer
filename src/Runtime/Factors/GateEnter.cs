@@ -1078,6 +1078,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterOp{T}"]/message_doc[@name="EnterAverageConditional{TValue}(TValue, TValue[])"]/*'/>
+        /// <typeparam name="TValue">The type of the message from <c>value</c>.</typeparam>
+        public static TValue[] EnterAverageConditional<TValue>([IsReturnedInEveryElement] TValue value, TValue[] result)
+        {
+            return EnterAverageLogarithm(value, result);
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterOp{T}"]/message_doc[@name="EnterAverageConditional{TValue, TResultList}(TValue, TResultList)"]/*'/>
         /// <typeparam name="TValue">The type of the message from <c>value</c>.</typeparam>
         /// <typeparam name="TResultList">The type of the outgoing message.</typeparam>
@@ -1267,6 +1274,17 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double AverageLogFactor()
         {
             return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterOp{T}"]/message_doc[@name="EnterAverageLogarithm{TValue}(TValue, TValue[])"]/*'/>
+        /// <typeparam name="TValue">The type of the message from <c>value</c>.</typeparam>
+        public static TValue[] EnterAverageLogarithm<TValue>([IsReturnedInEveryElement] TValue value, TValue[] result)
+        {
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = value;
+            }
+            return result;
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateEnterOp{T}"]/message_doc[@name="EnterAverageLogarithm{TValue, TResultList}(TValue, TResultList)"]/*'/>

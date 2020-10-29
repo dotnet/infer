@@ -1085,12 +1085,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IVariableDeclaration[][] indexVars = new IVariableDeclaration[][] { new[] { indexVar } };
             // Cannot set useLiteralIndices=true because arraySize is initially zero and gets incremented later.
             cvi.arrayDecl = vi.DeriveArrayVariable(stBefore, context,
-                                                   name, arraySizes, indexVars, exprIndices, cvi.wildcardVars);
+                                                   name, arraySizes, indexVars, exprIndices, cvi.wildcardVars, useArrays: true);
             context.InputAttributes.Remove<ConditionInformation>(cvi.arrayDecl);
             context.InputAttributes.Set(cvi.arrayDecl, this);
             if (!context.InputAttributes.Has<DerivedVariable>(cvi.arrayDecl))
                 context.OutputAttributes.Set(cvi.arrayDecl, new DerivedVariable());
-            List<IStatement> wildcardLoops = VariableInformation.GetVariableInformation(context, cvi.arrayDecl).BuildWildcardLoops(cvi.wildcardVars);
+            var arrayInformation = VariableInformation.GetVariableInformation(context, cvi.arrayDecl);
+            List<IStatement> wildcardLoops = arrayInformation.BuildWildcardLoops(cvi.wildcardVars);
 
             cvi.arrayRef = Builder.VarRefExpr(cvi.arrayDecl);
             IExpression arrayRef = Builder.JaggedArrayIndex(cvi.arrayRef, cvi.wildcardVars);

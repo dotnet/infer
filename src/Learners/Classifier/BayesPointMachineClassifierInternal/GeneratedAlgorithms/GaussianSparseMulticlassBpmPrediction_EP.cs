@@ -68,16 +68,16 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Discrete Labels_F_reduced;
 		public Discrete[] Labels_InstanceRange__selector_B;
 		public DistributionStructArray<Bernoulli,bool>[] Labels_InstanceRange__selector_cases_B;
-		public DistributionStructArray<Bernoulli,bool>[][] Labels_InstanceRange__selector_cases_rep7_B;
+		public Bernoulli[][][] Labels_InstanceRange__selector_cases_rep7_B;
 		/// <summary>Messages from uses of 'Labels_InstanceRange__selector_cases_rep7'</summary>
 		public Bernoulli[][][][] Labels_InstanceRange__selector_cases_rep7_uses_B;
-		public DistributionStructArray<Bernoulli,bool>[] Labels_InstanceRange__selector_cases_rep8_B_reduced;
+		public Bernoulli[][] Labels_InstanceRange__selector_cases_rep8_B_reduced;
 		/// <summary>Messages from uses of 'Labels_InstanceRange__selector_cases'</summary>
 		public Bernoulli[][][] Labels_InstanceRange__selector_cases_uses_B;
 		public Discrete Labels_InstanceRange__selector_rep_B_reduced;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Discrete&gt;</summary>
 		public Discrete[] Labels_InstanceRange__selector_rep_B_toDef;
-		public DistributionRefArray<Discrete,int>[] Labels_InstanceRange__selector_rep_F;
+		public Discrete[][] Labels_InstanceRange__selector_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Discrete&gt;</summary>
 		public Discrete[] Labels_InstanceRange__selector_rep_F_marginal;
 		/// <summary>Messages from uses of 'Labels_InstanceRange__selector'</summary>
@@ -93,15 +93,15 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Messages to uses of 'Labels_use'</summary>
 		public Discrete[][] Labels_uses_F;
 		public Gaussian[][][] MaxNoisyScore_0__B;
-		public DistributionStructArray<Gaussian,double>[][] MaxNoisyScore_rep_B;
+		public Gaussian[][][] MaxNoisyScore_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public Gaussian[][] MaxNoisyScore_rep_B_toDef;
-		public DistributionStructArray<Gaussian,double>[][] MaxNoisyScore_rep_F;
+		public Gaussian[][][] MaxNoisyScore_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public Gaussian[][] MaxNoisyScore_rep_F_marginal;
 		public Gaussian[][][] NoisyScoreDeltas_B;
 		public Gaussian[][][] NoisyScoreDeltas_F;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] NoisyScores__B;
+		public Gaussian[][][] NoisyScores__B;
 		public DistributionStructArray<Gaussian,double>[][] NoisyScores__ClassMaxNoisyScore_B;
 		public Gaussian[][][] NoisyScores__ClassMaxNoisyScore_ClassRange_0__B;
 		public DistributionStructArray<Gaussian,double>[] NoisyScores_F;
@@ -603,11 +603,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			if (this.instanceCount>0) {
 				this.vbool76_reduced = new bool[this.classCount][];
-				this.Labels_InstanceRange__selector_cases_rep8_B_reduced = new DistributionStructArray<Bernoulli,bool>[this.classCount];
+				this.Labels_InstanceRange__selector_cases_rep8_B_reduced = new Bernoulli[this.classCount][];
 			}
 			for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
 				if (this.instanceCount>0) {
-					this.Labels_InstanceRange__selector_cases_rep8_B_reduced[ClassMaxNoisyScore] = new DistributionStructArray<Bernoulli,bool>(this.classCount);
+					this.Labels_InstanceRange__selector_cases_rep8_B_reduced[ClassMaxNoisyScore] = new Bernoulli[this.classCount];
 				}
 				for(int _a8 = 0; _a8<this.classCount; _a8++) {
 					if (this.instanceCount>0) {
@@ -665,13 +665,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
 					this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.classCount];
 				}
-				this.MaxNoisyScore_rep_B[InstanceRange] = new DistributionStructArray<Gaussian,double>[this.classCount];
+				this.MaxNoisyScore_rep_B[InstanceRange] = new Gaussian[this.classCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
-					this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore] = new DistributionStructArray<Gaussian,double>(this.classCount);
+					this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.classCount];
 				}
-				this.MaxNoisyScore_rep_F[InstanceRange] = new DistributionStructArray<Gaussian,double>[this.classCount];
+				this.MaxNoisyScore_rep_F[InstanceRange] = new Gaussian[this.classCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
-					this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore] = new DistributionStructArray<Gaussian,double>(this.classCount);
+					this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.classCount];
 				}
 				this.Labels_InstanceRange__selector_cases_rep7_uses_B[InstanceRange] = new Bernoulli[this.classCount][][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
@@ -682,9 +682,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.Labels_InstanceRange__selector_cases_rep7_uses_B[InstanceRange][ClassMaxNoisyScore][_a7][0] = Bernoulli.Uniform();
 					}
 				}
-				this.Labels_InstanceRange__selector_cases_rep7_B[InstanceRange] = new DistributionStructArray<Bernoulli,bool>[this.classCount];
+				this.Labels_InstanceRange__selector_cases_rep7_B[InstanceRange] = new Bernoulli[this.classCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
-					this.Labels_InstanceRange__selector_cases_rep7_B[InstanceRange][ClassMaxNoisyScore] = new DistributionStructArray<Bernoulli,bool>(this.classCount);
+					this.Labels_InstanceRange__selector_cases_rep7_B[InstanceRange][ClassMaxNoisyScore] = new Bernoulli[this.classCount];
 					for(int _a7 = 0; _a7<this.classCount; _a7++) {
 						this.Labels_InstanceRange__selector_cases_rep7_B[InstanceRange][ClassMaxNoisyScore][_a7] = Bernoulli.Uniform();
 					}
@@ -697,7 +697,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_InstanceRange__selector_uses_F[InstanceRange][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.classCount));
 				this.Labels_InstanceRange__selector_rep_F_marginal[InstanceRange] = ReplicateOp_Divide.MarginalInit<Discrete>(this.Labels_InstanceRange__selector_uses_F[InstanceRange][1]);
 				this.Labels_InstanceRange__selector_rep_B_toDef[InstanceRange] = ReplicateOp_Divide.ToDefInit<Discrete>(this.Labels_InstanceRange__selector_uses_F[InstanceRange][1]);
-				this.Labels_InstanceRange__selector_rep_F[InstanceRange] = new DistributionRefArray<Discrete,int>(this.classCount);
+				this.Labels_InstanceRange__selector_rep_F[InstanceRange] = new Discrete[this.classCount];
 				for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {
 					this.Labels_InstanceRange__selector_rep_F[InstanceRange][ClassRange] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.classCount));
 				}
@@ -721,9 +721,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						}
 					}
 				}
-				this.NoisyScores__B[InstanceRange] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.classCount);
+				this.NoisyScores__B[InstanceRange] = new Gaussian[this.classCount][];
 				for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {
-					this.NoisyScores__B[InstanceRange][ClassRange] = new DistributionStructArray<Gaussian,double>(this.classCount);
+					this.NoisyScores__B[InstanceRange][ClassRange] = new Gaussian[this.classCount];
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
 						this.NoisyScores__B[InstanceRange][ClassRange][ClassMaxNoisyScore] = Gaussian.Uniform();
 					}
@@ -845,15 +845,15 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.Labels_InstanceRange__selector_cases_uses_B = new Bernoulli[this.instanceCount][][];
 			this.vbool76_reduced = default(bool[][]);
-			this.Labels_InstanceRange__selector_cases_rep8_B_reduced = default(DistributionStructArray<Bernoulli,bool>[]);
+			this.Labels_InstanceRange__selector_cases_rep8_B_reduced = default(Bernoulli[][]);
 			this.NoisyScoreDeltas_F = new Gaussian[this.instanceCount][][];
 			this.NoisyScoreDeltas_B = new Gaussian[this.instanceCount][][];
 			this.vdouble740_B = new Gaussian[this.instanceCount][][];
 			this.MaxNoisyScore_0__B = new Gaussian[this.instanceCount][][];
-			this.MaxNoisyScore_rep_B = new DistributionStructArray<Gaussian,double>[this.instanceCount][];
-			this.MaxNoisyScore_rep_F = new DistributionStructArray<Gaussian,double>[this.instanceCount][];
+			this.MaxNoisyScore_rep_B = new Gaussian[this.instanceCount][][];
+			this.MaxNoisyScore_rep_F = new Gaussian[this.instanceCount][][];
 			this.Labels_InstanceRange__selector_cases_rep7_uses_B = new Bernoulli[this.instanceCount][][][];
-			this.Labels_InstanceRange__selector_cases_rep7_B = new DistributionStructArray<Bernoulli,bool>[this.instanceCount][];
+			this.Labels_InstanceRange__selector_cases_rep7_B = new Bernoulli[this.instanceCount][][];
 			this.Labels_InstanceRange__selector_cases_B = new DistributionStructArray<Bernoulli,bool>[this.instanceCount];
 			this.Labels_InstanceRange__selector_uses_B = new Discrete[this.instanceCount][];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
@@ -865,10 +865,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.Labels_InstanceRange__selector_rep_F_marginal = new Discrete[this.instanceCount];
 			this.Labels_InstanceRange__selector_rep_B_toDef = new Discrete[this.instanceCount];
-			this.Labels_InstanceRange__selector_rep_F = new DistributionRefArray<Discrete,int>[this.instanceCount];
+			this.Labels_InstanceRange__selector_rep_F = new Discrete[this.instanceCount][];
 			this.NoisyScores__ClassMaxNoisyScore_B = new DistributionStructArray<Gaussian,double>[this.instanceCount][];
 			this.NoisyScores__ClassMaxNoisyScore_ClassRange_0__B = new Gaussian[this.instanceCount][][];
-			this.NoisyScores__B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[this.instanceCount];
+			this.NoisyScores__B = new Gaussian[this.instanceCount][][];
 			this.NoisyScores_use_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];
 			this.Labels_marginal_F = new DistributionRefArray<Discrete,int>(this.instanceCount);
 			this.Labels_use_B = new DistributionRefArray<Discrete,int>(this.instanceCount);

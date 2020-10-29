@@ -59,12 +59,18 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerFromMeanAndMeanLogTest()
         {
-            double mean = 3;
-            double meanLog = 0.4;
-            double power = 5;
-            GammaPower gammaPower = GammaPower.FromMeanAndMeanLog(mean, meanLog, power);
-            Assert.Equal(mean, gammaPower.GetMean(), 1e-1);
-            Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-1);
+            var testCases = new[]
+            {
+                (System.Math.Exp(1.25), 1.0, /*1.25,*/ -1.0),
+                (3, 0.4, 5),
+            };
+            foreach (var testCase in testCases)
+            {
+                var (mean, meanLog, power) = testCase;
+                GammaPower gammaPower = GammaPower.FromMeanAndMeanLog(mean, meanLog, power);
+                Assert.Equal(mean, gammaPower.GetMean(), 1e-1);
+                Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-1);
+            }
         }
 
         [Fact]

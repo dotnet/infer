@@ -62,10 +62,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Field backing the Labels property</summary>
 		private int[] labels;
 		public Gaussian[][][] MaxNoisyScore_0__B;
-		public DistributionStructArray<Gaussian,double>[][] MaxNoisyScore_rep_B;
+		public Gaussian[][][] MaxNoisyScore_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public Gaussian[][] MaxNoisyScore_rep_B_toDef;
-		public DistributionStructArray<Gaussian,double>[][] MaxNoisyScore_rep_F;
+		public Gaussian[][][] MaxNoisyScore_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public Gaussian[][] MaxNoisyScore_rep_F_marginal;
 		public Gaussian[][][] NoisyScoreDeltas_B;
@@ -599,10 +599,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					}
 				}
 				this.MaxNoisyScore_rep_B_toDef[InstanceRange] = new Gaussian[this.classCount];
-				this.MaxNoisyScore_rep_F[InstanceRange] = new DistributionStructArray<Gaussian,double>[this.classCount];
+				this.MaxNoisyScore_rep_F[InstanceRange] = new Gaussian[this.classCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
 					if (this.labels[InstanceRange]==ClassMaxNoisyScore) {
-						this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore] = new DistributionStructArray<Gaussian,double>(this.classCount);
+						this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.classCount];
 					}
 				}
 				for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {
@@ -654,10 +654,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.classCount];
 					}
 				}
-				this.MaxNoisyScore_rep_B[InstanceRange] = new DistributionStructArray<Gaussian,double>[this.classCount];
+				this.MaxNoisyScore_rep_B[InstanceRange] = new Gaussian[this.classCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
 					if (this.labels[InstanceRange]==ClassMaxNoisyScore) {
-						this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore] = new DistributionStructArray<Gaussian,double>(this.classCount);
+						this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.classCount];
 					}
 				}
 				this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange] = new DistributionStructArray<Gaussian,double>[this.classCount];
@@ -773,12 +773,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.NoisyScores_F = new DistributionStructArray<Gaussian,double>[this.instanceCount];
 			this.MaxNoisyScore_rep_F_marginal = new Gaussian[this.instanceCount][];
 			this.MaxNoisyScore_rep_B_toDef = new Gaussian[this.instanceCount][];
-			this.MaxNoisyScore_rep_F = new DistributionStructArray<Gaussian,double>[this.instanceCount][];
+			this.MaxNoisyScore_rep_F = new Gaussian[this.instanceCount][][];
 			this.NoisyScoreDeltas_F = new Gaussian[this.instanceCount][][];
 			this.NoisyScoreDeltas_B = new Gaussian[this.instanceCount][][];
 			this.vdouble87_B = new Gaussian[this.instanceCount][][];
 			this.MaxNoisyScore_0__B = new Gaussian[this.instanceCount][][];
-			this.MaxNoisyScore_rep_B = new DistributionStructArray<Gaussian,double>[this.instanceCount][];
+			this.MaxNoisyScore_rep_B = new Gaussian[this.instanceCount][][];
 			this.NoisyScores_ClassRange_ClassMaxNoisyScore_B = new DistributionStructArray<Gaussian,double>[this.instanceCount][];
 			this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B = new Gaussian[this.instanceCount][][];
 			this.NoisyScores_use_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];

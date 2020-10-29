@@ -269,7 +269,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public static Gamma FromMeanAndMeanLog(double mean, double meanLog)
         {
-            double delta = Math.Log(mean) - meanLog;
+            return FromMeanAndMeanLog(mean, meanLog, Math.Log(mean));
+        }
+
+        /// <summary>
+        /// Constructs a Gamma distribution with the given mean and mean logarithm.
+        /// </summary>
+        /// <param name="mean">Desired expected value.</param>
+        /// <param name="meanLog">Desired expected logarithm.</param>
+        /// <param name="logMean">Logarithm of desired expected value.</param>
+        /// <returns>A new Gamma distribution.</returns>
+        /// <remarks>This function is equivalent to maximum-likelihood estimation of a Gamma distribution
+        /// from data given by sufficient statistics.
+        /// This function is significantly slower than the other constructors since it
+        /// involves nonlinear optimization. The algorithm is a generalized Newton iteration, 
+        /// described in "Estimating a Gamma distribution" by T. Minka, 2002.
+        /// </remarks>
+        public static Gamma FromMeanAndMeanLog(double mean, double meanLog, double logMean)
+        {
+            double delta = logMean - meanLog;
             if (delta <= 0) return Gamma.PointMass(mean);
             double shape = 0.5 / delta;
             for (int iter = 0; iter < 100; iter++)
@@ -278,40 +296,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 if (MMath.AreEqual(g, 0)) break;
                 shape /= 1 + g / (1 - shape * MMath.Trigamma(shape));
             }
-            if (Double.IsNaN(shape)) throw new Exception("shape is nan");
+            if (double.IsNaN(shape)) throw new Exception("shape is nan");
             if (shape > double.MaxValue) return Gamma.PointMass(mean);
             return Gamma.FromShapeAndRate(shape, shape / mean);
-        }
-
-        /// <summary>
-        /// Constructs a Gamma distribution with the given log mean and mean logarithm.
-        /// </summary>
-        /// <param name="logMean">Log of desired expected value.</param>
-        /// <param name="meanLog">Desired expected logarithm.</param>
-        /// <returns>A new Gamma distribution.</returns>
-        /// <remarks>
-        /// This function is significantly slower than the other constructors since it
-        /// involves nonlinear optimization. The algorithm is a generalized Newton iteration, 
-        /// described in "Estimating a Gamma distribution" by T. Minka, 2002.
-        /// </remarks>
-        public static Gamma FromLogMeanAndMeanLog(double logMean, double meanLog)
-        {
-            // logMean = log(shape)-log(rate)
-            // meanLog = Psi(shape)-log(rate)
-            // delta = log(shape)-Psi(shape)
-            double delta = logMean - meanLog;
-            if (delta <= 2e-16) return Gamma.PointMass(Math.Exp(logMean));
-            double shape = 0.5 / delta;
-            for (int iter = 0; iter < 100; iter++)
-            {
-                double oldShape = shape;
-                double g = Math.Log(shape) - delta - MMath.Digamma(shape);
-                shape /= 1 + g / (1 - shape * MMath.Trigamma(shape));
-                if (Math.Abs(shape - oldShape) < 1e-8) break;
-            }
-            if (Double.IsNaN(shape)) throw new Exception("shape is nan");
-            Gamma result = Gamma.FromShapeAndRate(shape, shape / Math.Exp(logMean));
-            return result;
         }
 
         /// <summary>

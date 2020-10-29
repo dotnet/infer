@@ -49,10 +49,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>True if Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins6 has performed initialisation. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins6</summary>
 		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins6_isInitialised;
 		public Gamma CommonWeightPrecision_F;
-		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_B;
+		public Gamma[] CommonWeightPrecision_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_B_toDef;
-		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_F;
+		public Gamma[] CommonWeightPrecision_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_F_marginal;
 		/// <summary>True if Constant has executed. Set this to false to force re-execution of Constant</summary>
@@ -430,8 +430,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.Weights_uses_B[1] = new DistributionStructArray<Gaussian,double>(this.featureCount);
 			this.WeightPrecisions_B_FeatureRange__Q = new Gamma[this.featureCount];
-			this.CommonWeightPrecision_rep_B = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.CommonWeightPrecision_rep_F = new DistributionStructArray<Gamma,double>(this.featureCount);
+			this.CommonWeightPrecision_rep_B = new Gamma[this.featureCount];
+			this.CommonWeightPrecision_rep_F = new Gamma[this.featureCount];
 			if (this.featureCount>0) {
 				this.Zero_reduced = 0.0;
 				Constrain.Equal<double>(this.Zero_reduced, 0.0);

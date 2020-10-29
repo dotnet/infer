@@ -51,8 +51,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             // subject to x + 2*y = 1
             // x >= 0
             // y >= 0
-            Variable<double> x = Variable.GaussianFromMeanAndPrecision(1.0/precision/precision, precision);
-            Variable<double> y = Variable.GaussianFromMeanAndPrecision(1.0/precision/precision, precision);
+            Variable<double> x = Variable.GaussianFromMeanAndPrecision(1.0 / precision / precision, precision);
+            Variable<double> y = Variable.GaussianFromMeanAndPrecision(1.0 / precision / precision, precision);
             Variable.ConstrainEqual(x + 2 * y, 1);
             Variable.ConstrainPositive(x);
             Variable.ConstrainPositive(y);
@@ -1917,7 +1917,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         GammaEstimator bEst = new GammaEstimator();
                         GammaEstimator aEst = new GammaEstimator();
                         GammaEstimator productEst = new GammaEstimator();
-                        int numIter = 10_000_000*10;
+                        int numIter = 10_000_000;
                         double bScale = 1;
                         double aScale = 1;
                         double logBScale = System.Math.Log(bScale);
@@ -2153,7 +2153,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double weight = System.Math.Exp(logWeight);
                 totalWeight += weight;
             }
-            if(trace) Trace.WriteLine($"totalWeight = {totalWeight}");
+            if (trace) Trace.WriteLine($"totalWeight = {totalWeight}");
             return System.Math.Log(totalWeight / numIter);
         }
 
@@ -2268,7 +2268,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
 
                     double logZ = LogEvidenceIncrementBShape(sumPrior, aPrior, bPrior);
-                    if(trace) Trace.WriteLine($"LogZ = {logZ}");
+                    if (trace) Trace.WriteLine($"LogZ = {logZ}");
 
                     if (false)
                     {
@@ -2282,7 +2282,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         MeanVarianceAccumulator aMva = new MeanVarianceAccumulator();
                         MeanVarianceAccumulator sumMva = new MeanVarianceAccumulator();
                         int numIter = 10_000_000;
-                        double tailProbability = 1.0/numIter;
+                        double tailProbability = 1.0 / numIter;
                         // If sum cannot be more than x, then b cannot be more than x.
                         double sumUpperBound = sumPrior.GetQuantile(1 - tailProbability);
                         double evidenceMultiplier = GammaPowerProbBetween(bPrior, 0, sumUpperBound) * GammaPowerProbBetween(aPrior, 0, sumUpperBound);
@@ -2295,7 +2295,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                             double aSample = Sample(aPrior, 0, sumUpperBound);
                             double bScale = 1;
                             double aScale = 1;
-                            if (bScale != 1) 
+                            if (bScale != 1)
                             {
                                 logWeight -= bPrior.GetLogProb(bSample) - System.Math.Log(bScale);
                                 bSample *= bScale;
@@ -2331,7 +2331,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                             Trace.WriteLine($"{Quoter.Quote(bExpected)}, {Quoter.Quote(aExpected)}, {Quoter.Quote(sumExpected)}, {evExpected}");
                         }
                     }
-                    else if(trace) Trace.WriteLine($"{Quoter.Quote(bActual)}, {Quoter.Quote(aActual)}, {Quoter.Quote(sumActual)}, {evActual}");
+                    else if (trace) Trace.WriteLine($"{Quoter.Quote(bActual)}, {Quoter.Quote(aActual)}, {Quoter.Quote(sumActual)}, {evActual}");
                     double bError = MomentDiff(bExpected, bActual);
                     double aError = MomentDiff(aExpected, aActual);
                     double sumError = MomentDiff(sumExpected, sumActual);
@@ -2387,19 +2387,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             return System.Math.Pow(new TruncatedGamma(Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate), unpowerLowerBound, unpowerUpperBound).Sample(), gammaPower.Power);
         }
 
-        public static double MomentDiff(Gamma expected, Gamma actual)
-        {
-            expected.GetMeanAndVariance(out double meanExpected, out double varianceExpected);
-            actual.GetMeanAndVariance(out double meanActual, out double varianceActual);
-            const double rel = 1e-8;
-            return System.Math.Max(MMath.AbsDiff(meanExpected, meanActual, rel), MMath.AbsDiff(varianceExpected, varianceActual, rel));
-        }
+        const double rel = 1e-8;
 
-        public static double MomentDiff(GammaPower expected, GammaPower actual)
+        public static double MomentDiff(CanGetMeanAndVarianceOut<double,double> expected, CanGetMeanAndVarianceOut<double, double> actual)
         {
             expected.GetMeanAndVariance(out double meanExpected, out double varianceExpected);
             actual.GetMeanAndVariance(out double meanActual, out double varianceActual);
-            const double rel = 1e-8;
             return System.Math.Max(MMath.AbsDiff(meanExpected, meanActual, rel), MMath.AbsDiff(varianceExpected, varianceActual, rel));
         }
 
@@ -4161,6 +4154,94 @@ namespace Microsoft.ML.Probabilistic.Tests
         Assert.True(sumDist[3].MaxDiff(new Discrete(0, 3.0 / 32, 13.0 / 32, 13.0 / 32, 3.0 / 32)) < 1e-4);
     }
 #endif
+
+
+
+        [Fact]
+        public void ExpFactorTest()
+        {
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            var dPriorVar = Variable.Observed(default(Gaussian)).Named("dPrior");
+            Variable<double> d = Variable<double>.Random(dPriorVar).Named("d");
+            Variable<double> exp = Variable.Exp(d).Named("exp");
+            var expPriorVar = Variable.Observed(default(GammaPower)).Named("expPrior");
+            Variable.ConstrainEqualRandom(exp, expPriorVar);
+            exp.SetMarginalPrototype(expPriorVar);
+            block.CloseBlock();
+            InferenceEngine engine = new InferenceEngine();
+
+            var groundTruthArray = new[]
+            {
+                ((Gaussian.FromMeanAndPrecision(1, 2), GammaPower.Uniform(-1)),
+                 (Gaussian.FromNatural(1.9998965132582331, 2.0001832427396851), GammaPower.FromShapeAndRate(2.8220804368812047, 6.3586593528303261, -1.0), 0)),
+                ((Gaussian.FromMeanAndPrecision(1, 1000), GammaPower.Uniform(2)),
+                 (Gaussian.FromNatural(999.81974838904966, 999.83231543664101), GammaPower.FromShapeAndRate(3999.2421377863202, 2425.3749492614797, 2.0), 0)),
+                ((Gaussian.FromMeanAndPrecision(1, 1000), GammaPower.FromShapeAndRate(1, 1, 2)),
+                 (Gaussian.FromNatural(999.65208985784875, 1000.9840655225279), GammaPower.FromShapeAndRate(4003.8192381348445, 2429.7519152549512, 2.0), -2.84118821044094)),
+                ((Gaussian.FromMeanAndPrecision(1, 1000), GammaPower.FromShapeAndRate(1, 1, -1)),
+                 (Gaussian.FromNatural(999.12830752800949, 1000.7521969038098), GammaPower.FromShapeAndRate(1001.5790335640826, 2716.8030087447901, -1.0), -2.36674585661261)),
+                ((Gaussian.FromMeanAndPrecision(1, 2), GammaPower.FromShapeAndRate(10, 10, -1)),
+                 (Gaussian.FromNatural(1.3463798358521841, 10.918025124120254), GammaPower.FromShapeAndRate(11.479613174194139, 12.42489966931152, -1.0), -1.59084475637629)),
+            };
+
+            foreach (var groundTruth in groundTruthArray)
+            {
+                var (dPrior, expPrior) = groundTruth.Item1;
+                var (dExpected, expExpected, evExpected) = groundTruth.Item2;
+                dPriorVar.ObservedValue = dPrior;
+                expPriorVar.ObservedValue = expPrior;
+
+                var dActual = engine.Infer<Gaussian>(d);
+                var expActual = engine.Infer<GammaPower>(exp);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+
+                if (false)
+                {
+                    // importance sampling
+                    double totalWeight = 0;
+                    var dEst = new GaussianEstimator();
+                    GammaPowerEstimator expEst = new GammaPowerEstimator(expPrior.Power);
+                    int numIter = 10_000_000;
+                    MeanVarianceAccumulator mvaExp = new MeanVarianceAccumulator();
+                    for (int iter = 0; iter < numIter; iter++)
+                    {
+                        if (iter % 1_000_000 == 0) Trace.WriteLine($"iter = {iter}");
+                        double logWeight = 0;
+                        double dSample = dPrior.Sample();
+                        double expSample = System.Math.Exp(dSample);
+                        logWeight += expPrior.GetLogProb(expSample);
+                        double weight = System.Math.Exp(logWeight);
+                        totalWeight += weight;
+                        dEst.Add(dSample, weight);
+                        expEst.Add(expSample, weight);
+                        mvaExp.Add(expSample, weight);
+                    }
+                    Trace.WriteLine($"{nameof(totalWeight)} = {totalWeight}");
+                    if (totalWeight > 0)
+                    {
+                        dExpected = dEst.GetDistribution(new Gaussian());
+                        evExpected = System.Math.Log(totalWeight / numIter);
+                        expExpected = expEst.GetDistribution(new GammaPower());
+                        expExpected = GammaPower.FromMeanAndMeanLog(mvaExp.Mean, dExpected.GetMean(), expPrior.Power);
+                        Trace.WriteLine($"{Quoter.Quote(dExpected)}, {Quoter.Quote(expExpected)}, {evExpected}");
+                    }
+                }
+                double dError = MomentDiff(dExpected, dActual);
+                double expError = MomentDiff(expExpected, expActual);
+                double evError = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                bool trace = true;
+                if (trace)
+                {
+                    Trace.WriteLine($"d = {dActual} should be {dExpected}, error = {dError}");
+                    Trace.WriteLine($"exp = {expActual} should be {expExpected}, error = {expError}");
+                    Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
+                }
+                Assert.True(dError < 0.002);
+                Assert.True(expError < 0.1);
+                Assert.True(evError < 5e-4);
+            }
+        }
 
         [Fact]
         public void ExpFactorTest1()

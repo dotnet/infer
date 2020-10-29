@@ -343,9 +343,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             }
             string indexVarsString = s.ToString();
             if (indexVarsString.Length > 0) indexVarsString = $",indexVars={indexVarsString}";
-            string optionString = (LiteralIndexingDepth != 0) ? $",LiteralIndexingDepth={LiteralIndexingDepth}" : "";
+            string literalIndexingString = (LiteralIndexingDepth != 0) ? $",LiteralIndexingDepth={LiteralIndexingDepth}" : "";
+            string distArrayDepthString = (DistArrayDepth != 0) ? $",DistArrayDepth={DistArrayDepth}" : "";
             string marginalPrototypeString = (marginalPrototypeExpression == null) ? "" : $",{marginalPrototypeExpression.ToString()}";
-            return "VariableInformation(" + stocString + declaration + sizesString + indexVarsString + optionString + marginalPrototypeString + ")";
+            return "VariableInformation(" + stocString + declaration + sizesString + indexVarsString + distArrayDepthString + literalIndexingString + marginalPrototypeString + ")";
         }
 
 
@@ -455,6 +456,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <param name="wildcardVars">Loop variables to use for wildcards.  May be null if there are no wildcards.</param>
         /// <param name="useLiteralIndices">If true, literal indices will be used instead of newIndexVar.</param>
         /// <param name="copyInitializer">If true, the new variable will be given an InitialiseTo attribute if this variable had one</param>
+        /// <param name="useArrays">If true, the message type of the array will be a .NET array instead of DistributionArray.  Implied by <paramref name="useLiteralIndices"/>.</param>
         /// <remarks>
         /// The new array is indexed by wildcards first, then newIndexVar, then the indices remaining from the original array.
         /// For example, if original array is indexed [i,j][k,l][m,n] and indices = [*,*][3,*] then 
@@ -467,7 +469,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                                                           IList<IList<IExpression>> indices = null,
                                                           IList<IList<IExpression>> wildcardVars = null,
                                                           bool useLiteralIndices = false,
-                                                          bool copyInitializer = false)
+                                                          bool copyInitializer = false,
+                                                          bool useArrays = false)
         {
             if (arraySize == null)
                 throw new ArgumentException("arraySize is null");
@@ -476,7 +479,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             return DeriveArrayVariable(addTo, context, name,
                 new IExpression[][] { new[] { arraySize } },
                 new IVariableDeclaration[][] { new[] { newIndexVar } },
-                indices, wildcardVars, useLiteralIndices, copyInitializer);
+                indices, wildcardVars, useLiteralIndices, copyInitializer, useArrays);
         }
 
         internal IVariableDeclaration DeriveArrayVariable(ICollection<IStatement> addTo, BasicTransformContext context, string name,
@@ -484,7 +487,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                                                           IList<IList<IExpression>> indices = null,
                                                           IList<IList<IExpression>> wildcardVars = null,
                                                           bool useLiteralIndices = false,
-                                                          bool copyInitializer = false)
+                                                          bool copyInitializer = false,
+                                                          bool useArrays = false)
         {
             List<IExpression[]> newSizes = new List<IExpression[]>();
             List<IVariableDeclaration[]> newIndexVars = new List<IVariableDeclaration[]>();
@@ -527,7 +531,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             if (arraySize != null)
             {
                 newSizes.AddRange(arraySize);
-                distArrayDepth = newSizes.Count;
+                if (useArrays || useLiteralIndices)
+                    distArrayDepth = newSizes.Count;
                 if (useLiteralIndices)
                     literalIndexingDepth = newSizes.Count;
                 newIndexVars.AddRange(newIndexVar);
@@ -586,9 +591,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             vi.IsStochastic = IsStochastic;
             vi.sizes = newSizes;
             vi.indexVars = newIndexVars;
-            vi.DistArrayDepth = distArrayDepth;
-            if (useLiteralIndices)
-                vi.LiteralIndexingDepth = literalIndexingDepth;
+            vi.DistArrayDepth = distArrayDepth + System.Math.Max(0, this.DistArrayDepth - indexingDepth);
+            vi.LiteralIndexingDepth = literalIndexingDepth + System.Math.Max(0, this.LiteralIndexingDepth - indexingDepth);
             if (marginalPrototypeExpression != null)
             {
                 // substitute indices in the marginal prototype expression
@@ -679,7 +683,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                                                             List<IList<IExpression>> indices = null, IList<IList<IExpression>> wildcardVars = null,
                                                             bool copyInitializer = false)
         {
-            return DeriveArrayVariable(addTo, context, name, (IList<IExpression[]>)null, null, indices, wildcardVars, false, copyInitializer);
+            return DeriveArrayVariable(addTo, context, name, (IList<IExpression[]>)null, null, indices, wildcardVars, copyInitializer: copyInitializer);
         }
 
         /// <summary>

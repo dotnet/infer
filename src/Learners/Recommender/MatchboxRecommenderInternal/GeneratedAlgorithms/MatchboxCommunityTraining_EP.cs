@@ -377,10 +377,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_itemUserIds_observation__F;
 		/// <summary>Message to marginal of 'UserThresholds'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_marginal_F;
-		public DistributionStructArray<Gaussian,double>[] UserThresholds_rep_B;
+		public Gaussian[][] UserThresholds_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public Gaussian[] UserThresholds_rep_B_toDef;
-		public DistributionStructArray<Gaussian,double>[] UserThresholds_rep_F;
+		public Gaussian[][] UserThresholds_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
 		public Gaussian[] UserThresholds_rep_F_marginal;
 		/// <summary>Message from use of 'UserThresholds'</summary>
@@ -3617,7 +3617,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 				if (this.useSharedUserThresholds) {
-					this.UserThresholds_rep_F[userThreshold] = new DistributionStructArray<Gaussian,double>(this.observationCount);
+					this.UserThresholds_rep_F[userThreshold] = new Gaussian[this.observationCount];
 				}
 			}
 			for(int observation = 0; observation<this.observationCount; observation++) {
@@ -3629,7 +3629,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 				if (this.useSharedUserThresholds) {
-					this.UserThresholds_rep_B[userThreshold] = new DistributionStructArray<Gaussian,double>(this.observationCount);
+					this.UserThresholds_rep_B[userThreshold] = new Gaussian[this.observationCount];
 				}
 			}
 			for(int observation = 0; observation<this.observationCount; observation++) {
@@ -3967,8 +3967,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			if (this.useSharedUserThresholds) {
 				this.UserThresholds_rep_F_marginal = new Gaussian[this.userThresholdCount];
 				this.UserThresholds_rep_B_toDef = new Gaussian[this.userThresholdCount];
-				this.UserThresholds_rep_F = new DistributionStructArray<Gaussian,double>[this.userThresholdCount];
-				this.UserThresholds_rep_B = new DistributionStructArray<Gaussian,double>[this.userThresholdCount];
+				this.UserThresholds_rep_F = new Gaussian[this.userThresholdCount][];
+				this.UserThresholds_rep_B = new Gaussian[this.userThresholdCount][];
 			}
 			this.Changed_UserThresholdCount_UseSharedUserThresholds_isDone = true;
 		}
@@ -3982,9 +3982,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserThresholds_rep_F_marginal = default(Gaussian[]);
 			this.UserThresholds_rep_B_toDef = default(Gaussian[]);
 			this.UserThresholds_depth0_uses_F_1__marginal = default(DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>);
-			this.UserThresholds_rep_F = default(DistributionStructArray<Gaussian,double>[]);
+			this.UserThresholds_rep_F = default(Gaussian[][]);
 			this.UserThresholds_itemUserIds_observation__F = default(DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>);
-			this.UserThresholds_rep_B = default(DistributionStructArray<Gaussian,double>[]);
+			this.UserThresholds_rep_B = default(Gaussian[][]);
 			this.UserThresholds_itemUserIds_observation__B = default(DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>);
 			this.Changed_UseSharedUserThresholds_isDone = true;
 		}
