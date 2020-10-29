@@ -29,7 +29,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                                       Sampleable<double>, SettableToWeightedSum<TruncatedGamma>,
                                       CanGetMean<double>, CanGetVariance<double>, CanGetMeanAndVarianceOut<double, double>,
                                       CanGetLogNormalizer, CanGetLogAverageOf<TruncatedGamma>, CanGetLogAverageOfPower<TruncatedGamma>,
-                                      CanGetAverageLog<TruncatedGamma>, CanGetMode<double>
+                                      CanGetAverageLog<TruncatedGamma>, CanGetMode<double>,
+                                      CanGetQuantile
     {
         /// <summary>
         /// Untruncated Gamma
@@ -468,12 +469,34 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [Stochastic]
         public static double Sample(Gamma gamma, double lowerBound, double upperBound)
         {
-            double sample;
-            do
+            if (gamma.IsUniform()) return Rand.UniformBetween(lowerBound, upperBound);
+            bool useQuantile = (gamma.Shape == 1);
+            if (useQuantile)
+                return GetQuantile(gamma, lowerBound, upperBound, Rand.UniformBetween(0, 1));
+            else
             {
-                sample = gamma.Sample();
-            } while (sample < lowerBound || sample > upperBound);
-            return sample;
+                double sample;
+                do
+                {
+                    sample = gamma.Sample();
+                } while (sample < lowerBound || sample > upperBound);
+                return sample;
+            }
+        }
+
+        public static double GetQuantile(Gamma gamma, double lowerBound, double upperBound, double probability)
+        {
+            if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
+            if (probability > 1) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1");
+            double lowerProbability = gamma.GetProbLessThan(lowerBound);
+            double totalProbability = GammaProbBetween(gamma.Shape, gamma.Rate, lowerBound, upperBound);
+            return Math.Min(upperBound, Math.Max(lowerBound, gamma.GetQuantile(probability * totalProbability + lowerProbability)));
+        }
+
+        /// <inheritdoc cref="CanGetQuantile.GetQuantile(double)"/>
+        public double GetQuantile(double probability)
+        {
+            return GetQuantile(Gamma, LowerBound, UpperBound, probability);
         }
 
         /// <summary>
@@ -583,6 +606,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 // Apply the recurrence GammaUpper(s+1,x,false) = s*GammaUpper(s,x,false) + x^s*exp(-x)
+                // Z = GammaUpper(s,r*l,false) - GammaUpper(s,r*u,false)
+                // E[x] = (GammaUpper(s+1,r*l,false) - GammaUpper(s+1,r*u,false))/r/Z
+                //      = (s + ((r*l)^s*exp(-r*l) - (r*u)^s*exp(-r*u))/Z)/r
                 double rl = this.Gamma.Rate * LowerBound;
                 double ru = this.Gamma.Rate * UpperBound;
                 double m = this.Gamma.Shape / this.Gamma.Rate;

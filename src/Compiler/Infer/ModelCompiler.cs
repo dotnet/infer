@@ -780,7 +780,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 if (BrowserMode == BrowserMode.Always)
                     ShowBrowser(tc, GeneratedSourceFolder, output[0].Name);
                 else if(BrowserMode == BrowserMode.WriteFiles)
-                    tc.WriteAllOutputs(Path.Combine(GeneratedSourceFolder, output[0].Name + " Transforms"));
+                    tc.WriteAllOutputs(Path.Combine(GeneratedSourceFolder, output[0].Name + "_Transforms"));
                 if (ShowSchedule && InferenceEngine.Visualizer?.TaskGraphVisualizer != null)
                 {
                     foreach (CodeTransformer ct in tc.transformers)

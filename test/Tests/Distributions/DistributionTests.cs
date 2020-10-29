@@ -59,12 +59,18 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerFromMeanAndMeanLogTest()
         {
-            double mean = 3;
-            double meanLog = 0.4;
-            double power = 5;
-            GammaPower gammaPower = GammaPower.FromMeanAndMeanLog(mean, meanLog, power);
-            Assert.Equal(mean, gammaPower.GetMean(), 1e-1);
-            Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-1);
+            var testCases = new[]
+            {
+                (System.Math.Exp(1.25), 1.0, /*1.25,*/ -1.0),
+                (3, 0.4, 5),
+            };
+            foreach (var testCase in testCases)
+            {
+                var (mean, meanLog, power) = testCase;
+                GammaPower gammaPower = GammaPower.FromMeanAndMeanLog(mean, meanLog, power);
+                Assert.Equal(mean, gammaPower.GetMean(), 1e-1);
+                Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-1);
+            }
         }
 
         [Fact]
@@ -206,6 +212,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(expectedProbLessThan, 1 - g.GetProbLessThan(0.5), 1e-10);
             Assert.Equal(2, gamma.GetQuantile(expectedProbLessThan), 1e-10);
             Assert.Equal(0.5, g.GetQuantile(1 - expectedProbLessThan), 1e-10);
+
+            g = GammaPower.FromMeanAndVariance(3, double.PositiveInfinity, -1);
+            Assert.Equal(2, g.Shape);
+            Assert.Equal(3, g.Rate);
 
             GammaPowerMomentTest(1);
             GammaPowerMomentTest(-1);
@@ -1812,6 +1822,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             GammaFromMeanAndMeanLog(new Gamma(3, 4));
             GammaFromMeanAndMeanLog(Gamma.PointMass(3));
+            Gamma estimated = Gamma.FromMeanAndMeanLog(0, -1e303);
+            Assert.True(estimated.IsPointMass && estimated.Point == 0);
         }
 
         private void GammaFromMeanAndMeanLog(Gamma original)
@@ -1819,8 +1831,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             double mean = original.GetMean();
             double meanLog = original.GetMeanLog();
             Gamma estimated = Gamma.FromMeanAndMeanLog(mean, meanLog);
-            Console.WriteLine("original = {0}", original);
-            Console.WriteLine("estimated = {0}", estimated);
+            //Console.WriteLine("original = {0}", original);
+            //Console.WriteLine("estimated = {0}", estimated);
             Assert.True(original.MaxDiff(estimated) < 1e-10);
         }
 

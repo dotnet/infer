@@ -1115,9 +1115,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         // Same as Gamma.FromDerivatives multiplied by B
         internal static Gamma GammaFromDerivatives(Gamma B, double x, double dlogf, double ddlogf)
         {
-            double x2 = x * x;
             double b = B.Rate - (dlogf + x * ddlogf);
-            double a = B.Shape - x2 * ddlogf;
+            double a = B.Shape - ddlogf * x * x;
             if (a <= 0)
                 a = b * B.Shape / (B.Rate - dlogf);
             if (a <= 0 || b <= 0)

@@ -183,7 +183,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             Predicate<int> isPartitionedAtDepth = (depth => context.InputAttributes.Has<Partitioned>(Recognizer.GetVariableDeclaration(lvi.indexVarRefs[depth])));
             Type messageType = (true && Distributions.Distribution.IsDistributionType(type))
-                                   ? MessageTransform.GetDistributionType(arrayType, type, type, 0, 0, isPartitionedAtDepth)
+                                   ? MessageTransform.GetDistributionType(arrayType, type, type, 0, loops.Count, isPartitionedAtDepth)
                                    : MessageTransform.GetArrayType(arrayType, type, 0, isPartitionedAtDepth);
             lvi.arrayvd = Builder.VarDecl(ivd.Name, messageType);
             loopVarInfos[ivd] = lvi;
