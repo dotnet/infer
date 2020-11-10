@@ -302,7 +302,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double meanLogOverPower = meanLog / power;
             double shape = (power == -1) ? (1 + 0.5 / MMath.ExpMinus1(delta)) : 1;
             double logRate = 0;
-            int maxiter = 1000000;
+            int maxiter = 10000;
             int backtrackCount = 0;
             bool previouslyIncreased = false;
             for (int iter = 0; iter < maxiter; iter++)
