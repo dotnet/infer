@@ -470,6 +470,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageLogarithm(Gaussian)"]/*'/>
         public static Gamma ExpAverageLogarithm([Proper] Gaussian d)
         {
+            if (d.IsPointMass) return Gamma.PointMass(Math.Exp(d.Point));
             double mD, vD;
             d.GetMeanAndVariance(out mD, out vD);
             // E[exp(d)] = exp(mD + vD/2)
@@ -495,6 +496,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageLogarithm(Gaussian, GammaPower)"]/*'/>
         public static GammaPower ExpAverageLogarithm([Proper] Gaussian d, GammaPower result)
         {
+            if (d.IsPointMass) return GammaPower.PointMass(Math.Exp(d.Point), result.Power);
             double mD, vD;
             d.GetMeanAndVariance(out mD, out vD);
             // E[exp(d)] = exp(mD + vD/2)
@@ -661,6 +663,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             double expx = Math.Exp(d);
             double ddlogf = -exp.Rate * expx;
             double dlogf = exp.Shape - 1 + ddlogf;
+            // lim_{d -> -inf} d*exp(d) = 0
+            if (d < double.MinValue) return Gaussian.FromNatural(dlogf, 0);
+            // Gaussian.FromNatural(dlogf - ddlogf * d, -ddlogf)
             return Gaussian.FromDerivatives(d, dlogf, ddlogf, true);
         }
 
@@ -767,9 +772,11 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             double mode = FindMaximum(exp, d);
             double expMode = Math.Exp(mode);
+            // We want to find where LogFactorMinusMode == logUlp1, so we find zeroes of the difference.
+            double logUlp1 = Math.Log(MMath.Ulp1);
             Func<double, double> func = delegate (double xMinusMode)
             {
-                return LogFactorMinusMode(xMinusMode, exp, d, mode, expMode) + 50;
+                return LogFactorMinusMode(xMinusMode, exp, d, mode, expMode) - logUlp1;
             };
             Func<double, double> deriv = delegate (double xMinusMode)
             {

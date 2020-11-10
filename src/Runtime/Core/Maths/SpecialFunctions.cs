@@ -1643,6 +1643,30 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
+        /// <summary>
+        /// Computes the inverse of the digamma function, i.e.
+        /// <c>Digamma(DigammaInv(y)) == y</c>
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        internal static double DigammaInv(double y)
+        {
+            // Newton iteration to solve digamma(x)-y = 0
+            double x;
+            if (y <= -2.22)
+                x = -1 / (y - Digamma1);
+            else
+                x = Math.Exp(y) + 0.5;
+
+            // should never need more than 5 iterations
+            int maxIter = 5;
+            for (int iter = 0; iter < maxIter; iter++)
+            {
+                x -= (Digamma(x) - y) / Trigamma(x);
+            }
+            return x;
+        }
+
         #endregion
 
         #region Erf functions

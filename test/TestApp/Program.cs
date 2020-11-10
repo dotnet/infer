@@ -82,8 +82,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new VmpArrayTests().Regression();
-
             if (false)
             {
                 // Run all tests (need to run in 64-bit else OutOfMemory due to loading many DLLs)
