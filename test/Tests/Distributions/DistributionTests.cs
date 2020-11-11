@@ -298,6 +298,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             //SetMomentTest(g, 1.1, 2.2);
             PointMassMomentTest(g, 7.7, 4.4, 5.5);
             SamplingTest(g, 7.7);
+
+            var ratio = g / g2;
+            Assert.Throws<DivideByZeroException>(() =>
+            {
+                ratio = g / new TruncatedGaussian(4.4, 5.5, lowerBound + 1, upperBound);
+            });
+            ratio = TruncatedGaussian.PointMass(lowerBound) / new TruncatedGaussian(4.4, 5.5, lowerBound, upperBound);
+            Assert.Throws<DivideByZeroException>(() =>
+            {
+                ratio = TruncatedGaussian.PointMass(2) / new TruncatedGaussian(4.4, 5.5, lowerBound + 1, upperBound);
+            });
+
             g.SetToUniform();
             //GetAndSetMomentTest(g, 0.0, Double.PositiveInfinity);
 
