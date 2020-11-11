@@ -9,8 +9,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System.Runtime.Serialization;
 
     using Factors.Attributes;
+
     using Math;
+
     using Microsoft.ML.Probabilistic.Serialization;
+
     using Utilities;
 
     /// <summary>
@@ -283,16 +286,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public static GammaPower FromMeanAndMeanLog(double mean, double meanLog, double logMean, double power)
         {
-            // This iteration seems to diverge for power=-1
+            if (power == 1) return FromGamma(Gamma.FromMeanAndMeanLog(mean, meanLog, logMean), power);
+            double delta = logMean - meanLog;
+            if (delta <= 0)
+            {
+                // By Jensen's inequality, log(E[x]) >= E[log(x)]
+                // with equality only for a point mass.
+                return PointMass(mean, power);
+            }
             // Constraints:
             // mean = Gamma(Shape + power)/Gamma(Shape)/Rate^power
             // meanLog = power*(digamma(Shape) - log(Rate))
-            // digamma(Shape) =approx log(Shape - 0.5)
+            // log(mean) = log(Gamma(Shape + power)) - log(Gamma(Shape)) - power*log(Rate)
             double logMeanOverPower = logMean / power;
             double meanLogOverPower = meanLog / power;
-            double shape = 1;
+            double shape = (power == -1) ? (1 + 0.5 / MMath.ExpMinus1(delta)) : Math.Max(1 - power, 1);
             double logRate = 0;
-            int maxiter = 1000000;
+            int maxiter = 10000;
+            int backtrackCount = 0;
+            bool previouslyIncreased = false;
             for (int iter = 0; iter < maxiter; iter++)
             {
                 double oldLogRate = logRate;
@@ -301,25 +313,88 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     // mean = rate/(shape - 1)
                     // meanLog = log(rate) - digamma(shape)
-                    logRate = meanLog + MMath.Digamma(shape);
-                    shape = 1 + Math.Exp(logRate - logMean);
+                    // derivative wrt shape is trigamma(shape) =approx 1/(shape - 0.5)
+                    double digammaShape = MMath.Digamma(shape);
+                    logRate = meanLog + digammaShape;
+                    if (delta > 1 || shape <= 1 || backtrackCount > 5)
+                    {
+                        // derivative wrt logRate is exp(logRate - logMean) 
+                        // = exp(meanLog - logMean + digamma(shape)) 
+                        // =approx exp(meanLog - logMean)*(shape - 0.5)
+                        // So the convergence rate is approx exp(meanLog - logMean)
+                        // If meanLog is close to logMean, this will converge very slowly.
+                        //shape = 1 + Math.Exp(logRate - logMean);
+                        shape = 1 + Math.Exp(digammaShape - delta);
+                    }
+                    else if (backtrackCount > 1)
+                    {
+                        // digamma(Shape) =approx log(Shape) - 0.5/Shape
+                        // meanLog = log(rate) - digamma(shape) + log(shape) -log(shape)
+                        // exp(log(mean) - meanLog - digamma(shape) + log(shape))*(shape-1) = shape
+                        // (exp(...) - 1)*(shape-1) = 1
+                        shape = 1 + 1 / MMath.ExpMinus1(Math.Log(shape) - digammaShape + delta);
+                    }
+                    else
+                    {
+                        // digamma(Shape) =approx log(Shape - 0.5)
+                        // shape = 1 + Math.Exp(-delta) * (shape - 0.5);
+                        // (1 - exp(-delta)) * shape = 1 - exp(-delta)/2
+                        // shape = 1 + exp(-delta)/2/(1 - exp(-delta)) = 1 + 0.5/(exp(delta)-1)
+                        // shape = 1 + 0.5 / (Math.Exp(delta) - 1);
+                        // This comes from:
+                        // meanLog = log(rate) - digamma(shape) + log(shape-0.5)-log(shape-0.5)
+                        // = log(mean) + log(shape-1) - digamma(shape) + log(shape-0.5)-log(shape-0.5)
+                        shape = 1 + 0.5 / MMath.ExpMinus1(Math.Log(shape - 0.5) - digammaShape + delta);
+                    }
                 }
                 else
                 {
                     // Rate^power = Gamma(Shape + power)/Gamma(Shape)/mean
                     // power*log(Rate) = log(Gamma(Shape + power)) - log(Gamma(Shape)) - log(mean)
                     // derivative wrt shape is (digamma(Shape + power) - digamma(Shape))/power
-                    logRate = MMath.RisingFactorialLnOverN(shape, power) - logMeanOverPower;
-                    // derivative wrt logRate is exp(meanLogOverPower + logRate)
-                    shape = Math.Exp(meanLogOverPower + logRate) + 0.5;
+                    double risingFactorial = MMath.RisingFactorialLnOverN(shape, power);
+                    logRate = risingFactorial - logMeanOverPower;
+                    if (power == 2 && backtrackCount < 2)
+                    {
+                        // logRate = risingFactorial - logMeanOverPower
+                        // meanLogOverPower = digamma(shape) - logRate
+                        // = digamma(shape) - risingFactorial + logMeanOverPower
+                        // = digamma(shape)-log(shape)+0.5/shape +log(shape)+0.5/shape - risingFactorial + logMeanOverPower - 1/shape
+                        // 1/shape = digamma(shape)-log(shape)+0.5/shape +log(shape)+0.5/shape - risingFactorial + delta/power
+                        shape = 1 / ((MMath.Digamma(shape) - (Math.Log(shape) - 0.5 / shape)) + (0.5 / shape + Math.Log(shape) - risingFactorial) + delta / power);
+                    }
+                    else
+                    {
+                        // derivative wrt logRate is exp(meanLogOverPower + logRate)
+                        // = exp(meanLogOverPower - logMeanOverPower)*Gamma(Shape+power)/Gamma(Shape)
+                        // For power=-1 and large shape, the convergence rate is approx 
+                        // exp(meanLogOverPower - logMeanOverPower)/(Shape-1)*(log(Shape-0.5) - log(Shape-1.5))
+                        // which is small when meanLog is close to logMean.
+                        if (shape > 1 && backtrackCount < 2)
+                        {
+                            // This comes from:
+                            // meanLog = power*(digamma(Shape)-log(Shape)+log(Shape) - log(Rate))
+                            shape = Math.Exp(Math.Log(shape) - MMath.Digamma(shape) + meanLogOverPower + logRate);
+                        }
+                        else
+                        {
+                            // This also works but is slower.
+                            shape = MMath.DigammaInv(meanLogOverPower + logRate);
+                        }
+                    }
                 }
-                //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}");
+                //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}, mean = {Math.Exp(power * (MMath.RisingFactorialLnOverN(shape, power) - logRate))} should be {mean}, meanLog = {power * (MMath.Digamma(shape) - logRate)} should be {meanLog}");
                 if (MMath.AreEqual(oldLogRate, logRate) && MMath.AreEqual(oldShape, shape))
                 {
-                    //Console.WriteLine($"FromMeanAndMeanLog: {iter+1} iters");
+                    //Console.WriteLine($"FromMeanAndMeanLog: {iter + 1} iters");
+                    //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}, mean = {Math.Exp(logRate) / (shape - 1)} should be {mean}, meanLog = {power * (MMath.Digamma(shape) - logRate)} should be {meanLog}");
                     break;
                 }
-                if (double.IsNaN(shape) || iter == maxiter-1) throw new Exception("Failed to converge");
+                if (double.IsNaN(shape) || iter == maxiter - 1) throw new Exception("Failed to converge");
+                bool increased = (shape > oldShape);
+                if (iter > 4 && increased != previouslyIncreased)
+                    backtrackCount++;
+                previouslyIncreased = increased;
             }
             return FromShapeAndRate(shape, Math.Exp(logRate), power);
         }

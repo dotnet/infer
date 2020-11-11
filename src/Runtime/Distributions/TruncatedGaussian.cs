@@ -370,7 +370,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
-                    if (denominator.LowerBound < numerator.Point && numerator.Point < denominator.UpperBound)
+                    if (denominator.LowerBound <= numerator.Point && numerator.Point <= denominator.UpperBound)
                         Point = numerator.Point;
                     else
                         throw new DivideByZeroException();

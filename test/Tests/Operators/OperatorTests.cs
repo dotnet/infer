@@ -659,13 +659,20 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ExpOpTest()
         {
             Gamma exp = new Gamma(1, 1);
-            Gaussian d = Gaussian.FromNatural(-1.6171314269768655E+308, 4.8976001759138024);
-            Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, Gaussian.Uniform());
-            Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
-            Gaussian to_d_slow = ExpOp_Slow.DAverageConditional(exp, d);
-            Trace.WriteLine($"{to_d}");
-            Trace.WriteLine($"{to_d_slow}");
-            Assert.True(to_d_slow.MaxDiff(to_d) < 1e-10);
+            Gaussian[] ds = new[]
+            {
+                Gaussian.FromNatural(-1.6171314269768655E+308, 4.8976001759138024),
+                Gaussian.PointMass(double.NegativeInfinity),
+            };
+            foreach (var d in ds)
+            {
+                Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, Gaussian.Uniform());
+                Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
+                Gaussian to_d_slow = ExpOp_Slow.DAverageConditional(exp, d);
+                Trace.WriteLine($"{to_d}");
+                Trace.WriteLine($"{to_d_slow}");
+                Assert.True(to_d_slow.MaxDiff(to_d) < 1e-10);
+            }
         }
 
         [Fact]
