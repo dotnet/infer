@@ -59,11 +59,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerFromMeanAndMeanLogTest()
         {
-            GammaPower.FromMeanAndMeanLog(0.82657135035599683, -0.19053040661796108, -0.19046903712771776, -1.0);
-            GammaPower.FromMeanAndMeanLog(0.78123008687766349, -0.24698718364292091, -0.2468855670529615, -1.0);
-            // 
             var testCases = new[]
             {
+                (3, 0.4, 5),
+                (2.7196413092151412, 1, 2),
                 (0.82657135035599683, -0.19053040661796108, -1.0),
                 (0.78123008687766349, -0.24698718364292091, -1.0),
                 (0.65867320393062079, -0.41774280264746583, -1.0),
@@ -71,7 +70,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 (1.2739417498500658, -0.9778858306365934, -1.0),
                 (System.Math.Exp(1.0), 1.0, -1.0),
                 (System.Math.Exp(1.25), 1.0, -1.0),
-                (3, 0.4, 5),
             };
             foreach (var testCase in testCases)
             {
@@ -80,6 +78,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.Equal(mean, gammaPower.GetMean(), 1e-10);
                 Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-10);
             }
+            GammaPower.FromMeanAndMeanLog(0.82657135035599683, -0.19053040661796108, -0.19046903712771776, -1.0);
+            GammaPower.FromMeanAndMeanLog(0.78123008687766349, -0.24698718364292091, -0.2468855670529615, -1.0);
         }
 
         [Fact]

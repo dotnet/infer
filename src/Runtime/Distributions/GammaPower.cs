@@ -300,7 +300,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             // log(mean) = log(Gamma(Shape + power)) - log(Gamma(Shape)) - power*log(Rate)
             double logMeanOverPower = logMean / power;
             double meanLogOverPower = meanLog / power;
-            double shape = (power == -1) ? (1 + 0.5 / MMath.ExpMinus1(delta)) : 1;
+            double shape = (power == -1) ? (1 + 0.5 / MMath.ExpMinus1(delta)) : Math.Max(1 - power, 1);
             double logRate = 0;
             int maxiter = 10000;
             int backtrackCount = 0;
@@ -352,25 +352,38 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     // Rate^power = Gamma(Shape + power)/Gamma(Shape)/mean
                     // power*log(Rate) = log(Gamma(Shape + power)) - log(Gamma(Shape)) - log(mean)
                     // derivative wrt shape is (digamma(Shape + power) - digamma(Shape))/power
-                    logRate = MMath.RisingFactorialLnOverN(shape, power) - logMeanOverPower;
-                    // derivative wrt logRate is exp(meanLogOverPower + logRate)
-                    // = exp(meanLogOverPower - logMeanOverPower)*Gamma(Shape+power)/Gamma(Shape)
-                    // For power=-1 and large shape, the convergence rate is approx 
-                    // exp(meanLogOverPower - logMeanOverPower)/(Shape-1)*(log(Shape-0.5) - log(Shape-1.5))
-                    // which is small when meanLog is close to logMean.
-                    if (shape > 1 && backtrackCount < 2)
+                    double risingFactorial = MMath.RisingFactorialLnOverN(shape, power);
+                    logRate = risingFactorial - logMeanOverPower;
+                    if (power == 2 && backtrackCount < 2)
                     {
-                        // This comes from:
-                        // meanLog = power*(digamma(Shape)-log(Shape)+log(Shape) - log(Rate))
-                        shape = Math.Exp(Math.Log(shape) - MMath.Digamma(shape) + meanLogOverPower + logRate);
+                        // logRate = risingFactorial - logMeanOverPower
+                        // meanLogOverPower = digamma(shape) - logRate
+                        // = digamma(shape) - risingFactorial + logMeanOverPower
+                        // = digamma(shape)-log(shape)+0.5/shape +log(shape)+0.5/shape - risingFactorial + logMeanOverPower - 1/shape
+                        // 1/shape = digamma(shape)-log(shape)+0.5/shape +log(shape)+0.5/shape - risingFactorial + delta/power
+                        shape = 1 / ((MMath.Digamma(shape) - (Math.Log(shape) - 0.5 / shape)) + (0.5 / shape + Math.Log(shape) - risingFactorial) + delta / power);
                     }
                     else
                     {
-                        // This also works but is slower.
-                        shape = MMath.DigammaInv(meanLogOverPower + logRate);
+                        // derivative wrt logRate is exp(meanLogOverPower + logRate)
+                        // = exp(meanLogOverPower - logMeanOverPower)*Gamma(Shape+power)/Gamma(Shape)
+                        // For power=-1 and large shape, the convergence rate is approx 
+                        // exp(meanLogOverPower - logMeanOverPower)/(Shape-1)*(log(Shape-0.5) - log(Shape-1.5))
+                        // which is small when meanLog is close to logMean.
+                        if (shape > 1 && backtrackCount < 2)
+                        {
+                            // This comes from:
+                            // meanLog = power*(digamma(Shape)-log(Shape)+log(Shape) - log(Rate))
+                            shape = Math.Exp(Math.Log(shape) - MMath.Digamma(shape) + meanLogOverPower + logRate);
+                        }
+                        else
+                        {
+                            // This also works but is slower.
+                            shape = MMath.DigammaInv(meanLogOverPower + logRate);
+                        }
                     }
                 }
-                //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}, mean = {Math.Exp(logRate) / (shape - 1)} should be {mean}, meanLog = {power * (MMath.Digamma(shape) - logRate)} should be {meanLog}");
+                //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}, mean = {Math.Exp(power * (MMath.RisingFactorialLnOverN(shape, power) - logRate))} should be {mean}, meanLog = {power * (MMath.Digamma(shape) - logRate)} should be {meanLog}");
                 if (MMath.AreEqual(oldLogRate, logRate) && MMath.AreEqual(oldShape, shape))
                 {
                     //Console.WriteLine($"FromMeanAndMeanLog: {iter + 1} iters");
