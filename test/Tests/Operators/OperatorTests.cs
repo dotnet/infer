@@ -655,6 +655,30 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void ExpOpGammaPowerTest()
+        {
+            GammaPower exp = GammaPower.FromShapeAndRate(0, 0, -1);
+            Gaussian[] ds = new[]
+            {
+                Gaussian.FromNatural(-1.6171314269768655E+308, 4.8976001759138024),
+                Gaussian.FromNatural(-0.037020622891705768, 0.00034989765084474117),
+                Gaussian.PointMass(double.NegativeInfinity),
+            };
+            foreach (var d in ds)
+            {
+                Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
+                Gaussian to_d_slow = ExpOp_Slow.DAverageConditional(exp, d);
+                Trace.WriteLine($"{to_d}");
+                Trace.WriteLine($"{to_d_slow}");
+                Assert.True(to_d_slow.MaxDiff(to_d) < 1e-10);
+                to_d = Gaussian.FromNatural(1, 0);
+                GammaPower to_exp = ExpOp.ExpAverageConditional(exp, d, to_d);
+                Trace.WriteLine($"{to_exp}");
+            }
+            ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 883.22399999999993, -1), Gaussian.FromNatural(0.0072160312702854888, 8.1788482512051846E-06), Gaussian.FromNatural(0.00057861649495666474, 5.6316164560235272E-07));
+        }
+
+        [Fact]
         [Trait("Category", "OpenBug")]
         public void ExpOpTest()
         {
