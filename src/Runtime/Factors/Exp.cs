@@ -264,7 +264,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             double Z = 0;
             double sumY = 0;
-            double sumExpY = 0;
+            double logsumExpY = 0;
             //double sumExpMinusY = 0;
             bool useHermite = true;
             //if (vD < 10)
@@ -312,11 +312,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                     double logf = weights[i] - maxLogF;
                     double f = Math.Exp(logf);
                     double f_y = f * y;
-                    double fexpy = Math.Exp(logf + y);
                     Z += f;
                     sumY += f_y;
-                    sumExpY += fexpy;
-                    //sumExpMinusY += f * Math.Exp(-y);
+                    logsumExpY = MMath.LogSumExp(logsumExpY, logf + y);
                 }
             }
             else
@@ -329,12 +327,13 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double scale = 1;
                 Z = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(p(sc * z + mD) - offset), scale, nodeCount, relTol);
                 sumY = Quadrature.AdaptiveClenshawCurtis(z => (sc * z) * Math.Exp(p(sc * z + mD) - offset), scale, nodeCount, relTol);
-                sumExpY = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(sc * z + p(sc * z + mD) - offset), scale, nodeCount, relTol);
+                double sumExpY = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(sc * z + p(sc * z + mD) - offset), scale, nodeCount, relTol);
+                logsumExpY = Math.Log(sumExpY);
             }
             if (Z == 0)
                 throw new InferRuntimeException("Z==0");
             double meanLog = sumY / Z + mD;
-            double logMean = Math.Log(sumExpY / Z) + mD;
+            double logMean = logsumExpY - Math.Log(Z) + mD;
             double mean = Math.Exp(logMean);
             //double meanInverse = sumExpMinusY / Z / expmD;
             //Trace.WriteLine($"mean = {mean} meanLog = {meanLog} meanInverse = {meanInverse}");

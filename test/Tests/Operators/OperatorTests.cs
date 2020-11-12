@@ -657,6 +657,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ExpOpGammaPowerTest()
         {
+            ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 283.673, -1), Gaussian.FromNatural(0.004859823703146038, 6.6322755562737905E-06), Gaussian.FromNatural(0.00075506803981220758, 8.24487022054953E-07));
             GammaPower exp = GammaPower.FromShapeAndRate(0, 0, -1);
             Gaussian[] ds = new[]
             {
