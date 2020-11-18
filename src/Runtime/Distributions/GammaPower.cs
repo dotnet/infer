@@ -354,14 +354,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     // derivative wrt shape is (digamma(Shape + power) - digamma(Shape))/power
                     double risingFactorial = MMath.RisingFactorialLnOverN(shape, power);
                     logRate = risingFactorial - logMeanOverPower;
-                    if (power == 2 && backtrackCount < 2)
+                    if (power > 1 && backtrackCount < 2)
                     {
                         // logRate = risingFactorial - logMeanOverPower
                         // meanLogOverPower = digamma(shape) - logRate
                         // = digamma(shape) - risingFactorial + logMeanOverPower
-                        // = digamma(shape)-log(shape)+0.5/shape +log(shape)+0.5/shape - risingFactorial + logMeanOverPower - 1/shape
-                        // 1/shape = digamma(shape)-log(shape)+0.5/shape +log(shape)+0.5/shape - risingFactorial + delta/power
-                        shape = 1 / ((MMath.Digamma(shape) - (Math.Log(shape) - 0.5 / shape)) + (0.5 / shape + Math.Log(shape) - risingFactorial) + delta / power);
+                        // = digamma(shape)-log(shape)+0.5/shape +log(shape)+(power-1)*0.5/shape - risingFactorial + logMeanOverPower - power*0.5/shape
+                        // power*0.5/shape = digamma(shape)-log(shape)+0.5/shape +log(shape)+(power-1)*0.5/shape - risingFactorial + delta/power
+                        // log(x+n) <= log(x) + n/x
+                        // risingFactorial <= log(x) + (n-1)/2/x  if n >= 1
+                        // risingFactorial <= log(x) + (1-n)/2/x  if n <= -1
+                        double logShape = Math.Log(shape);
+                        double halfOverShape = 0.5 / shape;
+                        shape = power * 0.5 / ((MMath.Digamma(shape) - (logShape - halfOverShape)) + ((power - 1) * halfOverShape + logShape - risingFactorial) + delta / power);
                     }
                     else
                     {

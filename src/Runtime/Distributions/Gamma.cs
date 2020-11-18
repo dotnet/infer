@@ -140,7 +140,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else if (variance < 0)
             {
-                throw new ArgumentException("variance < 0 (" + variance + ")");
+                throw new ArgumentOutOfRangeException(nameof(variance), variance, "variance < 0");
             }
             else
             {
@@ -227,7 +227,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="scale">Scale</param>
         public void SetShapeAndScale(double shape, double scale)
         {
-            if (double.IsPositiveInfinity(shape)) throw new ArgumentOutOfRangeException(nameof(shape), "shape is infinite.  To create a point mass, set the Point property.");
+            if (double.IsPositiveInfinity(shape)) throw new ArgumentOutOfRangeException(nameof(shape), shape, "shape is infinite.  To create a point mass, set the Point property.");
             SetShapeAndRate(shape, 1.0 / scale);
         }
 
@@ -296,7 +296,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 if (MMath.AreEqual(g, 0)) break;
                 shape /= 1 + g / (1 - shape * MMath.Trigamma(shape));
             }
-            if (double.IsNaN(shape)) throw new Exception("shape is nan");
+            if (double.IsNaN(shape)) throw new InferRuntimeException("shape is nan");
             if (shape > double.MaxValue) return Gamma.PointMass(mean);
             return Gamma.FromShapeAndRate(shape, shape / mean);
         }
@@ -473,8 +473,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetQuantile(double probability)
         {
-            if (probability < 0) throw new ArgumentOutOfRangeException("probability < 0");
-            if (probability > 1) throw new ArgumentOutOfRangeException("probability > 1");
+            if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), probability, "probability < 0");
+            if (probability > 1) throw new ArgumentOutOfRangeException(nameof(probability), probability, "probability > 1");
             if (this.IsPointMass)
             {
                 return (probability == 1.0) ? MMath.NextDouble(this.Point) : this.Point;
@@ -881,7 +881,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     }
                     else
                     {
-                        throw new DivideByZeroException();
+                        throw new DivideByZeroException($"numerator {numerator} and denominator {denominator} are different point masses");
                     }
                 }
                 else
@@ -891,7 +891,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else if (denominator.IsPointMass)
             {
-                throw new DivideByZeroException();
+                throw new DivideByZeroException($"denominator {denominator} is a point mass but numerator {numerator} is not");
             }
             else if (forceProper && numerator.Rate == 0)
             {

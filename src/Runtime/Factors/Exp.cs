@@ -264,8 +264,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             double Z = 0;
             double sumY = 0;
-            double sumExpY = 0;
-            //double sumExpMinusY = 0;
+            double logsumExpY = double.NegativeInfinity;
             bool useHermite = true;
             //if (vD < 10)
             if (useHermite)
@@ -297,7 +296,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 for (int i = 0; i < weights.Length; i++)
                 {
                     double y = nodes[i] + mD;
-                    double logf = shapeMinus1 * y - exp.Rate * Math.Exp(y) + weights[i];
+                    double logf = weights[i];
+                    if (shapeMinus1 != 0) logf += shapeMinus1 * y; // avoid 0*inf
+                    if (exp.Rate != 0) logf -= exp.Rate * Math.Exp(y); // avoid 0*inf
                     if (logf > maxLogF)
                     {
                         maxLogF = logf;
@@ -307,13 +308,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                 for (int i = 0; i < weights.Length; i++)
                 {
                     double y = nodes[i];
-                    double f = Math.Exp(weights[i] - maxLogF);
+                    double logf = weights[i] - maxLogF;
+                    double f = Math.Exp(logf);
                     double f_y = f * y;
-                    double fexpy = f * Math.Exp(y);
                     Z += f;
                     sumY += f_y;
-                    sumExpY += fexpy;
-                    //sumExpMinusY += f * Math.Exp(-y);
+                    logsumExpY = MMath.LogSumExp(logsumExpY, logf + y);
                 }
             }
             else
@@ -326,16 +326,15 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double scale = 1;
                 Z = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(p(sc * z + mD) - offset), scale, nodeCount, relTol);
                 sumY = Quadrature.AdaptiveClenshawCurtis(z => (sc * z) * Math.Exp(p(sc * z + mD) - offset), scale, nodeCount, relTol);
-                sumExpY = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(sc * z + p(sc * z + mD) - offset), scale, nodeCount, relTol);
+                double sumExpY = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(sc * z + p(sc * z + mD) - offset), scale, nodeCount, relTol);
+                logsumExpY = Math.Log(sumExpY);
             }
             if (Z == 0)
                 throw new InferRuntimeException("Z==0");
             double meanLog = sumY / Z + mD;
-            double expmD = Math.Exp(mD);
-            double mean = sumExpY / Z * expmD;
-            //double meanInverse = sumExpMinusY / Z / expmD;
-            //Trace.WriteLine($"mean = {mean} meanLog = {meanLog} meanInverse = {meanInverse}");
-            Gamma result = Gamma.FromMeanAndMeanLog(mean, meanLog);
+            double logMean = logsumExpY - Math.Log(Z) + mD;
+            double mean = Math.Exp(logMean);
+            Gamma result = Gamma.FromMeanAndMeanLog(mean, meanLog, logMean);
             result.SetToRatio(result, exp, ForceProper);
             if (Double.IsNaN(result.Shape) || Double.IsNaN(result.Rate))
                 throw new InferRuntimeException($"result is NaN.  exp={exp}, d={d}, to_d={to_d}");
@@ -949,9 +948,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             //double bpost = b + d.Precision/expx;
             //double mpost = expx - d.Precision*(MMath.Digamma(apost) - Math.Log(apost))/bpost;
             double v = 1 / (d.Precision + b * expx);
-            double mlogpost = x - 0.5 * v * v * b * expx;
-            double mpost = expx * (1 + 0.5 * v * v * d.Precision);
-            Gamma result = Gamma.FromMeanAndMeanLog(mpost, mlogpost);
+            double meanLog = x - 0.5 * v * v * b * expx;
+            double logMean = x + Math.Log(1 + 0.5 * v * v * d.Precision);
+            double mean = Math.Exp(logMean);
+            Gamma result = Gamma.FromMeanAndMeanLog(mean, meanLog, logMean);
             result.SetToRatio(result, exp, true);
             return result;
         }
