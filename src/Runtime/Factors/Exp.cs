@@ -264,8 +264,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             double Z = 0;
             double sumY = 0;
-            double logsumExpY = 0;
-            //double sumExpMinusY = 0;
+            double logsumExpY = double.NegativeInfinity;
             bool useHermite = true;
             //if (vD < 10)
             if (useHermite)
@@ -335,8 +334,6 @@ namespace Microsoft.ML.Probabilistic.Factors
             double meanLog = sumY / Z + mD;
             double logMean = logsumExpY - Math.Log(Z) + mD;
             double mean = Math.Exp(logMean);
-            //double meanInverse = sumExpMinusY / Z / expmD;
-            //Trace.WriteLine($"mean = {mean} meanLog = {meanLog} meanInverse = {meanInverse}");
             Gamma result = Gamma.FromMeanAndMeanLog(mean, meanLog, logMean);
             result.SetToRatio(result, exp, ForceProper);
             if (Double.IsNaN(result.Shape) || Double.IsNaN(result.Rate))
