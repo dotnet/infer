@@ -74,22 +74,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         /// <summary>
         /// Returns a new instance of the <see cref="SparseGammaList"/> class
-        /// of a given size, with each element having a given log mean and mean log.
-        /// </summary>
-        /// <param name="size">The size of the list.</param>
-        /// <param name="mean">Desired expected value.</param>
-        /// <param name="meanLog">Desired expected logarithm.</param>
-        /// <param name="logMean">Log of desired expected value.</param>
-        /// <param name="tolerance">The tolerance for the approximation.</param>
-        /// <returns>The new <see cref="SparseGammaList"/> instance.</returns>
-        public static SparseGammaList FromMeanAndMeanLog(
-            int size, double mean, double meanLog, double logMean, double tolerance)
-        {
-            return SparseGammaList.Constant(size, Gamma.FromMeanAndMeanLog(mean, meanLog, logMean), tolerance);
-        }
-
-        /// <summary>
-        /// Returns a new instance of the <see cref="SparseGammaList"/> class
         /// of a given size, with each element having a given shape and rate.
         /// </summary>
         /// <param name="size">The size of the list.</param>

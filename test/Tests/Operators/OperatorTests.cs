@@ -657,6 +657,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ExpOpGammaPowerTest()
         {
+            Assert.True(ExpOp.DAverageConditional(GammaPower.PointMass(0, -1), new Gaussian(0, 1), Gaussian.Uniform()).Point < double.MinValue);
             ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 283.673, -1), Gaussian.FromNatural(0.004859823703146038, 6.6322755562737905E-06), Gaussian.FromNatural(0.00075506803981220758, 8.24487022054953E-07));
             GammaPower exp = GammaPower.FromShapeAndRate(0, 0, -1);
             Gaussian[] ds = new[]
@@ -669,12 +670,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
                 Gaussian to_d_slow = ExpOp_Slow.DAverageConditional(exp, d);
-                Trace.WriteLine($"{to_d}");
-                Trace.WriteLine($"{to_d_slow}");
+                //Trace.WriteLine($"{to_d}");
+                //Trace.WriteLine($"{to_d_slow}");
                 Assert.True(to_d_slow.MaxDiff(to_d) < 1e-10);
                 to_d = Gaussian.FromNatural(1, 0);
                 GammaPower to_exp = ExpOp.ExpAverageConditional(exp, d, to_d);
-                Trace.WriteLine($"{to_exp}");
+                //Trace.WriteLine($"{to_exp}");
             }
             ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 883.22399999999993, -1), Gaussian.FromNatural(0.0072160312702854888, 8.1788482512051846E-06), Gaussian.FromNatural(0.00057861649495666474, 5.6316164560235272E-07));
         }
@@ -701,6 +702,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        // This test fails because of cancellation in logMeanMinusMd and Gamma.SetToRatio in ExpOp.ExpAverageConditional
         [Fact]
         [Trait("Category", "ModifiesGlobals")]
         [Trait("Category", "OpenBug")]
@@ -714,14 +716,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double ve = 2e-3;
                 //ve = 1;
                 Gaussian uniform = Gaussian.Uniform();
-                Gamma to_exp_point = ExpOp.ExpAverageConditional(Gamma.PointMass(1), d, uniform);
-                Gaussian to_d_point = ExpOp.DAverageConditional(Gamma.PointMass(1), d, uniform);
+                Gamma expPoint = Gamma.PointMass(2);
+                Gamma to_exp_point = ExpOp.ExpAverageConditional(expPoint, d, uniform);
+                Gaussian to_d_point = ExpOp.DAverageConditional(expPoint, d, uniform);
                 double to_exp_oldError = double.PositiveInfinity;
                 double to_d_oldError = double.PositiveInfinity;
-                for (int i = 0; i < 100; i++)
+                for (int i = 5; i < 100; i++)
                 {
                     ve = System.Math.Pow(10, -i);
-                    Gamma exp = Gamma.FromMeanAndVariance(1, ve);
+                    Gamma exp = Gamma.FromMeanAndVariance(2, ve);
                     Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, uniform);
                     Gaussian to_d = ExpOp.DAverageConditional(exp, d, uniform);
                     double to_exp_error = to_exp.MaxDiff(to_exp_point);
@@ -737,6 +740,36 @@ namespace Microsoft.ML.Probabilistic.Tests
                 {
                     Trace.WriteLine(ExpOp.DAverageConditional(Gamma.FromMeanAndVariance(1, ve), d, uniform));
                 }
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        public void ExpOpGammaPower_PointExp()
+        {
+            double power = -1;
+            double vd = 1e-4;
+            vd = 1e-3;
+            Gaussian d = new Gaussian(0, vd);
+            Gaussian uniform = Gaussian.Uniform();
+            GammaPower expPoint = GammaPower.PointMass(2, power);
+            GammaPower to_exp_point = ExpOp.ExpAverageConditional(expPoint, d, uniform);
+            Gaussian to_d_point = ExpOp.DAverageConditional(expPoint, d, uniform);
+            double to_exp_oldError = double.PositiveInfinity;
+            double to_d_oldError = double.PositiveInfinity;
+            for (int i = 0; i < 100; i++)
+            {
+                double ve = System.Math.Pow(10, -i);
+                GammaPower exp = GammaPower.FromMeanAndVariance(2, ve, power);
+                GammaPower to_exp = ExpOp.ExpAverageConditional(exp, d, uniform);
+                Gaussian to_d = ExpOp.DAverageConditional(exp, d, uniform);
+                double to_exp_error = to_exp.MaxDiff(to_exp_point);
+                double to_d_error = System.Math.Abs(to_d.GetMean() - to_d_point.GetMean());
+                Trace.WriteLine($"ve={ve}: to_exp={to_exp} error={to_exp_error} to_d={to_d} error={to_d_error}");
+                Assert.True(to_exp_error <= to_exp_oldError);
+                to_exp_oldError = to_exp_error;
+                Assert.True(to_d_error <= to_d_oldError);
+                to_d_oldError = to_d_error;
             }
         }
 

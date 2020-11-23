@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.Serialization;
     using Math;
     using Utilities;
@@ -244,6 +245,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return result;
         }
 
+        /// <summary>
+        /// Gets the logarithm of the expected value minus the expected logarithm, more accurately than directly computing <c>Math.Log(GetMean()) - GetMeanLog()</c>.
+        /// </summary>
+        /// <returns></returns>
+        public double GetLogMeanMinusMeanLog()
+        {
+            if (IsPointMass) return 0;
+            else if (!IsProper()) throw new ImproperDistributionException(this);
+            else return LogMinusDigamma(Shape);
+        }
+
         static readonly double largeShape = Math.Sqrt(Math.Sqrt(1.0 / 120 / MMath.Ulp1));
 
         private static double LogMinusDigamma(double shape)
@@ -269,15 +281,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public static Gamma FromMeanAndMeanLog(double mean, double meanLog)
         {
-            return FromMeanAndMeanLog(mean, meanLog, Math.Log(mean));
+            return FromLogMeanMinusMeanLog(mean, Math.Log(mean) - meanLog);
         }
 
         /// <summary>
         /// Constructs a Gamma distribution with the given mean and mean logarithm.
         /// </summary>
         /// <param name="mean">Desired expected value.</param>
-        /// <param name="meanLog">Desired expected logarithm.</param>
-        /// <param name="logMean">Logarithm of desired expected value.</param>
+        /// <param name="logMeanMinusMeanLog">Logarithm of desired expected value minus desired expected logarithm.</param>
         /// <returns>A new Gamma distribution.</returns>
         /// <remarks>This function is equivalent to maximum-likelihood estimation of a Gamma distribution
         /// from data given by sufficient statistics.
@@ -285,14 +296,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// involves nonlinear optimization. The algorithm is a generalized Newton iteration, 
         /// described in "Estimating a Gamma distribution" by T. Minka, 2002.
         /// </remarks>
-        public static Gamma FromMeanAndMeanLog(double mean, double meanLog, double logMean)
+        public static Gamma FromLogMeanMinusMeanLog(double mean, double logMeanMinusMeanLog)
         {
-            double delta = logMean - meanLog;
-            if (delta <= 0) return Gamma.PointMass(mean);
-            double shape = 0.5 / delta;
+            if (logMeanMinusMeanLog <= 0) return Gamma.PointMass(mean);
+            double shape = 0.5 / logMeanMinusMeanLog;
             for (int iter = 0; iter < 100; iter++)
             {
-                double g = LogMinusDigamma(shape) - delta;
+                double g = LogMinusDigamma(shape) - logMeanMinusMeanLog;
+                //Trace.WriteLine($"shape = {shape} g = {g}");
                 if (MMath.AreEqual(g, 0)) break;
                 shape /= 1 + g / (1 - shape * MMath.Trigamma(shape));
             }
