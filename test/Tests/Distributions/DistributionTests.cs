@@ -78,8 +78,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.Equal(mean, gammaPower.GetMean(), 1e-10);
                 Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-10);
             }
-            GammaPower.FromMeanAndMeanLog(0.82657135035599683, -0.19053040661796108, -0.19046903712771776, -1.0);
-            GammaPower.FromMeanAndMeanLog(0.78123008687766349, -0.24698718364292091, -0.2468855670529615, -1.0);
+            GammaPower.FromMeanAndMeanLog(0.82657135035599683, -0.19053040661796108, -1.0);
+            GammaPower.FromMeanAndMeanLog(0.78123008687766349, -0.24698718364292091, -1.0);
         }
 
         [Fact]

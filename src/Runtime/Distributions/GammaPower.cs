@@ -267,15 +267,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public static GammaPower FromMeanAndMeanLog(double mean, double meanLog, double power)
         {
-            return FromMeanAndMeanLog(mean, meanLog, Math.Log(mean), power);
+            return FromLogMeanMinusMeanLog(mean, Math.Log(mean) - meanLog, power);
         }
 
         /// <summary>
         /// Constructs a GammaPower distribution with the given mean and mean logarithm.
         /// </summary>
         /// <param name="mean">Desired expected value.</param>
-        /// <param name="meanLog">Desired expected logarithm.</param>
-        /// <param name="logMean">Logarithm of desired expected value.</param>
+        /// <param name="logMeanMinusMeanLog">Logarithm of desired expected value minus desired expected logarithm.</param>
         /// <param name="power">Desired power.</param>
         /// <returns>A new GammaPower distribution.</returns>
         /// <remarks>This function is equivalent to maximum-likelihood estimation of a Gamma distribution
@@ -284,11 +283,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// involves nonlinear optimization. The algorithm is a generalized Newton iteration, 
         /// described in "Estimating a Gamma distribution" by T. Minka, 2002.
         /// </remarks>
-        public static GammaPower FromMeanAndMeanLog(double mean, double meanLog, double logMean, double power)
+        public static GammaPower FromLogMeanMinusMeanLog(double mean, double logMeanMinusMeanLog, double power)
         {
-            if (power == 1) return FromGamma(Gamma.FromMeanAndMeanLog(mean, meanLog, logMean), power);
-            double delta = logMean - meanLog;
-            if (delta <= 0)
+            if (power == 1) return FromGamma(Gamma.FromLogMeanMinusMeanLog(mean, logMeanMinusMeanLog), power);
+            if (logMeanMinusMeanLog <= 0)
             {
                 // By Jensen's inequality, log(E[x]) >= E[log(x)]
                 // with equality only for a point mass.
@@ -298,16 +296,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             // mean = Gamma(Shape + power)/Gamma(Shape)/Rate^power
             // meanLog = power*(digamma(Shape) - log(Rate))
             // log(mean) = log(Gamma(Shape + power)) - log(Gamma(Shape)) - power*log(Rate)
-            double logMeanOverPower = logMean / power;
-            double meanLogOverPower = meanLog / power;
-            double shape = (power == -1) ? (1 + 0.5 / MMath.ExpMinus1(delta)) : Math.Max(1 - power, 1);
-            double logRate = 0;
+            double logMeanMinusMeanLogOverPower = logMeanMinusMeanLog / power;
+            double shape = (power == -1) ? (1 + 0.5 / MMath.ExpMinus1(logMeanMinusMeanLog)) : Math.Max(1 - power, 1);
             int maxiter = 10000;
             int backtrackCount = 0;
             bool previouslyIncreased = false;
             for (int iter = 0; iter < maxiter; iter++)
             {
-                double oldLogRate = logRate;
                 double oldShape = shape;
                 if (power == -1)
                 {
@@ -315,8 +310,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     // meanLog = log(rate) - digamma(shape)
                     // derivative wrt shape is trigamma(shape) =approx 1/(shape - 0.5)
                     double digammaShape = MMath.Digamma(shape);
-                    logRate = meanLog + digammaShape;
-                    if (delta > 1 || shape <= 1 || backtrackCount > 5)
+                    if (logMeanMinusMeanLog > 1 || shape <= 1 || backtrackCount > 5)
                     {
                         // derivative wrt logRate is exp(logRate - logMean) 
                         // = exp(meanLog - logMean + digamma(shape)) 
@@ -324,7 +318,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         // So the convergence rate is approx exp(meanLog - logMean)
                         // If meanLog is close to logMean, this will converge very slowly.
                         //shape = 1 + Math.Exp(logRate - logMean);
-                        shape = 1 + Math.Exp(digammaShape - delta);
+                        shape = 1 + Math.Exp(digammaShape - logMeanMinusMeanLog);
                     }
                     else if (backtrackCount > 1)
                     {
@@ -332,7 +326,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         // meanLog = log(rate) - digamma(shape) + log(shape) -log(shape)
                         // exp(log(mean) - meanLog - digamma(shape) + log(shape))*(shape-1) = shape
                         // (exp(...) - 1)*(shape-1) = 1
-                        shape = 1 + 1 / MMath.ExpMinus1(Math.Log(shape) - digammaShape + delta);
+                        shape = 1 + 1 / MMath.ExpMinus1(Math.Log(shape) - digammaShape + logMeanMinusMeanLog);
                     }
                     else
                     {
@@ -344,7 +338,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         // This comes from:
                         // meanLog = log(rate) - digamma(shape) + log(shape-0.5)-log(shape-0.5)
                         // = log(mean) + log(shape-1) - digamma(shape) + log(shape-0.5)-log(shape-0.5)
-                        shape = 1 + 0.5 / MMath.ExpMinus1(Math.Log(shape - 0.5) - digammaShape + delta);
+                        shape = 1 + 0.5 / MMath.ExpMinus1(Math.Log(shape - 0.5) - digammaShape + logMeanMinusMeanLog);
                     }
                 }
                 else
@@ -353,7 +347,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     // power*log(Rate) = log(Gamma(Shape + power)) - log(Gamma(Shape)) - log(mean)
                     // derivative wrt shape is (digamma(Shape + power) - digamma(Shape))/power
                     double risingFactorial = MMath.RisingFactorialLnOverN(shape, power);
-                    logRate = risingFactorial - logMeanOverPower;
                     if (power > 1 && backtrackCount < 2)
                     {
                         // logRate = risingFactorial - logMeanOverPower
@@ -366,7 +359,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         // risingFactorial <= log(x) + (1-n)/2/x  if n <= -1
                         double logShape = Math.Log(shape);
                         double halfOverShape = 0.5 / shape;
-                        shape = power * 0.5 / ((MMath.Digamma(shape) - (logShape - halfOverShape)) + ((power - 1) * halfOverShape + logShape - risingFactorial) + delta / power);
+                        shape = power * 0.5 / ((MMath.Digamma(shape) - (logShape - halfOverShape)) + ((power - 1) * halfOverShape + logShape - risingFactorial) + logMeanMinusMeanLogOverPower);
                     }
                     else
                     {
@@ -379,17 +372,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         {
                             // This comes from:
                             // meanLog = power*(digamma(Shape)-log(Shape)+log(Shape) - log(Rate))
-                            shape = Math.Exp(Math.Log(shape) - MMath.Digamma(shape) + meanLogOverPower + logRate);
+                            shape = Math.Exp(Math.Log(shape) - MMath.Digamma(shape) + risingFactorial - logMeanMinusMeanLogOverPower);
                         }
                         else
                         {
                             // This also works but is slower.
-                            shape = MMath.DigammaInv(meanLogOverPower + logRate);
+                            shape = MMath.DigammaInv(risingFactorial - logMeanMinusMeanLogOverPower);
                         }
                     }
                 }
                 //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}, mean = {Math.Exp(power * (MMath.RisingFactorialLnOverN(shape, power) - logRate))} should be {mean}, meanLog = {power * (MMath.Digamma(shape) - logRate)} should be {meanLog}");
-                if (MMath.AreEqual(oldLogRate, logRate) && MMath.AreEqual(oldShape, shape))
+                if (MMath.AreEqual(oldShape, shape))
                 {
                     //Console.WriteLine($"FromMeanAndMeanLog: {iter + 1} iters");
                     //Console.WriteLine($"shape = {shape:g17}, logRate = {logRate:g17}, mean = {Math.Exp(logRate) / (shape - 1)} should be {mean}, meanLog = {power * (MMath.Digamma(shape) - logRate)} should be {meanLog}");
@@ -401,7 +394,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     backtrackCount++;
                 previouslyIncreased = increased;
             }
-            return FromShapeAndRate(shape, Math.Exp(logRate), power);
+            double rate = Math.Exp(MMath.RisingFactorialLnOverN(shape, power)) / Math.Pow(mean, 1 / power);
+            return FromShapeAndRate(shape, rate, power);
         }
 
         /// <summary>
