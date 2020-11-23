@@ -511,7 +511,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double logMean = mD + logMeanMinusMeanLog;
             double mean = Math.Exp(logMean);
             //return Gamma.FromMeanAndVariance(Math.Exp(lm), Math.Exp(2*lm)*(Math.Exp(vD)-1));
-            return GammaPower.FromMeanAndMeanLog(mean, mD, logMeanMinusMeanLog, result.Power);
+            return GammaPower.FromLogMeanMinusMeanLog(mean, logMeanMinusMeanLog, result.Power);
         }
 
         // Finds the maximum of -C exp(v/2) + .5 log(v)
