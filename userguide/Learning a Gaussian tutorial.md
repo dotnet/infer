@@ -80,7 +80,7 @@ The general rule is: **"Use VariableArray rather than .NET arrays whenever possi
 
 ### Visualising your model
 
-Infer.NET allows you to visualise the model in which inference is being performed, in the form of a _factor graph_. To see the factor graph, set the **ShowFactorGraph** property of the inference engine to true (or select Show: Factor Graph in the examples browser). The factor graph will then be displayed whenever a model is compiled. For the second model above, this gives something like:  
+Infer.NET allows you to visualise the model in which inference is being performed, in the form of a _factor graph_. To see the factor graph, set the **ShowFactorGraph** property of the inference engine to true (see [Inference Engine Settings](inference engine settings.md#ShowFactorGraph)) (or select Show: Factor Graph in the examples browser). The factor graph will then be displayed whenever a model is compiled. For the second model above, this gives something like:  
 
 ![Infer.NET block diagram](LearningAGaussianModel.PNG)
 

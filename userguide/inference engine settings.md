@@ -156,6 +156,8 @@ engine.Infer(x);
 
 This specifies whether to display the factor graph corresponding to the model. A factor graph is a graphical representation of a model which shows each variable as a circle and each factor or constraint as a square. If a variable participates in the factor or the constraint, then an edge is shown between the corresponding circle and square. Factor graphs are more than just a picture of the model; they are intimately related to the message passing algorithms used for inference in Infer.NET.  To make the graph readable, you should [attach names](Creating variables.md) to the variables in the model.
 
+By default, graphs are visualized using [GraphViz](http://www.graphviz.org/) in a web browser.  You will need to install GraphViz yourself.  On Windows, users can select the `WindowsVisualizer` (see below) which visualizes graphs using [MSAGL](https://github.com/microsoft/automatic-graph-layout).
+
 ```csharp
 // Show the factor graph of the model  
 engine.ShowFactorGraph = true;
