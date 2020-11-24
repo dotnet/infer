@@ -386,20 +386,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             // sum_{k=1}^{N-1} x[k] d^2 logf/dxk^2 = (sum_{k=1}^{N-1} -(alpha[k]-1)/x[k]) - (alpha[N]-1)/x[N]^2 + (alpha[N]-1)/x[N]
             // + sum_{k=1}^{N-1} dlogf/dxk = - (alpha[N]-1)/x[N] (N-1) - (alpha[N]-1)/x[N]^2 (1-x[N]) = -(alpha[N]-1)/x[N]*(N-2 + 1/x[N])
             // dlogf/dxk + x[k] d^2 logf/dxk^2 = - (alpha[N]-1)/x[N] -  x[k] (alpha[N]-1)/x[N]^2
-            double sum = 0;
-            for (int i = 0; i < x.Count-1; i++)
-            {
-                sum += dLogP[i] + ddLogP[i] * x[i];
-            }
+            this.PseudoCount.SetToFunction(ddLogP, x, (ddLogPi, xi) => ddLogPi * xi);
+            double sum = dLogP.Inner(this.PseudoCount);
             double xN = x[x.Count - 1];
             double alphaN = 1 - sum * xN / (x.Count - 2 + 1 / xN);
             if (alphaN < 1)
                 alphaN = 1;
-            for (int i = 0; i < x.Count-1; i++)
-            {
-                this.PseudoCount[i] = 1 + x[i] * (dLogP[i] + (alphaN - 1) / xN);
-                //this.PseudoCount[i] = 1 + x[i] * (x[i] * dLogP[i] - x[i] * xN * ddLogP[i])/(x[i]+xN);
-            }
+            this.PseudoCount.SetToFunction(x, dLogP, (xi, dLogPi) => 1 + xi * (dLogPi + (alphaN - 1) / xN));
             this.PseudoCount[x.Count - 1] = alphaN;
             this.TotalCount = this.PseudoCount.Sum();
         }

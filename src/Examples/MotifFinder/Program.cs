@@ -27,7 +27,7 @@ namespace MotifFinder
 
             const int SequenceCount = 50;
             const int SequenceLength = 25;
-            const double MotifPresenceProbability = 0.8;
+            const double MotifPresenceProbability = 1.0;// 0.8;
 
             //// Sample some data
 
@@ -65,6 +65,10 @@ namespace MotifFinder
             Range motifCharsRange = new Range(motifLength);
             VariableArray<Vector> motifNucleobaseProbs = Variable.Array<Vector>(motifCharsRange);
             motifNucleobaseProbs[motifCharsRange] = Variable.Dirichlet(motifNucleobasePseudoCounts).ForEach(motifCharsRange);
+
+            //var init = Variable.Array<Dirichlet>(motifCharsRange);
+            //init.ObservedValue = Util.ArrayInit(trueMotifNucleobaseDist.Length, i => new Dirichlet(PiecewiseVector.Constant(char.MaxValue + 1, 1e-6) + trueMotifNucleobaseDist[i].GetProbs()));
+            //motifNucleobaseProbs[motifCharsRange].InitialiseTo(init[motifCharsRange]);
 
             var sequenceRange = new Range(SequenceCount);
             VariableArray<string> sequences = Variable.Array<string>(sequenceRange);
@@ -149,7 +153,7 @@ namespace MotifFinder
             motifPositionData = new int[sequenceCount];
             for (int i = 0; i < sequenceCount; ++i)
             {
-                if (Rand.Double() < motifPresenceProbability)
+                if (Rand.Double() <= motifPresenceProbability)
                 {
                     motifPositionData[i] = Rand.Int(sequenceLength - motif.Length + 1);
                     var backgroundBeforeChars = Util.ArrayInit(motifPositionData[i], j => backgroundDist.Sample());
