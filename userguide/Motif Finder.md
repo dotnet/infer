@@ -40,7 +40,7 @@ We can define the model of a motif by a position frequency matrix. It is a matri
 
 ```csharp
 Vector motifNucleobasePseudoCounts = PiecewiseVector.Constant(char.MaxValue + 1, 1e-6);  
-motifNucleobasePseudoCounts['A'] = motifNucleobasePseudoCounts['C'] = motifNucleobasePseudoCounts['G'] = motifNucleobasePseudoCounts['T'] = 2.0;  
+motifNucleobasePseudoCounts['A'] = motifNucleobasePseudoCounts['C'] = motifNucleobasePseudoCounts['G'] = motifNucleobasePseudoCounts['T'] = 1.0;  
 
 Range motifCharsRange = new Range(motifLength);  
 VariableArray<Vector> motifNucleobaseProbs = Variable.Array<Vector>(motifCharsRange);  
