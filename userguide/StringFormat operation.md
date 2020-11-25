@@ -10,7 +10,7 @@ This page describes an experimental feature that is likely to change in future r
 
 In this tutorial we'll take a look at a powerful string operation supported in Infer.NET, **StringFormat**, and the sorts of models one can define with it.
 
-You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and executing **StringFormat.cs**.
+You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and editing RunMe.cs to execute [StringFormat.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/StringFormat.cs).
 
 ### Inferring an argument
 

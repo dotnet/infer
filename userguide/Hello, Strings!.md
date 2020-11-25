@@ -9,7 +9,7 @@ This page describes an experimental feature that is likely to change in future r
 
 This tutorial introduces the basics of performing inference over string variables in Infer.NET. It shows how to define a generative process that includes strings and how to reason about variables involved in that process.
 
-You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and executing **HelloStrings.cs**.
+You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and editing RunMe.cs to execute [HelloStrings.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/HelloStrings.cs).
 
 ### A generative model of text
 
