@@ -67,10 +67,6 @@ namespace MotifFinder
             VariableArray<Vector> motifNucleobaseProbs = Variable.Array<Vector>(motifCharsRange);
             motifNucleobaseProbs[motifCharsRange] = Variable.Dirichlet(motifNucleobasePseudoCounts).ForEach(motifCharsRange);
 
-            //var init = Variable.Array<Dirichlet>(motifCharsRange);
-            //init.ObservedValue = Util.ArrayInit(trueMotifNucleobaseDist.Length, i => new Dirichlet(PiecewiseVector.Constant(char.MaxValue + 1, 1e-6) + trueMotifNucleobaseDist[i].GetProbs()));
-            //motifNucleobaseProbs[motifCharsRange].InitialiseTo(init[motifCharsRange]);
-
             var sequenceRange = new Range(SequenceCount);
             VariableArray<string> sequences = Variable.Array<string>(sequenceRange);
 
