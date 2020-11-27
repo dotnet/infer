@@ -394,7 +394,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     backtrackCount++;
                 previouslyIncreased = increased;
             }
-            double rate = Math.Exp(MMath.RisingFactorialLnOverN(shape, power)) / Math.Pow(mean, 1 / power);
+            double rate = (mean > double.MaxValue && power < 0) ? mean : Math.Exp(MMath.RisingFactorialLnOverN(shape, power) - Math.Log(mean) / power);
             return FromShapeAndRate(shape, rate, power);
         }
 

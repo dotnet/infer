@@ -25,8 +25,9 @@ namespace MotifFinder
         {
             Rand.Restart(1337);
 
-            const int SequenceCount = 50;
+            const int SequenceCount = 70;
             const int SequenceLength = 25;
+            // To get the first result in the user guide, use MotifPresenceProbability = 1
             const double MotifPresenceProbability = 0.8;
 
             //// Sample some data
@@ -60,7 +61,7 @@ namespace MotifFinder
             //// Specify the model
 
             Vector motifNucleobasePseudoCounts = PiecewiseVector.Constant(char.MaxValue + 1, 1e-6);
-            motifNucleobasePseudoCounts['A'] = motifNucleobasePseudoCounts['C'] = motifNucleobasePseudoCounts['G'] = motifNucleobasePseudoCounts['T'] = 2.0;
+            motifNucleobasePseudoCounts['A'] = motifNucleobasePseudoCounts['C'] = motifNucleobasePseudoCounts['G'] = motifNucleobasePseudoCounts['T'] = 1.0;
 
             Range motifCharsRange = new Range(motifLength);
             VariableArray<Vector> motifNucleobaseProbs = Variable.Array<Vector>(motifCharsRange);
@@ -149,7 +150,7 @@ namespace MotifFinder
             motifPositionData = new int[sequenceCount];
             for (int i = 0; i < sequenceCount; ++i)
             {
-                if (Rand.Double() < motifPresenceProbability)
+                if (Rand.Double() <= motifPresenceProbability)
                 {
                     motifPositionData[i] = Rand.Int(sequenceLength - motif.Length + 1);
                     var backgroundBeforeChars = Util.ArrayInit(motifPositionData[i], j => backgroundDist.Sample());

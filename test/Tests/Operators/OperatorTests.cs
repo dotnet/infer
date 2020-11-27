@@ -684,6 +684,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "OpenBug")]
         public void ExpOpTest()
         {
+            Assert.True(!double.IsNaN(ExpOp.ExpAverageConditional(GammaPower.Uniform(-1), Gaussian.FromNatural(0.36153121930654075, 0.0005524890062312658), Gaussian.Uniform()).Rate));
             Assert.True(ExpOp.ExpAverageConditional(Gamma.FromShapeAndRate(3.302758272196654, 0.00060601537137241492), Gaussian.FromNatural(55.350150233321628, 6.3510247863590683), Gaussian.FromNatural(27.960892513144643, 3.4099170930572216)).Rate > 0);
             Gamma exp = new Gamma(1, 1);
             Gaussian[] ds = new[]
