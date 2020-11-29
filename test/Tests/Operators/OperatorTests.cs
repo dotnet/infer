@@ -657,6 +657,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ExpOpGammaPowerTest()
         {
+            Assert.True(!double.IsNaN(ExpOp.ExpAverageConditional(GammaPower.Uniform(-1), Gaussian.FromNatural(0.046634157098979417, 0.00078302234897204242), Gaussian.Uniform()).Rate));
+            Assert.True(!double.IsNaN(ExpOp.ExpAverageConditional(GammaPower.Uniform(-1), Gaussian.FromNatural(0.36153121930654075, 0.0005524890062312658), Gaussian.Uniform()).Rate));
             Assert.True(ExpOp.DAverageConditional(GammaPower.PointMass(0, -1), new Gaussian(0, 1), Gaussian.Uniform()).Point < double.MinValue);
             ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 283.673, -1), Gaussian.FromNatural(0.004859823703146038, 6.6322755562737905E-06), Gaussian.FromNatural(0.00075506803981220758, 8.24487022054953E-07));
             GammaPower exp = GammaPower.FromShapeAndRate(0, 0, -1);
@@ -684,7 +686,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "OpenBug")]
         public void ExpOpTest()
         {
-            Assert.True(!double.IsNaN(ExpOp.ExpAverageConditional(GammaPower.Uniform(-1), Gaussian.FromNatural(0.36153121930654075, 0.0005524890062312658), Gaussian.Uniform()).Rate));
             Assert.True(ExpOp.ExpAverageConditional(Gamma.FromShapeAndRate(3.302758272196654, 0.00060601537137241492), Gaussian.FromNatural(55.350150233321628, 6.3510247863590683), Gaussian.FromNatural(27.960892513144643, 3.4099170930572216)).Rate > 0);
             Gamma exp = new Gamma(1, 1);
             Gaussian[] ds = new[]
