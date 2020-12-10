@@ -9,6 +9,7 @@ using System.Numerics;
 using Xunit;
 using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using Microsoft.ML.Probabilistic.Math;
+using System.Diagnostics;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -16,6 +17,86 @@ namespace Microsoft.ML.Probabilistic.Tests
 #if NETCOREAPP3_1
     public class FloatTests
     {
+        internal void XPlus1TimesXMinus1Test()
+        {
+            float x = 0;
+            while (x < 1)
+            {
+                float next = NextFloat(x);
+                float fx = XPlus1TimesXMinus1(x);
+                float fnext = XPlus1TimesXMinus1(next);
+                if (fnext < fx)
+                {
+                    throw new Exception($"fnext < fx");
+                }
+                x = next;
+            }
+        }
+
+        private static float XPlus1TimesXMinus1(float x)
+        {
+            return (x + 1) * (x - 1);
+        }
+
+        internal void X2MinusXSquaredTest()
+        {
+            float x = 0;
+            while (x < 1)
+            {
+                float next = NextFloat(x);
+                float fx = X2MinusXSquared(x);
+                float fnext = X2MinusXSquared(next);
+                if (fnext < fx)
+                {
+                    throw new Exception($"fnext < fx");
+                }
+                x = next;
+            }
+        }
+
+        private static float X2MinusXSquared(float x)
+        {
+            return (float)(2 * x - (float)(x * x));
+            // Below does not work
+            //return x * (float)(2 - x);
+        }
+
+        internal void XPlusInvXTest()
+        {
+            float x = float.Epsilon;
+            //x = 0.707169652f;
+            //x = 0.707169831f;
+            //x = 1e-39f;
+            //x = NextFloat(x);
+            while (x < 1)
+            {
+                float next = NextFloat(x);
+                float fx = XPlusInvX(x);
+                float fnext = XPlusInvX(next);
+                float invX = (float)(1f / x);
+                float invNext = (float)(1f / next);
+                //if(!float.IsInfinity(invX) && invX == invNext)
+                //    Trace.WriteLine($"x = {x:r} 1/x = {invX:r} 1/next = {invNext:r} fx = {fx:r} fnext = {fnext:r}");
+                if (fnext > fx)
+                {
+                    Trace.WriteLine($"x = {x:r} 1/x = {invX:r} 1/next = {invNext:r} fx = {fx:r} fnext = {fnext:r}");
+                    //Trace.WriteLine("fnext > fx");
+                    throw new Exception($"fnext > fx");
+                }
+                x = next;
+            }
+        }
+
+        private static float XPlusInvX(float x)
+        {
+            float invX = (float)(1f / x);
+            // Below is monotonic for x >= 1
+            //return x + invX;
+            // Below is monotonic for 0 < x < 1
+            float invInvX = (float)(1f / invX);
+            return invInvX + invX;
+        }
+
         /// <summary>
         /// Tests whether two expressions are equal for all floating-point values.
         /// </summary>

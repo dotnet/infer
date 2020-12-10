@@ -1433,16 +1433,36 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             // This namespace is deliberately chosen to cause a potential name conflict when referring to Math.Exp.
             engine.ModelNamespace = "Microsoft.ML.Probabilistic";
-            engine.Compiler.GivePriorityTo(typeof(GammaFromShapeAndRateOp_Laplace));
-            //engine.Algorithm = new VariationalMessagePassing();
             Gaussian xExpected = new Gaussian(1.395, 0.0568); // VMP on simple Poisson
             xExpected = new Gaussian(1.395, 0.05716); // EP on simple Poisson
-            Gaussian xActual = engine.Infer<Gaussian>(x);
-            Console.WriteLine("x = {0} should be {1}", xActual, xExpected);
-            Assert.True(xExpected.MaxDiff(xActual) < 1);
-            IList<Gamma> p = engine.Infer<IList<Gamma>>(poissonRate);
-            Console.WriteLine(p);
-            Console.WriteLine(StringUtil.VerboseToString(p.Select(g => g.Shape)));
+            bool useSampling = false;
+            if(useSampling)
+            {
+                GaussianEstimator estimator = new GaussianEstimator();
+                for (int iter = 0; iter < 100_000; iter++)
+                {
+                    double xSample = Gaussian.FromMeanAndPrecision(0, 1).Sample();
+                    double logWeight = data.Sum(yi => {
+                        double rateSample = Gamma.FromShapeAndRate(System.Math.Exp(gammaLnShape), System.Math.Exp(gammaLnShape - xSample)).Sample();
+                        Poisson yDist = new Poisson(rateSample);
+                        return yDist.GetLogProb(yi);
+                    });
+                    double weight = System.Math.Exp(logWeight);
+                    estimator.Add(xSample, weight);
+                }
+                xExpected = estimator.GetDistribution(new Gaussian());
+            }
+            for (int trial = 0; trial < 2; trial++)
+            {
+                if(trial == 1) engine.Compiler.GivePriorityTo(typeof(GammaFromShapeAndRateOp_Laplace));
+                else if(trial == 2) engine.Algorithm = new VariationalMessagePassing();
+                Gaussian xActual = engine.Infer<Gaussian>(x);
+                Console.WriteLine("x = {0} should be {1}", xActual, xExpected);
+                Assert.True(xExpected.MaxDiff(xActual) < 1);
+                IList<Gamma> p = engine.Infer<IList<Gamma>>(poissonRate);
+                //Console.WriteLine(p);
+                //Console.WriteLine(StringUtil.VerboseToString(p.Select(g => g.Shape)));
+            }
         }
 
         // model from Thore Graepel

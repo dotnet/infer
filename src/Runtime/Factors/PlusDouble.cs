@@ -16,142 +16,6 @@ namespace Microsoft.ML.Probabilistic.Factors
     public static class DoublePlusOp
     {
         // ----------------------------------------------------------------------------------------------------------------------
-        // WrappedGaussian
-        // ----------------------------------------------------------------------------------------------------------------------
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="SumAverageConditional(WrappedGaussian, WrappedGaussian)"]/*'/>
-        public static WrappedGaussian SumAverageConditional([SkipIfUniform] WrappedGaussian a, [SkipIfUniform] WrappedGaussian b)
-        {
-            if (a.Period != b.Period)
-                throw new ArgumentException("a.Period (" + a.Period + ") != b.Period (" + b.Period + ")");
-            WrappedGaussian result = WrappedGaussian.Uniform(a.Period);
-            result.Gaussian = SumAverageConditional(a.Gaussian, b.Gaussian);
-            result.Normalize();
-            return result;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="SumAverageConditional(WrappedGaussian, double)"]/*'/>
-        public static WrappedGaussian SumAverageConditional([SkipIfUniform] WrappedGaussian a, double b)
-        {
-            WrappedGaussian result = WrappedGaussian.Uniform(a.Period);
-            result.Gaussian = SumAverageConditional(a.Gaussian, b);
-            result.Normalize();
-            return result;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="SumAverageConditional(double, WrappedGaussian)"]/*'/>
-        public static WrappedGaussian SumAverageConditional(double a, [SkipIfUniform] WrappedGaussian b)
-        {
-            return SumAverageConditional(b, a);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="AAverageConditional(WrappedGaussian, WrappedGaussian)"]/*'/>
-        public static WrappedGaussian AAverageConditional([SkipIfUniform] WrappedGaussian sum, [SkipIfUniform] WrappedGaussian b)
-        {
-            if (sum.Period != b.Period)
-                throw new ArgumentException("sum.Period (" + sum.Period + ") != b.Period (" + b.Period + ")");
-            WrappedGaussian result = WrappedGaussian.Uniform(sum.Period);
-            result.Gaussian = AAverageConditional(sum.Gaussian, b.Gaussian);
-            result.Normalize();
-            return result;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="AAverageConditional(WrappedGaussian, double)"]/*'/>
-        public static WrappedGaussian AAverageConditional([SkipIfUniform] WrappedGaussian sum, double b)
-        {
-            WrappedGaussian result = WrappedGaussian.Uniform(sum.Period);
-            result.Gaussian = AAverageConditional(sum.Gaussian, b);
-            result.Normalize();
-            return result;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="BAverageConditional(WrappedGaussian, WrappedGaussian)"]/*'/>
-        public static WrappedGaussian BAverageConditional([SkipIfUniform] WrappedGaussian sum, [SkipIfUniform] WrappedGaussian a)
-        {
-            return AAverageConditional(sum, a);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="BAverageConditional(WrappedGaussian, double)"]/*'/>
-        public static WrappedGaussian BAverageConditional([SkipIfUniform] WrappedGaussian sum, double a)
-        {
-            return AAverageConditional(sum, a);
-        }
-
-        // ----------------------------------------------------------------------------------------------------------------------
-        // TruncatedGaussian
-        // ----------------------------------------------------------------------------------------------------------------------
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="SumAverageConditional(double, TruncatedGaussian)"]/*'/>
-        public static TruncatedGaussian SumAverageConditional(double a, [SkipIfUniform] TruncatedGaussian b)
-        {
-            Gaussian prior = b.Gaussian;
-            Gaussian post = SumAverageConditional(a, prior);
-            TruncatedGaussian result = b;
-            result.Gaussian = post;
-            result.LowerBound += a;
-            result.UpperBound += a;
-            return result;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="SumAverageConditional(TruncatedGaussian, double)"]/*'/>
-        public static TruncatedGaussian SumAverageConditional([SkipIfUniform] TruncatedGaussian a, double b)
-        {
-            return SumAverageConditional(b, a);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="AAverageConditional(TruncatedGaussian, double)"]/*'/>
-        public static TruncatedGaussian AAverageConditional([SkipIfUniform] TruncatedGaussian sum, double b)
-        {
-            Gaussian prior = sum.Gaussian;
-            Gaussian post = AAverageConditional(prior, b);
-            TruncatedGaussian result = sum;
-            result.Gaussian = post;
-            result.LowerBound -= b;
-            result.UpperBound -= b;
-            return result;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="AAverageConditional(double, TruncatedGaussian)"]/*'/>
-        public static TruncatedGaussian AAverageConditional(double sum, [SkipIfUniform] TruncatedGaussian b)
-        {
-            Gaussian prior = b.Gaussian;
-            Gaussian post = AAverageConditional(sum, prior);
-            return new TruncatedGaussian(post, sum - b.UpperBound, sum - b.LowerBound);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="BAverageConditional(TruncatedGaussian, double)"]/*'/>
-        public static TruncatedGaussian BAverageConditional([SkipIfUniform] TruncatedGaussian sum, double a)
-        {
-            return AAverageConditional(sum, a);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="BAverageConditional(double, TruncatedGaussian)"]/*'/>
-        public static TruncatedGaussian BAverageConditional(double sum, [SkipIfUniform] TruncatedGaussian a)
-        {
-            return AAverageConditional(sum, a);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="LogAverageFactor(double, TruncatedGaussian, double)"]/*'/>
-        public static double LogAverageFactor(double sum, [SkipIfUniform] TruncatedGaussian a, double b)
-        {
-            TruncatedGaussian to_sum = SumAverageConditional(a, b);
-            return to_sum.GetLogProb(sum);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="LogAverageFactor(double, double, TruncatedGaussian)"]/*'/>
-        public static double LogAverageFactor(double sum, double a, [SkipIfUniform] TruncatedGaussian b)
-        {
-            TruncatedGaussian to_sum = SumAverageConditional(a, b);
-            return to_sum.GetLogProb(sum);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="LogAverageFactor(TruncatedGaussian, double, double)"]/*'/>
-        public static double LogAverageFactor([SkipIfUniform] TruncatedGaussian sum, double a, double b)
-        {
-            return sum.GetLogProb(Factor.Plus(a, b));
-        }
-
-        // ----------------------------------------------------------------------------------------------------------------------
         // Gaussian 
         // ----------------------------------------------------------------------------------------------------------------------
 
@@ -378,72 +242,250 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "Plus", typeof(double), typeof(double))]
-    [Quality(QualityBand.Stable)]
-    public static class DoublePlusVmpOp
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/doc/*'/>
+    [FactorMethod(typeof(Factor), "Plus", typeof(double), typeof(double), Default = true)]
+    [FactorMethod(new string[] { "A", "Sum", "B" }, typeof(Factor), "Difference", typeof(double), typeof(double), Default = true)]
+    [Quality(QualityBand.Mature)]
+    public static class PlusWrappedGaussianOp
     {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="SumAverageConditional(WrappedGaussian, WrappedGaussian)"]/*'/>
+        public static WrappedGaussian SumAverageConditional([SkipIfUniform] WrappedGaussian a, [SkipIfUniform] WrappedGaussian b)
+        {
+            if (a.Period != b.Period)
+                throw new ArgumentException("a.Period (" + a.Period + ") != b.Period (" + b.Period + ")");
+            WrappedGaussian result = WrappedGaussian.Uniform(a.Period);
+            result.Gaussian = DoublePlusOp.SumAverageConditional(a.Gaussian, b.Gaussian);
+            result.Normalize();
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="SumAverageConditional(WrappedGaussian, double)"]/*'/>
+        public static WrappedGaussian SumAverageConditional([SkipIfUniform] WrappedGaussian a, double b)
+        {
+            WrappedGaussian result = WrappedGaussian.Uniform(a.Period);
+            result.Gaussian = DoublePlusOp.SumAverageConditional(a.Gaussian, b);
+            result.Normalize();
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="SumAverageConditional(double, WrappedGaussian)"]/*'/>
+        public static WrappedGaussian SumAverageConditional(double a, [SkipIfUniform] WrappedGaussian b)
+        {
+            return SumAverageConditional(b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="AAverageConditional(WrappedGaussian, WrappedGaussian)"]/*'/>
+        public static WrappedGaussian AAverageConditional([SkipIfUniform] WrappedGaussian sum, [SkipIfUniform] WrappedGaussian b)
+        {
+            if (sum.Period != b.Period)
+                throw new ArgumentException("sum.Period (" + sum.Period + ") != b.Period (" + b.Period + ")");
+            WrappedGaussian result = WrappedGaussian.Uniform(sum.Period);
+            result.Gaussian = DoublePlusOp.AAverageConditional(sum.Gaussian, b.Gaussian);
+            result.Normalize();
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="AAverageConditional(WrappedGaussian, double)"]/*'/>
+        public static WrappedGaussian AAverageConditional([SkipIfUniform] WrappedGaussian sum, double b)
+        {
+            WrappedGaussian result = WrappedGaussian.Uniform(sum.Period);
+            result.Gaussian = DoublePlusOp.AAverageConditional(sum.Gaussian, b);
+            result.Normalize();
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="BAverageConditional(WrappedGaussian, WrappedGaussian)"]/*'/>
+        public static WrappedGaussian BAverageConditional([SkipIfUniform] WrappedGaussian sum, [SkipIfUniform] WrappedGaussian a)
+        {
+            return AAverageConditional(sum, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="BAverageConditional(WrappedGaussian, double)"]/*'/>
+        public static WrappedGaussian BAverageConditional([SkipIfUniform] WrappedGaussian sum, double a)
+        {
+            return AAverageConditional(sum, a);
+        }
+
         // ----------------------------------------------------------------------------------------------------------------------
-        // WrappedGaussian
+        // VMP
         // ----------------------------------------------------------------------------------------------------------------------
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="AverageLogFactor(WrappedGaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="AverageLogFactor(WrappedGaussian)"]/*'/>
         [Skip]
         public static double AverageLogFactor(WrappedGaussian sum)
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="SumAverageLogarithm(WrappedGaussian, WrappedGaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="SumAverageLogarithm(WrappedGaussian, WrappedGaussian)"]/*'/>
         public static WrappedGaussian SumAverageLogarithm([SkipIfUniform] WrappedGaussian a, [SkipIfUniform] WrappedGaussian b)
         {
-            return DoublePlusOp.SumAverageConditional(a, b);
+            return PlusWrappedGaussianOp.SumAverageConditional(a, b);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="SumAverageLogarithm(WrappedGaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="SumAverageLogarithm(WrappedGaussian, double)"]/*'/>
         public static WrappedGaussian SumAverageLogarithm([SkipIfUniform] WrappedGaussian a, double b)
         {
-            return DoublePlusOp.SumAverageConditional(a, b);
+            return PlusWrappedGaussianOp.SumAverageConditional(a, b);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="SumAverageLogarithm(double, WrappedGaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="SumAverageLogarithm(double, WrappedGaussian)"]/*'/>
         public static WrappedGaussian SumAverageLogarithm(double a, [SkipIfUniform] WrappedGaussian b)
         {
-            return DoublePlusOp.SumAverageConditional(a, b);
+            return PlusWrappedGaussianOp.SumAverageConditional(a, b);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="AAverageLogarithm(WrappedGaussian, WrappedGaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="AAverageLogarithm(WrappedGaussian, WrappedGaussian)"]/*'/>
         public static WrappedGaussian AAverageLogarithm([SkipIfUniform] WrappedGaussian sum, [SkipIfUniform] WrappedGaussian b)
         {
             if (sum.Period != b.Period)
                 throw new ArgumentException("sum.Period (" + sum.Period + ") != b.Period (" + b.Period + ")");
             WrappedGaussian result = WrappedGaussian.Uniform(sum.Period);
-            result.Gaussian = AAverageLogarithm(sum.Gaussian, b.Gaussian);
+            result.Gaussian = DoublePlusVmpOp.AAverageLogarithm(sum.Gaussian, b.Gaussian);
             result.Normalize();
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="AAverageLogarithm(WrappedGaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="AAverageLogarithm(WrappedGaussian, double)"]/*'/>
         public static WrappedGaussian AAverageLogarithm([SkipIfUniform] WrappedGaussian sum, double b)
         {
             WrappedGaussian result = WrappedGaussian.Uniform(sum.Period);
-            result.Gaussian = AAverageLogarithm(sum.Gaussian, b);
+            result.Gaussian = DoublePlusVmpOp.AAverageLogarithm(sum.Gaussian, b);
             result.Normalize();
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="BAverageLogarithm(WrappedGaussian, WrappedGaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="BAverageLogarithm(WrappedGaussian, WrappedGaussian)"]/*'/>
         public static WrappedGaussian BAverageLogarithm([SkipIfUniform] WrappedGaussian sum, [SkipIfUniform] WrappedGaussian a)
         {
             return AAverageLogarithm(sum, a);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="BAverageLogarithm(WrappedGaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusWrappedGaussianOp"]/message_doc[@name="BAverageLogarithm(WrappedGaussian, double)"]/*'/>
         public static WrappedGaussian BAverageLogarithm([SkipIfUniform] WrappedGaussian sum, double a)
         {
             return AAverageLogarithm(sum, a);
         }
+    }
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/doc/*'/>
+    [FactorMethod(typeof(Factor), "Plus", typeof(double), typeof(double), Default = true)]
+    [FactorMethod(new string[] { "A", "Sum", "B" }, typeof(Factor), "Difference", typeof(double), typeof(double), Default = true)]
+    [Quality(QualityBand.Mature)]
+    public static class PlusTruncatedGaussianOp
+    {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="SumAverageConditional(double, TruncatedGaussian)"]/*'/>
+        public static TruncatedGaussian SumAverageConditional(double a, [SkipIfUniform] TruncatedGaussian b)
+        {
+            Gaussian prior = b.ToGaussian();
+            Gaussian post = DoublePlusOp.SumAverageConditional(a, prior);
+            TruncatedGaussian result = b;
+            result.Gaussian = post;
+            result.LowerBound += a;
+            result.UpperBound += a;
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="SumAverageConditional(TruncatedGaussian, double)"]/*'/>
+        public static TruncatedGaussian SumAverageConditional([SkipIfUniform] TruncatedGaussian a, double b)
+        {
+            return SumAverageConditional(b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="SumAverageConditional(TruncatedGaussian, Gaussian)"]/*'/>
+        public static Gaussian SumAverageConditional([SkipIfUniform] TruncatedGaussian a, [SkipIfUniform] Gaussian b)
+        {
+            return SumAverageConditional(b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="SumAverageConditional(Gaussian, TruncatedGaussian)"]/*'/>
+        public static Gaussian SumAverageConditional([SkipIfUniform] Gaussian a, [SkipIfUniform] TruncatedGaussian b)
+        {
+            return DoublePlusOp.SumAverageConditional(a, b.ToGaussian());
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="AAverageConditional(TruncatedGaussian, double)"]/*'/>
+        public static TruncatedGaussian AAverageConditional([SkipIfUniform] TruncatedGaussian sum, double b)
+        {
+            Gaussian prior = sum.ToGaussian();
+            Gaussian post = DoublePlusOp.AAverageConditional(prior, b);
+            TruncatedGaussian result = sum;
+            result.Gaussian = post;
+            result.LowerBound -= b;
+            result.UpperBound -= b;
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="AAverageConditional(double, TruncatedGaussian)"]/*'/>
+        public static TruncatedGaussian AAverageConditional(double sum, [SkipIfUniform] TruncatedGaussian b)
+        {
+            Gaussian prior = b.ToGaussian();
+            Gaussian post = DoublePlusOp.AAverageConditional(sum, prior);
+            return new TruncatedGaussian(post, sum - b.UpperBound, sum - b.LowerBound);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian)"]/*'/>
+        public static TruncatedGaussian AAverageConditional([SkipIfUniform] Gaussian sum, [SkipIfUniform] Gaussian b)
+        {
+            return TruncatedGaussian.FromGaussian(DoublePlusOp.AAverageConditional(sum, b));
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian)"]/*'/>
+        public static Gaussian AAverageConditional([SkipIfUniform] Gaussian sum, [SkipIfUniform] TruncatedGaussian b)
+        {
+            return DoublePlusOp.AAverageConditional(sum, b.ToGaussian());
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="BAverageConditional(Gaussian, Gaussian)"]/*'/>
+        public static TruncatedGaussian BAverageConditional([SkipIfUniform] Gaussian sum, [SkipIfUniform] Gaussian a)
+        {
+            return AAverageConditional(sum, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="BAverageConditional(Gaussian, Gaussian)"]/*'/>
+        public static Gaussian BAverageConditional([SkipIfUniform] Gaussian sum, [SkipIfUniform] TruncatedGaussian a)
+        {
+            return AAverageConditional(sum, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="BAverageConditional(TruncatedGaussian, double)"]/*'/>
+        public static TruncatedGaussian BAverageConditional([SkipIfUniform] TruncatedGaussian sum, double a)
+        {
+            return AAverageConditional(sum, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="BAverageConditional(double, TruncatedGaussian)"]/*'/>
+        public static TruncatedGaussian BAverageConditional(double sum, [SkipIfUniform] TruncatedGaussian a)
+        {
+            return AAverageConditional(sum, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="LogAverageFactor(double, TruncatedGaussian, double)"]/*'/>
+        public static double LogAverageFactor(double sum, [SkipIfUniform] TruncatedGaussian a, double b)
+        {
+            TruncatedGaussian to_sum = SumAverageConditional(a, b);
+            return to_sum.GetLogProb(sum);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="LogAverageFactor(double, double, TruncatedGaussian)"]/*'/>
+        public static double LogAverageFactor(double sum, double a, [SkipIfUniform] TruncatedGaussian b)
+        {
+            TruncatedGaussian to_sum = SumAverageConditional(a, b);
+            return to_sum.GetLogProb(sum);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusTruncatedGaussianOp"]/message_doc[@name="LogAverageFactor(TruncatedGaussian, double, double)"]/*'/>
+        public static double LogAverageFactor([SkipIfUniform] TruncatedGaussian sum, double a, double b)
+        {
+            return sum.GetLogProb(Factor.Plus(a, b));
+        }
+    }
+
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/doc/*'/>
+    [FactorMethod(typeof(Factor), "Plus", typeof(double), typeof(double))]
+    [Quality(QualityBand.Stable)]
+    public static class DoublePlusVmpOp
+    {
         // ----------------------------------------------------------------------------------------------------------------------
         // Gaussian
         // ----------------------------------------------------------------------------------------------------------------------

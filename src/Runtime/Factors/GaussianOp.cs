@@ -742,8 +742,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Gamma GammaFromAlphaBeta(Gamma prior, double alpha, double beta, bool forceProper)
         {
             double bv = (prior.Shape + alpha + beta) / prior.Rate;
-            if (bv <= 0)
-                throw new Exception("Quadrature found zero variance");
+            //if (bv <= 0)
+            //    throw new Exception("Quadrature found zero variance");
             Gamma result = new Gamma();
             result.Rate = -beta / bv;
             // this is actually shape-1 until incremented below
@@ -752,6 +752,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (forceProper)
             {
                 double rmean = (prior.Shape + alpha) / prior.Rate;
+                if (rmean <= 0) return Gamma.PointMass(0);
                 //Console.WriteLine("posterior mean = {0}", rmean);
                 //Console.WriteLine("posterior variance = {0}", bv/prior.Rate);
                 if (result.Rate < 0)
@@ -1648,7 +1649,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 throw new ArgumentException("infinite bound");
             while (true)
             {
-                double x = (lowerBound + upperBound) / 2;
+                double x = MMath.Average(lowerBound, upperBound);
                 double f = func(x);
                 bool isPositive = (f > 0);
                 if (isPositive == wantPositive)
@@ -1657,12 +1658,20 @@ namespace Microsoft.ML.Probabilistic.Factors
                     {
                         // move away from the desired end
                         if (lowerValueIsPositive == wantPositive)
-                            lowerBound = x;
+                        {
+                            if (MMath.AreEqual(lowerBound, x)) return x;
+                            else lowerBound = x;
+                        }
                         else
-                            upperBound = x;
+                        {
+                            if (MMath.AreEqual(upperBound, x)) return x;
+                            else upperBound = x;
+                        }
                     }
                     else
+                    {
                         return x;
+                    }
                 }
                 else // (isPositive != wantPositive)
                 {

@@ -230,6 +230,17 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="ValuesAverageConditional{TExit}(TExit, TExit[])"]/*'/>
+        /// <typeparam name="TExit">The type of the message from <c>exit</c>.</typeparam>
+        public static TExit[] ValuesAverageConditional<TExit>([IsReturnedInEveryElement] TExit exit, TExit[] result)
+        {
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = exit;
+            }
+            return result;
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="CasesAverageConditional{TDist}(TDist, TDist, int)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the variable exiting the gate.</typeparam>
         public static Bernoulli CasesAverageConditional<TDist>(
@@ -489,14 +500,20 @@ namespace Microsoft.ML.Probabilistic.Factors
             return -to_exit.GetAverageLog(exit);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="ValuesAverageLogarithm{TExit, TResultList}(TExit, TExit[])"]/*'/>
+        /// <typeparam name="TExit">The type of the message from <c>exit</c>.</typeparam>
+        public static TExit[] ValuesAverageLogarithm<TExit>([IsReturnedInEveryElement] TExit exit, TExit[] result)
+        {
+            return ValuesAverageConditional(exit, result);
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="ValuesAverageLogarithm{TExit, TResultList}(TExit, TResultList)"]/*'/>
         /// <typeparam name="TExit">The type of the message from <c>exit</c>.</typeparam>
         /// <typeparam name="TResultList">The type of the outgoing message.</typeparam>
         public static TResultList ValuesAverageLogarithm<TExit, TResultList>([IsReturnedInEveryElement] TExit exit, TResultList result)
             where TResultList : CanSetAllElementsTo<TExit>
         {
-            result.SetAllElementsTo(exit);
-            return result;
+            return ValuesAverageConditional(exit, result);
         }
 
 #if true
@@ -819,6 +836,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double AverageLogFactor()
         {
             return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitRandomOp"]/message_doc[@name="ValuesAverageLogarithm{TExit}(TExit, TExit[])"]/*'/>
+        /// <typeparam name="TExit">The type of the distribution over the variable exiting the gate.</typeparam>
+        public static TExit[] ValuesAverageLogarithm<TExit>([IsReturnedInEveryElement] TExit exit, TExit[] result)
+        {
+            return ValuesAverageConditional(exit, result);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitRandomOp"]/message_doc[@name="ValuesAverageLogarithm{TExit, TResultList}(TExit, TResultList)"]/*'/>

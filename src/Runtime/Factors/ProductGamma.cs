@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return result;
             }
             // (ab)^(shape/power-1) exp(-rate*(ab)^(1/power))
-            return GammaPower.FromShapeAndRate(Product.Shape, Product.Rate * Math.Pow(B, 1/result.Power), result.Power);
+            return GammaPower.FromShapeAndRate(Product.Shape, Product.Rate * Math.Pow(B, 1 / result.Power), result.Power);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="AAverageConditional(double, double, GammaPower)"]/*'/>
@@ -671,7 +671,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             // E[x] = E[a]*E[b]
             // E[log(x)] = E[log(a)]+E[log(b)]
-            return Gamma.FromMeanAndMeanLog(A.GetMean() * B.GetMean(), A.GetMeanLog() + B.GetMeanLog());
+            return Gamma.FromLogMeanMinusMeanLog(A.GetMean() * B.GetMean(), A.GetLogMeanMinusMeanLog() + B.GetLogMeanMinusMeanLog());
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(double, Gamma)"]/*'/>
@@ -697,7 +697,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GammaPower.PointMass(A * B.Point, B.Power);
             if (A == 0)
                 return GammaPower.PointMass(0, B.Power);
-            return GammaPower.FromShapeAndRate(B.Shape, B.Rate * Math.Pow(A, -1/B.Power), B.Power);
+            return GammaPower.FromShapeAndRate(B.Shape, B.Rate * Math.Pow(A, -1 / B.Power), B.Power);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(Gamma, double)"]/*'/>
@@ -814,7 +814,16 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return A;
             double mean = A.GetMean() * B.GetMeanInverse();
             double meanLog = A.GetMeanLog() - B.GetMeanLog();
-            return Gamma.FromMeanAndMeanLog(mean, meanLog);
+            return Gamma.FromLogMeanMinusMeanLog(mean, A.GetLogMeanMinusMeanLog() + GetLogMeanInversePlusMeanLog(B));
+        }
+
+        private static double GetLogMeanInversePlusMeanLog(Gamma B)
+        {
+            // log(rate) - log(shape - 1) + digamma(shape) - log(rate) 
+            // = digamma(shape) - log(shape - 1)
+            // = 1/(shape - 1) + digamma(shape - 1) - log(shape - 1)
+            double shapeMinus1 = B.Shape - 1;
+            return 1 / shapeMinus1 - Gamma.FromShapeAndRate(shapeMinus1, B.Rate).GetLogMeanMinusMeanLog();
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioVmpOp"]/message_doc[@name="RatioAverageLogarithm(Gamma, double)"]/*'/>

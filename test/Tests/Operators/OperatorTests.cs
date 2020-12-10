@@ -15,7 +15,9 @@ namespace Microsoft.ML.Probabilistic.Tests
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
+
     using Utilities;
+
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
     using GaussianArray = DistributionStructArray<Gaussian, double>;
     using GaussianArray2D = DistributionStructArray2D<Gaussian, double>;
@@ -35,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.False(DoublePlusOp.BAverageConditional(Gaussian.FromNatural(-8.6696467442044984E+102, 0.43834920434350727), Gaussian.FromNatural(2.193337045017726E+205, 2.193337045017726E+205)).MeanTimesPrecision < double.MinValue);
             Gaussian Sum = Gaussian.FromNatural(1, 1);
             double tolerance = 1e-10;
-            foreach(var prec in DoublesGreaterThanZero().Where(x => !double.IsPositiveInfinity(x)))
+            foreach (var prec in DoublesGreaterThanZero().Where(x => !double.IsPositiveInfinity(x)))
             {
                 Gaussian b = Gaussian.FromNatural(prec, prec);
                 Gaussian a = DoublePlusOp.AAverageConditional(Sum, b);
@@ -614,63 +616,162 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        [Fact]
-        public void ExpOpTest2()
+        //[Fact]
+        //[Trait("Category", "ModifiesGlobals")]
+        internal void ExpOp_CompareToSampling()
         {
-            ExpOp.QuadratureNodeCount = 50;
-
+            int sampleCount = 1_000_000;
             for (int i = 1; i < 10; i++)
             {
                 double ve = System.Math.Pow(10, -i);
                 Gamma exp = Gamma.FromMeanAndVariance(1, ve);
                 Gaussian d = Gaussian.FromMeanAndVariance(0, 1);
                 Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
-                var importanceSampler = new ImportanceSampler(100000, d.Sample, x => System.Math.Exp(exp.GetLogProb(System.Math.Exp(x))));
+                var importanceSampler = new ImportanceSampler(sampleCount, d.Sample, x => System.Math.Exp(exp.GetLogProb(System.Math.Exp(x))));
                 double mean = importanceSampler.GetExpectation(x => x);
                 double Ex2 = importanceSampler.GetExpectation(x => x * x);
                 Gaussian to_d_is = new Gaussian(mean, Ex2 - mean * mean) / d;
                 var exp2 = Gamma.FromShapeAndRate(exp.Shape - 1, exp.Rate);
-                importanceSampler = new ImportanceSampler(100000, exp2.Sample, x => System.Math.Exp(d.GetLogProb(System.Math.Log(x))));
+                importanceSampler = new ImportanceSampler(sampleCount, exp2.Sample, x => System.Math.Exp(d.GetLogProb(System.Math.Log(x))));
                 mean = importanceSampler.GetExpectation(x => System.Math.Log(x));
                 Ex2 = importanceSampler.GetExpectation(x => System.Math.Log(x) * System.Math.Log(x));
                 Gaussian to_d_is2 = new Gaussian(mean, Ex2 - mean * mean) / d;
-                Console.WriteLine("{3}\t{0}\t{1}\t{2}", to_d.GetMean(), to_d_is.GetMean(), to_d_is2.GetMean(), ve);
+                Trace.WriteLine($"{ve}\t{to_d.GetMean()}\t{to_d_is.GetMean()}\t{to_d_is2.GetMean()}");
 
                 Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, Gaussian.Uniform());
 
-                importanceSampler = new ImportanceSampler(100000, d.Sample, x => System.Math.Exp(exp.GetLogProb(System.Math.Exp(x))));
+                importanceSampler = new ImportanceSampler(sampleCount, d.Sample, x => System.Math.Exp(exp.GetLogProb(System.Math.Exp(x))));
                 double Ey = importanceSampler.GetExpectation(x => System.Math.Exp(x));
                 double Elogy = importanceSampler.GetExpectation(x => x);
                 var to_exp_is1 = Gamma.FromMeanAndMeanLog(Ey, Elogy) / exp;
-                importanceSampler = new ImportanceSampler(100000, exp2.Sample, x => System.Math.Exp(d.GetLogProb(System.Math.Log(x))));
+                importanceSampler = new ImportanceSampler(sampleCount, exp2.Sample, x => System.Math.Exp(d.GetLogProb(System.Math.Log(x))));
                 Ey = importanceSampler.GetExpectation(x => x);
                 Elogy = importanceSampler.GetExpectation(x => System.Math.Log(x));
                 var to_exp_is2 = Gamma.FromMeanAndMeanLog(Ey, Elogy) / exp;
-                //Console.WriteLine("to_d: Quad {0} IS1: {1} IS2: {2}", to_exp.GetMean(), to_exp_is1.GetMean(), to_exp_is2.GetMean());
+                double is1_mean = to_exp_is1.IsProper() ? to_exp_is1.GetMean() : double.NaN;
+                double is2_mean = to_exp_is2.IsProper() ? to_exp_is2.GetMean() : double.NaN;
+                Trace.WriteLine($"to_exp: Quad {to_exp.GetMean()} IS1: {is1_mean} IS2: {is2_mean}");
             }
         }
 
         [Fact]
+        public void ExpOpGammaPowerTest()
+        {
+            Assert.True(ExpOp.DAverageConditional(GammaPower.PointMass(0, -1), new Gaussian(0, 1), Gaussian.Uniform()).Point < double.MinValue);
+            ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 283.673, -1), Gaussian.FromNatural(0.004859823703146038, 6.6322755562737905E-06), Gaussian.FromNatural(0.00075506803981220758, 8.24487022054953E-07));
+            GammaPower exp = GammaPower.FromShapeAndRate(0, 0, -1);
+            Gaussian[] ds = new[]
+            {
+                Gaussian.FromNatural(-1.6171314269768655E+308, 4.8976001759138024),
+                Gaussian.FromNatural(-0.037020622891705768, 0.00034989765084474117),
+                Gaussian.PointMass(double.NegativeInfinity),
+            };
+            foreach (var d in ds)
+            {
+                Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
+                Gaussian to_d_slow = ExpOp_Slow.DAverageConditional(exp, d);
+                //Trace.WriteLine($"{to_d}");
+                //Trace.WriteLine($"{to_d_slow}");
+                Assert.True(to_d_slow.MaxDiff(to_d) < 1e-10);
+                to_d = Gaussian.FromNatural(1, 0);
+                GammaPower to_exp = ExpOp.ExpAverageConditional(exp, d, to_d);
+                //Trace.WriteLine($"{to_exp}");
+            }
+            ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 883.22399999999993, -1), Gaussian.FromNatural(0.0072160312702854888, 8.1788482512051846E-06), Gaussian.FromNatural(0.00057861649495666474, 5.6316164560235272E-07));
+        }
+
+        [Fact]
+        [Trait("Category", "OpenBug")]
         public void ExpOpTest()
         {
-            ExpOp.QuadratureNodeCount = 50;
+            Assert.True(!double.IsNaN(ExpOp.ExpAverageConditional(GammaPower.Uniform(-1), Gaussian.FromNatural(0.36153121930654075, 0.0005524890062312658), Gaussian.Uniform()).Rate));
+            Assert.True(ExpOp.ExpAverageConditional(Gamma.FromShapeAndRate(3.302758272196654, 0.00060601537137241492), Gaussian.FromNatural(55.350150233321628, 6.3510247863590683), Gaussian.FromNatural(27.960892513144643, 3.4099170930572216)).Rate > 0);
+            Gamma exp = new Gamma(1, 1);
+            Gaussian[] ds = new[]
+            {
+                Gaussian.FromNatural(-1.6171314269768655E+308, 4.8976001759138024),
+                Gaussian.PointMass(double.NegativeInfinity),
+            };
+            foreach (var d in ds)
+            {
+                Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, Gaussian.Uniform());
+                Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
+                Gaussian to_d_slow = ExpOp_Slow.DAverageConditional(exp, d);
+                Trace.WriteLine($"{to_d}");
+                Trace.WriteLine($"{to_d_slow}");
+                Assert.True(to_d_slow.MaxDiff(to_d) < 1e-10);
+            }
+        }
+
+        // This test fails because of cancellation in logMeanMinusMd and Gamma.SetToRatio in ExpOp.ExpAverageConditional
+        [Fact]
+        [Trait("Category", "ModifiesGlobals")]
+        [Trait("Category", "OpenBug")]
+        public void ExpOp_PointExp()
+        {
+            using (TestUtils.TemporarilyChangeQuadratureNodeCount(21))
+            {
+                double vd = 1e-4;
+                vd = 1e-3;
+                Gaussian d = new Gaussian(0, vd);
+                double ve = 2e-3;
+                //ve = 1;
+                Gaussian uniform = Gaussian.Uniform();
+                Gamma expPoint = Gamma.PointMass(2);
+                Gamma to_exp_point = ExpOp.ExpAverageConditional(expPoint, d, uniform);
+                Gaussian to_d_point = ExpOp.DAverageConditional(expPoint, d, uniform);
+                double to_exp_oldError = double.PositiveInfinity;
+                double to_d_oldError = double.PositiveInfinity;
+                for (int i = 5; i < 100; i++)
+                {
+                    ve = System.Math.Pow(10, -i);
+                    Gamma exp = Gamma.FromMeanAndVariance(2, ve);
+                    Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, uniform);
+                    Gaussian to_d = ExpOp.DAverageConditional(exp, d, uniform);
+                    double to_exp_error = to_exp.MaxDiff(to_exp_point);
+                    double to_d_error = System.Math.Abs(to_d.GetMean() - to_d_point.GetMean());
+                    Trace.WriteLine($"ve={ve}: to_exp={to_exp} error={to_exp_error} to_d={to_d} error={to_d_error}");
+                    Assert.True(to_exp_error <= to_exp_oldError);
+                    to_exp_oldError = to_exp_error;
+                    Assert.True(to_d_error <= to_d_oldError);
+                    to_d_oldError = to_d_error;
+                }
+                Trace.WriteLine(ExpOp.DAverageConditional(Gamma.FromMeanAndVariance(1, ve), d, uniform));
+                using (TestUtils.TemporarilyChangeQuadratureShift(true))
+                {
+                    Trace.WriteLine(ExpOp.DAverageConditional(Gamma.FromMeanAndVariance(1, ve), d, uniform));
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        public void ExpOpGammaPower_PointExp()
+        {
+            double power = -1;
             double vd = 1e-4;
             vd = 1e-3;
-            double ve = 2e-3;
-            //ve = 1;
-            for (int i = 0; i < 10; i++)
+            Gaussian d = new Gaussian(0, vd);
+            Gaussian uniform = Gaussian.Uniform();
+            GammaPower expPoint = GammaPower.PointMass(2, power);
+            GammaPower to_exp_point = ExpOp.ExpAverageConditional(expPoint, d, uniform);
+            Gaussian to_d_point = ExpOp.DAverageConditional(expPoint, d, uniform);
+            double to_exp_oldError = double.PositiveInfinity;
+            double to_d_oldError = double.PositiveInfinity;
+            for (int i = 0; i < 100; i++)
             {
-                ve = System.Math.Pow(10, -i);
-                Gamma exp = Gamma.FromMeanAndVariance(1, ve);
-                Gamma to_exp = ExpOp.ExpAverageConditional(exp, new Gaussian(0, vd), Gaussian.Uniform());
-                Gaussian to_d = ExpOp.DAverageConditional(exp, new Gaussian(0, vd), Gaussian.Uniform());
-                Console.WriteLine("ve={0}: to_exp={1} to_d={2}", ve, to_exp, to_d);
-                // TODO: add assertions here
+                double ve = System.Math.Pow(10, -i);
+                GammaPower exp = GammaPower.FromMeanAndVariance(2, ve, power);
+                GammaPower to_exp = ExpOp.ExpAverageConditional(exp, d, uniform);
+                Gaussian to_d = ExpOp.DAverageConditional(exp, d, uniform);
+                double to_exp_error = to_exp.MaxDiff(to_exp_point);
+                double to_d_error = System.Math.Abs(to_d.GetMean() - to_d_point.GetMean());
+                Trace.WriteLine($"ve={ve}: to_exp={to_exp} error={to_exp_error} to_d={to_d} error={to_d_error}");
+                Assert.True(to_exp_error <= to_exp_oldError);
+                to_exp_oldError = to_exp_error;
+                Assert.True(to_d_error <= to_d_oldError);
+                to_d_oldError = to_d_error;
             }
-            Console.WriteLine(ExpOp.ExpAverageConditional(Gamma.PointMass(1), new Gaussian(0, vd), Gaussian.Uniform()));
-            Console.WriteLine(ExpOp.DAverageConditional(Gamma.FromMeanAndVariance(1, ve), new Gaussian(0, vd), Gaussian.Uniform()));
-            ExpOp.QuadratureShift = true;
-            Console.WriteLine(ExpOp.DAverageConditional(Gamma.FromMeanAndVariance(1, ve), new Gaussian(0, vd), Gaussian.Uniform()));
         }
 
         [Fact]
@@ -789,6 +890,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void MaxTest()
         {
             Gaussian actual, expected;
+            actual = MaxGaussianOp.MaxAverageConditional(Gaussian.FromNatural(6053.7946407740192, 2593.4559834344436), Gaussian.FromNatural(-1.57090676324773, 1.3751262174888785), Gaussian.FromNatural(214384.78500926663, 96523.508973471908));
+            Assert.False(actual.IsProper());
+            actual = MaxGaussianOp.MaxAverageConditional(Gaussian.FromNatural(146.31976467723146, 979.371757950659), Gaussian.FromNatural(0.075442729439046508, 0.086399540048904114), Gaussian.PointMass(0));
+            Assert.False(actual.IsProper());
+
             actual = MaxGaussianOp.MaxAverageConditional(Gaussian.Uniform(), Gaussian.PointMass(0), new Gaussian(-7.357e+09, 9.75));
             expected = Gaussian.PointMass(0);
             Assert.True(expected.MaxDiff(actual) < 1e-4);

@@ -100,6 +100,19 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void DigammaInvTest()
+        {
+            for (int i = 0; i < 1000; i++)
+            {
+                double y = -3 + i * 0.01;
+                double x = MMath.DigammaInv(y);
+                double y2 = MMath.Digamma(x);
+                double error = MMath.AbsDiff(y, y2, 1e-8);
+                Assert.True(error < 1e-8);
+            }
+        }
+
+        [Fact]
         public void SpecialFunctionsTest()
         {
             double[,] logistic_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "Logistic.csv"));

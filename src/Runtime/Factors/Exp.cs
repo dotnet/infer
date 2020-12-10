@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
@@ -54,8 +55,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogAverageFactor(exp, d);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="LogAverageFactor(Gamma, double)"]/*'/>
-        public static double LogAverageFactor(Gamma exp, double d)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="LogAverageFactor(CanGetLogProb{double}, double)"]/*'/>
+        public static double LogAverageFactor(CanGetLogProb<double> exp, double d)
         {
             return exp.GetLogProb(Math.Exp(d));
         }
@@ -139,9 +140,86 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogAverageFactor(exp, d);
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="LogEvidenceRatio(GammaPower, Gaussian, GammaPower, Gaussian)"]/*'/>
+        public static double LogEvidenceRatio(GammaPower exp, Gaussian d, [Fresh] GammaPower to_exp, Gaussian to_d)
+        {
+            return LogAverageFactor(exp, d, to_d)
+                                - to_exp.GetLogAverageOf(exp);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="LogAverageFactor(GammaPower, Gaussian, Gaussian)"]/*'/>
+        public static double LogAverageFactor(GammaPower exp, Gaussian d, Gaussian to_d)
+        {
+            if (d.IsPointMass)
+                return LogAverageFactor(exp, d.Point);
+            if (d.IsUniform())
+                return exp.GetLogAverageOf(new GammaPower(0, 0, exp.Power));
+            if (exp.IsPointMass)
+                return LogAverageFactor(exp.Point, d);
+            if (exp.IsUniform())
+                return 0.0;
+            double oneMinusPower = 1 - exp.Power;
+            bool useMethod1 = false;
+            if (useMethod1)
+            {
+                // The factor is Ga(exp(d); shape, rate, power)
+                // = exp(d*(shape/power - 1) - rate*exp(d/power))*rate^shape/Gamma(shape)/abs(power)
+                // = Ga(exp(d/power); shape-power+1, rate)*Gamma(shape-power+1)/rate^(shape-power+1)*rate^shape/Gamma(shape)/abs(power)
+                Gamma gamma = Gamma.FromShapeAndRate(exp.Shape + oneMinusPower, exp.Rate);
+                double correction = oneMinusPower * (MMath.RisingFactorialLnOverN(exp.Shape, oneMinusPower) + Math.Log(exp.Rate)) - Math.Log(Math.Abs(exp.Power));
+                Gaussian forward = GaussianProductOp.AAverageConditional(d, exp.Power);
+                Gaussian backward = GaussianProductOp.ProductAverageConditional(to_d, exp.Power);
+                return LogAverageFactor(gamma, forward, backward) + correction;
+            }
+            else
+            {
+                // The GammaPower density p_exp(y) = p_g(y^(1/c)) y^(1/c - 1)/abs(c)
+                // int p_exp(exp(x)) p_x(x) dx 
+                // = int p_g(exp(x/c)) exp(x(1/c - 1))/abs(c) p_x(x) dx
+                // = int p_g(exp(z)) exp(z(1 - c)) p_x(zc) dz
+                // where z = x/c
+                // p_x(zc) = N(z; m_x/c, v_x/c^2)/abs(c)
+                // exp(z(1-c)) p_x(zc) = exp((1-c)m_x/c + (1-c)^2 v_x/c^2/2) N(z; m_x/c + (1-c)v_x/c^2, v_x/c^2)
+                // p_g(exp(z)) exp(z(1 - c)) = p_g(exp(z); shape+1-c, rate)*Gamma(shape+1-c)/rate^(shape+1-c)*rate^shape/Gamma(shape)
+                Gamma gamma = Gamma.FromShapeAndRate(exp.Shape, exp.Rate);
+                d.GetMeanAndVariance(out double mD, out double vD);
+                Gaussian dOverPower = GaussianProductOp.AAverageConditional(d, exp.Power);
+                dOverPower.SetMeanAndPrecision(dOverPower.GetMean() + oneMinusPower / dOverPower.Precision, dOverPower.Precision);
+                Gaussian to_dOverPower = GaussianProductOp.ProductAverageConditional(to_d, exp.Power);
+                double oneMinusPowerOverPower = oneMinusPower / exp.Power;
+                double correction = oneMinusPowerOverPower * mD + oneMinusPowerOverPower * oneMinusPowerOverPower * vD / 2 - Math.Log(Math.Abs(exp.Power));
+                //double correction = MMath.GammaLn(exp.Shape - exp.Power + 1) - MMath.GammaLn(exp.Shape) + (1 - exp.Power) * Math.Log(exp.Rate) - Math.Log(Math.Abs(exp.Power));
+                return LogAverageFactor(gamma, dOverPower, to_dOverPower) + correction;
+            }
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageConditional(GammaPower, Gaussian, Gaussian)"]/*'/>
+        public static GammaPower ExpAverageConditional([NoInit] GammaPower exp, [Proper] Gaussian d, [NoInit] Gaussian to_d)
+        {
+            if (exp.IsUniform()) return ExpAverageLogarithm(d, exp);
+            Gamma gamma = Gamma.FromShapeAndRate(exp.Shape + (1 - exp.Power), exp.Rate);
+            if (exp.IsPointMass) gamma = Gamma.PointMass(Math.Pow(exp.Point, 1 / exp.Power));
+            Gaussian dOverPower = GaussianProductOp.AAverageConditional(d, exp.Power);
+            Gaussian to_dOverPower = GaussianProductOp.AAverageConditional(to_d, exp.Power);
+            Gamma to_gamma = ExpAverageConditional(gamma, dOverPower, to_dOverPower);
+            return PowerOp.PowAverageConditional(to_gamma, exp.Power);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="DAverageConditional(GammaPower, Gaussian)"]/*'/>
+        public static Gaussian DAverageConditional([SkipIfUniform] GammaPower exp, [Proper] Gaussian d, [NoInit] Gaussian to_d)
+        {
+            if (exp.IsPointMass) return DAverageConditional(exp.Point);
+            // as a function of d, the factor is Ga(exp(d); shape, rate, power) = exp(d*(shape/power -1) -rate*exp(d/power))
+            // = Ga(exp(d/power); shape - power + 1, rate)
+            Gamma gamma = Gamma.FromShapeAndRate(exp.Shape + (1 - exp.Power), exp.Rate);
+            // "forward" goes to d/power
+            Gaussian forward = GaussianProductOp.AAverageConditional(d, exp.Power);
+            Gaussian to_dOverPower = GaussianProductOp.AAverageConditional(to_d, exp.Power);
+            Gaussian message = DAverageConditional(gamma, forward, to_dOverPower);
+            // "message" goes to d/power
+            Gaussian backward = GaussianProductOp.ProductAverageConditional(message, exp.Power);
+            return backward;
+        }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageConditional(Gamma, Gaussian, Gaussian)"]/*'/>
         public static Gamma ExpAverageConditional([NoInit] Gamma exp, [Proper] Gaussian d, [NoInit] Gaussian to_d)
@@ -179,25 +257,27 @@ namespace Microsoft.ML.Probabilistic.Factors
             double mD, vD;
             Gaussian dMarginal = d * to_d;
             dMarginal.GetMeanAndVariance(out mD, out vD);
-            double Z = 0;
-            double sumy = 0;
-            double sumexpy = 0;
 
+            // Quadrature cannot get more than 6 digits of precision.
+            // So in cases where extra precision is required, use another approach.
             if (vD < 1e-6)
             {
-                double m, v;
-                d.GetMeanAndVariance(out m, out v);
-                return Gamma.FromLogMeanAndMeanLog(m + v / 2.0, m);
+                //Trace.WriteLine($"vD < 1e-6");
+                return ExpAverageLogarithm(d);
             }
 
+            double Z = 0;
+            double sumY = 0;
+            double logsumExpY = double.NegativeInfinity;
+            bool useHermite = true;
             //if (vD < 10)
-            if (true)
+            if (useHermite)
             {
                 // Use Gauss-Hermite quadrature
                 double[] nodes = new double[QuadratureNodeCount];
                 double[] weights = new double[QuadratureNodeCount];
 
-                Quadrature.GaussianNodesAndWeights(mD, vD, nodes, weights);
+                Quadrature.GaussianNodesAndWeights(0, vD, nodes, weights);
                 for (int i = 0; i < weights.Length; i++)
                 {
                     weights[i] = Math.Log(weights[i]);
@@ -207,7 +287,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // modify the weights to include q(y_k)/N(y_k;m,v)
                     for (int i = 0; i < weights.Length; i++)
                     {
-                        weights[i] += d.GetLogProb(nodes[i]) - dMarginal.GetLogProb(nodes[i]);
+                        weights[i] += d.GetLogProb(nodes[i] + mD) - Gaussian.GetLogProb(nodes[i], 0, vD);
                     }
                 }
 
@@ -216,51 +296,56 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // Z E[x] = int_y int_x x Ga(x;a,b) delta(x - exp(y)) N(y;my,vy) dx dy
                 //        = int_y exp(y) Ga(exp(y);a,b) N(y;my,vy) dy
                 // Z E[log(x)] = int_y y Ga(exp(y);a,b) N(y;my,vy) dy
+                double shapeMinus1 = exp.Shape - 1;
                 for (int i = 0; i < weights.Length; i++)
                 {
-                    double y = nodes[i];
-                    double logf = weights[i] + (exp.Shape - 1) * y - exp.Rate * Math.Exp(y);
+                    double y = nodes[i] + mD;
+                    double logf = weights[i];
+                    if (shapeMinus1 != 0) logf += shapeMinus1 * y; // avoid 0*inf
+                    if (exp.Rate != 0) logf -= exp.Rate * Math.Exp(y); // avoid 0*inf
                     if (logf > maxLogF)
+                    {
                         maxLogF = logf;
+                    }
                     weights[i] = logf;
                 }
                 for (int i = 0; i < weights.Length; i++)
                 {
                     double y = nodes[i];
-                    double f = Math.Exp(weights[i] - maxLogF);
+                    double logf = weights[i] - maxLogF;
+                    double f = Math.Exp(logf);
                     double f_y = f * y;
-                    double fexpy = f * Math.Exp(y);
                     Z += f;
-                    sumy += f_y;
-                    sumexpy += fexpy;
+                    sumY += f_y;
+                    logsumExpY = MMath.LogSumExp(logsumExpY, logf + y);
                 }
             }
             else
             {
-                Converter<double, double> p = delegate(double y) { return d.GetLogProb(y) + (exp.Shape - 1) * y - exp.Rate * Math.Exp(y); };
+                Converter<double, double> p = delegate (double y) { return d.GetLogProb(y) + (exp.Shape - 1) * y - exp.Rate * Math.Exp(y); };
                 double sc = Math.Sqrt(vD);
                 double offset = p(mD);
-                Z = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(p(sc * z + mD) - offset), 1, 16, 1e-6);
-                sumy = Quadrature.AdaptiveClenshawCurtis(z => (sc * z + mD) * Math.Exp(p(sc * z + mD) - offset), 1, 16, 1e-6);
-                sumexpy = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(sc * z + mD + p(sc * z + mD) - offset), 1, 16, 1e-6);
+                double relTol = 1e-16;
+                int nodeCount = 16 * 4;
+                double scale = 1;
+                Z = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(p(sc * z + mD) - offset), scale, nodeCount, relTol);
+                sumY = Quadrature.AdaptiveClenshawCurtis(z => (sc * z) * Math.Exp(p(sc * z + mD) - offset), scale, nodeCount, relTol);
+                double sumExpY = Quadrature.AdaptiveClenshawCurtis(z => Math.Exp(sc * z + p(sc * z + mD) - offset), scale, nodeCount, relTol);
+                logsumExpY = Math.Log(sumExpY);
             }
             if (Z == 0)
                 throw new InferRuntimeException("Z==0");
-            double s = 1.0 / Z;
-            if (Double.IsPositiveInfinity(s))
-                throw new InferRuntimeException("s is -inf");
-            double meanLog = sumy * s;
-            double mean = sumexpy * s;
-            Gamma result = Gamma.FromMeanAndMeanLog(mean, meanLog);
+            double meanLogMinusMd = sumY / Z;
+            double logMeanMinusMd = logsumExpY - Math.Log(Z);
+            double logMeanMinusMeanLog = logMeanMinusMd - meanLogMinusMd;
+            double mean = Math.Exp(logMeanMinusMd + mD);
+            Gamma result = Gamma.FromLogMeanMinusMeanLog(mean, logMeanMinusMeanLog);
+            //Trace.WriteLine($"result = {result} mean = {mean} logMeanMinusMeanLog = {logMeanMinusMeanLog}");
             result.SetToRatio(result, exp, ForceProper);
             if (Double.IsNaN(result.Shape) || Double.IsNaN(result.Rate))
                 throw new InferRuntimeException($"result is NaN.  exp={exp}, d={d}, to_d={to_d}");
             return result;
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageConditionalInit(Gaussian)"]/*'/>
         [Skip]
@@ -306,27 +391,31 @@ namespace Microsoft.ML.Probabilistic.Factors
                 result = new Gaussian(MMath.Digamma(exp.Shape - 1) - Math.Log(exp.Rate), MMath.Trigamma(exp.Shape - 1));
             Gaussian dMarginal = d * result;
             dMarginal.GetMeanAndVariance(out mD, out vD);
-            if(vD == 0)
+            if (vD == 0)
                 return ExpOp_Slow.DAverageConditional(exp, d);
-            Quadrature.GaussianNodesAndWeights(mD, vD, nodes, weights);
+            // Do not add mD to the quadrature nodes because it will lose precision in the nodes when mD has large magnitude.
+            Quadrature.GaussianNodesAndWeights(0, vD, nodes, weights);
             if (!result.IsUniform())
             {
                 // modify the weights to include q(y_k)/N(y_k;m,v)
                 for (int i = 0; i < weights.Length; i++)
                 {
-                    weights[i] *= Math.Exp(d.GetLogProb(nodes[i]) - Gaussian.GetLogProb(nodes[i], mD, vD));
-                }                
+                    weights[i] *= Math.Exp(d.GetLogProb(nodes[i] + mD) - Gaussian.GetLogProb(nodes[i], 0, vD));
+                }
             }
             double Z = 0;
             double sumy = 0;
             double sumy2 = 0;
             double maxLogF = Double.NegativeInfinity;
+            double shapeMinus1 = exp.Shape - 1;
             for (int i = 0; i < weights.Length; i++)
             {
-                double y = nodes[i];
-                double logf = Math.Log(weights[i]) + (exp.Shape - 1) * y - exp.Rate * Math.Exp(y);
+                double y = nodes[i] + mD;
+                double logf = shapeMinus1 * y - exp.Rate * Math.Exp(y) + Math.Log(weights[i]);
                 if (logf > maxLogF)
+                {
                     maxLogF = logf;
+                }
                 weights[i] = logf;
             }
             for (int i = 0; i < weights.Length; i++)
@@ -341,12 +430,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             if (Z == 0)
                 return Gaussian.Uniform();
-            double s = 1.0 / Z;
-            double mean = sumy * s;
-            double var = sumy2 * s - mean * mean;
-            // TODO: explain this
+            double meanMinusMode = sumy / Z;
+            double mean = meanMinusMode + mD;
+            // E[(y-mode)^2] = E[(y-mean)^2] + (mean - mode)^2
+            double var = sumy2 / Z - meanMinusMode * meanMinusMode;
             if (var <= 0.0)
             {
+                // Quadrature returns zero variance when the quadrature points are too far apart.
+                // In this case, we estimate the variance based on the distance between quadrature points.
                 double quadratureGap = 0.1;
                 var = 2 * vD * quadratureGap * quadratureGap;
             }
@@ -384,11 +475,20 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageLogarithm(Gaussian)"]/*'/>
         public static Gamma ExpAverageLogarithm([Proper] Gaussian d)
         {
+            if (d.IsPointMass) return Gamma.PointMass(Math.Exp(d.Point));
             double mD, vD;
             d.GetMeanAndVariance(out mD, out vD);
-            double lm = mD + vD / 2;
+            return ExpDistribution(mD, vD);
+        }
+
+        private static Gamma ExpDistribution(double mD, double vD)
+        { 
+            // E[exp(d)] = exp(mD + vD/2)
+            double logMeanMinusMeanLog = vD / 2;
+            double logMean = mD + logMeanMinusMeanLog;
+            double mean = Math.Exp(logMean);
             //return Gamma.FromMeanAndVariance(Math.Exp(lm), Math.Exp(2*lm)*(Math.Exp(vD)-1));
-            return Gamma.FromLogMeanAndMeanLog(lm, mD);
+            return Gamma.FromLogMeanMinusMeanLog(mean, logMeanMinusMeanLog);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageLogarithm(NonconjugateGaussian)"]/*'/>
@@ -397,9 +497,21 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             double mD, vD;
             d.GetMeanAndVariance(out mD, out vD);
-            double lm = mD + vD / 2;
+            return ExpDistribution(mD, vD);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageLogarithm(Gaussian, GammaPower)"]/*'/>
+        public static GammaPower ExpAverageLogarithm([Proper] Gaussian d, GammaPower result)
+        {
+            if (d.IsPointMass) return GammaPower.PointMass(Math.Exp(d.Point), result.Power);
+            double mD, vD;
+            d.GetMeanAndVariance(out mD, out vD);
+            // E[exp(d)] = exp(mD + vD/2)
+            double logMeanMinusMeanLog = vD / 2;
+            double logMean = mD + logMeanMinusMeanLog;
+            double mean = Math.Exp(logMean);
             //return Gamma.FromMeanAndVariance(Math.Exp(lm), Math.Exp(2*lm)*(Math.Exp(vD)-1));
-            return Gamma.FromLogMeanAndMeanLog(lm, mD);
+            return GammaPower.FromLogMeanMinusMeanLog(mean, logMeanMinusMeanLog, result.Power);
         }
 
         // Finds the maximum of -C exp(v/2) + .5 log(v)
@@ -517,7 +629,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             Gaussian result = new Gaussian();
             result.Precision = exp.Rate * Math.Exp(m + v / 2);
             result.MeanTimesPrecision = (m - 1) * result.Precision + (exp.Shape - 1);
-            if(UseRandomDamping) {
+            if (UseRandomDamping)
+            {
                 double step = Rand.Double() * 0.5; // random damping helps convergence, especially with parallel updates
                 result.Precision = step * result.Precision + (1 - step) * to_d.Precision;
                 result.MeanTimesPrecision = step * result.MeanTimesPrecision + (1 - step) * to_d.MeanTimesPrecision;
@@ -532,15 +645,6 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             return DAverageConditional(exp);
         }
-
-        private const string NotSupportedMessage = "VMP cannot support deterministic factors (e.g. Exp) with fixed output";
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp"]/message_doc[@name="ExpAverageLogarithm(double)"]/*'/>
-        [NotSupported(NotSupportedMessage)]
-        public static Gamma ExpAverageLogarithm(double d)
-        {
-            throw new NotSupportedException(NotSupportedMessage);
-        }
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Slow"]/doc/*'/>
@@ -550,13 +654,27 @@ namespace Microsoft.ML.Probabilistic.Factors
     {
         public static int QuadratureNodeCount = 1000;
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Slow"]/message_doc[@name="DAverageConditional(GammaPower, Gaussian)"]/*'/>
         public static Gaussian DAverageConditional([SkipIfUniform] GammaPower exp, [Proper] Gaussian d)
         {
+            // as a function of d, the factor is Ga(exp(d); shape, rate, power) = exp(d*(shape/power -1) -rate*exp(d/power))
+            // = Ga(exp(d/power); shape - power + 1, rate)
             double scale = 1 / exp.Power;
             Gaussian forward = GaussianProductOp.ProductAverageConditional(scale, d);
             Gaussian message = DAverageConditional(Gamma.FromNatural(exp.Shape - exp.Power, exp.Rate), forward);
             Gaussian backward = GaussianProductOp.BAverageConditional(message, scale);
             return backward;
+        }
+
+        public static Gaussian DAverageConditional([SkipIfUniform] Gamma exp, double d)
+        {
+            double expx = Math.Exp(d);
+            double ddlogf = -exp.Rate * expx;
+            double dlogf = exp.Shape - 1 + ddlogf;
+            // lim_{d -> -inf} d*exp(d) = 0
+            if (d < double.MinValue) return Gaussian.FromNatural(dlogf, 0);
+            // Gaussian.FromNatural(dlogf - ddlogf * d, -ddlogf)
+            return Gaussian.FromDerivatives(d, dlogf, ddlogf, true);
         }
 
         public static Gaussian DAverageConditional([SkipIfUniform] Gamma exp, [Proper] Gaussian d)
@@ -585,34 +703,27 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double lnRate = Math.Log(exp.Rate);
                 return new Gaussian(MMath.Digamma(exp.Shape - 1) - lnRate, MMath.Trigamma(exp.Shape - 1));
             }
-            double aMinus1 = exp.Shape - 1;
-            double b = exp.Rate;
             if (d.IsPointMass)
             {
-                double x = d.Point;
-                double expx = Math.Exp(x);
-                double dlogf = aMinus1 - b * expx;
-                double ddlogf = -b * expx;
-                return Gaussian.FromDerivatives(x, dlogf, ddlogf, true);
+                return DAverageConditional(exp, d.Point);
             }
-            double dmode, dmin, dmax;
-            GetIntegrationBounds(exp, d, out dmode, out dmin, out dmax);
+            double dmode, dminMinusMode, dmaxMinusMode;
+            GetIntegrationBounds(exp, d, out dmode, out dminMinusMode, out dmaxMinusMode);
+            if (dminMinusMode == dmaxMinusMode) return DAverageConditional(exp, d.Point);
             double expmode = Math.Exp(dmode);
             int n = QuadratureNodeCount;
-            double inc = (dmax - dmin) / (n - 1);
+            double inc = (dmaxMinusMode - dminMinusMode) / (n - 1);
             MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
             for (int i = 0; i < n; i++)
             {
-                double x = dmin + i * inc;
-                double xMinusMode = x - dmode;
-                double diff = aMinus1 * xMinusMode - b * (Math.Exp(x) - expmode)
-                    - 0.5 * ((x * x - dmode * dmode) * d.Precision - 2 * xMinusMode * d.MeanTimesPrecision);
+                double xMinusMode = dminMinusMode + i * inc;
+                double diff = LogFactorMinusMode(xMinusMode, exp, d, dmode, expmode);
                 double p = Math.Exp(diff);
-                mva.Add(x, p);
+                mva.Add(xMinusMode, p);
                 if (double.IsNaN(mva.Variance))
                     throw new Exception();
             }
-            double dMean = mva.Mean;
+            double dMean = mva.Mean + dmode;
             double dVariance = mva.Variance;
             Gaussian result = Gaussian.FromMeanAndVariance(dMean, dVariance);
             result.SetToRatio(result, d, true);
@@ -655,31 +766,34 @@ namespace Microsoft.ML.Probabilistic.Factors
             return x;
         }
 
-        public static void GetIntegrationBounds(Gamma exp, Gaussian d, out double dmode, out double dmin, out double dmax)
+        private static double LogFactorMinusMode(double xMinusMode, Gamma exp, Gaussian d, double mode, double expMode)
         {
-            dmode = FindMaximum(exp, d);
-            double aMinus1 = exp.Shape - 1;
-            double b = exp.Rate;
-            double mode = dmode;
-            double expMode = Math.Exp(dmode);
-            double mode2 = dmode * dmode;
-            Func<double, double> func = delegate(double x)
+            if (double.IsInfinity(xMinusMode))
+                return double.NegativeInfinity;
+            // Also see Gamma.GetLogProb
+            double f = xMinusMode * (exp.Shape - 1 + (d.MeanTimesPrecision - mode * d.Precision) - 0.5 * xMinusMode * d.Precision) - exp.Rate * expMode * MMath.ExpMinus1(xMinusMode);
+            if (double.IsNaN(f)) throw new Exception("f is NaN");
+            return f;
+        }
+
+        public static void GetIntegrationBounds(Gamma exp, Gaussian d, out double dmode, out double dminMinusMode, out double dmaxMinusMode)
+        {
+            double mode = FindMaximum(exp, d);
+            double expMode = Math.Exp(mode);
+            // We want to find where LogFactorMinusMode == logUlp1, so we find zeroes of the difference.
+            double logUlp1 = Math.Log(MMath.Ulp1);
+            Func<double, double> func = delegate (double xMinusMode)
             {
-                if (double.IsInfinity(x))
-                    return double.NegativeInfinity;
-                double xMinusMode = x - mode;
-                double f = aMinus1 * xMinusMode - b * (Math.Exp(x) - expMode) + xMinusMode * d.MeanTimesPrecision + 50;
-                // avoid infinity*0
-                if(d.Precision != 0) f -= 0.5 * (x * x - mode2) * d.Precision;
-                return f;
+                return LogFactorMinusMode(xMinusMode, exp, d, mode, expMode) - logUlp1;
             };
-            Func<double, double> deriv = delegate(double x)
+            Func<double, double> deriv = delegate (double xMinusMode)
             {
-                return aMinus1 - b * Math.Exp(x) - x * d.Precision + d.MeanTimesPrecision;
+                return -exp.Rate * expMode * Math.Exp(xMinusMode) - xMinusMode * d.Precision + (d.MeanTimesPrecision - mode * d.Precision) + (exp.Shape - 1);
             };
-            List<double> zeroes = GaussianOp_Slow.FindZeroes(func, deriv, new double[] { dmode }, new double[0]);
-            dmin = MMath.Min(zeroes);
-            dmax = MMath.Max(zeroes);
+            List<double> zeroes = GaussianOp_Slow.FindZeroes(func, deriv, new double[] { 0 }, new double[0]);
+            dminMinusMode = MMath.Min(zeroes);
+            dmaxMinusMode = MMath.Max(zeroes);
+            dmode = mode;
         }
     }
 
@@ -786,7 +900,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 double oldx = x;
                 x = X2(exp, d, x);
-                if(MMath.AbsDiff(x, oldx, 1e-10) < 1e-10) break;
+                if (MMath.AbsDiff(x, oldx, 1e-10) < 1e-10) break;
             }
             return x;
         }
@@ -843,9 +957,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             //double bpost = b + d.Precision/expx;
             //double mpost = expx - d.Precision*(MMath.Digamma(apost) - Math.Log(apost))/bpost;
             double v = 1 / (d.Precision + b * expx);
-            double mlogpost = x - 0.5 * v * v * b * expx;
-            double mpost = expx * (1 + 0.5 * v * v * d.Precision);
-            Gamma result = Gamma.FromMeanAndMeanLog(mpost, mlogpost);
+            double meanLogMinusX = -0.5 * v * v * b * expx;
+            double meanLog = x + meanLogMinusX;
+            double logMeanMinusX = Math.Log(1 + 0.5 * v * v * d.Precision);
+            double logMeanMinusMeanLog = logMeanMinusX - meanLogMinusX;
+            double logMean = x + logMeanMinusX;
+            double mean = Math.Exp(logMean);
+            Gamma result = Gamma.FromLogMeanMinusMeanLog(mean, logMeanMinusMeanLog);
             result.SetToRatio(result, exp, true);
             return result;
         }
@@ -892,7 +1010,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             s.MaximumIterations = 100;
             s.Epsilon = 1e-5;
             s.convergenceCriteria = BFGS.ConvergenceCriteria.Objective;
-            z = s.Run(z, 1.0, delegate(Vector y, ref Vector grad)
+            z = s.Run(z, 1.0, delegate (Vector y, ref Vector grad)
                 {
                     evalCounter++;
                     return GradientAndValueAtPoint(mu, s2, y, exp.Shape, exp.Rate, grad);

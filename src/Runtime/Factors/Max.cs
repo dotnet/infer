@@ -38,13 +38,21 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogAverageFactor(max, a, b);
         }
 
-        // logz is the log-expectation of the factor value.
-        // logw1 is the log-probability that max==a
-        // exp(logw1) = N(mx;m1,vx+v1) phi((mx1 - m2)/sqrt(vx1+v2))
-        // alpha1 is the correction to the mean of a due to b given that max==a
-        // alpha1 = N(mx1;m2,vx1+v2)/phi
-        // vx1 is the variance of a given that max==a (ignoring b)
-        // mx1 is the mean of a given that max==a (ignoring b)
+        /// <summary>
+        /// Computes statistics.
+        /// </summary>
+        /// <param name="max"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="logz">log-expectation of the factor value.</param>
+        /// <param name="logw1">log-probability that max==a.  exp(logw1) = N(mx;m1,vx+v1) phi((mx1 - m2)/sqrt(vx1+v2))</param>
+        /// <param name="alpha1">correction to the mean of a due to b given that max==a.  alpha1 = N(mx1;m2,vx1+v2)/phi</param>
+        /// <param name="vx1">variance of a given that max==a (ignoring b)</param>
+        /// <param name="mx1">mean of a given that max==a (ignoring b)</param>
+        /// <param name="logw2">log-probability that max==b</param>
+        /// <param name="alpha2">correction to the mean of b due to a given that max==b</param>
+        /// <param name="vx2">variance of b given that max==b (ignoring a)</param>
+        /// <param name="mx2">mean of b given that max==b (ignoring a)</param>
         internal static void ComputeStats(Gaussian max, Gaussian a, Gaussian b, out double logz,
                                           out double logw1, out double alpha1, out double vx1, out double mx1,
                                           out double logw2, out double alpha2, out double vx2, out double mx2)
