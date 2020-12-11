@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Microsoft.ML.Probabilistic.Learners.Tests;
 using Microsoft.ML.Probabilistic.Distributions;
+using System.Collections.Immutable;
 
 namespace Loki.Generated
 {
@@ -15,55 +16,94 @@ namespace Loki.Generated
     {
         static async Task Main(string[] args)
         {
-            //DoublePrecisionFuel.SetFuel(0);
-            //GaussianIsBetweenCRCC_IsMonotonicInXMean_IsolatedCase();
-            //GaussianIsBetweenCRCC_IsMonotonicInXPrecision_IsolatedCase();
+            var testInfo = TestInfo.FromDelegate(new OperatorTests().GaussianIsBetweenCRRR_NegativeUpperBoundTest);
+            var traceRunManager = new StaticMixedPrecisionTuningTestExecutionManager(null)
+            {
+                MissingDescriptionBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended
+            };
+            var traceResult = await TestRunner.RunTestIsolatedAsync(testInfo, traceRunManager) as SingleStaticMixedPrecisionTuningRunResult;
+            if (!traceResult.TestPassed)
+                throw new Exception("Test didn't pass in extended precision");
 
-            var result = await TestRunner.RunTestAsync(new OperatorTests().GaussianIsPositiveTest, 0/*, null, new CancellationTokenSource(TimeSpan.FromMinutes(10)).Token*/);
-            Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
+            Console.WriteLine("Participating operations:");
+            Console.WriteLine("ID\t| Arity");
+            Console.WriteLine("--------|--------");
+            foreach (var kvp in traceResult.EncounteredNotDescribedOperations)
+                Console.WriteLine($"{kvp.Key}\t| {kvp.Value}");
+            Console.WriteLine();
 
-            //var logFilePath = Path.Combine(Environment.CurrentDirectory, "log.csv");
-            //var categoriesToSkip = new[] { "CompilerOptionsTest", "Performance", /*"OpenBug",*/ "BadTest" };
-            //var tests = TestInfo.FromAssembly(typeof(Program).Assembly)
-            //    .Where(ti => !ti.Traits.Any(trait => trait.Key == "Category" && categoriesToSkip.Contains(trait.Value)))
-            //    //.Skip(100)
-            //    //.Take(100)
-            //    ;
+            Console.WriteLine("Reducing operation precisions...");
+            int runCount = 0;
+            var operationDescriptions = traceResult.EncounteredNotDescribedOperations.ToImmutableDictionary(
+                kvp => kvp.Key,
+                kvp => new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = true });
+            foreach (var kvp in traceResult.EncounteredNotDescribedOperations)
+            {
+                ++runCount;
+                var testedOperationDescriptions = operationDescriptions.SetItem(
+                    kvp.Key,
+                    new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = false });
+                var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions);
+                var runResult = await TestRunner.RunTestIsolatedAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
+                Console.WriteLine($"Run {runCount} - attempted performing operation {kvp.Key} in double: {runResult.Outcome}");
+                if (runResult.TestPassed)
+                    operationDescriptions = testedOperationDescriptions;
+                if (!runResult.EncounteredNotDescribedOperations.IsEmpty)
+                    throw new Exception($"Encountered an unexpected operation! ({runResult.EncounteredNotDescribedOperations.First().Key})");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Resulting operation precisions");
+            Console.WriteLine("ID\t| Precision");
+            Console.WriteLine("--------|---------------");
+            foreach (var kvp in operationDescriptions)
+                Console.WriteLine($"{kvp.Key}\t| {(kvp.Value.UseExtendedPrecisionOperation ? "Extended" : "Double")}");
+            Console.WriteLine();
 
-            //////var tests = new TestInfo[] { TestInfo.FromDelegate(new BayesPointMachineTests().BayesPointEvidence2) }
-            //////    .Where(ti => !ti.Traits.Any(trait => trait.Key == "Category" && trait.Value == "CompilerOptionsTest"))
-            //////    //.Skip(100)
-            //////    //.Take(100)
-            //////    ;
+            Console.WriteLine("Reducing operand precisions...");
+            runCount = 0;
+            foreach (var kvp in operationDescriptions)
+            {
+                if (kvp.Value.UseExtendedPrecisionOperation)
+                {
+                    for (int i = 0; i < traceResult.EncounteredNotDescribedOperations[kvp.Key]; ++i)
+                    {
+                        ++runCount;
+                        var roundOperands = operationDescriptions[kvp.Key].RoundOperands;
+                        roundOperands[i] = true;
+                        var testedOperationDescriptions = operationDescriptions.SetItem(
+                            kvp.Key,
+                            new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = true, RoundOperands = roundOperands });
 
-            //var testRun = TestSuiteRunner.RunTestSuite(
-            //    tests,
-            //    new[] { ulong.MaxValue, 0ul },
-            //    logFilePath,
-            //    false,
-            //    TimeSpan.FromMinutes(10),
-            //    16,
-            //    true,
-            //    new Progress<TestSuiteRunStatus>(s => Console.Title = $"Completed {s.CompletedTests} tests. OpCounts: {string.Join(" | ", s.CurrentTestStatuses.Select(cts => cts.CurrentRunStatus.OperationCount.ToString()))}"));
-
-            //var testResultEnumerator = testRun.GetAsyncEnumerator();
-            //try
-            //{
-            //    while (await testResultEnumerator.MoveNextAsync())
-            //    {
-            //        var result = testResultEnumerator.Current;
-            //        Console.WriteLine($"{result.ContainingTypeFullName}.{result.TestName}, {result.StartingFuel} fuel units: {result.Outcome}\n{result.Message}");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("A FATAL ERROR OCCURED:");
-            //    Console.WriteLine(ex);
-            //}
-            //finally
-            //{
-            //    await testResultEnumerator.DisposeAsync();
-            //}
+                        var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions);
+                        var runResult = await TestRunner.RunTestIsolatedAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
+                        Console.WriteLine($"Run {runCount} - attempted rounding operand {i + 1} of the operation {kvp.Key}: {runResult.Outcome}");
+                        if (runResult.TestPassed)
+                            operationDescriptions = testedOperationDescriptions;
+                        if (!runResult.EncounteredNotDescribedOperations.IsEmpty)
+                            throw new Exception($"Encountered an unexpected operation! ({runResult.EncounteredNotDescribedOperations.First().Key})");
+                    }
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("Resulting operation precisions");
+            Console.WriteLine("ID\t| Precision\t| Operand Precisions");
+            Console.WriteLine("--------|---------------|--------------------------");
+            foreach (var kvp in operationDescriptions)
+            {
+                Console.Write($"{kvp.Key}\t| ");
+                if (kvp.Value.UseExtendedPrecisionOperation)
+                {
+                    Console.Write("Extended");
+                    for (int i = 0; i < traceResult.EncounteredNotDescribedOperations[kvp.Key]; ++i)
+                        Console.Write($"\t| {(kvp.Value.RoundOperands[i] ? "Rounded" : "Preserved")}");
+                }
+                else
+                {
+                    Console.Write("Double");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
 
         [Xunit.Fact]
@@ -73,8 +113,8 @@ namespace Loki.Generated
             DoubleWithTransformingPrecision lowerBound = -1000;
             DoubleWithTransformingPrecision center = (lowerBound + upperBound) / 2;
             DoubleWithTransformingPrecision meanDelta = 1;
-            Bernoulli isBetween = new Bernoulli(new global::Loki.Shared.DoubleWithTransformingPrecision("1.0"));
-            Gaussian x = Gaussian.FromMeanAndPrecision(new DoubleWithTransformingPrecision("-0.238256490488795107321616978173267452037E-323228474"), new DoubleWithTransformingPrecision("0.1000000000000000000000000000000000000017E-21"));
+            Bernoulli isBetween = new Bernoulli(DoubleWithTransformingPrecision.FromString("1.0"));
+            Gaussian x = Gaussian.FromMeanAndPrecision(DoubleWithTransformingPrecision.FromString("-0.238256490488795107321616978173267452037E-323228474"), DoubleWithTransformingPrecision.FromString("0.1000000000000000000000000000000000000017E-21"));
             DoubleWithTransformingPrecision mx = x.GetMean();
             Gaussian toX = global::Microsoft.ML.Probabilistic.Factors.DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
             Gaussian xPost;
@@ -90,7 +130,7 @@ namespace Loki.Generated
             DoubleWithTransformingPrecision mean = xPost.GetMean();
 
             DoubleWithTransformingPrecision mx2 = mx + meanDelta;
-            if (MapDispatcher.System_Double_IsPositiveInfinity_System_Double(meanDelta)) mx2 = meanDelta;
+            if (MapDispatcher.System_Double_IsPositiveInfinity_System_Double(TestExecutionManager.MissingOperationId, meanDelta)) mx2 = meanDelta;
             Gaussian x2 = Gaussian.FromMeanAndPrecision(mx2, x.Precision);
             Gaussian toX2 = global::Microsoft.ML.Probabilistic.Factors.DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
             Gaussian xPost2;
@@ -107,25 +147,25 @@ namespace Loki.Generated
             // Increasing the prior mean should increase the posterior mean.
             if (mean2 < mean)
             {
-                meanError = MapDispatcher.Microsoft_ML_Probabilistic_Math_MMath_Ulp_System_Double(mean);
-                meanError2 = MapDispatcher.Microsoft_ML_Probabilistic_Math_MMath_Ulp_System_Double(mean2);
-                DoubleWithTransformingPrecision meanUlpDiff = (mean - mean2) / MapDispatcher.System_Math_Max_System_Double_System_Double(meanError, meanError2);
-                Xunit.Assert.True(meanUlpDiff < new DoubleWithTransformingPrecision("1e16"));
+                meanError = MapDispatcher.Microsoft_ML_Probabilistic_Math_MMath_Ulp_System_Double(TestExecutionManager.MissingOperationId, mean);
+                meanError2 = MapDispatcher.Microsoft_ML_Probabilistic_Math_MMath_Ulp_System_Double(TestExecutionManager.MissingOperationId, mean2);
+                DoubleWithTransformingPrecision meanUlpDiff = (mean - mean2) / MapDispatcher.System_Math_Max_System_Double_System_Double(TestExecutionManager.MissingOperationId, meanError, meanError2);
+                Xunit.Assert.True(meanUlpDiff < DoubleWithTransformingPrecision.FromString("1e16"));
             }
             // When mx > center, increasing prior mean should increase posterior precision.
             if (mx > center && xPost2.Precision < xPost.Precision)
             {
                 DoubleWithTransformingPrecision ulpDiff = OperatorTests.UlpDiff(xPost2.Precision, xPost.Precision);
-                Xunit.Assert.True(ulpDiff < new DoubleWithTransformingPrecision("1e11"));
+                Xunit.Assert.True(ulpDiff < DoubleWithTransformingPrecision.FromString("1e11"));
             }
         }
 
         static void GaussianIsBetweenCRCC_IsMonotonicInXPrecision_IsolatedCase()
         {
-            Bernoulli isBetween = new Bernoulli(new DoubleWithTransformingPrecision("1.0"));
-            DoubleWithTransformingPrecision lowerBound = new DoubleWithTransformingPrecision("-10000");
-            DoubleWithTransformingPrecision upperBound = new DoubleWithTransformingPrecision("-0.999999999999999819999999999999999999997E+4");
-            Gaussian x = Gaussian.FromMeanAndPrecision(new DoubleWithTransformingPrecision("-0.999999999999999999999999999999999999987E+17"), new DoubleWithTransformingPrecision("0.1000000000000000000000000000000000000012E-16"));
+            Bernoulli isBetween = new Bernoulli(DoubleWithTransformingPrecision.FromString("1.0"));
+            DoubleWithTransformingPrecision lowerBound = DoubleWithTransformingPrecision.FromString("-10000");
+            DoubleWithTransformingPrecision upperBound = DoubleWithTransformingPrecision.FromString("-0.999999999999999819999999999999999999997E+4");
+            Gaussian x = Gaussian.FromMeanAndPrecision(DoubleWithTransformingPrecision.FromString("-0.999999999999999999999999999999999999987E+17"), DoubleWithTransformingPrecision.FromString("0.1000000000000000000000000000000000000012E-16"));
             DoubleWithTransformingPrecision mx = x.GetMean();
             Gaussian toX = global::Microsoft.ML.Probabilistic.Factors.DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
             Gaussian xPost;
@@ -141,7 +181,7 @@ namespace Loki.Generated
                 meanError = OperatorTests.GetProductMeanError(toX, x);
             }
             DoubleWithTransformingPrecision mean = xPost.GetMean();
-            DoubleWithTransformingPrecision precisionDelta = new DoubleWithTransformingPrecision("0.1000000000000000000000000000000000000008E-12");
+            DoubleWithTransformingPrecision precisionDelta = DoubleWithTransformingPrecision.FromString("0.1000000000000000000000000000000000000008E-12");
             Gaussian x2 = Gaussian.FromMeanAndPrecision(mx, x.Precision + precisionDelta);
             Gaussian toX2 = Microsoft.ML.Probabilistic.Factors.DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
             Gaussian xPost2;
@@ -163,22 +203,22 @@ namespace Loki.Generated
                 // Since mx < mean, increasing the prior precision should decrease the posterior mean.
                 if (mean2 > mean)
                 {
-                    meanUlpDiff = (mean2 - mean) / MapDispatcher.System_Math_Max_System_Double_System_Double(meanError, meanError2);
+                    meanUlpDiff = (mean2 - mean) / MapDispatcher.System_Math_Max_System_Double_System_Double(TestExecutionManager.MissingOperationId, meanError, meanError2);
                 }
             }
             else
             {
                 if (mean2 < mean)
                 {
-                    meanUlpDiff = (mean - mean2) / MapDispatcher.System_Math_Max_System_Double_System_Double(meanError, meanError2);
+                    meanUlpDiff = (mean - mean2) / MapDispatcher.System_Math_Max_System_Double_System_Double(TestExecutionManager.MissingOperationId, meanError, meanError2);
                 }
             }
-            Xunit.Assert.True(meanUlpDiff < new DoubleWithTransformingPrecision("1e16"));
+            Xunit.Assert.True(meanUlpDiff < DoubleWithTransformingPrecision.FromString("1e16"));
             // Increasing prior precision should increase posterior precision.
             if (xPost2.Precision < xPost.Precision)
             {
                 DoubleWithTransformingPrecision ulpDiff = OperatorTests.UlpDiff(xPost2.Precision, xPost.Precision);
-                Xunit.Assert.True(ulpDiff < new DoubleWithTransformingPrecision("1e16"));
+                Xunit.Assert.True(ulpDiff < DoubleWithTransformingPrecision.FromString("1e16"));
             }
         }
     }

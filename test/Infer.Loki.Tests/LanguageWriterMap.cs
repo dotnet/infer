@@ -16,7 +16,7 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            mappers.PermanentMethodMapper.CreateMap(
+            mappers.DirectMethodMapper.CreateMap(
                 typeof(Microsoft.ML.Probabilistic.Compiler.Quoter).Assembly
                     .GetType("Microsoft.ML.Probabilistic.Compiler.CSharpWriter")
                     .GetMethod(
@@ -25,8 +25,8 @@ namespace Infer.Loki.Tests
                         null,
                         Type.EmptyTypes,
                         null),
-                new Func<long>(LanguageWriterMethods.GetNegativeZeroBits).Method);
-            mappers.PermanentMethodMapper.CreateMap(
+                new Func<ulong, long>(LanguageWriterMethods.GetNegativeZeroBits).Method);
+            mappers.DirectMethodMapper.CreateMap(
                 typeof(Microsoft.ML.Probabilistic.Compiler.Quoter).Assembly
                     .GetType("Microsoft.ML.Probabilistic.Compiler.CSharpWriter")
                     .GetMethod(
@@ -35,8 +35,8 @@ namespace Infer.Loki.Tests
                         null,
                         new Type[] { typeof(double) },
                         null),
-                new Func<object, DoubleWithTransformingPrecision, bool>(LanguageWriterMethods.IsNegativeZero).Method);
-            mappers.PermanentMethodMapper.CreateMap(
+                new Func<ulong, object, DoubleWithTransformingPrecision, bool>(LanguageWriterMethods.IsNegativeZero).Method);
+            mappers.DirectMethodMapper.CreateMap(
                 typeof(Microsoft.ML.Probabilistic.Compiler.Quoter).Assembly
                     .GetType("Microsoft.ML.Probabilistic.Compiler.LanguageWriter")
                     .GetMethod(
@@ -45,8 +45,8 @@ namespace Infer.Loki.Tests
                         null,
                         new Type[] { typeof(StringBuilder), typeof(ILiteralExpression) },
                         null),
-                new Action<object, StringBuilder, ILiteralExpression>(LanguageWriterMethods.AppendLiteralExpression).Method);
-            mappers.PermanentMethodMapper.CreateMap(
+                new Action<ulong, object, StringBuilder, ILiteralExpression>(LanguageWriterMethods.AppendLiteralExpression).Method);
+            mappers.DirectMethodMapper.CreateMap(
                 typeof(Microsoft.ML.Probabilistic.Compiler.Quoter).Assembly
                     .GetType("Microsoft.ML.Probabilistic.Compiler.CSharpWriter")
                     .GetMethod(
@@ -55,7 +55,7 @@ namespace Infer.Loki.Tests
                         null,
                         new Type[] { typeof(StringBuilder), typeof(ILiteralExpression) },
                         null),
-                new Action<object, StringBuilder, ILiteralExpression>(LanguageWriterMethods.AppendLiteralExpression).Method);
+                new Action<ulong, object, StringBuilder, ILiteralExpression>(LanguageWriterMethods.AppendLiteralExpression).Method);
         }
     }
 }

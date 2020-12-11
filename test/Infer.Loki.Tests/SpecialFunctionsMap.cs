@@ -17,33 +17,33 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Gamma, Gamma);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.GammaLn, GammaLn);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Digamma, Digamma);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Trigamma, Trigamma);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Tetragamma, Tetragamma);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ReciprocalFactorialMinus1, ReciprocalFactorialMinus1);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double, double>, Func<BigFloat, BigFloat, BigFloat>>(MMath.GammaUpperLogScale, GammaUpperLogScale);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Gamma, Gamma);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.GammaLn, GammaLn);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Digamma, Digamma);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Trigamma, Trigamma);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Tetragamma, Tetragamma);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ReciprocalFactorialMinus1, ReciprocalFactorialMinus1);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double, double>, Func<BigFloat, BigFloat, BigFloat>>(MMath.GammaUpperLogScale, GammaUpperLogScale);
 
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1Plus, Log1Plus);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1PlusExp, Log1PlusExp);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1MinusExp, Log1MinusExp);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.LogExpMinus1, LogExpMinus1);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1, ExpMinus1);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1RatioMinus1RatioMinusHalf, ExpMinus1RatioMinus1RatioMinusHalf);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1Plus, Log1Plus);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1PlusExp, Log1PlusExp);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Log1MinusExp, Log1MinusExp);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.LogExpMinus1, LogExpMinus1);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1, ExpMinus1);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.ExpMinus1RatioMinus1RatioMinusHalf, ExpMinus1RatioMinus1RatioMinusHalf);
 
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Erfc, Erfc);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdf, NormalCdf);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfLn, NormalCdfLn);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfRatio, NormalCdfRatio);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Erfc, Erfc);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdf, NormalCdf);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfLn, NormalCdfLn);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NormalCdfRatio, NormalCdfRatio);
 
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDouble, NextBigFloat);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDouble, PreviousBigFloat);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDoubleWithPositiveDifference, NextBigFloatWithPositiveDifference);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDoubleWithPositiveDifference, PreviousBigFloatWithPositiveDifference);
-            mappers.FuelBasedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Ulp, Ulp);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDouble, NextBigFloat);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDouble, PreviousBigFloat);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.NextDoubleWithPositiveDifference, NextBigFloatWithPositiveDifference);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.PreviousDoubleWithPositiveDifference, PreviousBigFloatWithPositiveDifference);
+            mappers.ManagedMethodMapper.CreateMap<Func<double, double>, Func<BigFloat, BigFloat>>(MMath.Ulp, Ulp);
 
-            mappers.FuelBasedMethodMapper.CreateMap
+            mappers.ManagedMethodMapper.CreateMap
             (
                 typeof(MMath).GetMethod(
                     "GammaSeries",
@@ -54,7 +54,7 @@ namespace Infer.Loki.Tests
                 new Func<BigFloat, BigFloat>(GammaSeries).Method
             );
 
-            mappers.FuelBasedMethodMapper.CreateMap
+            mappers.ManagedMethodMapper.CreateMap
             (
                 typeof(MMath).GetMethod(
                     "GammaLnSeries",
@@ -65,7 +65,7 @@ namespace Infer.Loki.Tests
                 new Func<BigFloat, BigFloat>(GammaLnSeries).Method
             );
 
-            mappers.FuelBasedMethodMapper.CreateMap
+            mappers.ManagedMethodMapper.CreateMap
             (
                 typeof(MMath).GetMethod(
                     "XMinusLog1Plus",
@@ -76,49 +76,49 @@ namespace Infer.Loki.Tests
                 new Func<BigFloat, BigFloat>(XMinusLog1Plus).Method
             );
 
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.Sqrt2)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(Sqrt2)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.Sqrt2PI)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(Sqrt2PI)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.InvSqrt2PI)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(InvSqrt2PI)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.LnSqrt2PI)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LnSqrt2PI)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.Ln2)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(Ln2)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField(nameof(MMath.Ulp1)),
                 typeof(SpecialFunctionsMethods).GetField(nameof(Ulp1)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField("DefaultBetaEpsilon", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(DefaultBetaEpsilon)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField("LogisticGaussianVarianceThreshold", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianVarianceThreshold)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(Quadrature).GetField("AdaptiveQuadratureMaxNodes", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(AdaptiveQuadratureMaxNodes)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField("NormalCdfMomentRatioMaxTerms", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(NormalCdfMomentRatioMaxTerms)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField("log0", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(Log0)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField("logHalfUlpPrev1", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LogHalfUlpPrev1)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField("logisticGaussianQuadratureRelativeTolerance", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianQuadratureRelativeTolerance)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField("logisticGaussianDerivativeQuadratureRelativeTolerance", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianDerivativeQuadratureRelativeTolerance)));
-            mappers.FuelBasedMemberMapper.CreateMap(
+            mappers.ManagedMemberMapper.CreateMap(
                 typeof(MMath).GetField("logisticGaussianSeriesApproximmationThreshold", BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(SpecialFunctionsMethods).GetField(nameof(LogisticGaussianSeriesApproximmationThreshold)));
         }

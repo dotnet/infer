@@ -10,7 +10,7 @@ namespace Infer.Loki.Mappings
     {
         private static readonly CodeBuilder Builder = CodeBuilder.Instance;
 
-        public static IExpression Quote(object p)
+        public static IExpression Quote(ulong operationId, object p)
         {
             if (p is DoubleWithTransformingPrecision dwtp)
             {

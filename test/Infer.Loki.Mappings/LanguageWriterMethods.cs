@@ -15,12 +15,12 @@ namespace Infer.Loki.Mappings
 {
     public static class LanguageWriterMethods
     {
-        public static long GetNegativeZeroBits()
+        public static long GetNegativeZeroBits(ulong operationId)
         {
             return -9223372036854775808; // actual value. Doesn't really matter as we aren't supposed to call this method anyway.
         }
 
-        public static bool IsNegativeZero(object _, DoubleWithTransformingPrecision x)
+        public static bool IsNegativeZero(ulong operationId, object _, DoubleWithTransformingPrecision x)
         {
             return x.InternalValue.IsZero() && x.InternalValue.IsNegative();
         }
@@ -39,7 +39,7 @@ namespace Infer.Loki.Mappings
                         null);
 
 
-        public static void AppendLiteralExpression(object self, StringBuilder sb, ILiteralExpression ile)
+        public static void AppendLiteralExpression(ulong operationId, object self, StringBuilder sb, ILiteralExpression ile)
         {
             if (ile.Value == null)
             {

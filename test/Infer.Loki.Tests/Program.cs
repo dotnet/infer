@@ -22,7 +22,7 @@ namespace Infer.Loki.Tests
 
             var transformer = new TestTransformer(settings);
             await transformer.Build();
-            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new SpecialFunctionsTests().LogisticGaussianTest), 0);
+            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new SpecialFunctionsTests().LogisticGaussianTest), new FuelBasedTestExecutionManager(0));
             Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
 
             //var tests = transformer.EnumerateTransformedTests()
@@ -95,8 +95,9 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex(@"^TestApp"));
             settings.ExcludeProject(new Regex(@"^TestFSharp"));
             settings.ExcludeProject(new Regex(@"^TestPublic"));
+            settings.ExcludeProject(new Regex(@"^TestPython"));
             settings.ExcludeProject(new Regex(@"^Tools\.BuildFactorDoc"));
-            settings.ExcludeProject(new Regex(@"^Tools\.GenerateSeries"));
+            settings.ExcludeProject(new Regex(@"^Tools\.PythonScripts"));
             settings.ExcludeProject(new Regex(@"^Tools\.PrepareSource"));
             settings.ExcludeProject(new Regex("^Tutorials"));
             settings.ExcludeProject(new Regex(@"^Visualizers\.Windows"));

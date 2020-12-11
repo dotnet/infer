@@ -17,7 +17,7 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            mappers.FuelBasedMethodMapper.CreateMap
+            mappers.ManagedMethodMapper.CreateMap
             (
                 typeof(SpecialFunctionsTests).GetMethod(
                     "DoubleTryParseWithWorkarounds",
@@ -33,7 +33,7 @@ namespace Infer.Loki.Tests
                     null)
             );
 
-            mappers.PermanentMemberMapper.CreateMap(
+            mappers.DirectMemberMapper.CreateMap(
                 typeof(TestUtils).GetProperty(nameof(TestUtils.DataFolderPath)),
                 typeof(TestHelpersMethods).GetField(nameof(TestHelpersMethods.DataFolderPath)));
         }

@@ -12,13 +12,13 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            mappers.PermanentMethodMapper.CreateMap(
+            mappers.DirectMethodMapper.CreateMap(
                 typeof(Automaton<,,,,>).GetNestedType("Determinization", BindingFlags.NonPublic).GetNestedType("WeightedState").GetMethod("GetWeightHighBits", BindingFlags.NonPublic | BindingFlags.Static),
-                new Func<DoubleWithTransformingPrecision, int>(AutomatonMethods.GetWeightHighBits<int,int,int,int,int>).Method);
+                new Func<ulong, DoubleWithTransformingPrecision, int>(AutomatonMethods.GetWeightHighBits<int,int,int,int,int>).Method);
 
-            mappers.PermanentMethodMapper.CreateMap(
+            mappers.DirectMethodMapper.CreateMap(
                 typeof(Automaton<,,,,>).GetMethod("GetHashCodeFromLogNorm", BindingFlags.NonPublic | BindingFlags.Static),
-                new Func<DoubleWithTransformingPrecision, int>(AutomatonMethods.GetHashCodeFromLogNorm<int, int, int, int, int>).Method);
+                new Func<ulong, DoubleWithTransformingPrecision, int>(AutomatonMethods.GetHashCodeFromLogNorm<int, int, int, int, int>).Method);
         }
     }
 }

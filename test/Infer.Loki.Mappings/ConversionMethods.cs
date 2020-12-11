@@ -14,7 +14,7 @@ namespace Infer.Loki.Mappings
 {
     public static class ConversionMethods
     {
-        public static Converter GetPrimitiveConverter(Type fromType, Type toType)
+        public static Converter GetPrimitiveConverter(ulong operationId, Type fromType, Type toType)
         {
             if (toType == typeof(DoubleWithTransformingPrecision))
             {
@@ -27,7 +27,7 @@ namespace Infer.Loki.Mappings
                 return Conversion.GetPrimitiveConverter(fromType, toType);
         }
 
-        public static bool TryGetPrimitiveConversion(Type fromType, Type toType, out Conversion info)
+        public static bool TryGetPrimitiveConversion(ulong operationId, Type fromType, Type toType, out Conversion info)
         {
             var fromTypeIsDoubleWithTransformingPrecision = fromType == typeof(DoubleWithTransformingPrecision);
             var toTypeIsDoubleWithTransformingPrecision = toType == typeof(DoubleWithTransformingPrecision);
@@ -41,7 +41,7 @@ namespace Infer.Loki.Mappings
                 }
                 else
                 {
-                    info.Converter = GetPrimitiveConverter(fromType, toType);
+                    info.Converter = GetPrimitiveConverter(operationId, fromType, toType);
                     // from now on, explicit is the default
                     info.IsExplicit = true;
                     TypeCode fromTypeCode = Type.GetTypeCode(fromType);
@@ -70,7 +70,7 @@ namespace Infer.Loki.Mappings
                     {
                         // wrap the converter with a compatibility check
                         Converter conv = info.Converter;
-                        Converter back = GetPrimitiveConverter(toType, fromType);
+                        Converter back = GetPrimitiveConverter(operationId, toType, fromType);
                         info.Converter = fromValue =>
                         {
                             object toValue = conv(fromValue);
@@ -87,10 +87,10 @@ namespace Infer.Loki.Mappings
                 return Conversion.TryGetPrimitiveConversion(fromType, toType, out info);
         }
 
-        public static bool TryGetConversion(Type fromType, Type toType, out Conversion info)
+        public static bool TryGetConversion(ulong operationId, Type fromType, Type toType, out Conversion info)
         {
             if (fromType == typeof(DoubleWithTransformingPrecision) && toType.IsPrimitive)
-                return TryGetPrimitiveConversion(fromType, toType, out info);
+                return TryGetPrimitiveConversion(operationId, fromType, toType, out info);
             else
                 return Conversion.TryGetConversion(fromType, toType, out info);
         }

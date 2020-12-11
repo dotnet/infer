@@ -15,7 +15,7 @@ namespace Infer.Loki.Tests
     {
         public void MapAll(Mappers mappers)
         {
-            mappers.PermanentMethodMapper.CreateMap<Func<object, IExpression>, Func<object, IExpression>>(ExpressionEvaluator.Quote, ExpressionEvaluatorMethods.Quote);
+            mappers.DirectMethodMapper.CreateMap<Func<object, IExpression>, Func<ulong, object, IExpression>>(ExpressionEvaluator.Quote, ExpressionEvaluatorMethods.Quote);
         }
     }
 }
