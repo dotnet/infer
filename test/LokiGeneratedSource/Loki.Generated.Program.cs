@@ -16,6 +16,9 @@ namespace Loki.Generated
     {
         static async Task Main(string[] args)
         {
+            const StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior MissingDescriptionBehavior =
+                StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseDouble;
+
             var testInfo = TestInfo.FromDelegate(new OperatorTests().GaussianIsBetweenCRRR_NegativeUpperBoundTest);
             var traceRunManager = new StaticMixedPrecisionTuningTestExecutionManager(null)
             {
@@ -34,22 +37,40 @@ namespace Loki.Generated
 
             Console.WriteLine("Reducing operation precisions...");
             int runCount = 0;
-            var operationDescriptions = traceResult.EncounteredNotDescribedOperations.ToImmutableDictionary(
+            var allOperations = traceResult.EncounteredNotDescribedOperations.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var operationDescriptions = allOperations.ToImmutableDictionary(
                 kvp => kvp.Key,
                 kvp => new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = true });
-            foreach (var kvp in traceResult.EncounteredNotDescribedOperations)
+            var processingQueue = new Queue<KeyValuePair<ulong, int>>(allOperations);
+            while(processingQueue.Any())
             {
+                var kvp = processingQueue.Dequeue();
                 ++runCount;
                 var testedOperationDescriptions = operationDescriptions.SetItem(
                     kvp.Key,
                     new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = false });
-                var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions);
+                var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions) { MissingDescriptionBehavior = MissingDescriptionBehavior };
                 var runResult = await TestRunner.RunTestIsolatedAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
                 Console.WriteLine($"Run {runCount} - attempted performing operation {kvp.Key} in double: {runResult.Outcome}");
                 if (runResult.TestPassed)
-                    operationDescriptions = testedOperationDescriptions;
-                if (!runResult.EncounteredNotDescribedOperations.IsEmpty)
-                    throw new Exception($"Encountered an unexpected operation! ({runResult.EncounteredNotDescribedOperations.First().Key})");
+                {
+                    // If MissingDescriptionBehavior is UseDouble, than there's no need to consider newly encountered operations, as they were already
+                    // performed in double precision, and the test passed.
+                    if (runManager.MissingDescriptionBehavior == StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended && !runResult.EncounteredNotDescribedOperations.IsEmpty)
+                    {
+                        foreach (var nkvp in runResult.EncounteredNotDescribedOperations)
+                        {
+                            allOperations.Add(nkvp.Key, nkvp.Value);
+                            processingQueue.Enqueue(nkvp);
+                        }
+                        operationDescriptions = testedOperationDescriptions.AddRange(runResult.EncounteredNotDescribedOperations.Select(
+                            nkvp => new KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>(
+                                nkvp.Key,
+                                new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription())));
+                    }
+                    else
+                        operationDescriptions = testedOperationDescriptions;
+                }
             }
             Console.WriteLine();
             Console.WriteLine("Resulting operation precisions");
@@ -61,8 +82,10 @@ namespace Loki.Generated
 
             Console.WriteLine("Reducing operand precisions...");
             runCount = 0;
-            foreach (var kvp in operationDescriptions)
+            var processingQueue2 = new Queue<KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>>(operationDescriptions);
+            while (processingQueue2.Any())
             {
+                var kvp = processingQueue2.Dequeue();
                 if (kvp.Value.UseExtendedPrecisionOperation)
                 {
                     for (int i = 0; i < traceResult.EncounteredNotDescribedOperations[kvp.Key]; ++i)
@@ -74,13 +97,30 @@ namespace Loki.Generated
                             kvp.Key,
                             new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = true, RoundOperands = roundOperands });
 
-                        var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions);
+                        var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions) { MissingDescriptionBehavior = MissingDescriptionBehavior };
                         var runResult = await TestRunner.RunTestIsolatedAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
                         Console.WriteLine($"Run {runCount} - attempted rounding operand {i + 1} of the operation {kvp.Key}: {runResult.Outcome}");
                         if (runResult.TestPassed)
-                            operationDescriptions = testedOperationDescriptions;
-                        if (!runResult.EncounteredNotDescribedOperations.IsEmpty)
-                            throw new Exception($"Encountered an unexpected operation! ({runResult.EncounteredNotDescribedOperations.First().Key})");
+                        {
+                            // If MissingDescriptionBehavior is UseDouble, than there's no need to consider newly encountered operations, as they were already
+                            // performed in double precision, and the test passed.
+                            if (runManager.MissingDescriptionBehavior == StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended && !runResult.EncounteredNotDescribedOperations.IsEmpty)
+                            {
+                                foreach (var nkvp in runResult.EncounteredNotDescribedOperations)
+                                {
+                                    allOperations.Add(nkvp.Key, nkvp.Value);
+                                    processingQueue2.Enqueue(new KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>(
+                                        nkvp.Key,
+                                        new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()));
+                                }
+                                operationDescriptions = testedOperationDescriptions.AddRange(runResult.EncounteredNotDescribedOperations.Select(
+                                    nkvp => new KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>(
+                                        nkvp.Key,
+                                        new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription())));
+                            }
+                            else
+                                operationDescriptions = testedOperationDescriptions;
+                        }
                     }
                 }
             }
