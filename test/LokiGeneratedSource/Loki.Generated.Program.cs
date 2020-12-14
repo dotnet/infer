@@ -9,6 +9,7 @@ using System.Threading;
 using Microsoft.ML.Probabilistic.Learners.Tests;
 using Microsoft.ML.Probabilistic.Distributions;
 using System.Collections.Immutable;
+using Newtonsoft.Json;
 
 namespace Loki.Generated
 {
@@ -36,40 +37,64 @@ namespace Loki.Generated
             Console.WriteLine();
 
             Console.WriteLine("Reducing operation precisions...");
+            int lapCount = 0;
             int runCount = 0;
             var allOperations = traceResult.EncounteredNotDescribedOperations.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             var operationDescriptions = allOperations.ToImmutableDictionary(
                 kvp => kvp.Key,
                 kvp => new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = true });
-            var processingQueue = new Queue<KeyValuePair<ulong, int>>(allOperations);
-            while(processingQueue.Any())
+            File.WriteAllText($"checkpoint{lapCount}.json", JsonConvert.SerializeObject((allOperations, operationDescriptions)));
+            bool is1Minimal = false;
+            ulong oldDoubleOpCount = (ulong)operationDescriptions.LongCount(kvp => !kvp.Value.UseExtendedPrecisionOperation);
+            ulong newDoubleOpCount = oldDoubleOpCount;
+            while (!is1Minimal)
             {
-                var kvp = processingQueue.Dequeue();
-                ++runCount;
-                var testedOperationDescriptions = operationDescriptions.SetItem(
-                    kvp.Key,
-                    new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = false });
-                var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions) { MissingDescriptionBehavior = MissingDescriptionBehavior };
-                var runResult = await TestRunner.RunTestIsolatedAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
-                Console.WriteLine($"Run {runCount} - attempted performing operation {kvp.Key} in double: {runResult.Outcome}");
-                if (runResult.TestPassed)
+                ++lapCount;
+                var processingQueue = new Queue<KeyValuePair<ulong, int>>(allOperations);
+                while (processingQueue.Any())
                 {
-                    // If MissingDescriptionBehavior is UseDouble, than there's no need to consider newly encountered operations, as they were already
-                    // performed in double precision, and the test passed.
-                    if (runManager.MissingDescriptionBehavior == StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended && !runResult.EncounteredNotDescribedOperations.IsEmpty)
+                    var kvp = processingQueue.Dequeue();
+                    if (!operationDescriptions[kvp.Key].UseExtendedPrecisionOperation)
+                        continue;
+
+                    ++runCount;
+                    var testedOperationDescriptions = operationDescriptions.SetItem(
+                        kvp.Key,
+                        new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = false });
+                    var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions) { MissingDescriptionBehavior = MissingDescriptionBehavior };
+                    var runResult = await TestRunner.RunTestIsolatedAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
+                    Console.WriteLine($"Run {runCount} - attempted performing operation {kvp.Key} in double: {runResult.Outcome}");
+                    if (runResult.TestPassed)
                     {
-                        foreach (var nkvp in runResult.EncounteredNotDescribedOperations)
+                        ++newDoubleOpCount;
+                        // If MissingDescriptionBehavior is UseDouble, than there's no need to consider newly encountered operations, as they were already
+                        // performed in double precision, and the test passed.
+                        if (runManager.MissingDescriptionBehavior == StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended && !runResult.EncounteredNotDescribedOperations.IsEmpty)
                         {
-                            allOperations.Add(nkvp.Key, nkvp.Value);
-                            processingQueue.Enqueue(nkvp);
+                            foreach (var nkvp in runResult.EncounteredNotDescribedOperations)
+                            {
+                                allOperations.Add(nkvp.Key, nkvp.Value);
+                                processingQueue.Enqueue(nkvp);
+                            }
+                            operationDescriptions = testedOperationDescriptions.AddRange(runResult.EncounteredNotDescribedOperations.Select(
+                                nkvp => new KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>(
+                                    nkvp.Key,
+                                    new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription())));
                         }
-                        operationDescriptions = testedOperationDescriptions.AddRange(runResult.EncounteredNotDescribedOperations.Select(
-                            nkvp => new KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>(
-                                nkvp.Key,
-                                new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription())));
+                        else
+                            operationDescriptions = testedOperationDescriptions;
                     }
-                    else
-                        operationDescriptions = testedOperationDescriptions;
+                }
+                if (newDoubleOpCount == oldDoubleOpCount)
+                {
+                    Console.WriteLine("Done!");
+                    is1Minimal = true;
+                }
+                else
+                {
+                    Console.WriteLine($"Obtained a new configuration, saving as checkpoint{lapCount}.json...");
+                    File.WriteAllText($"checkpoint{lapCount}.json", JsonConvert.SerializeObject((allOperations, operationDescriptions)));
+                    oldDoubleOpCount = newDoubleOpCount;
                 }
             }
             Console.WriteLine();
@@ -88,7 +113,7 @@ namespace Loki.Generated
                 var kvp = processingQueue2.Dequeue();
                 if (kvp.Value.UseExtendedPrecisionOperation)
                 {
-                    for (int i = 0; i < traceResult.EncounteredNotDescribedOperations[kvp.Key]; ++i)
+                    for (int i = 0; i < allOperations[kvp.Key]; ++i)
                     {
                         ++runCount;
                         var roundOperands = operationDescriptions[kvp.Key].RoundOperands;
@@ -144,6 +169,9 @@ namespace Loki.Generated
                 Console.WriteLine();
             }
             Console.WriteLine();
+            Console.WriteLine("Saving final.json...");
+            File.WriteAllText($"final.json", JsonConvert.SerializeObject((allOperations, operationDescriptions)));
+            Console.WriteLine("Done!");
         }
 
         [Xunit.Fact]
