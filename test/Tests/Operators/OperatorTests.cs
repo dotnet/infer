@@ -3214,7 +3214,6 @@ weight * (tau + alphaX) + alphaX
         }
 
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void GaussianIsBetweenCRRR_NegativeUpperBoundTest()
         {
             Gaussian X = Gaussian.FromNatural(813.982758311301, 1.0594806725507477);

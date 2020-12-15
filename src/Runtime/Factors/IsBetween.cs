@@ -1243,6 +1243,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             bool useLogZRatio = (r > smallR) && (logZ < smallLogZ);
             double rPlus1 = MMath.GetRPlus1(r, sqrtomr2);
             double omr2 = sqrtomr2 * sqrtomr2;
+            double invZRatio = -1;
             alphaL = 0.0;
             if (r == 0 && !Double.IsInfinity(yl))
             {
@@ -1252,6 +1253,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 // since X and lowerBound are not both uniform, invSqrtVxl > 0
                 double logPhiL = 0;
+                double phiLInvZRatio = 0;
+                bool usePhiLInvZRatio = false;
                 if (!useLogZRatio)
                     logPhiL += Gaussian.GetLogProb(yl, 0, 1);
                 if (r > -1)
@@ -1271,7 +1274,20 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                     if (useLogZRatio)
                     {
-                        logPhiL = MMath.NormalCdfRatioLn(yuryl);
+                        if (yuryl > 0)
+                            logPhiL = MMath.NormalCdfRatioLn(yuryl);
+                        else
+                        {
+                            invZRatio = Math.Exp(-logZRatio);
+                            if (invZRatio == 0 || invZRatio > double.MaxValue)
+                                logPhiL = MMath.NormalCdfRatioLn(yuryl);
+                            else
+                            {
+                                // Avoiding a possible catastrophic cancellation logPhiL - logZRatio
+                                phiLInvZRatio = MMath.NormalCdfRatio(yuryl) * invZRatio;
+                                usePhiLInvZRatio = true;
+                            }
+                        }
                     }
                     else
                     {
@@ -1280,7 +1296,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                     if (logPhiL > double.MaxValue) throw new Exception();
                     //Trace.WriteLine($"yuryl = {yuryl}, invSqrtVxl = {invSqrtVxl} useLogZRatio = {useLogZRatio}");
                 }
-                alphaL = -d_p * invSqrtVxl * Math.Exp(logPhiL - (useLogZRatio ? logZRatio : logZ));
+                if (usePhiLInvZRatio)
+                    alphaL = -d_p * invSqrtVxl * phiLInvZRatio;
+                else
+                    alphaL = -d_p * invSqrtVxl * Math.Exp(logPhiL - (useLogZRatio ? logZRatio : logZ));
             }
             alphaU = 0.0;
             if (r == 0 && !Double.IsInfinity(yu))
@@ -1291,6 +1310,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 // since X and upperBound are not both uniform, invSqrtVxu > 0
                 double logPhiU = 0;
+                double phiUInvZRatio = 0;
+                bool usePhiUInvZRatio = false;
                 if (!useLogZRatio)
                     logPhiU = Gaussian.GetLogProb(yu, 0, 1);
                 if (r > -1)
@@ -1310,12 +1331,32 @@ namespace Microsoft.ML.Probabilistic.Factors
                         ylryu = (mx * vu / (vx + vu) - ml + mu * vx / (vx + vu)) / Math.Sqrt(vx * vl + vx * vu + vl * vu) / invSqrtVxu;
                     }
                     if (useLogZRatio)
-                        logPhiU = MMath.NormalCdfRatioLn(ylryu);
+                    {
+                        if (ylryu > 0)
+                            logPhiU = MMath.NormalCdfRatioLn(ylryu);
+                        else
+                        {
+                            // Checking, if evaluated already
+                            if (invZRatio == -1)
+                                invZRatio = Math.Exp(-logZRatio);
+                            if (invZRatio == 0 || invZRatio > double.MaxValue)
+                                logPhiU = MMath.NormalCdfRatioLn(ylryu);
+                            else
+                            {
+                                // Avoiding a possible catastrophic cancellation logPhiU - logZRatio
+                                phiUInvZRatio = MMath.NormalCdfRatio(ylryu) * invZRatio;
+                                usePhiUInvZRatio = true;
+                            }
+                        }
+                    }
                     else
                         logPhiU += MMath.NormalCdfLn(ylryu);
                     //Trace.WriteLine($"ylryu = {ylryu}, invSqrtVxu = {invSqrtVxu}");
                 }
-                alphaU = d_p * invSqrtVxu * Math.Exp(logPhiU - (useLogZRatio ? logZRatio : logZ));
+                if (usePhiUInvZRatio)
+                    alphaU = d_p * invSqrtVxu * phiUInvZRatio;
+                else
+                    alphaU = d_p * invSqrtVxu * Math.Exp(logPhiU - (useLogZRatio ? logZRatio : logZ));
             }
             alphaX = -alphaL - alphaU;
             if (useLogZRatio && Math.Abs(alphaX) < Math.Abs(alphaL) * 1e-6)
