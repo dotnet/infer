@@ -21,157 +21,90 @@ namespace Loki.Generated
                 StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseDouble;
 
             var testInfo = TestInfo.FromDelegate(new OperatorTests().GaussianIsBetweenCRRR_NegativeUpperBoundTest);
-            var traceRunManager = new StaticMixedPrecisionTuningTestExecutionManager(null)
+            string lastStatus = null;
+            var localizer = new StaticMixedPrecisionTuningLocalizer(testInfo)
             {
-                MissingDescriptionBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended
+                Progress = new Progress<StaticMixedPrecisionTuningLocalizationStatus>(s =>
+                {
+                    Console.Title = s.ToString();
+                    if (lastStatus != s.StatusString)
+                    {
+                        lastStatus = s.StatusString;
+                        Console.WriteLine(s);
+                    }
+                }),
+                MissingDescriptionBehavior = MissingDescriptionBehavior,
+                CheckpointAutosavingFrequency = 50
             };
-            var traceResult = await TestRunner.RunTestIsolatedAsync(testInfo, traceRunManager) as SingleStaticMixedPrecisionTuningRunResult;
-            if (!traceResult.TestPassed)
-                throw new Exception("Test didn't pass in extended precision");
 
-            Console.WriteLine("Participating operations:");
-            Console.WriteLine("ID\t| Arity");
-            Console.WriteLine("--------|--------");
-            foreach (var kvp in traceResult.EncounteredNotDescribedOperations)
-                Console.WriteLine($"{kvp.Key}\t| {kvp.Value}");
-            Console.WriteLine();
+            bool isLocalizable = await localizer.CheckLocalizeability();
 
-            Console.WriteLine("Reducing operation precisions...");
-            int lapCount = 0;
-            int runCount = 0;
-            var allOperations = traceResult.EncounteredNotDescribedOperations.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            var operationDescriptions = allOperations.ToImmutableDictionary(
-                kvp => kvp.Key,
-                kvp => new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = true });
-            File.WriteAllText($"checkpoint{lapCount}.json", JsonConvert.SerializeObject((allOperations, operationDescriptions)));
-            bool is1Minimal = false;
-            ulong oldDoubleOpCount = (ulong)operationDescriptions.LongCount(kvp => !kvp.Value.UseExtendedPrecisionOperation);
-            ulong newDoubleOpCount = oldDoubleOpCount;
-            while (!is1Minimal)
+            if (isLocalizable)
             {
-                ++lapCount;
-                var processingQueue = new Queue<KeyValuePair<ulong, int>>(allOperations);
-                while (processingQueue.Any())
-                {
-                    var kvp = processingQueue.Dequeue();
-                    if (!operationDescriptions[kvp.Key].UseExtendedPrecisionOperation)
-                        continue;
+                var arities = localizer.GetOperationsAndArities();
 
-                    ++runCount;
-                    var testedOperationDescriptions = operationDescriptions.SetItem(
-                        kvp.Key,
-                        new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = false });
-                    var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions) { MissingDescriptionBehavior = MissingDescriptionBehavior };
-                    var runResult = await TestRunner.RunTestIsolatedAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
-                    Console.WriteLine($"Run {runCount} - attempted performing operation {kvp.Key} in double: {runResult.Outcome}");
-                    if (runResult.TestPassed)
+                Console.WriteLine();
+                Console.WriteLine("Participating operations:");
+                Console.WriteLine("ID\t| Arity");
+                Console.WriteLine("--------|--------");
+                foreach (var kvp in arities)
+                    Console.WriteLine($"{kvp.Key}\t| {kvp.Value}");
+                Console.WriteLine();
+
+                await localizer.LocalizeOnOperations();
+                var operationDescriptions = localizer.GetOperationDescriptions();
+                Console.WriteLine();
+                Console.WriteLine("Resulting operation precisions");
+                Console.WriteLine("ID\t| Precision");
+                Console.WriteLine("--------|---------------");
+                foreach (var kvp in operationDescriptions)
+                    Console.WriteLine($"{kvp.Key}\t| {(kvp.Value.UseExtendedPrecisionOperation ? "Extended" : "Double")}");
+                Console.WriteLine();
+
+                await localizer.LocalizeOnOperands();
+                arities = localizer.GetOperationsAndArities();
+                operationDescriptions = localizer.GetOperationDescriptions();
+                Console.WriteLine();
+                Console.WriteLine("Resulting operation precisions");
+                Console.WriteLine("ID\t| Precision\t| Operand Precisions");
+                Console.WriteLine("--------|---------------|--------------------------");
+                foreach (var kvp in operationDescriptions)
+                {
+                    Console.Write($"{kvp.Key}\t| ");
+                    if (kvp.Value.UseExtendedPrecisionOperation)
                     {
-                        ++newDoubleOpCount;
-                        // If MissingDescriptionBehavior is UseDouble, than there's no need to consider newly encountered operations, as they were already
-                        // performed in double precision, and the test passed.
-                        if (runManager.MissingDescriptionBehavior == StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended && !runResult.EncounteredNotDescribedOperations.IsEmpty)
-                        {
-                            foreach (var nkvp in runResult.EncounteredNotDescribedOperations)
-                            {
-                                allOperations.Add(nkvp.Key, nkvp.Value);
-                                processingQueue.Enqueue(nkvp);
-                            }
-                            operationDescriptions = testedOperationDescriptions.AddRange(runResult.EncounteredNotDescribedOperations.Select(
-                                nkvp => new KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>(
-                                    nkvp.Key,
-                                    new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription())));
-                        }
-                        else
-                            operationDescriptions = testedOperationDescriptions;
+                        Console.Write("Extended");
+                        for (int i = 0; i < arities[kvp.Key]; ++i)
+                            Console.Write($"\t| {(kvp.Value.RoundOperands[i] ? "Rounded" : "Preserved")}");
                     }
-                }
-                if (newDoubleOpCount == oldDoubleOpCount)
-                {
-                    Console.WriteLine("Done!");
-                    is1Minimal = true;
-                }
-                else
-                {
-                    Console.WriteLine($"Obtained a new configuration, saving as checkpoint{lapCount}.json...");
-                    File.WriteAllText($"checkpoint{lapCount}.json", JsonConvert.SerializeObject((allOperations, operationDescriptions)));
-                    oldDoubleOpCount = newDoubleOpCount;
-                }
-            }
-            Console.WriteLine();
-            Console.WriteLine("Resulting operation precisions");
-            Console.WriteLine("ID\t| Precision");
-            Console.WriteLine("--------|---------------");
-            foreach (var kvp in operationDescriptions)
-                Console.WriteLine($"{kvp.Key}\t| {(kvp.Value.UseExtendedPrecisionOperation ? "Extended" : "Double")}");
-            Console.WriteLine();
-
-            Console.WriteLine("Reducing operand precisions...");
-            runCount = 0;
-            var processingQueue2 = new Queue<KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>>(operationDescriptions);
-            while (processingQueue2.Any())
-            {
-                var kvp = processingQueue2.Dequeue();
-                if (kvp.Value.UseExtendedPrecisionOperation)
-                {
-                    for (int i = 0; i < allOperations[kvp.Key]; ++i)
+                    else
                     {
-                        ++runCount;
-                        var roundOperands = operationDescriptions[kvp.Key].RoundOperands;
-                        roundOperands[i] = true;
-                        var testedOperationDescriptions = operationDescriptions.SetItem(
-                            kvp.Key,
-                            new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription() { UseExtendedPrecisionOperation = true, RoundOperands = roundOperands });
-
-                        var runManager = new StaticMixedPrecisionTuningTestExecutionManager(testedOperationDescriptions) { MissingDescriptionBehavior = MissingDescriptionBehavior };
-                        var runResult = await TestRunner.RunTestIsolatedAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
-                        Console.WriteLine($"Run {runCount} - attempted rounding operand {i + 1} of the operation {kvp.Key}: {runResult.Outcome}");
-                        if (runResult.TestPassed)
-                        {
-                            // If MissingDescriptionBehavior is UseDouble, than there's no need to consider newly encountered operations, as they were already
-                            // performed in double precision, and the test passed.
-                            if (runManager.MissingDescriptionBehavior == StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended && !runResult.EncounteredNotDescribedOperations.IsEmpty)
-                            {
-                                foreach (var nkvp in runResult.EncounteredNotDescribedOperations)
-                                {
-                                    allOperations.Add(nkvp.Key, nkvp.Value);
-                                    processingQueue2.Enqueue(new KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>(
-                                        nkvp.Key,
-                                        new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()));
-                                }
-                                operationDescriptions = testedOperationDescriptions.AddRange(runResult.EncounteredNotDescribedOperations.Select(
-                                    nkvp => new KeyValuePair<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>(
-                                        nkvp.Key,
-                                        new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription())));
-                            }
-                            else
-                                operationDescriptions = testedOperationDescriptions;
-                        }
+                        Console.Write("Double");
                     }
-                }
-            }
-            Console.WriteLine();
-            Console.WriteLine("Resulting operation precisions");
-            Console.WriteLine("ID\t| Precision\t| Operand Precisions");
-            Console.WriteLine("--------|---------------|--------------------------");
-            foreach (var kvp in operationDescriptions)
-            {
-                Console.Write($"{kvp.Key}\t| ");
-                if (kvp.Value.UseExtendedPrecisionOperation)
-                {
-                    Console.Write("Extended");
-                    for (int i = 0; i < traceResult.EncounteredNotDescribedOperations[kvp.Key]; ++i)
-                        Console.Write($"\t| {(kvp.Value.RoundOperands[i] ? "Rounded" : "Preserved")}");
-                }
-                else
-                {
-                    Console.Write("Double");
+                    Console.WriteLine();
                 }
                 Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("Extended precision operations");
+                Console.WriteLine("ID\t| Operand Precisions");
+                Console.WriteLine("--------|--------------------------");
+                foreach (var kvp in operationDescriptions)
+                {
+                    if (kvp.Value.UseExtendedPrecisionOperation)
+                    {
+                        Console.Write($"{kvp.Key}");
+                        for (int i = 0; i < arities[kvp.Key]; ++i)
+                            Console.Write($"\t| {(kvp.Value.RoundOperands[i] ? "Rounded" : "Preserved")}");
+                        Console.WriteLine();
+                    }
+                }
+                Console.WriteLine();
+                Console.WriteLine("Done!");
             }
-            Console.WriteLine();
-            Console.WriteLine("Saving final.json...");
-            File.WriteAllText($"final.json", JsonConvert.SerializeObject((allOperations, operationDescriptions)));
-            Console.WriteLine("Done!");
+            else
+            {
+                Console.WriteLine("Test is not localizable");
+            }
         }
 
         [Xunit.Fact]
