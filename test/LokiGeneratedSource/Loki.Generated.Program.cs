@@ -27,83 +27,32 @@ namespace Loki.Generated
                 Progress = new Progress<StaticMixedPrecisionTuningLocalizationStatus>(s =>
                 {
                     Console.Title = s.ToString();
-                    if (lastStatus != s.StatusString)
-                    {
-                        lastStatus = s.StatusString;
-                        Console.WriteLine(s);
-                    }
+                    //if (lastStatus != s.StatusString)
+                    //{
+                    //    lastStatus = s.StatusString;
+                    //    Console.WriteLine(s);
+                    //}
                 }),
                 MissingDescriptionBehavior = MissingDescriptionBehavior,
                 CheckpointAutosavingFrequency = 50
             };
 
-            bool isLocalizable = await localizer.CheckLocalizeability();
-
-            if (isLocalizable)
+            int resultCount = 0;
+            var resultEnumerator = localizer.LocalizeAll().GetAsyncEnumerator();
+            try
             {
-                var arities = localizer.GetOperationsAndArities();
-
-                Console.WriteLine();
-                Console.WriteLine("Participating operations:");
-                Console.WriteLine("ID\t| Arity");
-                Console.WriteLine("--------|--------");
-                foreach (var kvp in arities)
-                    Console.WriteLine($"{kvp.Key}\t| {kvp.Value}");
-                Console.WriteLine();
-
-                await localizer.LocalizeOnOperations();
-                var operationDescriptions = localizer.GetOperationDescriptions();
-                Console.WriteLine();
-                Console.WriteLine("Resulting operation precisions");
-                Console.WriteLine("ID\t| Precision");
-                Console.WriteLine("--------|---------------");
-                foreach (var kvp in operationDescriptions)
-                    Console.WriteLine($"{kvp.Key}\t| {(kvp.Value.UseExtendedPrecisionOperation ? "Extended" : "Double")}");
-                Console.WriteLine();
-
-                await localizer.LocalizeOnOperands();
-                arities = localizer.GetOperationsAndArities();
-                operationDescriptions = localizer.GetOperationDescriptions();
-                Console.WriteLine();
-                Console.WriteLine("Resulting operation precisions");
-                Console.WriteLine("ID\t| Precision\t| Operand Precisions");
-                Console.WriteLine("--------|---------------|--------------------------");
-                foreach (var kvp in operationDescriptions)
+                while (await resultEnumerator.MoveNextAsync())
                 {
-                    Console.Write($"{kvp.Key}\t| ");
-                    if (kvp.Value.UseExtendedPrecisionOperation)
-                    {
-                        Console.Write("Extended");
-                        for (int i = 0; i < arities[kvp.Key]; ++i)
-                            Console.Write($"\t| {(kvp.Value.RoundOperands[i] ? "Rounded" : "Preserved")}");
-                    }
-                    else
-                    {
-                        Console.Write("Double");
-                    }
                     Console.WriteLine();
+                    ++resultCount;
+                    Console.WriteLine($"Localization result {resultCount}.");
+                    Console.WriteLine();
+                    Console.WriteLine(resultEnumerator.Current);
                 }
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("Extended precision operations");
-                Console.WriteLine("ID\t| Operand Precisions");
-                Console.WriteLine("--------|--------------------------");
-                foreach (var kvp in operationDescriptions)
-                {
-                    if (kvp.Value.UseExtendedPrecisionOperation)
-                    {
-                        Console.Write($"{kvp.Key}");
-                        for (int i = 0; i < arities[kvp.Key]; ++i)
-                            Console.Write($"\t| {(kvp.Value.RoundOperands[i] ? "Rounded" : "Preserved")}");
-                        Console.WriteLine();
-                    }
-                }
-                Console.WriteLine();
-                Console.WriteLine("Done!");
             }
-            else
+            finally
             {
-                Console.WriteLine("Test is not localizable");
+                await resultEnumerator.DisposeAsync();
             }
         }
 
