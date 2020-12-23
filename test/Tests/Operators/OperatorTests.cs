@@ -3224,7 +3224,7 @@ weight * (tau + alphaX) + alphaX
             Gaussian previousToX = new Gaussian();
             Gaussian previousXpost = new Gaussian();
             double tolerance = 1e-10;
-            for (int i = 8; i < 100; i++)
+            for (int i = 8; i < 9; i++)
             {
                 // seems like answer should always be Gaussian(m/v=-814, 1/v=0)
                 Gaussian upperBound = Gaussian.FromNatural(-System.Math.Pow(10, i), 9);

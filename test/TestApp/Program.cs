@@ -81,7 +81,9 @@ namespace TestApp
 
             Stopwatch watch = new Stopwatch();
             watch.Start();
-            Console.WriteLine(System.Math.Exp(-745));
+
+            new OperatorTests().GaussianIsBetweenCRRR_NegativeUpperBoundTest();
+
             if (false)
             {
                 // Run all tests (need to run in 64-bit else OutOfMemory due to loading many DLLs)

@@ -4,6 +4,7 @@ using Microsoft.ML.Probabilistic.Learners.Tests;
 using Microsoft.ML.Probabilistic.Tests;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,14 +17,15 @@ namespace Infer.Loki.Tests
     {
         public static async Task Main()
         {
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             //Infer.Loki.Mappings.SpecialFunctionsMethods.FindThresholds();
             //return;
             Settings settings = GetSettings();
 
             var transformer = new TestTransformer(settings);
             await transformer.Build();
-            var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new SpecialFunctionsTests().LogisticGaussianTest), new FuelBasedTestExecutionManager(0));
-            Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
+            //var testResult = await TestRunner.RunTestAsync(transformer.GetCorrespondingTransformedTest(new SpecialFunctionsTests().LogisticGaussianTest), new FuelBasedTestExecutionManager(0));
+            //Console.WriteLine($"Test result: {testResult.TestPassed},\nMessage: {testResult.Message}");
 
             //var tests = transformer.EnumerateTransformedTests()
             //    .Where(ti => ti.Method.ReflectedType.Name == typeof(SpecialFunctionsTests).Name /*&& ti.Method.Name != "NormalCdfIntegralTest"*/)

@@ -10,6 +10,7 @@ using Microsoft.ML.Probabilistic.Learners.Tests;
 using Microsoft.ML.Probabilistic.Distributions;
 using System.Collections.Immutable;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Loki.Generated
 {
@@ -17,6 +18,7 @@ namespace Loki.Generated
     {
         static async Task Main(string[] args)
         {
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             const StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior MissingDescriptionBehavior =
                 StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseDouble;
 
@@ -36,6 +38,14 @@ namespace Loki.Generated
                 MissingDescriptionBehavior = MissingDescriptionBehavior,
                 CheckpointAutosavingFrequency = 50
             };
+
+            var runManager = new StaticMixedPrecisionTuningTestExecutionManager(null)
+            {
+                //Progress = individualRunProgress,
+                MissingDescriptionBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended,
+                MissingIdBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended,
+            };
+            var result = await TestRunner.RunTestAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
 
             int resultCount = 0;
             var resultEnumerator = localizer.LocalizeAll().GetAsyncEnumerator();

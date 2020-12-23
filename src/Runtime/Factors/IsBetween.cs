@@ -708,7 +708,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             else
             {
                 invSqrtVxu = 1.0 / Math.Sqrt(vx + vu);
+                //invSqrtVxu = Math.Pow(vx + vu, -0.5);
                 yu = (mu - mx) * invSqrtVxu;
+                //yu = (mu - mx) / Math.Sqrt(vx + vu);
             }
             if (X.IsPointMass)
             {
@@ -1314,10 +1316,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                     else
                         logPhiU += MMath.NormalCdfLn(ylryu);
                     //Trace.WriteLine($"ylryu = {ylryu}, invSqrtVxu = {invSqrtVxu}");
+                    //alphaU = d_p * invSqrtVxu * MMath.NormalCdfRatio(ylryu) / Math.Exp(logZRatio);
                 }
                 alphaU = d_p * invSqrtVxu * Math.Exp(logPhiU - (useLogZRatio ? logZRatio : logZ));
             }
             alphaX = -alphaL - alphaU;
+            //if (MMath.AbsDiff(-813.982758300706, alphaX, 1e-20) > 1.3e-10) throw new Exception();
             if (useLogZRatio && Math.Abs(alphaX) < Math.Abs(alphaL) * 1e-6)
             {
                 // In this regime, we can assume NormalCdfRatio(x) == -1/x (since x < -1e8)
