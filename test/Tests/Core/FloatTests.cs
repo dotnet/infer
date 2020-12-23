@@ -17,6 +17,51 @@ namespace Microsoft.ML.Probabilistic.Tests
 #if NETCOREAPP3_1
     public class FloatTests
     {
+        internal void QuadraticFormulaTest()
+        {
+            float a = 1e-8f;
+            float b = 1f;
+            float c = -1f;
+            float rootF = QuadraticFormula(a, b, c);
+            float rootF2 = QuadraticFormulaMuller(a, b, c);
+            double root = QuadraticFormula((double)a, b, c);
+            Console.WriteLine($"{rootF} {rootF2} {(float)root}");
+        }
+
+        internal static float QuadraticFormula(float a, float b, float c)
+        {
+            float ac4 = a * c * 4;
+            float bSqr = b * b;
+            float discrim = bSqr - ac4;
+            float sqrtDiscrim = System.MathF.Sqrt(discrim);
+            float numer = sqrtDiscrim - b;
+            return numer / (2 * a);
+        }
+
+        internal static float QuadraticFormulaMuller(float a, float b, float c)
+        {
+            float ac4 = a * c * 4;
+            float bSqr = b * b;
+            float discrim = bSqr - ac4;
+            float sqrtDiscrim = System.MathF.Sqrt(discrim);
+            float denom = -sqrtDiscrim - b;
+            return 2 * c / denom;
+        }
+
+        internal static double QuadraticFormula(double a, double b, double c)
+        {
+            double ac4 = a * c * 4;
+            double bSqr = b * b;
+            double discrim = bSqr - ac4;
+            double sqrtDiscrim = System.Math.Sqrt(discrim);
+            double numer = sqrtDiscrim - b;
+            return numer / (2 * a);
+        }
+
+        /// <summary>
+        /// Tests whether a function decreases for positive x.
+        /// In this case, XPlus1TimesXMinus1 sometimes decreases for positive x.
+        /// </summary>
         internal void XPlus1TimesXMinus1Test()
         {
             float x = 0;
@@ -237,4 +282,4 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
     }
 #endif
-}
+        }
