@@ -29,14 +29,15 @@ namespace Loki.Generated
                 Progress = new Progress<StaticMixedPrecisionTuningLocalizationStatus>(s =>
                 {
                     Console.Title = s.ToString();
-                    //if (lastStatus != s.StatusString)
-                    //{
-                    //    lastStatus = s.StatusString;
-                    //    Console.WriteLine(s);
-                    //}
+                    if (lastStatus != s.StatusString)
+                    {
+                        lastStatus = s.StatusString;
+                        Console.WriteLine(s);
+                    }
                 }),
                 MissingDescriptionBehavior = MissingDescriptionBehavior,
-                CheckpointAutosavingFrequency = 50
+                CheckpointAutosavingFrequency = 50,
+                ForceLocalizationWhenExtendedRunFails = true
             };
 
             var runManager = new StaticMixedPrecisionTuningTestExecutionManager(null)
