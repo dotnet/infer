@@ -996,10 +996,31 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 else
                     return mpa;
             }
-            else if (
-                Recognizer.IsStaticMethod(imie, typeof(Factor), "Difference") ||
-                Recognizer.IsStaticMethod(imie, typeof(Factor), "Ratio")
-                )
+            else if (Recognizer.IsStaticMethod(imie, typeof(Factor), "Difference"))
+            {
+                if (imie.Arguments.Count == 2 &&
+                    typeof(double).IsAssignableFrom(imie.Arguments[0].GetExpressionType()) &&
+                    typeof(double).IsAssignableFrom(imie.Arguments[1].GetExpressionType())
+                    )
+                {
+                    Type[] types = new[]
+                    {
+                        typeof(Beta),
+                        typeof(Gamma),
+                        typeof(Gaussian),
+                    };
+                    bool anyArgumentMatches = imie.Arguments.Any(arg => types.Any(type => type.Equals(GetMarginalType(arg))));
+                    if (anyArgumentMatches)
+                    {
+                        MarginalPrototype mpa = new MarginalPrototype(null);
+                        mpa.prototypeExpression = Builder.StaticMethod(new Func<Microsoft.ML.Probabilistic.Distributions.Gaussian>(Microsoft.ML.Probabilistic.Distributions.Gaussian.Uniform));
+                        return mpa;
+                    }
+                    // fall through
+                }
+                return GetFirstMarginalPrototype(imie.Arguments, targetDecl);
+            }
+            else if (Recognizer.IsStaticMethod(imie, typeof(Factor), "Ratio"))
             {
                 return GetFirstMarginalPrototype(imie.Arguments, targetDecl);
             }
