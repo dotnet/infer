@@ -33,7 +33,7 @@ def TwoCoins():
 def TruncatedGaussianEfficient():
     threshold = Variable.New[Double]()
     x = Variable.GaussianFromMeanAndVariance(0.0, 1.0)
-    Variable.ConstrainTrue(x > threshold)
+    Variable.ConstrainTrue(x.op_GreaterThan(x,threshold))
     engine = InferenceEngine()
     for thresh in [i*0.1 for i in range(11)]:
         threshold.ObservedValue = thresh
@@ -76,24 +76,19 @@ def LearningAGaussianWithRanges():
 def BayesPointMachine(incomes, ages, w, y):
     j = y.Range
     xData = [Vector.FromArray(income, age, 1) for income, age in zip(incomes, ages)]
-    x = VariableObserved(xData, j)
-    # The following does not work in pythonnet:
-    #x = Variable.Observed[Vector](Array[Vector](xData))
+    x = Variable.Observed[Vector](Array[Vector](xData), j)
 
     noise = 0.1
     ip = Variable.InnerProduct(w, x[j])
     v = Variable.GaussianFromMeanAndVariance(ip, noise)
-    y[j] = v > 0.0
+    y[j] = v.op_GreaterThan(v, 0.0)
 
 def BayesPointMachineExample():
     incomes = [63, 16, 28, 55, 22, 20]
     ages = [38, 23, 40, 27, 18, 40]
     will_buy = [True, False, True, True, False, False]
 
-    # The following does not work in pythonnet:
-    #y = Variable.Observed[bool](will_buy)
-    #y = Variable.Observed[bool].Overloads[Array[bool]](will_buy)
-    y = VariableObserved(will_buy)
+    y = Variable.Observed[bool](will_buy)
 
     eye = PositiveDefiniteMatrix.Identity(3)
     m = Vector.Zero(3)
@@ -114,10 +109,10 @@ def BayesPointMachineExample():
 def ClinicalTrial():
     # Data from clinical trial
     control_group_data = [False, False, True, False, False]
-    control_group = VariableObserved(control_group_data)
+    control_group = Variable.Observed[bool](control_group_data)
 
     treated_group_data = [True, False, True, True, True]
-    treated_group = VariableObserved(treated_group_data)
+    treated_group = Variable.Observed[bool](treated_group_data)
 
     i = control_group.Range
     j = treated_group.Range
@@ -177,7 +172,7 @@ def MixtureOfGaussians():
     forEachBlock = Variable.ForEach(n)
     z[n] = Variable.Discrete(weights)
     switchBlock = Variable.Switch(z[n])
-    data[n] = Variable.VectorGaussianFromMeanAndPrecision(means[z[n]], precs[z[n]])
+    data[n] = Variable.VectorGaussianFromMeanAndPrecision(means.get_Item(z[n]), precs.get_Item(z[n]))
     switchBlock.CloseBlock()
     forEachBlock.CloseBlock()
 
@@ -187,9 +182,7 @@ def MixtureOfGaussians():
     # Initialise messages randomly to break symmetry
     zInit = Variable.Array[Discrete](n).Named("zInit")
     zInit.ObservedValue = [Discrete.PointMass(Rand.Int(k.SizeAsInt), k.SizeAsInt) for i in range(n.SizeAsInt)]
-    # The following does not work in pythonnet:
-    #z.get_Item(n).InitialiseTo[Discrete].Overloads[Variable[Discrete]](zInit.get_Item(n))
-    InitialiseTo(z[n], zInit[n])
+    z[n].InitialiseTo[Discrete](zInit[n])
 
     # The inference
     engine = InferenceEngine();
