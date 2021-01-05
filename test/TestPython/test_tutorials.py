@@ -24,7 +24,7 @@ from Microsoft.ML.Probabilistic.Utilities import Util
 def TwoCoins():
     firstCoin = Variable.Bernoulli(0.5)
     secondCoin = Variable.Bernoulli(0.5)
-    bothHeads = firstCoin.op_BitwiseAnd(firstCoin, secondCoin)
+    bothHeads = firstCoin & secondCoin
     engine = InferenceEngine()
     print("Probability both coins are heads: %s" % engine.Infer(bothHeads))
     bothHeads.ObservedValue = False
@@ -33,7 +33,7 @@ def TwoCoins():
 def TruncatedGaussianEfficient():
     threshold = Variable.New[Double]()
     x = Variable.GaussianFromMeanAndVariance(0.0, 1.0)
-    Variable.ConstrainTrue(x.op_GreaterThan(x,threshold))
+    Variable.ConstrainTrue(x > threshold)
     engine = InferenceEngine()
     for thresh in [i*0.1 for i in range(11)]:
         threshold.ObservedValue = thresh
@@ -66,7 +66,7 @@ def LearningAGaussianWithRanges():
     data_range = Range(len(data)).Named("n")
     x = Variable.Array[Double](data_range)
     v = Variable.GaussianFromMeanAndPrecision(mean, precision).ForEach(data_range)
-    x.set_Item(data_range, v)
+    x[data_range] = v
     x.ObservedValue = data
 
     engine = InferenceEngine()
@@ -81,10 +81,9 @@ def BayesPointMachine(incomes, ages, w, y):
     #x = Variable.Observed[Vector](Array[Vector](xData))
 
     noise = 0.1
-    ip = Variable.InnerProduct(w, x.get_Item(j))
+    ip = Variable.InnerProduct(w, x[j])
     v = Variable.GaussianFromMeanAndVariance(ip, noise)
-    v = v.op_GreaterThan(v, 0.0)
-    y.set_Item(j, v)
+    y[j] = v > 0.0
 
 def BayesPointMachineExample():
     incomes = [63, 16, 28, 55, 22, 20]
@@ -131,19 +130,19 @@ def ClinicalTrial():
     # Model if treatment is effective
     probIfControl = Variable.Beta(1.0, 1.0)
     t = Variable.Bernoulli(probIfControl).ForEach(i)
-    control_group.set_Item(i, t)
+    control_group[i] = t
 
     probIfTreated = Variable.Beta(1.0, 1.0)
     t = Variable.Bernoulli(probIfTreated).ForEach(j)
-    treated_group.set_Item(j, t)
+    treated_group[j] = t
     if_var.Dispose()
 
     # A bit of background
     if_var = Variable.IfNot(is_effective)
     # Model if treatment is not effective
     prob_all = Variable.Beta(1.0, 1.0)
-    control_group.set_Item(i, Variable.Bernoulli(prob_all).ForEach(i))
-    treated_group.set_Item(j, Variable.Bernoulli(prob_all).ForEach(j))
+    control_group[i] = Variable.Bernoulli(prob_all).ForEach(i)
+    treated_group[j] = Variable.Bernoulli(prob_all).ForEach(j)
     if_var.Dispose()
 
     # Clinical accuracy
@@ -158,13 +157,11 @@ def MixtureOfGaussians():
 
     # Mixture component means
     means = Variable.Array[Vector](k)
-    means_k = Variable.VectorGaussianFromMeanAndPrecision(Vector.FromArray(0.0, 0.0), PositiveDefiniteMatrix.IdentityScaledBy(2, 0.01)).ForEach(k)
-    means.set_Item(k, means_k)
+    means[k] = Variable.VectorGaussianFromMeanAndPrecision(Vector.FromArray(0.0, 0.0), PositiveDefiniteMatrix.IdentityScaledBy(2, 0.01)).ForEach(k)
 
     # Mixture component precisions
     precs = Variable.Array[PositiveDefiniteMatrix](k).Named("precs")
-    precs_k = Variable.WishartFromShapeAndScale(100.0, PositiveDefiniteMatrix.IdentityScaledBy(2, 0.01)).ForEach(k)
-    precs.set_Item(k, precs_k)
+    precs[k] = Variable.WishartFromShapeAndScale(100.0, PositiveDefiniteMatrix.IdentityScaledBy(2, 0.01)).ForEach(k)
             
     # Mixture weights 
     weights = Variable.Dirichlet(k, [ 1.0, 1.0 ]).Named("weights")
@@ -178,9 +175,9 @@ def MixtureOfGaussians():
 
     # The mixture of Gaussians model
     forEachBlock = Variable.ForEach(n)
-    z.set_Item(n, Variable.Discrete(weights))
-    switchBlock = Variable.Switch(z.get_Item(n))
-    data.set_Item(n, Variable.VectorGaussianFromMeanAndPrecision(means.get_Item(z.get_Item(n)), precs.get_Item(z.get_Item(n))))
+    z[n] = Variable.Discrete(weights)
+    switchBlock = Variable.Switch(z[n])
+    data[n] = Variable.VectorGaussianFromMeanAndPrecision(means[z[n]], precs[z[n]])
     switchBlock.CloseBlock()
     forEachBlock.CloseBlock()
 
@@ -192,7 +189,7 @@ def MixtureOfGaussians():
     zInit.ObservedValue = [Discrete.PointMass(Rand.Int(k.SizeAsInt), k.SizeAsInt) for i in range(n.SizeAsInt)]
     # The following does not work in pythonnet:
     #z.get_Item(n).InitialiseTo[Discrete].Overloads[Variable[Discrete]](zInit.get_Item(n))
-    InitialiseTo(z.get_Item(n), zInit.get_Item(n))
+    InitialiseTo(z[n], zInit[n])
 
     # The inference
     engine = InferenceEngine();
