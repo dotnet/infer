@@ -39,6 +39,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             return Util.ArrayInit(count, i => (min + i * inc));
         }
 
+        [Fact]
+        public void BetaSubtractionTest()
+        {
+            Variable<double> a = Variable.Beta(1, 1);
+            Variable<double> b = Variable.Beta(1, 1);
+            var c = a - b;
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(c);
+        }
+
         /// <summary>
         /// Demonstrate that EP can solve a linear program
         /// </summary>
