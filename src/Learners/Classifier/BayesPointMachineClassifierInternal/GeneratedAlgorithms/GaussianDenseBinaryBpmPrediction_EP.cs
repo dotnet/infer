@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public bool Constant_isDone;
 		/// <summary>Field backing the FeatureCount property</summary>
 		private int featureCount;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> FeatureScores_F;
+		public DistributionStructArray<Gaussian,double>[] FeatureScores_F;
 		/// <summary>Field backing the FeatureValues property</summary>
 		private double[][] featureValues;
 		/// <summary>Field backing the InstanceCount property</summary>
@@ -43,20 +43,20 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Message to marginal of 'Labels'</summary>
 		public DistributionStructArray<Bernoulli,bool> Labels_marginal_F;
 		public Bernoulli Labels_use_B_reduced;
-		public DistributionStructArray<Gaussian,double> NoisyScore_F;
+		public Gaussian[] NoisyScore_F;
 		/// <summary>Field backing the NumberOfIterationsDone property</summary>
 		private int numberOfIterationsDone;
-		public DistributionStructArray<Gaussian,double> Score_F;
+		public Gaussian[] Score_F;
 		/// <summary>Field backing the WeightConstraints property</summary>
 		private DistributionStructArray<Gaussian,double> weightConstraints;
 		/// <summary>Field backing the WeightPriors property</summary>
 		private DistributionStructArray<Gaussian,double> weightPriors;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_rep_B;
+		public Gaussian[][] Weights_depth1_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
-		public DistributionStructArray<Gaussian,double> Weights_depth1_rep_B_toDef;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_rep_F;
+		public Gaussian[] Weights_depth1_rep_B_toDef;
+		public Gaussian[][] Weights_depth1_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
-		public DistributionStructArray<Gaussian,double> Weights_depth1_rep_F_marginal;
+		public Gaussian[] Weights_depth1_rep_F_marginal;
 		/// <summary>Messages from uses of 'Weights_use'</summary>
 		public DistributionStructArray<Gaussian,double>[] Weights_uses_B;
 		/// <summary>Messages to uses of 'Weights_use'</summary>
@@ -169,10 +169,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_isDone) {
 				return ;
 			}
-			this.Weights_depth1_rep_F_marginal = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			this.Weights_depth1_rep_B_toDef = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			this.Weights_depth1_rep_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.featureCount);
-			this.Weights_depth1_rep_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.featureCount);
+			this.Weights_depth1_rep_F_marginal = new Gaussian[this.featureCount];
+			this.Weights_depth1_rep_B_toDef = new Gaussian[this.featureCount];
+			this.Weights_depth1_rep_F = new Gaussian[this.featureCount][];
+			this.Weights_depth1_rep_B = new Gaussian[this.featureCount][];
 			this.Changed_FeatureCount_isDone = true;
 		}
 
@@ -201,8 +201,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.Weights_depth1_rep_F[FeatureRange] = new DistributionStructArray<Gaussian,double>(this.instanceCount);
-				this.Weights_depth1_rep_B[FeatureRange] = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+				this.Weights_depth1_rep_F[FeatureRange] = new Gaussian[this.instanceCount];
+				this.Weights_depth1_rep_B[FeatureRange] = new Gaussian[this.instanceCount];
 			}
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
@@ -263,9 +263,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			this.Labels_F = new DistributionStructArray<Bernoulli,bool>(this.instanceCount);
-			this.NoisyScore_F = new DistributionStructArray<Gaussian,double>(this.instanceCount);
-			this.Score_F = new DistributionStructArray<Gaussian,double>(this.instanceCount);
-			this.FeatureScores_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
+			this.NoisyScore_F = new Gaussian[this.instanceCount];
+			this.Score_F = new Gaussian[this.instanceCount];
+			this.FeatureScores_F = new DistributionStructArray<Gaussian,double>[this.instanceCount];
 			this.Labels_marginal_F = new DistributionStructArray<Bernoulli,bool>(this.instanceCount);
 			this.Labels_use_B_reduced = default(Bernoulli);
 			if (this.instanceCount>0) {

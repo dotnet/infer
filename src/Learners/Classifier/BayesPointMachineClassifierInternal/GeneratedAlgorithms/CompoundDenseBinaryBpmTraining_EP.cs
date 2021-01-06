@@ -45,33 +45,33 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>True if Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst3 has performed initialisation. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst3</summary>
 		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised;
 		public Gamma CommonWeightPrecision_F;
-		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_B;
+		public Gamma[] CommonWeightPrecision_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_B_toDef;
-		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_F;
+		public Gamma[] CommonWeightPrecision_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gamma&gt;</summary>
 		public Gamma CommonWeightPrecision_rep_F_marginal;
 		/// <summary>True if Constant has executed. Set this to false to force re-execution of Constant</summary>
 		public bool Constant_isDone;
 		/// <summary>Field backing the FeatureCount property</summary>
 		private int featureCount;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> FeatureScores_B;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> FeatureScores_F;
+		public DistributionStructArray<Gaussian,double>[] FeatureScores_B;
+		public DistributionStructArray<Gaussian,double>[] FeatureScores_F;
 		/// <summary>Field backing the FeatureValues property</summary>
 		private double[][] featureValues;
 		/// <summary>Field backing the InstanceCount property</summary>
 		private int instanceCount;
 		/// <summary>Field backing the Labels property</summary>
 		private bool[] labels;
-		public DistributionStructArray<Gaussian,double> NoisyScore_F;
+		public Gaussian[] NoisyScore_F;
 		/// <summary>Message from use of 'NoisyScore'</summary>
-		public DistributionStructArray<Gaussian,double> NoisyScore_use_B;
+		public Gaussian[] NoisyScore_use_B;
 		/// <summary>Field backing the NumberOfIterationsDone property</summary>
 		private int numberOfIterationsDone;
-		public DistributionStructArray<Gaussian,double> Score_B;
-		public DistributionStructArray<Gaussian,double> Score_F;
+		public Gaussian[] Score_B;
+		public Gaussian[] Score_F;
 		/// <summary>Buffer for GammaFromShapeAndRateOp_Laplace.SampleAverageConditional</summary>
-		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_B_FeatureRange__Q;
+		public Gamma[] SharedWeightPrecisionRates_B_FeatureRange__Q;
 		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_F;
 		/// <summary>Message from use of 'SharedWeightPrecisionRates'</summary>
 		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_use_B;
@@ -84,9 +84,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Field backing the WeightPrecisionRateConstraints property</summary>
 		private DistributionStructArray<Gamma,double> weightPrecisionRateConstraints;
 		public Gamma WeightPrecisionRateRates_F_reduced;
-		public DistributionRefArray<DistributionStructArray<Gamma,double>,double[]> WeightPrecisionRates_rep_B;
+		public Gamma[][] WeightPrecisionRates_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gamma&gt;</summary>
-		public DistributionStructArray<Gamma,double> WeightPrecisionRates_rep_B_toDef;
+		public Gamma[] WeightPrecisionRates_rep_B_toDef;
 		/// <summary>Message from use of 'WeightPrecisionRates'</summary>
 		public DistributionStructArray<Gamma,double> WeightPrecisionRates_use_B;
 		/// <summary>Messages from uses of 'WeightPrecisionRates_use'</summary>
@@ -95,17 +95,17 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Gamma[][] WeightPrecisionRates_uses_F;
 		public DistributionStructArray<Gamma,double> WeightPrecisions_B;
 		/// <summary>Buffer for GammaRatioOp_Laplace.AAverageConditional</summary>
-		public DistributionStructArray<Gamma,double> WeightPrecisions_B_FeatureRange__Q;
+		public Gamma[] WeightPrecisions_B_FeatureRange__Q;
 		public DistributionStructArray<Gamma,double> WeightPrecisions_F;
 		public DistributionStructArray<Gaussian,double> Weights_F;
 		/// <summary>Message to marginal of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double> Weights_marginal_F;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_rep_B;
+		public Gaussian[][] Weights_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
-		public DistributionStructArray<Gaussian,double> Weights_rep_B_toDef;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_rep_F;
+		public Gaussian[] Weights_rep_B_toDef;
+		public Gaussian[][] Weights_rep_F;
 		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional&lt;Gaussian&gt;</summary>
-		public DistributionStructArray<Gaussian,double> Weights_rep_F_marginal;
+		public Gaussian[] Weights_rep_F_marginal;
 		/// <summary>Message from use of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double> Weights_use_B;
 		/// <summary>Messages from uses of 'Weights_use'</summary>
@@ -278,8 +278,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.WeightPrecisionRates_uses_B = new Gamma[this.featureCount][];
 			this.WeightPrecisionRates_uses_F = new Gamma[this.featureCount][];
-			this.WeightPrecisionRates_rep_B_toDef = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.WeightPrecisionRates_rep_B = new DistributionRefArray<DistributionStructArray<Gamma,double>,double[]>(this.featureCount);
+			this.WeightPrecisionRates_rep_B_toDef = new Gamma[this.featureCount];
+			this.WeightPrecisionRates_rep_B = new Gamma[this.featureCount][];
 			this.WeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.featureCount);
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.WeightPrecisionRates_uses_B[FeatureRange] = new Gamma[2];
@@ -293,7 +293,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.SharedWeightPrecisionRates_uses_B[FeatureRange][1] = Gamma.Uniform();
 				this.SharedWeightPrecisionRates_uses_B[FeatureRange][0] = Gamma.Uniform();
 			}
-			this.SharedWeightPrecisionRates_B_FeatureRange__Q = new DistributionStructArray<Gamma,double>(this.featureCount);
+			this.SharedWeightPrecisionRates_B_FeatureRange__Q = new Gamma[this.featureCount];
 			this.Weights_uses_B = new Gaussian[this.featureCount][];
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.Weights_uses_B[FeatureRange] = new Gaussian[2];
@@ -305,14 +305,14 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Weights_uses_F[FeatureRange] = new Gaussian[2];
 				this.Weights_uses_F[FeatureRange][1] = Gaussian.Uniform();
 			}
-			this.Weights_rep_F_marginal = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			this.Weights_rep_B_toDef = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			this.Weights_rep_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.featureCount);
-			this.Weights_rep_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.featureCount);
+			this.Weights_rep_F_marginal = new Gaussian[this.featureCount];
+			this.Weights_rep_B_toDef = new Gaussian[this.featureCount];
+			this.Weights_rep_F = new Gaussian[this.featureCount][];
+			this.Weights_rep_B = new Gaussian[this.featureCount][];
 			this.Weights_use_B = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			this.WeightPrecisions_B_FeatureRange__Q = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.CommonWeightPrecision_rep_B = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.CommonWeightPrecision_rep_F = new DistributionStructArray<Gamma,double>(this.featureCount);
+			this.WeightPrecisions_B_FeatureRange__Q = new Gamma[this.featureCount];
+			this.CommonWeightPrecision_rep_B = new Gamma[this.featureCount];
+			this.CommonWeightPrecision_rep_F = new Gamma[this.featureCount];
 			this.Weights_marginal_F = new DistributionStructArray<Gaussian,double>(this.featureCount);
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.Weights_marginal_F[FeatureRange] = Gaussian.Uniform();
@@ -430,7 +430,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.WeightPrecisionRates_rep_B[FeatureRange] = new DistributionStructArray<Gamma,double>(this.instanceCount);
+				this.WeightPrecisionRates_rep_B[FeatureRange] = new Gamma[this.instanceCount];
 			}
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
@@ -438,7 +438,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 			}
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.Weights_rep_F[FeatureRange] = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+				this.Weights_rep_F[FeatureRange] = new Gaussian[this.instanceCount];
 			}
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
@@ -454,7 +454,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 			}
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.Weights_rep_B[FeatureRange] = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+				this.Weights_rep_B[FeatureRange] = new Gaussian[this.instanceCount];
 			}
 			this.Changed_FeatureCount_InstanceCount_isDone = true;
 		}
@@ -534,24 +534,24 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_InstanceCount_isDone) {
 				return ;
 			}
-			this.FeatureScores_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
-			this.Score_F = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+			this.FeatureScores_F = new DistributionStructArray<Gaussian,double>[this.instanceCount];
+			this.Score_F = new Gaussian[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.Score_F[InstanceRange] = Gaussian.Uniform();
 			}
-			this.NoisyScore_F = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+			this.NoisyScore_F = new Gaussian[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.NoisyScore_F[InstanceRange] = Gaussian.Uniform();
 			}
-			this.NoisyScore_use_B = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+			this.NoisyScore_use_B = new Gaussian[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.NoisyScore_use_B[InstanceRange] = Gaussian.Uniform();
 			}
-			this.Score_B = new DistributionStructArray<Gaussian,double>(this.instanceCount);
+			this.Score_B = new Gaussian[this.instanceCount];
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				this.Score_B[InstanceRange] = Gaussian.Uniform();
 			}
-			this.FeatureScores_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.instanceCount);
+			this.FeatureScores_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];
 			this.Changed_InstanceCount_isDone = true;
 		}
 

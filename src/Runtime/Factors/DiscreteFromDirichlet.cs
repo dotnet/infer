@@ -168,11 +168,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             Vector ddLogP = Vector.Zero(probs.Count);
             double sampleN = sampleProbs[probs.Count - 1];
             double probN = probs[probs.Count - 1];
-            for (int i = 0; i < probs.Count; i++)
-            {
-                dLogP[i] = (sampleProbs[i] - sampleN)/Z;
-                ddLogP[i] = -dLogP[i]*dLogP[i];
-            }
+            dLogP.SetToFunction(sampleProbs, sampleProb => (sampleProb - sampleN) / Z);
+            ddLogP.SetToFunction(dLogP, x => -x * x);
             result.SetDerivatives(probs, dLogP, ddLogP, !Dirichlet.AllowImproperSum);
             return result;
         }

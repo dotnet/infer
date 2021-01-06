@@ -43,7 +43,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 pdCache[paramDecl.Name] = paramDecl;
             }
-            methodDecl.Body = ConvertBlock(methodSyntax.Body);
+            if (methodSyntax.Body != null)
+                methodDecl.Body = ConvertBlock(methodSyntax.Body);
             pdCache.Clear();
             vdCache.Clear();
         }
@@ -599,7 +600,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         private IExpression ConvertNamedType(INamedTypeSymbol symbol, MemberAccessExpressionSyntax memberAccess)
         {
             var typeRef = (ITypeReference)ConvertTypeReference(symbol);
-            return new XTypeReferenceExpression 
+            return new XTypeReferenceExpression
             {
                 Type = typeRef
             };

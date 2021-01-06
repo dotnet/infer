@@ -490,6 +490,19 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        [Skip]
+        public static T[] UsesDeriv<T>(T[] result)
+            where T : SettableToUniform
+        {
+            for (int i = 0; i < result.Length; i++)
+            {
+                T item = result[i];
+                item.SetToUniform();
+                result[i] = item;
+            }
+            return result;
+        }
+
         public static T UsesAverageLogarithm2<T, TDef>([IsReturnedInEveryElement] TDef Def, T result)
             where T : CanSetAllElementsTo<TDef>
         {

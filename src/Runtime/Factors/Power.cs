@@ -130,7 +130,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(Gamma, double, Gamma)"]/*'/>
         public static Gamma PowAverageConditional([SkipIfUniform] Gamma x, double y, Gamma result)
         {
-            GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
+            GammaPower message = PowAverageConditional(x, y);
             return GammaFromGammaPower(message);
         }
 
@@ -171,7 +171,9 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(GammaPower, double, GammaPower)"]/*'/>
         public static GammaPower PowAverageConditional([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
-            GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y * x.Power);
+            GammaPower message;
+            if (x.IsPointMass) message = GammaPower.PointMass(System.Math.Pow(x.Point, y), y * x.Power);
+            else message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y * x.Power);
             return GammaPowerFromDifferentPower(message, result.Power);
         }
 
@@ -254,12 +256,14 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(Gamma, double)"]/*'/>
         public static GammaPower PowAverageConditional([SkipIfUniform] Gamma x, double y)
         {
-            return GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
+            if (x.IsPointMass) return GammaPower.PointMass(System.Math.Pow(x.Point, y), y);
+            else return GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(GammaPower, double)"]/*'/>
         public static Gamma XAverageConditional([SkipIfUniform] GammaPower pow, double y)
         {
+            if (pow.IsPointMass) return Gamma.PointMass(System.Math.Pow(pow.Point, 1 / y));
             if (y != pow.Power)
                 throw new NotSupportedException("Incoming message " + pow + " does not match the exponent (" + y + ")");
             return Gamma.FromShapeAndRate(pow.Shape + (1 - y), pow.Rate);

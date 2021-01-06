@@ -320,7 +320,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// Fails with "enemyStrengthAfter is not defined in all cases"
         /// </summary>
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void SumForwardBackwardTest()
         {
             var teamCount = Variable.Observed(2).Named("teamCount");
@@ -348,20 +347,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             var enemyStrengthAfter = Variable.Array<double>(team);
             enemyStrengthAfter.Name = nameof(enemyStrengthAfter);
             var lastIndex = teamCount - 1;
-            // lastIndex must be observed to get inlining
-            // the check in ModelBuilder should propagate 'observed' property, or do the inlining later
-            //var lastIndex = Variable.Observed(1);
-            //lastIndex.Name = nameof(lastIndex);
             using (var block = Variable.ForEach(team))
             {
                 var teamIndex = block.Index;
-                var isLast = (teamIndex == teamCount - 1).Named("isLast");
-                //using(Variable.If(isLast)) // this version works
                 using (Variable.If(teamIndex == lastIndex))
                 {
                     enemyStrengthAfter[teamIndex] = 0.0;
                 }
-                //using(Variable.IfNot(isLast))
                 using (Variable.If(teamIndex < lastIndex))
                 {
                     enemyStrengthAfter[teamIndex] = enemyStrengthAfter[teamIndex + 1] + teamStrength[teamIndex + 1];
@@ -406,21 +398,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             var enemyStrengthAfter = Variable.Array<double>(team);
             enemyStrengthAfter.Name = nameof(enemyStrengthAfter);
-            //var lastIndex = teamCount - 1;
-            // lastIndex must be observed to get inlining
-            // the check in ModelBuilder should propagate 'observed' property, or do the inlining later
-            var lastIndex = Variable.Observed(1);
-            lastIndex.Name = nameof(lastIndex);
+            var lastIndex = teamCount - 1;
             using (var block = Variable.ForEach(team))
             {
                 var teamIndex = block.Index;
-                var isLast = (teamIndex == teamCount - 1).Named("isLast");
-                //using(Variable.If(isLast))
                 using (Variable.If(teamIndex == lastIndex))
                 {
                     enemyStrengthAfter[teamIndex] = 0.0;
                 }
-                //using(Variable.IfNot(isLast))
                 using (Variable.If(teamIndex < lastIndex))
                 {
                     enemyStrengthAfter[teamIndex] = enemyStrengthAfter[teamIndex + 1] + teamStrength[teamIndex + 1];

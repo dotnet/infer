@@ -188,6 +188,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [Quality(QualityBand.Preview)]
         public static Gamma CopyAverageConditional(TruncatedGamma value)
         {
+            // TODO: use EP
             if (!value.IsPointMass)
                 throw new ArgumentException("value is not a point mass");
             return value.ToGamma();
@@ -205,6 +206,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [Quality(QualityBand.Preview)]
         public static Gaussian CopyAverageConditional(TruncatedGaussian value)
         {
+            // TODO: use EP
             if (!value.IsPointMass)
                 throw new ArgumentException("value is not a point mass");
             return value.ToGaussian();

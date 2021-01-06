@@ -670,24 +670,54 @@ namespace Microsoft.ML.Probabilistic.Tests
             get { return new TemporaryHelper(() => GammaProductOp_Laplace.ForceProper = false, () => GammaProductOp_Laplace.ForceProper = true); }
         }
 
+        /// <summary>
+        /// A test that uses this property must have Trait("Category", "ModifiesGlobals")
+        /// </summary>
         public static IDisposable TemporarilyAllowBetaImproperSums
         {
             get { return new TemporaryHelper(() => Beta.AllowImproperSum = true, () => Beta.AllowImproperSum = false); }
         }
 
+        /// <summary>
+        /// A test that uses this property must have Trait("Category", "ModifiesGlobals")
+        /// </summary>
         public static IDisposable TemporarilyAllowDirichletImproperSums
         {
             get { return new TemporaryHelper(() => Dirichlet.AllowImproperSum = true, () => Dirichlet.AllowImproperSum = false); }
         }
 
+        /// <summary>
+        /// A test that uses this property must have Trait("Category", "ModifiesGlobals")
+        /// </summary>
         public static IDisposable TemporarilyUseMeanPointGamma
         {
             get { return new TemporaryHelper(() => Factors.VariablePointOp_RpropGamma.UseMean = true, () => Factors.VariablePointOp_RpropGamma.UseMean = false); }
         }
 
+        /// <summary>
+        /// A test that uses this property must have Trait("Category", "ModifiesGlobals")
+        /// </summary>
         public static IDisposable TemporarilyUnrollLoops
         {
             get { return new TemporaryHelper(() => InferenceEngine.DefaultEngine.Compiler.UnrollLoops = true, () => InferenceEngine.DefaultEngine.Compiler.UnrollLoops = false); }
+        }
+
+        /// <summary>
+        /// A test that uses this method must have Trait("Category", "ModifiesGlobals")
+        /// </summary>
+        public static IDisposable TemporarilyChangeQuadratureNodeCount(int quadratureNodeCount)
+        {
+            int previousValue = ExpOp.QuadratureNodeCount;
+            return new TemporaryHelper(() => ExpOp.QuadratureNodeCount = quadratureNodeCount, () => ExpOp.QuadratureNodeCount = previousValue);
+        }
+
+        /// <summary>
+        /// A test that uses this method must have Trait("Category", "ModifiesGlobals")
+        /// </summary>
+        public static IDisposable TemporarilyChangeQuadratureShift(bool quadratureShift)
+        {
+            bool previousValue = ExpOp.QuadratureShift;
+            return new TemporaryHelper(() => ExpOp.QuadratureShift = quadratureShift, () => ExpOp.QuadratureShift = previousValue);
         }
 
         private class TemporaryHelper : IDisposable

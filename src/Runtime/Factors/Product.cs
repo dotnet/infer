@@ -37,11 +37,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (Product.IsPointMass)
                 return AAverageConditional(Product.Point, B);
+            if (Product.IsUniform() && B < double.MinValue) 
+                return Product;
             // (m - ab)^2/v = (a^2 b^2 - 2abm + m^2)/v
-            // This code works correctly even if B=0 or Product is uniform. 
+            // This code works correctly even if B=0 or Product is uniform (and B is finite). 
             Gaussian result = new Gaussian();
-            result.Precision = B * B * Product.Precision;
-            result.MeanTimesPrecision = B * Product.MeanTimesPrecision;
+            result.Precision = Product.Precision * B * B;
+            result.MeanTimesPrecision = Product.MeanTimesPrecision * B;
             return result;
         }
 
@@ -66,6 +68,33 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="BAverageConditional(double, double)"]/*'/>
         public static Gaussian BAverageConditional(double Product, double A)
+        {
+            return AAverageConditional(Product, A);
+        }
+
+        // TruncatedGaussian //////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="ProductAverageConditional(double, TruncatedGaussian)"]/*'/>
+        public static TruncatedGaussian ProductAverageConditional(double A, [SkipIfUniform] TruncatedGaussian B)
+        {
+            return GaussianProductVmpOp.ProductAverageLogarithm(A, B);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="ProductAverageConditional(TruncatedGaussian, double)"]/*'/>
+        public static TruncatedGaussian ProductAverageConditional([SkipIfUniform] TruncatedGaussian A, double B)
+        {
+            return ProductAverageConditional(B, A);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="AAverageConditional(TruncatedGaussian, double)"]/*'/>
+        public static TruncatedGaussian AAverageConditional([SkipIfUniform] TruncatedGaussian Product, double B)
+        {
+            if (Product.IsUniform()) return Product;
+            return new TruncatedGaussian(AAverageConditional(Product.Gaussian, B), ((B >= 0) ? Product.LowerBound : Product.UpperBound) / B, ((B >= 0) ? Product.UpperBound : Product.LowerBound) / B);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="BAverageConditional(TruncatedGaussian, double)"]/*'/>
+        public static TruncatedGaussian BAverageConditional([SkipIfUniform] TruncatedGaussian Product, double A)
         {
             return AAverageConditional(Product, A);
         }
@@ -2111,11 +2140,24 @@ namespace Microsoft.ML.Probabilistic.Factors
             // v = A*A*vb
             // 1/v = (1/vb)/(A*A)
             // m/v = (mb/vb)/A
-            return Gaussian.FromNatural(B.MeanTimesPrecision / A, B.Precision / (A * A));
+            return Gaussian.FromNatural(B.MeanTimesPrecision / A, B.Precision / A / A);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(Gaussian, double)"]/*'/>
         public static Gaussian ProductAverageLogarithm([SkipIfUniform] Gaussian A, double B)
+        {
+            return ProductAverageLogarithm(B, A);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(double, TruncatedGaussian)"]/*'/>
+        public static TruncatedGaussian ProductAverageLogarithm(double A, [SkipIfUniform] TruncatedGaussian B)
+        {
+            if (B.IsUniform()) return B;
+            return new TruncatedGaussian(ProductAverageLogarithm(A, B.Gaussian), ((A >= 0) ? B.LowerBound : B.UpperBound) * A, ((A >= 0) ? B.UpperBound : B.LowerBound) * A);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(TruncatedGaussian, double)"]/*'/>
+        public static TruncatedGaussian ProductAverageLogarithm([SkipIfUniform] TruncatedGaussian A, double B)
         {
             return ProductAverageLogarithm(B, A);
         }

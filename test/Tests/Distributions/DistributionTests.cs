@@ -59,12 +59,27 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerFromMeanAndMeanLogTest()
         {
-            double mean = 3;
-            double meanLog = 0.4;
-            double power = 5;
-            GammaPower gammaPower = GammaPower.FromMeanAndMeanLog(mean, meanLog, power);
-            Assert.Equal(mean, gammaPower.GetMean(), 1e-1);
-            Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-1);
+            var testCases = new[]
+            {
+                (3, 0.4, 5),
+                (2.7196413092151412, 1, 2),
+                (0.82657135035599683, -0.19053040661796108, -1.0),
+                (0.78123008687766349, -0.24698718364292091, -1.0),
+                (0.65867320393062079, -0.41774280264746583, -1.0),
+                (32.016744802449665, 3.4078368553200575, -1.0),
+                (1.2739417498500658, -0.9778858306365934, -1.0),
+                (System.Math.Exp(1.0), 1.0, -1.0),
+                (System.Math.Exp(1.25), 1.0, -1.0),
+            };
+            foreach (var testCase in testCases)
+            {
+                var (mean, meanLog, power) = testCase;
+                GammaPower gammaPower = GammaPower.FromMeanAndMeanLog(mean, meanLog, power);
+                Assert.Equal(mean, gammaPower.GetMean(), 1e-10);
+                Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-10);
+            }
+            GammaPower.FromMeanAndMeanLog(0.82657135035599683, -0.19053040661796108, -1.0);
+            GammaPower.FromMeanAndMeanLog(0.78123008687766349, -0.24698718364292091, -1.0);
         }
 
         [Fact]
@@ -207,6 +222,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(2, gamma.GetQuantile(expectedProbLessThan), 1e-10);
             Assert.Equal(0.5, g.GetQuantile(1 - expectedProbLessThan), 1e-10);
 
+            g = GammaPower.FromMeanAndVariance(3, double.PositiveInfinity, -1);
+            Assert.Equal(2, g.Shape);
+            Assert.Equal(3, g.Rate);
+
             GammaPowerMomentTest(1);
             GammaPowerMomentTest(-1);
             GammaPowerMomentTest(2);
@@ -279,6 +298,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             //SetMomentTest(g, 1.1, 2.2);
             PointMassMomentTest(g, 7.7, 4.4, 5.5);
             SamplingTest(g, 7.7);
+
+            var ratio = g / g2;
+            Assert.Throws<DivideByZeroException>(() =>
+            {
+                ratio = g / new TruncatedGaussian(4.4, 5.5, lowerBound + 1, upperBound);
+            });
+            ratio = TruncatedGaussian.PointMass(lowerBound) / new TruncatedGaussian(4.4, 5.5, lowerBound, upperBound);
+            Assert.Throws<DivideByZeroException>(() =>
+            {
+                ratio = TruncatedGaussian.PointMass(2) / new TruncatedGaussian(4.4, 5.5, lowerBound + 1, upperBound);
+            });
+
             g.SetToUniform();
             //GetAndSetMomentTest(g, 0.0, Double.PositiveInfinity);
 
@@ -1812,6 +1843,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             GammaFromMeanAndMeanLog(new Gamma(3, 4));
             GammaFromMeanAndMeanLog(Gamma.PointMass(3));
+            Gamma estimated = Gamma.FromMeanAndMeanLog(0, -1e303);
+            Assert.True(estimated.IsPointMass && estimated.Point == 0);
         }
 
         private void GammaFromMeanAndMeanLog(Gamma original)
@@ -1819,8 +1852,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             double mean = original.GetMean();
             double meanLog = original.GetMeanLog();
             Gamma estimated = Gamma.FromMeanAndMeanLog(mean, meanLog);
-            Console.WriteLine("original = {0}", original);
-            Console.WriteLine("estimated = {0}", estimated);
+            //Console.WriteLine("original = {0}", original);
+            //Console.WriteLine("estimated = {0}", estimated);
             Assert.True(original.MaxDiff(estimated) < 1e-10);
         }
 

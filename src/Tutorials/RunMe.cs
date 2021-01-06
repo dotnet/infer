@@ -34,6 +34,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
             //Tutorials
             //Uncomment one of these lines to run a particular tutorial in console application
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             new FirstExample().Run();
             //new TruncatedGaussian().Run();

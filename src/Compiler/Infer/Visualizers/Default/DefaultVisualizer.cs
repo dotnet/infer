@@ -46,8 +46,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                         }
                     }
                 }
-
-                tcv.Visualize(Path.Combine(folder, modelName + " Transforms"));
+                // Avoid spaces in folder names since they can confuse some apps
+                tcv.Visualize(Path.Combine(folder, modelName + "_Transforms"));
             }
         }
 
