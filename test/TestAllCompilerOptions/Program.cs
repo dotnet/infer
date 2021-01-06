@@ -10,7 +10,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
     {
         static void Main()
         {
-            var failed = TestUtils.TestAllCompilerOptions(loadTestAssembly: true);
+            var failed = CompilerOptionsTestUtils.TestAllCompilerOptions(loadTestAssembly: true);
             Assert.Equal(0, failed);
         }
     }
