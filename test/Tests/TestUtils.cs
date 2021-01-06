@@ -26,7 +26,6 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Xunit.Sdk;
     using Microsoft.ML.Probabilistic.Models;
     using Microsoft.ML.Probabilistic.Factors;
-    using System.Threading;
 
     public static class TestUtils
     {

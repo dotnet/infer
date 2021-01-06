@@ -5,7 +5,11 @@
 # Run all-compiler-options-test.
 
 pool:
-  vmImage: 'windows-2019'
+  name: InferNet
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
 
 trigger: none # disable CI build
 
@@ -49,7 +53,7 @@ jobs:
   - powershell: |
       # ErrorAction is required because if the process is not found, gps logs
       # an error.
-      gps TrueSkill.Tests -ErrorAction Ignore | kill
+      gps TestAllCompilerOptions -ErrorAction Ignore | kill
     condition: always()
   
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
