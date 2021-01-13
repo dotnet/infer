@@ -20,9 +20,10 @@ namespace Loki.Generated
         {
             Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             const StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior MissingDescriptionBehavior =
-                StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseDouble;
+                StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended;
 
             var testInfo = TestInfo.FromDelegate(new OperatorTests().GaussianIsBetweenCRRR_NegativeUpperBoundTest);
+            //var testInfo = TestInfo.FromDelegate(new OperatorTests().GaussianIsBetween_CRRR_UncertainXTest);
             string lastStatus = null;
             var localizer = new StaticMixedPrecisionTuningLocalizer(testInfo)
             {
@@ -37,16 +38,62 @@ namespace Loki.Generated
                 }),
                 MissingDescriptionBehavior = MissingDescriptionBehavior,
                 CheckpointAutosavingFrequency = 50,
-                ForceLocalizationWhenExtendedRunFails = true
+                ForceLocalizationWhenExtendedRunFails = true,
+                TryEnsureNumericalStabilityOfExtendedToDoubleTransitions = true,
+                StabilityCheckihgPrecision = 40
             };
 
-            var runManager = new StaticMixedPrecisionTuningTestExecutionManager(null)
-            {
-                //Progress = individualRunProgress,
-                MissingDescriptionBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended,
-                MissingIdBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended,
-            };
-            var result = await TestRunner.RunTestAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
+            //var runManager = new StaticMixedPrecisionTuningTestExecutionManager(new Dictionary<ulong, StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription>()
+            //{
+            //    [7014UL] = new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()
+            //    {
+            //        UseExtendedPrecisionOperation = true,
+            //        RoundOperands = new BitField64() { Bits = 0 }//{ Bits = 1 }
+            //    },
+            //    [7015UL] = new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()
+            //    {
+            //        UseExtendedPrecisionOperation = true,
+            //        RoundOperands = new BitField64() { Bits = 0 }//{ Bits = 1 }
+            //    },
+            //    [22450UL] = new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()
+            //    {
+            //        UseExtendedPrecisionOperation = true,
+            //        RoundOperands = new BitField64() { Bits = 0 }//{ Bits = 2 }
+            //    },
+            //    [22451UL] = new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()
+            //    {
+            //        UseExtendedPrecisionOperation = true,
+            //        RoundOperands = new BitField64() { Bits = 0 }
+            //    },
+            //    [22487UL] = new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()
+            //    {
+            //        UseExtendedPrecisionOperation = true,
+            //        RoundOperands = new BitField64() { Bits = 0 }//{ Bits = 2 }
+            //    },
+            //    [22488UL] = new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()
+            //    {
+            //        UseExtendedPrecisionOperation = true,
+            //        RoundOperands = new BitField64() { Bits = 0 }
+            //    },
+            //    [22489UL] = new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()
+            //    {
+            //        UseExtendedPrecisionOperation = true,
+            //        RoundOperands = new BitField64() { Bits = 0 }//{ Bits = 3 }
+            //    },
+            //    //[22491UL] = new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()
+            //    //{
+            //    //    UseExtendedPrecisionOperation = true,
+            //    //    RoundOperands = new BitField64() { Bits = 3 }
+            //    //},
+            //}.ToImmutableDictionary())
+            //{
+            //    //Progress = individualRunProgress,
+            //    MissingDescriptionBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseDouble,
+            //    //MissingIdBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended,
+            //};
+            //var result = await TestRunner.RunTestAsync(testInfo, runManager) as SingleStaticMixedPrecisionTuningRunResult;
+            //Console.WriteLine(result);
+            //return;
 
             int resultCount = 0;
             var resultEnumerator = localizer.LocalizeAll().GetAsyncEnumerator();
@@ -59,6 +106,17 @@ namespace Loki.Generated
                     Console.WriteLine($"Localization result {resultCount}.");
                     Console.WriteLine();
                     Console.WriteLine(resultEnumerator.Current);
+
+                    var killerCheckRunManager = new StaticMixedPrecisionTuningTestExecutionManager(
+                        resultEnumerator.Current.ExtendedPrecisionOperations.ToImmutableDictionary(
+                            op => op.Id,
+                            op => new StaticMixedPrecisionTuningTestExecutionManager.OperationExecutionDescription()))
+                    {
+                        MissingDescriptionBehavior = StaticMixedPrecisionTuningTestExecutionManager.OperationAmbiguityProcessingBehavior.UseExtended
+                    };
+                    var killerCheckResult = await TestRunner.RunTestAsync(testInfo, killerCheckRunManager) as SingleStaticMixedPrecisionTuningRunResult;
+                    if (killerCheckResult.Outcome == TestOutcome.Failed)
+                        Console.WriteLine("This is a KILLER inaccuracy.");
                 }
             }
             finally
