@@ -35,6 +35,15 @@ This code will output
 name is 'John'
 ```
 
+_**See also:** [Quality bands](Quality bands.md)_
+
+Inference over strings is currently supported only with the expectation propagation algorithm.  StringFormat is considered to be an experimental feature, so, to prevent the model compiler from emitting warnings about using experimental components, the recommended quality level must be amended:
+
+```
+var engine = new InferenceEngine();
+engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+```
+
 ### Inferring the template
 
 So far we've fixed the form of the greeting. We can instead try to learn it by simultaneously working out what the template and the name are from the text. That will require us to specify a prior distribution over the template. It would be reasonable to say that the template should have a name placeholder somewhere, surrounded by non-word characters like a space, a full stop, or a comma. That leads us to the following model:
@@ -107,3 +116,4 @@ text3 is 'Hi! My name is Boris.'
 ```
 
 In this tutorial we saw how to use the **StringFormat** operation to both extract values from a piece of text and learn templates from one or more pieces of text. These are both very useful techniques for processing natural text strings. We can now move to the [next tutorial](Motif Finder.md), where we'll see how to combine integer, boolean, character array and string random variables to define a complex probabilistic model from bioinformatics.
+

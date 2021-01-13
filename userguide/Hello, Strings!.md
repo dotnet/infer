@@ -5,8 +5,6 @@ layout: default
 
 ## Strings Tutorial 1: Hello, Strings!
 
-This page describes an experimental feature that is likely to change in future releases.
-
 This tutorial introduces the basics of performing inference over string variables in Infer.NET. It shows how to define a generative process that includes strings and how to reason about variables involved in that process.
 
 You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and editing RunMe.cs to execute [HelloStrings.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/HelloStrings.cs).
@@ -48,15 +46,12 @@ Note that it's not clear from the value of **text** what **str1** and **str2** a
 
 ```csharp
 var engine = new InferenceEngine();  
-engine.Compiler.RecommendedQuality = QualityBand.Experimental;  
 
 Console.WriteLine("str1: {0}", engine.Infer(str1));  
 Console.WriteLine("str2: {0}", engine.Infer(str2));
 ```
 
-_**See also:** [Quality bands](Quality bands.md)_
-
-A couple of important things to note is that a) inference over strings is currently supported only with the expectation propagation algorithm and b) it's currently considered to be an experimental feature, so, to prevent the model compiler from emitting warnings about using experimental components, the recommended quality level must be amended. Running this code will produce the following output:
+Running this code will produce the following output:
 
 ```
 str1: Hello▪ uncertain
