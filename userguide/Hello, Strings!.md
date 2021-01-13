@@ -90,6 +90,6 @@ P(str1 = 'Hello uncertain') = 0.5
 P(str1 = 'Hello uncertain world') = 0
 ```
 
-The algorithms behind string inference are described in [String inference](..\development\String Inference.md).
+The algorithms behind string inference are described in [String inference](..\development\String Inference.html).
 
 You are now ready to move to the [next tutorial](StringFormat operation.md), where you will see some other supported operations over strings and use them to define a more sophisticated model.
