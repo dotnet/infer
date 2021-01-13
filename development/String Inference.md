@@ -5,7 +5,7 @@ layout: default
 
 ## String inference
 
-Infer.NET represents distributions on strings via probabilistic automata.  Operations on automata are described in [Belief Propagation with Strings](https://www.microsoft.com/en-us/research/publication/belief-propagation-strings/), with more details in [Notes on String operators](StringInference.pdf).
+Infer.NET represents distributions on strings via probabilistic automata.  Operations on automata are described in [Belief Propagation with Strings](https://www.microsoft.com/en-us/research/publication/belief-propagation-strings/), with more details in [Notes on String operators](StringInference.pdf).  The Infer.NET implementation is described in [String inference API design](String inference API design.md).
 
 ### Viewing automata
 

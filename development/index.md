@@ -21,7 +21,6 @@ layout: default
 *   [Gate computations](Gate computations.md)
 *   [Performance lessons learned](Performance lessons learned.md)
 *   [String inference](String Inference.md)
-*   [String inference API design](String inference API design.md)
 *   [Comparison to other PP frameworks](Comparison to other PP frameworks.md)
 
 ### Issues
