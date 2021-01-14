@@ -1321,7 +1321,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 alphaU = d_p * invSqrtVxu * Math.Exp(logPhiU - (useLogZRatio ? logZRatio : logZ));
             }
             alphaX = -alphaL - alphaU;
-            //if (MMath.AbsDiff(-813.982758300706, alphaX, 1e-20) > 1.3e-10) throw new Exception();
+            //if (MMath.AbsDiff(-0.813982758300706107033890548183668417181E+3, alphaX, 1e-20) > 1e-11) throw new Exception();
             if (useLogZRatio && Math.Abs(alphaX) < Math.Abs(alphaL) * 1e-6)
             {
                 // In this regime, we can assume NormalCdfRatio(x) == -1/x (since x < -1e8)
