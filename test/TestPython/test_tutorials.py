@@ -33,7 +33,7 @@ def TwoCoins():
 def TruncatedGaussianEfficient():
     threshold = Variable.New[Double]()
     x = Variable.GaussianFromMeanAndVariance(0.0, 1.0)
-    Variable.ConstrainTrue(x.op_GreaterThan(x,threshold))
+    Variable.ConstrainTrue(x > threshold)
     engine = InferenceEngine()
     for thresh in [i*0.1 for i in range(11)]:
         threshold.ObservedValue = thresh
@@ -80,8 +80,7 @@ def BayesPointMachine(incomes, ages, w, y):
 
     noise = 0.1
     ip = Variable.InnerProduct(w, x[j])
-    v = Variable.GaussianFromMeanAndVariance(ip, noise)
-    y[j] = v.op_GreaterThan(v, 0.0)
+    y[j] = Variable.GaussianFromMeanAndVariance(ip, noise) > 0.0
 
 def BayesPointMachineExample():
     incomes = [63, 16, 28, 55, 22, 20]
