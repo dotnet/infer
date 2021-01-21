@@ -206,9 +206,7 @@ def GenerateData(nData):
 def HelloStrings():
     str1 = Variable.StringUniform()
     str2 = Variable.StringUniform()
-    # TODO: text = str1 + " " + str2
-    text = str1.op_Addition(str1, " ")
-    text = text.op_Addition(text, str2)
+    text = str1 + " " + str2
     text.ObservedValue = "hello uncertain world"
     engine = InferenceEngine()
     print(f"str1: {engine.Infer(str1)}")
@@ -228,12 +226,7 @@ def StringFormat():
 
     # Infer template
     name = Variable.StringCapitalized()
-    # The following does not work in pythonnet:
-    #template = Variable.StringUniform() + Variable.CharNonWord()
-    template = Variable.StringUniform().op_Addition(Variable.StringUniform(), Variable.CharNonWord())
-    template = template.op_Addition(template, "{0}")
-    template = template.op_Addition(template, Variable.CharNonWord())
-    template = template.op_Addition(template, Variable.StringUniform())
+    template = Variable.StringUniform() + Variable.CharNonWord() + "{0}" + Variable.CharNonWord() + Variable.StringUniform()
     text = VariableStringFormat(template, name)
 
     text.ObservedValue = "Hello, mate! I'm Dave."
@@ -299,44 +292,40 @@ def MotifFinder():
     motifLength = len(trueMotifNucleobaseDist)  # Assume we know the true motif length.
     motifCharsRange = Range(motifLength)
     motifNucleobaseProbs = Variable.Array[Vector](motifCharsRange)
-    # Cannot do motifNucleobaseProbs[motifCharsRange] = Variable.Dirichlet...
-    motifNucleobaseProbs.set_Item(motifCharsRange, Variable.Dirichlet(motif_nucleobase_pseudo_counts).ForEach(motifCharsRange))
+    motifNucleobaseProbs[motifCharsRange] = Variable.Dirichlet(motif_nucleobase_pseudo_counts).ForEach(motifCharsRange)
     sequenceRange = Range(SequenceCount)
     sequences = Variable.Array[str](sequenceRange)
 
     motifPositions = Variable.Array[int](sequenceRange)
-    motifPositions.set_Item(sequenceRange, Variable.DiscreteUniform(SequenceLength - motifLength + 1).ForEach(sequenceRange))
+    motifPositions[sequenceRange] = Variable.DiscreteUniform(SequenceLength - motifLength + 1).ForEach(sequenceRange)
 
     motifPresence = Variable.Array[bool](sequenceRange)
-    motifPresence.set_Item(sequenceRange, Variable.Bernoulli(MotifPresenceProbability).ForEach(sequenceRange))
+    motifPresence[sequenceRange] = Variable.Bernoulli(MotifPresenceProbability).ForEach(sequenceRange)
 
     forEachBlock = Variable.ForEach(sequenceRange)
-    ifVar = Variable.If(motifPresence.get_Item(sequenceRange))
+    ifVar = Variable.If(motifPresence[sequenceRange])
 
     motifChars = Variable.Array[Char](motifCharsRange)
-    motifChars.set_Item(motifCharsRange, Variable.Char(motifNucleobaseProbs.get_Item(motifCharsRange)))
+    motifChars[motifCharsRange] = Variable.Char(motifNucleobaseProbs[motifCharsRange])
     motif = Variable.StringFromArray(motifChars)
-    motifPos = motifPositions.get_Item(sequenceRange)
 
-    backgroundLengthRight = motifPos.op_Subtraction(SequenceLength - motifLength, motifPositions.get_Item(sequenceRange))
-    backgroundLeft = VariableStringOfLength(motifPositions.get_Item(sequenceRange), backgroundNucleobaseDist)
+    backgroundLengthRight = SequenceLength - motifLength - motifPositions[sequenceRange]
+    backgroundLeft = VariableStringOfLength(motifPositions[sequenceRange], backgroundNucleobaseDist)
     backgroundRight = VariableStringOfLength(backgroundLengthRight, backgroundNucleobaseDist)
-    added_vars = backgroundLeft.op_Addition(backgroundLeft, motif)
-    added_vars = added_vars.op_Addition(added_vars, backgroundRight)
-    sequences.set_Item(sequenceRange, added_vars)
+    sequences[sequenceRange] = backgroundLeft + motif + backgroundRight
 
     ifVar.Dispose()
 
-    ifNotVar = Variable.IfNot(motifPresence.get_Item(sequenceRange))
+    ifNotVar = Variable.IfNot(motifPresence[sequenceRange])
 
-    sequences.set_Item(sequenceRange, VariableStringOfLength(SequenceLength, backgroundNucleobaseDist))
+    sequences[sequenceRange] = VariableStringOfLength(SequenceLength, backgroundNucleobaseDist)
 
     ifNotVar.Dispose()
     forEachBlock.CloseBlock()
 
     sequences.ObservedValue = sequenceData
     engine = InferenceEngine()
-    engine.NumberOfIterations = 30  #30
+    engine.NumberOfIterations = 30
     engine.Compiler.RecommendedQuality = QualityBand.Experimental
 
     motifNucleobaseProbsPosterior = engine.Infer[Array[Dirichlet]](motifNucleobaseProbs)
@@ -349,7 +338,7 @@ def MotifFinder():
                                  lambda dist, c: dist[c])  # Distributions.DiscreteChar indexer is implemented.
 
     PrintPositionFrequencyMatrix("\nInferred position frequency matrix mean:",
-                                 motifNucleobaseProbsPosterior, # Array of Distribtions.Dirichlet; mean of each is a PiecewiseVector
+                                 motifNucleobaseProbsPosterior, # Array of Distributions.Dirichlet; mean of each is a PiecewiseVector
                                  lambda dist, c: dist.GetMean()[ord(c)])  # PiecewiseVector indexer is implemented, but not for strings...
     # TypeError: No method matches given arguments for get_Item: (<class 'str'>) -> need to do ord(c)
     # Tried importing Console and ConsoleColor from System which works in powershell but not in VS console.
@@ -437,19 +426,6 @@ def printc(text, color=ConsoleColor.Yellow):
     Console.ResetColor()
 
 # Python.NET helper functions
-
-def VariableObserved(list, range=None):
-    t = type(list[0])
-    array = Array[t](list)
-    if range == None:
-        args = [array]
-    else:
-        args = [array, range]
-    return Invoker.InvokeStatic(Variable, "Observed", args)
-
-def InitialiseTo(variable, distribution):
-    # Reflection essentially, public in the Infer.NET API but not in the manual
-    Invoker.InvokeInstance("InitialiseTo", variable, distribution)
 
 def ToClr(matrix):
     # See https://github.com/pythonnet/pythonnet/blob/ec424bb0a8f0217c496898395880cf9b99d073e6/src/tests/test_array.py#L1112
