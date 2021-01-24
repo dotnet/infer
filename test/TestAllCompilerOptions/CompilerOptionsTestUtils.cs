@@ -202,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
 
             try
             {
-                var processLimit = 1; // Environment.ProcessorCount;
+                var processLimit = Environment.ProcessorCount;
                 var semaphore = new Semaphore(processLimit, processLimit);
                 var instance = 0;
                 foreach (var loops in new[] { true, false })
