@@ -221,7 +221,8 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
                                         temporaryDirectories.Add(temp);
                                         Directory.CreateDirectory(temp);
 
-                                        CopyDirectory("Data", temp);
+                                        var dataDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data");
+                                        CopyDirectory(Directory.GetCurrentDirectory(), temp);
 
                                         return await RunProcessAsync(
                                             assembly,
