@@ -279,8 +279,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
                     lastTime = DateTime.UtcNow;
                 }
 
-                var state = string.Format("UseParallelForLoops={0} FreeMemory={1} ReturnCopies={2} OptimiseInferenceCode={3}", loops, free, copies, optimise);
-                return RunAllTests(TestFinished, tests).Select(m => new Tuple<string, MethodInfo>(state, m)).ToList();
+                return RunAllTests(TestFinished, tests).Select(m => new Tuple<string, MethodInfo>($"UseParallelForLoops={loops} FreeMemory={free} ReturnCopies={copies} OptimiseInferenceCode={optimise}: {m.error}", m.test)).ToList();
             }
             finally
             {
@@ -312,9 +311,9 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
             }
         }
 
-        private static IEnumerable<MethodInfo> RunAllTests(Action<string, TimeSpan> testFinished, MethodInfo[] tests)
+        private static IEnumerable<(MethodInfo test, Exception error)> RunAllTests(Action<string, TimeSpan> testFinished, MethodInfo[] tests)
         {
-            var failed = new ConcurrentQueue<MethodInfo>();
+            var failed = new ConcurrentQueue<(MethodInfo, Exception)>();
             var safeTests = new ConcurrentQueue<MethodInfo>();
             var unsafeTests = new ConcurrentQueue<MethodInfo>();
             ForEach(tests, test =>
@@ -358,7 +357,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
             return failed;
         }
 
-        private static void RunTest(MethodInfo test, ConcurrentQueue<MethodInfo> failed)
+        private static void RunTest(MethodInfo test, ConcurrentQueue<(MethodInfo, Exception)> failed)
         {
             object obj = Activator.CreateInstance(test.DeclaringType);
             BindingFlags flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod;
@@ -368,9 +367,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(test);
-                Trace.WriteLine(ex);
-                failed.Enqueue(test);
+                failed.Enqueue((test, ex));
             }
         }
     }
