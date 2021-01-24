@@ -19,6 +19,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
     using Microsoft.ML.Probabilistic.Compiler;
     using Microsoft.ML.Probabilistic.Models;
     using Xunit;
+    using System.Security.Cryptography;
 
     public static class CompilerOptionsTestUtils
     {
@@ -172,6 +173,22 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
             return outputTasks;
         }
 
+        private static void CopyDirectory(string source, string destination)
+        {
+            var directoryInfo = new DirectoryInfo(source);
+            Directory.CreateDirectory(Path.Combine(destination, directoryInfo.Name));
+
+            foreach (var file in directoryInfo.GetFiles())
+            {
+                File.Copy(file.FullName, Path.Combine(destination, directoryInfo.Name, file.Name));
+            }
+
+            foreach (var directory in directoryInfo.GetDirectories())
+            {
+                CopyDirectory(directory.FullName, Path.Combine(destination, directoryInfo.Name));
+            }
+        }
+
         public static async Task LaunchTestAllCompilerOptionsProcesses()
         {
             var assembly = Assembly.GetExecutingAssembly().Location;
@@ -185,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
 
             try
             {
-                var processLimit = Environment.ProcessorCount;
+                var processLimit = 1; // Environment.ProcessorCount;
                 var semaphore = new Semaphore(processLimit, processLimit);
                 var instance = 0;
                 foreach (var loops in new[] { true, false })
@@ -203,6 +220,8 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
                                         var temp = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
                                         temporaryDirectories.Add(temp);
                                         Directory.CreateDirectory(temp);
+
+                                        CopyDirectory("Data", temp);
 
                                         return await RunProcessAsync(
                                             assembly,
