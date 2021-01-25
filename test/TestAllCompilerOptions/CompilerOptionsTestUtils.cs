@@ -299,7 +299,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
                     lastTime = DateTime.UtcNow;
                 }
 
-                return RunAllTests(TestFinished, tests).Select(m => new Tuple<string, MethodInfo>($"UseParallelForLoops={loops} FreeMemory={free} ReturnCopies={copies} OptimiseInferenceCode={optimise}: {m.error}", m.test)).ToList();
+                return RunAllTests(TestFinished, tests, runInParallel: false).Select(m => new Tuple<string, MethodInfo>($"UseParallelForLoops={loops} FreeMemory={free} ReturnCopies={copies} OptimiseInferenceCode={optimise}: {m.error}", m.test)).ToList();
             }
             finally
             {
@@ -320,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
                 MethodInfo method = type.GetMethod(methodName, Type.EmptyTypes);
                 return method;
             }).ToArray();
-            RunAllTests(testFinished, testMethods);
+            RunAllTests(testFinished, testMethods, runInParallel: false);
         }
 
         private static void ForEach<T>(IEnumerable<T> tests, Action<T> action)
@@ -331,7 +331,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
             }
         }
 
-        private static IEnumerable<(MethodInfo test, Exception error)> RunAllTests(Action<string, TimeSpan> testFinished, MethodInfo[] tests)
+        private static IEnumerable<(MethodInfo test, Exception error)> RunAllTests(Action<string, TimeSpan> testFinished, MethodInfo[] tests, bool runInParallel)
         {
             var failed = new ConcurrentQueue<(MethodInfo, Exception)>();
             var safeTests = new ConcurrentQueue<MethodInfo>();
@@ -347,7 +347,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
                 else safeTests.Enqueue(test);
             });
             // unsafe tests must run sequentially.
-            Trace.WriteLine($"Running {unsafeTests.Count} tests sequentially");
+            Trace.WriteLine($"Running {unsafeTests.Count} unsafe tests sequentially");
             foreach (var test in unsafeTests)
             {
                 var sw = Stopwatch.StartNew();
@@ -356,24 +356,38 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
             }
             var safeTestsArray = safeTests.ToArray();
             Array.Sort(safeTestsArray, (a, b) => a.Name.CompareTo(b.Name));
-            Trace.WriteLine($"Running {safeTests.Count} tests in parallel");
-            try
+            if (runInParallel)
             {
-                Parallel.ForEach(safeTestsArray, test =>
+                Trace.WriteLine($"Running {safeTests.Count} safe tests in parallel");
+                try
+                {
+                    Parallel.ForEach(safeTestsArray, test =>
+                    {
+                        var sw = Stopwatch.StartNew();
+                        RunTest(test, failed);
+                        testFinished(test.Name, sw.Elapsed);
+                    });
+                }
+                catch (AggregateException ex)
+                {
+                    // To make the Visual Studio debugger stop at the inner exception, check "Enable Just My Code" in Debug->Options.
+                    // throw InnerException while preserving stack trace
+                    // https://stackoverflow.com/questions/57383/in-c-how-can-i-rethrow-innerexception-without-losing-stack-trace
+                    System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                    throw;
+                }
+            }
+            else
+            {
+                Trace.WriteLine($"Running {unsafeTests.Count} safe tests sequentially");
+                foreach (var test in safeTestsArray)
                 {
                     var sw = Stopwatch.StartNew();
                     RunTest(test, failed);
                     testFinished(test.Name, sw.Elapsed);
-                });
+                }
             }
-            catch (AggregateException ex)
-            {
-                // To make the Visual Studio debugger stop at the inner exception, check "Enable Just My Code" in Debug->Options.
-                // throw InnerException while preserving stack trace
-                // https://stackoverflow.com/questions/57383/in-c-how-can-i-rethrow-innerexception-without-losing-stack-trace
-                System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
+
             return failed;
         }
 
