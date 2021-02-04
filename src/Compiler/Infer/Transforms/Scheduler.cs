@@ -28,7 +28,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
     internal class Scheduler
     {
-        internal static bool verbose, showAncestors, showGraphs, showMinCut, showTimings, showCapacityBreakdown;
+        internal static bool verbose, showAncestors, showGraphs, showUnwind, showMinCut, showTimings, showCapacityBreakdown, showOffsetEdges;
         internal bool debug, doRepair = true, useRepair2 = false;
         internal bool useExperimentalSerialSchedules;
         internal Action<string, IEnumerable<string>> RecordText;
@@ -888,6 +888,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             // Phase 1: label edges to satisfy Required/SkipIfUniform constraints
             Stack<StackFrame> frames = new Stack<StackFrame>();
+            bool cannotInitialise = false;
             bool backtracking = false;
             while (true)
             {
@@ -928,7 +929,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         // set verbose=true, showGraphs=true
                         if (debug && g.Nodes.Count > 1)
                             DrawLabeledGraph("init failure", false, edgeCost);
-                        throw new Exception("Scheduling constraints cannot be satisfied.  This is usually due to a missing or overspecified method attribute");
+                        cannotInitialise = true;
+                        break;
                     }
                     StackFrame oldFrame = frames.Pop();
                     EdgeIndex newBackEdge = oldFrame.edge;
@@ -936,7 +938,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (debug && verbose)
                     {
                         Debug.WriteLine("unwinding " + EdgeToString(oldFrame.edge));
-                        if (showGraphs)
+                        if (showUnwind)
                             DrawLabeledGraph("unwind", false, edgeCost);
                     }
                     // unwind labels
@@ -1035,6 +1037,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 costIsInfinite = GetNodesToInit1(edgeCostIter, directionIter, edgeCost, initializerDescendants, nodesToInit, useGroups);
             }
+            if (nodesToInit.Count > 0 && cannotInitialise)
+                throw new Exception("Scheduling constraints cannot be satisfied.  This is usually due to a missing or overspecified method attribute");
             // construct a schedule for nodesToInit
             // label any remaining unlabeled edges
             foreach (NodeIndex source in nodesToInit)
@@ -1420,11 +1424,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 float iterCost = SumSubarray(edgeCostIter, iterBackEdges);
                 if (initCost < iterCost)
                 {
-                    Debug.WriteLine("initializer reduced cost from {0} to {1}", iterCost, initCost);
+                    Debug.WriteLine($"initializer reduced cost from {iterCost} to {initCost}");
                 }
                 else
                 {
-                    Debug.WriteLine("did not initialize since cost did not reduce (from {0} to {1})", iterCost, initCost);
+                    Debug.WriteLine($"did not initialize since cost did not reduce (from {iterCost} to {initCost})");
                 }
             }
             DepthFirstSearch<NodeIndex> dfsBack;
@@ -1443,7 +1447,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     string groupString = "";
                     if (useGroups && (node >= groupGraph.firstGroup))
                         groupString = "group ";
-                    Debug.WriteLine("found {1}{0}", node, groupString);
+                    Debug.WriteLine($"found {groupString}{node}");
                 }
                 nodesToInit.Add(node);
             };
@@ -1468,7 +1472,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         string txt = DoubleToString(edgeCostIter[iterBackEdge]);
                         if (initializerDescendants.Contains(source))
                             txt += " init";
-                        Debug.WriteLine("searching from {0} {1}", EdgeToString(iterBackEdge), txt);
+                        Debug.WriteLine($"searching from {EdgeToString(iterBackEdge)} {txt}");
                     }
                     if (useGroups)
                     {
@@ -1482,7 +1486,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     directionIter[iterBackEdge] = Direction.Forward;
                 }
                 else if (debug)
-                    Debug.WriteLine("cost[{0}] = {1}", EdgeToString(iterBackEdge), edgeCostIter[iterBackEdge]);
+                    Debug.WriteLine($"cost[{EdgeToString(iterBackEdge)}] = {edgeCostIter[iterBackEdge]}");
             }
 
             return costIsInfinite;
@@ -2225,7 +2229,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (dg.isRequired[edgeOrig])
                     return 100f * scale;
                 int smallestEdgeSetSize = int.MaxValue;
-                foreach(var edgeSet in GetRequiredEdgeSets(g.TargetOf(edge), true, false))
+                foreach (var edgeSet in GetRequiredEdgeSets(g.TargetOf(edge), true, false))
                 {
                     if (edgeSet.Contains(edge))
                         smallestEdgeSetSize = System.Math.Min(smallestEdgeSetSize, edgeSet.Count);
@@ -2554,7 +2558,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
             }
             if (debug)
-                Debug.WriteLine($"unlabeling {StringUtil.CollectionToString(unlabeledEdges.Select(EdgeToString),"")}");
+                Debug.WriteLine($"unlabeling {StringUtil.CollectionToString(unlabeledEdges.Select(EdgeToString), "")}");
             foreach (EdgeIndex edge in sortedEdges2)
             {
                 source = g.SourceOf(edge);
@@ -2815,8 +2819,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     int length = edgeLength + edgeLength2 + distance[target][source2] + distance[target2][source];
                     edgeCost[edge2] += 1f / length;
 
-                    // for debugging
-                    //Debug.WriteLine("{0} increased cost of {1} to {2}", EdgeToString(edge), EdgeToString(edge2), edgeCost[edge2]);
+                    if (verbose)
+                        Debug.WriteLine($"{EdgeToString(edge)} increased cost of {EdgeToString(edge2)} to {edgeCost[edge2]} (shortest cycle length={length})");
                 }
             }
         }
@@ -3076,7 +3080,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 edgeCost[edge] = cost;
             }
-            foreach(var edgeSet in GetRequiredEdgeSets(target, inIteration, true))
+            foreach (var edgeSet in GetRequiredEdgeSets(target, inIteration, true))
             {
                 int unknownCount = edgeSet.Count(edge => direction[edge] == Direction.Unknown);
                 float cost = (unknownCount <= 1) ? float.PositiveInfinity : 1f / edgeSet.Count;
@@ -3089,6 +3093,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
+        /// <summary>
+        /// Get the cost of reversing (i.e. labeling backward) each edge in the dependency graph.
+        /// </summary>
+        /// <param name="inIteration">true if we are scoring edges in the iteration schedule</param>
+        /// <returns></returns>
         private float[] GetEdgeCostsInit(bool inIteration)
         {
             float[] edgeCost = new float[g.EdgeCount()];

@@ -268,8 +268,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                              containersOfNode.Add(containers);
                                              for (int i = 0; i < currentFusedCount; i++)
                                              {
-                                                 IForStatement ifs = (IForStatement)containers[i];
-                                                 if (ifs != null)
+                                                 if (containers[i] is IForStatement ifs)
                                                  {
                                                      var loopVar = Recognizer.LoopVariable(ifs);
                                                      if (loopVarsOfWhileNumber.Count <= whileNumber)

@@ -14,10 +14,6 @@ using Microsoft.ML.Probabilistic.Models.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 {
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning disable 1591
-#endif
-
     /// <summary>
     /// Describes a variable in MSL (random, constant, or loop variable)
     /// </summary>
@@ -33,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <summary>
         /// Helps recognize code patterns
         /// </summary>
-        private static CodeRecognizer Recognizer = CodeRecognizer.Instance;
+        private static readonly CodeRecognizer Recognizer = CodeRecognizer.Instance;
 
         /// <summary>
         /// Stores the lengths that were used to define an array in MSL.
@@ -345,7 +341,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             if (indexVarsString.Length > 0) indexVarsString = $",indexVars={indexVarsString}";
             string literalIndexingString = (LiteralIndexingDepth != 0) ? $",LiteralIndexingDepth={LiteralIndexingDepth}" : "";
             string distArrayDepthString = (DistArrayDepth != 0) ? $",DistArrayDepth={DistArrayDepth}" : "";
-            string marginalPrototypeString = (marginalPrototypeExpression == null) ? "" : $",{marginalPrototypeExpression.ToString()}";
+            string marginalPrototypeString = (marginalPrototypeExpression == null) ? "" : $",{marginalPrototypeExpression}";
             return "VariableInformation(" + stocString + declaration + sizesString + indexVarsString + distArrayDepthString + literalIndexingString + marginalPrototypeString + ")";
         }
 
@@ -749,11 +745,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 {
                     foreach (IStatement container in containers.inputs)
                     {
-                        if (container is IForStatement)
+                        if (container is IForStatement ifs)
                         {
-                            IVariableDeclaration loopVar = Recognizer.LoopVariable((IForStatement)container);
-                            IExpression actualIndex;
-                            if (replacedIndexVars.TryGetValue(loopVar, out actualIndex))
+                            IVariableDeclaration loopVar = Recognizer.LoopVariable(ifs);
+                            if (replacedIndexVars.TryGetValue(loopVar, out IExpression actualIndex))
                             {
                                 context.Error($"Cannot index {expr} by {loopVar.Name}={actualIndex} since {v.Name} has an implicit dependency on {loopVar.Name}. Try making the dependency explicit by putting {v.Name} into an array indexed by {loopVar.Name}");
                             }
@@ -815,7 +810,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
     internal class NameGenerator : ICompilerAttribute
     {
-        private Dictionary<string, int> counts = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> counts = new Dictionary<string, int>();
 
         public string GenerateName(string prefix)
         {
@@ -835,8 +830,4 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             return prefix + count;
         }
     }
-
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning restore 1591
-#endif
 }

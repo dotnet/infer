@@ -39,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Helps build class declarations
         /// </summary>
-        private static CodeBuilder Builder = CodeBuilder.Instance;
+        private static readonly CodeBuilder Builder = CodeBuilder.Instance;
 
         /// <summary>
         /// Automatically generate names for variables based on their definition.
@@ -228,9 +228,9 @@ namespace Microsoft.ML.Probabilistic.Models
             {
                 if (ShorterIsPrefixOfLonger(defConditions, currentConditions)) return true;
             }
-            if (this is HasItemVariables)
+            if (this is HasItemVariables hiv)
             {
-                ICollection<IVariable> ie = ((HasItemVariables)this).GetItemsUntyped().Values;
+                ICollection<IVariable> ie = hiv.GetItemsUntyped().Values;
                 foreach (IVariable irv in ie)
                 {
                     Variable v = (Variable)irv;
@@ -248,9 +248,9 @@ namespace Microsoft.ML.Probabilistic.Models
             {
                 if (ShorterIsPrefixOfLonger(defConditions, currentConditions)) return true;
             }
-            if (this is HasItemVariables)
+            if (this is HasItemVariables hiv)
             {
-                foreach (KeyValuePair<IList<IModelExpression>, IVariable> entry in ((HasItemVariables)this).GetItemsUntyped())
+                foreach (KeyValuePair<IList<IModelExpression>, IVariable> entry in hiv.GetItemsUntyped())
                 {
                     if (MayOverlap(entry.Key, indices[depth]))
                     {
@@ -487,7 +487,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     {
                         HasObservedValue hov = this as HasObservedValue;
                         Type type;
-                        if (ReferenceEquals(hov.ObservedValue, null))
+                        if (hov.ObservedValue is null)
                         {
                             Type face = GetType().GetInterface(typeof(IModelExpression<>).Name, false);
                             Type[] typeArgs = face.GetGenericArguments();
@@ -539,9 +539,8 @@ namespace Microsoft.ML.Probabilistic.Models
 
         internal static void ForEachBaseVariable(IModelExpression expr, Action<Variable> action)
         {
-            if (expr is Variable)
+            if (expr is Variable var)
             {
-                Variable var = (Variable)expr;
                 if (var.IsBase)
                 {
                     action(var);
@@ -727,7 +726,7 @@ namespace Microsoft.ML.Probabilistic.Models
             while (parent.array != null) parent = (Variable)parent.array;
             foreach (ICompilerAttribute attr in parent.attributes)
             {
-                if (attr is AttributeType) yield return (AttributeType)attr;
+                if (attr is AttributeType type) yield return type;
             }
         }
 
@@ -956,10 +955,10 @@ namespace Microsoft.ML.Probabilistic.Models
             }
             foreach (IStatementBlock sb in StatementBlock.GetOpenBlocks())
             {
-                if (sb is ConditionBlock)
+                if (sb is ConditionBlock cb)
                 {
                     // Remove condition variables from lhs and rhs
-                    Variable condVar = ((ConditionBlock)sb).ConditionVariableUntyped;
+                    Variable condVar = cb.ConditionVariableUntyped;
                     set1.Remove(condVar);
                     set2.Remove(condVar);
                 }
@@ -1406,12 +1405,11 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>Returns a random variable that is statistically defined by the specified prior.</returns>
         public static Variable<T> Random<T>(IDistribution<T> dist)
         {
-            if (dist is HasPoint<T>)
+            if (dist is HasPoint<T> hasPoint)
             {
-                // Variable.Random(PointMass(x)) -> Variable.Constant(x)
-                HasPoint<T> hasPoint = (HasPoint<T>)dist;
                 if (hasPoint.IsPointMass)
                 {
+                    // Variable.Random(PointMass(x)) -> Variable.Constant(x)
                     return Variable.Constant(hasPoint.Point).Attrib(new MarginalPrototype(dist));
                 }
             }
@@ -3292,7 +3290,17 @@ namespace Microsoft.ML.Probabilistic.Models
                     sumUpTo[i] = sumUpTo[i - 1] + array[i];
                 }
             }
-            var sum = Variable.Copy(sumUpTo[((Variable<int>)n.Size) - 1]);
+            var size = (Variable<int>)n.Size;
+            var sizeIsZero = (size == 0);
+            var sum = Variable.New<double>();
+            using (Variable.If(sizeIsZero))
+            {
+                sum.SetTo(Variable.Constant(0.0));
+            }
+            using (Variable.IfNot(sizeIsZero))
+            {
+                sum.SetTo(Variable.Copy(sumUpTo[size - 1]));
+            }
             ReverseAndCloseBlocks(blocks);
             return sum;
         }
@@ -3328,9 +3336,8 @@ namespace Microsoft.ML.Probabilistic.Models
             });
             foreach (IStatementBlock b in StatementBlock.GetOpenBlocks())
             {
-                if (b is HasRange)
+                if (b is HasRange br)
                 {
-                    HasRange br = (HasRange)b;
                     ranges.Remove(br.Range);
                 }
             }
@@ -3555,8 +3562,8 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<Vector> Vector(Variable<double[]> array)
         {
             var result = Variable<Vector>.Factor(Probabilistic.Math.Vector.FromArray, array);
-            if (array is IVariableArray)
-                result.SetValueRange(((IVariableArray)array).Ranges[0]);
+            if (array is IVariableArray iva)
+                result.SetValueRange(iva.Ranges[0]);
             return result;
         }
 
@@ -5607,9 +5614,8 @@ namespace Microsoft.ML.Probabilistic.Models
             containers = ((Variable)varArray).Containers;
             foreach (IModelExpression ind in inds)
             {
-                if (ind is Range)
+                if (ind is Range range)
                 {
-                    Range range = (Range)ind;
                     Models.MethodInvoke.ForEachRange(range.Size,
                                                      delegate (Range r)
                                                          {
@@ -5620,9 +5626,9 @@ namespace Microsoft.ML.Probabilistic.Models
                                                          });
                     continue;
                 }
-                else if (ind is Variable<int>)
+                else if (ind is Variable<int> variable)
                 {
-                    containers = MergeContainers(containers, ((Variable<int>)ind).Containers);
+                    containers = MergeContainers(containers, variable.Containers);
                     continue;
                 }
                 else
@@ -5630,9 +5636,8 @@ namespace Microsoft.ML.Probabilistic.Models
                     throw new ArgumentException("Can only index by ranges or integer variables, not " + ind);
                 }
             }
-            if (varArray is HasItemVariables)
+            if (varArray is HasItemVariables irva)
             {
-                HasItemVariables irva = (HasItemVariables)varArray;
                 if (irva.GetItemsUntyped().ContainsKey(inds)) throw new InvalidOperationException("Duplicate indexed variable created.");
                 irva.GetItemsUntyped()[inds] = this;
             }
