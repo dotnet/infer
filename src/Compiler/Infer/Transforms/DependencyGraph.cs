@@ -160,19 +160,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal static IExpression TargetExpression(IStatement ist)
         {
             if (ist is IForStatement)
-                return TargetExpression(((IForStatement) ist).Body.Statements[0]);
+                return TargetExpression(((IForStatement)ist).Body.Statements[0]);
             else if (ist is IConditionStatement)
-                return TargetExpression(((IConditionStatement) ist).Then.Statements[0]);
+                return TargetExpression(((IConditionStatement)ist).Then.Statements[0]);
             else if (ist is IBlockStatement)
-                return TargetExpression(((IBlockStatement) ist).Statements[0]);
+                return TargetExpression(((IBlockStatement)ist).Statements[0]);
             else if (ist is ICommentStatement)
             {
-                ICommentStatement ics = (ICommentStatement) ist;
+                ICommentStatement ics = (ICommentStatement)ist;
                 return CodeBuilder.Instance.LiteralExpr(ics.Comment.Text);
             }
             else if (ist is IExpressionStatement)
             {
-                IExpression expr = ((IExpressionStatement) ist).Expression;
+                IExpression expr = ((IExpressionStatement)ist).Expression;
                 if (expr is IAssignExpression)
                 {
                     expr = ((IAssignExpression)expr).Target;
@@ -186,12 +186,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return null;
         }
 
-        internal DependencyGraph(BasicTransformContext context, 
-            IList<IStatement> nodes, 
-            IDictionary<IStatement, IStatement> replacements = null, 
-            bool ignoreMissingNodes = false, 
+        internal DependencyGraph(BasicTransformContext context,
+            IList<IStatement> nodes,
+            IDictionary<IStatement, IStatement> replacements = null,
+            bool ignoreMissingNodes = false,
             bool ignoreRequirements = false,
-            bool deleteCancels = false, 
+            bool deleteCancels = false,
             bool readAfterWriteOnly = false)
         {
             Dictionary<IStatement, int> indexOfNode = new Dictionary<IStatement, int>(new IdentityComparer<IStatement>());
@@ -206,7 +206,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             this.nodeData = dependencyGraph;
             this.edgeData = dependencyGraph;
             this.getTargetIndex = (i => new TargetIndex(i));
-            NodeToString = delegate(int i) { return nodes[i].ToString(); };
+            NodeToString = delegate (int i) { return nodes[i].ToString(); };
             NodeToShortString = delegate (int i)
             {
                 string s = StatementToShortString(nodes[i]);
@@ -241,7 +241,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 if (replacements != null && replacements.Count > 0)
                 {
-                    di = (DependencyInformation) di.Clone();
+                    di = (DependencyInformation)di.Clone();
                     di.Replace(replacements);
                 }
                 if (di.IsOutput)
@@ -403,7 +403,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // the graph is now complete.
             dependencyGraph.IsReadOnly = true;
 
-            if(debug)
+            if (debug)
                 LoggingStart("Construction");
             foreach (var kvp in pendingEvents)
             {
@@ -425,7 +425,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     di = new DependencyInformation();
                 if (replacements != null && replacements.Count > 0)
                 {
-                    di = (DependencyInformation) di.Clone();
+                    di = (DependencyInformation)di.Clone();
                     di.Replace(replacements);
                 }
                 // label 'required' edges
@@ -604,7 +604,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IStatement externalSource = null;
                     foreach (IStatement source in di.Dependencies)
                     {
-                        if (!indexOfNode.ContainsKey(source) && !IsUniform(context, source)) {
+                        if (!indexOfNode.ContainsKey(source) && !IsUniform(context, source))
+                        {
                             hasExternalSource = true;
                             externalSource = source;
                             break;
@@ -614,7 +615,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     {
                         initiallyStaleNodes.Add(targetIndex);
                         if (debug)
-                            AddEvent(targetIndex, "initially stale because of external source "+externalSource); 
+                            AddEvent(targetIndex, "initially stale because of external source " + externalSource);
                     }
                 }
             }
@@ -643,7 +644,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (debug)
                     ForEachFreshDescendant(node, node2 =>
                     {
-                        if(node2 != node) AddEvent(node2, string.Format("initially stale because of ancestor {0} {1}", node, NodeToShortString(node)));
+                        if (node2 != node) AddEvent(node2, string.Format("initially stale because of ancestor {0} {1}", node, NodeToShortString(node)));
                         nodesToAdd.Add(node2);
                     });
                 else
@@ -659,8 +660,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         //     bitsProvided[edge4] = 2
         //     bitsProvided[edge5] = 2
         //     requiredBits = 3
-        internal bool LabelRequiredEdges(Dictionary<IStatement, int> indexOfNode, DependencyInformation di, 
-            IStatement target, int targetIndex, IEnumerable<IStatement> sources, int anyCounter, 
+        internal bool LabelRequiredEdges(Dictionary<IStatement, int> indexOfNode, DependencyInformation di,
+            IStatement target, int targetIndex, IEnumerable<IStatement> sources, int anyCounter,
             BasicTransformContext context, bool ignoreMissingNodes)
         {
             bool topLevel = (anyCounter == 0);
@@ -668,7 +669,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (source is AnyStatement)
                 {
-                    AnyStatement anyBlock = (AnyStatement) source;
+                    AnyStatement anyBlock = (AnyStatement)source;
                     List<IStatement> children = new List<IStatement>();
                     children.AddRange(anyBlock.Statements);
                     if (children.Count == 1)
@@ -703,7 +704,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                     throw new InferCompilerException("anyCounter < 1");
                                 if (anyCounter > 8)
                                     throw new NotSupportedException("Method has > 8 SkipIfAllUniform annotations");
-                                byte bit = (byte) (1 << (anyCounter - 1));
+                                byte bit = (byte)(1 << (anyCounter - 1));
                                 bitsProvided[edge] |= bit;
                                 requiredBits[targetIndex] |= bit;
                             }
@@ -723,9 +724,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             if (anyCounter > 8)
                                 throw new NotSupportedException("Method has > 8 SkipIfAllUniform annotations");
-                            byte bit = (byte) (1 << (anyCounter - 1));
+                            byte bit = (byte)(1 << (anyCounter - 1));
                             // when a required node is missing and not labelled uniform, assume that it is available.  thus this bit is no longer required.
-                            requiredBits[targetIndex] &= (byte) ~bit;
+                            requiredBits[targetIndex] &= (byte)~bit;
                             // no need to consider rest of the AnyStatement
                             return true;
                         }
@@ -804,7 +805,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (debug)
                 LoggingStart("PropagateUniformNodes");
             var sorter = new CyclicDependencySort<NodeIndex, bool>(dependencyGraph,
-                                                                   delegate(NodeIndex node, IndexedProperty<NodeIndex, bool> isScheduled, bool cost)
+                                                                   delegate (NodeIndex node, IndexedProperty<NodeIndex, bool> isScheduled, bool cost)
                                                                    { return IsUniform(node, source => isScheduled[source]); });
             // only nodes whose cost=false will be scheduled
             sorter.Threshold = true;
@@ -853,7 +854,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        private IEnumerable<NodeIndex> InvalidOrStaleSources(NodeIndex node, ICollection<NodeIndex> invalidNodes, ICollection<TargetIndex> staleNodes, 
+        private IEnumerable<NodeIndex> InvalidOrStaleSources(NodeIndex node, ICollection<NodeIndex> invalidNodes, ICollection<TargetIndex> staleNodes,
             ICollection<NodeIndex> scheduled, ICollection<NodeIndex> initialized, Action<NodeIndex> action)
         {
             // could use 'SourcesOf' here
@@ -1029,24 +1030,24 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             DepthFirstSearch<NodeIndex> dfsSources = new DepthFirstSearch<EdgeIndex>(node => FreshSourcesOf(node, source => !fresh.Contains(getTargetIndex(source))), dependencyGraph);
             Stack<NodeIndex> todo = new Stack<EdgeIndex>();
             dfsSources.DiscoverNode += todo.Push;
-            dfsSources.BackEdge += delegate(Edge<NodeIndex> edge)
+            dfsSources.BackEdge += delegate (Edge<NodeIndex> edge)
             {
                 if (edge.Source != edge.Target)
                     throw new Exception("Cycle of fresh edges");
             };
             DepthFirstSearch<NodeIndex> dfsTargets = new DepthFirstSearch<EdgeIndex>(TriggeesOf, dependencyGraph);
-            dfsTargets.FinishNode += delegate(NodeIndex triggee)
+            dfsTargets.FinishNode += delegate (NodeIndex triggee)
             {
                 todo.Push(triggee);
                 changed.Add(triggee);
             };
-            dfsTargets.BackEdge += delegate(Edge<NodeIndex> edge)
+            dfsTargets.BackEdge += delegate (Edge<NodeIndex> edge)
             {
-                if(edge.Source != edge.Target)
+                if (edge.Source != edge.Target)
                     throw new Exception("Cycle of trigger edges");
             };
             var dfsStale = new DepthFirstSearch<NodeIndex>(FreshTargetsOf, dependencyGraph);
-            dfsStale.DiscoverNode += delegate(NodeIndex target)
+            dfsStale.DiscoverNode += delegate (NodeIndex target)
             {
                 fresh.Remove(getTargetIndex(target));
             };
@@ -1132,7 +1133,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         public void CollectFreshNodes(IEnumerable<NodeIndex> schedule, Set<TargetIndex> fresh)
         {
             var dfsStale = new DepthFirstSearch<NodeIndex>(FreshTargetsOf, dependencyGraph);
-            dfsStale.DiscoverNode += delegate(NodeIndex target)
+            dfsStale.DiscoverNode += delegate (NodeIndex target)
             {
                 fresh.Remove(getTargetIndex(target));
             };
@@ -1164,7 +1165,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             // this code is based on CollectFreshNodes
             var dfsStale = new DepthFirstSearch<NodeIndex>(FreshTargetsOf, dependencyGraph);
-            dfsStale.DiscoverNode += delegate(NodeIndex target)
+            dfsStale.DiscoverNode += delegate (NodeIndex target)
             {
                 fresh.Remove(getTargetIndex(target));
             };
@@ -1220,9 +1221,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             DepthFirstSearch<NodeIndex> dfsF = null, dfsT = null;
             if (initialized != null)
             {
-                dfsF = new DepthFirstSearch<EdgeIndex>(node => 
-                    (initsCanBeStale || scheduled.Contains(node) || 
-                      (!initialized.Contains(node) && !ResultWouldBeUniform(node, scheduled, initialized))) 
+                dfsF = new DepthFirstSearch<EdgeIndex>(node =>
+                    (initsCanBeStale || scheduled.Contains(node) ||
+                      (!initialized.Contains(node) && !ResultWouldBeUniform(node, scheduled, initialized)))
                     ? FreshTargetsOf(node) : emptyList, dependencyGraph);
                 dfsT = new DepthFirstSearch<EdgeIndex>(node => scheduled.Contains(node) ? TriggeesOf(node) : emptyList, dependencyGraph);
             }
@@ -1259,7 +1260,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     // To find the incorrect annotations, collect the text written to console below to get the nodes on the offending cycle.
                     // Then you check all operators on that cycle.  It may help to view the dependency graph with engine.ShowSchedule.
                     // To be able to display the graph, set SchedulingTransform.doRepair = false.
-                    if (newSchedule.Count > 100*dependencyGraph.Nodes.Count)
+                    if (newSchedule.Count > 100 * dependencyGraph.Nodes.Count)
                     {
                         // find a repeating subsequence of the schedule
                         int posEnd = newSchedule.Count - 1;
@@ -1318,18 +1319,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     // mark children of changed nodes as stale
                     foreach (NodeIndex node2 in changed)
                     {
-                      foreach (EdgeIndex edge in dependencyGraph.EdgesOutOf(node2))
-                      {
-                        if (isDeleted[edge])
-                          continue;
-                        NodeIndex target = dependencyGraph.TargetOf(edge);
-                        if (target == node2)
-                          continue;
-                        if (initialized == null)
-                          ForEachFreshDescendant(target, i => stale.Add(getTargetIndex(i)));
-                        else
-                          ForEachFreshDescendant(dfsF, target, i => stale.Add(getTargetIndex(i)));
-                      }
+                        foreach (EdgeIndex edge in dependencyGraph.EdgesOutOf(node2))
+                        {
+                            if (isDeleted[edge])
+                                continue;
+                            NodeIndex target = dependencyGraph.TargetOf(edge);
+                            if (target == node2)
+                                continue;
+                            if (initialized == null)
+                                ForEachFreshDescendant(target, i => stale.Add(getTargetIndex(i)));
+                            else
+                                ForEachFreshDescendant(dfsF, target, i => stale.Add(getTargetIndex(i)));
+                        }
                     }
                     invalid.Remove(source);
                     stale.Remove(getTargetIndex(source));
@@ -1422,15 +1423,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // mark children of changed nodes as stale
                 foreach (NodeIndex node2 in changed)
                 {
-                  foreach (EdgeIndex edge in dependencyGraph.EdgesOutOf(node2))
-                  {
-                    if (isDeleted[edge])
-                      continue;
-                    NodeIndex target = dependencyGraph.TargetOf(edge);
-                    if (target == node2)
-                      continue;
-                    ForEachFreshDescendant(dfsF, target, i => stale.Add(getTargetIndex(i)));
-                  }
+                    foreach (EdgeIndex edge in dependencyGraph.EdgesOutOf(node2))
+                    {
+                        if (isDeleted[edge])
+                            continue;
+                        NodeIndex target = dependencyGraph.TargetOf(edge);
+                        if (target == node2)
+                            continue;
+                        ForEachFreshDescendant(dfsF, target, i => stale.Add(getTargetIndex(i)));
+                    }
                 }
                 scheduled.Add(node);
                 stale.Remove(getTargetIndex(node));
@@ -1545,7 +1546,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     available.Add(i);
                     // invalidate triggered nodes
                     //foreach (Node triggee in TriggeesOf(i)) {
-                    ForEachTriggeeDescendant(i, delegate(NodeIndex triggee) { available.Remove(triggee); });
+                    ForEachTriggeeDescendant(i, delegate (NodeIndex triggee) { available.Remove(triggee); });
                 }
                 else
                 {
@@ -1583,7 +1584,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             dfs.DiscoverNode += action;
             if (false)
             {
-                dfs.BackEdge += delegate(Edge<NodeIndex> edge)
+                dfs.BackEdge += delegate (Edge<NodeIndex> edge)
                     {
                         FindLoop(node, FreshTargetsOf, nodeData, "needs a fresh");
                         //Console.WriteLine("{0} triggers {1}", edge.Source, edge.Target);
@@ -1620,8 +1621,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             dfs.Clear();
             dfs.ClearActions();
-            dfs.TreeEdge += delegate(Edge<NodeIndex> edge) { action(edge.Target); };
-            dfs.BackEdge += delegate(Edge<NodeIndex> edge)
+            dfs.TreeEdge += delegate (Edge<NodeIndex> edge) { action(edge.Target); };
+            dfs.BackEdge += delegate (Edge<NodeIndex> edge)
                 {
                     FindLoop(trigger, TriggeesOf, nodeData, "is triggered by");
                     throw new Exception("The model has a loop of deterministic edges, which is not allowed by Variational Message Passing.");
@@ -1654,15 +1655,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns></returns>
         public IEnumerable<NodeIndex> FreshTargetsOf(NodeIndex node)
         {
-          foreach (EdgeIndex edge in dependencyGraph.EdgesOutOf(node))
-          {
-            if (isFreshEdge[edge] && !isDeleted[edge])
+            foreach (EdgeIndex edge in dependencyGraph.EdgesOutOf(node))
             {
-              int target = dependencyGraph.TargetOf(edge);
-              if (!isUniform[target])
-                yield return target;
+                if (isFreshEdge[edge] && !isDeleted[edge])
+                {
+                    int target = dependencyGraph.TargetOf(edge);
+                    if (!isUniform[target])
+                        yield return target;
+                }
             }
-          }
         }
 
         public IEnumerable<NodeIndex> FreshSourcesOf(NodeIndex node, Predicate<NodeIndex> predicate)
@@ -1683,8 +1684,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             bool found = false;
             IndexedProperty<NodeIndex, NodeIndex> parent = data.CreateNodeData<NodeIndex>(0);
             DepthFirstSearch<NodeIndex> dfs = new DepthFirstSearch<NodeIndex>(successors, data);
-            dfs.TreeEdge += delegate(Edge<NodeIndex> edge) { parent[edge.Target] = edge.Source; };
-            dfs.BackEdge += delegate(Edge<NodeIndex> edge)
+            dfs.TreeEdge += delegate (Edge<NodeIndex> edge) { parent[edge.Target] = edge.Source; };
+            dfs.BackEdge += delegate (Edge<NodeIndex> edge)
                 {
                     if (!found)
                     {

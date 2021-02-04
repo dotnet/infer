@@ -45,7 +45,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerPlateOp"]/message_doc[@name="EnterAverageConditional{T}(T, T, double, T)"]/*'/>
         /// <typeparam name="T">The type of the distribution over the variable entering the power plate.</typeparam>
         [SkipIfAllUniform("enter", "value")]
-        public static T EnterAverageConditional<T>([NoInit, Cancels] T enter, T value, double exponent, T result)
+        public static T EnterAverageConditional<T>([NoInit] T enter, T value, double exponent, T result)
             where T : SettableToPower<T>, SettableToProduct<T>
         {
             if (exponent == 0)
