@@ -7,9 +7,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
-using Microsoft.ML.Probabilistic.Compiler.Graphs;
 using Microsoft.ML.Probabilistic.Collections;
+using Microsoft.ML.Probabilistic.Compiler.Attributes;
+using Microsoft.ML.Probabilistic.Compiler.CodeModel;
+using Microsoft.ML.Probabilistic.Compiler.Graphs;
+using Microsoft.ML.Probabilistic.Compiler.Visualizers;
+using Microsoft.ML.Probabilistic.Math;
+using Microsoft.ML.Probabilistic.Models;
+using Microsoft.ML.Probabilistic.Serialization;
 using Microsoft.ML.Probabilistic.Utilities;
 using NodeIndex = System.Int32;
 using EdgeIndex = System.Int32;
@@ -17,14 +24,6 @@ using EdgeIndex = System.Int32;
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
     using Cycle = List<EdgeIndex>;
-    using Microsoft.ML.Probabilistic.Math;
-    using System.Text;
-    using Microsoft.ML.Probabilistic.Compiler.Attributes;
-    using Microsoft.ML.Probabilistic.Compiler.CodeModel;
-    using Microsoft.ML.Probabilistic.Compiler.Visualizers;
-    using Microsoft.ML.Probabilistic.Models;
-    using Microsoft.ML.Probabilistic.Compiler;
-    using Microsoft.ML.Probabilistic.Serialization;
 
     internal class Scheduler
     {
