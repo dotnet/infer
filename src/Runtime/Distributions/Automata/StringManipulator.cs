@@ -14,6 +14,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Serializable]
     public class StringManipulator : ISequenceManipulator<string, char>
     {
+        public IEqualityComparer<string> SequenceEqualityComparer { get; } =
+            EqualityComparer<string>.Default;
+
         /// <summary>
         /// Converts a given sequence of characters to a string.
         /// </summary>
@@ -43,17 +46,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public char GetElement(string sequence, int index)
         {
             return sequence[index];
-        }
-
-        /// <summary>
-        /// Checks if given strings are equal.
-        /// </summary>
-        /// <param name="sequence1">The first string.</param>
-        /// <param name="sequence2">The second string.</param>
-        /// <returns><see langword="true"/> if the strings are equal, <see langword="false"/> otherwise.</returns>
-        public bool SequencesAreEqual(string sequence1, string sequence2)
-        {
-            return object.Equals(sequence1, sequence2);
         }
 
         /// <summary>

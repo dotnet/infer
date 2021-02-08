@@ -725,12 +725,31 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
     {
     }
 
+    /// <summary>
+    /// Represents an offset dependency between a read and a write
+    /// </summary>
     internal class Offset
     {
+        /// <summary>
+        /// Loop counter variable
+        /// </summary>
         public readonly IVariableDeclaration loopVar;
+        /// <summary>
+        /// (loop counter of write) - (loop counter of read) 
+        /// The special value <see cref="DependencyAnalysisTransform.sequentialOffset"/> means that there is no fixed offset.
+        /// </summary>
         public readonly int offset;
+        /// <summary>
+        /// True if the first affected element will be mutated at an earlier loop iteration, based on the loop direction.
+        /// </summary>
         public readonly bool isAvailable;
 
+        /// <summary>
+        /// Create a new offset dependency
+        /// </summary>
+        /// <param name="loopVar">Loop counter</param>
+        /// <param name="offset">(loop counter of write) - (loop counter of read)</param>
+        /// <param name="isAvailable">True if the first affected element will be mutated at an earlier loop iteration, based on the loop direction</param>
         public Offset(IVariableDeclaration loopVar, int offset, bool isAvailable)
         {
             this.loopVar = loopVar;

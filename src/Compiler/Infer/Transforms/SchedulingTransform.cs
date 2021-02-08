@@ -638,6 +638,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                     else
                     {
+                        RecordSchedule("Single", block, inputStmts);
                         AddConvertedStatements(pendingOutput, stmts, new Range(0, 1), null);
                     }
                 }

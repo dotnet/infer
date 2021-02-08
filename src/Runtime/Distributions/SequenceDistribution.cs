@@ -1396,7 +1396,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             
             if (this.IsPointMass)
             {
-                if (SequenceManipulator.SequencesAreEqual(sequence, this.point))
+                if (SequenceManipulator.SequenceEqualityComparer.Equals(sequence, this.point))
                 {
                     return 0;
                 }
@@ -1419,7 +1419,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             if (this.IsPointMass)
             {
-                return SequenceManipulator.SequencesAreEqual(sequence, this.point);
+                return SequenceManipulator.SequenceEqualityComparer.Equals(sequence, this.point);
             }
 
             // todo: stop GetLogValue early as soon as we know the weight is not neg infinity.

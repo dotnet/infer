@@ -394,9 +394,6 @@ def MotifFinder():
         if (motifPos != -1):
             print(f"   P(pos={motifPos}) = {motifPositionPosterior[i][motifPos]:.2f}", end="");
         print()
-    # Keep the application alive until the user enters a keystroke
-    print("Done.  Press enter to exit.")
-    Console.ReadKey()
 
 def PrintPositionFrequencyMatrix(caption, positionWeights, weightExtractor):
     print(caption)

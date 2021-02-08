@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
-using Microsoft.ML.Probabilistic.Distributions;
-using Microsoft.ML.Probabilistic.Factors;
+
 using Microsoft.ML.Probabilistic.Collections;
+using Microsoft.ML.Probabilistic.Compiler.Attributes;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
+using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
@@ -30,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private ChannelAnalysisTransform analysis;
 
-        private Dictionary<IVariableDeclaration, VariableToChannelInformation> usesOfVariable =
+        private readonly Dictionary<IVariableDeclaration, VariableToChannelInformation> usesOfVariable =
             new Dictionary<IVariableDeclaration, VariableToChannelInformation>(new IdentityComparer<IVariableDeclaration>());
 
         public override ITypeDeclaration Transform(ITypeDeclaration itd)
@@ -80,24 +79,20 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             context.SetPrimaryOutput(fs);
             // Check condition is valid
             fs.Condition = ifs.Condition;
-            if ((!(fs.Condition is IBinaryExpression)) || (((IBinaryExpression) fs.Condition).Operator != BinaryOperator.LessThan))
+            if (!(fs.Condition is IBinaryExpression expression) || (expression.Operator != BinaryOperator.LessThan))
                 Error("For statement condition must be of the form 'indexVar<loopSize', was " + fs.Condition);
 
             // Check increment is valid
             fs.Increment = ifs.Increment;
-            IExpressionStatement ies = fs.Increment as IExpressionStatement;
             bool validIncrement = false;
-            if (ies != null)
+            if (fs.Increment is IExpressionStatement ies)
             {
-                if (ies.Expression is IAssignExpression)
+                if (ies.Expression is IAssignExpression iae)
                 {
-                    IAssignExpression iae = (IAssignExpression) ies.Expression;
-                    IBinaryExpression ibe = iae.Expression as IBinaryExpression;
-                    validIncrement = (ibe != null) && (ibe.Operator == BinaryOperator.Add);
+                    validIncrement = (iae.Expression is IBinaryExpression ibe) && (ibe.Operator == BinaryOperator.Add);
                 }
-                else if (ies.Expression is IUnaryExpression)
+                else if (ies.Expression is IUnaryExpression iue)
                 {
-                    IUnaryExpression iue = (IUnaryExpression) ies.Expression;
                     validIncrement = (iue.Operator == UnaryOperator.PostIncrement);
                 }
             }
@@ -109,23 +104,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             // Check initializer is valid
             fs.Initializer = ifs.Initializer;
-            ies = fs.Initializer as IExpressionStatement;
-            if (ies == null)
+            if (fs.Initializer is IExpressionStatement ies2)
             {
-                Error("For statement initializer must be an expression statement, was " + fs.Initializer.GetType());
-            }
-            else
-            {
-                if (!(ies.Expression is IAssignExpression))
+                if (ies2.Expression is IAssignExpression iae2)
                 {
-                    Error("For statement initializer must be an assignment, was " + fs.Initializer.GetType().Name);
-                }
-                else
-                {
-                    IAssignExpression iae2 = (IAssignExpression) ies.Expression;
                     if (!(iae2.Target is IVariableDeclarationExpression)) Error("For statement initializer must be a variable declaration, was " + iae2.Target.GetType().Name);
                     if (!Recognizer.IsLiteral(iae2.Expression, 0)) Error("Loop index must start at 0, was " + iae2.Expression);
                 }
+                else
+                {
+                    Error("For statement initializer must be an assignment, was " + fs.Initializer.GetType());
+                }
+            }
+            else
+            {
+                Error("For statement initializer must be an expression statement, was " + fs.Initializer.GetType());
             }
 
             fs.Body = ConvertBlock(ifs.Body);
@@ -163,7 +156,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             string prefix = vi.Name;
             if (prefix.EndsWith("_use")) prefix = prefix.Substring(0, prefix.Length - 4);
-            IVariableDeclaration usesDecl = vi.DeriveArrayVariable(stmts, context, prefix + "_uses", Builder.LiteralExpr(useCount), Builder.VarDecl("_ind", typeof (int)),
+            string arrayName = VariableInformation.GenerateName(context, prefix + "_uses");
+            IVariableDeclaration usesDecl = vi.DeriveArrayVariable(stmts, context, arrayName, Builder.LiteralExpr(useCount), Builder.VarDecl("_ind", typeof(int)),
                                                                    prefixSizes, prefixVars, useLiteralIndices: true);
             context.OutputAttributes.Remove<ChannelInfo>(usesDecl);
             context.OutputAttributes.Add(usesDecl, new DescriptionAttribute($"uses of '{vi.Name}'"));
@@ -179,10 +173,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override IExpression ConvertAssign(IAssignExpression iae)
         {
-            iae = (IAssignExpression) base.ConvertAssign(iae);
+            iae = (IAssignExpression)base.ConvertAssign(iae);
             // array allocation should not be treated as defining the variable
             bool shouldDelete = false;
-            if(!(iae.Expression is IArrayCreateExpression))
+            if (!(iae.Expression is IArrayCreateExpression))
                 AddReplicateStatement(iae.Target, iae.Expression, ref shouldDelete);
             return shouldDelete ? null : iae;
         }
@@ -267,9 +261,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                 }
 
-                if (rhs != null && rhs is IMethodInvokeExpression)
+                if (rhs != null && rhs is IMethodInvokeExpression imie)
                 {
-                    IMethodInvokeExpression imie = (IMethodInvokeExpression)rhs;
                     bool copyPropagation = false;
                     if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Factor.Copy)) && copyPropagation)
                     {
@@ -313,9 +306,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         for (int i = ancIndex - 2; i > 0; i--)
                         {
                             object ancestor = context.GetAncestor(i);
-                            if (ancestor is IConditionStatement)
+                            if (ancestor is IConditionStatement ics)
                             {
-                                IConditionStatement ics = (IConditionStatement) ancestor;
                                 if (CodeRecognizer.IsStochastic(context, ics.Condition))
                                 {
                                     ancIndex = i;
@@ -356,9 +348,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IArrayIndexerExpression iaie = (IArrayIndexerExpression)target;
                 foreach (IExpression index in iaie.Indices)
                 {
-                    if (index is ILiteralExpression)
+                    if (index is ILiteralExpression ile)
                     {
-                        int value = (int)((ILiteralExpression)index).Value;
+                        int value = (int)ile.Value;
                         if (value != 0)
                         {
                             extraLiteralsAreZero = false;
@@ -390,8 +382,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             else if (Recognizer.IsBeingIndexed(context)) return ivre;
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(ivre);
             if (ivd == null) return ivre;
-            VariableToChannelInformation vtci;
-            if (usesOfVariable.TryGetValue(ivd, out vtci))
+            if (usesOfVariable.TryGetValue(ivd, out VariableToChannelInformation vtci))
             {
                 if (vtci.usageDepth != 0) Error("wrong usageDepth (" + vtci.usageDepth + " instead of 0)");
                 return Builder.ArrayIndex(Builder.VarRefExpr(vtci.usesDecl), Builder.LiteralExpr(GetUseNumber(ivd, vtci)));
@@ -404,8 +395,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             var info = analysis.usageInfo[ivd];
             IStatement st = context.FindAncestorNotSelf<IStatement>();
             int useNumber;
-            Queue<int> queue;
-            if (info.useNumberOfStatement.TryGetValue(st, out queue))
+            if (info.useNumberOfStatement.TryGetValue(st, out Queue<int> queue))
             {
                 useNumber = queue.Dequeue();
             }
@@ -425,8 +415,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (!(target is IVariableReferenceExpression)) return expr;
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(target);
             if (ivd == null) return expr;
-            VariableToChannelInformation vtci;
-            if (usesOfVariable.TryGetValue(ivd, out vtci))
+            if (usesOfVariable.TryGetValue(ivd, out VariableToChannelInformation vtci))
             {
                 IExpression usageIndex = Builder.LiteralExpr(GetUseNumber(ivd, vtci));
                 IExpression newExpr = Builder.VarRefExpr(vtci.usesDecl);

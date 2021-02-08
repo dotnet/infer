@@ -114,13 +114,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else if (sumGe1 == countGe1)
                 {
-                    double scale = 1.0/countGe1;
+                    double scale = 1.0 / countGe1;
                     result.SetToFunction(PseudoCount, c => (c >= 1) ? scale : 0);
                 }
                 else
                 {
-                    double scale = 1.0/(sumGe1 - countGe1);
-                    result.SetToFunction(PseudoCount, c => (c > 1) ? (c - 1)*scale : 0);
+                    double scale = 1.0 / (sumGe1 - countGe1);
+                    result.SetToFunction(PseudoCount, c => (c > 1) ? (c - 1) * scale : 0);
                 }
             }
             return result;
@@ -146,13 +146,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 result.SetTo(Point);
             }
-            else if (!IsProper())
+            else if (!(PseudoCount >= 0))
             {
                 throw new ImproperDistributionException(this);
             }
             else
             {
-                result.SetToProduct(PseudoCount, 1.0/TotalCount);
+                result.SetToProduct(PseudoCount, 1.0 / TotalCount);
             }
             return result;
         }
@@ -223,14 +223,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 result.SetToProduct(PseudoCount, PseudoCount);
             }
-            else if (!IsProper())
+            else if (!(PseudoCount >= 0))
             {
                 throw new ImproperDistributionException(this);
             }
             else
             {
-                double s = 1.0/(TotalCount*(TotalCount + 1));
-                result.SetToFunction(PseudoCount, x => x*(x + 1)*s);
+                double s = 1.0 / (TotalCount * (TotalCount + 1));
+                result.SetToFunction(PseudoCount, x => x * (x + 1) * s);
             }
             return result;
         }
@@ -247,14 +247,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 result.SetToProduct(PseudoCount, PseudoCount);
                 result.SetToProduct(result, PseudoCount);
             }
-            else if (!IsProper())
+            else if (!(PseudoCount >= 0))
             {
                 throw new ImproperDistributionException(this);
             }
             else
             {
-                double s = 1.0/(TotalCount*(TotalCount + 1)*(TotalCount + 2));
-                result.SetToFunction(PseudoCount, x => x*(x + 1)*(x + 2)*s);
+                double s = 1.0 / (TotalCount * (TotalCount + 1) * (TotalCount + 2));
+                result.SetToFunction(PseudoCount, x => x * (x + 1) * (x + 2) * s);
             }
             return result;
         }
@@ -267,15 +267,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Vector result = Vector.Zero(Dimension, Sparsity);
             if (IsPointMass) return result;
-            else if (!IsProper())
+            else if (!(PseudoCount >= 0))
             {
                 throw new ImproperDistributionException(this);
             }
             else
             {
-                double mult = 1.0/TotalCount;
-                double mult1 = 1.0/(1.0 + TotalCount);
-                result.SetToFunction(PseudoCount, x => (x*mult)*(1.0 - x*mult)*mult1);
+                double mult = 1.0 / TotalCount;
+                double mult1 = 1.0 / (1.0 + TotalCount);
+                result.SetToFunction(PseudoCount, x => (x * mult) * (1.0 - x * mult) * mult1);
                 return result;
             }
         }
@@ -292,16 +292,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 mean.SetTo(Point);
                 variance.SetAllElementsTo(0.0);
             }
-            else if (!IsProper())
+            else if (!(PseudoCount >= 0))
             {
                 throw new ImproperDistributionException(this);
             }
             else
             {
-                double mult = 1.0/TotalCount;
-                double mult1 = 1.0/(1.0 + TotalCount);
+                double mult = 1.0 / TotalCount;
+                double mult1 = 1.0 / (1.0 + TotalCount);
                 mean.SetToProduct(PseudoCount, mult);
-                variance.SetToFunction(PseudoCount, x => x*mult*(1 - x*mult)*mult1);
+                variance.SetToFunction(PseudoCount, x => x * mult * (1 - x * mult) * mult1);
             }
         }
 
@@ -323,7 +323,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             double sumMean = mean.Sum();
             double sumMeanSq = meanSquare.Sum();
-            double sumSqMean = mean.Sum(x => x*x);
+            double sumSqMean = mean.Sum(x => x * x);
             double numer = sumMean - sumMeanSq;
             double denom = sumMeanSq - sumSqMean;
             if (denom == 0.0)
@@ -332,7 +332,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                TotalCount = numer/denom;
+                TotalCount = numer / denom;
                 PseudoCount.SetToProduct(mean, TotalCount);
             }
         }
@@ -353,7 +353,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public void SetMeanAndVariance(Vector mean, Vector variance)
         {
-            double numer = mean.Sum(x => (x*(1 - x)));
+            double numer = mean.Sum(x => (x * (1 - x)));
             double denom = variance.Sum();
             if (denom == 0.0)
             {
@@ -361,7 +361,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                TotalCount = numer/denom - 1;
+                TotalCount = numer / denom - 1;
                 PseudoCount.SetToProduct(mean, TotalCount);
             }
         }
@@ -472,15 +472,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // TotalCount must always be in sync with PseudoCount
                 if (TotalCount == 0) break;
                 double digammaTotalCount = MMath.Digamma(TotalCount);
-                double inv_trigammaTotalCount = 1/MMath.Trigamma(TotalCount);
+                double inv_trigammaTotalCount = 1 / MMath.Trigamma(TotalCount);
                 trigammaPseudoCount.SetToFunction(PseudoCount, meanLog, (x, y) => Double.IsNegativeInfinity(y) ? Double.NegativeInfinity : MMath.Trigamma(x));
                 gradient.SetToFunction(PseudoCount, meanLog, (x, y) => Double.IsNegativeInfinity(y) ? 0.0 : digammaTotalCount - MMath.Digamma(x) + y);
                 while (true)
                 {
-                    inv_hessian.SetToFunction(trigammaPseudoCount, x => -1.0/(x + lambda));
+                    inv_hessian.SetToFunction(trigammaPseudoCount, x => -1.0 / (x + lambda));
                     double sum_ih = inv_hessian.Sum();
                     double sum_gih = Vector.InnerProduct(inv_hessian, gradient);
-                    double b = sum_gih/(inv_trigammaTotalCount + sum_ih);
+                    double b = sum_gih / (inv_trigammaTotalCount + sum_ih);
                     // update PseudoCount, TotalCount, digammaPseudoCount, digammaTotalCount, logLike
                     double logLike = 0.0;
                     double activity = 0.0;
@@ -658,7 +658,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else
                 {
                     result += that.PseudoCount.Inner(x => x - 1.0, this.PseudoCount, MMath.Digamma);
-                    result += -(that.TotalCount - that.Dimension)*MMath.Digamma(TotalCount);
+                    result += -(that.TotalCount - that.Dimension) * MMath.Digamma(TotalCount);
                 }
                 return result;
             }
@@ -709,8 +709,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 PseudoCount.SetToFunction(a.PseudoCount, b.PseudoCount, (x, y) => x + y - 1);
 
                 // Make pseudo-count dense if sparse count is too big.
-                if (PseudoCount.IsSparse() && ((SparseVector) PseudoCount).SparseCount > 0.50*Dimension)
-                    PseudoCount = ((SparseVector) PseudoCount).ToVector();
+                if (PseudoCount.IsSparse() && ((SparseVector)PseudoCount).SparseCount > 0.50 * Dimension)
+                    PseudoCount = ((SparseVector)PseudoCount).ToVector();
                 //PseudoCount.SetToSum(a.PseudoCount, b.PseudoCount);
                 //PseudoCount.SetToSum(PseudoCount, -1);
             }
@@ -765,17 +765,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // solution is: PseudoCount[i] = s*numerator[i] - denominator[i] + 1
                 // where s = max(1, max_i denominator[i]/numerator[i])
                 // note the scale of the numerator is irrelevant
-                
-                if (numerator.PseudoCount.Any(x => x <= 0))
+
+                if (!numerator.IsProper())
                 {
                     throw new ImproperDistributionException(numerator);
                 }
 
                 var ratio = denominator.PseudoCount / numerator.PseudoCount;
                 double s = Math.Max(1.0, ratio.Max());
-                
-                TotalCount = s*numerator.TotalCount - denominator.TotalCount + Dimension;
-                PseudoCount.SetToFunction(numerator.PseudoCount, denominator.PseudoCount, (x, y) => Math.Max(s*x - y + 1, 1));
+
+                TotalCount = s * numerator.TotalCount - denominator.TotalCount + Dimension;
+                PseudoCount.SetToFunction(numerator.PseudoCount, denominator.PseudoCount, (x, y) => Math.Max(s * x - y + 1, 1));
             }
             else
             {
@@ -823,8 +823,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                TotalCount = (dist.TotalCount - Dimension)*exponent + Dimension;
-                PseudoCount.SetToFunction(dist.PseudoCount, x => ((x - 1)*exponent + 1));
+                TotalCount = (dist.TotalCount - Dimension) * exponent + Dimension;
+                PseudoCount.SetToFunction(dist.PseudoCount, x => ((x - 1) * exponent + 1));
                 /*PseudoCount.SetToSum(dist.PseudoCount, -1);
                 PseudoCount.Scale(exponent);
                 PseudoCount.SetToSum(PseudoCount, 1);*/
@@ -868,7 +868,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 throw new ArgumentException("weight1 (" + weight1 + ") + weight2 (" + weight2 + ") < 0");
             else if (weight1 == 0) SetTo(dist2);
             else if (weight2 == 0) SetTo(dist1);
-                // if dist1 == dist2 then we must return dist1, with no roundoff error
+            // if dist1 == dist2 then we must return dist1, with no roundoff error
             else if (dist1.Equals(dist2)) SetTo(dist1);
             else if (double.IsPositiveInfinity(weight1))
             {
@@ -981,7 +981,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 throw new ArgumentException("weight1 (" + weight1 + ") + weight2 (" + weight2 + ") < 0");
             else if (weight1 == 0) result.SetTo(dist2);
             else if (weight2 == 0) result.SetTo(dist1);
-                // if dist1 == dist2 then we must return dist1, with no roundoff error
+            // if dist1 == dist2 then we must return dist1, with no roundoff error
             else if (dist1.Equals(dist2)) result.SetTo(dist1);
             else if (double.IsPositiveInfinity(weight1))
             {
@@ -1013,12 +1013,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     // catch this to avoid roundoff errors
                     v.SetToSum(weight1, v1, weight2, v2);
-                    v.Scale(1.0/(weight1 + weight2));
+                    v.Scale(1.0 / (weight1 + weight2));
                     result.SetMeanAndVariance(m1, v);
                 }
                 else
                 {
-                    double invZ = 1.0/(weight1 + weight2);
+                    double invZ = 1.0 / (weight1 + weight2);
                     m.SetToSum(weight1, m1, weight2, m2);
                     m.Scale(invZ);
                     // m1' = m1-m
@@ -1095,7 +1095,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsPointMass)
             {
-                return power*that.GetLogProb(Point);
+                return power * that.GetLogProb(Point);
             }
             else if (that.IsPointMass)
             {
@@ -1104,8 +1104,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                var product = this*(that ^ power);
-                return product.GetLogNormalizer() - this.GetLogNormalizer() - power*that.GetLogNormalizer();
+                var product = this * (that ^ power);
+                return product.GetLogNormalizer() - this.GetLogNormalizer() - power * that.GetLogNormalizer();
             }
         }
 
@@ -1117,7 +1117,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public Vector Sample()
         {
             Sparsity resultSparsity = Sparsity;
-            if (PseudoCount.IsSparse && ((SparseVector) PseudoCount).CommonValue != 0.0)
+            if (PseudoCount.IsSparse && ((SparseVector)PseudoCount).CommonValue != 0.0)
                 resultSparsity = Sparsity.Dense;
             return Sample(Vector.Zero(Dimension, resultSparsity));
         }
@@ -1202,7 +1202,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             PseudoCount = Vector.Zero(dimension);
             PseudoCount.SetAllElementsTo(initialCount);
-            TotalCount = dimension*initialCount;
+            TotalCount = dimension * initialCount;
         }
 
         /// <summary>
@@ -1217,7 +1217,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             PseudoCount = Vector.Zero(dimension, sparsity);
             PseudoCount.SetAllElementsTo(initialCount);
-            TotalCount = dimension*initialCount;
+            TotalCount = dimension * initialCount;
         }
 
         /// <summary>

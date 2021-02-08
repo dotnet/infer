@@ -7,16 +7,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
 
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Provides the ability to manipulate lists (classes that implement <see cref="IList{T}"/>).
     /// </summary>
     /// <typeparam name="TList">The type of a list.</typeparam>
     /// <typeparam name="TElement">The type of a list element.</typeparam>
-    public class ListManipulator<TList, TElement> : ISequenceManipulator<TList, TElement>
+    public sealed class ListManipulator<TList, TElement> : ISequenceManipulator<TList, TElement>
         where TList : class, IList<TElement>, new()
     {
+        public IEqualityComparer<TList> SequenceEqualityComparer { get; } =
+            ListComparer<TElement>.Default;
+
         /// <summary>
         /// Converts a given collection of elements to a list.
         /// </summary>
@@ -43,15 +45,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="index">The position.</param>
         /// <returns>The element at the given position in the list.</returns>
         public TElement GetElement(TList sequence, int index) => sequence[index];
-
-        /// <summary>
-        /// Checks if given lists are equal.
-        /// Lists are considered equal if they contain the same elements in the same order.
-        /// </summary>
-        /// <param name="sequence1">The first list.</param>
-        /// <param name="sequence2">The second list.</param>
-        /// <returns><see langword="true"/> if the lists are equal, <see langword="false"/> otherwise.</returns>
-        public bool SequencesAreEqual(TList sequence1, TList sequence2) => ListComparer<TElement>.EqualLists(sequence1, sequence2);
 
         /// <summary>
         /// Creates a list by copying the first list and then appending the second list to it.
