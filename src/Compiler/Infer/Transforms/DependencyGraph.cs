@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         // Debugging /////////////////////////////////////////////////////
         public Converter<NodeIndex, string> NodeToString;
         public Converter<NodeIndex, string> NodeToShortString;
-        internal IList<IStatement> Nodes;
+        internal IReadOnlyList<IStatement> Nodes;
         internal AttributeRegistry<object, ICompilerAttribute> attributes;
         internal IndexedProperty<NodeIndex, List<string>> EventHistory;
         public int EventCounter;
@@ -187,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         internal DependencyGraph(BasicTransformContext context,
-            IList<IStatement> nodes,
+            IReadOnlyList<IStatement> nodes,
             IDictionary<IStatement, IStatement> replacements = null,
             bool ignoreMissingNodes = false,
             bool ignoreRequirements = false,

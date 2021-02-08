@@ -51,12 +51,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override void DoConvertMethodBody(IList<IStatement> outputs, IList<IStatement> inputs)
         {
-            IList<IStatement> isc = Schedule(inputs);
+            IList<IStatement> isc = Schedule((IReadOnlyList<IStatement>)inputs);
             RegisterUnchangedStatements(isc);
             outputs.AddRange(isc);
         }
 
-        protected IList<IStatement> Schedule(IList<IStatement> isc)
+        protected IList<IStatement> Schedule(IReadOnlyList<IStatement> isc)
         {
             DependencyGraph g = new DependencyGraph(context, isc, ignoreMissingNodes: false, ignoreRequirements: true, readAfterWriteOnly: true);
             // The uniform statements must be removed first, before doing the search backward from outputs.  

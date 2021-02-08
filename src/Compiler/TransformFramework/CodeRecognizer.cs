@@ -412,6 +412,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                                     // therefore available when mutated_offset < affected_offset which is always true.
                                     // if mutated_offset < 0 then element size-1 is never mutated so not available.
                                     // if affected_offset < 0 then last affected is (size-1+affected_offset) at last time so not available.
+                                    //isAvailable = (affected_offset >= 0); // TODO
                                     isAvailable = (affected_offset >= 0) && (mutated_offset >= 0);
                                 }
                                 offsets.Add(mutatedVar, offset, isAvailable);

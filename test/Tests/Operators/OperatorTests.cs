@@ -1277,43 +1277,49 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "ModifiesGlobals")]
         public void DiscreteFromDirichletOpMomentMatchTest()
         {
-            bool save = Dirichlet.AllowImproperSum;
-            Dirichlet.AllowImproperSum = true;
-
-            Dirichlet probsDist = new Dirichlet(1, 2, 3, 4);
-            Discrete sampleDist = Discrete.Uniform(4);
-            Assert.True(Dirichlet.Uniform(4).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) < 1e-4);
-            sampleDist = Discrete.PointMass(1, 4);
-            Assert.True(new Dirichlet(1, 2, 1, 1).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) < 1e-4);
-            sampleDist = new Discrete(0, 1, 1, 0);
-            Assert.True(new Dirichlet(0.9364, 1.247, 1.371, 0.7456).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) <
-                          1e-3);
-            Dirichlet.AllowImproperSum = false;
+            using (TestUtils.TemporarilyAllowDirichletImproperSums)
+            {
+                Dirichlet probsDist = new Dirichlet(1, 2, 3, 4);
+                Discrete sampleDist = Discrete.Uniform(4);
+                Assert.True(Dirichlet.Uniform(4).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) < 1e-4);
+                sampleDist = Discrete.PointMass(1, 4);
+                Assert.True(new Dirichlet(1, 2, 1, 1).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) < 1e-4);
+                sampleDist = new Discrete(0, 1, 1, 0);
+                Assert.True(new Dirichlet(0.9364, 1.247, 1.371, 0.7456).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) <
+                              1e-3);
+            }
         }
+
         [Fact]
         public void DiscreteFromDirichletOpTest()
         {
             Dirichlet probs4 = new Dirichlet(1.0, 2, 3, 4);
-            Discrete sample4 = Discrete.Uniform(4);
-            sample4 = new Discrete(0.4, 0.6, 0, 0);
-            Dirichlet result4 = (Dirichlet)DiscreteFromDirichletOp.ProbsAverageConditional(sample4, probs4, Dirichlet.Uniform(4));
-            Console.WriteLine(result4);
+            Discrete sample4 = new Discrete(0.4, 0.6, 0, 0);
+            Dirichlet result4 = DiscreteFromDirichletOp.ProbsAverageConditional(sample4, probs4, Dirichlet.Uniform(4));
 
             Dirichlet probs3 = new Dirichlet(1.0, 2, 7);
-            Discrete sample3 = Discrete.Uniform(3);
-            sample3 = new Discrete(0.4, 0.6, 0);
-            Dirichlet result3 = (Dirichlet)DiscreteFromDirichletOp.ProbsAverageConditional(sample3, probs3, Dirichlet.Uniform(3));
-            Console.WriteLine(result3);
+            Discrete sample3 = new Discrete(0.4, 0.6, 0);
+            Dirichlet result3 = DiscreteFromDirichletOp.ProbsAverageConditional(sample3, probs3, Dirichlet.Uniform(3));
             for (int i = 0; i < 3; i++)
             {
                 Assert.True(MMath.AbsDiff(result4.PseudoCount[i], result3.PseudoCount[i], 1e-6) < 1e-10);
             }
 
+            Dirichlet probs2 = new Dirichlet(1.0, 2);
+            Discrete sample2 = new Discrete(0.4, 0.6);
+            Dirichlet result2 = DiscreteFromDirichletOp.ProbsAverageConditional(sample2, probs2, Dirichlet.Uniform(2));
+
+            Beta beta = new Beta(1.0, 2);
+            Bernoulli bernoulli = new Bernoulli(0.4);
+            Beta result1 = BernoulliFromBetaOp.ProbTrueAverageConditional(bernoulli, beta);
+            Assert.Equal(result2.PseudoCount[0], result1.TrueCount, 1e-10);
+            Assert.Equal(result2.PseudoCount[1], result1.FalseCount, 1e-10);
+
             // test handling of small alphas
             Discrete sample = DiscreteFromDirichletOp.SampleAverageLogarithm(Dirichlet.Symmetric(2, 1e-8), Discrete.Uniform(2));
-            Console.WriteLine(sample);
             Assert.True(sample.IsUniform());
         }
 

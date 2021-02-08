@@ -332,15 +332,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         /// <param name="g"></param>
         /// <param name="schedule"></param>
+        /// <param name="isDeleted"></param>
         /// <returns></returns>
-        internal static Set<NodeIndex> CollectUses(IndexedGraph g, IEnumerable<NodeIndex> schedule)
+        internal static Set<NodeIndex> CollectUses(IndexedGraph g, IEnumerable<NodeIndex> schedule, Func<EdgeIndex, bool> isDeleted = null)
         {
             Set<NodeIndex> uses = new Set<NodeIndex>();
             Set<NodeIndex> available = new Set<NodeIndex>();
             foreach (NodeIndex node in schedule)
             {
-                foreach (NodeIndex source in g.SourcesOf(node))
+                foreach (EdgeIndex edge in g.EdgesInto(node).Where(e => isDeleted == null || !isDeleted(e)))
                 {
+                    NodeIndex source = g.SourceOf(edge);
                     if (!available.Contains(source)) uses.Add(source);
                 }
                 available.Add(node);

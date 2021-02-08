@@ -939,8 +939,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             // Height data
             double[,] RatsHeightData = new double[,]
-                {
-                    {151, 199, 246, 283, 320},
+            {
+             {151, 199, 246, 283, 320},
              {145, 199, 249, 293, 354},
              {147, 214, 263, 312, 328},
              {155, 200, 237, 272, 297},

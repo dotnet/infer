@@ -1041,8 +1041,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 cvi.arrayRef = transformedExpr; //indexedExpr;
                 if (isExitVar)
                 {
-                    // this attribute should preferably be attached in GetCloneForCase
-                    // TODO
+                    // TODO: this attribute should preferably be attached in GetCloneForCase
                     if(!context.OutputAttributes.Has<DerivedVariable>(cvi.arrayDecl))
                         context.OutputAttributes.Set(cvi.arrayDecl, new DerivedVariable());
                 }
