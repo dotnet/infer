@@ -337,6 +337,8 @@ namespace Microsoft.ML.Probabilistic.Collections
     /// <typeparam name="T"></typeparam>
     public class ListComparer<T> : IEqualityComparer<IList<T>>
     {
+        public static ListComparer<T> Default { get; } = new ListComparer<T>();
+
         public bool Equals(IList<T> x, IList<T> y)
         {
             return ListComparer<T>.EqualLists(x, y);

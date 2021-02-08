@@ -17,14 +17,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
     {
-        
+
         /// <summary>
         /// Enumerates support of this automaton when possible.
-        /// Only point mass element distributions are supported.
+        /// Element distributions must be either point mass or implement <see cref="CanEnumerateSupport{T}"/>.
         /// </summary>
         /// <param name="maxCount">The maximum support enumeration count.</param>
         /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
         /// <exception cref="AutomatonEnumerationCountException">Thrown if enumeration is too large.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if distribution on some transition is not enumerable.</exception>
         /// <returns>The sequences in the support of this automaton</returns>
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
         {
@@ -47,6 +48,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <summary>
         /// Tries to enumerate support of this automaton.
+        /// Element distributions must be either point mass or implement <see cref="CanEnumerateSupport{T}"/>.
         /// </summary>
         /// <param name="maxCount">The maximum support enumeration count.</param>
         /// <param name="result">The sequences in the support of this automaton</param>
@@ -101,7 +103,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var enumeration = this.EnumerateSupportInternalWithDuplicates();
             if (!tryDeterminize)
             {
-                enumeration = enumeration.Distinct();
+                enumeration = enumeration.Distinct(SequenceManipulator.SequenceEqualityComparer);
             }
 
             return enumeration;
@@ -156,8 +158,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </remarks>
         private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates()
         {
-            // Path to current state in automaton from root
-            var path = new List<TElement>();
+            // Sequence of elements on path to current state in automaton
+            var sequence = new List<TElement>();
 
             // Stack of states for backtracking during depth-first traversal
             var stack = new Stack<StateEnumerationState>();
@@ -168,12 +170,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             //   automaton contains loops, a special procedure `ComputeEndStatesReachability` is
             //   invoked which computes it efficiently for whole graph.
             // - Whether this state is being visited now and if yes - how long is the sequence from
-            //   root to this state. This is used for (non-empty) loop detection. We store length
+            //   root to this state. This is used for (non-empty) loop detection. We store length + 1,
+            //   because 0 value of flags has special meaning of "this state has not been visited yet".
             var flags = new StateEnumerationFlags[this.States.Count];
 
             // Number of sequences produced by this time. By comparing value of this counter
             // before entering the state and when leaving it is easy to detect whether the state
-            // is a dead ent.
+            // is a dead end.
             var producedCount = 0;
 
             // Enumeration state for current state. A top of traversal stack, materialized in local
@@ -190,7 +193,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 // We do not ever "enter" the start state via a transition, so need to handle
                 // "start state is also an end state" case explicitly
-                yield return SequenceManipulator.ToSequence(path);
+                yield return SequenceManipulator.ToSequence(sequence);
             }
 
             while (true)
@@ -204,7 +207,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // In theory, this operation could be called only when `current.PathLength`
                 // decreases. But that happens in multiple places, so it's easier to truncate path
                 // on each iteration, even if it is a noop.
-                path.RemoveRange(current.PathLength, path.Count - current.PathLength);
+                sequence.RemoveRange(current.PathLength, sequence.Count - current.PathLength);
 
                 if (!AdvanceToNextTransition(out var nextStateIndex, out var nextElement))
                 {
@@ -214,7 +217,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 if (nextElement.HasValue)
                 {
-                    path.Add(nextElement.Value);
+                    sequence.Add(nextElement.Value);
                 }
 
                 nextStateIndex = TraverseTrivialStates(nextStateIndex);
@@ -222,7 +225,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 if (flags[nextStateIndex] != 0)
                 {
-                    // We have found a loop, so let's check if it can produce anything.
+                    // This states is either dead end or a loop. If this is a dead end, then it
+                    // will not be traversed at all.
+                    if (flags[nextStateIndex].HasFlag(StateEnumerationFlags.IsDeadEnd))
+                    {
+                        continue;
+                    }
+
+                    // This is a loop, so let's check if it can produce anything.
                     // If it produces anything - then support is in-enumerable.
                     // If it doesn't, there's no point in entering this state at all
                     if (!endStateReachabilityComputed)
@@ -232,7 +242,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     if (flags[nextStateIndex].HasFlag(StateEnumerationFlags.IsDeadEnd) ||
-                        path.Count + 1 == (int)(flags[nextStateIndex] & StateEnumerationFlags.DepthMask))
+                        sequence.Count + 1 == (int)(flags[nextStateIndex] & StateEnumerationFlags.DepthMask))
                     {
                         // Just skip this loop
                         // - Either no end state is reachable from this loop. So it can "produce"
@@ -250,7 +260,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 var producedBeforeThisState = producedCount;
-                if (nextState.CanEnd && path.Count > current.LongestOutputInPath)
+                if (nextState.CanEnd && sequence.Count > current.LongestOutputInPath)
                 {
                     // Output sequence only if it is longer then any sequence produced on the path
                     // to this state. This is an important optimization in some real automata.
@@ -262,7 +272,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // we can assume that `e` is effectively not an end state because it does not
                     // produce any new sequences.
                     ++producedCount;
-                    yield return SequenceManipulator.ToSequence(path);
+                    yield return SequenceManipulator.ToSequence(sequence);
                 }
 
                 if (nextState.TransitionsCount == 0)
@@ -277,12 +287,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 else
                 {
                     // Slow path: store current state on stack and move to next state
-                    flags[nextStateIndex] = (StateEnumerationFlags) (path.Count + 1);
+                    flags[nextStateIndex] = (StateEnumerationFlags) (sequence.Count + 1);
                     stack.Push(current);
                     current = InitEnumerationState(
                         nextStateIndex,
                         producedBeforeThisState,
-                        nextState.CanEnd ? path.Count : current.LongestOutputInPath);
+                        nextState.CanEnd ? sequence.Count : current.LongestOutputInPath);
                 }
             }
 
@@ -294,7 +304,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     StateIndex = index,
                     ProducedCount = producedBeforeThisState,
-                    PathLength = path.Count,
+                    PathLength = sequence.Count,
                     LongestOutputInPath = longestOutputInPath,
                     TransitionIndex = state.FirstTransitionIndex - 1,
                     RemainingTransitionsCount = state.TransitionsCount,
@@ -466,7 +476,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return currentStateIndex;
                     }
 
-                    path.Add(dist.Point);
+                    sequence.Add(dist.Point);
                     currentStateIndex = transition.DestinationStateIndex;
                 }
             }
@@ -484,26 +494,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             //// First, build a reversed graph
 
-            // TODO: rename
-            var inDegree = new int[this.States.Count + 1];
+            var edgePlacementIndices = new int[this.States.Count + 1];
             foreach (var transition in this.Data.Transitions)
             {
                 if (!transition.Weight.IsZero)
                 {
-                    ++inDegree[transition.DestinationStateIndex + 1];
+                    ++edgePlacementIndices[transition.DestinationStateIndex + 1];
                 }
             }
 
             // The element of edgePlacementIndices at index i+1 contains a count of the number of edges 
             // going into the i'th state (the indegree of the state).
             // Convert this into a cumulative count (which will be used to give a unique index to each edge).
-            for (var i = 1; i < inDegree.Length; ++i)
+            for (var i = 1; i < edgePlacementIndices.Length; ++i)
             {
-                inDegree[i] += inDegree[i - 1];
+                edgePlacementIndices[i] += edgePlacementIndices[i - 1];
             }
 
-            var edgeArrayStarts = (int[])inDegree.Clone();
-            var totalEdgeCount = inDegree[this.States.Count];
+            var edgeArrayStarts = (int[])edgePlacementIndices.Clone();
+            var totalEdgeCount = edgePlacementIndices[this.States.Count];
             var edgeDestinationIndices = new int[totalEdgeCount];
 
             foreach (var state in this.States)
@@ -513,7 +522,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (!transition.Weight.IsZero)
                     {
                         // The unique index for this edge
-                        var edgePlacementIndex = inDegree[transition.DestinationStateIndex]++;
+                        var edgePlacementIndex = edgePlacementIndices[transition.DestinationStateIndex]++;
 
                         // The source index for the edge (which is the destination edge in the reversed graph)
                         edgeDestinationIndices[edgePlacementIndex] = state.Index;
