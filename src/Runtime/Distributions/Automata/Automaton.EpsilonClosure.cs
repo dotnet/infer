@@ -19,14 +19,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public struct EpsilonClosure
         {
             /// <summary>
-            /// The default capacity of <see cref="weightedStates"/>.
-            /// </summary>
-            private const int DefaultStateListCapacity = 5;
-
-            /// <summary>
             /// The list of the states in the closure.
             /// </summary>
-            private readonly List<(State, Weight)> weightedStates;
+            private readonly (State, Weight)[] weightedStates;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="EpsilonClosure"/> class.
@@ -37,8 +32,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton,
                 State state)
             {
-                this.weightedStates = new List<(State, Weight)>(DefaultStateListCapacity);
-
                 // Optimize for a very common case: a single-node closure
                 bool singleNodeClosure = true;
                 Weight selfLoopWeight = Weight.Zero;
@@ -59,19 +52,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (singleNodeClosure)
                 {
                     Weight stateWeight = Weight.ApproximateClosure(selfLoopWeight);
-                    this.weightedStates.Add((state, stateWeight));
+                    this.weightedStates = new[] { (state, stateWeight) };
                     this.EndWeight = stateWeight * state.EndWeight;
                 }
                 else
                 {
-                    Condensation condensation = automaton.ComputeCondensation(state, tr => tr.IsEpsilon, true);
+                    var condensation = automaton.ComputeCondensation(state, tr => tr.IsEpsilon, true);
+                    this.weightedStates = new (State, Weight)[condensation.TotalStatesCount];
+                    var statesAdded = 0;
                     for (int i = 0; i < condensation.ComponentCount; ++i)
                     {
                         StronglyConnectedComponent component = condensation.GetComponent(i);
                         for (int j = 0; j < component.Size; ++j)
                         {
                             State componentState = component.GetStateByIndex(j);
-                            this.weightedStates.Add((componentState, condensation.GetWeightFromRoot(componentState)));
+                            this.weightedStates[statesAdded++] =
+                                (componentState, condensation.GetWeightFromRoot(componentState));
                         }
                     }
 
@@ -88,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets the number of states in the closure.
             /// </summary>
-            public int Size => this.weightedStates.Count;
+            public int Size => this.weightedStates.Length;
 
             /// <summary>
             /// Gets a state by its index.
@@ -97,7 +93,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The state with the specified index.</returns>
             public State GetStateByIndex(int index)
             {
-                Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Count, "index", "An invalid closure state index given.");
+                Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Length, "index", "An invalid closure state index given.");
 
                 return this.weightedStates[index].Item1;
             }
@@ -110,7 +106,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The weight.</returns>
             public Weight GetStateWeightByIndex(int index)
             {
-                Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Count, "index", "An invalid closure state index given.");
+                Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Length, "index", "An invalid closure state index given.");
 
                 return this.weightedStates[index].Item2;
             }

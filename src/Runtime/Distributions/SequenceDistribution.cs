@@ -966,10 +966,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (this.IsPointMass)
             {
-                return new List<TSequence>(new[] { this.Point });
+                return new[] { this.Point };
             }
 
-            this.EnsureNormalized();
+            if (tryDeterminize)
+            {
+                // Determinization of automaton may fail if distribution is not normalized.
+                // But if determinization was not requested, we don't want to pay price of normalization
+                this.EnsureNormalized();
+            }
+
             return this.sequenceToWeight.EnumerateSupport(maxCount, tryDeterminize);
         }
 
@@ -986,11 +992,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (this.IsPointMass)
             {
-                result = new List<TSequence>(new[] { this.Point });
+                result = new[] { this.Point };
                 return true;
             }
 
-            this.EnsureNormalized();
+            if (tryDeterminize)
+            {
+                // Determinization of automaton may fail if distribution is not normalized.
+                // But if determinization was not requested, we don't want to pay price of normalization
+                this.EnsureNormalized();
+            }
+
             return this.sequenceToWeight.TryEnumerateSupport(maxCount, out result, tryDeterminize);
         }
 
