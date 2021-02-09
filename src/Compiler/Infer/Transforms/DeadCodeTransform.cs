@@ -16,10 +16,6 @@ using Microsoft.ML.Probabilistic.Compiler.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning disable 1591
-#endif
-
     /// <summary>
     /// Remove statements whose result is never used.  Attach InitializerSet attribute to while loops.
     /// </summary>
@@ -31,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         public ModelCompiler compiler;
-        private bool pruneDeadCode;
+        private readonly bool pruneDeadCode;
         private LoopMergingInfo loopMergingInfo;
 
         public DeadCodeTransform(ModelCompiler compiler, bool pruneDeadCode)
@@ -79,17 +75,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             foreach (IStatement stmt in isc)
             {
-                if (stmt is IWhileStatement)
+                if (stmt is IWhileStatement iws)
                 {
-                    IWhileStatement iws = (IWhileStatement)stmt;
                     beginWhile(iws);
                     ForEachStatement(iws.Body.Statements, beginWhile, endWhile, beginFirstIterPost, endFirstIterPost, action);
                     endWhile(iws);
                     continue;
                 }
-                else if (stmt is IConditionStatement)
+                else if (stmt is IConditionStatement ics)
                 {
-                    IConditionStatement ics = (IConditionStatement)stmt;
                     bool testsIteration = Recognizer.GetVariables(ics.Condition).Any(ivd => (ivd.Name == "iteration"));
                     if (testsIteration)
                     {
@@ -175,9 +169,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             for (int i = blocks.Count - 1; i >= 0; i--)
             {
                 StatementBlock block = blocks[i];
-                if (block is Loop)
+                if (block is Loop loop)
                 {
-                    Loop loop = (Loop) block;
                     if (!pruneDeadCode)
                     {
                         usedNodes = CollectUses(dependencyGraph, block.indices);
@@ -185,8 +178,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     else
                     {
                         usedBySelf.Clear();
-                        List<NodeIndex> tailStmts;
-                        block.indices = PruneDeadNodesCyclic(g, block.indices, usedNodes, usedBySelf, out tailStmts); // modifies usedNodes
+                        block.indices = PruneDeadNodesCyclic(g, block.indices, usedNodes, usedBySelf, out List<int> tailStmts); // modifies usedNodes
                         loop.tail = tailStmts;
                     }
                     RemoveSuffix(block.indices, loop.firstIterPostBlock);
@@ -205,9 +197,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IList<IStatement> sc = Builder.StmtCollection();
             foreach (StatementBlock block in blocks)
             {
-                if (block is Loop)
+                if (block is Loop loop)
                 {
-                    Loop loop = (Loop) block;
                     context.OpenStatement(loop.loopStatement);
                     IWhileStatement ws = Builder.WhileStmt(loop.loopStatement);
                     context.SetPrimaryOutput(ws);
@@ -258,9 +249,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         // for each back edge whose source is in a while loop, add the appropriate initializer of source to the InitializerSet
         private void AddLoopInitializers(StatementBlock block, ICollection<NodeIndex> usedNodes, Dictionary<NodeIndex, StatementBlock> blockOfNode, DependencyGraph2 g)
         {
-            if (block is Loop)
+            if (block is Loop loop)
             {
-                Loop loop = (Loop)block;
                 AddLoopInitializers(loop.tail, usedNodes, blockOfNode, g);
                 AddLoopInitializers(loop.firstIterPostBlock, usedNodes, blockOfNode, g);
             }
@@ -276,9 +266,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 NodeIndex target = (nodeLoop == null || nodeLoop.indices.Count == 0) ? node : nodeLoop.indices[0];
                 foreach (NodeIndex source in g.dependencyGraph.SourcesOf(node))
                 {
-                    if (source >= node && usedNodes.Contains(source) && blockOfNode[source] is Loop)
+                    if (source >= node && usedNodes.Contains(source) && blockOfNode[source] is Loop loop)
                     {
-                        Loop loop = (Loop)blockOfNode[source];
                         ForEachInitializer(g.nodes[source], target, g, loop.initializers.Add);
                     }
                 }
@@ -467,8 +456,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             List<IStatement> toAdd = new List<IStatement>();
             foreach (var init in initializers)
             {
-                IStatement newStatement;
-                if (replacements.TryGetValue(init, out newStatement))
+                if (replacements.TryGetValue(init, out IStatement newStatement))
                     toAdd.Add(newStatement);
             }
             foreach (var oldStatement in replacements.Keys)
