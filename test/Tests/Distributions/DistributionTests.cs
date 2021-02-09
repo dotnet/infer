@@ -1310,6 +1310,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "ModifiesGlobals")]
         public void DirichletTest()
         {
             Vector mTrue = Vector.FromArray(0.1, 0.2, 0.3, 0.4);
@@ -1323,12 +1324,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(mTrue.MaxDiff(m) < 1e-10);
             Assert.True(vTrue.MaxDiff(v) < 1e-10);
 
-            bool save = Dirichlet.AllowImproperSum;
-            Dirichlet.AllowImproperSum = false;
             DistributionTest(d, Dirichlet.Symmetric(d.Dimension, 7.7));
-            Dirichlet.AllowImproperSum = true;
-            DistributionTest(d, Dirichlet.Symmetric(d.Dimension, 7.7));
-            Dirichlet.AllowImproperSum = save;
+            using (TestUtils.TemporarilyAllowDirichletImproperSums)
+            {
+                DistributionTest(d, Dirichlet.Symmetric(d.Dimension, 7.7));
+            }
             PointMassTest(d, mTrue);
             UniformTest(d, mTrue);
             SetMomentTest(d, mTrue, vTrue);

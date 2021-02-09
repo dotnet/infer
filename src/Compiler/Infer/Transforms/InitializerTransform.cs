@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                     else
                     {
-                        IList<IStatement> inputStmts = iws.Body.Statements;
+                        IReadOnlyList<IStatement> inputStmts = (IReadOnlyList<IStatement>)iws.Body.Statements;
                         IStatement firstIterPostBlock = ForwardBackwardTransform.ExtractFirstIterationPostProcessingBlock(context, ref inputStmts);
                         DependencyGraph g = new DependencyGraph(context, inputStmts, ignoreMissingNodes: true, ignoreRequirements: true);
                         // look for cycles of initialized nodes and insert clones as needed

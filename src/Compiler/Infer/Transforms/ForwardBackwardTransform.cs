@@ -415,7 +415,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             ws.Body = Builder.BlockStmt();
             Context.OpenStatement(iws.Body);
             context.SetPrimaryOutput(ws.Body);
-            Schedule(ws.Body.Statements, iws.Body.Statements, context.InputAttributes.Has<DoNotSchedule>(iws));
+            Schedule(ws.Body.Statements, (IReadOnlyList<IStatement>)iws.Body.Statements, context.InputAttributes.Has<DoNotSchedule>(iws));
             Context.CloseStatement(iws.Body);
             context.InputAttributes.CopyObjectAttributesTo(iws, context.OutputAttributes, ws);
             return ws;
@@ -490,7 +490,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return newSt;
         }
 
-        internal static IStatement ExtractFirstIterationPostProcessingBlock(BasicTransformContext context, ref IList<IStatement> stmts)
+        internal static IStatement ExtractFirstIterationPostProcessingBlock(BasicTransformContext context, ref IReadOnlyList<IStatement> stmts)
         {
             IStatement firstIterPostBlock = null;
             foreach (var ist in stmts)
@@ -512,7 +512,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="outputStmts"></param>
         /// <param name="inputStmts"></param>
         /// <param name="doNotSchedule"></param>
-        protected void Schedule(IList<IStatement> outputStmts, IList<IStatement> inputStmts, bool doNotSchedule)
+        protected void Schedule(IList<IStatement> outputStmts, IReadOnlyList<IStatement> inputStmts, bool doNotSchedule)
         {
             if (doNotSchedule)
             {
@@ -617,7 +617,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="infos"></param>
         /// <param name="loopIndex"></param>
         /// <param name="containerPrefix">The containers that have already been grouped.</param>
-        private void SplitForwardBackward(IList<IStatement> inputStmts, ICollection<IStatement> outputStmts, DependencyGraph g, IEnumerable<NodeIndex> nodes,
+        private void SplitForwardBackward(IReadOnlyList<IStatement> inputStmts, ICollection<IStatement> outputStmts, DependencyGraph g, IEnumerable<NodeIndex> nodes,
                                           List<SerialLoopInfo> infos, int loopIndex, List<IStatement> containerPrefix)
         {
             if (loopIndex >= infos.Count)
@@ -680,8 +680,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             sccBack.EndComponent += delegate ()
             {
                 // check that the block has some offset edges on loopVar
-                if (currentBlock.Count == 1)
-                    return;
                 bool isForwardLoop = !loopVarsToReverse.Contains(loopVar);
                 bool hasOffsetEdge = BlockHasOffsetEdge(g, info, currentBlock, isForwardLoop);
                 if (!hasOffsetEdge)
@@ -890,7 +888,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             else throw new NotSupportedException(container.ToString());
         }
 
-        private StackFrame BuildStackFrame(IList<IStatement> inputStmts, DependencyGraph g, Set<NodeIndex> nodesInLoop, Set<NodeIndex> currentBlock)
+        private StackFrame BuildStackFrame(IReadOnlyList<IStatement> inputStmts, DependencyGraph g, Set<NodeIndex> nodesInLoop, Set<NodeIndex> currentBlock)
         {
             // construct a new StackFrame
             StackFrame frame = new StackFrame();
@@ -1041,7 +1039,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         // check that LoopMergingInfo allows the statements in currentBlock to be merged
-        private void CheckLoopMerging(IList<IStatement> inputStmts, IVariableDeclaration loopVar, Set<NodeIndex> currentBlock, bool isForwardLoop)
+        private void CheckLoopMerging(IReadOnlyList<IStatement> inputStmts, IVariableDeclaration loopVar, Set<NodeIndex> currentBlock, bool isForwardLoop)
         {
             Set<int> checkedStmts = new Set<int>();
             foreach (NodeIndex node in currentBlock)
@@ -1063,7 +1061,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         // emit warnings for increment statements that are not sequential
-        private void CheckSequentialUpdates(IList<IStatement> inputStmts, DependencyGraph g, IVariableDeclaration loopVar, Set<NodeIndex> currentBlock, Set<IStatement> originalStmts)
+        private void CheckSequentialUpdates(IReadOnlyList<IStatement> inputStmts, DependencyGraph g, IVariableDeclaration loopVar, Set<NodeIndex> currentBlock, Set<IStatement> originalStmts)
         {
             // collect all increment statements in the block
             Set<NodeIndex> incrementStmts = new Set<NodeIndex>();

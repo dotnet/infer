@@ -67,12 +67,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override void DoConvertMethodBody(IList<IStatement> outputs, IList<IStatement> inputs)
         {
-            List<IStatement> isc = Schedule(inputs);
+            List<IStatement> isc = Schedule((IReadOnlyList<IStatement>)inputs);
             RegisterUnchangedStatements(isc);
             outputs.AddRange(isc);
         }
 
-        protected List<IStatement> Schedule(IList<IStatement> isc)
+        protected List<IStatement> Schedule(IReadOnlyList<IStatement> isc)
         {
             bool dependsOnIteration = false;
             foreach (IStatement ist in isc)
@@ -135,7 +135,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        private bool CancelsIntoIncrement(DependencyGraph g, IList<IStatement> stmts, EdgeIndex edge)
+        private bool CancelsIntoIncrement(DependencyGraph g, IReadOnlyList<IStatement> stmts, EdgeIndex edge)
         {
             if (g.isCancels[edge])
             {
@@ -159,7 +159,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
         }
 
-        private List<IStatement> Schedule(DependencyGraph g, IList<IStatement> stmts, bool createFirstIterPostBlocks)
+        private List<IStatement> Schedule(DependencyGraph g, IReadOnlyList<IStatement> stmts, bool createFirstIterPostBlocks)
         {
             List<IStatement> output = new List<IStatement>();
             List<StatementBlock> blocks = new List<StatementBlock>();
@@ -334,7 +334,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="dependencyGraph"></param>
         /// <param name="stmts"></param>
         /// <param name="nodesToMove">Modified on exit</param>
-        private Dictionary<Loop, IBlockStatement> GetFirstIterPostprocessing(List<StatementBlock> blocks, DirectedGraphFilter<NodeIndex, EdgeIndex> dependencyGraph, IList<IStatement> stmts, ICollection<NodeIndex> nodesToMove)
+        private Dictionary<Loop, IBlockStatement> GetFirstIterPostprocessing(List<StatementBlock> blocks, DirectedGraphFilter<NodeIndex, EdgeIndex> dependencyGraph, IReadOnlyList<IStatement> stmts, ICollection<NodeIndex> nodesToMove)
         {
             var hasUserInitializedAncestor = dependencyGraph.CreateNodeData(false);
             DepthFirstSearch<NodeIndex> dfsInitBlock = new DepthFirstSearch<int>(dependencyGraph.SourcesOf, dependencyGraph);
@@ -406,7 +406,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return firstIterPostprocessing;
         }
 
-        private bool ContainsIterationStatement(IList<IStatement> stmts, IEnumerable<NodeIndex> block)
+        private bool ContainsIterationStatement(IReadOnlyList<IStatement> stmts, IEnumerable<NodeIndex> block)
         {
             foreach (NodeIndex i in block)
             {

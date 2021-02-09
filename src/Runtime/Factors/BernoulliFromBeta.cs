@@ -129,7 +129,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="BernoulliFromBetaOp"]/message_doc[@name="ProbTrueAverageConditional(Bernoulli, Beta)"]/*'/>
         public static Beta ProbTrueAverageConditional([SkipIfUniform] Bernoulli sample, Beta probTrue)
         {
-            // this code is similar to DiscreteFromDirichletOp.PAverageConditional()
+            // this code is similar to DiscreteFromDirichletOp.ProbsAverageConditional()
             if (probTrue.IsPointMass)
             {
                 return ProbTrueAverageConditional(sample, probTrue.Point);

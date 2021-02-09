@@ -730,17 +730,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 				this.WeightPrecisionRates_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.Marginal<Gamma>(this.WeightPrecisionRates_rep_B_toDef[FeatureRange], this.WeightPrecisionRates_uses_F[FeatureRange][1], this.WeightPrecisionRates_rep_F_marginal[FeatureRange]);
 			}
-			for(int iteration = 0; iteration<numberOfIterations; iteration++) {
-				for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-					for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-						this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange] = ReplicateOp_Divide.UsesAverageConditional<Gamma>(this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange], this.WeightPrecisionRates_rep_F_marginal[FeatureRange], InstanceRange, this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange]);
-						this.WeightPrecisionRates_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.MarginalIncrement<Gamma>(this.WeightPrecisionRates_rep_F_marginal[FeatureRange], this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange], this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange]);
-					}
-				}
-				this.OnProgressChanged(new ProgressChangedEventArgs(iteration));
-			}
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+					this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange] = ReplicateOp_Divide.UsesAverageConditional<Gamma>(this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange], this.WeightPrecisionRates_rep_F_marginal[FeatureRange], InstanceRange, this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange]);
+					this.WeightPrecisionRates_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.MarginalIncrement<Gamma>(this.WeightPrecisionRates_rep_F_marginal[FeatureRange], this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange], this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange]);
 					this.ModelSelector_selector_cases_0_rep11_rep_B[InstanceRange][FeatureRange] = Bernoulli.FromLogOdds(GaussianOpBase.LogEvidenceRatio(this.featureValues[InstanceRange][FeatureRange], 0.0, this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange]));
 				}
 				this.ModelSelector_selector_cases_0_rep11_B[InstanceRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep11_rep_B[InstanceRange], this.ModelSelector_selector_cases_0_rep11_B[InstanceRange]);
