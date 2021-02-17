@@ -54,7 +54,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Quality(QualityBand.Experimental)]
     [DataContract]
     [Serializable]
-    public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
+    public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> :
+        IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis, TThis>,
+        SettableTo<TThis>
         where TSequence : class, IEnumerable<TElement>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
@@ -649,6 +651,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Creates an automaton which has given values on given sequences and is zero everywhere else.
+        /// </summary>
+        /// <param name="sequenceToLogValue">The collection of pairs of a sequence and the logarithm of the automaton value on that sequence.</param>
+        /// <remarks>
+        /// If the same sequence is presented in the collection of pairs multiple times,
+        /// the value of the automaton on that sequence will be equal to the sum of the values in the collection.
+        /// </remarks>
+        /// <returns>The created automaton.</returns>
+        public static TThis FromLogValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceToLogValue)
+        {
+            Argument.CheckIfNotNull(sequenceToLogValue, "sequenceToValue");
+
+            return Sum(sequenceToLogValue.Select(kvp => ConstantOnLog(kvp.Value, kvp.Key)));
+            //TThis result = Zero();
+            //foreach (KeyValuePair<TSequence, double> sequenceWithValue in sequenceToLogValue)
+            //{
+            //    result = Sum(result, ConstantOnLog(sequenceWithValue.Value, sequenceWithValue.Key));
+            //}
+
+            //return result;
         }
 
         /// <summary>
@@ -2413,6 +2438,33 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 threadMaxStateCountOverride = this.originalThreadMaxStateCount;
             }
         }
+        #endregion
+
+
+        #region IWeightFunction implementation
+
+        public TThis AsAutomaton() => (TThis)this;
+
+        public TSequence Point
+        { 
+            get => TryComputePoint() ?? throw new InvalidOperationException("This automaton is zero everywhere or is non-zero on more than one sequence.");
+            set => SetTo(ConstantOn(1.0, value)); 
+        }
+
+        public bool IsPointMass => TryEnumerateSupport(2, out var support, tryDeterminize: false) && support.Count() == 1;
+
+        public bool UsesAutomatonRepresentation => true;
+
+        public void SetToSum(IEnumerable<TThis> weightFunctions) => SetTo(Sum(weightFunctions));
+
+        public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs) => SetTo(FromValues(sequenceWeightPairs));
+
+        public TThis Repeat(int minTimes = 1, int? maxTimes = null) => Repeat((TThis)this, minTimes, maxTimes);
+
+        public double MaxDiff(TThis that) => GetLogSimilarity((TThis)this, that);
+
+        public void NormalizeStructure() { }
+
         #endregion
 
         #region Serialization}

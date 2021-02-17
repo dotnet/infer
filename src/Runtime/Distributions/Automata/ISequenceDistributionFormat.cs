@@ -20,17 +20,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <typeparam name="TElement">The type of sequence elements of <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TElementDistribution">The type of distributions over sequence elements of <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate instances of <typeparamref name="TSequence"/>.</typeparam>
+        /// <typeparam name="TAutomaton">The type of automata used by <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TWeightFunction">The type of weight functions used by <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TSequenceDistribution">The concrete type of <paramref name="sequenceDistribution"/>.</typeparam>
         /// <param name="sequenceDistribution">The sequence distribution to convert to string.</param>
         /// <returns>The string representation of the <paramref name="sequenceDistribution"/>.</returns>
-        string ConvertToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution>(
+        string ConvertToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TSequenceDistribution>(
             TSequenceDistribution sequenceDistribution)
             where TSequence : class, IEnumerable<TElement>
             where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>,
                 SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-            where TWeightFunction : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>, new()
-            where TSequenceDistribution : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution>, new();
+            where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
+            where TWeightFunction : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, SettableTo<TWeightFunction>, SettableTo<TAutomaton>, new()
+            where TSequenceDistribution : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TSequenceDistribution>, new();
     }
 }
