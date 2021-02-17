@@ -89,10 +89,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a>&gt;</div>
@@ -130,7 +131,7 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
 [Serializable]
-public struct DiscreteChar : IDistribution&lt;char&gt;, ICloneable, HasPoint&lt;char&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;char&gt;, SettableTo&lt;DiscreteChar&gt;, SettableToProduct&lt;DiscreteChar&gt;, SettableToProduct&lt;DiscreteChar, DiscreteChar&gt;, SettableToRatio&lt;DiscreteChar&gt;, SettableToRatio&lt;DiscreteChar, DiscreteChar&gt;, SettableToPower&lt;DiscreteChar&gt;, SettableToWeightedSumExact&lt;DiscreteChar&gt;, SettableToWeightedSum&lt;DiscreteChar&gt;, SettableToPartialUniform&lt;DiscreteChar&gt;, CanGetLogAverageOf&lt;DiscreteChar&gt;, CanGetLogAverageOfPower&lt;DiscreteChar&gt;, CanGetAverageLog&lt;DiscreteChar&gt;, CanGetMode&lt;char&gt;, Sampleable&lt;char&gt;, CanEnumerateSupport&lt;char&gt;, ISerializable, IEquatable&lt;DiscreteChar&gt;</code></pre>
+public struct DiscreteChar : IDistribution&lt;char&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;char&gt;, CanGetLogProb&lt;char&gt;, SettableTo&lt;DiscreteChar&gt;, SettableToProduct&lt;DiscreteChar&gt;, SettableToProduct&lt;DiscreteChar, DiscreteChar&gt;, SettableToRatio&lt;DiscreteChar&gt;, SettableToRatio&lt;DiscreteChar, DiscreteChar&gt;, SettableToPower&lt;DiscreteChar&gt;, SettableToWeightedSumExact&lt;DiscreteChar&gt;, SettableToWeightedSum&lt;DiscreteChar&gt;, SettableToPartialUniform&lt;DiscreteChar&gt;, CanGetLogAverageOf&lt;DiscreteChar&gt;, CanGetLogAverageOfPower&lt;DiscreteChar&gt;, CanGetAverageLog&lt;DiscreteChar&gt;, CanGetMode&lt;char&gt;, Sampleable&lt;char&gt;, CanEnumerateSupport&lt;char&gt;, ISerializable, IEquatable&lt;DiscreteChar&gt;</code></pre>
   </div>
   <h3 id="fields">Fields
   </h3>
@@ -303,6 +304,54 @@ and allow characters in such ranges to be considered either lower or upper case.
   </table>
   <h3 id="properties">Properties
   </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_HasLogProbabilityOverride_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.HasLogProbabilityOverride*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_HasLogProbabilityOverride" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.HasLogProbabilityOverride">HasLogProbabilityOverride</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution is partial uniform with a log probability override.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasLogProbabilityOverride { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_IsBroad_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.IsBroad*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_IsBroad" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.IsBroad">IsBroad</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution is broad - i.e. a general class of values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsBroad { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_IsDigit_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.IsDigit*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_IsDigit" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.IsDigit">IsDigit</h4>
   <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution equals the distribution created by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Digit">Digit()</a>.</p>
@@ -534,6 +583,30 @@ and allow characters in such ranges to be considered either lower or upper case.
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><p>The probability of the character under this distribution.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_LogProbabilityOverride_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.LogProbabilityOverride*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_LogProbabilityOverride" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.LogProbabilityOverride">LogProbabilityOverride</h4>
+  <div class="markdown level1 summary"><p>Gets a value for the log probability override if it exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double? LogProbabilityOverride { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1938,11 +2011,50 @@ public static DiscreteChar Lower()</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
         <td><span class="parametername">distribution</span></td>
-        <td><p>The distribution which support will be used to setup the current distribution.</p>
+        <td><p>The distribution whose support will be used to setup the current distribution.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToPartialUniformOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.SetToPartialUniformOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToPartialUniformOf_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_Nullable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.SetToPartialUniformOf(Microsoft.ML.Probabilistic.Distributions.DiscreteChar,System.Nullable{System.Double})">SetToPartialUniformOf(DiscreteChar, Nullable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the distribution to be uniform over the support of a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniformOf(DiscreteChar distribution, double? logProbabilityOverride)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
+        <td><span class="parametername">distribution</span></td>
+        <td><p>The distribution whose support will be used to setup the current distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">logProbabilityOverride</span></td>
+        <td><p>An optional value to override for the log probability calculation
+against this distribution. If this is set, then the distribution will not be normalize;
+i.e. the probabilities will not sum to 1 over the support.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToPartialUniformOf_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_Nullable_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Overriding the log probability calculation in this way is useful within the context of using <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>
+to create more realistic language model priors. Distributions with this override are always uncached.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.SetToPower*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToPower_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.SetToPower(Microsoft.ML.Probabilistic.Distributions.DiscreteChar,System.Double)">SetToPower(DiscreteChar, Double)</h4>
   <div class="markdown level1 summary"><p>Sets the current distribution to a given distribution raised to a given power.</p>
@@ -2662,16 +2774,19 @@ public static DiscreteChar WordChar()</code></pre>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

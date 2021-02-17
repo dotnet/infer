@@ -89,6 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
@@ -132,7 +133,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public struct Beta : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Beta&gt;, SettableToProduct&lt;Beta&gt;, SettableToProduct&lt;Beta, Beta&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Beta&gt;, SettableToRatio&lt;Beta, Beta&gt;, SettableToPower&lt;Beta&gt;, SettableToWeightedSum&lt;Beta&gt;, CanGetLogAverageOf&lt;Beta&gt;, CanGetLogAverageOfPower&lt;Beta&gt;, CanGetAverageLog&lt;Beta&gt;, CanGetLogNormalizer, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetMode&lt;double&gt;, CanGetProbLessThan</code></pre>
+public struct Beta : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Beta&gt;, SettableToProduct&lt;Beta&gt;, SettableToProduct&lt;Beta, Beta&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Beta&gt;, SettableToRatio&lt;Beta, Beta&gt;, SettableToPower&lt;Beta&gt;, SettableToWeightedSum&lt;Beta&gt;, CanGetLogAverageOf&lt;Beta&gt;, CanGetLogAverageOfPower&lt;Beta&gt;, CanGetAverageLog&lt;Beta&gt;, CanGetLogNormalizer, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetMode&lt;double&gt;, CanGetProbLessThan</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -2044,6 +2045,9 @@ two Beta distributions</p>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

@@ -94,6 +94,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
@@ -139,7 +140,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public class Wishart : IDistribution&lt;PositiveDefiniteMatrix&gt;, ICloneable, HasPoint&lt;PositiveDefiniteMatrix&gt;, CanGetLogProb&lt;PositiveDefiniteMatrix&gt;, SettableTo&lt;Wishart&gt;, SettableToProduct&lt;Wishart&gt;, SettableToProduct&lt;Wishart, Wishart&gt;, Diffable, SettableToUniform, Sampleable&lt;PositiveDefiniteMatrix&gt;, SettableToRatio&lt;Wishart&gt;, SettableToRatio&lt;Wishart, Wishart&gt;, SettableToPower&lt;Wishart&gt;, CanGetMean&lt;PositiveDefiniteMatrix&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;PositiveDefiniteMatrix, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;PositiveDefiniteMatrix, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;Wishart&gt;, CanGetLogAverageOfPower&lt;Wishart&gt;, SettableToWeightedSum&lt;Wishart&gt;, CanGetAverageLog&lt;Wishart&gt;, CanGetLogNormalizer, CanGetMode&lt;PositiveDefiniteMatrix&gt;</code></pre>
+public class Wishart : IDistribution&lt;PositiveDefiniteMatrix&gt;, IDistribution, ICloneable, HasPoint&lt;PositiveDefiniteMatrix&gt;, CanGetLogProb&lt;PositiveDefiniteMatrix&gt;, SettableTo&lt;Wishart&gt;, SettableToProduct&lt;Wishart&gt;, SettableToProduct&lt;Wishart, Wishart&gt;, Diffable, SettableToUniform, Sampleable&lt;PositiveDefiniteMatrix&gt;, SettableToRatio&lt;Wishart&gt;, SettableToRatio&lt;Wishart, Wishart&gt;, SettableToPower&lt;Wishart&gt;, CanGetMean&lt;PositiveDefiniteMatrix&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;PositiveDefiniteMatrix, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;PositiveDefiniteMatrix, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;Wishart&gt;, CanGetLogAverageOfPower&lt;Wishart&gt;, SettableToWeightedSum&lt;Wishart&gt;, CanGetAverageLog&lt;Wishart&gt;, CanGetLogNormalizer, CanGetMode&lt;PositiveDefiniteMatrix&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Wishart_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -2633,6 +2634,9 @@ of type PositiveDefiniteMatrix. The distribution type must implement <a class="x
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

@@ -121,14 +121,14 @@ public struct DataContainer : ISerializable</code></pre>
   <h3 id="constructors">Constructors
   </h3>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer__ctor_System_Int32_Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__StateData__Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__Transition__System_Boolean_System_Boolean_System_Nullable_System_Boolean__System_Nullable_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.#ctor(System.Int32,Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{`0,`1,`2,`3,`4}.StateData},Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{`0,`1,`2,`3,`4}.Transition},System.Boolean,System.Boolean,System.Nullable{System.Boolean},System.Nullable{System.Boolean})">DataContainer(Int32, ReadOnlyArray&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StateData&gt;, ReadOnlyArray&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition&gt;, Boolean, Boolean, Nullable&lt;Boolean&gt;, Nullable&lt;Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer__ctor_System_Int32_Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__StateData__Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__Transition__System_Boolean_System_Boolean_System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.#ctor(System.Int32,Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{`0,`1,`2,`3,`4}.StateData},Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{`0,`1,`2,`3,`4}.Transition},System.Boolean,System.Boolean,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">DataContainer(Int32, ReadOnlyArray&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StateData&gt;, ReadOnlyArray&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition&gt;, Boolean, Boolean, Nullable&lt;Boolean&gt;, Nullable&lt;Boolean&gt;, Nullable&lt;Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes instance of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.DataContainer.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;StartStateIndex&quot;, &quot;States&quot;, &quot;Transitions&quot;, &quot;IsEpsilonFree&quot;, &quot;UsesGroups&quot;, &quot;IsDeterminized&quot;, &quot;IsZero&quot;})]
-public DataContainer(int startStateIndex, ReadOnlyArray&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StateData&gt; states, ReadOnlyArray&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition&gt; transitions, bool isEpsilonFree, bool usesGroups, bool? isDeterminized, bool? isZero)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;StartStateIndex&quot;, &quot;States&quot;, &quot;Transitions&quot;, &quot;IsEpsilonFree&quot;, &quot;UsesGroups&quot;, &quot;IsDeterminized&quot;, &quot;IsZero&quot;, &quot;IsEnumerable&quot;})]
+public DataContainer(int startStateIndex, ReadOnlyArray&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StateData&gt; states, ReadOnlyArray&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition&gt; transitions, bool isEpsilonFree, bool usesGroups, bool? isDeterminized, bool? isZero, bool? isEnumerable)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -173,6 +173,11 @@ public DataContainer(int startStateIndex, ReadOnlyArray&lt;Automaton&lt;TSequenc
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">isZero</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">isEnumerable</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -279,6 +284,29 @@ inside this array.</p>
   <div class="markdown level1 remarks"><p>Null value means that this property is unknown.
 False value means that this automaton can not be determinized</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer_IsEnumerable_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.IsEnumerable*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer_IsEnumerable" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.IsEnumerable">IsEnumerable</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool? IsEnumerable { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer_IsEpsilonFree_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.IsEpsilonFree*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer_IsEpsilonFree" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.IsEpsilonFree">IsEpsilonFree</h4>
   <div class="markdown level1 summary"><p>Gets value indicating whether this automaton is epsilon-free.</p>
@@ -381,12 +409,12 @@ False value means that this automaton can not be determinized</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer_With_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.With*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer_With_System_Nullable_System_Boolean__System_Nullable_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.With(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">With(Nullable&lt;Boolean&gt;, Nullable&lt;Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_DataContainer_With_System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.DataContainer.With(System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">With(Nullable&lt;Boolean&gt;, Nullable&lt;Boolean&gt;, Nullable&lt;Boolean&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer With(bool? isDeterminized = default(bool? ), bool? isZero = default(bool? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer With(bool? isDeterminized = default(bool? ), bool? isZero = default(bool? ), bool? isEnumerable = default(bool? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -406,6 +434,11 @@ False value means that this automaton can not be determinized</p>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">isZero</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">isEnumerable</span></td>
         <td></td>
       </tr>
     </tbody>

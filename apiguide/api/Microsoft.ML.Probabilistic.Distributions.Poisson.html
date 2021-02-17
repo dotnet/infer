@@ -89,10 +89,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Poisson.html">Poisson</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Poisson.html">Poisson</a>&gt;</div>
@@ -129,7 +130,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Stable)]
-public struct Poisson : IDistribution&lt;int&gt;, ICloneable, HasPoint&lt;int&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;int&gt;, SettableTo&lt;Poisson&gt;, SettableToProduct&lt;Poisson&gt;, SettableToProduct&lt;Poisson, Poisson&gt;, SettableToRatio&lt;Poisson&gt;, SettableToRatio&lt;Poisson, Poisson&gt;, SettableToPower&lt;Poisson&gt;, SettableToWeightedSum&lt;Poisson&gt;, CanGetLogAverageOf&lt;Poisson&gt;, CanGetLogAverageOfPower&lt;Poisson&gt;, CanGetAverageLog&lt;Poisson&gt;, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;</code></pre>
+public struct Poisson : IDistribution&lt;int&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;int&gt;, CanGetLogProb&lt;int&gt;, SettableTo&lt;Poisson&gt;, SettableToProduct&lt;Poisson&gt;, SettableToProduct&lt;Poisson, Poisson&gt;, SettableToRatio&lt;Poisson&gt;, SettableToRatio&lt;Poisson, Poisson&gt;, SettableToPower&lt;Poisson&gt;, SettableToWeightedSum&lt;Poisson&gt;, CanGetLogAverageOf&lt;Poisson&gt;, CanGetLogAverageOfPower&lt;Poisson&gt;, CanGetAverageLog&lt;Poisson&gt;, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Poisson_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -1913,16 +1914,19 @@ public static Poisson Uniform()</code></pre>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

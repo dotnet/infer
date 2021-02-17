@@ -803,6 +803,92 @@ instead of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automa
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Concatenate_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Concatenate*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Concatenate__4___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Concatenate(`4[])">Concatenate(TThis[])</h4>
+  <div class="markdown level1 summary"><p>Creates an automaton which is the concatenation of given automata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Concatenate(params TThis[] automata)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TThis[]</td>
+        <td><span class="parametername">automata</span></td>
+        <td><p>The automata to multiply.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Concatenate_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Concatenate*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Concatenate_System_Collections_Generic_IEnumerable__4__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Concatenate(System.Collections.Generic.IEnumerable{`4})">Concatenate(IEnumerable&lt;TThis&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates an automaton which is the concatenation of given automata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Concatenate(IEnumerable&lt;TThis&gt; automata)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TThis&gt;</td>
+        <td><span class="parametername">automata</span></td>
+        <td><p>The automata to multiply.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Constant_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Constant*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Constant_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Constant(System.Double)">Constant(Double)</h4>
   <div class="markdown level1 summary"><p>Creates an automaton which maps every sequence to a given value.</p>
@@ -1570,7 +1656,7 @@ will be scaled by the number of the sequence occurrences.</p>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.EnumerateSupport*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_System_Int32_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.EnumerateSupport(System.Int32,System.Boolean)">EnumerateSupport(Int32, Boolean)</h4>
   <div class="markdown level1 summary"><p>Enumerates support of this automaton when possible.
-Only point mass element distributions are supported.</p>
+Element distributions must be either point mass or implement <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1629,6 +1715,11 @@ Only point mass element distributions are supported.</p>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.AutomatonEnumerationCountException.html">AutomatonEnumerationCountException</a></td>
         <td><p>Thrown if enumeration is too large.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td><p>Thrown if distribution on some transition is not enumerable.</p>
 </td>
       </tr>
     </tbody>
@@ -1771,13 +1862,62 @@ public static TThis FromData(Automaton&lt;TSequence, TElement, TElementDistribut
 the value of the automaton on that sequence will be equal to the sum of the values in the collection.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetConverger*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetConverger(`4[])">GetConverger(TThis[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetConverger(`4,System.Double)">GetConverger(TThis, Double)</h4>
   <div class="markdown level1 summary"><p>Gets an automaton such that every given automaton, if multiplied by it, becomes normalizable.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis GetConverger(params TThis[] automata)</code></pre>
+    <pre><code class="lang-csharp hljs">public static TThis GetConverger(TThis automata, double decayWeight = 0.99)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">automata</span></td>
+        <td><p>The automata.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">decayWeight</span></td>
+        <td><p>The decay weight.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>An automaton, product with which will make every given automaton normalizable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetConverger*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4___System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetConverger(`4[],System.Double)">GetConverger(TThis[], Double)</h4>
+  <div class="markdown level1 summary"><p>Gets an automaton such that every given automaton, if multiplied by it, becomes normalizable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis GetConverger(TThis[] automata, double decayWeight = 0.99)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1793,6 +1933,12 @@ the value of the automaton on that sequence will be equal to the sum of the valu
         <td>TThis[]</td>
         <td><span class="parametername">automata</span></td>
         <td><p>The automata.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">decayWeight</span></td>
+        <td><p>The decay weight.</p>
 </td>
       </tr>
     </tbody>
@@ -2427,8 +2573,8 @@ and returns the logarithm of the normalizer.</p>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Read_System_Func_System_Double__System_Func_System_Int32__System_Func__2___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Serializtion format is a bit unnatural, but we do it for compatiblity with old serialized data.
-So we don't have to maintain 2 versions of derserialization</p>
+  <div class="markdown level1 remarks"><p>Serialization format is a bit unnatural, but we do it for compatibility with old serialized data.
+So we don't have to maintain 2 versions of deserialization.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_RemoveDeadStates_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.RemoveDeadStates*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_RemoveDeadStates" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.RemoveDeadStates">RemoveDeadStates()</h4>
@@ -3612,7 +3758,8 @@ and there are no epsilon transitions.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryEnumerateSupport*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryEnumerateSupport(System.Int32,System.Collections.Generic.IEnumerable{`0}@,System.Boolean)">TryEnumerateSupport(Int32, out IEnumerable&lt;TSequence&gt;, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Tries to enumerate support of this automaton.</p>
+  <div class="markdown level1 summary"><p>Tries to enumerate support of this automaton.
+Element distributions must be either point mass or implement <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -3661,22 +3808,6 @@ and there are no epsilon transitions.</p>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if successful, false otherwise</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.AutomatonException.html">AutomatonException</a></td>
-        <td><p>General automaton exception.</p>
 </td>
       </tr>
     </tbody>

@@ -90,6 +90,7 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</p>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
@@ -131,7 +132,7 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</p>
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Experimental)]
-public struct ConjugateDirichlet : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;ConjugateDirichlet&gt;, SettableToProduct&lt;ConjugateDirichlet&gt;, SettableToProduct&lt;ConjugateDirichlet, ConjugateDirichlet&gt;, Diffable, SettableToUniform, SettableToRatio&lt;ConjugateDirichlet&gt;, SettableToRatio&lt;ConjugateDirichlet, ConjugateDirichlet&gt;, SettableToPower&lt;ConjugateDirichlet&gt;, SettableToWeightedSum&lt;ConjugateDirichlet&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;ConjugateDirichlet&gt;, CanGetLogAverageOfPower&lt;ConjugateDirichlet&gt;, CanGetAverageLog&lt;ConjugateDirichlet&gt;, CanGetLogNormalizer</code></pre>
+public struct ConjugateDirichlet : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;ConjugateDirichlet&gt;, SettableToProduct&lt;ConjugateDirichlet&gt;, SettableToProduct&lt;ConjugateDirichlet, ConjugateDirichlet&gt;, Diffable, SettableToUniform, SettableToRatio&lt;ConjugateDirichlet&gt;, SettableToRatio&lt;ConjugateDirichlet, ConjugateDirichlet&gt;, SettableToPower&lt;ConjugateDirichlet&gt;, SettableToWeightedSum&lt;ConjugateDirichlet&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;ConjugateDirichlet&gt;, CanGetLogAverageOfPower&lt;ConjugateDirichlet&gt;, CanGetAverageLog&lt;ConjugateDirichlet&gt;, CanGetLogNormalizer</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -453,60 +454,6 @@ if you want to assign the result to a Conjugate Dirichlet type</p>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
-  <a id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_FromLogMeanAndMeanLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.FromLogMeanAndMeanLog*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_FromLogMeanAndMeanLog_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.FromLogMeanAndMeanLog(System.Double,System.Double)">FromLogMeanAndMeanLog(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Constructs a Conjugate Dirichlet distribution with the given log mean and mean logarithm.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ConjugateDirichlet FromLogMeanAndMeanLog(double logMean, double meanLog)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logMean</span></td>
-        <td><p>Log of desired expected value.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">meanLog</span></td>
-        <td><p>Desired expected logarithm.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.html">ConjugateDirichlet</a></td>
-        <td><p>A new Gamma distribution.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_FromLogMeanAndMeanLog_System_Double_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This function is significantly slower than the other constructors since it
-involves nonlinear optimization. The algorithm is a generalized Newton iteration,
-described in &quot;Estimating a Gamma distribution&quot; by T. Minka, 2002.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_FromMeanAndMeanLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.FromMeanAndMeanLog*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_FromMeanAndMeanLog_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.FromMeanAndMeanLog(System.Double,System.Double)">FromMeanAndMeanLog(Double, Double)</h4>
   <div class="markdown level1 summary"><p>Constructs a Conjugate Dirichlet distribution with the given mean and mean logarithm.</p>
@@ -2506,6 +2453,9 @@ public static ConjugateDirichlet Uniform()</code></pre>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

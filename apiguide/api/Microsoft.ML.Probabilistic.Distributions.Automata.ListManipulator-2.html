@@ -123,7 +123,7 @@
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_ListManipulator_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ListManipulator&lt;TList, TElement&gt; : ISequenceManipulator&lt;TList, TElement&gt; where TList : class, IList&lt;TElement&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class ListManipulator&lt;TList, TElement&gt; : ISequenceManipulator&lt;TList, TElement&gt; where TList : class, IList&lt;TElement&gt;, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -143,6 +143,31 @@
         <td><span class="parametername">TElement</span></td>
         <td><p>The type of a list element.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ListManipulator_2_SequenceEqualityComparer_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ListManipulator`2.SequenceEqualityComparer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ListManipulator_2_SequenceEqualityComparer" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ListManipulator`2.SequenceEqualityComparer">SequenceEqualityComparer</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEqualityComparer&lt;TList&gt; SequenceEqualityComparer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.iequalitycomparer-1">IEqualityComparer</a>&lt;TList&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -285,56 +310,6 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><p>The length of the list.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ListManipulator_2_SequencesAreEqual_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ListManipulator`2.SequencesAreEqual*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ListManipulator_2_SequencesAreEqual__0__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ListManipulator`2.SequencesAreEqual(`0,`0)">SequencesAreEqual(TList, TList)</h4>
-  <div class="markdown level1 summary"><p>Checks if given lists are equal.
-Lists are considered equal if they contain the same elements in the same order.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool SequencesAreEqual(TList sequence1, TList sequence2)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TList</span></td>
-        <td><span class="parametername">sequence1</span></td>
-        <td><p>The first list.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TList</span></td>
-        <td><span class="parametername">sequence2</span></td>
-        <td><p>The second list.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><p><span class="xref">true</span> if the lists are equal, <span class="xref">false</span> otherwise.</p>
 </td>
       </tr>
     </tbody>

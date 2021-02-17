@@ -89,10 +89,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
@@ -125,7 +126,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Experimental)]
-public struct WrappedGaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;double&gt;, SettableTo&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToWeightedSum&lt;WrappedGaussian&gt;, SettableToPower&lt;WrappedGaussian&gt;, Sampleable&lt;double&gt;, CanGetLogAverageOf&lt;WrappedGaussian&gt;, CanGetLogAverageOfPower&lt;WrappedGaussian&gt;, CanGetAverageLog&lt;WrappedGaussian&gt;</code></pre>
+public struct WrappedGaussian : IDistribution&lt;double&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToWeightedSum&lt;WrappedGaussian&gt;, SettableToPower&lt;WrappedGaussian&gt;, Sampleable&lt;double&gt;, CanGetLogAverageOf&lt;WrappedGaussian&gt;, CanGetLogAverageOfPower&lt;WrappedGaussian&gt;, CanGetAverageLog&lt;WrappedGaussian&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is represented by a unwrapped Gaussian and a period length L.
@@ -1246,16 +1247,19 @@ public static WrappedGaussian Uniform(double period = 6.2831853071795862)</code>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

@@ -89,6 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
@@ -133,7 +134,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public struct Gamma : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gamma&gt;, SettableToProduct&lt;Gamma&gt;, SettableToProduct&lt;Gamma, Gamma&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gamma&gt;, SettableToRatio&lt;Gamma, Gamma&gt;, SettableToPower&lt;Gamma&gt;, SettableToWeightedSum&lt;Gamma&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gamma&gt;, CanGetLogAverageOfPower&lt;Gamma&gt;, CanGetAverageLog&lt;Gamma&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;, CanGetProbLessThan, CanGetQuantile</code></pre>
+public struct Gamma : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gamma&gt;, SettableToProduct&lt;Gamma&gt;, SettableToProduct&lt;Gamma, Gamma&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gamma&gt;, SettableToRatio&lt;Gamma, Gamma&gt;, SettableToPower&lt;Gamma&gt;, SettableToWeightedSum&lt;Gamma&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gamma&gt;, CanGetLogAverageOfPower&lt;Gamma&gt;, CanGetAverageLog&lt;Gamma&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;, CanGetProbLessThan, CanGetQuantile</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Gamma_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -450,14 +451,14 @@ if you want to assign the result to a Gamma type</p>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Gamma_FromLogMeanAndMeanLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.FromLogMeanAndMeanLog*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gamma_FromLogMeanAndMeanLog_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.FromLogMeanAndMeanLog(System.Double,System.Double)">FromLogMeanAndMeanLog(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Constructs a Gamma distribution with the given log mean and mean logarithm.</p>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gamma_FromLogMeanMinusMeanLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.FromLogMeanMinusMeanLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gamma_FromLogMeanMinusMeanLog_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.FromLogMeanMinusMeanLog(System.Double,System.Double)">FromLogMeanMinusMeanLog(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Constructs a Gamma distribution with the given mean and mean logarithm.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma FromLogMeanAndMeanLog(double logMean, double meanLog)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Gamma FromLogMeanMinusMeanLog(double mean, double logMeanMinusMeanLog)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -471,14 +472,14 @@ if you want to assign the result to a Gamma type</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logMean</span></td>
-        <td><p>Log of desired expected value.</p>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Desired expected value.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">meanLog</span></td>
-        <td><p>Desired expected logarithm.</p>
+        <td><span class="parametername">logMeanMinusMeanLog</span></td>
+        <td><p>Logarithm of desired expected value minus desired expected logarithm.</p>
 </td>
       </tr>
     </tbody>
@@ -499,8 +500,10 @@ if you want to assign the result to a Gamma type</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gamma_FromLogMeanAndMeanLog_System_Double_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This function is significantly slower than the other constructors since it
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gamma_FromLogMeanMinusMeanLog_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function is equivalent to maximum-likelihood estimation of a Gamma distribution
+from data given by sufficient statistics.
+This function is significantly slower than the other constructors since it
 involves nonlinear optimization. The algorithm is a generalized Newton iteration,
 described in &quot;Estimating a Gamma distribution&quot; by T. Minka, 2002.</p>
 </div>
@@ -985,6 +988,30 @@ public static Gamma FromShapeAndRate(double shape, double rate)</code></pre>
       </tr>
     </tbody>
   </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gamma_GetLogMeanMinusMeanLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.GetLogMeanMinusMeanLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gamma_GetLogMeanMinusMeanLog" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.GetLogMeanMinusMeanLog">GetLogMeanMinusMeanLog()</h4>
+  <div class="markdown level1 summary"><p>Gets the logarithm of the expected value minus the expected logarithm, more accurately than directly computing <code>Math.Log(GetMean()) - GetMeanLog()</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogMeanMinusMeanLog()</code></pre>
+  </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -2441,6 +2468,9 @@ public static Gamma Uniform()</code></pre>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

@@ -109,10 +109,11 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Array-1.html">Array</a>&lt;T&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ConvertibleToArray.html">ConvertibleToArray</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;DomainType[]&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;DomainType[]&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;DomainType[]&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;DomainType[]&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;DomainType[]&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.IArrayFactory-2.html">IArrayFactory</a>&lt;T, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;T, DomainType&gt;&gt;</div>
@@ -266,7 +267,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [Quality(QualityBand.Mature)]
 [DataContract]
-public class DistributionRefArray&lt;T, DomainType&gt; : DistributionArray&lt;T, DomainType&gt;, IArray&lt;T&gt;, IList&lt;T&gt;, ICollection&lt;T&gt;, CanSetAllElementsTo&lt;T&gt;, IReadOnlyList&lt;T&gt;, IReadOnlyCollection&lt;T&gt;, IEnumerable&lt;T&gt;, IEnumerable, SettableTo&lt;T[]&gt;, SettableTo&lt;Array&lt;T&gt;&gt;, ConvertibleToArray, IDistribution&lt;DomainType[]&gt;, ICloneable, HasPoint&lt;DomainType[]&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;DomainType[]&gt;, Sampleable&lt;DomainType[]&gt;, IArrayFactory&lt;T, DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableTo&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToProduct&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToProduct&lt;DistributionRefArray&lt;T, DomainType&gt;, DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToRatio&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToRatio&lt;DistributionRefArray&lt;T, DomainType&gt;, DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToPower&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToWeightedSum&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, CanGetLogAverageOf&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, CanGetLogAverageOfPower&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, CanGetAverageLog&lt;DistributionRefArray&lt;T, DomainType&gt;&gt; where T : class, ICloneable, SettableTo&lt;T&gt;, SettableToProduct&lt;T&gt;, SettableToRatio&lt;T&gt;, SettableToPower&lt;T&gt;, SettableToWeightedSum&lt;T&gt;, CanGetLogAverageOf&lt;T&gt;, CanGetLogAverageOfPower&lt;T&gt;, CanGetAverageLog&lt;T&gt;, IDistribution&lt;DomainType&gt;, Sampleable&lt;DomainType&gt;</code></pre>
+public class DistributionRefArray&lt;T, DomainType&gt; : DistributionArray&lt;T, DomainType&gt;, IArray&lt;T&gt;, IList&lt;T&gt;, ICollection&lt;T&gt;, CanSetAllElementsTo&lt;T&gt;, IReadOnlyList&lt;T&gt;, IReadOnlyCollection&lt;T&gt;, IEnumerable&lt;T&gt;, IEnumerable, SettableTo&lt;T[]&gt;, SettableTo&lt;Array&lt;T&gt;&gt;, ConvertibleToArray, IDistribution&lt;DomainType[]&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;DomainType[]&gt;, CanGetLogProb&lt;DomainType[]&gt;, Sampleable&lt;DomainType[]&gt;, IArrayFactory&lt;T, DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableTo&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToProduct&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToProduct&lt;DistributionRefArray&lt;T, DomainType&gt;, DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToRatio&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToRatio&lt;DistributionRefArray&lt;T, DomainType&gt;, DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToPower&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, SettableToWeightedSum&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, CanGetLogAverageOf&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, CanGetLogAverageOfPower&lt;DistributionRefArray&lt;T, DomainType&gt;&gt;, CanGetAverageLog&lt;DistributionRefArray&lt;T, DomainType&gt;&gt; where T : class, ICloneable, SettableTo&lt;T&gt;, SettableToProduct&lt;T&gt;, SettableToRatio&lt;T&gt;, SettableToPower&lt;T&gt;, SettableToWeightedSum&lt;T&gt;, CanGetLogAverageOf&lt;T&gt;, CanGetLogAverageOfPower&lt;T&gt;, CanGetAverageLog&lt;T&gt;, IDistribution&lt;DomainType&gt;, Sampleable&lt;DomainType&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1161,16 +1162,19 @@ starting at a given index</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
@@ -1301,6 +1305,9 @@ starting at a given index</p>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_AsReadOnly__1_System_Collections_Generic_IList___0__">IListExtensions.AsReadOnly&lt;T&gt;(IList&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray.html#Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_ToReadOnlyArray__1_System_Collections_Generic_IEnumerable___0__">ReadOnlyArray.ToReadOnlyArray&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
   </div>
 </article>
           </div>

@@ -94,6 +94,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
@@ -139,7 +140,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [Quality(QualityBand.Mature)]
 [DataContract]
-public class Discrete : IDistribution&lt;int&gt;, ICloneable, HasPoint&lt;int&gt;, CanGetLogProb&lt;int&gt;, SettableTo&lt;Discrete&gt;, SettableToProduct&lt;Discrete&gt;, SettableToProduct&lt;Discrete, Discrete&gt;, Diffable, SettableToUniform, SettableToPartialUniform&lt;Discrete&gt;, SettableToRatio&lt;Discrete&gt;, SettableToRatio&lt;Discrete, Discrete&gt;, SettableToPower&lt;Discrete&gt;, SettableToWeightedSumExact&lt;Discrete&gt;, SettableToWeightedSum&lt;Discrete&gt;, CanGetLogAverageOf&lt;Discrete&gt;, CanGetLogAverageOfPower&lt;Discrete&gt;, CanGetAverageLog&lt;Discrete&gt;, CanGetLogNormalizer, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMode&lt;int&gt;</code></pre>
+public class Discrete : IDistribution&lt;int&gt;, IDistribution, ICloneable, HasPoint&lt;int&gt;, CanGetLogProb&lt;int&gt;, SettableTo&lt;Discrete&gt;, SettableToProduct&lt;Discrete&gt;, SettableToProduct&lt;Discrete, Discrete&gt;, Diffable, SettableToUniform, SettableToPartialUniform&lt;Discrete&gt;, SettableToRatio&lt;Discrete&gt;, SettableToRatio&lt;Discrete, Discrete&gt;, SettableToPower&lt;Discrete&gt;, SettableToWeightedSumExact&lt;Discrete&gt;, SettableToWeightedSum&lt;Discrete&gt;, CanGetLogAverageOf&lt;Discrete&gt;, CanGetLogAverageOfPower&lt;Discrete&gt;, CanGetAverageLog&lt;Discrete&gt;, CanGetLogNormalizer, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMode&lt;int&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Discrete_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is represented by a normalized Vector of length D.
@@ -2135,6 +2136,9 @@ even.</p>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

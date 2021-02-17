@@ -97,10 +97,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;TSequence&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TSequence&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TSequence&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;TSequence&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;TThis&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;TThis&gt;</div>
@@ -139,7 +140,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Experimental)]
-public abstract class SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt; : IDistribution&lt;TSequence&gt;, ICloneable, HasPoint&lt;TSequence&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;TSequence&gt;, SettableTo&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToRatio&lt;TThis&gt;, SettableToRatio&lt;TThis, TThis&gt;, SettableToPower&lt;TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetLogAverageOfPower&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt;, SettableToWeightedSumExact&lt;TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, SettableToPartialUniform&lt;TThis&gt;, CanGetLogNormalizer, Sampleable&lt;TSequence&gt; where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, Sampleable&lt;TElement&gt;, new()
+public abstract class SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt; : IDistribution&lt;TSequence&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;TSequence&gt;, CanGetLogProb&lt;TSequence&gt;, SettableTo&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToRatio&lt;TThis&gt;, SettableToRatio&lt;TThis, TThis&gt;, SettableToPower&lt;TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetLogAverageOfPower&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt;, SettableToWeightedSumExact&lt;TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, SettableToPartialUniform&lt;TThis&gt;, CanGetLogNormalizer, Sampleable&lt;TSequence&gt; where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, Sampleable&lt;TElement&gt;, new()
     where TSequenceManipulator : ISequenceManipulator&lt;TSequence, TElement&gt;, new()
     where TWeightFunction : Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction&gt;, new()
     where TThis : SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;, new()</code></pre>
@@ -759,13 +760,14 @@ Output the concatenation of the sampled pair of sequences.
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Concatenate*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_System_Collections_Generic_IEnumerable__2__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Concatenate(System.Collections.Generic.IEnumerable{`2})">Concatenate(IEnumerable&lt;TElementDistribution&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates a distribution over sequences induced by a given list of distributions over sequence elements.</p>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_System_Collections_Generic_IEnumerable__2__System_Boolean_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Concatenate(System.Collections.Generic.IEnumerable{`2},System.Boolean,System.Boolean)">Concatenate(IEnumerable&lt;TElementDistribution&gt;, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over sequences induced by a given list of distributions over sequence elements
+where the sequence can optionally end at any length, and the last element can optionally repeat without limit.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis Concatenate(IEnumerable&lt;TElementDistribution&gt; sequence)</code></pre>
+    <pre><code class="lang-csharp hljs">public static TThis Concatenate(IEnumerable&lt;TElementDistribution&gt; elementDistributions, bool allowEarlyEnd = false, bool repeatLastElement = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -779,8 +781,20 @@ Output the concatenation of the sampled pair of sequences.
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TElementDistribution&gt;</td>
-        <td><span class="parametername">sequence</span></td>
-        <td><p>Enumerable of distributions over sequence elements.</p>
+        <td><span class="parametername">elementDistributions</span></td>
+        <td><p>Enumerable of distributions over sequence elements and the transition weights.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">allowEarlyEnd</span></td>
+        <td><p>Allow the sequence to end at any point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">repeatLastElement</span></td>
+        <td><p>Repeat the last element.</p>
 </td>
       </tr>
     </tbody>
@@ -840,6 +854,55 @@ Output the concatenation of the sampled pair of sequences.
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if the sequence has non-zero probability under this distribiton, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Converge_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Converge*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Converge__5_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Converge(`5,System.Double)">Converge(TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Converges an improper sequence distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Converge(TThis dist, double decayWeight = 0.99)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The original distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">decayWeight</span></td>
+        <td><p>The decay weight.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The converged distribution.</p>
 </td>
       </tr>
     </tbody>
@@ -3766,16 +3829,19 @@ Defaults to <span class="xref">null</span>.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

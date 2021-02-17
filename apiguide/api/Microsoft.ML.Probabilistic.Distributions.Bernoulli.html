@@ -89,9 +89,10 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>&gt;</div>
@@ -131,7 +132,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public struct Bernoulli : IDistribution&lt;bool&gt;, ICloneable, HasPoint&lt;bool&gt;, Diffable, CanGetLogProb&lt;bool&gt;, SettableTo&lt;Bernoulli&gt;, SettableToProduct&lt;Bernoulli&gt;, SettableToProduct&lt;Bernoulli, Bernoulli&gt;, SettableToUniform, SettableToRatio&lt;Bernoulli&gt;, SettableToRatio&lt;Bernoulli, Bernoulli&gt;, SettableToPower&lt;Bernoulli&gt;, SettableToWeightedSumExact&lt;Bernoulli&gt;, SettableToWeightedSum&lt;Bernoulli&gt;, Sampleable&lt;bool&gt;, CanGetMean&lt;double&gt;, CanSetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetLogAverageOf&lt;Bernoulli&gt;, CanGetLogAverageOfPower&lt;Bernoulli&gt;, CanGetAverageLog&lt;Bernoulli&gt;, CanGetLogNormalizer, CanGetMode&lt;bool&gt;</code></pre>
+public struct Bernoulli : IDistribution&lt;bool&gt;, IDistribution, ICloneable, Diffable, HasPoint&lt;bool&gt;, CanGetLogProb&lt;bool&gt;, SettableTo&lt;Bernoulli&gt;, SettableToProduct&lt;Bernoulli&gt;, SettableToProduct&lt;Bernoulli, Bernoulli&gt;, SettableToUniform, SettableToRatio&lt;Bernoulli&gt;, SettableToRatio&lt;Bernoulli, Bernoulli&gt;, SettableToPower&lt;Bernoulli&gt;, SettableToWeightedSumExact&lt;Bernoulli&gt;, SettableToWeightedSum&lt;Bernoulli&gt;, Sampleable&lt;bool&gt;, CanGetMean&lt;double&gt;, CanSetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetLogAverageOf&lt;Bernoulli&gt;, CanGetLogAverageOfPower&lt;Bernoulli&gt;, CanGetAverageLog&lt;Bernoulli&gt;, CanGetLogNormalizer, CanGetMode&lt;bool&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Bernoulli_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The most common way to use the distribution is to get and set its ProbTrue property.</p>
@@ -1896,13 +1897,16 @@ public static Bernoulli Uniform()</code></pre>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
+  </div>
+  <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

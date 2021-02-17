@@ -97,10 +97,11 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Estimator-1.html">Estimator</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.MixtureEstimator-1.html">MixtureEstimator</a>&lt;TDist&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;TDist&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;TDomain&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TDomain&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TDomain&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;TDomain&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;TDomain&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;TThis&gt;</div>
@@ -166,7 +167,7 @@
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Mixture_3_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Mixture&lt;TDist, TDomain, TThis&gt; : MixtureEstimator&lt;TDist&gt;, Estimator&lt;MixtureEstimator&lt;TDist&gt;&gt;, Accumulator&lt;TDist&gt;, IDistribution&lt;TDomain&gt;, ICloneable, HasPoint&lt;TDomain&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;TDomain&gt;, Sampleable&lt;TDomain&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt; where TDist : CanGetLogAverageOf&lt;TDist&gt;, CanGetLogProb&lt;TDomain&gt;, Sampleable&lt;TDomain&gt;, IDistribution&lt;TDomain&gt; where TThis : Mixture&lt;TDist, TDomain, TThis&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class Mixture&lt;TDist, TDomain, TThis&gt; : MixtureEstimator&lt;TDist&gt;, Estimator&lt;MixtureEstimator&lt;TDist&gt;&gt;, Accumulator&lt;TDist&gt;, IDistribution&lt;TDomain&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;TDomain&gt;, CanGetLogProb&lt;TDomain&gt;, Sampleable&lt;TDomain&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt; where TDist : CanGetLogAverageOf&lt;TDist&gt;, CanGetLogProb&lt;TDomain&gt;, Sampleable&lt;TDomain&gt;, IDistribution&lt;TDomain&gt; where TThis : Mixture&lt;TDist, TDomain, TThis&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -654,16 +655,19 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

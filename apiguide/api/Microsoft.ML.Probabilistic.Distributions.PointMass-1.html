@@ -95,10 +95,11 @@ All the probability mass is at the point given by observed value.</p>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;T&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;T&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;T&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;T&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;T&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean</a>&lt;T&gt;</div>
@@ -115,13 +116,7 @@ All the probability mass is at the point given by observed value.</p>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
     </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
@@ -140,7 +135,7 @@ All the probability mass is at the point given by observed value.</p>
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public class PointMass&lt;T&gt; : IDistribution&lt;T&gt;, ICloneable, HasPoint&lt;T&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;T&gt;, Sampleable&lt;T&gt;, CanGetMean&lt;T&gt;, SettableTo&lt;PointMass&lt;T&gt;&gt;, SettableToProduct&lt;PointMass&lt;T&gt;&gt;, SettableToProduct&lt;PointMass&lt;T&gt;, PointMass&lt;T&gt;&gt;, SettableToRatio&lt;PointMass&lt;T&gt;&gt;, SettableToRatio&lt;PointMass&lt;T&gt;, PointMass&lt;T&gt;&gt;, SettableToPower&lt;PointMass&lt;T&gt;&gt;, SettableToWeightedSum&lt;PointMass&lt;T&gt;&gt;, CanGetLogAverageOf&lt;PointMass&lt;T&gt;&gt;, CanGetAverageLog&lt;PointMass&lt;T&gt;&gt;</code></pre>
+public class PointMass&lt;T&gt; : IDistribution&lt;T&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;T&gt;, CanGetLogProb&lt;T&gt;, Sampleable&lt;T&gt;, CanGetMean&lt;T&gt;, SettableTo&lt;PointMass&lt;T&gt;&gt;, SettableToProduct&lt;PointMass&lt;T&gt;&gt;, SettableToProduct&lt;PointMass&lt;T&gt;, PointMass&lt;T&gt;&gt;, SettableToRatio&lt;PointMass&lt;T&gt;&gt;, SettableToRatio&lt;PointMass&lt;T&gt;, PointMass&lt;T&gt;&gt;, SettableToPower&lt;PointMass&lt;T&gt;&gt;, SettableToWeightedSum&lt;PointMass&lt;T&gt;&gt;, CanGetLogAverageOf&lt;PointMass&lt;T&gt;&gt;, CanGetAverageLog&lt;PointMass&lt;T&gt;&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -308,6 +303,48 @@ public T Point { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_PointMass_1_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.PointMass`1.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_PointMass_1_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.PointMass`1.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_PointMass_1_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.PointMass`1.GetAverageLog*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_PointMass_1_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_PointMass__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.PointMass`1.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.PointMass{`0})">GetAverageLog(PointMass&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns 0 if the this and that point mass are equal, negative infinity otherwise</p>
@@ -350,6 +387,31 @@ public T Point { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_PointMass_1_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.PointMass`1.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_PointMass_1_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.PointMass`1.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_PointMass_1_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.PointMass`1.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_PointMass_1_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_PointMass__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.PointMass`1.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.PointMass{`0})">GetLogAverageOf(PointMass&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns 0 if the this and that point mass are equal, negative infinity otherwise</p>
@@ -795,16 +857,19 @@ public T Point { get; set; }</code></pre>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

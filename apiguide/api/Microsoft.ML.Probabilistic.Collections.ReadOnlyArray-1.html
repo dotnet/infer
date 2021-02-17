@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1" class="text-break">Struct ReadOnlyArray&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Represents a read only array.</p>
+  <div class="markdown level0 summary"><p>Represents an immutable array.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div classs="implements">
@@ -95,12 +95,6 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a>
-    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a>
     </div>
@@ -138,38 +132,10 @@ public struct ReadOnlyArray&lt;T&gt; : IReadOnlyList&lt;T&gt;, IReadOnlyCollecti
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>It is implemented as struct because it avoids extra allocations on heap.
-<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray&lt;T&gt;</a> doesn't have space overhead compared to regular arrays.</p>
+  <div class="markdown level0 remarks"><p>This is a partial reimplementation of System.Collections.Immutable.ReadOnlyArray.
+Once we can move to netcore-only codebase, this type can be removed.
+API is supposed to be a subset of the real thing to ease migration in future.</p>
 </div>
-  <h3 id="constructors">Constructors
-  </h3>
-  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1__ctor__0___" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.#ctor(`0[])">ReadOnlyArray(T[])</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray&lt;T&gt;</a> structure.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;CloneArray&quot;})]
-public ReadOnlyArray(T[] array)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>T[]</td>
-        <td><span class="parametername">array</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="properties">Properties
   </h3>
   <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_Count_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.Count*"></a>
@@ -195,14 +161,13 @@ public ReadOnlyArray(T[] array)</code></pre>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_IsNull_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.IsNull*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_IsNull" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.IsNull">IsNull</h4>
-  <div class="markdown level1 summary"><p>Gets a boolean value which is true if this ReadOnlyArray wraps null array.</p>
-</div>
+  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_Empty_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.Empty*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_Empty" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.Empty">Empty</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsNull { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static ReadOnlyArray&lt;T&gt; Empty { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -214,7 +179,7 @@ public ReadOnlyArray(T[] array)</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray</a>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -285,6 +250,91 @@ public ReadOnlyArray(T[] array)</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_CreateCopy_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.CreateCopy*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_CreateCopy_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.CreateCopy(System.Collections.Generic.IEnumerable{`0})">CreateCopy(IEnumerable&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a new instance of <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray&lt;T&gt;</a> by copying elements of
+<code data-dev-comment-type="paramref" class="paramref">sequence</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;CloneArray&quot;})]
+public static ReadOnlyArray&lt;T&gt; CreateCopy(IEnumerable&lt;T&gt; sequence)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
+        <td><span class="parametername">sequence</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_Equals_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object o)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">o</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_GetEnumerator_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.GetEnumerator*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_GetEnumerator" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.GetEnumerator">GetEnumerator()</h4>
   <div class="markdown level1 summary"><p>Returns enumerator over elements of array.</p>
@@ -312,16 +362,40 @@ public ReadOnlyArray(T[] array)</code></pre>
   <h5 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_GetEnumerator_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This is value-type non-virtual version of enumerator that is used by compiler in foreach loops.</p>
 </div>
-  <h3 id="operators">Operators
-  </h3>
-  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_op_Implicit_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.op_Implicit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_op_Implicit__0____Microsoft_ML_Probabilistic_Collections_ReadOnlyArray__0_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.op_Implicit(`0[])~Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{`0}">Implicit(T[] to ReadOnlyArray&lt;T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Helper method which allows to cast regular arrays to read only versions implicitly.</p>
-</div>
+  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static implicit operator ReadOnlyArray&lt;T&gt;(T[] array)</code></pre>
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_op_Equality_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.op_Equality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_op_Equality_Microsoft_ML_Probabilistic_Collections_ReadOnlyArray__0__Microsoft_ML_Probabilistic_Collections_ReadOnlyArray__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.op_Equality(Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{`0},Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{`0})">Equality(ReadOnlyArray&lt;T&gt;, ReadOnlyArray&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(ReadOnlyArray&lt;T&gt; left, ReadOnlyArray&lt;T&gt; right)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -334,8 +408,13 @@ public ReadOnlyArray(T[] array)</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td>T[]</td>
-        <td><span class="parametername">array</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray</a>&lt;T&gt;</td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray</a>&lt;T&gt;</td>
+        <td><span class="parametername">right</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -350,7 +429,52 @@ public ReadOnlyArray(T[] array)</code></pre>
     </thead>
     <tbody>
       <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_op_Inequality_" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.op_Inequality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_1_op_Inequality_Microsoft_ML_Probabilistic_Collections_ReadOnlyArray__0__Microsoft_ML_Probabilistic_Collections_ReadOnlyArray__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray`1.op_Inequality(Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{`0},Microsoft.ML.Probabilistic.Collections.ReadOnlyArray{`0})">Inequality(ReadOnlyArray&lt;T&gt;, ReadOnlyArray&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(ReadOnlyArray&lt;T&gt; left, ReadOnlyArray&lt;T&gt; right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray</a>&lt;T&gt;</td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray</a>&lt;T&gt;</td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -470,6 +594,9 @@ public ReadOnlyArray(T[] array)</code></pre>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableSum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_Double__">IEnumerableExensions.EnumerableSum&lt;T&gt;(IEnumerable&lt;T&gt;, Func&lt;T, Double&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray.html#Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_ToReadOnlyArray__1_System_Collections_Generic_IEnumerable___0__">ReadOnlyArray.ToReadOnlyArray&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
   </div>
 </article>
           </div>

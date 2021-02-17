@@ -353,6 +353,73 @@ public static T MarginalAverageConditional&lt;T&gt;(T Use, T Def, T result)
   <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableOp_MarginalAverageConditional__1___0___0___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>marginal</code> as the random arguments are varied. The formula is <code>proj[p(marginal) sum_(use,def) p(use,def) factor(use,def,marginal)]/p(marginal)</code>.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableOp_MarginalAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableOp.MarginalAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableOp_MarginalAverageConditional__2___1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableOp.MarginalAverageConditional``2(``1,``0)">MarginalAverageConditional&lt;TDist, T&gt;(T, TDist)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist MarginalAverageConditional&lt;TDist, T&gt;(T Def, TDist result)
+    where TDist : HasPoint&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">Def</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the marginal of the variable.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableOp_MarginalAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableOp.MarginalAverageConditionalInit*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableOp_MarginalAverageConditionalInit__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableOp.MarginalAverageConditionalInit``1(``0)">MarginalAverageConditionalInit&lt;T&gt;(T)</h4>
   <div class="markdown level1 summary"></div>
@@ -476,6 +543,73 @@ public static T MarginalAverageConditional&lt;T&gt;(T Use, T Def, T result)
   <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableOp_UseAverageConditional__1___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>use</code> as the random arguments are varied. The formula is <code>proj[p(use) sum_(def) p(def) factor(use,def,marginal)]/p(use)</code>.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableOp_UseAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableOp.UseAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableOp_UseAverageConditional__2___1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableOp.UseAverageConditional``2(``1,``0)">UseAverageConditional&lt;TDist, T&gt;(T, TDist)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist UseAverageConditional&lt;TDist, T&gt;(T Def, TDist result)
+    where TDist : HasPoint&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">Def</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the marginal of the variable.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           

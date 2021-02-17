@@ -108,10 +108,11 @@ automatically reset to the common value.</p>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.icollection">ICollection</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGaussianList.html">SparseGaussianList</a>&gt;</div>
@@ -464,7 +465,7 @@ automatically reset to the common value.</p>
     <pre><code class="lang-csharp hljs">[Serializable]
 [Quality(QualityBand.Stable)]
 [DataContract]
-public class SparseGaussianList : SparseDistributionList&lt;Gaussian, double, SparseGaussianList&gt;, ISparseList&lt;Gaussian&gt;, ISparseEnumerable&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, ICollection&lt;Gaussian&gt;, IEnumerable&lt;Gaussian&gt;, IList, ICollection, IEnumerable, IDistribution&lt;ISparseList&lt;double&gt;&gt;, ICloneable, HasPoint&lt;ISparseList&lt;double&gt;&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;ISparseList&lt;double&gt;&gt;, Sampleable&lt;ISparseList&lt;double&gt;&gt;, SettableTo&lt;SparseGaussianList&gt;, SettableToProduct&lt;SparseGaussianList&gt;, SettableToProduct&lt;SparseGaussianList, SparseGaussianList&gt;, SettableToPower&lt;SparseGaussianList&gt;, SettableToRatio&lt;SparseGaussianList&gt;, SettableToRatio&lt;SparseGaussianList, SparseGaussianList&gt;, SettableToWeightedSum&lt;SparseGaussianList&gt;, CanGetLogAverageOf&lt;SparseGaussianList&gt;, CanGetLogAverageOfPower&lt;SparseGaussianList&gt;, CanGetAverageLog&lt;SparseGaussianList&gt;, CanGetMean&lt;ISparseList&lt;double&gt;&gt;, CanGetVariance&lt;ISparseList&lt;double&gt;&gt;</code></pre>
+public class SparseGaussianList : SparseDistributionList&lt;Gaussian, double, SparseGaussianList&gt;, ISparseList&lt;Gaussian&gt;, ISparseEnumerable&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, ICollection&lt;Gaussian&gt;, IEnumerable&lt;Gaussian&gt;, IList, ICollection, IEnumerable, IDistribution&lt;ISparseList&lt;double&gt;&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;ISparseList&lt;double&gt;&gt;, CanGetLogProb&lt;ISparseList&lt;double&gt;&gt;, Sampleable&lt;ISparseList&lt;double&gt;&gt;, SettableTo&lt;SparseGaussianList&gt;, SettableToProduct&lt;SparseGaussianList&gt;, SettableToProduct&lt;SparseGaussianList, SparseGaussianList&gt;, SettableToPower&lt;SparseGaussianList&gt;, SettableToRatio&lt;SparseGaussianList&gt;, SettableToRatio&lt;SparseGaussianList, SparseGaussianList&gt;, SettableToWeightedSum&lt;SparseGaussianList&gt;, CanGetLogAverageOf&lt;SparseGaussianList&gt;, CanGetLogAverageOfPower&lt;SparseGaussianList&gt;, CanGetAverageLog&lt;SparseGaussianList&gt;, CanGetMean&lt;ISparseList&lt;double&gt;&gt;, CanGetVariance&lt;ISparseList&lt;double&gt;&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -1165,16 +1166,19 @@ of means and precisions</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
@@ -1308,6 +1312,9 @@ of means and precisions</p>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_AsReadOnly__1_System_Collections_Generic_IList___0__">IListExtensions.AsReadOnly&lt;T&gt;(IList&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray.html#Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_ToReadOnlyArray__1_System_Collections_Generic_IEnumerable___0__">ReadOnlyArray.ToReadOnlyArray&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
   </div>
 </article>
           </div>

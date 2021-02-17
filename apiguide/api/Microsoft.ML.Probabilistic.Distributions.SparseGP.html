@@ -95,10 +95,11 @@
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IGaussianProcess.html">IGaussianProcess</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
@@ -135,7 +136,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [Quality(QualityBand.Preview)]
 [DataContract]
-public class SparseGP : IGaussianProcess, IDistribution&lt;IFunction&gt;, ICloneable, HasPoint&lt;IFunction&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;IFunction&gt;, SettableTo&lt;SparseGP&gt;, SettableToProduct&lt;SparseGP&gt;, SettableToProduct&lt;SparseGP, SparseGP&gt;, SettableToRatio&lt;SparseGP&gt;, SettableToRatio&lt;SparseGP, SparseGP&gt;, SettableToPower&lt;SparseGP&gt;, SettableToWeightedSum&lt;SparseGP&gt;, CanGetLogAverageOf&lt;SparseGP&gt;, CanGetLogAverageOfPower&lt;SparseGP&gt;, CanGetAverageLog&lt;SparseGP&gt;, CanGetMean&lt;IFunction&gt;, Sampleable&lt;IFunction&gt;</code></pre>
+public class SparseGP : IGaussianProcess, IDistribution&lt;IFunction&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;IFunction&gt;, CanGetLogProb&lt;IFunction&gt;, SettableTo&lt;SparseGP&gt;, SettableToProduct&lt;SparseGP&gt;, SettableToProduct&lt;SparseGP, SparseGP&gt;, SettableToRatio&lt;SparseGP&gt;, SettableToRatio&lt;SparseGP, SparseGP&gt;, SettableToPower&lt;SparseGP&gt;, SettableToWeightedSum&lt;SparseGP&gt;, CanGetLogAverageOf&lt;SparseGP&gt;, CanGetLogAverageOfPower&lt;SparseGP&gt;, CanGetAverageLog&lt;SparseGP&gt;, CanGetMean&lt;IFunction&gt;, Sampleable&lt;IFunction&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -1867,16 +1868,19 @@ which are referenced.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

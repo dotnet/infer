@@ -95,10 +95,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;TEnum&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TEnum&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TEnum&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;TEnum&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
@@ -293,7 +294,7 @@
   <h5 id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
-public class DiscreteEnum&lt;TEnum&gt; : GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;, IDistribution&lt;TEnum&gt;, ICloneable, HasPoint&lt;TEnum&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;TEnum&gt;, SettableTo&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToProduct&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToProduct&lt;DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;&gt;, SettableToRatio&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToRatio&lt;DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;&gt;, SettableToPower&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToWeightedSumExact&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToWeightedSum&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToPartialUniform&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetLogAverageOf&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetLogAverageOfPower&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetAverageLog&lt;DiscreteEnum&lt;TEnum&gt;&gt;, Sampleable&lt;TEnum&gt;</code></pre>
+public class DiscreteEnum&lt;TEnum&gt; : GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;, IDistribution&lt;TEnum&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;TEnum&gt;, CanGetLogProb&lt;TEnum&gt;, SettableTo&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToProduct&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToProduct&lt;DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;&gt;, SettableToRatio&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToRatio&lt;DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;&gt;, SettableToPower&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToWeightedSumExact&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToWeightedSum&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToPartialUniform&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetLogAverageOf&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetLogAverageOfPower&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetAverageLog&lt;DiscreteEnum&lt;TEnum&gt;&gt;, Sampleable&lt;TEnum&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -440,16 +441,19 @@ public class DiscreteEnum&lt;TEnum&gt; : GenericDiscreteBase&lt;TEnum, DiscreteE
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

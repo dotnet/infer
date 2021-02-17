@@ -195,6 +195,67 @@ public static class GateEnterOp&lt;T&gt;</code></pre>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(enter,selector,value))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.EnterAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageConditional__1___0___0___" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.EnterAverageConditional``1(``0,``0[])">EnterAverageConditional&lt;TValue&gt;(TValue, TValue[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TValue[] EnterAverageConditional&lt;TValue&gt;(TValue value, TValue[] result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>TValue[]</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TValue[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.EnterAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageConditional__2___0___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.EnterAverageConditional``2(``0,``1)">EnterAverageConditional&lt;TValue, TResultList&gt;(TValue, TResultList)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>enter</code>.</p>
 </div>
@@ -268,6 +329,67 @@ public static class GateEnterOp&lt;T&gt;</code></pre>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageConditional__2___0___1__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>enter</code> as the random arguments are varied. The formula is <code>proj[p(enter) sum_(value) p(value) factor(enter,selector,value)]/p(enter)</code>.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.EnterAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageLogarithm__1___0___0___" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.EnterAverageLogarithm``1(``0,``0[])">EnterAverageLogarithm&lt;TValue&gt;(TValue, TValue[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TValue[] EnterAverageLogarithm&lt;TValue&gt;(TValue value, TValue[] result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>TValue[]</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TValue[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.EnterAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_EnterAverageLogarithm__2___0___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.EnterAverageLogarithm``2(``0,``1)">EnterAverageLogarithm&lt;TValue, TResultList&gt;(TValue, TResultList)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>enter</code>.</p>

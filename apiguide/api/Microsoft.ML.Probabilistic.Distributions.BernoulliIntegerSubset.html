@@ -95,10 +95,11 @@ integers, which are the indices of elements in the boolean list with value 'true
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset.html">BernoulliIntegerSubset</a>&gt;</div>
@@ -138,7 +139,7 @@ integers, which are the indices of elements in the boolean list with value 'true
   <h5 id="Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Quality(QualityBand.Stable)]
-public class BernoulliIntegerSubset : IDistribution&lt;IList&lt;int&gt;&gt;, ICloneable, HasPoint&lt;IList&lt;int&gt;&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;IList&lt;int&gt;&gt;, Sampleable&lt;IList&lt;int&gt;&gt;, SettableToProduct&lt;BernoulliIntegerSubset&gt;, SettableToProduct&lt;BernoulliIntegerSubset, BernoulliIntegerSubset&gt;, SettableTo&lt;BernoulliIntegerSubset&gt;, SettableToPower&lt;BernoulliIntegerSubset&gt;, SettableToRatio&lt;BernoulliIntegerSubset&gt;, SettableToRatio&lt;BernoulliIntegerSubset, BernoulliIntegerSubset&gt;, SettableToWeightedSum&lt;BernoulliIntegerSubset&gt;, CanGetLogAverageOf&lt;BernoulliIntegerSubset&gt;, CanGetLogAverageOfPower&lt;BernoulliIntegerSubset&gt;, CanGetAverageLog&lt;BernoulliIntegerSubset&gt;</code></pre>
+public class BernoulliIntegerSubset : IDistribution&lt;IList&lt;int&gt;&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;IList&lt;int&gt;&gt;, CanGetLogProb&lt;IList&lt;int&gt;&gt;, Sampleable&lt;IList&lt;int&gt;&gt;, SettableToProduct&lt;BernoulliIntegerSubset&gt;, SettableToProduct&lt;BernoulliIntegerSubset, BernoulliIntegerSubset&gt;, SettableTo&lt;BernoulliIntegerSubset&gt;, SettableToPower&lt;BernoulliIntegerSubset&gt;, SettableToRatio&lt;BernoulliIntegerSubset&gt;, SettableToRatio&lt;BernoulliIntegerSubset, BernoulliIntegerSubset&gt;, SettableToWeightedSum&lt;BernoulliIntegerSubset&gt;, CanGetLogAverageOf&lt;BernoulliIntegerSubset&gt;, CanGetLogAverageOfPower&lt;BernoulliIntegerSubset&gt;, CanGetAverageLog&lt;BernoulliIntegerSubset&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -2279,16 +2280,19 @@ BernoulliIntegerSubset distribution raised to a power.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

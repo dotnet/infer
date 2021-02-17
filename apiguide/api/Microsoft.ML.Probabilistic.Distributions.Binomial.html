@@ -89,10 +89,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Binomial.html">Binomial</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Binomial.html">Binomial</a>&gt;</div>
@@ -134,7 +135,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Experimental)]
-public struct Binomial : IDistribution&lt;int&gt;, ICloneable, HasPoint&lt;int&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;int&gt;, SettableTo&lt;Binomial&gt;, SettableToProduct&lt;Binomial&gt;, SettableToProduct&lt;Binomial, Binomial&gt;, SettableToRatio&lt;Binomial&gt;, SettableToRatio&lt;Binomial, Binomial&gt;, SettableToPower&lt;Binomial&gt;, SettableToWeightedSum&lt;Binomial&gt;, CanGetLogAverageOf&lt;Binomial&gt;, CanGetLogAverageOfPower&lt;Binomial&gt;, CanGetAverageLog&lt;Binomial&gt;, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;</code></pre>
+public struct Binomial : IDistribution&lt;int&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;int&gt;, CanGetLogProb&lt;int&gt;, SettableTo&lt;Binomial&gt;, SettableToProduct&lt;Binomial&gt;, SettableToProduct&lt;Binomial, Binomial&gt;, SettableToRatio&lt;Binomial&gt;, SettableToRatio&lt;Binomial, Binomial&gt;, SettableToPower&lt;Binomial&gt;, SettableToWeightedSum&lt;Binomial&gt;, CanGetLogAverageOf&lt;Binomial&gt;, CanGetLogAverageOfPower&lt;Binomial&gt;, CanGetAverageLog&lt;Binomial&gt;, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Binomial_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The formula for the distribution is <code>p(x) = n!/(n-x)!/x! p^x (1-p)^(n-x)</code>.
@@ -1099,16 +1100,19 @@ public static Binomial FromNatural(int trialCount, double logOdds, double a = 1,
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

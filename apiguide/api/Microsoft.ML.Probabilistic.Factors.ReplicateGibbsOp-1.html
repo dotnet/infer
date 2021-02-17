@@ -530,138 +530,6 @@ public static class ReplicateGibbsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs__1__0_Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0__0__" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs``1(`0,Microsoft.ML.Probabilistic.Distributions.GibbsMarginal{``0,`0})">MarginalGibbs&lt;TDist&gt;(T, GibbsMarginal&lt;TDist, T&gt;)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GibbsMarginal&lt;TDist, T&gt; MarginalGibbs&lt;TDist&gt;(T Def, GibbsMarginal&lt;TDist, T&gt; to_marginal)
-    where TDist : IDistribution&lt;T&gt;, Sampleable&lt;T&gt;</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">T</span></td>
-        <td><span class="parametername">Def</span></td>
-        <td><p>Incoming message from <code>Def</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, T&gt;</td>
-        <td><span class="parametername">to_marginal</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, T&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TDist</span></td>
-        <td><p>The type of the distribution over the replicated variable.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs__1__0_Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0__0___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs__1__0___Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0__0__" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs``1(`0[],Microsoft.ML.Probabilistic.Distributions.GibbsMarginal{``0,`0})">MarginalGibbs&lt;TDist&gt;(T[], GibbsMarginal&lt;TDist, T&gt;)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GibbsMarginal&lt;TDist, T&gt; MarginalGibbs&lt;TDist&gt;(T[] Uses, GibbsMarginal&lt;TDist, T&gt; to_marginal)
-    where TDist : IDistribution&lt;T&gt;, Sampleable&lt;T&gt;</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>T[]</td>
-        <td><span class="parametername">Uses</span></td>
-        <td><p>Incoming message from <code>Uses</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, T&gt;</td>
-        <td><span class="parametername">to_marginal</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, T&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TDist</span></td>
-        <td><p>The type of the distribution over the replicated variable.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs__1__0___Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0__0___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs__1_System_Collections_Generic_IList___0____0_Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0__0__" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs``1(System.Collections.Generic.IList{``0},``0,Microsoft.ML.Probabilistic.Distributions.GibbsMarginal{``0,`0})">MarginalGibbs&lt;TDist&gt;(IList&lt;TDist&gt;, TDist, GibbsMarginal&lt;TDist, T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
@@ -750,6 +618,143 @@ public static GibbsMarginal&lt;TDist, T&gt; MarginalGibbs&lt;TDist&gt;(IList&lt;
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs__2___1_Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0___1__" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs``2(``1,Microsoft.ML.Probabilistic.Distributions.GibbsMarginal{``0,``1})">MarginalGibbs&lt;TDist, TDomain&gt;(TDomain, GibbsMarginal&lt;TDist, TDomain&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GibbsMarginal&lt;TDist, TDomain&gt; MarginalGibbs&lt;TDist, TDomain&gt;(TDomain Def, GibbsMarginal&lt;TDist, TDomain&gt; to_marginal)
+    where TDist : IDistribution&lt;TDomain&gt;, Sampleable&lt;TDomain&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDomain</span></td>
+        <td><span class="parametername">Def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, TDomain&gt;</td>
+        <td><span class="parametername">to_marginal</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, TDomain&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDomain</span></td>
+        <td><p>The domain type of <code data-dev-comment-type="typeparamref" class="typeparamref">TDist</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs__2___1_Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0___1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs2_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs2*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs2__1__0___Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0__0__" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbs2``1(`0[],Microsoft.ML.Probabilistic.Distributions.GibbsMarginal{``0,`0})">MarginalGibbs2&lt;TDist&gt;(T[], GibbsMarginal&lt;TDist, T&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GibbsMarginal&lt;TDist, T&gt; MarginalGibbs2&lt;TDist&gt;(T[] Uses, GibbsMarginal&lt;TDist, T&gt; to_marginal)
+    where TDist : IDistribution&lt;T&gt;, Sampleable&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">Uses</span></td>
+        <td><p>Incoming message from <code>Uses</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, T&gt;</td>
+        <td><span class="parametername">to_marginal</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbs2__1__0___Microsoft_ML_Probabilistic_Distributions_GibbsMarginal___0__0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbsInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbsInit*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp_1_MarginalGibbsInit__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp`1.MarginalGibbsInit``1(``0)">MarginalGibbsInit&lt;TDist&gt;(TDist)</h4>
   <div class="markdown level1 summary"></div>

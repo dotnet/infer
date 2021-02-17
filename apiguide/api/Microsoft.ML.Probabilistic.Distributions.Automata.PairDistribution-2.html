@@ -96,10 +96,11 @@ and correlated <code>P(x, y) \propto P(x) P(y) I[x=y]</code>. Both elements of a
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-2.html">PairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-2.html">PairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
@@ -196,7 +197,7 @@ and correlated <code>P(x, y) \propto P(x) P(y) I[x=y]</code>. Both elements of a
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistribution_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class PairDistribution&lt;TElement, TElementDistribution&gt; : PairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, IDistribution&lt;Pair&lt;Option&lt;TElement&gt;, Option&lt;TElement&gt;&gt;&gt;, ICloneable, HasPoint&lt;Pair&lt;Option&lt;TElement&gt;, Option&lt;TElement&gt;&gt;&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;Pair&lt;Option&lt;TElement&gt;, Option&lt;TElement&gt;&gt;&gt;, CanGetLogAverageOf&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToProduct&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToProduct&lt;PairDistribution&lt;TElement, TElementDistribution&gt;, PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToWeightedSumExact&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToWeightedSum&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToPartialUniform&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt; where TElementDistribution : IDistribution&lt;TElement&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public class PairDistribution&lt;TElement, TElementDistribution&gt; : PairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, IDistribution&lt;Pair&lt;Option&lt;TElement&gt;, Option&lt;TElement&gt;&gt;&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;Pair&lt;Option&lt;TElement&gt;, Option&lt;TElement&gt;&gt;&gt;, CanGetLogProb&lt;Pair&lt;Option&lt;TElement&gt;, Option&lt;TElement&gt;&gt;&gt;, CanGetLogAverageOf&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToProduct&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToProduct&lt;PairDistribution&lt;TElement, TElementDistribution&gt;, PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToWeightedSumExact&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToWeightedSum&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SettableToPartialUniform&lt;PairDistribution&lt;TElement, TElementDistribution&gt;&gt; where TElementDistribution : IDistribution&lt;TElement&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -691,16 +692,19 @@ and <code>Q(x)</code> is a given element distribution.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

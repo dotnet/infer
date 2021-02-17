@@ -108,10 +108,11 @@ automatically reset to the common value.</p>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.icollection">ICollection</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBernoulliList.html">SparseBernoulliList</a>&gt;</div>
@@ -464,7 +465,7 @@ automatically reset to the common value.</p>
     <pre><code class="lang-csharp hljs">[Serializable]
 [Quality(QualityBand.Stable)]
 [DataContract]
-public class SparseBernoulliList : SparseDistributionList&lt;Bernoulli, bool, SparseBernoulliList&gt;, ISparseList&lt;Bernoulli&gt;, ISparseEnumerable&lt;Bernoulli&gt;, IList&lt;Bernoulli&gt;, ICollection&lt;Bernoulli&gt;, IEnumerable&lt;Bernoulli&gt;, IList, ICollection, IEnumerable, IDistribution&lt;ISparseList&lt;bool&gt;&gt;, ICloneable, HasPoint&lt;ISparseList&lt;bool&gt;&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;ISparseList&lt;bool&gt;&gt;, Sampleable&lt;ISparseList&lt;bool&gt;&gt;, SettableTo&lt;SparseBernoulliList&gt;, SettableToProduct&lt;SparseBernoulliList&gt;, SettableToProduct&lt;SparseBernoulliList, SparseBernoulliList&gt;, SettableToPower&lt;SparseBernoulliList&gt;, SettableToRatio&lt;SparseBernoulliList&gt;, SettableToRatio&lt;SparseBernoulliList, SparseBernoulliList&gt;, SettableToWeightedSum&lt;SparseBernoulliList&gt;, CanGetLogAverageOf&lt;SparseBernoulliList&gt;, CanGetLogAverageOfPower&lt;SparseBernoulliList&gt;, CanGetAverageLog&lt;SparseBernoulliList&gt;, CanGetMean&lt;ISparseList&lt;double&gt;&gt;, CanGetVariance&lt;ISparseList&lt;double&gt;&gt;</code></pre>
+public class SparseBernoulliList : SparseDistributionList&lt;Bernoulli, bool, SparseBernoulliList&gt;, ISparseList&lt;Bernoulli&gt;, ISparseEnumerable&lt;Bernoulli&gt;, IList&lt;Bernoulli&gt;, ICollection&lt;Bernoulli&gt;, IEnumerable&lt;Bernoulli&gt;, IList, ICollection, IEnumerable, IDistribution&lt;ISparseList&lt;bool&gt;&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;ISparseList&lt;bool&gt;&gt;, CanGetLogProb&lt;ISparseList&lt;bool&gt;&gt;, Sampleable&lt;ISparseList&lt;bool&gt;&gt;, SettableTo&lt;SparseBernoulliList&gt;, SettableToProduct&lt;SparseBernoulliList&gt;, SettableToProduct&lt;SparseBernoulliList, SparseBernoulliList&gt;, SettableToPower&lt;SparseBernoulliList&gt;, SettableToRatio&lt;SparseBernoulliList&gt;, SettableToRatio&lt;SparseBernoulliList, SparseBernoulliList&gt;, SettableToWeightedSum&lt;SparseBernoulliList&gt;, CanGetLogAverageOf&lt;SparseBernoulliList&gt;, CanGetLogAverageOfPower&lt;SparseBernoulliList&gt;, CanGetAverageLog&lt;SparseBernoulliList&gt;, CanGetMean&lt;ISparseList&lt;double&gt;&gt;, CanGetVariance&lt;ISparseList&lt;double&gt;&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -1100,16 +1101,19 @@ element having a given probability of true.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
@@ -1243,6 +1247,9 @@ element having a given probability of true.</p>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_AsReadOnly__1_System_Collections_Generic_IList___0__">IListExtensions.AsReadOnly&lt;T&gt;(IList&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray.html#Microsoft_ML_Probabilistic_Collections_ReadOnlyArray_ToReadOnlyArray__1_System_Collections_Generic_IEnumerable___0__">ReadOnlyArray.ToReadOnlyArray&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
   </div>
 </article>
           </div>

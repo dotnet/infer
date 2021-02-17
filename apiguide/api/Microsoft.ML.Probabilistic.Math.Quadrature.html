@@ -201,7 +201,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AdaptiveClenshawCurtis(Converter&lt;double, double&gt; f, double CCFactor, int numIntervals, double relTol)</code></pre>
+    <pre><code class="lang-csharp hljs">public static double AdaptiveClenshawCurtis(Converter&lt;double, double&gt; f, double scale, int nodeCount, double relTol)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -221,20 +221,137 @@
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">CCFactor</span></td>
-        <td><p>A positive tuning parameter</p>
+        <td><span class="parametername">scale</span></td>
+        <td><p>A positive tuning parameter.  f is assumed to be negligible outside of [-scale,scale]</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">numIntervals</span></td>
-        <td><p>The initial number of nodes</p>
+        <td><span class="parametername">nodeCount</span></td>
+        <td><p>The initial number of nodes.  Should be at least 2 and a power of 2.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">relTol</span></td>
         <td><p>A threshold to stop subdividing</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Quadrature_AdaptiveExpSinh_" data-uid="Microsoft.ML.Probabilistic.Math.Quadrature.AdaptiveExpSinh*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Quadrature_AdaptiveExpSinh_System_Converter_System_Double_System_Double__System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Quadrature.AdaptiveExpSinh(System.Converter{System.Double,System.Double},System.Double,System.Double)">AdaptiveExpSinh(Converter&lt;Double, Double&gt;, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Integrate the function f from 0 to +Infinity using exp-sinh quadrature.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AdaptiveExpSinh(Converter&lt;double, double&gt; f, double scale, double relTol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">f</span></td>
+        <td><p>The function to integrate</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scale</span></td>
+        <td><p>A positive tuning parameter.
+<code data-dev-comment-type="paramref" class="paramref">f</code> is assumed to be continuous and at least one of <code data-dev-comment-type="paramref" class="paramref">f</code>(0) and
+cosh(arsinh(2 * ln(scale)/pi)) * scale * <code data-dev-comment-type="paramref" class="paramref">f</code>(<code data-dev-comment-type="paramref" class="paramref">scale</code>) to be non-zero.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">relTol</span></td>
+        <td><p>A threshold to stop subdividing</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Quadrature_AdaptivePositiveHalfAxisTrapeziumRule_" data-uid="Microsoft.ML.Probabilistic.Math.Quadrature.AdaptivePositiveHalfAxisTrapeziumRule*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Quadrature_AdaptivePositiveHalfAxisTrapeziumRule_System_Converter_System_Double_System_Double__System_Double_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Quadrature.AdaptivePositiveHalfAxisTrapeziumRule(System.Converter{System.Double,System.Double},System.Double,System.Double,System.Int32)">AdaptivePositiveHalfAxisTrapeziumRule(Converter&lt;Double, Double&gt;, Double, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Integrate the function f from 0 to +Infinity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AdaptivePositiveHalfAxisTrapeziumRule(Converter&lt;double, double&gt; f, double scale, double relTol, int maxNodes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">f</span></td>
+        <td><p>The function to integrate. Must have at most one extremum.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scale</span></td>
+        <td><p>A positive tuning parameter.
+<code data-dev-comment-type="paramref" class="paramref">f</code> is assumed to be continuous on (0, + Infinity) and non-negligible somewhere on (0, <code data-dev-comment-type="paramref" class="paramref">scale</code>]</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">relTol</span></td>
+        <td><p>A threshold to stop subdividing</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxNodes</span></td>
+        <td><p>Another threshold to stop subdividing</p>
 </td>
       </tr>
     </tbody>

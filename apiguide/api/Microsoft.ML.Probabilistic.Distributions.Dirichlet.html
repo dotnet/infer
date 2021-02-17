@@ -94,6 +94,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
@@ -139,7 +140,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public class Dirichlet : IDistribution&lt;Vector&gt;, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;Dirichlet&gt;, SettableToProduct&lt;Dirichlet&gt;, SettableToProduct&lt;Dirichlet, Dirichlet&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Dirichlet&gt;, SettableToRatio&lt;Dirichlet, Dirichlet&gt;, SettableToPower&lt;Dirichlet&gt;, SettableToWeightedSum&lt;Dirichlet&gt;, CanGetLogAverageOf&lt;Dirichlet&gt;, CanGetLogAverageOfPower&lt;Dirichlet&gt;, CanGetAverageLog&lt;Dirichlet&gt;, CanGetLogNormalizer, Sampleable&lt;Vector&gt;, CanGetMean&lt;Vector&gt;, CanGetVariance&lt;Vector&gt;, CanGetMeanAndVariance&lt;Vector, Vector&gt;, CanSetMeanAndVariance&lt;Vector, Vector&gt;, CanGetMode&lt;Vector&gt;</code></pre>
+public class Dirichlet : IDistribution&lt;Vector&gt;, IDistribution, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;Dirichlet&gt;, SettableToProduct&lt;Dirichlet&gt;, SettableToProduct&lt;Dirichlet, Dirichlet&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Dirichlet&gt;, SettableToRatio&lt;Dirichlet, Dirichlet&gt;, SettableToPower&lt;Dirichlet&gt;, SettableToWeightedSum&lt;Dirichlet&gt;, CanGetLogAverageOf&lt;Dirichlet&gt;, CanGetLogAverageOfPower&lt;Dirichlet&gt;, CanGetAverageLog&lt;Dirichlet&gt;, CanGetLogNormalizer, Sampleable&lt;Vector&gt;, CanGetMean&lt;Vector&gt;, CanGetVariance&lt;Vector&gt;, CanGetMeanAndVariance&lt;Vector, Vector&gt;, CanSetMeanAndVariance&lt;Vector, Vector&gt;, CanGetMode&lt;Vector&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -2594,6 +2595,9 @@ can be got/set as Vectors</p>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

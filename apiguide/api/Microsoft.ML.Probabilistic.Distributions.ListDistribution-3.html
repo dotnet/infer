@@ -96,10 +96,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;TList&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TList&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TList&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;TList&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ListDistribution-3.html">ListDistribution</a>&lt;TList, TElement, TElementDistribution&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ListDistribution-3.html">ListDistribution</a>&lt;TList, TElement, TElementDistribution&gt;&gt;</div>
@@ -152,7 +153,7 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__1_">SequenceDistribution&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;.SingleElement(TElement)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_System_Collections_Generic_IEnumerable__2__">SequenceDistribution&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;.Concatenate(IEnumerable&lt;TElementDistribution&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_System_Collections_Generic_IEnumerable__2__System_Boolean_System_Boolean_">SequenceDistribution&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;.Concatenate(IEnumerable&lt;TElementDistribution&gt;, Boolean, Boolean)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Collections_Generic_IEnumerable__5__System_Boolean_System_Boolean_">SequenceDistribution&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;.OneOf(IEnumerable&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, Boolean, Boolean)</a>
@@ -365,6 +366,9 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsZero">SequenceDistribution&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;.IsZero()</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Converge__5_System_Double_">SequenceDistribution&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;.Converge(ListDistribution&lt;TList, TElement, TElementDistribution&gt;, Double)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Equals_System_Object_">SequenceDistribution&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;.Equals(Object)</a>
     </div>
     <div>
@@ -407,7 +411,7 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Serializable]
 [Quality(QualityBand.Experimental)]
-public class ListDistribution&lt;TList, TElement, TElementDistribution&gt; : ListDistribution&lt;TList, TElement, TElementDistribution, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, IDistribution&lt;TList&gt;, ICloneable, HasPoint&lt;TList&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;TList&gt;, SettableTo&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToProduct&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToProduct&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToRatio&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToRatio&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToPower&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, CanGetLogAverageOf&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, CanGetLogAverageOfPower&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, CanGetAverageLog&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToWeightedSumExact&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToWeightedSum&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToPartialUniform&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, CanGetLogNormalizer, Sampleable&lt;TList&gt; where TList : class, IList&lt;TElement&gt;, new()
+public class ListDistribution&lt;TList, TElement, TElementDistribution&gt; : ListDistribution&lt;TList, TElement, TElementDistribution, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, IDistribution&lt;TList&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;TList&gt;, CanGetLogProb&lt;TList&gt;, SettableTo&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToProduct&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToProduct&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToRatio&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToRatio&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;, ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToPower&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, CanGetLogAverageOf&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, CanGetLogAverageOfPower&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, CanGetAverageLog&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToWeightedSumExact&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToWeightedSum&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, SettableToPartialUniform&lt;ListDistribution&lt;TList, TElement, TElementDistribution&gt;&gt;, CanGetLogNormalizer, Sampleable&lt;TList&gt; where TList : class, IList&lt;TElement&gt;, new()
     where TElementDistribution : IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, Sampleable&lt;TElement&gt;, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
@@ -441,16 +445,19 @@ public class ListDistribution&lt;TList, TElement, TElementDistribution&gt; : Lis
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

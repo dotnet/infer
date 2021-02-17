@@ -94,6 +94,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
@@ -141,7 +142,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public class VectorGaussian : IDistribution&lt;Vector&gt;, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;VectorGaussian&gt;, SettableToProduct&lt;VectorGaussian&gt;, SettableToProduct&lt;VectorGaussian, VectorGaussian&gt;, Diffable, SettableToUniform, SettableToRatio&lt;VectorGaussian&gt;, SettableToRatio&lt;VectorGaussian, VectorGaussian&gt;, SettableToPower&lt;VectorGaussian&gt;, SettableToWeightedSum&lt;VectorGaussian&gt;, Sampleable&lt;Vector&gt;, CanSamplePrep&lt;VectorGaussian, Vector&gt;, CanGetLogProbPrep&lt;VectorGaussian, Vector&gt;, CanGetMean&lt;DenseVector&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;VectorGaussian&gt;, CanGetLogAverageOfPower&lt;VectorGaussian&gt;, CanGetAverageLog&lt;VectorGaussian&gt;, CanGetLogNormalizer, CanGetMode&lt;DenseVector&gt;</code></pre>
+public class VectorGaussian : IDistribution&lt;Vector&gt;, IDistribution, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;VectorGaussian&gt;, SettableToProduct&lt;VectorGaussian&gt;, SettableToProduct&lt;VectorGaussian, VectorGaussian&gt;, Diffable, SettableToUniform, SettableToRatio&lt;VectorGaussian&gt;, SettableToRatio&lt;VectorGaussian, VectorGaussian&gt;, SettableToPower&lt;VectorGaussian&gt;, SettableToWeightedSum&lt;VectorGaussian&gt;, Sampleable&lt;Vector&gt;, CanSamplePrep&lt;VectorGaussian, Vector&gt;, CanGetLogProbPrep&lt;VectorGaussian, Vector&gt;, CanGetMean&lt;DenseVector&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;VectorGaussian&gt;, CanGetLogAverageOfPower&lt;VectorGaussian&gt;, CanGetAverageLog&lt;VectorGaussian&gt;, CanGetLogNormalizer, CanGetMode&lt;DenseVector&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -2733,6 +2734,9 @@ of a VectorGaussian mixture. The distribution type must implement <a class="xref
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

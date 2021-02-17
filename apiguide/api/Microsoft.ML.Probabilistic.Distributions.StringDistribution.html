@@ -95,10 +95,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
@@ -151,7 +152,7 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__1_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SingleElement(Char)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_System_Collections_Generic_IEnumerable__2__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Concatenate(IEnumerable&lt;DiscreteChar&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_System_Collections_Generic_IEnumerable__2__System_Boolean_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Concatenate(IEnumerable&lt;DiscreteChar&gt;, Boolean, Boolean)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Collections_Generic_IEnumerable__5__System_Boolean_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(IEnumerable&lt;StringDistribution&gt;, Boolean, Boolean)</a>
@@ -364,6 +365,9 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsZero">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsZero()</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Converge__5_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Converge(StringDistribution, Double)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Equals_System_Object_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Equals(Object)</a>
     </div>
     <div>
@@ -404,7 +408,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Preview)]
-public class StringDistribution : SequenceDistribution&lt;string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;, IDistribution&lt;string&gt;, ICloneable, HasPoint&lt;string&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;string&gt;, SettableTo&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution, StringDistribution&gt;, SettableToRatio&lt;StringDistribution&gt;, SettableToRatio&lt;StringDistribution, StringDistribution&gt;, SettableToPower&lt;StringDistribution&gt;, CanGetLogAverageOf&lt;StringDistribution&gt;, CanGetLogAverageOfPower&lt;StringDistribution&gt;, CanGetAverageLog&lt;StringDistribution&gt;, SettableToWeightedSumExact&lt;StringDistribution&gt;, SettableToWeightedSum&lt;StringDistribution&gt;, SettableToPartialUniform&lt;StringDistribution&gt;, CanGetLogNormalizer, Sampleable&lt;string&gt;</code></pre>
+public class StringDistribution : SequenceDistribution&lt;string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;, IDistribution&lt;string&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;string&gt;, CanGetLogProb&lt;string&gt;, SettableTo&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution, StringDistribution&gt;, SettableToRatio&lt;StringDistribution&gt;, SettableToRatio&lt;StringDistribution, StringDistribution&gt;, SettableToPower&lt;StringDistribution&gt;, CanGetLogAverageOf&lt;StringDistribution&gt;, CanGetLogAverageOfPower&lt;StringDistribution&gt;, CanGetAverageLog&lt;StringDistribution&gt;, SettableToWeightedSumExact&lt;StringDistribution&gt;, SettableToWeightedSum&lt;StringDistribution&gt;, SettableToPartialUniform&lt;StringDistribution&gt;, CanGetLogNormalizer, Sampleable&lt;string&gt;</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -1129,16 +1133,19 @@ Defaults to <span class="xref">null</span>.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>

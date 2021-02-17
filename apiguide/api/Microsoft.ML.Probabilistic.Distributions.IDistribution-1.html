@@ -92,12 +92,6 @@
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable.clone#System_ICloneable_Clone">ICloneable.Clone()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html#Microsoft_ML_Probabilistic_Distributions_HasPoint_1_Point">HasPoint&lt;T&gt;.Point</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html#Microsoft_ML_Probabilistic_Distributions_HasPoint_1_IsPointMass">HasPoint&lt;T&gt;.IsPointMass</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html#Microsoft_ML_Probabilistic_Math_Diffable_MaxDiff_System_Object_">Diffable.MaxDiff(Object)</a>
     </div>
     <div>
@@ -105,6 +99,12 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html#Microsoft_ML_Probabilistic_Distributions_SettableToUniform_IsUniform">SettableToUniform.IsUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html#Microsoft_ML_Probabilistic_Distributions_HasPoint_1_Point">HasPoint&lt;T&gt;.Point</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html#Microsoft_ML_Probabilistic_Distributions_HasPoint_1_IsPointMass">HasPoint&lt;T&gt;.IsPointMass</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html#Microsoft_ML_Probabilistic_Distributions_CanGetLogProb_1_GetLogProb__0_">CanGetLogProb&lt;T&gt;.GetLogProb(T)</a>
@@ -115,7 +115,7 @@
   <h5 id="Microsoft_ML_Probabilistic_Distributions_IDistribution_1_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Quality(QualityBand.Mature)]
-public interface IDistribution&lt;T&gt; : ICloneable, HasPoint&lt;T&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;T&gt;</code></pre>
+public interface IDistribution&lt;T&gt; : IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;T&gt;, CanGetLogProb&lt;T&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

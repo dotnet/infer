@@ -89,6 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
@@ -129,7 +130,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Preview)]
-public struct TruncatedGaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;TruncatedGaussian&gt;, Diffable, SettableToProduct&lt;TruncatedGaussian&gt;, SettableToProduct&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToUniform, SettableToRatio&lt;TruncatedGaussian&gt;, SettableToRatio&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToPower&lt;TruncatedGaussian&gt;, Sampleable&lt;double&gt;, SettableToWeightedSum&lt;TruncatedGaussian&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanGetLogNormalizer, CanGetLogAverageOf&lt;TruncatedGaussian&gt;, CanGetLogAverageOfPower&lt;TruncatedGaussian&gt;, CanGetAverageLog&lt;TruncatedGaussian&gt;</code></pre>
+public struct TruncatedGaussian : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;TruncatedGaussian&gt;, Diffable, SettableToProduct&lt;TruncatedGaussian&gt;, SettableToProduct&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToUniform, SettableToRatio&lt;TruncatedGaussian&gt;, SettableToRatio&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToPower&lt;TruncatedGaussian&gt;, Sampleable&lt;double&gt;, SettableToWeightedSum&lt;TruncatedGaussian&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanGetLogNormalizer, CanGetLogAverageOf&lt;TruncatedGaussian&gt;, CanGetLogAverageOfPower&lt;TruncatedGaussian&gt;, CanGetAverageLog&lt;TruncatedGaussian&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is parameterized by a Gaussian and two real numbers (LowerBound, UpperBound).
@@ -1552,6 +1553,9 @@ public static TruncatedGaussian Uniform()</code></pre>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

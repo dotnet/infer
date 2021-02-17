@@ -194,7 +194,8 @@ Every method that manipulates Variable objects must be aware of this distinction
     </tbody>
   </table>
   <h4 id="Microsoft_ML_Probabilistic_Models_Variable_isObserved" data-uid="Microsoft.ML.Probabilistic.Models.Variable.isObserved">isObserved</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Field backing the IsObserved property for base variables.  Unused for non-base variables.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -4553,6 +4554,67 @@ the returned CaseBlock must be closed manually by calling CloseBlock().</p>
   <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Cut__1_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray___0____0_______remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Cut allows forward messages to pass through unchanged, whereas backward messages are cut off.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Models_Variable_CutForwardWhen_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.CutForwardWhen*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_CutForwardWhen__1_Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.CutForwardWhen``1(Microsoft.ML.Probabilistic.Models.Variable{``0},Microsoft.ML.Probabilistic.Models.Variable{System.Boolean})">CutForwardWhen&lt;T&gt;(Variable&lt;T&gt;, Variable&lt;Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of the argument where the forward message is uniform when <code data-dev-comment-type="paramref" class="paramref">shouldCut</code> is true.  Used to control inference.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Variable&lt;T&gt; CutForwardWhen&lt;T&gt;(Variable&lt;T&gt; x, Variable&lt;bool&gt; shouldCut)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;</td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">shouldCut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Dirichlet*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Dirichlet_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Dirichlet(Microsoft.ML.Probabilistic.Math.Vector)">Dirichlet(Vector)</h4>
   <div class="markdown level1 summary"><p>Creates a Dirichlet-distributed random variable with a set of pseudo-counts specified

@@ -89,6 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
@@ -133,7 +134,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public struct Gaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian, Gaussian&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gaussian&gt;, SettableToRatio&lt;Gaussian, Gaussian&gt;, SettableToPower&lt;Gaussian&gt;, SettableToWeightedSum&lt;Gaussian&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gaussian&gt;, CanGetLogAverageOfPower&lt;Gaussian&gt;, CanGetAverageLog&lt;Gaussian&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;, CanGetProbLessThan, CanGetQuantile</code></pre>
+public struct Gaussian : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian, Gaussian&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gaussian&gt;, SettableToRatio&lt;Gaussian, Gaussian&gt;, SettableToPower&lt;Gaussian&gt;, SettableToWeightedSum&lt;Gaussian&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gaussian&gt;, CanGetLogAverageOfPower&lt;Gaussian&gt;, CanGetAverageLog&lt;Gaussian&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;, CanGetProbLessThan, CanGetQuantile</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -2202,6 +2203,9 @@ of a Gaussian mixture. The distribution type must implement <a class="xref" href
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>

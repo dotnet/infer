@@ -195,8 +195,54 @@ public static class ExpOp_Slow</code></pre>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_ExpOp_Slow_DAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ExpOp_Slow.DAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_ExpOp_Slow_DAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ExpOp_Slow.DAverageConditional(Microsoft.ML.Probabilistic.Distributions.GammaPower,Microsoft.ML.Probabilistic.Distributions.Gaussian)">DAverageConditional(GammaPower, Gaussian)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ExpOp_Slow_DAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.ExpOp_Slow.DAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double)">DAverageConditional(Gamma, Double)</h4>
   <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian DAverageConditional(Gamma exp, double d)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">exp</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">d</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ExpOp_Slow_DAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ExpOp_Slow.DAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ExpOp_Slow_DAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ExpOp_Slow.DAverageConditional(Microsoft.ML.Probabilistic.Distributions.GammaPower,Microsoft.ML.Probabilistic.Distributions.Gaussian)">DAverageConditional(GammaPower, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>d</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -215,12 +261,14 @@ public static class ExpOp_Slow</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
         <td><span class="parametername">exp</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>exp</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">d</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>d</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -235,7 +283,32 @@ public static class ExpOp_Slow</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>d</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ExpOp_Slow_DAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>d</code> as the random arguments are varied. The formula is <code>proj[p(d) sum_(exp) p(exp) factor(exp,d)]/p(d)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">exp</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">d</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -290,7 +363,7 @@ public static class ExpOp_Slow</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void GetIntegrationBounds(Gamma exp, Gaussian d, out double dmode, out double dmin, out double dmax)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void GetIntegrationBounds(Gamma exp, Gaussian d, out double dmode, out double dminMinusMode, out double dmaxMinusMode)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -319,12 +392,12 @@ public static class ExpOp_Slow</code></pre>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">dmin</span></td>
+        <td><span class="parametername">dminMinusMode</span></td>
         <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">dmax</span></td>
+        <td><span class="parametername">dmaxMinusMode</span></td>
         <td></td>
       </tr>
     </tbody>

@@ -125,7 +125,7 @@
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_Damp_Backward_" data-uid="Microsoft.ML.Probabilistic.Factors.Damp.Backward*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_Damp_Backward__1___0_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.Damp.Backward``1(``0,System.Double)">Backward&lt;T&gt;(T, Double)</h4>
-  <div class="markdown level1 summary"><p>Copy a value and damp the backward message.</p>
+  <div class="markdown level1 summary"><p>Copy a value and damp the message from the copy to the original.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -186,12 +186,12 @@
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_Damp_Backward__1___0_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>If you use this factor, be sure to increase the number of algorithm iterations appropriately.
-The number of iterations should increase according to the reciprocal of stepsize.</p>
+  <div class="markdown level1 remarks"><p>If you use this factor, be sure to multiply your convergence tolerance by stepsize.
+Equivalently, use the same convergence tolerance but measure the difference between iterations spaced apart by 1/stepsize.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_Damp_Forward_" data-uid="Microsoft.ML.Probabilistic.Factors.Damp.Forward*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_Damp_Forward__1___0_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.Damp.Forward``1(``0,System.Double)">Forward&lt;T&gt;(T, Double)</h4>
-  <div class="markdown level1 summary"><p>Copy a value and damp the forward message.</p>
+  <div class="markdown level1 summary"><p>Copy a value and damp the message from the original to the copy.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -252,8 +252,8 @@ The number of iterations should increase according to the reciprocal of stepsize
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_Damp_Forward__1___0_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>If you use this factor, be sure to increase the number of algorithm iterations appropriately.
-The number of iterations should increase according to the reciprocal of stepsize.</p>
+  <div class="markdown level1 remarks"><p>If you use this factor, be sure to multiply your convergence tolerance by stepsize.
+Equivalently, use the same convergence tolerance but measure the difference between iterations spaced apart by 1/stepsize.</p>
 </div>
 </article>
           </div>

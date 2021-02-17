@@ -89,6 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
@@ -109,6 +110,8 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -129,7 +132,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Preview)]
-public struct TruncatedGamma : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;TruncatedGamma&gt;, Diffable, SettableToProduct&lt;TruncatedGamma&gt;, SettableToProduct&lt;TruncatedGamma, TruncatedGamma&gt;, SettableToUniform, SettableToRatio&lt;TruncatedGamma&gt;, SettableToRatio&lt;TruncatedGamma, TruncatedGamma&gt;, SettableToPower&lt;TruncatedGamma&gt;, Sampleable&lt;double&gt;, SettableToWeightedSum&lt;TruncatedGamma&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanGetLogNormalizer, CanGetLogAverageOf&lt;TruncatedGamma&gt;, CanGetLogAverageOfPower&lt;TruncatedGamma&gt;, CanGetAverageLog&lt;TruncatedGamma&gt;</code></pre>
+public struct TruncatedGamma : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;TruncatedGamma&gt;, Diffable, SettableToProduct&lt;TruncatedGamma&gt;, SettableToProduct&lt;TruncatedGamma, TruncatedGamma&gt;, SettableToUniform, SettableToRatio&lt;TruncatedGamma&gt;, SettableToRatio&lt;TruncatedGamma, TruncatedGamma&gt;, SettableToPower&lt;TruncatedGamma&gt;, Sampleable&lt;double&gt;, SettableToWeightedSum&lt;TruncatedGamma&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanGetLogNormalizer, CanGetLogAverageOf&lt;TruncatedGamma&gt;, CanGetLogAverageOfPower&lt;TruncatedGamma&gt;, CanGetAverageLog&lt;TruncatedGamma&gt;, CanGetMode&lt;double&gt;, CanGetQuantile</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is parameterized by a Gamma and two real numbers (LowerBound, UpperBound).
@@ -504,6 +507,119 @@ public double Point { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GammaProbBetween_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GammaProbBetween*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GammaProbBetween_System_Double_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GammaProbBetween(System.Double,System.Double,System.Double,System.Double,System.Boolean)">GammaProbBetween(Double, Double, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Computes GammaLower(a, r<em>u) - GammaLower(a, r</em>l) to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GammaProbBetween(double shape, double rate, double lowerBound, double upperBound, bool regularized = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">shape</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">regularized</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GammaUpperRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GammaUpperRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GammaUpperRatio_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GammaUpperRatio(System.Double,System.Double,System.Boolean)">GammaUpperRatio(Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>GammaUpper(s,x)/(x^(s-1)*exp(-x)) - 1</code> to high accuracy</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GammaUpperRatio(double s, double x, bool regularized = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">s</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real number gt;= 45 and gt; <code data-dev-comment-type="paramref" class="paramref">s</code>/0.99</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">regularized</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetAverageLog*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.TruncatedGamma)">GetAverageLog(TruncatedGamma)</h4>
   <div class="markdown level1 summary"><p>Get the average logarithm of that distribution under this distribution, i.e. int this(x) log( that(x) ) dx</p>
@@ -843,6 +959,30 @@ public double Point { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetMode_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetMode" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetMode">GetMode()</h4>
+  <div class="markdown level1 summary"><p>Get the mode (highest density point) of this distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetNormalizer*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetNormalizer">GetNormalizer()</h4>
   <div class="markdown level1 summary"><p>Gets the normalizer for the truncated Gamma density function</p>
@@ -852,6 +992,101 @@ public double Point { get; set; }</code></pre>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public double GetNormalizer()</code></pre>
   </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetQuantile_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetQuantile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetQuantile_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetQuantile(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,System.Double,System.Double)">GetQuantile(Gamma, Double, Double, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GetQuantile(Gamma gamma, double lowerBound, double upperBound, double probability)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">gamma</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">probability</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetQuantile_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetQuantile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_GetQuantile_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.GetQuantile(System.Double)">GetQuantile(Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetQuantile(double probability)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">probability</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -1052,6 +1287,58 @@ public static TruncatedGamma PointMass(double point)</code></pre>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_Sample_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.Sample(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,System.Double)">Sample(Gamma, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Sample from a TruncatedGamma distribution with the specified parameters</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Sample(Gamma gamma, double lowerBound, double upperBound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">gamma</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.Sample*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_Sample_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.Sample(System.Double)">Sample(Double)</h4>
   <div class="markdown level1 summary"><p>Sample from the distribution</p>
 </div>
@@ -1075,63 +1362,6 @@ public static TruncatedGamma PointMass(double point)</code></pre>
         <td><span class="parametername">result</span></td>
         <td><p>Ignored</p>
 </td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>The sample value</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.Sample*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_Sample_System_Double_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.Sample(System.Double,System.Double,System.Double,System.Double)">Sample(Double, Double, Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Sample from a TruncatedGamma distribution with the specified parameters</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double Sample(double shape, double scale, double lowerBound, double upperBound)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">shape</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">scale</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">lowerBound</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">upperBound</span></td>
-        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1643,6 +1873,9 @@ public static TruncatedGamma Uniform()</code></pre>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
+  </div>
+  <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
@@ -1701,6 +1934,12 @@ public static TruncatedGamma Uniform()</code></pre>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a>
   </div>
 </article>
           </div>

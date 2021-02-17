@@ -109,9 +109,9 @@
     <pre><code class="lang-csharp hljs">public struct State : IEquatable&lt;Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.State&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Acts as a &quot;fat reference&quot; to state in automaton. In addition to reference to actual StateData it carries
-3 additional properties for convenience: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.State.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_Owner">Owner</a> automaton, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.State.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_Index">Index</a> of the state
-and full <span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.transitions</span> table.</p>
+  <div class="markdown level0 remarks"><p>Acts as a &quot;fat reference&quot; to state in automaton. In addition to reference to actual
+StateData it carries 2 additional properties for convenience: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.State.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_Index">Index</a>
+of the state and full <span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.transitions</span> table.</p>
 </div>
   <h3 id="properties">Properties
   </h3>
@@ -163,30 +163,6 @@ and full <span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.Au
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_HasIncomingTransitions_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.HasIncomingTransitions*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_HasIncomingTransitions" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.HasIncomingTransitions">HasIncomingTransitions</h4>
-  <div class="markdown level1 summary"><p>Whether there are incoming transitions to this state</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool HasIncomingTransitions { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_Index_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.Index*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_Index" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.Index">Index</h4>
   <div class="markdown level1 summary"><p>Gets the index of the state.</p>
@@ -207,30 +183,6 @@ and full <span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.Au
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_Owner_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.Owner*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_Owner" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.Owner">Owner</h4>
-  <div class="markdown level1 summary"><p>Gets automaton to which this state belongs.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt; Owner { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html">Automaton</a>&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -343,31 +295,6 @@ and full <span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.Au
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_GetEpsilonClosure_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.GetEpsilonClosure*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_GetEpsilonClosure" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.GetEpsilonClosure">GetEpsilonClosure()</h4>
-  <div class="markdown level1 summary"><p>Gets the epsilon closure of this state.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.EpsilonClosure GetEpsilonClosure()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.EpsilonClosure.html">Automaton.EpsilonClosure</a>&lt;&gt;</td>
-        <td><p>The epsilon closure of this state.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.GetHashCode*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_State_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.State.GetHashCode">GetHashCode()</h4>
   <div class="markdown level1 summary"></div>

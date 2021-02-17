@@ -699,6 +699,56 @@ public static class PowerOp</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional(Microsoft.ML.Probabilistic.Distributions.TruncatedGamma,System.Double,Microsoft.ML.Probabilistic.Distributions.GammaPower)">PowAverageConditional(TruncatedGamma, Double, GammaPower)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GammaPower PowAverageConditional(TruncatedGamma x, double y, GammaPower result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double)">PowAverageLogarithm(Gamma, Double)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>pow</code>.</p>
@@ -923,8 +973,7 @@ public static class PowerOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.TruncatedGamma,System.Double)">XAverageConditional(Gamma, TruncatedGamma, Double)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>x</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -943,20 +992,17 @@ public static class PowerOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
         <td><span class="parametername">pow</span></td>
-        <td><p>Incoming message from <code>pow</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></td>
         <td><span class="parametername">x</span></td>
-        <td><p>Incoming message from <code>x</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">y</span></td>
-        <td><p>Constant value for <code>y</code>.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -971,27 +1017,7 @@ public static class PowerOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></td>
-        <td><p>The outgoing EP message to the <code>x</code> argument.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>x</code> as the random arguments are varied. The formula is <code>proj[p(x) sum_(pow) p(pow) factor(pow,x,y)]/p(x)</code>.</p>
-</div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">pow</code> is not a proper distribution.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1072,6 +1098,56 @@ public static class PowerOp</code></pre>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
         <td><p><code data-dev-comment-type="paramref" class="paramref">pow</code> is not a proper distribution.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional(Microsoft.ML.Probabilistic.Distributions.GammaPower,Microsoft.ML.Probabilistic.Distributions.TruncatedGamma,System.Double)">XAverageConditional(GammaPower, TruncatedGamma, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TruncatedGamma XAverageConditional(GammaPower pow, TruncatedGamma x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">pow</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
