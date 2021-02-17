@@ -528,7 +528,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             if (minTrueCount >= 0) Assert.True(count >= minTrueCount); // count may be greater on newer runtimes
             if (minTrueCount == 0)
             {
-                Console.WriteLine("Correctly failed with exceptions: ");
+                Console.WriteLine("Correctly threw exceptions: ");
                 Console.WriteLine(StringUtil.ToString(lastError));
             }
         }
@@ -548,7 +548,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             if (minTrueCount >= 0) Assert.True(count >= minTrueCount); // count may be greater on newer runtimes
             if (minTrueCount == 0)
             {
-                Console.WriteLine("Correctly failed with exceptions: ");
+                Console.WriteLine("Correctly threw exceptions: ");
                 Console.WriteLine(StringUtil.ToString(lastError));
             }
         }

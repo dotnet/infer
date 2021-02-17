@@ -82,11 +82,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private static readonly MessageDirection[] directions = { MessageDirection.Forwards, MessageDirection.Backwards };
 
-        // TODO: consider collapsing unit arrays (arrays of length 1) into non-array variables
-
-        // Caches the quality band of the algorithm
-        private readonly IDictionary<IAlgorithm, QualityBand> algQualityBand = new Dictionary<IAlgorithm, QualityBand>();
-
         public MessageTransform(ModelCompiler compiler, IAlgorithm algorithm, FactorManager factorManager, bool allowDerivedParents)
         {
             this.compiler = compiler;
@@ -362,7 +357,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                     FindChannelInfo(mi, channelRef);
                     isStochastic[parameterName] = !mi.hasNonUnitDerivative;
-                    if (alg is VariationalMessagePassing && ((VariationalMessagePassing)alg).UseDerivMessages && !isChild && mi.hasNonUnitDerivative && !isVariableFactor)
+                    if (alg is VariationalMessagePassing vmp && vmp.UseDerivMessages && !isChild && mi.hasNonUnitDerivative && !isVariableFactor)
                     {
                         IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(channelRef);
                         DerivMessage dm = context.InputAttributes.Get<DerivMessage>(ivd);
@@ -552,7 +547,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
                 this.factorManager.PriorityList.RemoveRange(0, this.factorManager.PriorityList.Count - currentPriorityListSize);
 
-                if (alg is VariationalMessagePassing && ((VariationalMessagePassing)alg).UseDerivMessages && isChild && mi.hasNonUnitDerivative && !isVariableFactor)
+                if (alg is VariationalMessagePassing vmp && vmp.UseDerivMessages && isChild && mi.hasNonUnitDerivative && !isVariableFactor)
                 {
                     IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(arguments[i]);
                     DerivMessage dm = context.InputAttributes.Get<DerivMessage>(ivd);
@@ -578,8 +573,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             IVariableDeclaration msgVar = Recognizer.GetVariableDeclaration(message);
             KeyValuePair<IVariableDeclaration, IExpression> key = new KeyValuePair<IVariableDeclaration, IExpression>(msgVar, factor);
-            IExpression initExpr;
-            if (analysis.messageInitExprs.TryGetValue(key, out initExpr))
+            if (analysis.messageInitExprs.TryGetValue(key, out IExpression initExpr))
             {
                 IExpressionStatement init = Builder.AssignStmt(message, initExpr);
                 context.OutputAttributes.Set(init, new Initializer());
@@ -662,7 +656,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 argumentTypes[resultName] = resultElementType;
                 // Get the expressions for all the arguments to the operator
                 List<IExpression> args = GetOperatorArguments(alg, info, fninfo, mi, msgInfo, argumentTypes, isStochastic, isVariableFactor);
-                VariableInformation vi = VariableInformation.GetVariableInformation(context, (mi.channelDecl != null) ? mi.channelDecl : Recognizer.GetVariableDeclaration(mi.messageToFactor));
+                VariableInformation vi = VariableInformation.GetVariableInformation(context, mi.channelDecl ?? Recognizer.GetVariableDeclaration(mi.messageToFactor));
                 int depth = Recognizer.GetIndexingDepth(mi.messageFromFactor);
                 vi.DefineIndexVarsUpToDepth(context, depth + 1);
                 IVariableDeclaration indexVar = vi.indexVars[depth][0];
@@ -768,9 +762,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // Get the quality band of the operator method and attach an attribute
             // Quality bands on the factor itself are optional, and are handled by
             // the general mechanism in IterativeProcessTransform.
-            if ((!useFactor) && (operatorMethod is IMethodInvokeExpression))
+            if ((!useFactor) && (operatorMethod is IMethodInvokeExpression imie))
             {
-                var imie = (IMethodInvokeExpression)operatorMethod;
                 var mr = Recognizer.GetMethodReference(operatorMethod);
                 // Get the quality band of the operator method and attach an attribute
                 QualityBand opQB = Quality.GetQualityBand(mr.MethodInfo);
@@ -849,7 +842,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 context.OutputAttributes.Set(assignExpr, new DescriptionAttribute("Message to '" + mi.channelDecl.Name + "' from " + info.Method.Name + " factor"));
             IStatement st = Builder.ExprStatement(assignExpr);
             if (fninfo.AllTriggers) needAllTriggers = true;
-            else if (alg is VariationalMessagePassing && !isVariableFactor && !((VariationalMessagePassing)alg).UseDerivMessages && !fninfo.NoTriggers)
+            else if (alg is VariationalMessagePassing vmp && !isVariableFactor && !vmp.UseDerivMessages && !fninfo.NoTriggers)
             {
                 needAllTriggers = true;
             }
@@ -1004,8 +997,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // prefix the buffer name with the name of the first argument of its defining function
                 ParameterInfo parameter2 = fcninfo2.Method.GetParameters()[0];
                 string factorParameterName2 = fcninfo2.factorEdgeOfParameter[parameter2.Name].ParameterName;
-                MessageInfo mi2;
-                if (msgInfo.TryGetValue(factorParameterName2, out mi2))
+                if (msgInfo.TryGetValue(factorParameterName2, out MessageInfo mi2))
                 {
                     prefix = mi2.messageToFactor.ToString();
                 }
@@ -1259,7 +1251,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (mie.Arguments.Count == 1)
                 {
                     string varName;
-                    if (decl is IParameterDeclaration) varName = ((IParameterDeclaration)decl).Name;
+                    if (decl is IParameterDeclaration ipd) varName = ipd.Name;
                     else varName = ((IVariableDeclaration)decl).Name;
                     ChannelInfo ci = context.InputAttributes.Get<ChannelInfo>(decl);
                     if (ci != null) varName = ci.varInfo.Name;
@@ -1543,9 +1535,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IExpressionStatement stmt = MakeDeclStatement(channelInfo, mai);
                 // This will be a declaration expression if this is an array and
                 // a declaration with assignment otherwise
-                if (InitializeOnSeparateLine && stmt.Expression is IAssignExpression)
+                if (InitializeOnSeparateLine && stmt.Expression is IAssignExpression iae)
                 {
-                    IAssignExpression iae = (IAssignExpression)stmt.Expression;
                     context.AddStatementBeforeCurrent(Builder.ExprStatement(iae.Target));
                     iae.Target = Builder.VarRefExpr(mai.decl);
                     context.AddStatementBeforeCurrent(Builder.ExprStatement(iae));
@@ -1789,8 +1780,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (isInitialiseTo)
                 {
-                    int minusDepth;
-                    domainType = GetInitializerDomainType(elementInit, out minusDepth);
+                    domainType = GetInitializerDomainType(elementInit, out int minusDepth);
                     Assert.IsTrue(minusDepth >= 0);
                     arrayDepth = Util.GetArrayDepth(ci.channelType, domainType) - minusDepth;
                     bool addBracketsToInitialiser = true;
@@ -1912,9 +1902,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal static string GetName(IExpression expr)
         {
-            if (expr is IArrayIndexerExpression) return GetName((IArrayIndexerExpression)expr);
-            else if (expr is IVariableReferenceExpression) return ((IVariableReferenceExpression)expr).Variable.Variable.Name;
-            else if (expr is IVariableDeclarationExpression) return ((IVariableDeclarationExpression)expr).Variable.Name;
+            if (expr is IArrayIndexerExpression iaie) return GetName(iaie);
+            else if (expr is IVariableReferenceExpression ivre) return ivre.Variable.Variable.Name;
+            else if (expr is IVariableDeclarationExpression ivde) return ivde.Variable.Name;
             else return CodeBuilder.MakeValid(expr.ToString());
         }
 
@@ -1970,8 +1960,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns></returns>
         private IExpression ConvertInitialiser(IExpression initialiser)
         {
-            Type type;
-            if (initialiserType.TryGetValue(initialiser, out type)) return Builder.CastExpr(initialiser, type);
+            if (initialiserType.TryGetValue(initialiser, out Type type)) return Builder.CastExpr(initialiser, type);
             if (initialiser is IArrayIndexerExpression iaie)
             {
                 IExpression target = ConvertInitialiser(iaie.Target);
@@ -2093,8 +2082,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             // new DistributionRefArray<>(sourceArray.Length, index0 => new DistributionArray(sourceArray[index0].Length, ...))
             if (innermostElementType.IsAssignableFrom(arrayType)) return innermostElementInit;
-            int rank;
-            Type elementType = Util.GetElementType(arrayType, out rank);
+            Type elementType = Util.GetElementType(arrayType, out int rank);
             if (elementType == null) throw new ArgumentException(arrayType + " is not an array type with innermost element type " + innermostElementType);
             IExpression elementInit = GetDistributionArrayCreateExpression(elementType, innermostElementType, innermostElementInit, varInfo, depth + 1);
             IExpression initDelegate = MakeArrayInitDelegate(elementInit, varInfo.indexVars[depth]);
@@ -2197,7 +2185,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </remarks>
         protected IStatement[] FillArray(IExpression outputLhs, VariableInformation varInfo, int depth, IReadOnlyList<IExpression> dimensions, IExpression elementInit)
         {
-            if (outputLhs is IVariableDeclarationExpression) outputLhs = Builder.VarRefExpr(((IVariableDeclarationExpression)outputLhs).Variable);
+            if (outputLhs is IVariableDeclarationExpression ivde) outputLhs = Builder.VarRefExpr(ivde.Variable);
             int indexingDepth = depth;
             if (indexingDepth == varInfo.LiteralIndexingDepth - 1)
             {
@@ -2245,8 +2233,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     new Type[] { type }, elementLhs, elementInit);
             }
             IStatement ist = Builder.AssignStmt(elementLhs, elementInit);
-            IForStatement innerForStatement;
-            var fs = Builder.NestedForStmt(indexVars, dimensions, out innerForStatement);
+            var fs = Builder.NestedForStmt(indexVars, dimensions, out IForStatement innerForStatement);
             if (arrayCreate != null)
                 innerForStatement.Body.Statements.Add(arrayCreate);
             innerForStatement.Body.Statements.Add(ist);
@@ -2255,8 +2242,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public static IExpression GetArrayCreateExpression(Type arrayType, IExpression elementInit, VariableInformation varInfo, int depth = 0)
         {
-            int rank;
-            Type elementType = Util.GetElementType(arrayType, out rank);
+            Type elementType = Util.GetElementType(arrayType, out int rank);
             IExpression initDelegate = MakeArrayInitDelegate(elementInit, varInfo.indexVars[depth]);
             IExpression[] args = new IExpression[rank + 1];
             for (int i = 0; i < rank; i++)
@@ -2355,8 +2341,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (innermostElementType.IsAssignableFrom(arrayType)) return newInnermostElementType;
             if (arrayType.IsArray)
             {
-                int rank;
-                Type elementType = Util.GetElementType(arrayType, out rank);
+                Type elementType = Util.GetElementType(arrayType, out int rank);
                 if (elementType == null) throw new ArgumentException(arrayType + " is not an array type with innermost element type " + innermostElementType);
                 Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, useDistributionArrays);
                 if (useDistributionArrays)
@@ -2388,8 +2373,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                                Predicate<int> useFileArrayAtDepth)
         {
             if (innermostElementType.IsAssignableFrom(arrayType)) return newInnermostElementType;
-            int rank;
-            Type elementType = Util.GetElementType(arrayType, out rank);
+            Type elementType = Util.GetElementType(arrayType, out int rank);
             if (elementType == null) throw new ArgumentException(arrayType + " is not an array type.");
             if (arrayType.IsAssignableFrom(Util.MakeArrayType(elementType, rank)))
             {
@@ -2420,8 +2404,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         public static Type GetArrayType(Type arrayType, Type innermostElementType, int depth, Predicate<int> useFileArrayAtDepth)
         {
             if (arrayType == innermostElementType) return innermostElementType;
-            int rank;
-            Type elementType = Util.GetElementType(arrayType, out rank);
+            Type elementType = Util.GetElementType(arrayType, out int rank);
             if (elementType == null) throw new ArgumentException(arrayType + " is not an array type.");
             Type innerType = GetArrayType(elementType, innermostElementType, depth + 1, useFileArrayAtDepth);
             if (useFileArrayAtDepth(depth))

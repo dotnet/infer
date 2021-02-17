@@ -290,7 +290,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(distributions, "distributions");
 
-            var enumerable = distributions as IList<TThis> ?? distributions.ToList();
+            var enumerable = distributions as IReadOnlyList<TThis> ?? distributions.ToList();
             if (enumerable.Count == 1)
             {
                 if (!cloneIfSizeOne)
@@ -351,7 +351,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(sequences, "sequences");
 
-            var enumerable = sequences as IList<TSequence> ?? sequences.ToList();
+            var enumerable = sequences as IReadOnlyList<TSequence> ?? sequences.ToList();
             return OneOf(enumerable.Select(PointMass), false, true);
         }
 

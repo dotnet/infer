@@ -8,6 +8,7 @@ using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Algorithms;
+using Microsoft.ML.Probabilistic.Utilities;
 
 namespace LDAExample
 {
@@ -108,7 +109,7 @@ namespace LDAExample
         /// <summary>
         /// Initialisation for breaking symmetry with respect to <see cref="Theta"/> (observed)
         /// </summary>
-        protected Variable<IDistribution<Vector[]>> ThetaInit;
+        protected VariableArray<Dirichlet> ThetaInit;
 
         /// <summary>
         /// Constructs an LDA model
@@ -165,8 +166,8 @@ namespace LDAExample
 
             evidenceBlock.CloseBlock();
 
-            ThetaInit = Variable.New<IDistribution<Vector[]>>().Named("ThetaInit");
-            Theta.InitialiseTo(ThetaInit);
+            ThetaInit = Variable.Array<Dirichlet>(D).Named("ThetaInit");
+            Theta[D].InitialiseTo(ThetaInit[D]);
             Engine = new InferenceEngine(new VariationalMessagePassing());
             Engine.Compiler.ShowWarnings = false;
             Engine.ModelName = "LDAModel";
@@ -179,22 +180,17 @@ namespace LDAExample
         /// <param name="sparsity">The sparsity settings</param>
         /// <returns></returns>
         /// <remarks>This is implemented so as to support sparse initialisations</remarks>
-        public static IDistribution<Vector[]> GetInitialisation(
+        public static Dirichlet[] GetInitialisation(
             int numDocs, int numTopics, Sparsity sparsity)
         {
-            Dirichlet[] initTheta = new Dirichlet[numDocs];
-            double baseVal = 1.0 / numTopics;
-
-            for (int i = 0; i < numDocs; i++)
+            return Util.ArrayInit(numDocs, i =>
             {
                 // Choose a random topic
                 Vector v = Vector.Zero(numTopics, sparsity);
                 int topic = Rand.Int(numTopics);
                 v[topic] = 1.0;
-                initTheta[i] = Dirichlet.PointMass(v);
-            }
-
-            return Distribution<Vector>.Array(initTheta);
+                return Dirichlet.PointMass(v);
+            });
         }
 
         /// <summary>

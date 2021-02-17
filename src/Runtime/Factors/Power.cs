@@ -86,6 +86,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         // GammaPower = TruncatedGamma ^ y  /////////////////////////////////////////////////////////
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(TruncatedGamma, double, GammaPower)"]/*'/>
         public static GammaPower PowAverageConditional([SkipIfUniform] TruncatedGamma x, double y, GammaPower result)
         {
             if (result.Power == -1) y = -y;
