@@ -83,9 +83,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool UsesGroups => false;
 
-        public TAutomaton AsAutomaton() =>
-            Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.FromLogValues(
-                Dictionary.Select(kvp => new KeyValuePair<TSequence, double>(kvp.Key, kvp.Value.LogValue)));
+        public TAutomaton AsAutomaton()
+        {
+            var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.Builder();
+            foreach (var entry in Dictionary)
+            {
+                if (!entry.Value.IsZero)
+                {
+                    var sequenceStartState = result.AddState();
+                    var sequenceEndState = sequenceStartState.AddTransitionsForSequence(entry.Key);
+                    sequenceEndState.SetEndWeight(Weight.One);
+                    result.Start.AddEpsilonTransition(entry.Value, sequenceStartState.Index);
+                }
+            }
+
+            return result.GetAutomaton();
+        }
 
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
         {

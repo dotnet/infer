@@ -16,6 +16,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
     {
+        /// <summary>
+        /// Returns an automaton representation of the current weight function. If the weight function is normalized,
+        /// the resulting automaton is stochastic, i.e. the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.
+        /// </summary>
         TAutomaton AsAutomaton();
 
         /// <summary>
@@ -37,6 +41,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <summary>
         /// Attempts to normalize the weight function so that sum of its values on all possible sequences equals to one (if it is possible).
+        /// If successful, future calls to <see cref="AsAutomaton"/> produce a stochastic automaton,
+        /// i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.
         /// </summary>
         /// <param name="logNormalizer">When the function returns, contains the logarithm of the normalizer.</param>
         /// <returns><see langword="true"/> if the automaton was successfully normalized, <see langword="false"/> otherwise.</returns>

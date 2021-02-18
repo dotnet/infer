@@ -504,17 +504,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 point.ToString(SequenceDistributionFormats.GraphViz));
         }
 
-        /// <summary>
-        /// Tests that converting a mixture to a string preserves the order of the mixture components.
-        /// </summary>
-        [Fact]
-        [Trait("Category", "StringInference")]
-        public void MixtureToStringPreservesOrder()
-        {
-            StringDistribution mixture = StringDistribution.OneOf("John", "Tom", "Sam");
-            Assert.Equal("[John|Tom|Sam]", mixture.ToString());
-        }
-
         [Fact]
         [Trait("Category", "StringInference")]
         public void EnumerateSupport()

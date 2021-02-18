@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// The tolerance used when comparing log-probabilities.
         /// </summary>
         private const double LogValueEps = 1e-8;
-        
+
         #region Utils for testing automata
 
         /// <summary>

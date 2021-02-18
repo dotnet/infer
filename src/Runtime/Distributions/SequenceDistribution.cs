@@ -1838,12 +1838,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             var product = new TWeightFunction();
             product.SetToProduct(dist1.sequenceToWeight, dist2.sequenceToWeight);
-            SetWorkspace(product);
 
             double? logNormalizer = null;
             if (computeLogNormalizer)
             {
-                if (sequenceToWeight.IsZero())
+                if (product.IsZero())
                 {
                     logNormalizer = double.NegativeInfinity; // Normalizer of zero is defined to be -inf, not zero
                 }
@@ -1852,7 +1851,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     double computedLogNormalizer;
 
                     // todo: consider moving the following logic into the Automaton class
-                    if (!sequenceToWeight.TryNormalizeValues(out computedLogNormalizer))
+                    if (!product.TryNormalizeValues(out computedLogNormalizer))
                     {
                         computedLogNormalizer = 0;
                     }
@@ -1880,7 +1879,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 
                 this.isNormalized = true;
             }
-            
+
+            SetWorkspace(product);
+
             return logNormalizer;
         }
         
