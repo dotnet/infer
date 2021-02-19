@@ -1353,9 +1353,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             dist1.EnsureNormalized();
             dist2.EnsureNormalized();
 
-            var workspace = sequenceToWeight;
-            workspace.SetToSumLog(logWeight1, dist1.sequenceToWeight, logWeight2, dist2.sequenceToWeight);
-            SetWorkspace(workspace);
+            SetWorkspace(sequenceToWeight.SumLog(logWeight1, logWeight2, dist2.sequenceToWeight));
         }
 
         /// <summary>
@@ -1834,8 +1832,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             //var product = weightFunction1.Product(weightFunction2, tryDeterminize);
             //this.SetWorkspace(product);
 
-            var product = new TWeightFunction();
-            product.SetToProduct(dist1.sequenceToWeight, dist2.sequenceToWeight);
+            var product = dist1.sequenceToWeight.Product(dist2.sequenceToWeight);
 
             double? logNormalizer = null;
             if (computeLogNormalizer)

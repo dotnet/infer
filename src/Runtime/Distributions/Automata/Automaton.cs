@@ -1373,9 +1373,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Computes the product of the current automaton and a given one.
         /// </summary>
         /// <param name="automaton">The automaton to compute the product with.</param>
+        /// <returns>The computed product.</returns>
+        public TThis Product(TThis automaton)
+        {
+            return this.Product(automaton, true);
+        }
+
+        /// <summary>
+        /// Computes the product of the current automaton and a given one.
+        /// </summary>
+        /// <param name="automaton">The automaton to compute the product with.</param>
         /// <param name="tryDeterminize">Whether to try to determinize the result.</param>
         /// <returns>The computed product.</returns>
-        public TThis Product(TThis automaton, bool tryDeterminize = true)
+        public TThis Product(TThis automaton, bool tryDeterminize)
         {
             Argument.CheckIfNotNull(automaton, "automaton");
 
@@ -2464,6 +2474,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public double MaxDiff(TThis that) => GetLogSimilarity((TThis)this, that);
 
         public void NormalizeStructure() { }
+
+        public TThis Sum(double weight1, double weight2, TThis automaton)
+        {
+            var result = new TThis();
+            result.SetToSum(weight1, (TThis)this, weight2, automaton);
+            return result;
+        }
+
+        public TThis SumLog(double logWeight1, double logWeight2, TThis automaton)
+        {
+            var result = new TThis();
+            result.SetToSumLog(logWeight1, (TThis)this, logWeight2, automaton);
+            return result;
+        }
 
         #endregion
 

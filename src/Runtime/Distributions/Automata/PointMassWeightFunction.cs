@@ -64,20 +64,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return new List<TSequence>(new[] { point });
         }
 
-        public void SetToProduct(TPointMass a, TPointMass b)
-        {
-            if (a.point == b.point)
-                point = a.point;
-            else
-                SetToZero();
-        }
-
         public void SetToSum(IEnumerable<TPointMass> weightFunctions)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetToSum(double weight1, TPointMass value1, double weight2, TPointMass value2)
         {
             throw new NotImplementedException();
         }
@@ -86,11 +73,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             result = new List<TSequence>(new[] { point });
             return true;
-        }
-
-        public void SetToSumLog(double logWeight1, TPointMass weightFunction1, double logWeight2, TPointMass weightFunction2)
-        {
-            throw new NotImplementedException();
         }
 
         public double GetLogValue(TSequence sequence) => SequenceManipulator.SequenceEqualityComparer.Equals(point, sequence) ? 0.0 : double.NegativeInfinity;
@@ -166,6 +148,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
 
             return FromPoint(SequenceManipulator.Concat(point, weightFunction.Point));
+        }
+
+        public TPointMass Sum(TPointMass weightFunction)
+        {
+            throw new NotSupportedException($"{nameof(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>)} is not closed under summation.");
+        }
+
+        public TPointMass Sum(double weight1, double weight2, TPointMass weightFunction)
+        {
+            throw new NotSupportedException($"{nameof(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>)} is not closed under summation.");
+        }
+
+        public TPointMass SumLog(double logWeight1, double logWeight2, TPointMass weightFunction)
+        {
+            throw new NotSupportedException($"{nameof(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>)} is not closed under summation.");
+        }
+
+        public TPointMass Product(TPointMass weightFunction)
+        {
+            if (point == weightFunction.point)
+                return FromPoint(point);
+            else
+                throw new NotSupportedException($"Can not create a zero {nameof(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>)}.");
         }
     }
 

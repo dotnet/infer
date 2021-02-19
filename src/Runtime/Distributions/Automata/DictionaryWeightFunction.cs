@@ -123,21 +123,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             throw new NotImplementedException();
         }
 
-        public void SetToProduct(TDictionary a, TDictionary b)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetToSum(double weight1, TDictionary value1, double weight2, TDictionary value2)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetToSumLog(double logWeight1, TDictionary weightFunction1, double logWeight2, TDictionary weightFunction2)
-        {
-            throw new NotImplementedException();
-        }
-
         public TDictionary Repeat(int minTimes = 1, int? maxTimes = null)
         {
             throw new NotImplementedException();
@@ -247,6 +232,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         public TDictionary Append(TDictionary weightFunction, int group = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TDictionary Sum(TDictionary weightFunction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TDictionary Sum(double weight1, double weight2, TDictionary weightFunction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TDictionary SumLog(double logWeight1, double logWeight2, TDictionary weightFunction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TDictionary Product(TDictionary weightFunction)
         {
             throw new NotImplementedException();
         }

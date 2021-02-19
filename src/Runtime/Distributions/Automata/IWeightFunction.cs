@@ -138,9 +138,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
     [Quality(QualityBand.Experimental)]
     public interface IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis> :
-        IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>,
-        SettableToProduct<TThis>,
-        SettableToWeightedSum<TThis>
+        IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>
         where TSequence : class, IEnumerable<TElement>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
@@ -167,19 +165,40 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         TThis Append(TThis weightFunction, int group = 0);
 
         /// <summary>
+        /// Computes the sum of the current weight function and a given weight function.
+        /// </summary>
+        /// <param name="weightFunction">The weight function to compute the sum with.</param>
+        /// <returns>The computed sum.</returns>
+        TThis Sum(TThis weightFunction);
+
+        /// <summary>
+        /// Computes the weighted sum of the current weight function and a given weight function.
+        /// </summary>
+        /// <param name="weight1">The weight of the current weight function.</param>
+        /// <param name="weight2">The weight of the <paramref name="weightFunction"/>.</param>
+        /// <param name="weightFunction">The weight function to compute the sum with.</param>
+        TThis Sum(double weight1, double weight2, TThis weightFunction);
+
+        /// <summary>
+        /// Computes the weighted sum of the current weight function and a given weight function.
+        /// </summary>
+        /// <param name="logWeight1">The logarithm of the weight of the current weight function.</param>
+        /// <param name="logWeight2">The logarithm of the weight of the <paramref name="weightFunction"/>.</param>
+        /// <param name="weightFunction">The weight function to compute the sum with.</param>
+        TThis SumLog(double logWeight1, double logWeight2, TThis weightFunction);
+
+        /// <summary>
         /// Replaces the current weight function with a sum of given weight functions.
         /// </summary>
         /// <param name="weightFunctions">The weight functions to sum.</param>
         void SetToSum(IEnumerable<TThis> weightFunctions);
 
         /// <summary>
-        /// Replaces the current weight function by the weighted sum of a given pair of weight functions.
+        /// Computes the product of the current weight function and a given one.
         /// </summary>
-        /// <param name="logWeight1">The logarithm of the weight of the first weight function.</param>
-        /// <param name="weightFunction1">The first weight function.</param>
-        /// <param name="logWeight2">The logarithm of the weight of the second weight function.</param>
-        /// <param name="weightFunction2">The second weight function.</param>
-        void SetToSumLog(double logWeight1, TThis weightFunction1, double logWeight2, TThis weightFunction2);
+        /// <param name="weightFunction">The weight function to compute the product with.</param>
+        /// <returns>The computed product.</returns>
+        TThis Product(TThis weightFunction);
 
         /// <summary>
         /// Creates a weight function <c>g(s) = sum_{k=Kmin}^{Kmax} sum_{t1 t2 ... tk = s} f(t1)f(t2)...f(tk)</c>,

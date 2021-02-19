@@ -352,30 +352,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             weightFunction = automaton;
         }
 
-        public void SetToProduct(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> a, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> b)
-        {
-            // TODO
-            var automaton = new TAutomaton();
-            automaton.SetToProduct(a.AsAutomaton(), b.AsAutomaton());
-            weightFunction = automaton;
-        }
-
-        public void SetToSum(double weight1, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> value1, double weight2, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> value2)
-        {
-            // TODO
-            var automaton = new TAutomaton();
-            automaton.SetToSum(weight1, value1.AsAutomaton(), weight2, value2.AsAutomaton());
-            weightFunction = automaton;
-        }
-
-        public void SetToSumLog(double logWeight1, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction1, double logWeight2, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction2)
-        {
-            // TODO
-            var automaton = new TAutomaton();
-            automaton.SetToSumLog(logWeight1, weightFunction1.AsAutomaton(), logWeight2, weightFunction2.AsAutomaton());
-            weightFunction = automaton;
-        }
-
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Repeat(int minTimes = 1, int? maxTimes = null)
         {
             // TODO
@@ -484,6 +460,34 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             return FromAutomaton(this.weightFunction.AsAutomaton().Append(weightFunction.weightFunction.AsAutomaton(), group));
+        }
+
+        public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Sum(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
+        {
+            // TODO
+            return FromAutomaton(AsAutomaton().Sum(weightFunction.AsAutomaton()));
+        }
+
+        public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Sum(double weight1, double weight2, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
+        {
+            // TODO
+            var automaton = new TAutomaton();
+            automaton.SetToSum(weight1, AsAutomaton(), weight2, weightFunction.AsAutomaton());
+            return FromAutomaton(automaton);
+        }
+
+        public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> SumLog(double logWeight1, double logWeight2, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
+        {
+            // TODO
+            var automaton = new TAutomaton();
+            automaton.SetToSumLog(logWeight1, AsAutomaton(), logWeight2, weightFunction.AsAutomaton());
+            return FromAutomaton(automaton);
+        }
+
+        public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Product(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
+        {
+            // TODO
+            return FromAutomaton(AsAutomaton().Product(weightFunction.AsAutomaton()));
         }
     }
 }
