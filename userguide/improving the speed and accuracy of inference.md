@@ -30,7 +30,7 @@ There are often multiple ways of using Infer.NET to solve a particular problem. 
     In general, the fewer factors in your factor graph, the faster and more accurate inference can be. Try to rewrite your model to reduce the number of factors if possible. The **ShowFactorGraph** option on the inference engine should help.
 
 *   _Profile the inference code_  
-    You can profile the generated inference code to find bottlenecks, as described in [debugging inference(Debugging inference.md).
+    You can profile the generated inference code to find bottlenecks, as described in [debugging inference](Debugging inference.md).
 
 *   _Reduce the number of iterations of inference_  
     The default number of iterations is 50 - your model may need fewer iterations to converge. Modify **NumberOfIterations** in the [inference engine settings](inference engine settings.md) or use a custom convergence criterion (see [Controlling how inference is performed](Controlling how inference is performed.md)).

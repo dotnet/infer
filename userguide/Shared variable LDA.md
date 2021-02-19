@@ -118,7 +118,7 @@ This specifies 5 passes of 10 iterations.
 Once the passes are complete, the marginal posterior distributions of the shared variables can be retrieved as follows. Note the special treatment for the evidence variable:
 
 ```csharp
-postPhi = Distribution.ToArray<Dirichlet[]>(Phi.Marginal<IDistribution<Vector[]>>());  
+postPhi = Phi.Marginal<Dirichlet[]>();
 return Model.GetEvidenceForAll(BetaModel, DocModel);
 ```
 

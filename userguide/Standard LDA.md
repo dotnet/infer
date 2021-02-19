@@ -68,11 +68,11 @@ using (Variable.ForEach(D))
 }
 ```
 
-This completes the main definition of the model, but there are a couple of other things we need to set up before doing inference. Firstly note that we need to break symmetry when we're doing inference because the model is symmetric with respect to the latent topics. We will do this by initialising the messages out of _Theta_. We will do this in a general way by defining a variable _ThetaInit_ which we will observe at inference time to be a random message in the form of a distribution over a Vector\[\] domain. The advantage of making _ThetaInit_ a variable is that we can modify it without causing a model recompilation.
+This completes the main definition of the model, but there are a couple of other things we need to set up before doing inference. Firstly note that we need to break symmetry when we're doing inference because the model is symmetric with respect to the latent topics. We will do this by initialising the messages out of _Theta_. We will do this in a general way by defining a variable _ThetaInit_ which we will observe at inference time to be a random message in the form of a Dirichlet distribution. The advantage of making _ThetaInit_ a variable is that we can modify it without causing a model recompilation.
 
 ```csharp
-ThetaInit = Variable.New<IDistribution<Vector[]>>();  
-Theta.InitialiseTo(ThetaInit);
+ThetaInit = Variable.Array<Dirichlet>(D).Named("ThetaInit");
+Theta[D].InitialiseTo(ThetaInit[D]);
 ```
 
 Lastly, we would like to retrieve the evidence from the model so that we can compare models - for example we might want to optimise the _alpha_ and _beta_ hyper-parameters. We can compute [model evidence](Computing model evidence for model selection.md) by creating a mixture of the model with an empty model as follows:
