@@ -344,34 +344,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
         }
 
-        public void AppendInPlace(TSequence sequence, int group = 0)
-        {
-            if (weightFunction != null)
-            {
-                if (group != 0)
-                    weightFunction = weightFunction.AsAutomaton();
-
-                weightFunction.AppendInPlace(sequence);
-            }
-        }
-
-        public void AppendInPlace(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> other, int group = 0)
-        {
-            // TODO
-            if (weightFunction != null)
-            {
-                if (weightFunction is TPointMass pmThis && other.weightFunction is TPointMass pmOther && group == 0)
-                {
-                    pmThis.AppendInPlace(pmOther.Point);
-                }
-                else
-                {
-                    weightFunction = AsAutomaton();
-                    ((TAutomaton)weightFunction).AppendInPlace(other.AsAutomaton(), group);
-                }
-            }
-        }
-
         public void SetToSum(IEnumerable<MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>> weightFunctions)
         {
             // TODO
@@ -474,6 +446,44 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // TODO
             weightFunction = new TAutomaton();
             weightFunction.SetToConstantLog(logValue, allowedElements);
+        }
+
+        public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Append(TSequence sequence, int group = 0)
+        {
+            switch (weightFunction)
+            {
+                case null:
+                    return Zero();
+                case TPointMass pointMass:
+                    return group == 0 ? FromPointMass(pointMass.Append(sequence)) : FromAutomaton(pointMass.AsAutomaton().Append(sequence, group));
+                case TDictionary dictionary:
+                    return group == 0 ? FromDictionary(dictionary.Append(sequence)) : FromAutomaton(dictionary.AsAutomaton().Append(sequence, group));
+                case TAutomaton automaton:
+                    return FromAutomaton(automaton.Append(sequence, group));
+                default:
+                    throw new InvalidOperationException("Current function has an invalid type");
+            }
+        }
+
+        public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Append(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction, int group = 0)
+        {
+            if (this.weightFunction == null || weightFunction.weightFunction == null)
+                return Zero();
+
+            if (group == 0)
+            {
+                if (weightFunction.weightFunction is TPointMass otherPointMass)
+                {
+                    if (this.weightFunction is TPointMass thisPointMass)
+                        return FromPointMass(thisPointMass.Append(otherPointMass.Point));
+                    if (this.weightFunction is TDictionary thisDictionary)
+                        return FromDictionary(thisDictionary.Append(otherPointMass.Point));
+                }
+
+                // TODO: if (weightFunction.weightFunction is TDictionary otherDictionary)
+            }
+
+            return FromAutomaton(this.weightFunction.AsAutomaton().Append(weightFunction.weightFunction.AsAutomaton(), group));
         }
     }
 }

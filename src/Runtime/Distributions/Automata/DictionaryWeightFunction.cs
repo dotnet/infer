@@ -118,18 +118,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return true;
         }
 
-        public virtual void AppendInPlace(TSequence sequence, int group = 0)
-        {
-            Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
-
-            SetWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, sequence), kvp.Value)).ToList());
-        }
-
-        public void AppendInPlace(TDictionary other, int group = 0)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SetToSum(IEnumerable<TDictionary> weightFunctions)
         {
             throw new NotImplementedException();
@@ -249,6 +237,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             if (Dictionary.Any(kvp => kvp.Value.IsZero))
                 SetWeights(Dictionary.Where(kvp => !kvp.Value.IsZero).ToList());
+        }
+
+        public TDictionary Append(TSequence sequence, int group = 0)
+        {
+            Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
+
+            return FromWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, sequence), kvp.Value)));
+        }
+
+        public TDictionary Append(TDictionary weightFunction, int group = 0)
+        {
+            throw new NotImplementedException();
         }
     }
 

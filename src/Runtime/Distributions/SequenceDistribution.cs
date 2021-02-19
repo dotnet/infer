@@ -895,9 +895,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             //}
 
             //this.SetWorkspace(workspace);
-            var workspace = sequenceToWeight;
-            workspace.AppendInPlace(dist.sequenceToWeight, group);
-            SetWorkspace(workspace);
+            SetWorkspace(sequenceToWeight.Append(dist.sequenceToWeight, group));
         }
 
         /// <summary>

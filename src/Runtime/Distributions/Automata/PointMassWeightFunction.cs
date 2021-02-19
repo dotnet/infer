@@ -55,20 +55,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool UsesGroups => throw new NotImplementedException();
 
-        public void AppendInPlace(TSequence sequence, int group = 0)
-        {
-            Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
-
-            point = SequenceManipulator.Concat(point, sequence);
-        }
-
-        public void AppendInPlace(TPointMass other, int group = 0)
-        {
-            Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
-
-            point = SequenceManipulator.Concat(point, other.point);
-        }
-
         public TDictionary AsDictionary() => new TDictionary() { Point = point };
 
         public TAutomaton AsAutomaton() => Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.ConstantOn(1.0, point);
@@ -167,6 +153,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public bool HasGroup(int group) => false;
 
         public void NormalizeStructure() { }
+
+        public TPointMass Append(TSequence sequence, int group = 0)
+        {
+            Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
+
+            return FromPoint(SequenceManipulator.Concat(point, sequence));
+        }
+
+        public TPointMass Append(TPointMass weightFunction, int group = 0)
+        {
+            Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
+
+            return FromPoint(SequenceManipulator.Concat(point, weightFunction.Point));
+        }
     }
 
     [Serializable]

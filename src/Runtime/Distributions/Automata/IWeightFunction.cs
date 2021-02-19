@@ -87,14 +87,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs);
 
         /// <summary>
-        /// Replaces the current weight function with a weight function <c>f'(st) = f(s)</c>, where <c>f(s)</c> is the current weight function
-        /// and <c>t</c> is the given sequence.
-        /// </summary>
-        /// <param name="sequence">The sequence.</param>
-        /// <param name="group">The group.</param>
-        void AppendInPlace(TSequence sequence, int group = 0);
-
-        /// <summary>
         /// Computes the logarithm of the value of the weight function on a given sequence.
         /// </summary>
         /// <param name="sequence">The sequence to compute the value on.</param>
@@ -155,13 +147,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
         where TThis : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis>, new()
     {
+
         /// <summary>
-        /// Replaces the current weight function with a weight function <c>f'(s) = sum_{tu=s} f(t)g(u)</c>,
-        /// where <c>f(t)</c> is the current weight function and <c>g(u)</c> is the given weight function.
+        /// Creates a weight function <c>f'(st) = f(s)</c>, where <c>f(s)</c> is the current weight function
+        /// and <c>t</c> is the given sequence.
         /// </summary>
-        /// <param name="other">The automaton to append.</param>
+        /// <param name="sequence">The sequence.</param>
         /// <param name="group">The group.</param>
-        void AppendInPlace(TThis other, int group = 0);
+        /// <returns>The created weight function.</returns>
+        TThis Append(TSequence sequence, int group = 0);
+
+        /// <summary>
+        /// Creates a weight function <c>f'(s) = sum_{tu=s} f(t)g(u)</c>, where <c>f(t)</c> is the current weight function
+        /// and <c>g(u)</c> is the given weight function.
+        /// </summary>
+        /// <param name="weightFunction">The weight function to append.</param>
+        /// <param name="group">The group.</param>
+        /// <returns>The created weight function.</returns>
+        TThis Append(TThis weightFunction, int group = 0);
 
         /// <summary>
         /// Replaces the current weight function with a sum of given weight functions.
