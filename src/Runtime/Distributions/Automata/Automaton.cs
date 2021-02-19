@@ -2473,7 +2473,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public double MaxDiff(TThis that) => GetLogSimilarity((TThis)this, that);
 
-        public void NormalizeStructure() { }
+        public TThis NormalizeStructure() => Clone(); // TODO: replace with `this` after making this type immutable
 
         public TThis Sum(double weight1, double weight2, TThis automaton)
         {
@@ -2487,6 +2487,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var result = new TThis();
             result.SetToSumLog(logWeight1, (TThis)this, logWeight2, automaton);
             return result;
+        }
+
+        /// <summary>
+        /// Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible)
+        /// and returns the result in an out parameter.
+        /// If successful, produces a stochastic automaton,
+        /// i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.
+        /// </summary>
+        /// <param name="normalizedAutomaton">Result of the normaliztion attempt.</param>
+        /// <param name="logNormalizer">When the function returns, contains the logarithm of the normalizer.</param>
+        /// <returns><see langword="true"/> if the automaton was successfully normalized, <see langword="false"/> otherwise.</returns>
+        public bool TryNormalizeValues(out TThis normalizedAutomaton, out double logNormalizer)
+        {
+            normalizedAutomaton = Clone();
+            return normalizedAutomaton.TryNormalizeValues(out logNormalizer);
         }
 
         #endregion

@@ -307,10 +307,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         //public bool TryNormalizeValues() => weightFunction.TryNormalizeValues(out _);
 
         /// <summary>
-        /// Modifies the weight function to be in normalized form e.g. using special
-        /// case structures for point masses and fucntions with small support.
+        /// Returns the weight function converted to the normalized form e.g. using special
+        /// case structures for point masses and functions with small support.
         /// </summary>
-        public void NormalizeStructure()
+        public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> NormalizeStructure()
         {
             switch (weightFunction)
             {
@@ -318,13 +318,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var filteredTruncated = dictionary.Dictionary.Where(kvp => !kvp.Value.IsZero).Take(2).ToList();
                     if (filteredTruncated.Count == 1/* && dictionary.Dictionary.Single().Value.LogValue == 0.0*/)
                     {
-                        weightFunction = new TPointMass() { Point = filteredTruncated.Single().Key };
+                        return FromPointMass(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>.FromPoint(filteredTruncated.Single().Key));
                     }
                     else
                     {
-                        weightFunction.NormalizeStructure();
+                        return FromDictionary(dictionary.NormalizeStructure());
                     }
-                    break;
                 case TAutomaton automaton:
                     if (!automaton.UsesGroups && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false))
                     {
@@ -332,16 +331,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var list = support.Select(seq => new KeyValuePair<TSequence, Weight>(seq, Weight.FromLogValue(automaton.GetLogValue(seq)))).ToList();
                         if (list.Count == 1/* && list.Single().Value.LogValue == 0.0*/)
                         {
-                            weightFunction = new TPointMass() { Point = list.First().Key };
+                            return FromPointMass(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>.FromPoint(list.First().Key));
                         }
                         else
                         {
-                            weightFunction = new TDictionary();
-                            ((TDictionary)weightFunction).SetWeights(list);
+                            return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>.FromWeights(list));
                         }
                     }
                     break;
             }
+            var result = new MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>();
+            result.SetTo(this);
+            return result; // TODO: replace with `this` after making this type immutable
         }
 
         public void SetToSum(IEnumerable<MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>> weightFunctions)
@@ -368,14 +369,32 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
-        public bool TryNormalizeValues(out double logNormalizer)
+        public bool TryNormalizeValues(out MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> normalizedFunction, out double logNormalizer)
         {
-            if (weightFunction == null)
+            bool result;
+            switch (weightFunction)
             {
-                logNormalizer = double.NegativeInfinity;
-                return false;
+                case null:
+                    normalizedFunction = new MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>();
+                    logNormalizer = double.NegativeInfinity;
+                    result = false;
+                    break;
+                case TPointMass pointMass:
+                    result = pointMass.TryNormalizeValues(out var normalizedPointMass, out logNormalizer);
+                    normalizedFunction = FromPointMass(normalizedPointMass);
+                    break;
+                case TDictionary dictionary:
+                    result = dictionary.TryNormalizeValues(out var normalizedDictionary, out logNormalizer);
+                    normalizedFunction = FromDictionary(normalizedDictionary);
+                    break;
+                case TAutomaton automaton:
+                    result = automaton.TryNormalizeValues(out var normalizedAutomaton, out logNormalizer);
+                    normalizedFunction = FromAutomaton(normalizedAutomaton);
+                    break;
+                default:
+                    throw new InvalidOperationException("Current function has an invalid type");
             }
-            return weightFunction.TryNormalizeValues(out logNormalizer);
+            return result;
         }
 
         public double GetLogValue(TSequence sequence) => weightFunction?.GetLogValue(sequence) ?? double.NegativeInfinity;

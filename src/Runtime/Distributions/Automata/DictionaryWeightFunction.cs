@@ -145,21 +145,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             throw new NotImplementedException();
         }
 
-        public virtual bool TryNormalizeValues(out double logNormalizer)
+        public virtual bool TryNormalizeValues(out TDictionary normalizedFunction, out double logNormalizer)
         {
             if (Dictionary.Count == 0)
             {
+                normalizedFunction = FromWeights(Dictionary); // TODO: replace with `this` after making this type immutable
                 logNormalizer = double.NegativeInfinity;
                 return false;
             }
             double logNormalizerLocal = MMath.LogSumExp(Dictionary.Values.Select(v => v.LogValue));
             logNormalizer = logNormalizerLocal;
             if (double.IsNaN(logNormalizerLocal) || double.IsInfinity(logNormalizerLocal))
+            {
+                normalizedFunction = FromWeights(Dictionary); // TODO: replace with `this` after making this type immutable
                 return false;
+            }
             if (logNormalizerLocal == 0.0)
+            {
+                normalizedFunction = FromWeights(Dictionary); // TODO: replace with `this` after making this type immutable
                 return true;
+            }
             // TODO: do it faster
-            SetWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromLogValue(kvp.Value.LogValue - logNormalizerLocal))).ToList());
+            normalizedFunction = FromWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromLogValue(kvp.Value.LogValue - logNormalizerLocal))).ToList());
             return true;
         }
 
@@ -218,11 +225,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             throw new NotImplementedException();
         }
 
-        public void NormalizeStructure()
-        {
-            if (Dictionary.Any(kvp => kvp.Value.IsZero))
-                SetWeights(Dictionary.Where(kvp => !kvp.Value.IsZero).ToList());
-        }
+        public TDictionary NormalizeStructure() => FromWeights(Dictionary.Where(kvp => !kvp.Value.IsZero)); // TODO: return `this` when normalization is not required after making this type immutable
 
         public TDictionary Append(TSequence sequence, int group = 0)
         {

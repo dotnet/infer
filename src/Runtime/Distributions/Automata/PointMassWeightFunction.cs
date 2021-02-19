@@ -107,8 +107,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             throw new NotImplementedException();
         }
 
-        public bool TryNormalizeValues(out double logNormalizer)
+        public bool TryNormalizeValues(out TPointMass normalizedFunction, out double logNormalizer)
         {
+            normalizedFunction = FromPoint(Point); // TODO: replace with `this` after making this type immutable
             logNormalizer = 0.0;
             return true;
         }
@@ -134,7 +135,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool HasGroup(int group) => false;
 
-        public void NormalizeStructure() { }
+        public TPointMass NormalizeStructure() => FromPoint(Point); // TODO: replace with `this` after making this type immutable
 
         public TPointMass Append(TSequence sequence, int group = 0)
         {
@@ -168,7 +169,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public TPointMass Product(TPointMass weightFunction)
         {
             if (point == weightFunction.point)
-                return FromPoint(point);
+                return FromPoint(point); // TODO: replace with `this` after making this type immutable
             else
                 throw new NotSupportedException($"Can not create a zero {nameof(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>)}.");
         }

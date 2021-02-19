@@ -40,15 +40,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         bool UsesAutomatonRepresentation { get; }
 
         /// <summary>
-        /// Attempts to normalize the weight function so that sum of its values on all possible sequences equals to one (if it is possible).
-        /// If successful, future calls to <see cref="AsAutomaton"/> produce a stochastic automaton,
-        /// i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.
-        /// </summary>
-        /// <param name="logNormalizer">When the function returns, contains the logarithm of the normalizer.</param>
-        /// <returns><see langword="true"/> if the automaton was successfully normalized, <see langword="false"/> otherwise.</returns>
-        bool TryNormalizeValues(out double logNormalizer);
-
-        /// <summary>
         /// Computes the logarithm of the normalizer (sum of values of the weight function on all sequences).
         /// </summary>
         /// <returns>The logarithm of the normalizer.</returns>
@@ -128,12 +119,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="group">The specified group.</param>
         /// <returns>True if it the weight function has this group, false otherwise.</returns>
         bool HasGroup(int group);
-
-        /// <summary>
-        /// Modifies the weight function to be in normalized form e.g. using special
-        /// case structures for point masses and fucntions with small support.
-        /// </summary>
-        void NormalizeStructure();
     }
 
     [Quality(QualityBand.Experimental)]
@@ -234,6 +219,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="weightFunction">The weight function.</param>
         ///<exception cref="NotImplementedException">Thrown if if the <paramref name="weightFunction"/> cannot be determinized.</exception>
         void SetToConstantOnSupportOfLog(double logValue, TThis weightFunction);
+
+        /// <summary>
+        /// Attempts to normalize the weight function so that sum of its values on all possible sequences equals to one (if it is possible)
+        /// and returns the result in an out parameter.
+        /// If successful, calls to <see cref="IWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton}.AsAutomaton"/>
+        /// methods of the resulting function produce a stochastic automaton,
+        /// i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.
+        /// </summary>
+        /// <param name="normalizedFunction">Result of the normaliztion attempt.</param>
+        /// <param name="logNormalizer">When the function returns, contains the logarithm of the normalizer.</param>
+        /// <returns><see langword="true"/> if the weight function was successfully normalized, <see langword="false"/> otherwise.</returns>
+        bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer);
+
+        /// <summary>
+        /// Returns the weight function converted to the normalized form e.g. using special
+        /// case structures for point masses and functions with small support.
+        /// </summary>
+        TThis NormalizeStructure();
     }
 
     [Quality(QualityBand.Experimental)]

@@ -1353,7 +1353,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             dist1.EnsureNormalized();
             dist2.EnsureNormalized();
 
-            SetWorkspace(sequenceToWeight.SumLog(logWeight1, logWeight2, dist2.sequenceToWeight));
+            SetWorkspace(dist1.sequenceToWeight.SumLog(logWeight1, logWeight2, dist2.sequenceToWeight));
         }
 
         /// <summary>
@@ -1835,6 +1835,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             var product = dist1.sequenceToWeight.Product(dist2.sequenceToWeight);
 
             double? logNormalizer = null;
+            bool didNormalize = false;
             if (computeLogNormalizer)
             {
                 if (product.IsZero())
@@ -1846,7 +1847,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     double computedLogNormalizer;
 
                     // todo: consider moving the following logic into the Automaton class
-                    if (!product.TryNormalizeValues(out computedLogNormalizer))
+                    if (!product.TryNormalizeValues(out product, out computedLogNormalizer))
                     {
                         computedLogNormalizer = 0;
                     }
@@ -1871,11 +1872,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
                     logNormalizer = computedLogNormalizer;    
                 }
-                
-                this.isNormalized = true;
+
+                didNormalize = true;
             }
 
             SetWorkspace(product);
+            isNormalized = didNormalize;
 
             return logNormalizer;
         }
@@ -1902,7 +1904,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (!this.isNormalized)
             {
-                this.sequenceToWeight.TryNormalizeValues(out _);
+                sequenceToWeight.TryNormalizeValues(out sequenceToWeight, out _);
                 this.isNormalized = true;
             }
         }
@@ -1924,7 +1926,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             //    this.Point = pt;
             //}
 
-            sequenceToWeight.NormalizeStructure();
+            sequenceToWeight = sequenceToWeight.NormalizeStructure();
         }
 
         ///// <summary>
