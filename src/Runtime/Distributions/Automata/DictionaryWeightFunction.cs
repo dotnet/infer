@@ -16,13 +16,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
-    public class DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton, TDictionary>
+    public class DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis> : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis>
         where TSequence : class, IEnumerable<TElement>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
-        where TPointMass : PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>, new()
-        where TDictionary : DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>, new()
+        where TThis : DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis>, new()
     {
         protected static TSequenceManipulator SequenceManipulator =>
                 Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.SequenceManipulator;
@@ -44,9 +43,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         #region Factory methods
 
         [Construction(nameof(Dictionary))]
-        public static TDictionary FromWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
+        public static TThis FromWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
         {
-            var result = new TDictionary();
+            var result = new TThis();
             result.SetWeights(sequenceWeightPairs);
             return result;
         }
@@ -118,34 +117,34 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return true;
         }
 
-        public void SetToSum(IEnumerable<TDictionary> weightFunctions)
+        public void SetToSum(IEnumerable<TThis> weightFunctions)
         {
             throw new NotImplementedException();
         }
 
-        public TDictionary Repeat(int minTimes = 1, int? maxTimes = null)
+        public TThis Repeat(int minTimes = 1, int? maxTimes = null)
         {
             throw new NotImplementedException();
         }
 
-        public TDictionary ScaleLog(double logScale)
+        public TThis ScaleLog(double logScale)
         {
             throw new NotImplementedException();
         }
 
-        public Dictionary<int, TDictionary> GetGroups() => new Dictionary<int, TDictionary>();
+        public Dictionary<int, TThis> GetGroups() => new Dictionary<int, TThis>();
 
-        public double MaxDiff(TDictionary that)
+        public double MaxDiff(TThis that)
         {
             throw new NotImplementedException();
         }
 
-        public void SetToConstantOnSupportOfLog(double logValue, TDictionary weightFunction)
+        public void SetToConstantOnSupportOfLog(double logValue, TThis weightFunction)
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool TryNormalizeValues(out TDictionary normalizedFunction, out double logNormalizer)
+        public virtual bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)
         {
             if (Dictionary.Count == 0)
             {
@@ -225,36 +224,36 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             throw new NotImplementedException();
         }
 
-        public TDictionary NormalizeStructure() => FromWeights(Dictionary.Where(kvp => !kvp.Value.IsZero)); // TODO: return `this` when normalization is not required after making this type immutable
+        public TThis NormalizeStructure() => FromWeights(Dictionary.Where(kvp => !kvp.Value.IsZero)); // TODO: return `this` when normalization is not required after making this type immutable
 
-        public TDictionary Append(TSequence sequence, int group = 0)
+        public TThis Append(TSequence sequence, int group = 0)
         {
             Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
 
             return FromWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, sequence), kvp.Value)));
         }
 
-        public TDictionary Append(TDictionary weightFunction, int group = 0)
+        public TThis Append(TThis weightFunction, int group = 0)
         {
             throw new NotImplementedException();
         }
 
-        public TDictionary Sum(TDictionary weightFunction)
+        public TThis Sum(TThis weightFunction)
         {
             throw new NotImplementedException();
         }
 
-        public TDictionary Sum(double weight1, double weight2, TDictionary weightFunction)
+        public TThis Sum(double weight1, double weight2, TThis weightFunction)
         {
             throw new NotImplementedException();
         }
 
-        public TDictionary SumLog(double logWeight1, double logWeight2, TDictionary weightFunction)
+        public TThis SumLog(double logWeight1, double logWeight2, TThis weightFunction)
         {
             throw new NotImplementedException();
         }
 
-        public TDictionary Product(TDictionary weightFunction)
+        public TThis Product(TThis weightFunction)
         {
             throw new NotImplementedException();
         }
@@ -263,7 +262,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
-    public class StringDictionaryWeightFunction : DictionaryWeightFunction<string, char, DiscreteChar, StringManipulator, StringPointMassWeightFunction, StringDictionaryWeightFunction, StringAutomaton>
+    public class StringDictionaryWeightFunction : DictionaryWeightFunction<string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDictionaryWeightFunction>
     {
         public StringDictionaryWeightFunction() : base(new SortedList<string, Weight>()) { }
 
@@ -309,7 +308,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
-    public class ListDictionaryWeightFunction<TList, TElement, TElementDistribution> : DictionaryWeightFunction<TList, TElement, TElementDistribution, ListManipulator<TList, TElement>, ListPointMassWeightFunction<TList, TElement, TElementDistribution>, ListDictionaryWeightFunction<TList, TElement, TElementDistribution>, ListAutomaton<TList, TElement, TElementDistribution>>
+    public class ListDictionaryWeightFunction<TList, TElement, TElementDistribution> : DictionaryWeightFunction<TList, TElement, TElementDistribution, ListManipulator<TList, TElement>, ListAutomaton<TList, TElement, TElementDistribution>, ListDictionaryWeightFunction<TList, TElement, TElementDistribution>>
         where TList : class, IList<TElement>, new()
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
     {
@@ -318,7 +317,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
-    public class ListDictionaryWeightFunction<TElement, TElementDistribution> : DictionaryWeightFunction<List<TElement>, TElement, TElementDistribution, ListManipulator<List<TElement>, TElement>, ListPointMassWeightFunction<TElement, TElementDistribution>, ListDictionaryWeightFunction<TElement, TElementDistribution>, ListAutomaton<TElement, TElementDistribution>>
+    public class ListDictionaryWeightFunction<TElement, TElementDistribution> : DictionaryWeightFunction<List<TElement>, TElement, TElementDistribution, ListManipulator<List<TElement>, TElement>, ListAutomaton<TElement, TElementDistribution>, ListDictionaryWeightFunction<TElement, TElementDistribution>>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
     {
     }
