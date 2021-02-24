@@ -27,7 +27,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.SequenceManipulator;
 
         [DataMember]
-        // TODO: use truly immutable storage.
+        // Should only ever be set in factory methods.
+        // TODO: use truly immutable storage,
+        // replace with init-only property after switching to C# 9.0+
         protected IReadOnlyDictionary<TSequence, Weight> dictionary;
 
         #region Constructors
@@ -56,29 +58,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #endregion
 
-        public IReadOnlyDictionary<TSequence, Weight> Dictionary
-        {
-            get => dictionary;
-            //protected set
-            //{
-            //    Argument.CheckIfNotNull(value, nameof(value), "Dictionary must not be null.");
+        public IReadOnlyDictionary<TSequence, Weight> Dictionary => dictionary;
 
-            //    dictionary = new Dictionary<TSequence, Weight>(value, SequenceManipulator.SequenceEqualityComparer);
-            //}
-        }
-
-        public TSequence Point 
-        {
-            get => Dictionary.Count == 1 ? Dictionary.Single().Key : throw new InvalidOperationException("This weight function is zero everywhere or is non-zero on more than one sequence.");
-            //set
-            //{
-            //    if (Dictionary.Count != 1 || !SequenceManipulator.SequenceEqualityComparer.Equals(value, Dictionary.Single().Key))
-            //    {
-            //        Dictionary.Clear();
-            //        Dictionary.Add(value, Weight.One);
-            //    }
-            //}
-        }
+        public TSequence Point =>
+            Dictionary.Count == 1 ? Dictionary.Single().Key : throw new InvalidOperationException("This weight function is zero everywhere or is non-zero on more than one sequence.");
 
         public bool IsPointMass => Dictionary.Count == 1;
 
@@ -172,16 +155,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             throw new NotImplementedException();
         }
 
-        //public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs)
-        //{
-        //    SetWeights(sequenceWeightPairs.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromValue(kvp.Value))));
-        //}
-
         /// <summary>
         /// Replaces the internal sequence to weight dictionary with a new one using the supplied <paramref name="sequenceWeightPairs"/>.
         /// If the supplied collection contains multiple entries for the same sequence, the weights for that sequence are summed.
         /// </summary>
         /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
+        /// <remarks>Should only ever be called in factory methods.</remarks>
         protected virtual void SetWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
         {
             var newDictionary = new Dictionary<TSequence, Weight>(SequenceManipulator.SequenceEqualityComparer);
@@ -268,44 +247,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             FillDictionary(newDictionary, sequenceWeightPairs);
             dictionary = newDictionary;
         }
-
-        //public override IDictionary<string, Weight> Dictionary
-        //{
-        //    get => dictionary;
-        //    protected set
-        //    {
-        //        Argument.CheckIfNotNull(value, nameof(value), "Dictionary must not be null.");
-
-        //        dictionary = new SortedList<string, Weight>(value);
-        //    }
-        //}
-
-        //public override void AppendInPlace(string sequence, int group = 0)
-        //{
-        //    Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
-        //    var list = (SortedList<string, double>)Dictionary;
-        //    for (int i = 0; i < list.Keys.Count; ++i)
-        //        list.Keys[i] += sequence; // Can't do this - colletion is read-only
-        //}
-
-        //public override bool TryNormalizeValues(out double logNormalizer)
-        //{
-        //    if (!(Dictionary is SortedList<string, double> list) || list.Count == 0)
-        //    {
-        //        logNormalizer = double.NegativeInfinity;
-        //        return false;
-        //    }
-        //    double normalizer = list.Values.Sum();
-        //    logNormalizer = Math.Log(normalizer);
-        //    if (normalizer == 0.0 || double.IsNaN(normalizer) || double.IsInfinity(normalizer))
-        //        return false;
-        //    if (normalizer == 1.0)
-        //        return true;
-
-        //    for (int i = 0; i < list.Values.Count; ++i)
-        //        list.Values[i] /= normalizer; // Can't do this - colletion is read-only
-        //    return true;
-        //}
     }
 
     [Serializable]

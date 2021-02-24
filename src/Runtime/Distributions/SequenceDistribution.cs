@@ -525,17 +525,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             Argument.CheckIfInRange(minTimes >= 0, "minTimes", "The minimum number of repetitions must be non-negative.");
             Argument.CheckIfValid(!maxTimes.HasValue || maxTimes.Value >= minTimes, "The maximum number of repetitions must not be less than the minimum number.");
 
-            //if (dist.IsPointMass && maxTimes.HasValue && minTimes == maxTimes)
-            //{
-            //    var newSequenceElements = new List<TElement>(SequenceManipulator.GetLength(dist.Point) * minTimes);
-            //    for (int i = 0; i < minTimes; ++i)
-            //    {
-            //        newSequenceElements.AddRange(dist.Point);
-            //    }
-
-            //    return PointMass(SequenceManipulator.ToSequence(newSequenceElements));
-            //}
-
             double logNormalizer = -dist.GetLogAverageOf(dist);
 
             return FromWeightFunction(dist.sequenceToWeight.ScaleLog(logNormalizer).Repeat(minTimes, maxTimes));
@@ -1598,11 +1587,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns><see langword="true"/> if the current distribution is proper, <see langword="false"/> otherwise.</returns>
         public bool IsProper()
         {
-            //if (this.IsPointMass)
-            //{
-            //    return true;
-            //}
-
             return !double.IsInfinity(this.sequenceToWeight.GetLogNormalizer()); // TODO: cache?
         }
         
@@ -1825,11 +1809,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 dist2.EnsureNormalized();    
             }
 
-            //var weightFunction1 = dist1.GetWorkspaceOrPoint();
-            //var weightFunction2 = dist2.GetWorkspaceOrPoint();
-            //var product = weightFunction1.Product(weightFunction2, tryDeterminize);
-            //this.SetWorkspace(product);
-
             var product = dist1.sequenceToWeight.Product(dist2.sequenceToWeight);
 
             double? logNormalizer = null;
@@ -1927,27 +1906,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             sequenceToWeight = sequenceToWeight.NormalizeStructure();
         }
 
-        ///// <summary>
-        ///// Returns a point mass represented by the current distribution, or <see langword="null"/>,
-        ///// if it doesn't represent a point mass.
-        ///// </summary>
-        ///// <returns>The point mass represented by the distribution, or <see langword="null"/>.</returns>
-        //private TSequence TryComputePoint()
-        //{
-        //    if (this.IsPointMass)
-        //    {
-        //        return this.point;
-        //    }
-
-        //    return this.sequenceToWeight.TryComputePoint();
-        //}
-
-        #endregion    
-
-        ///// <summary>
-        ///// Whether sequenceToWeight needs to be serialized.
-        ///// </summary>
-        //public bool ShouldSerializesequenceToWeight() => point == null;
+        #endregion
 
     }
 }

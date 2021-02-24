@@ -53,6 +53,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
         /// <exception cref="AutomatonEnumerationCountException">Thrown if enumeration is too large.</exception>
         /// <returns>The sequences in the support of this weight function</returns>
+        // TODO: get rid of tryDeterminize and potential mutations it involves
         IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true);
 
         /// <summary>
@@ -62,6 +63,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="result">The sequences in the support of this weight function</param>
         /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
         /// <returns>True if successful, false otherwise</returns>
+        // TODO: get rid of tryDeterminize and potential mutations it involves
         bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true);
 
         /// <summary>

@@ -13,11 +13,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Utilities;
     using Factors.Attributes;
 
-    // TODO: remove when done developing SequenceDistribution
-    //internal class StringDistributionA :
-    //    SequenceDistribution<string, char, DiscreteChar, StringManipulator, StringAutomaton, StringAutomaton, StringDistributionA>
-    //{ }
-
     /// <summary>
     /// Represents a distribution over strings that uses a weighted finite state automaton as the underlying weight function.
     /// </summary>
