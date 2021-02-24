@@ -42,7 +42,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> ConstantLog(double logValue, TElementDistribution allowedElements)
             {
-                // TODO
+                if (allowedElements is CanEnumerateSupport<TElement> supportEnumerator)
+                {
+                    var possiblyTruncatedSupport = supportEnumerator.EnumerateSupport().Take(MaxDictionarySize + 1).ToList();
+                    if (possiblyTruncatedSupport.Count <= MaxDictionarySize)
+                    {
+                        var weight = Weight.FromLogValue(logValue);
+                        return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromWeights(
+                            possiblyTruncatedSupport.Select(elem => new KeyValuePair<TSequence, Weight>(SequenceManipulator.ToSequence(new[] { elem }), weight))));
+                    }
+                }
                 var automaton = new TAutomaton();
                 automaton.SetToConstantLog(logValue, allowedElements);
                 return FromAutomaton(automaton);
@@ -50,7 +59,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> ConstantOnSupportOfLog(double logValue, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
             {
-                // TODO
+                if (weightFunction.TryEnumerateSupport(MaxDictionarySize, out var support, false))
+                {
+                    var weight = Weight.FromLogValue(logValue);
+                    return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromWeights(
+                        support.Select(sequence => new KeyValuePair<TSequence, Weight>(sequence, weight))));
+                }
                 var automaton = new TAutomaton();
                 automaton.SetToConstantOnSupportOfLog(logValue, weightFunction.AsAutomaton());
                 return FromAutomaton(automaton);
@@ -83,7 +97,38 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Sum(IEnumerable<MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>> weightFunctions)
             {
-                // TODO
+                var dictionary = new Dictionary<TSequence, Weight>(MaxDictionarySize, SequenceManipulator.SequenceEqualityComparer);
+                bool resultFitsDictionary = true;
+                foreach (var weightFunction in weightFunctions)
+                {
+                    if (weightFunction.TryEnumerateSupport(MaxDictionarySize, out var support, false))
+                    {
+                        foreach (var sequence in support)
+                        {
+                            var weight = Weight.FromLogValue(weightFunction.GetLogValue(sequence));
+                            if (dictionary.TryGetValue(sequence, out Weight oldWeight))
+                                dictionary[sequence] = oldWeight + weight;
+                            else if (dictionary.Count < MaxDictionarySize)
+                                dictionary.Add(sequence, weight);
+                            else
+                            {
+                                resultFitsDictionary = false;
+                                break;
+                            }
+                        }
+                        if (!resultFitsDictionary)
+                            break;
+                    }
+                    else
+                    {
+                        resultFitsDictionary = false;
+                        break;
+                    }
+                }
+
+                if (resultFitsDictionary)
+                    return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromWeights(dictionary));
+
                 var automaton = new TAutomaton();
                 automaton.SetToSum(weightFunctions.Select(wf => wf.AsAutomaton()));
                 return FromAutomaton(automaton);
