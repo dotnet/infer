@@ -27,11 +27,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.SequenceManipulator;
 
         [DataMember]
-        protected IDictionary<TSequence, Weight> dictionary;
+        // TODO: use truly immutable storage.
+        protected IReadOnlyDictionary<TSequence, Weight> dictionary;
 
         #region Constructors
 
-        protected DictionaryWeightFunction(IDictionary<TSequence, Weight> dictionary)
+        protected DictionaryWeightFunction(IReadOnlyDictionary<TSequence, Weight> dictionary)
         {
             this.dictionary = dictionary;
         }
@@ -50,30 +51,33 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
+        public static TThis FromValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs) =>
+            FromWeights(sequenceWeightPairs.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromValue(kvp.Value))));
+
         #endregion
 
-        public IDictionary<TSequence, Weight> Dictionary
+        public IReadOnlyDictionary<TSequence, Weight> Dictionary
         {
             get => dictionary;
-            //set
+            //protected set
             //{
             //    Argument.CheckIfNotNull(value, nameof(value), "Dictionary must not be null.");
-                
-            //    dictionary = new Dictionary<TSequence, double>(value, SequenceManipulator.SequenceEqualityComparer);
+
+            //    dictionary = new Dictionary<TSequence, Weight>(value, SequenceManipulator.SequenceEqualityComparer);
             //}
         }
 
         public TSequence Point 
         {
             get => Dictionary.Count == 1 ? Dictionary.Single().Key : throw new InvalidOperationException("This weight function is zero everywhere or is non-zero on more than one sequence.");
-            set
-        {
-                if (Dictionary.Count != 1 || !SequenceManipulator.SequenceEqualityComparer.Equals(value, Dictionary.Single().Key))
-                {
-                    Dictionary.Clear();
-                    Dictionary.Add(value, Weight.One);
-                }
-            }
+            //set
+            //{
+            //    if (Dictionary.Count != 1 || !SequenceManipulator.SequenceEqualityComparer.Equals(value, Dictionary.Single().Key))
+            //    {
+            //        Dictionary.Clear();
+            //        Dictionary.Add(value, Weight.One);
+            //    }
+            //}
         }
 
         public bool IsPointMass => Dictionary.Count == 1;
@@ -117,11 +121,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return true;
         }
 
-        public void SetToSum(IEnumerable<TThis> weightFunctions)
-        {
-            throw new NotImplementedException();
-        }
-
         public TThis Repeat(int minTimes = 1, int? maxTimes = null)
         {
             throw new NotImplementedException();
@@ -136,32 +135,23 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public double MaxDiff(TThis that)
         {
-            throw new NotImplementedException();
-        }
-
-        public void SetToConstantOnSupportOfLog(double logValue, TThis weightFunction)
-        {
-            throw new NotImplementedException();
+            // TODO: implement properly.
+            return Math.Exp(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.GetLogSimilarity(
+                AsAutomaton(), that.AsAutomaton()));
         }
 
         public virtual bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)
         {
-            if (Dictionary.Count == 0)
-            {
-                normalizedFunction = FromWeights(Dictionary); // TODO: replace with `this` after making this type immutable
-                logNormalizer = double.NegativeInfinity;
-                return false;
-            }
-            double logNormalizerLocal = MMath.LogSumExp(Dictionary.Values.Select(v => v.LogValue));
+            double logNormalizerLocal = GetLogNormalizer();
             logNormalizer = logNormalizerLocal;
             if (double.IsNaN(logNormalizerLocal) || double.IsInfinity(logNormalizerLocal))
             {
-                normalizedFunction = FromWeights(Dictionary); // TODO: replace with `this` after making this type immutable
+                normalizedFunction = (TThis)this;
                 return false;
             }
             if (logNormalizerLocal == 0.0)
             {
-                normalizedFunction = FromWeights(Dictionary); // TODO: replace with `this` after making this type immutable
+                normalizedFunction = (TThis)this;
                 return true;
             }
             // TODO: do it faster
@@ -182,20 +172,37 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             throw new NotImplementedException();
         }
 
-        public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs)
+        //public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs)
+        //{
+        //    SetWeights(sequenceWeightPairs.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromValue(kvp.Value))));
+        //}
+
+        /// <summary>
+        /// Replaces the internal sequence to weight dictionary with a new one using the supplied <paramref name="sequenceWeightPairs"/>.
+        /// If the supplied collection contains multiple entries for the same sequence, the weights for that sequence are summed.
+        /// </summary>
+        /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
+        protected virtual void SetWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
         {
-            SetWeights(sequenceWeightPairs.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromValue(kvp.Value))));
+            var newDictionary = new Dictionary<TSequence, Weight>(SequenceManipulator.SequenceEqualityComparer);
+            FillDictionary(newDictionary, sequenceWeightPairs);
+            dictionary = newDictionary;
         }
 
-        public void SetWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
+        /// <summary>
+        /// Fills the supplied empty sequence to weight dictionary with values from the given collection.
+        /// If the supplied collection contains multiple entries for the same sequence, the weights for that sequence are summed.
+        /// </summary>
+        /// <param name="dictionaryToFill">The target empty dictionary.</param>
+        /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
+        protected static void FillDictionary(IDictionary<TSequence, Weight> dictionaryToFill, IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
         {
-            Dictionary.Clear();
             foreach (var kvp in sequenceWeightPairs)
             {
-                if (Dictionary.TryGetValue(kvp.Key, out Weight prob))
-                    Dictionary[kvp.Key] = prob * kvp.Value;
+                if (dictionaryToFill.TryGetValue(kvp.Key, out Weight prob))
+                    dictionaryToFill[kvp.Key] = prob + kvp.Value;
                 else
-                    Dictionary.Add(kvp);
+                    dictionaryToFill.Add(kvp.Key, kvp.Value);
             }
         }
 
@@ -209,22 +216,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool IsZero() => Dictionary.All(kvp => kvp.Value.IsZero);
 
-        public void SetToZero()
-        {
-            throw new NotImplementedException();
-        }
+        public bool HasGroup(int group) => false;
 
-        public void SetToConstantLog(double logValue, TElementDistribution allowedElements)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasGroup(int group)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TThis NormalizeStructure() => FromWeights(Dictionary.Where(kvp => !kvp.Value.IsZero)); // TODO: return `this` when normalization is not required after making this type immutable
+        public TThis NormalizeStructure() => Dictionary.Values.Any(val => val.IsZero) ? FromWeights(Dictionary.Where(kvp => !kvp.Value.IsZero)) : (TThis)this;
 
         public TThis Append(TSequence sequence, int group = 0)
         {
@@ -257,6 +251,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             throw new NotImplementedException();
         }
+
+        public TThis Clone() => (TThis)this; // This type is immutable.
     }
 
     [Serializable]
@@ -266,14 +262,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     {
         public StringDictionaryWeightFunction() : base(new SortedList<string, Weight>()) { }
 
-        //public override IDictionary<string, double> Dictionary
+        protected override void SetWeights(IEnumerable<KeyValuePair<string, Weight>> sequenceWeightPairs)
+        {
+            var newDictionary = new SortedList<string, Weight>();
+            FillDictionary(newDictionary, sequenceWeightPairs);
+            dictionary = newDictionary;
+        }
+
+        //public override IDictionary<string, Weight> Dictionary
         //{
         //    get => dictionary;
-        //    set
+        //    protected set
         //    {
         //        Argument.CheckIfNotNull(value, nameof(value), "Dictionary must not be null.");
 
-        //        dictionary = new SortedList<string, double>(value);
+        //        dictionary = new SortedList<string, Weight>(value);
         //    }
         //}
 

@@ -17,9 +17,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [DataContract]
     [Quality(QualityBand.Experimental)]
     public struct MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> :
-        IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>>,
-        SettableTo<MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>>,
-        SettableTo<TAutomaton>
+        IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>>//,
+        //SettableTo<MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>>,
+        //SettableTo<TAutomaton>
         where TSequence : class, IEnumerable<TElement>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
@@ -39,6 +39,60 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         [DataMember]
         private IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> weightFunction;
+
+        public class Factory : IWeightFunctionFactory<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>>
+        {
+            public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> ConstantLog(double logValue, TElementDistribution allowedElements)
+            {
+                // TODO
+                var automaton = new TAutomaton();
+                automaton.SetToConstantLog(logValue, allowedElements);
+                return FromAutomaton(automaton);
+            }
+
+            public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> ConstantOnSupportOfLog(double logValue, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
+            {
+                // TODO
+                var automaton = new TAutomaton();
+                automaton.SetToConstantOnSupportOfLog(logValue, weightFunction.AsAutomaton());
+                return FromAutomaton(automaton);
+            }
+
+            public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> FromAutomaton(TAutomaton automaton) =>
+                MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>.FromAutomaton(automaton);
+
+            public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> FromValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs)
+            {
+                var collection = sequenceWeightPairs as ICollection<KeyValuePair<TSequence, double>> ?? sequenceWeightPairs.ToList();
+                if (collection.Count == 1 && collection.Single().Value == 1.0)
+                {
+                    return FromPointMass(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TPointMass>.FromPoint(collection.Single().Key));
+                }
+                else
+                {
+                    if (collection.Count <= MaxDictionarySize)
+                    {
+                        return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromValues(sequenceWeightPairs));
+                    }
+                    else
+                        return FromAutomaton(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.FromValues(collection));
+                }
+            }
+                
+
+            public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> PointMass(TSequence point) =>
+                FromPointMass(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TPointMass>.FromPoint(point));
+
+            public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Sum(IEnumerable<MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>> weightFunctions)
+            {
+                // TODO
+                var automaton = new TAutomaton();
+                automaton.SetToSum(weightFunctions.Select(wf => wf.AsAutomaton()));
+                return FromAutomaton(automaton);
+            }
+
+            public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Zero() => MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>.Zero();
+        }
 
         #region Factory Methods
 
@@ -75,12 +129,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 throw new InvalidOperationException("This distribution is not a point mass.");
             }
 
-            set
-            {
-                Argument.CheckIfNotNull(value, nameof(value), "Point mass must not be null.");
+            //set
+            //{
+            //    Argument.CheckIfNotNull(value, nameof(value), "Point mass must not be null.");
 
-                weightFunction = new TPointMass() { Point = value };
-            }
+            //    weightFunction = new TPointMass() { Point = value };
+            //}
         }
 
         /// <summary>
@@ -106,70 +160,70 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool UsesAutomatonRepresentation => weightFunction is TAutomaton;
 
-        public void SetTo(TPointMass pointMass)
-        {
-            Argument.CheckIfNotNull(pointMass, nameof(pointMass), "Point mass must not be null.");
-            weightFunction = pointMass;
-        }
+        //public void SetTo(TPointMass pointMass)
+        //{
+        //    Argument.CheckIfNotNull(pointMass, nameof(pointMass), "Point mass must not be null.");
+        //    weightFunction = pointMass;
+        //}
 
-        public void SetTo(TDictionary dictionary)
-        {
-            Argument.CheckIfNotNull(dictionary, nameof(dictionary), "Dictionary mass must not be null.");
-            weightFunction = dictionary;
-        }
+        //public void SetTo(TDictionary dictionary)
+        //{
+        //    Argument.CheckIfNotNull(dictionary, nameof(dictionary), "Dictionary mass must not be null.");
+        //    weightFunction = dictionary;
+        //}
 
-        public void SetTo(TAutomaton automaton)
-        {
-            Argument.CheckIfNotNull(automaton, nameof(automaton), "Automaton mass must not be null.");
-            weightFunction = automaton;
-        }
+        //public void SetTo(TAutomaton automaton)
+        //{
+        //    Argument.CheckIfNotNull(automaton, nameof(automaton), "Automaton mass must not be null.");
+        //    weightFunction = automaton;
+        //}
 
-        public void SetTo(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> other)
-        {
-            switch (other.weightFunction)
-            {
-                case null:
-                    weightFunction = null;
-                    break;
-                case TPointMass pointMass:
-                    Point = pointMass.Point;
-                    break;
-                case TDictionary dictionary:
-                    weightFunction = new TDictionary();
-                    ((TDictionary)weightFunction).SetWeights(dictionary.Dictionary);
-                    break;
-                case TAutomaton automaton:
-                    weightFunction = automaton.Clone();
-                    break;
-                default:
-                    throw new ArgumentException("Argument's weight function has an invalid type", nameof(other));
-            }
-        }
+        //public void SetTo(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> other)
+        //{
+        //    switch (other.weightFunction)
+        //    {
+        //        case null:
+        //            weightFunction = null;
+        //            break;
+        //        case TPointMass pointMass:
+        //            Point = pointMass.Point;
+        //            break;
+        //        case TDictionary dictionary:
+        //            weightFunction = new TDictionary();
+        //            ((TDictionary)weightFunction).SetWeights(dictionary.Dictionary);
+        //            break;
+        //        case TAutomaton automaton:
+        //            weightFunction = automaton.Clone();
+        //            break;
+        //        default:
+        //            throw new ArgumentException("Argument's weight function has an invalid type", nameof(other));
+        //    }
+        //}
 
-        public void SetToZero()
-        {
-            weightFunction = null;
-        }
+        //public void SetToZero()
+        //{
+        //    weightFunction = null;
+        //}
 
-        public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceProbPairs)
-        {
-            Argument.CheckIfNotNull(sequenceProbPairs, nameof(sequenceProbPairs));
-            var collection = sequenceProbPairs as ICollection<KeyValuePair<TSequence, double>> ?? sequenceProbPairs.ToList();
-            if (collection.Count == 1 && collection.Single().Value == 1.0)
-            {
-                weightFunction = new TPointMass() { Point = collection.Single().Key };
-            }
-            else
-            {
-                if (collection.Count <= MaxDictionarySize)
-                {
-                    weightFunction = new TDictionary();
-                    weightFunction.SetValues(collection);
-                }
-                else
-                    weightFunction = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.FromValues(collection);
-            }
-        }
+        //public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceProbPairs)
+        //{
+        //    Argument.CheckIfNotNull(sequenceProbPairs, nameof(sequenceProbPairs));
+        //    var collection = sequenceProbPairs as ICollection<KeyValuePair<TSequence, double>> ?? sequenceProbPairs.ToList();
+        //    if (collection.Count == 1 && collection.Single().Value == 1.0)
+        //    {
+        //        weightFunction = new TPointMass() { Point = collection.Single().Key };
+        //    }
+        //    else
+        //    {
+        //        if (collection.Count <= MaxDictionarySize)
+        //        {
+        //            weightFunction = new TDictionary();
+        //            weightFunction.SetValues(collection);
+        //        }
+        //        else
+        //            weightFunction = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.FromValues(collection);
+        //    }
+        //}
 
         //unused
         //public void SetToRepeat(IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> weightFunction, int minTimes = 1, int? maxTimes = null)
@@ -316,7 +370,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 case TDictionary dictionary:
                     var filteredTruncated = dictionary.Dictionary.Where(kvp => !kvp.Value.IsZero).Take(2).ToList();
-                    if (filteredTruncated.Count == 1/* && dictionary.Dictionary.Single().Value.LogValue == 0.0*/)
+                    if (filteredTruncated.Count == 1)
                     {
                         return FromPointMass(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TPointMass>.FromPoint(filteredTruncated.Single().Key));
                     }
@@ -329,7 +383,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         // TODO: compute values along with support
                         var list = support.Select(seq => new KeyValuePair<TSequence, Weight>(seq, Weight.FromLogValue(automaton.GetLogValue(seq)))).ToList();
-                        if (list.Count == 1/* && list.Single().Value.LogValue == 0.0*/)
+                        if (list.Count == 1)
                         {
                             return FromPointMass(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TPointMass>.FromPoint(list.First().Key));
                         }
@@ -340,18 +394,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                     break;
             }
-            var result = new MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>();
-            result.SetTo(this);
-            return result; // TODO: replace with `this` after making this type immutable
+            
+            return Clone(); // TODO: replace with `this` after making automata immutable
         }
 
-        public void SetToSum(IEnumerable<MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>> weightFunctions)
-        {
-            // TODO
-            var automaton = new TAutomaton();
-            automaton.SetToSum(weightFunctions.Select(wf => wf.AsAutomaton()));
-            weightFunction = automaton;
-        }
+        //public void SetToSum(IEnumerable<MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>> weightFunctions)
+        //{
+        //    // TODO
+        //    var automaton = new TAutomaton();
+        //    automaton.SetToSum(weightFunctions.Select(wf => wf.AsAutomaton()));
+        //    weightFunction = automaton;
+        //}
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Repeat(int minTimes = 1, int? maxTimes = null)
         {
@@ -409,14 +462,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return AsAutomaton().MaxDiff(that.AsAutomaton());
         }
 
-        public void SetToConstantOnSupportOfLog(double logValue, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
-        {
-            // TODO
-            var automaton = new TAutomaton();
-            automaton.SetToConstantOnSupportOfLog(logValue, weightFunction.AsAutomaton());
-            this.weightFunction = automaton;
-        }
-
         public double GetLogNormalizer() => weightFunction?.GetLogNormalizer() ?? double.NegativeInfinity;
 
         public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths()
@@ -436,12 +481,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return AsAutomaton().EnumeratePaths();
         }
 
-        public void SetToConstantLog(double logValue, TElementDistribution allowedElements)
-        {
-            // TODO
-            weightFunction = new TAutomaton();
-            weightFunction.SetToConstantLog(logValue, allowedElements);
-        }
+        //public void SetToConstantLog(double logValue, TElementDistribution allowedElements)
+        //{
+        //    // TODO
+        //    weightFunction = new TAutomaton();
+        //    weightFunction.SetToConstantLog(logValue, allowedElements);
+        //}
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Append(TSequence sequence, int group = 0)
         {
@@ -507,6 +552,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             // TODO
             return FromAutomaton(AsAutomaton().Product(weightFunction.AsAutomaton()));
+        }
+
+        public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Clone()
+        {
+            // TODO: remove when automata become immutable
+            if (weightFunction is TAutomaton automaton)
+                return FromAutomaton(automaton.Clone());
+
+            return this;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <summary>
         /// Uses <see cref="AutomatonFormat"/> on the weight function of <paramref name="sequenceDistribution"/>,
-        /// or calls <see cref="ConvertPointMassToString{TSequence,TElement,TElementDistribution,TSequenceManipulator,TAutomaton,TWeightFunction,TSequenceDistribution}"/> if the distribution is a point mass.
+        /// or calls <see cref="ConvertPointMassToString{TSequence,TElement,TElementDistribution,TSequenceManipulator,TAutomaton,TWeightFunction,TWeightFunctionFactory,TSequenceDistribution}"/> if the distribution is a point mass.
         /// </summary>
         /// <typeparam name="TSequence">The type of sequences <paramref name="sequenceDistribution"/> is defined on.</typeparam>
         /// <typeparam name="TElement">The type of sequence elements of <paramref name="sequenceDistribution"/>.</typeparam>
@@ -41,23 +41,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate instances of <typeparamref name="TSequence"/>.</typeparam>
         /// <typeparam name="TAutomaton">The type of automata used by <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TWeightFunction">The type of weight functions used by <paramref name="sequenceDistribution"/>.</typeparam>
+        /// <typeparam name="TWeightFunctionFactory">The type of weight function factory used by <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TSequenceDistribution">The concrete type of <paramref name="sequenceDistribution"/>.</typeparam>
         /// <param name="sequenceDistribution">The sequence distribution to convert to string.</param>
         /// <returns>The string representation of the <paramref name="sequenceDistribution"/>.</returns>
-        public string ConvertToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TSequenceDistribution>(
+        public string ConvertToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TSequenceDistribution>(
             TSequenceDistribution sequenceDistribution)
             where TSequence : class, IEnumerable<TElement>
             where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
-            where TWeightFunction : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, SettableTo<TWeightFunction>, SettableTo<TAutomaton>, new()
-            where TSequenceDistribution : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TSequenceDistribution>, new()
+            where TWeightFunction : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, new()
+            where TWeightFunctionFactory : IWeightFunctionFactory<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, new()
+            where TSequenceDistribution : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TSequenceDistribution>, new()
         {
             Argument.CheckIfNotNull(sequenceDistribution, nameof(sequenceDistribution));
 
             if (sequenceDistribution.IsPointMass)
             {
-                return this.ConvertPointMassToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TSequenceDistribution>(sequenceDistribution);
+                return this.ConvertPointMassToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TSequenceDistribution>(sequenceDistribution);
             }
 
             return this.AutomatonFormat.ConvertToString(sequenceDistribution.GetWorkspaceOrPoint());
@@ -72,17 +74,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate instances of <typeparamref name="TSequence"/>.</typeparam>
         /// <typeparam name="TAutomaton">The type of automata used by <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TWeightFunction">The type of weight functions used by <paramref name="sequenceDistribution"/>.</typeparam>
+        /// <typeparam name="TWeightFunctionFactory">The type of weight function factory used by <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TSequenceDistribution">The concrete type of <paramref name="sequenceDistribution"/>.</typeparam>
         /// <param name="sequenceDistribution">The sequence distribution to convert to string.</param>
         /// <returns>The string representation of the <paramref name="sequenceDistribution"/>.</returns>
-        protected abstract string ConvertPointMassToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TSequenceDistribution>(
+        protected abstract string ConvertPointMassToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TSequenceDistribution>(
             TSequenceDistribution sequenceDistribution)
             where TSequence : class, IEnumerable<TElement>
             where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>,
                 CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
-            where TWeightFunction : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, SettableTo<TWeightFunction>, SettableTo<TAutomaton>, new()
-            where TSequenceDistribution : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TSequenceDistribution>, new();
+            where TWeightFunction : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, new()
+            where TWeightFunctionFactory : IWeightFunctionFactory<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, new()
+            where TSequenceDistribution : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TSequenceDistribution>, new();
     }
 }

@@ -36,10 +36,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate instances of <typeparamref name="TSequence"/>.</typeparam>
         /// <typeparam name="TAutomaton">The type of automata used by <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TWeightFunction">The type of weight functions used by <paramref name="sequenceDistribution"/>.</typeparam>
+        /// <typeparam name="TWeightFunctionFactory">The type of weight function factory used by <paramref name="sequenceDistribution"/>.</typeparam>
         /// <typeparam name="TSequenceDistribution">The concrete type of <paramref name="sequenceDistribution"/>.</typeparam>
         /// <param name="sequenceDistribution">The sequence distribution to convert to string.</param>
         /// <returns>The string representation of the <paramref name="sequenceDistribution"/>.</returns>
-        protected override string ConvertPointMassToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TSequenceDistribution>(
+        protected override string ConvertPointMassToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TSequenceDistribution>(
             TSequenceDistribution sequenceDistribution)
         {
             return this.AutomatonFormat.ConvertToString(sequenceDistribution.GetWorkspaceOrPoint());

@@ -41,7 +41,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public TSequence Point
         {
             get => point;
-            set
+            // Setter should only ever be used in factory methods
+            // TODO: replace with `init` after switching to C# 9.0+
+            private set
             {
                 Argument.CheckIfNotNull(value, nameof(value), "Point mass must not be null.");
                 point = value;
@@ -52,18 +54,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool UsesAutomatonRepresentation => false;
 
-        public bool UsesGroups => throw new NotImplementedException();
+        public bool UsesGroups => false;
 
         public TAutomaton AsAutomaton() => Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.ConstantOn(1.0, point);
 
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
         {
             return new List<TSequence>(new[] { point });
-        }
-
-        public void SetToSum(IEnumerable<TThis> weightFunctions)
-        {
-            throw new NotImplementedException();
         }
 
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
@@ -73,11 +70,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         public double GetLogValue(TSequence sequence) => SequenceManipulator.SequenceEqualityComparer.Equals(point, sequence) ? 0.0 : double.NegativeInfinity;
-
-        public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs)
-        {
-            throw new NotImplementedException();
-        }
 
         public TThis Repeat(int minTimes = 1, int? maxTimes = null)
         {
@@ -99,14 +91,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 AsAutomaton(), that.AsAutomaton()));
         }
 
-        public void SetToConstantOnSupportOfLog(double logValue, TThis weightFunction)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)
         {
-            normalizedFunction = FromPoint(Point); // TODO: replace with `this` after making this type immutable
+            normalizedFunction = (TThis)this;
             logNormalizer = 0.0;
             return true;
         }
@@ -120,19 +107,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool IsZero() => false;
 
-        public void SetToZero()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetToConstantLog(double logValue, TElementDistribution allowedElements)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool HasGroup(int group) => false;
 
-        public TThis NormalizeStructure() => FromPoint(Point); // TODO: replace with `this` after making this type immutable
+        public TThis NormalizeStructure() => (TThis)this;
 
         public TThis Append(TSequence sequence, int group = 0)
         {
@@ -166,10 +143,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public TThis Product(TThis weightFunction)
         {
             if (point == weightFunction.point)
-                return FromPoint(point); // TODO: replace with `this` after making this type immutable
+                return (TThis)this;
             else
                 throw new NotSupportedException($"Can not create a zero {nameof(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis>)}.");
         }
+
+        public TThis Clone() => (TThis)this; // This type is immutable.
     }
 
     [Serializable]
