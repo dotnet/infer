@@ -1633,7 +1633,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </returns>
         public bool IsZero()
         {
-            return !this.IsPointMass && this.sequenceToWeight.IsZero();
+            return this.sequenceToWeight.IsZero();
         }
 
         /// <summary>
@@ -1727,9 +1727,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             Argument.CheckIfNotNull(allowedElements, nameof(allowedElements));
 
             var workspace = WeightFunctionFactory.ConstantLog(uniformLogProb, allowedElements);
-            SetWorkspace(workspace);
-
-            //this.SetWorkspace(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.ConstantLog(uniformLogProb, allowedElements), false);
+            SetWorkspace(workspace, false);
         }
 
         #endregion
@@ -1865,11 +1863,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns><see langword="true"/> if the distribution uses groups, <see langword="false"/> otherwise.</returns>
         private bool UsesGroups()
         {
-            if (this.IsPointMass)
-            {
-                return false;
-            }
-
             return this.sequenceToWeight.UsesGroups;
         }
 
@@ -1892,17 +1885,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         private void NormalizeStructure()
         {
-            //if (this.UsesGroups())
-            //{
-            //    return; // todo: remove groups
-            //}
-
-            //var pt = this.TryComputePoint();
-            //if (pt != null)
-            //{
-            //    this.Point = pt;
-            //}
-
             sequenceToWeight = sequenceToWeight.NormalizeStructure();
         }
 
