@@ -521,8 +521,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static TThis Repeat(TThis dist, int minTimes = 1, int? maxTimes = null)
         {
-            Argument.CheckIfNotNull(dist, "dist");
-            Argument.CheckIfInRange(minTimes >= 0, "minTimes", "The minimum number of repetitions must be non-negative.");
+            Argument.CheckIfNotNull(dist, nameof(dist));
+            Argument.CheckIfInRange(minTimes >= 0, nameof(minTimes), "The minimum number of repetitions must be non-negative.");
             Argument.CheckIfValid(!maxTimes.HasValue || maxTimes.Value >= minTimes, "The maximum number of repetitions must not be less than the minimum number.");
 
             double logNormalizer = -dist.GetLogAverageOf(dist);

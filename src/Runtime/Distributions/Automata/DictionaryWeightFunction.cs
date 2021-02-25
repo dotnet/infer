@@ -45,16 +45,47 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #region Factory methods
 
-        [Construction(nameof(Dictionary))]
+        /// <summary>
+        /// Creates a sequence to weight dictionary using the supplied <paramref name="sequenceWeightPairs"/>.
+        /// If the supplied collection contains multiple entries for the same sequence, the weights for that sequence are summed.
+        /// </summary>
+        /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
         public static TThis FromWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
         {
             var result = new TThis();
             result.SetWeights(sequenceWeightPairs);
             return result;
+
         }
 
+        /// <summary>
+        /// Creates a sequence to weight dictionary using the supplied <paramref name="sequenceWeightPairs"/>.
+        /// If the supplied collection is expected to not contain multiple entries for the same sequence.
+        /// </summary>
+        /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
+        [Construction(nameof(Dictionary))]
+        public static TThis FromDistinctWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
+        {
+            var result = new TThis();
+            result.SetDistinctWeights(sequenceWeightPairs);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a sequence to weight dictionary using the supplied <paramref name="sequenceWeightPairs"/>.
+        /// If the supplied collection contains multiple entries for the same sequence, the weights for that sequence are summed.
+        /// </summary>
+        /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
         public static TThis FromValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs) =>
             FromWeights(sequenceWeightPairs.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromValue(kvp.Value))));
+
+        /// <summary>
+        /// Creates a sequence to weight dictionary using the supplied <paramref name="sequenceWeightPairs"/>.
+        /// If the supplied collection is expected to not contain multiple entries for the same sequence.
+        /// </summary>
+        /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
+        public static TThis FromDistinctValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs) =>
+            FromDistinctWeights(sequenceWeightPairs.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromValue(kvp.Value))));
 
         #endregion
 
@@ -111,7 +142,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public TThis ScaleLog(double logScale)
         {
-            throw new NotImplementedException();
+            var scale = Weight.FromLogValue(logScale);
+            return FromDistinctWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * scale)));
         }
 
         public Dictionary<int, TThis> GetGroups() => new Dictionary<int, TThis>();
@@ -166,6 +198,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var newDictionary = new Dictionary<TSequence, Weight>(SequenceManipulator.SequenceEqualityComparer);
             FillDictionary(newDictionary, sequenceWeightPairs);
             dictionary = newDictionary;
+        }
+
+        /// <summary>
+        /// Replaces the internal sequence to weight dictionary with a new one using the supplied <paramref name="sequenceWeightPairs"/>.
+        /// If the supplied collection is expected to not contain multiple entries for the same sequence.
+        /// </summary>
+        /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
+        /// <remarks>Should only ever be called in factory methods.</remarks>
+        protected virtual void SetDistinctWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
+        {
+            dictionary = sequenceWeightPairs.ToDictionary(kvp => kvp.Key, kvp => kvp.Value, SequenceManipulator.SequenceEqualityComparer);
         }
 
         /// <summary>
@@ -246,6 +289,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var newDictionary = new SortedList<string, Weight>();
             FillDictionary(newDictionary, sequenceWeightPairs);
             dictionary = newDictionary;
+        }
+
+        protected override void SetDistinctWeights(IEnumerable<KeyValuePair<string, Weight>> sequenceWeightPairs)
+        {
+            var dict = sequenceWeightPairs as IDictionary<string, Weight> ?? sequenceWeightPairs.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            dictionary = new SortedList<string, Weight>(dict);
         }
     }
 
