@@ -869,23 +869,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(dist, nameof(dist));
 
-            //if (this.IsPointMass && dist.IsPointMass && group == 0)
-            //{
-            //    this.Point = SequenceManipulator.Concat(this.point, dist.point);
-            //    return;
-            //}
-
-            //var workspace = this.GetWorkspaceOrPoint();
-            //if (dist.IsPointMass)
-            //{
-            //    workspace.AppendInPlace(dist.Point, group);
-            //}
-            //else
-            //{
-            //    workspace.AppendInPlace(dist.sequenceToWeight, group);
-            //}
-
-            //this.SetWorkspace(workspace);
             SetWorkspace(sequenceToWeight.Append(dist.sequenceToWeight, group));
         }
 

@@ -413,22 +413,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public double GetLogNormalizer() => weightFunction?.GetLogNormalizer() ?? double.NegativeInfinity;
 
-        public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths()
-        {
-            if (weightFunction is TPointMass pointMass)
-            {
-                var singleton = new List<Tuple<List<TElementDistribution>, double>>
-                    {
-                       new Tuple<List<TElementDistribution>, double>(pointMass.Point.Select(el => new TElementDistribution { Point = el }).ToList(), 0)
-                    };
-
-                return singleton;
-            }
-
-            // TODO: a special case for dictionaries
-
-            return AsAutomaton().EnumeratePaths();
-        }
+        public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() => weightFunction?.EnumeratePaths() ?? Enumerable.Empty<Tuple<List<TElementDistribution>, double>>();
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Append(TSequence sequence, int group = 0)
         {
@@ -462,8 +447,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return FromDictionary(thisDictionary.Append(otherPointMass.Point));
                 }
 
-                // TODO: if (weightFunction.weightFunction is TDictionary otherDictionary)
+                if (weightFunction.weightFunction is TDictionary otherDictionary)
+                {
+                    if (this.weightFunction is TPointMass thisPointMass)
+                        return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromPoint(thisPointMass.Point).Append(otherDictionary));
+                    if (this.weightFunction is TDictionary thisDictionary && thisDictionary.Dictionary.Count * otherDictionary.Dictionary.Count <= MaxDictionarySize)
+                        return FromDictionary(thisDictionary.Append(otherDictionary));
+                }
             }
+
+            if (weightFunction.weightFunction is TPointMass pointMass)
+                return FromAutomaton(this.weightFunction.AsAutomaton().Append(pointMass.Point, group));
 
             return FromAutomaton(this.weightFunction.AsAutomaton().Append(weightFunction.weightFunction.AsAutomaton(), group));
         }

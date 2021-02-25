@@ -100,10 +100,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public double GetLogNormalizer() => 0;
 
-        public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() =>
+            new List<Tuple<List<TElementDistribution>, double>> { new Tuple<List<TElementDistribution>, double>(Point.Select(el => new TElementDistribution { Point = el }).ToList(), 0) };
 
         public bool IsZero() => false;
 

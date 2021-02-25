@@ -87,6 +87,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public static TThis FromDistinctValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs) =>
             FromDistinctWeights(sequenceWeightPairs.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromValue(kvp.Value))));
 
+        public static TThis FromPoint(TSequence point)
+        {
+            var result = new TThis();
+            result.SetDistinctWeights(new[] { new KeyValuePair<TSequence, Weight>(point, Weight.One) });
+            return result;
+        }
+
         #endregion
 
         public IReadOnlyDictionary<TSequence, Weight> Dictionary => dictionary;
@@ -182,10 +189,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return MMath.LogSumExp(Dictionary.Values.Select(v => v.LogValue));
         }
 
-        public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() =>
+            Dictionary.Select(kvp => new Tuple<List<TElementDistribution>, double>(kvp.Key.Select(el => new TElementDistribution { Point = el }).ToList(), kvp.Value.LogValue));
 
         /// <summary>
         /// Replaces the internal sequence to weight dictionary with a new one using the supplied <paramref name="sequenceWeightPairs"/>.
@@ -246,12 +251,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
 
-            return FromWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, sequence), kvp.Value)));
+            return FromDistinctWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, sequence), kvp.Value)));
         }
 
         public TThis Append(TThis weightFunction, int group = 0)
         {
-            throw new NotImplementedException();
+            Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
+
+            return FromWeights(Dictionary.SelectMany(kvp => weightFunction.Dictionary.Select(skvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, skvp.Key), kvp.Value * skvp.Value))));
         }
 
         public TThis Sum(TThis weightFunction)
