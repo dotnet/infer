@@ -464,8 +464,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Sum(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
         {
-            // TODO
-            return FromAutomaton(AsAutomaton().Sum(weightFunction.AsAutomaton()));
+            if (weightFunction.IsCanonicalZero())
+                return Clone(); // TODO: return `this` when automata become immutable
+            if (IsCanonicalZero())
+                return weightFunction.Clone(); // TODO: return weightFunction when automata become immutable
+
+            if (weightFunction.weightFunction is TAutomaton otherAutomaton)
+                return FromAutomaton(AsAutomaton().Sum(otherAutomaton));
+            if (this.weightFunction is TAutomaton thisAutomaton)
+                return FromAutomaton(thisAutomaton.Sum(weightFunction.AsAutomaton()));
+
+            // Now both weight functions are either point masses or dictionaries
+            var thisDictionary = this.weightFunction as TDictionary ?? DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromPoint(((TPointMass)this.weightFunction).Point);
+            var otherDictionary = weightFunction.weightFunction as TDictionary ?? DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromPoint(((TPointMass)weightFunction.weightFunction).Point);
+
+            var resultDictionary = thisDictionary.Sum(otherDictionary);
+
+            if (resultDictionary.Dictionary.Count <= MaxDictionarySize)
+                return FromDictionary(resultDictionary);
+            else
+                return FromAutomaton(resultDictionary.AsAutomaton());
         }
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Sum(double weight1, double weight2, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)

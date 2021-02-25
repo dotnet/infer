@@ -261,10 +261,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return FromWeights(Dictionary.SelectMany(kvp => weightFunction.Dictionary.Select(skvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, skvp.Key), kvp.Value * skvp.Value))));
         }
 
-        public TThis Sum(TThis weightFunction)
-        {
-            throw new NotImplementedException();
-        }
+        public TThis Sum(TThis weightFunction) =>
+            FromWeights(Dictionary.Concat(weightFunction.Dictionary));
 
         public TThis Sum(double weight1, double weight2, TThis weightFunction)
         {
