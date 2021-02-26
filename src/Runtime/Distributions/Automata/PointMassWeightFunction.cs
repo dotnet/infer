@@ -73,12 +73,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public TThis Repeat(int minTimes = 1, int? maxTimes = null)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException($"{nameof(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis>)} is not closed under repetition.");
         }
 
         public TThis ScaleLog(double logScale)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException($"{nameof(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis>)} is not closed under scaling.");
         }
 
         public Dictionary<int, TThis> GetGroups() => new Dictionary<int, TThis>();

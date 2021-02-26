@@ -520,7 +520,62 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Product(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
         {
-            // TODO
+            if (IsCanonicalZero() || weightFunction.IsCanonicalZero())
+                return Zero();
+
+            TPointMass pointMass = null;
+            IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> other = null;
+            if (this.weightFunction is TPointMass thisPointMass)
+            {
+                pointMass = thisPointMass;
+                other = weightFunction.weightFunction;
+            }
+            else if (weightFunction.weightFunction is TPointMass otherPointMass)
+            {
+                pointMass = otherPointMass;
+                other = this.weightFunction;
+            }
+            if (pointMass != null && !other.UsesGroups)
+            {
+                var logValue = other.GetLogValue(pointMass.Point);
+                if (logValue == 0.0)
+                    return FromPointMass(pointMass);
+                else
+                    return FromDictionary(
+                        DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(
+                            new[] { new KeyValuePair<TSequence, Weight>(pointMass.Point, Weight.FromLogValue(logValue)) }));
+            }
+
+            TDictionary dictionary = null;
+            if (this.weightFunction is TDictionary thisDictionary)
+            {
+                if (weightFunction.weightFunction is TDictionary secondDictionary)
+                    return FromDictionary(thisDictionary.Product(secondDictionary));
+                dictionary = thisDictionary;
+                other = weightFunction.weightFunction;
+            }
+            else if (weightFunction.weightFunction is TDictionary otherDictionary)
+            {
+                dictionary = otherDictionary;
+                other = this.weightFunction;
+            }
+
+            if (dictionary != null && !other.UsesGroups)
+            {
+                var resultList = new List<KeyValuePair<TSequence, Weight>>(dictionary.Dictionary.Count);
+                foreach (var kvp in dictionary.Dictionary)
+                {
+                    if (!kvp.Value.IsZero)
+                    {
+                        var otherLogValue = other.GetLogValue(kvp.Key);
+                        if (!double.IsNegativeInfinity(otherLogValue))
+                            resultList.Add(new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * Weight.FromLogValue(otherLogValue)));
+                    }
+                }
+                return FromDictionary(
+                        DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(resultList));
+            }
+
             return FromAutomaton(AsAutomaton().Product(weightFunction.AsAutomaton()));
         }
 

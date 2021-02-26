@@ -1727,62 +1727,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private double? DoSetToProduct(TThis dist1, TThis dist2, bool computeLogNormalizer, bool tryDeterminize = true)
         {
             Debug.Assert(dist1 != null && dist2 != null, "Valid distributions must be provided.");
-            
-            // TODO: handle in weight function.SetToProduct
-            if (dist1.IsPointMass)
-            {
-                var pt = dist1.Point;
-                bool containsPoint = false;
-                double? logNorm = null;
-                if (computeLogNormalizer)
-                {
-                    logNorm = dist2.GetLogProb(pt);
-                    containsPoint = !double.IsNegativeInfinity(logNorm.Value);
-                }
-                else
-                {
-                    containsPoint = dist2.Contains(pt);
-                }
-                
-                if (containsPoint)
-                {
-                    this.SetTo(dist1);
-                }
-                else
-                {
-                    this.SetToZero();
-                }
-
-                return logNorm;
-            }
-
-            if (dist2.IsPointMass)
-            {
-                var pt = dist2.Point;
-                bool containsPoint = false;
-                double? logNorm = null;
-
-                if (computeLogNormalizer)
-                {
-                    logNorm = dist1.GetLogProb(pt);
-                    containsPoint = !double.IsNegativeInfinity(logNorm.Value);
-                } else
-                {
-                    containsPoint = dist1.Contains(pt);
-                }
-                
-                if (!containsPoint)
-                {
-                    this.SetToZero();
-                    return logNorm;
-                }
-
-                if (!dist1.UsesGroups())
-                {
-                    this.Point = pt;
-                    return logNorm;
-                }
-            }
 
             if (computeLogNormalizer)
             {

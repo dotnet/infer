@@ -284,7 +284,23 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public TThis Product(TThis weightFunction)
         {
-            throw new NotImplementedException();
+            IReadOnlyDictionary<TSequence, Weight> dict1, dict2;
+            if (Dictionary.Count <= weightFunction.Dictionary.Count)
+            {
+                dict1 = Dictionary;
+                dict2 = weightFunction.Dictionary;
+            }
+            else
+            {
+                dict1 = weightFunction.Dictionary;
+                dict2 = Dictionary;
+            }
+            var resultList = new List<KeyValuePair<TSequence, Weight>>(dict1.Count);
+            foreach (var kvp in dict1)
+                if (dict2.TryGetValue(kvp.Key, out Weight weight2))
+                    resultList.Add(new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * weight2));
+
+            return FromDistinctWeights(resultList);
         }
 
         public TThis Clone() => (TThis)this; // This type is immutable.
