@@ -488,18 +488,34 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Sum(double weight1, double weight2, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
         {
-            // TODO
-            var automaton = new TAutomaton();
-            automaton.SetToSum(weight1, AsAutomaton(), weight2, weightFunction.AsAutomaton());
-            return FromAutomaton(automaton);
+            Argument.CheckIfInRange(weight1 >= 0, nameof(weight1), "Negative weights are not supported.");
+            Argument.CheckIfInRange(weight2 >= 0, nameof(weight2), "Negative weights are not supported.");
+
+            return SumLog(Math.Log(weight1), Math.Log(weight2), weightFunction);
         }
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> SumLog(double logWeight1, double logWeight2, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
         {
-            // TODO
-            var automaton = new TAutomaton();
-            automaton.SetToSumLog(logWeight1, AsAutomaton(), logWeight2, weightFunction.AsAutomaton());
-            return FromAutomaton(automaton);
+            if (weightFunction.IsCanonicalZero() || double.IsNegativeInfinity(logWeight2))
+                return ScaleLog(logWeight1);
+            if (IsCanonicalZero() || double.IsNegativeInfinity(logWeight1))
+                return weightFunction.ScaleLog(logWeight2);
+
+            if (weightFunction.weightFunction is TAutomaton otherAutomaton)
+                return FromAutomaton(AsAutomaton().SumLog(logWeight1, logWeight2, otherAutomaton));
+            if (this.weightFunction is TAutomaton thisAutomaton)
+                return FromAutomaton(thisAutomaton.SumLog(logWeight1, logWeight2, weightFunction.AsAutomaton()));
+
+            // Now both weight functions are either point masses or dictionaries
+            var thisDictionary = this.weightFunction as TDictionary ?? DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromPoint(((TPointMass)this.weightFunction).Point);
+            var otherDictionary = weightFunction.weightFunction as TDictionary ?? DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromPoint(((TPointMass)weightFunction.weightFunction).Point);
+
+            var resultDictionary = thisDictionary.SumLog(logWeight1, logWeight2, otherDictionary);
+
+            if (resultDictionary.Dictionary.Count <= MaxDictionarySize)
+                return FromDictionary(resultDictionary);
+            else
+                return FromAutomaton(resultDictionary.AsAutomaton());
         }
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Product(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)

@@ -266,12 +266,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public TThis Sum(double weight1, double weight2, TThis weightFunction)
         {
-            throw new NotImplementedException();
+            Argument.CheckIfInRange(weight1 >= 0, nameof(weight1), "Negative weights are not supported.");
+            Argument.CheckIfInRange(weight2 >= 0, nameof(weight2), "Negative weights are not supported.");
+
+            return SumLog(Math.Log(weight1), Math.Log(weight2), weightFunction);
         }
 
         public TThis SumLog(double logWeight1, double logWeight2, TThis weightFunction)
         {
-            throw new NotImplementedException();
+            var scale1 = Weight.FromLogValue(logWeight1);
+            var scale2 = Weight.FromLogValue(logWeight2);
+
+            return FromWeights(
+                Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * scale1))
+                .Concat(weightFunction.Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * scale2))));
         }
 
         public TThis Product(TThis weightFunction)
