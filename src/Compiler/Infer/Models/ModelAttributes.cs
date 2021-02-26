@@ -82,12 +82,14 @@ namespace Microsoft.ML.Probabilistic.Models.Attributes
     //public class Sparse : Attribute { }
 
     /// <summary>
-    /// When attached to a Range, indicates that the elements of the range should be updated sequentially rather than in parallel.
+    /// Changes the order of inference updates in Expectation Propagation.
+    /// When attached to a Range, indicates that the elements of VariableArrays indexed by the range should be updated sequentially rather than in parallel.
+    /// This can sometimes accelerate convergence.  Not supported for all models.
     /// </summary>
     public class Sequential : ICompilerAttribute
     {
         /// <summary>
-        /// If true, updates should be done in both directions of the loop
+        /// If true, the Range will be iterated both forward and backward, with sequential updates in each direction.  Otherwise, the Range will only be iterated in the forward direction.
         /// </summary>
         public bool BackwardPass;
     }

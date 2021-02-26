@@ -15,10 +15,6 @@ using Microsoft.ML.Probabilistic.Models.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning disable 1591
-#endif
-
     /// <summary>
     /// Handles any replication made necessary by loops.
     /// </summary>
@@ -39,10 +35,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Error("Invalid expression type for the size of a loop (" + loopSize.GetType().Name + "): " + loopSize);
                 return ifs;
             }
-            if (loopSize is ILiteralExpression)
+            if (loopSize is ILiteralExpression ile)
             {
                 // remove loops that execute for 0 iterations
-                int loopSizeAsInt = (int)((ILiteralExpression)loopSize).Value;
+                int loopSizeAsInt = (int)ile.Value;
                 if (loopSizeAsInt == 0)
                     return null;
             }
@@ -131,9 +127,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Containers c = context.InputAttributes.Get<Containers>(ivd);
                 foreach (IStatement container in c.inputs)
                 {
-                    if (container is IForStatement)
+                    if (container is IForStatement loop)
                     {
-                        IForStatement loop = (IForStatement)container;
                         IVariableDeclaration loopVar = Recognizer.LoopVariable(loop);
                         bool isPartitionedLoop = context.InputAttributes.Has<Partitioned>(loopVar);
                         if (isPartitionedLoop && loopVar.Equals(ivd)) return true;
@@ -161,9 +156,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="target">Prefix of expr to replicate</param>
         protected void AddUnreplicatedIndices(IForStatement loop, IExpression expr, List<IEnumerable<IExpression>> indices, out IExpression target)
         {
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression) expr;
                 AddUnreplicatedIndices(loop, iaie.Target, indices, out target);
                 if (indices.Count == 0)
                 {
@@ -241,9 +235,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 foreach (IExpression index in bracket)
                 {
                     IExpression indExpr = index;
-                    if (indExpr is IBinaryExpression)
+                    if (indExpr is IBinaryExpression ibe)
                     {
-                        IBinaryExpression ibe = (IBinaryExpression)indExpr;
                         indExpr = ibe.Left;
                     }
                     IVariableDeclaration indVar = Recognizer.GetVariableDeclaration(indExpr);
@@ -304,8 +297,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             List<IStatement> ancestors = context.FindAncestors<IStatement>();
             foreach (IStatement ancestor in ancestors)
             {
-                IConditionStatement ics = ancestor as IConditionStatement;
-                if (ics == null)
+                if (!(ancestor is IConditionStatement ics))
                     continue;
                 ConditionBinding binding = new ConditionBinding(ics.Condition);
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(binding.lhs);
@@ -409,7 +401,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 List<IForStatement> loops = context.FindAncestors<IForStatement>(ancIndex);
                 foreach (IStatement container in missing.inputs)
                 {
-                    if (container is IForStatement) loops.Add((IForStatement) container);
+                    if (container is IForStatement ifs) loops.Add(ifs);
                 }
                 context.OutputAttributes.Set(repVar, new LoopContext(loops));
                 // must convert the output since it may contain 'if' conditions
@@ -422,8 +414,4 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return expr;
         }
     }
-
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning restore 1591
-#endif
 }
