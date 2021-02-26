@@ -90,7 +90,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return FromAutomaton(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.FromValues(collection));
                 }
             }
-                
 
             public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> PointMass(TSequence point) =>
                 FromPoint(point);
@@ -101,15 +100,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 bool resultFitsDictionary = true;
                 foreach (var weightFunction in weightFunctions)
                 {
-                    if (weightFunction.TryEnumerateSupport(MaxDictionarySize, out var support, false))
+                    if (weightFunction.IsCanonicalZero())
+                        continue;
+                    if (weightFunction.weightFunction is TPointMass pointMass)
                     {
-                        foreach (var sequence in support)
+                        if (dictionary.TryGetValue(pointMass.Point, out Weight oldWeight))
+                            dictionary[pointMass.Point] = oldWeight + Weight.One;
+                        else if (dictionary.Count < MaxDictionarySize)
+                            dictionary.Add(pointMass.Point, Weight.One);
+                        else
                         {
-                            var weight = Weight.FromLogValue(weightFunction.GetLogValue(sequence));
-                            if (dictionary.TryGetValue(sequence, out Weight oldWeight))
-                                dictionary[sequence] = oldWeight + weight;
+                            resultFitsDictionary = false;
+                            break;
+                        }
+                    }
+                    else if (weightFunction.weightFunction is TDictionary wfDictionary)
+                    {
+                        foreach (var kvp in wfDictionary.Dictionary)
+                        {
+                            if (dictionary.TryGetValue(kvp.Key, out Weight oldWeight))
+                                dictionary[kvp.Key] = oldWeight + kvp.Value;
                             else if (dictionary.Count < MaxDictionarySize)
-                                dictionary.Add(sequence, weight);
+                                dictionary.Add(kvp.Key, kvp.Value);
                             else
                             {
                                 resultFitsDictionary = false;
@@ -127,7 +139,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 if (resultFitsDictionary)
+                {
+                    if (dictionary.Count == 0)
+                        return MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>.Zero();
+                    if (dictionary.Count == 1)
+                    {
+                        var singleKvp = dictionary.Single();
+                        if (singleKvp.Value.LogValue == 0.0)
+                            return FromPoint(singleKvp.Key);
+                    }
                     return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(dictionary));
+                }
 
                 var automaton = new TAutomaton();
                 automaton.SetToSum(weightFunctions.Select(wf => wf.AsAutomaton()));
