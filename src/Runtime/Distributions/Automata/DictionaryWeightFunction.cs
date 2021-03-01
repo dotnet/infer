@@ -155,21 +155,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public Dictionary<int, TThis> GetGroups() => new Dictionary<int, TThis>();
 
-        public double MaxDiff(TThis that)
+        protected double GetLogSimilarity(TThis that)
         {
             var thisIsZero = IsZero();
             var thatIsZero = that.IsZero();
             if (thisIsZero)
             {
-                return thatIsZero ? 0.0 : Math.E;
+                return thatIsZero ? double.NegativeInfinity : 1.0;
             }
             if (thatIsZero)
-                return Math.E;
+                return 1.0;
 
             TThis product = Product(that);
             if (product.IsZero())
             {
-                return Math.E;
+                return 1.0;
             }
 
             double logNormThisSquared = GetLogNormalizerOfSquare();
@@ -178,10 +178,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             double term1 = MMath.LogSumExp(logNormThisSquared, logNormThatSquared);
             double term2 = logNormProduct + MMath.Ln2;
-            double result = MMath.DifferenceOfExp(Math.Max(term1, term2), Math.Min(term1, term2)); // To avoid NaN due to numerical instabilities
-            System.Diagnostics.Debug.Assert(!double.IsNaN(result), "Similarity must be a valid number.");
+            double result = MMath.LogDifferenceOfExp(Math.Max(term1, term2), Math.Min(term1, term2)); // To avoid NaN due to numerical instabilities
+            System.Diagnostics.Debug.Assert(!double.IsNaN(result), "Log-similarity must be a valid number.");
             return result;
         }
+
+        public double MaxDiff(TThis that) => Math.Exp(GetLogSimilarity(that));
 
         public virtual bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)
         {
@@ -334,16 +336,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public TThis Clone() => (TThis)this; // This type is immutable.
 
-        public virtual bool Equals(TThis other)
+        public bool Equals(TThis other)
         {
             if (other == null || other.Dictionary.Count != Dictionary.Count)
                 return false;
 
-            foreach (var kvp in Dictionary)
-                if (!other.Dictionary.TryGetValue(kvp.Key, out Weight weight) || kvp.Value != weight)
-                    return false;
-
-            return true;
+            // Consistently with Automaton.Equals()
+            double logSimilarity = GetLogSimilarity(other);
+            const double LogSimilarityThreshold = -30;
+            return logSimilarity < LogSimilarityThreshold;
         }
 
         public override bool Equals(object obj)
@@ -388,19 +389,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             dictionary = new SortedList<string, Weight>(dict);
         }
 
-        public override bool Equals(StringDictionaryWeightFunction other)
-        {
-            if (other == null || other.Dictionary.Count != Dictionary.Count)
-                return false;
+        //public override bool Equals(StringDictionaryWeightFunction other)
+        //{
+        //    if (other == null || other.Dictionary.Count != Dictionary.Count)
+        //        return false;
 
-            var thisSortedList = (SortedList<string, Weight>)Dictionary;
-            var otherSortedList = (SortedList<string, Weight>)other.Dictionary;
-            for (int i = 0; i < thisSortedList.Count; ++i)
-                if (thisSortedList.Keys[i] != otherSortedList.Keys[i] || thisSortedList.Values[i] != otherSortedList.Values[i])
-                    return false;
+        //    var thisSortedList = (SortedList<string, Weight>)Dictionary;
+        //    var otherSortedList = (SortedList<string, Weight>)other.Dictionary;
+        //    for (int i = 0; i < thisSortedList.Count; ++i)
+        //        if (thisSortedList.Keys[i] != otherSortedList.Keys[i] || thisSortedList.Values[i] != otherSortedList.Values[i])
+        //            return false;
 
-            return true;
-        }
+        //    return true;
+        //}
     }
 
     [Serializable]

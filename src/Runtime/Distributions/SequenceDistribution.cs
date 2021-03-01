@@ -1649,25 +1649,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             TThis that = (TThis)obj;
-            if (this.IsPointMass)
-            {
-                if (!that.IsPointMass)
-                {
-                    return false;
-                }
-
-                // todo: use sequence manipulator equality
-                return Equals(this.Point, that.Point);
-            }
-            else
-            {
-                if (that.IsPointMass)
-                {
-                    return false;
-                }
-            }
-
-            return this.GetNormalizedWorkspaceOrPoint().Equals(that.GetNormalizedWorkspaceOrPoint());
+            EnsureNormalized();
+            that.EnsureNormalized();
+            return sequenceToWeight.Equals(that.sequenceToWeight);
         }
 
         /// <summary>
@@ -1676,7 +1660,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The hash code.</returns>
         public override int GetHashCode()
         {
-            return this.GetNormalizedWorkspaceOrPoint().GetHashCode();
+            EnsureNormalized();
+            return sequenceToWeight.GetHashCode();
         }
 
         #endregion
