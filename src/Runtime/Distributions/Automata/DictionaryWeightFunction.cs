@@ -157,9 +157,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public double MaxDiff(TThis that)
         {
-            // TODO: implement properly.
-            return Math.Exp(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.GetLogSimilarity(
-                AsAutomaton(), that.AsAutomaton()));
+            var thisIsZero = IsZero();
+            var thatIsZero = that.IsZero();
+            if (thisIsZero)
+            {
+                return thatIsZero ? 0.0 : Math.E;
+            }
+            if (thatIsZero)
+                return Math.E;
+
+            TThis product = Product(that);
+            if (product.IsZero())
+            {
+                return Math.E;
+            }
+
+            double logNormThisSquared = GetLogNormalizerOfSquare();
+            double logNormThatSquared = that.GetLogNormalizerOfSquare();
+            double logNormProduct = product.GetLogNormalizer();
+
+            double term1 = MMath.LogSumExp(logNormThisSquared, logNormThatSquared);
+            double term2 = logNormProduct + MMath.Ln2;
+            double result = MMath.DifferenceOfExp(Math.Max(term1, term2), Math.Min(term1, term2)); // To avoid NaN due to numerical instabilities
+            System.Diagnostics.Debug.Assert(!double.IsNaN(result), "Similarity must be a valid number.");
+            return result;
         }
 
         public virtual bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)
@@ -187,6 +208,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return double.NegativeInfinity;
 
             return MMath.LogSumExp(Dictionary.Values.Select(v => v.LogValue));
+        }
+
+        protected double GetLogNormalizerOfSquare()
+        {
+            if (Dictionary == null || Dictionary.Count == 0)
+                return double.NegativeInfinity;
+            else
+                return MMath.LogSumExp(Dictionary.Values.Select(v => 2 * v.LogValue));
         }
 
         public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() =>
@@ -330,13 +359,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public override int GetHashCode()
         {
             // Consistently with Automaton.GetHashCode()
-            double logNormalizerOfSquare;
-            if (Dictionary == null || Dictionary.Count == 0)
-                logNormalizerOfSquare = double.NegativeInfinity;
-            else
-                logNormalizerOfSquare = MMath.LogSumExp(Dictionary.Values.Select(v => 2 * v.LogValue));
-
-            return (BitConverter.DoubleToInt64Bits(logNormalizerOfSquare) >> 31).GetHashCode();
+            return (BitConverter.DoubleToInt64Bits(GetLogNormalizerOfSquare()) >> 31).GetHashCode();
         }
 
         public override string ToString()

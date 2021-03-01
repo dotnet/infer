@@ -1396,7 +1396,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             EnsureNormalized();
             thatDistribution.EnsureNormalized();
             
-            return Math.Exp(sequenceToWeight.MaxDiff(thatDistribution.sequenceToWeight));
+            return sequenceToWeight.MaxDiff(thatDistribution.sequenceToWeight);
         }
 
         /// <summary>

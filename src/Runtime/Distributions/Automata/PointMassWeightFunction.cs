@@ -83,13 +83,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public Dictionary<int, TThis> GetGroups() => new Dictionary<int, TThis>();
 
-        public double MaxDiff(TThis that)
-        {
-            if (SequenceManipulator.SequenceEqualityComparer.Equals(point, that.point))
-                return 0.0;
-            return Math.Exp(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.GetLogSimilarity(
-                AsAutomaton(), that.AsAutomaton()));
-        }
+        public double MaxDiff(TThis that) => SequenceManipulator.SequenceEqualityComparer.Equals(point, that.point) ? 0.0 : Math.E;
 
         public bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)
         {

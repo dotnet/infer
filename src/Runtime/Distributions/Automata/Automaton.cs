@@ -2481,7 +2481,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public TThis Repeat(int minTimes = 1, int? maxTimes = null) => Repeat((TThis)this, minTimes, maxTimes);
 
-        public double MaxDiff(TThis that) => GetLogSimilarity((TThis)this, that);
+        public double MaxDiff(TThis that) => Math.Exp(GetLogSimilarity((TThis)this, that));
 
         public TThis NormalizeStructure() => Clone(); // TODO: replace with `this` after making this type immutable
 

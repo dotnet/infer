@@ -429,8 +429,42 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public double MaxDiff(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> that)
         {
-            // TODO
-            return AsAutomaton().MaxDiff(that.AsAutomaton());
+            if (IsCanonicalZero())
+                return that.IsZero() ? 0.0 : Math.E;
+            if (that.IsCanonicalZero())
+                return IsZero() ? 0.0 : Math.E;
+
+            switch (weightFunction)
+            {
+                case TAutomaton automaton:
+                    return automaton.MaxDiff(that.AsAutomaton());
+                case TDictionary dictionary:
+                    switch (that.weightFunction)
+                    {
+                        case TAutomaton otherAutomaton:
+                            return AsAutomaton().MaxDiff(otherAutomaton);
+                        case TDictionary otherDictionary:
+                            return dictionary.MaxDiff(otherDictionary);
+                        case TPointMass otherPointMass:
+                            return dictionary.MaxDiff(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromPoint(otherPointMass.Point));
+                        default:
+                            throw new InvalidOperationException("Other function has an invalid type");
+                    }
+                case TPointMass pointMass:
+                    switch (that.weightFunction)
+                    {
+                        case TAutomaton otherAutomaton:
+                            return AsAutomaton().MaxDiff(otherAutomaton);
+                        case TDictionary otherDictionary:
+                            return otherDictionary.MaxDiff(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromPoint(pointMass.Point));
+                        case TPointMass otherPointMass:
+                            return pointMass.MaxDiff(otherPointMass);
+                        default:
+                            throw new InvalidOperationException("Other function has an invalid type");
+                    }
+                default:
+                    throw new InvalidOperationException("Current function has an invalid type");
+            }
         }
 
         public double GetLogNormalizer() => weightFunction?.GetLogNormalizer() ?? double.NegativeInfinity;
