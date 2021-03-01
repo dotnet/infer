@@ -313,7 +313,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 .Concat(weightFunction.Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * scale2))));
         }
 
-        public TThis Product(TThis weightFunction)
+        public virtual TThis Product(TThis weightFunction)
         {
             IReadOnlyDictionary<TSequence, Weight> dict1, dict2;
             if (Dictionary.Count <= weightFunction.Dictionary.Count)
@@ -375,6 +375,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public class StringDictionaryWeightFunction : DictionaryWeightFunction<string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDictionaryWeightFunction>
     {
         public StringDictionaryWeightFunction() : base(new SortedList<string, Weight>()) { }
+        private StringDictionaryWeightFunction(SortedList<string, Weight> sortedList) : base(sortedList) { }
 
         protected override void SetWeights(IEnumerable<KeyValuePair<string, Weight>> sequenceWeightPairs)
         {
@@ -387,6 +388,31 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             var dict = sequenceWeightPairs as IDictionary<string, Weight> ?? sequenceWeightPairs.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             dictionary = new SortedList<string, Weight>(dict);
+        }
+
+        public override StringDictionaryWeightFunction Product(StringDictionaryWeightFunction weightFunction)
+        {
+            var dict1 = (SortedList<string, Weight>)Dictionary;
+            var dict2 = (SortedList<string, Weight>)weightFunction.Dictionary;
+            var resultList = new SortedList<string, Weight>(Math.Min(dict1.Count, dict2.Count));
+            int idx1 = 0, idx2 = 0;
+            while (idx1 < dict1.Count && idx2 < dict2.Count)
+            {
+                int comparisonResult = dict1.Keys[idx1].CompareTo(dict2.Keys[idx2]);
+                if (comparisonResult < 0)
+                    ++idx1;
+                else if (comparisonResult > 0)
+                    ++idx2;
+                else
+                {
+                    resultList.Add(dict1.Keys[idx1], dict1.Values[idx1] * dict2.Values[idx2]);
+                    ++idx1;
+                    ++idx2;
+                }
+            }
+            resultList.TrimExcess();
+
+            return new StringDictionaryWeightFunction(resultList);
         }
 
         //public override bool Equals(StringDictionaryWeightFunction other)
