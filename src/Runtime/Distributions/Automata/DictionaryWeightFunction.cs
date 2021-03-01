@@ -304,6 +304,35 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         public TThis Clone() => (TThis)this; // This type is immutable.
+
+        public virtual bool Equals(TThis other)
+        {
+            if (other == null || other.Dictionary.Count != Dictionary.Count)
+                return false;
+
+            foreach (var kvp in Dictionary)
+                if (!other.Dictionary.TryGetValue(kvp.Key, out Weight weight) || kvp.Value != weight)
+                    return false;
+
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || typeof(TThis) != obj.GetType())
+            {
+                return false;
+            }
+
+            return Equals((TThis)obj);
+        }
+
+        public override int GetHashCode() => AsAutomaton().GetHashCode();
+
+        public override string ToString()
+        {
+            return $"[{string.Join("|", Dictionary.Keys)}]";
+        }
     }
 
     [Serializable]
@@ -324,6 +353,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             var dict = sequenceWeightPairs as IDictionary<string, Weight> ?? sequenceWeightPairs.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             dictionary = new SortedList<string, Weight>(dict);
+        }
+
+        public override bool Equals(StringDictionaryWeightFunction other)
+        {
+            if (other == null || other.Dictionary.Count != Dictionary.Count)
+                return false;
+
+            var thisSortedList = (SortedList<string, Weight>)Dictionary;
+            var otherSortedList = (SortedList<string, Weight>)other.Dictionary;
+            for (int i = 0; i < thisSortedList.Count; ++i)
+                if (thisSortedList.Keys[i] != otherSortedList.Keys[i] || thisSortedList.Values[i] != otherSortedList.Values[i])
+                    return false;
+
+            return true;
         }
     }
 

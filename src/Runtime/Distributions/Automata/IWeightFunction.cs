@@ -104,7 +104,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
     [Quality(QualityBand.Experimental)]
     public interface IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis> :
-        IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>
+        IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>,
+        IEquatable<TThis>
         where TSequence : class, IEnumerable<TElement>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()

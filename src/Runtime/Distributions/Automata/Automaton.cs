@@ -1996,6 +1996,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         #region Equality
 
         /// <summary>
+        /// Checks if <paramref name="other"/> is an automaton that defines the same weighted regular language.
+        /// </summary>
+        /// <param name="other">The automaton to compare this automaton with.</param>
+        /// <returns><see langword="true"/> if this automaton is equal to <paramref name="other"/>, false otherwise.</returns>
+        public bool Equals(TThis other)
+        {
+            double logSimilarity = GetLogSimilarity((TThis)this, other);
+            const double LogSimilarityThreshold = -30; // Can't be -inf due to numerical instabilities in GetLogSimilarity()
+            return logSimilarity < LogSimilarityThreshold;
+        }
+
+        /// <summary>
         /// Checks if <paramref name="obj"/> is an automaton that defines the same weighted regular language.
         /// </summary>
         /// <param name="obj">The object to compare this automaton with.</param>
@@ -2007,9 +2019,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return false;
             }
 
-            double logSimilarity = GetLogSimilarity((TThis)this, (TThis)obj);
-            const double LogSimilarityThreshold = -30; // Can't be -inf due to numerical instabilities in GetLogSimilarity()
-            return logSimilarity < LogSimilarityThreshold;
+            return Equals((TThis)obj);
         }
 
         /// <summary>

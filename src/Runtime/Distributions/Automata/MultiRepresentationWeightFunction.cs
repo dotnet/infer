@@ -609,5 +609,65 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             return this;
         }
+
+        public bool Equals(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> other)
+        {
+            if (IsCanonicalZero())
+                return other.IsZero();
+            if (other.IsCanonicalZero())
+                return IsZero();
+
+            switch (weightFunction)
+            {
+                case TAutomaton automaton:
+                    return automaton.Equals(other.AsAutomaton());
+                case TDictionary dictionary:
+                    switch (other.weightFunction)
+                    {
+                        case TAutomaton otherAutomaton:
+                            return AsAutomaton().Equals(otherAutomaton);
+                        case TDictionary otherDictionary:
+                            return dictionary.Equals(otherDictionary);
+                        case TPointMass otherPointMass:
+                            if (dictionary.Dictionary.Count != 1)
+                                return false;
+                            var singleKvp = dictionary.Dictionary.Single();
+                            return SequenceManipulator.SequenceEqualityComparer.Equals(singleKvp.Key, otherPointMass.Point) && singleKvp.Value.LogValue == 0.0;
+                        default:
+                            throw new InvalidOperationException("Other function has an invalid type");
+                    }
+                case TPointMass pointMass:
+                    switch (other.weightFunction)
+                    {
+                        case TAutomaton otherAutomaton:
+                            return AsAutomaton().Equals(otherAutomaton);
+                        case TDictionary otherDictionary:
+                            if (otherDictionary.Dictionary.Count != 1)
+                                return false;
+                            var singleKvp = otherDictionary.Dictionary.Single();
+                            return SequenceManipulator.SequenceEqualityComparer.Equals(pointMass.Point, singleKvp.Key) && singleKvp.Value.LogValue == 0.0;
+                        case TPointMass otherPointMass:
+                            return pointMass.Equals(otherPointMass);
+                        default:
+                            throw new InvalidOperationException("Other function has an invalid type");
+                    }
+                default:
+                    throw new InvalidOperationException("Current function has an invalid type");
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || typeof(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>) != obj.GetType())
+            {
+                return false;
+            }
+
+            return Equals((MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>)obj);
+        }
+
+        public override int GetHashCode() => AsAutomaton().GetHashCode();
+
+        public override string ToString() => weightFunction?.ToString() ?? "{null}";
     }
 }

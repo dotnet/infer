@@ -147,6 +147,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         public TThis Clone() => (TThis)this; // This type is immutable.
+
+        public bool Equals(TThis other) => SequenceManipulator.SequenceEqualityComparer.Equals(point, other?.point);
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || typeof(TThis) != obj.GetType())
+            {
+                return false;
+            }
+
+            return Equals((TThis)obj);
+        }
+
+        public override int GetHashCode() => SequenceManipulator.SequenceEqualityComparer.GetHashCode(point);
+
+        public override string ToString() => point?.ToString() ?? "{null}";
     }
 
     [Serializable]
