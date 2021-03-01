@@ -327,7 +327,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return Equals((TThis)obj);
         }
 
-        public override int GetHashCode() => AsAutomaton().GetHashCode();
+        public override int GetHashCode()
+        {
+            // Consistently with Automaton.GetHashCode()
+            double logNormalizerOfSquare;
+            if (Dictionary == null || Dictionary.Count == 0)
+                logNormalizerOfSquare = double.NegativeInfinity;
+            else
+                logNormalizerOfSquare = MMath.LogSumExp(Dictionary.Values.Select(v => 2 * v.LogValue));
+
+            return (BitConverter.DoubleToInt64Bits(logNormalizerOfSquare) >> 31).GetHashCode();
+        }
 
         public override string ToString()
         {
