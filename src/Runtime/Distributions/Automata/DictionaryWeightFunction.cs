@@ -223,8 +223,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 normalizedFunction = (TThis)this;
                 return true;
             }
-            // TODO: do it faster
-            normalizedFunction = FromWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromLogValue(kvp.Value.LogValue - logNormalizerLocal))).ToList());
+            normalizedFunction = FromDistinctWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromLogValue(kvp.Value.LogValue - logNormalizerLocal))));
             return true;
         }
 
@@ -321,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool HasGroup(int group) => false;
 
-        public TThis NormalizeStructure() => Dictionary.Values.Any(val => val.IsZero) ? FromWeights(Dictionary.Where(kvp => !kvp.Value.IsZero)) : (TThis)this;
+        public TThis NormalizeStructure() => Dictionary.Values.Any(val => val.IsZero) ? FromDistinctWeights(Dictionary.Where(kvp => !kvp.Value.IsZero)) : (TThis)this;
 
         public TThis Append(TSequence sequence, int group = 0)
         {
