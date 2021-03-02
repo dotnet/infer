@@ -222,6 +222,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(2, gamma.GetQuantile(expectedProbLessThan), 1e-10);
             Assert.Equal(0.5, g.GetQuantile(1 - expectedProbLessThan), 1e-10);
 
+            Assert.Equal(0, g.GetProbLessThan(0));
+            Assert.Equal(0, g.GetProbLessThan(double.MinValue));
+            Assert.Equal(0, g.GetProbLessThan(double.NegativeInfinity));
+
             g = GammaPower.FromMeanAndVariance(3, double.PositiveInfinity, -1);
             Assert.Equal(2, g.Shape);
             Assert.Equal(3, g.Rate);
