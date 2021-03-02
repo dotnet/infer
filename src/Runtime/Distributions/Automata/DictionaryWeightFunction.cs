@@ -193,15 +193,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (thatIsZero)
                 return 1.0;
 
-            TThis product = Product(that);
-            if (product.IsZero())
-            {
+            double logNormProduct = GetLogNormalizerOfProduct(that);
+            if (double.IsNegativeInfinity(logNormProduct))
                 return 1.0;
-            }
 
             double logNormThisSquared = GetLogNormalizerOfSquare();
             double logNormThatSquared = that.GetLogNormalizerOfSquare();
-            double logNormProduct = product.GetLogNormalizer();
 
             double term1 = MMath.LogSumExp(logNormThisSquared, logNormThatSquared);
             double term2 = logNormProduct + MMath.Ln2;
@@ -245,6 +242,27 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return double.NegativeInfinity;
             else
                 return MMath.LogSumExp(Dictionary.Values.Select(v => 2 * v.LogValue));
+        }
+
+        protected virtual double GetLogNormalizerOfProduct(TThis weightFunction)
+        {
+            IReadOnlyDictionary<TSequence, Weight> dict1, dict2;
+            if (Dictionary.Count <= weightFunction.Dictionary.Count)
+            {
+                dict1 = Dictionary;
+                dict2 = weightFunction.Dictionary;
+            }
+            else
+            {
+                dict1 = weightFunction.Dictionary;
+                dict2 = Dictionary;
+            }
+            Weight normalizer = Weight.Zero;
+            foreach (var kvp in dict1)
+                if (dict2.TryGetValue(kvp.Key, out Weight weight2))
+                    normalizer += kvp.Value * weight2;
+
+            return normalizer.LogValue;
         }
 
         public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() =>
@@ -440,6 +458,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             resultList.TrimExcess();
 
             return new StringDictionaryWeightFunction(resultList);
+        }
+
+        protected override double GetLogNormalizerOfProduct(StringDictionaryWeightFunction weightFunction)
+        {
+            var dict1 = (SortedList<string, Weight>)Dictionary;
+            var dict2 = (SortedList<string, Weight>)weightFunction.Dictionary;
+            Weight normalizer = Weight.Zero;
+            int idx1 = 0, idx2 = 0;
+            while (idx1 < dict1.Count && idx2 < dict2.Count)
+            {
+                int comparisonResult = dict1.Keys[idx1].CompareTo(dict2.Keys[idx2]);
+                if (comparisonResult < 0)
+                    ++idx1;
+                else if (comparisonResult > 0)
+                    ++idx2;
+                else
+                {
+                    normalizer += dict1.Values[idx1] * dict2.Values[idx2];
+                    ++idx1;
+                    ++idx2;
+                }
+            }
+
+            return normalizer.LogValue;
         }
     }
 
