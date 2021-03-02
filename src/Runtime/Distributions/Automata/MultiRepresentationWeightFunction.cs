@@ -311,7 +311,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Repeat(int minTimes = 1, int? maxTimes = null)
         {
-            Argument.CheckIfInRange(minTimes >= 0, "minTimes", "The minimum number of repetitions must be non-negative.");
+            Argument.CheckIfInRange(minTimes >= 0, nameof(minTimes), "The minimum number of repetitions must be non-negative.");
             Argument.CheckIfValid(!maxTimes.HasValue || maxTimes.Value >= minTimes, "The maximum number of repetitions must not be less than the minimum number.");
 
             if (weightFunction == null)
@@ -344,27 +344,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 var resultSupportSize = ResultSupportSize(dictionary.Dictionary.Count, minTimes, maxTimes.Value);
                 if (resultSupportSize <= MaxDictionarySize)
-                {
-                    var dictAsList = dictionary.Dictionary.ToList();
-                    var currentRepsEnumerable = dictAsList.AsEnumerable();
-                    for (int i = 1; i < minTimes; ++i)
-                        currentRepsEnumerable = currentRepsEnumerable.SelectMany(kvp => dictAsList.Select(skvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, skvp.Key), kvp.Value * skvp.Value)));
-                    var resultList = new List<KeyValuePair<TSequence, Weight>>((int)resultSupportSize + 1);
-                    resultList.AddRange(currentRepsEnumerable);
-                    int lastRepStart = 0;
-                    for (int i = minTimes; i < maxTimes; ++i)
-                    {
-                        int curRepStart = resultList.Count;
-                        for (int j = lastRepStart; j < curRepStart; ++j)
-                        {
-                            var kvp = resultList[j];
-                            foreach (var skvp in dictAsList)
-                                resultList.Add(new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, skvp.Key), kvp.Value * skvp.Value));
-                        }
-                        lastRepStart = curRepStart;
-                    }
-                    return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(resultList));
-                }
+                    return FromDictionary(dictionary.Repeat(minTimes, maxTimes.Value, (int)resultSupportSize + 1));
             }
 
             return FromAutomaton(AsAutomaton().Repeat(minTimes, maxTimes));

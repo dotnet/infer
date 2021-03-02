@@ -144,7 +144,34 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public TThis Repeat(int minTimes = 1, int? maxTimes = null)
         {
-            throw new NotImplementedException();
+            Argument.CheckIfNotNull(maxTimes, nameof(maxTimes), "Can not represent unlimited repetitions as a finite dictionary.");
+
+            return Repeat(minTimes, maxTimes.Value, 0);
+        }
+        public TThis Repeat(int minTimes, int maxTimes, int expectedResultSupportSize)
+        {
+            Argument.CheckIfInRange(minTimes >= 0, nameof(minTimes), "The minimum number of repetitions must be non-negative.");
+            Argument.CheckIfValid(maxTimes >= minTimes, "The maximum number of repetitions must not be less than the minimum number.");
+
+            var dictAsList = Dictionary.ToList();
+            var currentRepsEnumerable = dictAsList.AsEnumerable();
+            for (int i = 1; i < minTimes; ++i)
+                currentRepsEnumerable = currentRepsEnumerable.SelectMany(kvp => dictAsList.Select(skvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, skvp.Key), kvp.Value * skvp.Value)));
+            var resultList = expectedResultSupportSize > 0 ? new List<KeyValuePair<TSequence, Weight>>(expectedResultSupportSize) : new List<KeyValuePair<TSequence, Weight>>();
+            resultList.AddRange(currentRepsEnumerable);
+            int lastRepStart = 0;
+            for (int i = minTimes; i < maxTimes; ++i)
+            {
+                int curRepStart = resultList.Count;
+                for (int j = lastRepStart; j < curRepStart; ++j)
+                {
+                    var kvp = resultList[j];
+                    foreach (var skvp in dictAsList)
+                        resultList.Add(new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, skvp.Key), kvp.Value * skvp.Value));
+                }
+                lastRepStart = curRepStart;
+            }
+            return FromDistinctWeights(resultList);
         }
 
         public TThis ScaleLog(double logScale)
@@ -414,20 +441,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             return new StringDictionaryWeightFunction(resultList);
         }
-
-        //public override bool Equals(StringDictionaryWeightFunction other)
-        //{
-        //    if (other == null || other.Dictionary.Count != Dictionary.Count)
-        //        return false;
-
-        //    var thisSortedList = (SortedList<string, Weight>)Dictionary;
-        //    var otherSortedList = (SortedList<string, Weight>)other.Dictionary;
-        //    for (int i = 0; i < thisSortedList.Count; ++i)
-        //        if (thisSortedList.Keys[i] != otherSortedList.Keys[i] || thisSortedList.Values[i] != otherSortedList.Values[i])
-        //            return false;
-
-        //    return true;
-        //}
     }
 
     [Serializable]
