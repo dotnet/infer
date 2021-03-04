@@ -17,6 +17,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Compiler;
     using Microsoft.ML.Probabilistic.Compiler.CodeModel;
+    using Microsoft.ML.Probabilistic.Algorithms;
 
 #if SUPPRESS_XMLDOC_WARNINGS
 #pragma warning disable 1591
@@ -531,7 +532,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns></returns>
         public static string FlipCapitalization(string s)
         {
-            if (s.Length > 0 && Char.IsLower(s[0])) return Char.ToUpper(s[0]) + s.Substring(1);
+            if (s.Length > 0 && char.IsLower(s[0])) return char.ToUpper(s[0]) + s.Substring(1);
             else return Uncapitalize(s);
         }
 
@@ -542,19 +543,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns></returns>
         public static string Uncapitalize(string s)
         {
-            if (s.Length > 0 && Char.IsUpper(s[0])) return Char.ToLower(s[0]) + s.Substring(1);
+            if (s.Length > 0 && char.IsUpper(s[0])) return char.ToLower(s[0]) + s.Substring(1);
             else return s;
         }
 
         public static MethodInfo GetPointMassMethod(Type distType, Type domainType)
         {
-            Exception exception;
-            MethodInfo method =
-                (MethodInfo)
-                Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(distType, "PointMass",
-                                                        BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.FlattenHierarchy, null,
-                                                        new Type[] { domainType }, out exception);
-            return method;
+            return (MethodInfo)Invoker.GetBestMethod(
+                distType, 
+                "PointMass",
+                BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.FlattenHierarchy, 
+                null,
+                new Type[] { domainType }, 
+                out Exception exception);
         }
 
         /// <summary>
@@ -574,7 +575,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal class FactorInfo : ICompilerAttribute
         {
-            private static CodeBuilder Builder = CodeBuilder.Instance;
+            private static readonly CodeBuilder Builder = CodeBuilder.Instance;
+
+            private static readonly string epEvidenceMethodName = new ExpectationPropagation().GetEvidenceMethodName(new List<ICompilerAttribute>());
 
             public readonly MethodInfo Method;
 
@@ -621,7 +624,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <summary>
             /// Cache of MessageFcnInfo.  Need not be cleared if the PriorityList changes.
             /// </summary>
-            public IDictionary<string, MessageFcnInfo> MessageFcns = new Dictionary<string, MessageFcnInfo>();
+            public readonly Dictionary<string, MessageFcnInfo> MessageFcns = new Dictionary<string, MessageFcnInfo>();
 
             /// <summary>
             /// Create an empty FactorInfo structure.
@@ -695,7 +698,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// If the result is true, then GetMessageFcnInfo will generally fail.  Thus it is good to
             /// call this function as a check before calling GetMessageFcnInfo.
             /// </remarks>
-            public bool OutputIsDeterministic(IDictionary<string, Type> parameterTypes)
+            public bool OutputIsDeterministic(IReadOnlyDictionary<string, Type> parameterTypes)
             {
                 if (parameterTypes == null) return false;
                 if (!IsDeterministicFactor) return false;
@@ -713,19 +716,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             public MessageFcnInfo GetMessageFcnInfoFromFactor()
             {
                 ParameterInfo[] parameters = Method.GetParameters();
-                MessageFcnInfo fcninfo = new MessageFcnInfo(Method, parameters);
-                fcninfo.DependencyInfo = new DependencyInformation();
-                fcninfo.factorEdgeOfParameter = new Dictionary<string, FactorEdge>();
                 int offset = IsVoid ? 0 : 1;
+                var factorEdgeOfParameter = new Dictionary<string, FactorEdge>();
+                var dependencyInfo = new DependencyInformation();
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     ParameterInfo parameter = parameters[i];
-                    fcninfo.factorEdgeOfParameter[parameter.Name] = new FactorEdge(ParameterNames[i + offset]);
+                    factorEdgeOfParameter[parameter.Name] = new FactorEdge(ParameterNames[i + offset]);
                     IExpression paramRef = Builder.ParamRef(Builder.Param(parameter.Name, parameter.ParameterType));
                     IStatement st = Builder.ExprStatement(paramRef);
-                    fcninfo.DependencyInfo.Add(DependencyType.Dependency | DependencyType.Requirement, st);
+                    dependencyInfo.Add(DependencyType.Dependency | DependencyType.Requirement, st);
                 }
-                return fcninfo;
+                return new MessageFcnInfo(Method, parameters, factorEdgeOfParameter)
+                {
+                    DependencyInfo = dependencyInfo
+                };
             }
 
             /// <summary>
@@ -746,8 +751,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <exception cref="MissingMethodException">No match was found.</exception>
             /// <exception cref="NotSupportedException">The message function is not supported (as opposed to simply missing).</exception>
             /// <exception cref="AmbiguousMatchException">More than one method matches the given constraints.</exception>
-            public MessageFcnInfo GetMessageFcnInfo(FactorManager factorManager, string methodSuffix, string targetParameter, IDictionary<string, Type> parameterTypes,
-                                                    IDictionary<string, bool> isStochastic = null)
+            public MessageFcnInfo GetMessageFcnInfo(FactorManager factorManager, string methodSuffix, string targetParameter, IReadOnlyDictionary<string, Type> parameterTypes,
+                                                    IReadOnlyDictionary<string, bool> isStochastic = null)
             {
                 if (factorManager.Tracing)
                 {
@@ -877,7 +882,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <exception cref="ArgumentException">The best matching type parameters did not satisfy the constraints of the generic method.</exception>
             /// <exception cref="MissingMethodException">No match was found.</exception>
             /// <exception cref="NotSupportedException">The message function is not supported (as opposed to simply missing).</exception>
-            public IEnumerable<MessageFcnInfo> GetMessageFcnInfos(string methodSuffix, string targetParameter, IDictionary<string, Type> parameterTypes)
+            public IEnumerable<MessageFcnInfo> GetMessageFcnInfos(string methodSuffix, string targetParameter, IReadOnlyDictionary<string, Type> parameterTypes)
             {
                 IList<Type> operators = this.GetMessageOperators();
                 var errors = new List<Exception>();
@@ -957,8 +962,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// the given operators are returned.
             /// </remarks>
             protected IEnumerable<MessageFunctionBinding> FindMessageFunctions(IEnumerable<Type> operators, string methodSuffix, string targetParameter,
-                                                                               IDictionary<string, Type> typeArguments, IDictionary<string, Type> parameterTypes,
-                                                                               IDictionary<string, bool> isStochastic, IList<Exception> errors)
+                                                                               IReadOnlyDictionary<string, Type> typeArguments, IReadOnlyDictionary<string, Type> parameterTypes,
+                                                                               IReadOnlyDictionary<string, bool> isStochastic, IList<Exception> errors)
             {
                 bool tracing = false;
                 Type resultType = null;
@@ -1093,9 +1098,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         Assert.IsTrue(actualSuffix != null);
                         ParameterInfo[] parameters = method.GetParameters();
                         Type returnType = resultType;
-                        bool changedResultType = false;
                         // if caller specified a type for resultIndex, require that it exists.
                         bool passResultIndex = Array.Exists(parameters, parameter => parameter.Name == "resultIndex" || parameter.Name == "ResultIndex");
+                        var customParameterTypes = parameterTypes;
                         if (parameterTypes != null && parameterTypes.ContainsKey("resultIndex"))
                         {
                             if (!passResultIndex)
@@ -1111,9 +1116,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             // if the method has a resultIndex parameter that wasn't requested, change the result type
                             returnType = Util.GetElementType(resultType);
-                            parameterTypes["result"] = returnType;
-                            parameterTypes["resultIndex"] = typeof(int);
-                            changedResultType = true;
+                            var parameterTypesWithResultIndex = new Dictionary<string, Type>();
+                            parameterTypesWithResultIndex.AddRange(parameterTypes);
+                            parameterTypesWithResultIndex["result"] = returnType;
+                            parameterTypesWithResultIndex["resultIndex"] = typeof(int);
+                            customParameterTypes = parameterTypesWithResultIndex;
                         }
                         // check that Stochastic attributes match desired
                         if (isStochastic != null)
@@ -1126,28 +1133,49 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                 continue;
                             }
                         }
-                        Type[] types = GetDesiredParameterTypes(parameters, parameterTypes, factorEdgeOfParameter);
-                        if (changedResultType)
+                        Type[] types = GetDesiredParameterTypes(parameters, customParameterTypes, factorEdgeOfParameter);
+                        int returnValuePosition = -1;
+                        if (targetParameter.Length == 0 && !IsVoid && method.Name == epEvidenceMethodName)
                         {
-                            parameterTypes["result"] = resultType;
-                            parameterTypes.Remove("resultIndex");
+                            // This is an EP evidence method.
+                            // Check that one of the parameters corresponds to the return value.
+                            string returnValue = ParameterNames[0];
+                            for (int i = 0; i < parameters.Length; i++)
+                            {
+                                var parameter = parameters[i];
+                                FactorEdge edge = factorEdgeOfParameter[parameter.Name];
+                                if (edge.ParameterName == returnValue && !edge.IsOutgoingMessage)
+                                {
+                                    returnValuePosition = i;
+                                }
+                            }
+                            if (returnValuePosition == -1)
+                            {
+                                errors.Add(new ArgumentException("'" + returnValue + "' is not an argument of " + StringUtil.MethodSignatureToString(method)));
+                                if (tracing) Trace.WriteLine(errors[errors.Count - 1]);
+                                continue;
+                            }
                         }
                         // try to infer the method-specific type parameters
-                        Exception matchException;
-                        ConversionOptions conversionOptions = new ConversionOptions();
-                        conversionOptions.AllowImplicitConversions = true;
-                        conversionOptions.IsImplicitConversion = delegate (Type fromType, Type toType)
+                        bool canConvertToPointMass(Type fromType, Type toType, int position)
+                        {
+                            // For an EP evidence method, do not allow point mass conversion of the return value.
+                            if (position == returnValuePosition) return false;
+                            bool isDomainType = Distributions.Distribution.IsDistributionType(toType) &&
+                                                Distributions.Distribution.GetDomainType(toType).IsAssignableFrom(fromType);
+                            if (isDomainType)
                             {
-                                bool isDomainType = Distributions.Distribution.IsDistributionType(toType) &&
-                                                    Distributions.Distribution.GetDomainType(toType).IsAssignableFrom(fromType);
-                                if (isDomainType)
-                                {
-                                    MethodInfo pointMassMethod = GetPointMassMethod(toType, fromType);
-                                    return (pointMassMethod != null);
-                                }
-                                else return false;
-                            };
-                        Binding binding = Binding.GetBestBinding(method, types, conversionOptions, out matchException);
+                                MethodInfo pointMassMethod = GetPointMassMethod(toType, fromType);
+                                return (pointMassMethod != null);
+                            }
+                            else return false;
+                        }
+                        ConversionOptions conversionOptions = new ConversionOptions
+                        {
+                            AllowImplicitConversions = true,
+                            IsImplicitConversion = canConvertToPointMass
+                        };
+                        Binding binding = Binding.GetBestBinding(method, types, conversionOptions, out Exception matchException);
                         if (binding == null)
                         {
                             errors.Add(matchException);
@@ -1182,8 +1210,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             }
                         }
                         // method has matched.  create a MessageFcnInfo.
-                        MessageFcnInfo info = new MessageFcnInfo(method, parameters);
-                        info.factorEdgeOfParameter = factorEdgeOfParameter;
+                        MessageFcnInfo info = new MessageFcnInfo(method, parameters, factorEdgeOfParameter);
                         info.Suffix = actualSuffix;
                         info.TargetParameter = originalNameOfTarget.ContainsKey(actualNewTarget) ? originalNameOfTarget[actualNewTarget] : actualNewTarget;
                         try
@@ -1209,15 +1236,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             continue;
                         }
                         found = true;
-                        MessageFunctionBinding b = new MessageFunctionBinding();
-                        b.MessageFcnInfo = info;
-                        b.ConversionWeight = 0.0F; // (float)binding.Types.Count/100;
-                        for (int i = 0; i < binding.Conversions.Length; i++)
+                        var conversionWeight = 0.0F; // (float)binding.Types.Count/100;
+                        foreach (Conversion c in binding.Conversions)
                         {
-                            Conversion c = binding.Conversions[i];
-                            b.ConversionWeight += c.GetWeight() + 1;
+                            conversionWeight += c.GetWeight() + 1;
                         }
-                        b.DeclaringType = type;
+                        MessageFunctionBinding b = new MessageFunctionBinding
+                        {
+                            MessageFcnInfo = info,
+                            ConversionWeight = conversionWeight,
+                            DeclaringType = type
+                        };
                         yield return b;
                     }
                 }
@@ -1256,39 +1285,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
 
             /// <summary>
-            /// Compute the canonical index of each parameter, in case the parameters are permuted.
-            /// </summary>
-            /// <param name="parameters"></param>
-            /// <param name="originalNames"></param>
-            /// <returns></returns>
-            public IEnumerable<int> GetFieldIndices(ParameterInfo[] parameters, IDictionary<string, string> originalNames)
-            {
-                int indexOfResultIndex = ParameterNames.Count;
-                int indexOfResult = ParameterNames.Count + 1;
-                for (int i = 0; i < parameters.Length; i++)
-                {
-                    string name = parameters[i].Name;
-                    if (name == "resultIndex") yield return indexOfResultIndex;
-                    else if (name == "result") yield return indexOfResult;
-                    else
-                    {
-                        string originalName;
-                        if ((originalNames == null) ||
-                            !originalNames.TryGetValue(name, out originalName))
-                        {
-                            originalName = name;
-                        }
-                        yield return ParameterNames.IndexOf(originalName);
-                    }
-                }
-            }
-
-            /// <summary>
             /// Get a mapping from type parameter names to type arguments.
             /// </summary>
             /// <param name="method"></param>
             /// <returns>empty if the method is a generic method definition.</returns>
-            public static IDictionary<string, Type> GetTypeArguments(MethodInfo method)
+            public static IReadOnlyDictionary<string, Type> GetTypeArguments(MethodInfo method)
             {
                 Dictionary<string, Type> result = new Dictionary<string, Type>();
                 if (method.IsGenericMethod && !method.IsGenericMethodDefinition)
@@ -1333,7 +1334,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <returns>The instantiated Type.</returns>
             /// <exception cref="InvalidOperationException"><paramref name="type"/> is not a generic type definition.</exception>
             /// <exception cref="ArgumentException">A type argument does not satisfy the constraints of the generic type.</exception>
-            public static Type MakeGenericType(Type type, IDictionary<string, Type> typeArguments)
+            public static Type MakeGenericType(Type type, IReadOnlyDictionary<string, Type> typeArguments)
             {
                 Type[] args = type.GetGenericArguments();
                 for (int i = 0; i < args.Length; i++)
@@ -1353,16 +1354,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <returns></returns>
             public static MethodInfo MakeGenericMethod(MethodInfo method, IDictionary<string, Type> typeArguments)
             {
-                Type[] args = Array.ConvertAll<Type, Type>(method.GetGenericArguments(), delegate (Type arg)
-                    {
-                        if (!arg.IsGenericParameter) return arg;
-                        else
-                        {
-                            Type bound;
-                            if (typeArguments.TryGetValue(arg.Name, out bound)) return bound;
-                            else return arg;
-                        }
-                    });
+                Type[] args = Array.ConvertAll(method.GetGenericArguments(), delegate (Type arg)
+                {
+                    if (!arg.IsGenericParameter) return arg;
+                    else if (typeArguments.TryGetValue(arg.Name, out Type bound)) return bound;
+                    else return arg;
+                });
                 return method.MakeGenericMethod(args);
             }
 
@@ -1377,8 +1374,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// The result array will always have the same length as <paramref name="parameters"/>.
             /// It will contain null when the desired parameter type is unknown.
             /// </remarks>
-            protected static Type[] GetDesiredParameterTypes(ParameterInfo[] parameters, IDictionary<string, Type> parameterTypes,
-                                                             IDictionary<string, FactorEdge> factorEdgeOfParameter)
+            protected static Type[] GetDesiredParameterTypes(ParameterInfo[] parameters, IReadOnlyDictionary<string, Type> parameterTypes,
+                                                             IReadOnlyDictionary<string, FactorEdge> factorEdgeOfParameter)
             {
                 Type[] types = new Type[parameters.Length];
                 for (int i = 0; i < parameters.Length; i++)
@@ -1405,13 +1402,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return types;
             }
 
-            protected string GetAttributesErrorString(ParameterInfo[] parameters, IDictionary<string, bool> isStochastic, IDictionary<string, FactorEdge> factorEdgeOfParameter)
+            protected string GetAttributesErrorString(ParameterInfo[] parameters, IReadOnlyDictionary<string, bool> isStochastic, IReadOnlyDictionary<string, FactorEdge> factorEdgeOfParameter)
             {
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     string originalName = parameters[i].Name;
-                    FactorEdge edge;
-                    if ((factorEdgeOfParameter != null) && factorEdgeOfParameter.TryGetValue(originalName, out edge))
+                    if ((factorEdgeOfParameter != null) && factorEdgeOfParameter.TryGetValue(originalName, out FactorEdge edge))
                     {
                         originalName = edge.ToString();
                     }
@@ -1573,13 +1569,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// Factor parameter dependencies are detected via the parameter names of the method.
             /// Array index dependencies are specified via parameter attributes.
             /// </remarks>
-            protected IList<FactorEdge> GetDependencies(IDictionary<string, FactorEdge> factorEdgeOfParameter, MethodInfo method,
-                                                        out IList<FactorEdge> requirements, out bool skipIfAllUniform, out IList<FactorEdge> triggers, out bool noTriggers)
+            private IReadOnlyList<FactorEdge> GetDependencies(
+                IReadOnlyDictionary<string, FactorEdge> factorEdgeOfParameter,
+                MethodInfo method,
+                out IReadOnlyList<FactorEdge> requirements,
+                out bool skipIfAllUniform,
+                out IReadOnlyList<FactorEdge> triggers,
+                out bool noTriggers)
             {
-                IList<FactorEdge> dependencies = new List<FactorEdge>();
-                requirements = new List<FactorEdge>();
-                triggers = new List<FactorEdge>();
-                skipIfAllUniform = false;
+                var dependencies = new List<FactorEdge>();
+                var requirementsList = new List<FactorEdge>();
+                var triggersList = new List<FactorEdge>();
 #if TRACE_REFLECTION
             Console.WriteLine("FactorInfo.GetDependencies: reflecting on "+StringUtil.MethodFullNameToString(method));
 #endif
@@ -1640,7 +1640,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             }
                         }
                         requiredRange = requiredRange.Intersect(range);
-                        if (!requiredRange.IsEmpty) requirements.Add(requiredRange);
+                        if (!requiredRange.IsEmpty) requirementsList.Add(requiredRange);
 
                         // Triggers
                         FactorEdge triggerRange = new FactorEdge(range.ParameterName);
@@ -1658,7 +1658,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             }
                         }
                         triggerRange = triggerRange.Intersect(range);
-                        if (!triggerRange.IsEmpty) triggers.Add(triggerRange);
+                        if (!triggerRange.IsEmpty) triggersList.Add(triggerRange);
                     }
                     else
                     {
@@ -1670,13 +1670,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         // ignore extra parameters
                     }
                 }
-                if (requirements.Count > 0) skipIfAllUniform = true;
-                if (method.GetCustomAttributes(typeof(SkipIfAllUniformAttribute), true).Length > 0)
-                {
-                    skipIfAllUniform = true;
-                }
+                skipIfAllUniform = (requirementsList.Count > 0) ||
+                    (method.GetCustomAttributes(typeof(SkipIfAllUniformAttribute), true).Length > 0);
                 noTriggers = (method.GetCustomAttributes(typeof(NoTriggersAttribute), true).Length > 0);
-                Assert.IsTrue(dependencies.Count >= requirements.Count);
+                Assert.IsTrue(dependencies.Count >= requirementsList.Count);
+                requirements = requirementsList;
+                triggers = triggersList;
                 return dependencies;
             }
 
@@ -1894,233 +1893,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         public string IndexToString()
         {
             return "i";
-        }
-
-        public static T[] GetValues<T>(T[] array, int[] indices)
-        {
-            T[] result = new T[indices.Length];
-            for (int i = 0; i < indices.Length; i++)
-            {
-                result[i] = array[indices[i]];
-            }
-            return result;
-        }
-    }
-
-    /// <summary>
-    /// Records information about the operator method 
-    /// </summary>
-    internal class MessageFcnInfo : ICompilerAttribute
-    {
-        public readonly MethodInfo Method;
-
-        /// <summary>
-        /// The name of the factor edge being computed.
-        /// </summary>
-        public string TargetParameter;
-
-        public string Suffix;
-
-        /// <summary>
-        /// True if the method has a result parameter
-        /// </summary>
-        public bool PassResult
-        {
-            get { return (ResultParameterIndex != -1); }
-        }
-
-        /// <summary>
-        /// True if the method has a resultIndex parameter
-        /// </summary>
-        public bool PassResultIndex
-        {
-            get { return (ResultIndexParameterIndex != -1); }
-        }
-
-        /// <summary>
-        /// True if the message function performs sampling.
-        /// </summary>
-        public readonly bool IsStochastic;
-
-        public IList<FactorEdge> Dependencies, Requirements, Triggers;
-
-        /// <summary>
-        /// Includes all parameters, including buffers, result, and resultIndex.
-        /// </summary>
-        public Dictionary<string, FactorEdge> factorEdgeOfParameter;
-
-        public DependencyInformation DependencyInfo;
-
-        /// <summary>
-        /// Indicates whether to skip the message if all arguments are uniform.
-        /// </summary>
-        /// <remarks>
-        /// Only meaningful if Requirements.Count == 0.
-        /// </remarks>
-        public bool SkipIfAllUniform;
-
-        /// <summary>
-        /// Indicates whether the method has AllTriggersAttribute.
-        /// </summary>
-        public bool AllTriggers;
-
-        /// <summary>
-        /// Indicates whether the method has NoTriggersAttribute.
-        /// </summary>
-        public bool NoTriggers;
-
-        /// <summary>
-        /// If the message is not supported, provides the explanation.
-        /// </summary>
-        /// <remarks>
-        /// Will be null if the message is supported.
-        /// </remarks>
-        public readonly string NotSupportedMessage;
-
-        /// <summary>
-        /// True if the function returns the product of all arguments.
-        /// </summary>
-        public readonly bool IsMultiplyAll;
-
-        /// <summary>
-        /// Index of the IsReturned parameter, or -1 if none.
-        /// </summary>
-        public readonly int ReturnedParameterIndex = -1;
-
-        /// <summary>
-        /// Index of the IsReturnedInAllElements parameter, or -1 if none.
-        /// </summary>
-        public readonly int ReturnedInAllElementsParameterIndex = -1;
-
-        /// <summary>
-        /// Index of the result parameter, or -1 if none.
-        /// </summary>
-        public readonly int ResultParameterIndex = -1;
-
-        /// <summary>
-        /// Index of the resultIndex parameter, or -1 if none.
-        /// </summary>
-        public readonly int ResultIndexParameterIndex = -1;
-
-        /// <summary>
-        /// True if the parameter has IndexedAttribute.  Array may be null if no parameters have the attribute.
-        /// </summary>
-        public readonly bool[] IsIndexedParameter;
-
-        public MessageFcnInfo(MethodInfo method, ICollection<ParameterInfo> parameters)
-        {
-            this.Method = method;
-            int parameterIndex = 0;
-            foreach (ParameterInfo parameter in parameters)
-            {
-                if (parameter.Name == "result" || parameter.Name == "Result")
-                {
-                    if (ResultParameterIndex != -1) throw new Exception("Only one parameter of a method can be the result");
-                    ResultParameterIndex = parameterIndex;
-                }
-                else if (parameter.Name == "resultIndex" || parameter.Name == "ResultIndex")
-                {
-                    if (ResultIndexParameterIndex != -1) throw new Exception("Only one parameter of a method can be the resultIndex");
-                    ResultIndexParameterIndex = parameterIndex;
-                }
-                else if (parameter.IsDefined(typeof(IsReturnedAttribute), false))
-                {
-                    if (ReturnedParameterIndex != -1) throw new Exception("IsReturnedAttribute can only be attached to one parameter of a method");
-                    // MessageTransform must not replace this method if it has a NoInit attribute.
-                    if (!parameter.IsDefined(typeof(NoInitAttribute), false) && !parameter.IsDefined(typeof(DiodeAttribute), false))
-                        ReturnedParameterIndex = parameterIndex;
-                }
-                else if (parameter.IsDefined(typeof(IsReturnedInEveryElementAttribute), false))
-                {
-                    if (ReturnedInAllElementsParameterIndex != -1) throw new Exception("IsReturnedInAllElementsAttribute can only be attached to one parameter of a method");
-                    ReturnedInAllElementsParameterIndex = parameterIndex;
-                }
-                if (parameter.IsDefined(typeof(IndexedAttribute), false))
-                {
-                    if (IsIndexedParameter == null) IsIndexedParameter = new bool[parameters.Count];
-                    IsIndexedParameter[parameterIndex] = true;
-                }
-                parameterIndex++;
-            }
-            AllTriggers = Method.IsDefined(typeof(AllTriggersAttribute), false);
-            IsMultiplyAll = Method.IsDefined(typeof(MultiplyAllAttribute), false);
-            IsStochastic = Method.IsDefined(typeof(Stochastic), false);
-            object[] attrs = Method.GetCustomAttributes(typeof(NotSupportedAttribute), false);
-            if (attrs.Length > 0)
-            {
-                NotSupportedMessage = ((NotSupportedAttribute)attrs[0]).Message;
-            }
-        }
-
-        /// <summary>
-        /// Copy constructor.
-        /// </summary>
-        /// <param name="that"></param>
-        public MessageFcnInfo(MessageFcnInfo that)
-        {
-            Method = that.Method;
-            TargetParameter = that.TargetParameter;
-            Suffix = that.Suffix;
-            IsStochastic = that.IsStochastic;
-            Dependencies = that.Dependencies;
-            Requirements = that.Requirements;
-            Triggers = that.Triggers;
-            SkipIfAllUniform = that.SkipIfAllUniform;
-            NotSupportedMessage = that.NotSupportedMessage;
-            factorEdgeOfParameter = that.factorEdgeOfParameter;
-            DependencyInfo = that.DependencyInfo;
-            IsMultiplyAll = that.IsMultiplyAll;
-            ReturnedParameterIndex = that.ReturnedParameterIndex;
-            ReturnedInAllElementsParameterIndex = that.ReturnedInAllElementsParameterIndex;
-            ResultParameterIndex = that.ResultParameterIndex;
-            ResultIndexParameterIndex = that.ResultIndexParameterIndex;
-        }
-
-        /// <summary>
-        /// Get the field names and types of message function parameters.
-        /// </summary>
-        /// <returns>A list of (field name, parameter type) in the same order as the parameters of the function.</returns>
-        /// <remarks>
-        /// The field names are not necessarily the same as the parameter names of the method.
-        /// The field names are a subset of the entries in the FactorInfo of the factor.
-        /// Additionally, a parameter may have the special field name "result" or "resultIndex".
-        /// </remarks>
-        public List<KeyValuePair<string, Type>> GetParameterTypes()
-        {
-            List<KeyValuePair<string, Type>> result = new List<KeyValuePair<string, Type>>();
-            ParameterInfo[] parameters = Method.GetParameters();
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                ParameterInfo parameter = parameters[i];
-                if (factorEdgeOfParameter.ContainsKey(parameter.Name))
-                {
-                    result.Add(new KeyValuePair<string, Type>(factorEdgeOfParameter[parameter.Name].ToString(), parameter.ParameterType));
-                }
-                else
-                {
-                    result.Add(new KeyValuePair<string, Type>(FactorManager.Uncapitalize(parameter.Name), parameter.ParameterType));
-                }
-            }
-            return result;
-        }
-
-        public override string ToString()
-        {
-            System.Text.StringBuilder s = new System.Text.StringBuilder(StringUtil.MethodSignatureToString(Method));
-            s.AppendLine();
-            if (TargetParameter != null)
-            {
-                s.Append("  target: ");
-                s.Append(TargetParameter);
-                s.AppendLine();
-            }
-            if (Suffix != null)
-            {
-                s.Append("  suffix: ");
-                s.AppendLine(Suffix);
-            }
-            s.AppendLine(DependencyInfo.ToString());
-            return s.ToString();
         }
     }
 

@@ -428,9 +428,9 @@ namespace Microsoft.ML.Probabilistic.Utilities
         public static string ToString(object o)
         {
             if (o == null) return "null";
-            if (o is Type)
+            if (o is Type type1)
             {
-                return TypeToString((Type) o);
+                return TypeToString(type1);
             }
             else
             {
@@ -462,13 +462,13 @@ namespace Microsoft.ML.Probabilistic.Utilities
             // if the object is a dictionary, print it like one.
             // if the object is enumerable, print it like an array.
             // otherwise print its properties.
-            if (o is IDictionary)
+            if (o is IDictionary dictionary)
             {
-                return DictionaryToString((IDictionary) o, Environment.NewLine);
+                return DictionaryToString(dictionary, Environment.NewLine);
             }
-            else if (o is IEnumerable)
+            else if (o is IEnumerable enumerable)
             {
-                return EnumerableToString((IEnumerable) o, Environment.NewLine);
+                return EnumerableToString(enumerable, Environment.NewLine);
             } 
             else if (IsIndexable(o))
             {
@@ -485,7 +485,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
         /// <param name="dict"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        public static string DictionaryToString<KeyType, ValueType>(IDictionary<KeyType, ValueType> dict, string delimiter)
+        public static string DictionaryToString<KeyType, ValueType>(IEnumerable<KeyValuePair<KeyType, ValueType>> dict, string delimiter)
         {
             StringBuilder s = new StringBuilder();
             int i = 0;
@@ -743,8 +743,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
 
         public static int[] ArrayLowerBounds(Array a)
         {
-            bool allZero;
-            return ArrayLowerBounds(a, out allZero);
+            return ArrayLowerBounds(a, out bool allZero);
         }
 
         public static int[] ArrayLowerBounds(Array a, out bool allZero)
@@ -798,7 +797,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
             int i = 0;
             for (int d = 0; d < strides.Length; d++)
             {
-                i = i + index[d]*strides[d];
+                i += index[d]*strides[d];
             }
             return i;
         }

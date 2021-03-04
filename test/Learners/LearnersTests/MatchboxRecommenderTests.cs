@@ -1203,36 +1203,38 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         private void InitializeNativeTrainingData()
         {
-            this.nativeTrainingData = new NativeDataset();
-            this.nativeTrainingData.UserIds = new[] { 1, 0, 1, 0, 0, 1 };
-            this.nativeTrainingData.ItemIds = new[] { 1, 0, 2, 3, 2, 3 };
-            this.nativeTrainingData.Ratings = new[] { 0, 1, 2, 3, 4, 5 };
-            this.nativeTrainingData.UserCount = 2;
-            this.nativeTrainingData.ItemCount = 4;
-            this.nativeTrainingData.NonZeroUserFeatureValues = new[]
+            this.nativeTrainingData = new NativeDataset
+            {
+                UserIds = new[] { 1, 0, 1, 0, 0, 1 },
+                ItemIds = new[] { 1, 0, 2, 3, 2, 3 },
+                Ratings = new[] { 0, 1, 2, 3, 4, 5 },
+                UserCount = 2,
+                ItemCount = 4,
+                NonZeroUserFeatureValues = new[]
                 {
                     new[] { 2, 3, 2.3, 3.2, 4 },
                     new[] { 6, 5.4, 4.5, 5, 4 }
-                };
-            this.nativeTrainingData.NonZeroUserFeatureIndices = new[]
+                },
+                NonZeroUserFeatureIndices = new[]
                 {
                     new[] { 0, 1, 2, 3, 4 },
                     new[] { 4, 3, 2, 1, 0 }
-                };
-            this.nativeTrainingData.NonZeroItemFeatureValues = new[]
+                },
+                NonZeroItemFeatureValues = new[]
                 {
                     new[] { 0.2, 0.0 },
                     new[] { 0.0, 0.0 },
                     new[] { 0.2, 0.9 },
                     new[] { 1.2, 1.1 }
-                };
-            this.nativeTrainingData.NonZeroItemFeatureIndices = new[]
+                },
+                NonZeroItemFeatureIndices = new[]
                 {
                     new[] { 0, 1 },
                     new[] { 1, 0 },
                     new[] { 0, 1 },
                     new[] { 1, 0 }
-                };
+                }
+            };
 
             this.nativeMapping = new NativeRecommenderTestMapping();
         }
@@ -1242,8 +1244,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         private void InitializeStandardTrainingData()
         {
-            this.standardTrainingData = new StandardDataset();
-            this.standardTrainingData.Observations = new List<Tuple<User, Item, int?>>
+            this.standardTrainingData = new StandardDataset
+            {
+                Observations = new List<Tuple<User, Item, int?>>
                 {
                     new Tuple<User, Item, int?>(User.WithId("u0"), Item.WithId("i0"), 1),
                     new Tuple<User, Item, int?>(User.WithId("u1"), Item.WithId("i1"), 0),
@@ -1251,7 +1254,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                     new Tuple<User, Item, int?>(User.WithId("u0"), Item.WithId("i3"), 3),
                     new Tuple<User, Item, int?>(User.WithId("u0"), Item.WithId("i2"), 4),
                     new Tuple<User, Item, int?>(User.WithId("u1"), Item.WithId("i3"), 5)
-                };
+                }
+            };
 
             this.standardTrainingDataFeatures = new FeatureProvider
                 {

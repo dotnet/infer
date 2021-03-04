@@ -36,8 +36,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal static bool debug;
         private LoopMergingInfo loopMergingInfo;
-        private Set<IVariableDeclaration> loopVarsToReverse = new Set<IVariableDeclaration>();
-        private Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+        private readonly Set<IVariableDeclaration> loopVarsToReverse = new Set<IVariableDeclaration>();
+        private readonly Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
         private Dictionary<IStatement, Set<IVariableDeclaration>> loopVarsToReverseInStatement;
         IBlockStatement debugBlock;
 
@@ -191,7 +191,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     /// </summary>
     internal class LoopReversalAnalysisTransform : ShallowCopyTransform
     {
-        private bool debug;
+        private readonly bool debug;
 
         public LoopReversalAnalysisTransform(bool debug)
         {
@@ -318,7 +318,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             continue;
                         NodeIndex source = node;
                         List<IStatement> containersOfSource = containersOfNode[source];
-                        bool hasLoopVar = containersOfSource.Any(container => container is IForStatement && Recognizer.LoopVariable((IForStatement)container) == loopVar);
+                        bool hasLoopVar = containersOfSource.Any(container => container is IForStatement ifs && Recognizer.LoopVariable(ifs) == loopVar);
                         if (!hasLoopVar) continue;
                         nodesOfInterest.Add(node);
                         IStatement sourceSt = nodes[source];
@@ -453,12 +453,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             for (int i = 0; i < System.Math.Min(containersOfTarget.Count, containersOfSource.Count); i++)
             {
-                if (containersOfTarget[i] is IForStatement)
+                if (containersOfTarget[i] is IForStatement afs)
                 {
-                    if (!(containersOfSource[i] is IForStatement))
+                    if (!(containersOfSource[i] is IForStatement bfs))
                         break;
-                    IForStatement afs = (IForStatement)containersOfTarget[i];
-                    IForStatement bfs = (IForStatement)containersOfSource[i];
                     IVariableDeclaration loopVar = Recognizer.LoopVariable(afs);
                     if (Recognizer.LoopVariable(bfs) != loopVar)
                         break;

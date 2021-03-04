@@ -258,15 +258,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
 
             // Find information about the messages for each argument and work out their types
-            IDictionary<string, MessageInfo> msgInfo = new Dictionary<string, MessageInfo>();
+            Dictionary<string, MessageInfo> msgInfo = new Dictionary<string, MessageInfo>();
             if (debug)
                 context.InputAttributes.Set(imie, new MessageInfoDict()
                 {
                     msgInfo = msgInfo
                 });
-            IDictionary<string, Type> argumentTypes = new Dictionary<string, Type>();
-            IDictionary<string, Type> resultTypes = new Dictionary<string, Type>();
-            IDictionary<string, bool> isStochastic = new Dictionary<string, bool>();
+            var argumentTypes = new Dictionary<string, Type>();
+            var resultTypes = new Dictionary<string, Type>();
+            var isStochastic = new Dictionary<string, bool>();
             List<bool> isReturnOrOut = new List<bool>();
             List<bool> argIsConstant = new List<bool>();
             bool resultIsConstant = info.IsDeterministicFactor && !isVariableFactor;
@@ -365,9 +365,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             IExpression derivArg = Builder.ReplaceExpression(channelRef, Builder.VarRefExpr(ivd), Builder.VarRefExpr(dm.decl));
                             IExpression derivMsg = GetMessageExpression(derivArg, MessageDirection.Forwards);
-                            MessageInfo mi2 = new MessageInfo();
-                            mi2.messageFromFactor = derivMsg;
-                            mi2.messageToFactor = derivMsg;
+                            MessageInfo mi2 = new MessageInfo
+                            {
+                                messageFromFactor = derivMsg,
+                                messageToFactor = derivMsg
+                            };
                             string derivParameterName = parameterName + "_deriv";
                             msgInfo[derivParameterName] = mi2;
                             Type derivType = derivMsg.GetExpressionType();
@@ -444,8 +446,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 try
                 {
                     IExpression channelRef = ics.Condition;
-                    MessageInfo mi = new MessageInfo();
-                    mi.messageFromFactor = GetMessageExpression(channelRef, MessageDirection.Backwards);
+                    MessageInfo mi = new MessageInfo
+                    {
+                        messageFromFactor = GetMessageExpression(channelRef, MessageDirection.Backwards)
+                    };
                     FindChannelInfo(mi, channelRef);
                     string evidenceField = "";
                     msgInfo[evidenceField] = mi;
@@ -556,8 +560,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         ChannelToMessageInfo ctmi = context.InputAttributes.Get<ChannelToMessageInfo>(dm.decl);
                         IVariableDeclaration derivMsgVar = ctmi.fwd.decl;
                         IVariableDeclaration forwardVar = Recognizer.GetVariableDeclaration(mi.messageFromFactor);
-                        MessageInfo mi2 = new MessageInfo();
-                        mi2.messageFromFactor = Builder.ReplaceExpression(mi.messageFromFactor, Builder.VarRefExpr(forwardVar), Builder.VarRefExpr(derivMsgVar));
+                        MessageInfo mi2 = new MessageInfo
+                        {
+                            messageFromFactor = Builder.ReplaceExpression(mi.messageFromFactor, Builder.VarRefExpr(forwardVar), Builder.VarRefExpr(derivMsgVar))
+                        };
                         string field = "";
                         msgInfo[field] = mi2;
                         string methodName = targetParameter + "Deriv";
@@ -587,27 +593,27 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="action">Receives the generated statements</param>
         /// <param name="alg">The algorithm</param>
         /// <param name="info">Factor information</param>
-        /// <param name="msgInfo">Dictionary of message information</param>
+        /// <param name="msgInfo">Dictionary of message information.  May be modified with buffers.</param>
         /// <param name="methodSuffix">Suffix for the operator method</param>
         /// <param name="targetParameter">target argument name</param>
-        /// <param name="argumentTypes">Argument types for the operator method</param>
+        /// <param name="argumentTypes">Argument types for the operator method.  May be modified with buffers.</param>
         /// <param name="isStochastic">Indicates whether each argument is valid for a formal marked with the Stochastic attribute.</param>
         /// <param name="isVariableFactor">Whether this is a variable factor</param>
         /// <param name="isInit">Whether the statement is an initializer</param>
         /// <param name="alternateSuffix"></param>
         /// <returns></returns>
-        protected void ForEachOperatorStatement(Action<IStatement> action, IAlgorithm alg, FactorManager.FactorInfo info, IDictionary<string, MessageInfo> msgInfo,
-                                                string methodSuffix, string targetParameter, IDictionary<string, Type> argumentTypes, IDictionary<string, bool> isStochastic,
+        protected void ForEachOperatorStatement(Action<IStatement> action, IAlgorithm alg, FactorManager.FactorInfo info, Dictionary<string, MessageInfo> msgInfo,
+                                                string methodSuffix, string targetParameter, Dictionary<string, Type> argumentTypes, IReadOnlyDictionary<string, bool> isStochastic,
                                                 bool isVariableFactor, bool isInit = false, string alternateSuffix = null)
         {
-            bool useFactor = (targetParameter == info.ParameterNames[0]) && info.OutputIsDeterministic(argumentTypes) && !info.IsVoid && !isVariableFactor;
+            var customArgumentTypes = new Dictionary<string, Type>(argumentTypes);
+            bool useFactor = (targetParameter == info.ParameterNames[0]) && info.OutputIsDeterministic(customArgumentTypes) && !info.IsVoid && !isVariableFactor;
 
             // For Gibbs, we do not want to allow EP methods which require projection. A crude
             // way of detecting these is to look at the arguments, and reject any method which
             // includes as an argument the incoming message corresponding to the target parameter
-            argumentTypes = new Dictionary<string, Type>(argumentTypes);
             if (alg is GibbsSampling && (!useFactor) && (!isVariableFactor))
-                argumentTypes[targetParameter] = typeof(PlaceHolder);
+                customArgumentTypes[targetParameter] = typeof(PlaceHolder);
 
             MessageFcnInfo fninfo;
             if (useFactor) fninfo = info.GetMessageFcnInfoFromFactor();
@@ -618,7 +624,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     try
                     {
-                        fninfo = info.GetMessageFcnInfo(factorManager, alternateSuffix, targetParameter, argumentTypes, isStochastic);
+                        fninfo = info.GetMessageFcnInfo(factorManager, alternateSuffix, targetParameter, customArgumentTypes, isStochastic);
                     }
                     catch (Exception)
                     {
@@ -629,7 +635,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     try
                     {
-                        fninfo = info.GetMessageFcnInfo(factorManager, methodSuffix, targetParameter, argumentTypes, isStochastic);
+                        fninfo = info.GetMessageFcnInfo(factorManager, methodSuffix, targetParameter, customArgumentTypes, isStochastic);
                     }
                     catch (Exception ex)
                     {
@@ -651,11 +657,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (fninfo.PassResultIndex)
             {
                 Type resultType = argumentTypes[resultName];
-                argumentTypes[resultIndexName] = typeof(int);
+                customArgumentTypes[resultIndexName] = typeof(int);
                 Type resultElementType = Util.GetElementType(resultType);
-                argumentTypes[resultName] = resultElementType;
+                customArgumentTypes[resultName] = resultElementType;
                 // Get the expressions for all the arguments to the operator
-                List<IExpression> args = GetOperatorArguments(alg, info, fninfo, mi, msgInfo, argumentTypes, isStochastic, isVariableFactor);
+                List<IExpression> args = GetOperatorArguments(alg, info, fninfo, mi, msgInfo, customArgumentTypes, isStochastic, isVariableFactor);
                 VariableInformation vi = VariableInformation.GetVariableInformation(context, mi.channelDecl ?? Recognizer.GetVariableDeclaration(mi.messageToFactor));
                 int depth = Recognizer.GetIndexingDepth(mi.messageFromFactor);
                 vi.DefineIndexVarsUpToDepth(context, depth + 1);
@@ -686,9 +692,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             else
             {
-                argumentTypes.Remove(resultIndexName);
+                customArgumentTypes.Remove(resultIndexName);
                 // Get the expressions for all the arguments to the operator
-                List<IExpression> args = GetOperatorArguments(alg, info, fninfo, mi, msgInfo, argumentTypes, isStochastic, isVariableFactor);
+                List<IExpression> args = GetOperatorArguments(alg, info, fninfo, mi, msgInfo, customArgumentTypes, isStochastic, isVariableFactor);
                 // Create the statement which calls the message function
                 IStatement st = GetOperatorStatement(alg, info, fninfo, mi, targetParameter, args, null, isVariableFactor, isInit, useFactor);
                 action(st);
@@ -727,26 +733,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     throw new NotSupportedException("'" + resultName + "' is not the last argument of " + StringUtil.MethodSignatureToString(fninfo.Method));
                 fullArgs.Add(msg);
             }
-            string epEvidenceMethodName = new ExpectationPropagation().GetEvidenceMethodName(new List<ICompilerAttribute>());
-            if (targetParameter.Length == 0 && !info.IsVoid && fninfo.Method.Name == epEvidenceMethodName)
-            {
-                // check that one of the parameters corresponds to the return value
-                ParameterInfo[] parameters = fninfo.Method.GetParameters();
-                string returnValue = info.ParameterNames[0];
-                var hasReturnParameter = parameters.Any(parameter =>
-                {
-                    FactorEdge edge = fninfo.factorEdgeOfParameter[parameter.Name];
-                    return edge.ParameterName == returnValue && !edge.IsOutgoingMessage;
-                });
-                if (!hasReturnParameter) throw new NotSupportedException("'" + returnValue + "' is not an argument of " + StringUtil.MethodSignatureToString(fninfo.Method));
-            }
-            bool conversionAllowed(string parameterName)
-            {
-                // Do not allow point mass conversion of the return parameter in a LogEvidenceRatio method.
-                return targetParameter.Length > 0 || info.IsVoid || fninfo.Method.Name != epEvidenceMethodName ||
-                    (fninfo.factorEdgeOfParameter[parameterName].ParameterName != info.ParameterNames[0]);
-            }
-            fullArgs = ConvertArguments(fninfo.Method, fullArgs, conversionAllowed);
+            fullArgs = ConvertArguments(fninfo.Method, fullArgs);
             IExpression operatorMethod = Builder.StaticMethod(fninfo.Method, fullArgs.ToArray());
             if (!context.OutputAttributes.Has<MessageFcnInfo>(fninfo.Method))
                 context.OutputAttributes.Set(fninfo.Method, fninfo);
@@ -802,7 +789,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             messageUpdatedMethod = Builder.FireEventDecl(MethodVisibility.Private, "On" + DebuggingSupport.MessageEventName, messageUpdatedEvent);
                         }
                         // Generate code to emit message events
-                        var methodRef = new Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete.XMethodReference(messageUpdatedMethod);
+                        var methodRef = new CodeModel.Concrete.XMethodReference(messageUpdatedMethod);
                         var mre = Builder.MethodRefExpr();
                         mre.Method = methodRef;
                         mre.Target = Builder.ThisRefExpr();
@@ -960,8 +947,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         private MessageInfo CreateBuffer(string name, Type type, IAlgorithm alg, FactorManager.FactorInfo info, MessageFcnInfo fcninfo,
-                                         MessageInfo miTgt, IDictionary<string, MessageInfo> msgInfo, IDictionary<string, Type> argumentTypes,
-                                         IDictionary<string, bool> isStochastic,
+                                         MessageInfo miTgt, Dictionary<string, MessageInfo> msgInfo, Dictionary<string, Type> argumentTypes,
+                                         IReadOnlyDictionary<string, bool> isStochastic,
                                          bool isVariableFactor)
         {
             if (type != null)
@@ -1007,10 +994,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             context.OutputAttributes.Set(bufferDecl, new DescriptionAttribute("Buffer for " + StringUtil.EscapeXmlCharacters(StringUtil.MethodFullNameToString(fcninfo.Method))));
             context.OutputAttributes.Set(bufferDecl, new Containers(context));
             IExpression msg = Builder.VarRefExpr(bufferDecl);
-            MessageInfo mi = new MessageInfo();
-            mi.channelDecl = miTgt.channelDecl;
-            mi.messageFromFactor = msg;
-            mi.messageToFactor = msg;
+            MessageInfo mi = new MessageInfo
+            {
+                channelDecl = miTgt.channelDecl,
+                messageFromFactor = msg,
+                messageToFactor = msg
+            };
             msgInfo[name] = mi;
             string flippedName = FactorManager.FlipCapitalization(name);
             msgInfo[flippedName] = mi;
@@ -1041,14 +1030,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="info">Factor information</param>
         /// <param name="fcninfo">Operator method information</param>
         /// <param name="miTgt">The message info for the target argument</param>
-        /// <param name="msgInfo">Message information for each field</param>
-        /// <param name="argumentTypes">Argument types for the operator method</param>
-        /// <param name="isStochastic"></param>
+        /// <param name="msgInfo">Message information for each field.  May be modified with buffers.</param>
+        /// <param name="argumentTypes">Argument types for the operator method.  May be modified with buffers.</param>
+        /// <param name="isStochastic">Whether each argument can be stochastic.</param>
         /// <param name="isVariableFactor">Whether this is a variable factor</param>
         /// <returns></returns>
         protected List<IExpression> GetOperatorArguments(IAlgorithm alg, FactorManager.FactorInfo info, MessageFcnInfo fcninfo,
-                                                         MessageInfo miTgt, IDictionary<string, MessageInfo> msgInfo, IDictionary<string, Type> argumentTypes,
-                                                         IDictionary<string, bool> isStochastic,
+                                                         MessageInfo miTgt, Dictionary<string, MessageInfo> msgInfo, Dictionary<string, Type> argumentTypes,
+                                                         IReadOnlyDictionary<string, bool> isStochastic,
                                                          bool isVariableFactor)
         {
             List<IExpression> args = new List<IExpression>();
@@ -1109,7 +1098,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return args;
         }
 
-        private List<IExpression> ConvertArguments(MethodInfo method, IList<IExpression> args, Predicate<string> conversionAllowed)
+        private List<IExpression> ConvertArguments(MethodInfo method, IList<IExpression> args)
         {
             List<IExpression> convertedArgs = new List<IExpression>();
             ParameterInfo[] parameters = method.GetParameters();
@@ -1125,7 +1114,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     Type distType = parameter.ParameterType;
                     Type domainType = argType;
                     MethodInfo pointMassMethod = FactorManager.GetPointMassMethod(distType, domainType);
-                    if (pointMassMethod != null && conversionAllowed(parameter.Name))
+                    if (pointMassMethod != null)
                     {
                         convertedArg = Builder.StaticMethod(pointMassMethod, arg);
                     }
@@ -1358,14 +1347,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     innermostType)[0];
             }
             // Cache the message array information, including the declaration
-            MessageArrayInformation mai = new MessageArrayInformation();
-            // Create the variable declaration of the message array variable
-            mai.decl = Builder.VarDecl(messageName, messageType);
+            MessageArrayInformation mai = new MessageArrayInformation
+            {
+                // Create the variable declaration of the message array variable
+                decl = Builder.VarDecl(messageName, messageType),
+                ci = channelInfo,
+                isDistribution = isDistribution,
+                marginalPrototypeExpression = mpe
+            };
             // Attach the message array information as an attribute on the variable declaration
             context.OutputAttributes.Set(mai.decl, mai);
-            mai.ci = channelInfo;
-            mai.isDistribution = isDistribution;
-            mai.marginalPrototypeExpression = mpe;
             if (direction == MessageDirection.Backwards)
             {
                 ctmi.bck = mai;
@@ -1442,14 +1433,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             bool isDistribution = Distribution.IsDistributionType(messageType);
 
             // Cache the message array information, including the declaration
-            MessageArrayInformation mai = new MessageArrayInformation();
-            // Create the variable declaration of the message array variable
-            mai.decl = messageVar;
+            MessageArrayInformation mai = new MessageArrayInformation
+            {
+                // Create the variable declaration of the message array variable
+                decl = messageVar,
+                ci = channelInfo,
+                isDistribution = isDistribution
+            };
+            //mai.marginalPrototypeExpression = initExpr;
             // Attach the message array information as an attribute on the variable declaration
             context.OutputAttributes.Set(mai.decl, mai);
-            mai.ci = channelInfo;
-            mai.isDistribution = isDistribution;
-            //mai.marginalPrototypeExpression = initExpr;
             if (direction == MessageDirection.Backwards)
             {
                 ctmi.bck = mai;
@@ -2543,7 +2536,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private class MessageInfoDict : ICompilerAttribute
         {
-            public IDictionary<string, MessageInfo> msgInfo;
+            public IReadOnlyDictionary<string, MessageInfo> msgInfo;
 
             public override string ToString()
             {
