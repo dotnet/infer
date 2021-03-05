@@ -51,12 +51,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal static bool UseMessageAnalysis;
         internal static bool debug;
-        private MessageAnalysisTransform analysis;
+        internal bool InitializeOnSeparateLine;
         protected IAlgorithm algorithm;
         protected FactorManager factorManager;
         protected ModelCompiler compiler;
-        internal bool InitializeOnSeparateLine;
-        readonly bool AllowDerivedParents;
 
         internal const string resultName = "result";
         internal const string resultIndexName = "resultIndex";
@@ -81,6 +79,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             new Dictionary<IVariableDeclaration, IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         private static readonly MessageDirection[] directions = { MessageDirection.Forwards, MessageDirection.Backwards };
+
+        /// <summary>
+        /// If true, restrictions on derived parents are ignored.
+        /// </summary>
+        private readonly bool AllowDerivedParents;
+
+        /// <summary>
+        /// Results of analysis
+        /// </summary>
+        private MessageAnalysisTransform analysis;
+
+        /// <summary>
+        /// Method declaration used for message tracing
+        /// </summary>
+        private IMethodDeclaration messageUpdatedMethod;
 
         public MessageTransform(ModelCompiler compiler, IAlgorithm algorithm, FactorManager factorManager, bool allowDerivedParents)
         {
@@ -308,12 +321,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 bool isConstant = !CodeRecognizer.IsStochastic(context, channelRef);
                 if (!isConstant) resultIsConstant = false;
                 argIsConstant.Add(isConstant);
-                MessageInfo mi = new MessageInfo();
-                msgInfo[parameterName] = mi;
+                MessageInfo mi;
                 if (isConstant)
                 {
-                    if (isChild) mi.messageFromFactor = channelRef;
-                    mi.messageToFactor = channelRef;
+                    mi = new MessageInfo
+                    {
+                        messageFromFactor = isChild ? channelRef : null,
+                        messageToFactor = channelRef
+                    };
                     if (!isWeaklyTyped)
                     {
                         Type inwardType = mi.messageToFactor.GetExpressionType();
@@ -328,13 +343,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     //if (bckMsg == null) { Error("backward message is null"); return imie; }
                     if (isChild)
                     {
-                        mi.messageFromFactor = fwdMsg;
-                        mi.messageToFactor = bckMsg;
+                        mi = new MessageInfo(this, channelRef)
+                        {
+                            messageFromFactor = fwdMsg,
+                            messageToFactor = bckMsg
+                        };
                     }
                     else
                     {
-                        mi.messageFromFactor = bckMsg;
-                        mi.messageToFactor = fwdMsg;
+                        mi = new MessageInfo(this, channelRef)
+                        {
+                            messageFromFactor = bckMsg,
+                            messageToFactor = fwdMsg
+                        };
                     }
                     if (!isWeaklyTyped)
                     {
@@ -355,7 +376,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             resultTypes[parameterName] = outwardType;
                         }
                     }
-                    FindChannelInfo(mi, channelRef);
                     isStochastic[parameterName] = !mi.hasNonUnitDerivative;
                     if (alg is VariationalMessagePassing vmp && vmp.UseDerivMessages && !isChild && mi.hasNonUnitDerivative && !isVariableFactor)
                     {
@@ -378,6 +398,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         }
                     }
                 }
+                msgInfo[parameterName] = mi;
             }
             if (resultIsConstant && isAssignment && !resultIsObserved)
             {
@@ -443,22 +464,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 argumentTypes[resultName] = typeof(double);
                 string methodName = alg.GetEvidenceMethodName(factorAttributes);
-                try
+                IExpression channelRef = ics.Condition;
+                MessageInfo mi = new MessageInfo(this, channelRef)
                 {
-                    IExpression channelRef = ics.Condition;
-                    MessageInfo mi = new MessageInfo
-                    {
-                        messageFromFactor = GetMessageExpression(channelRef, MessageDirection.Backwards)
-                    };
-                    FindChannelInfo(mi, channelRef);
-                    string evidenceField = "";
-                    msgInfo[evidenceField] = mi;
-                    ForEachOperatorStatement(context.AddStatementBeforeCurrent, alg, info, msgInfo, methodName, evidenceField, argumentTypes, isStochastic, isVariableFactor);
-                }
-                catch (Exception ex)
-                {
-                    Error("Could not construct evidence method", ex);
-                }
+                    messageFromFactor = GetMessageExpression(channelRef, MessageDirection.Backwards)
+                };
+                string evidenceField = "";
+                msgInfo[evidenceField] = mi;
+                ForEachOperatorStatement(context.AddStatementBeforeCurrent, alg, info, msgInfo, methodName, evidenceField, argumentTypes, isStochastic, isVariableFactor);
             }
             else if (resultIsConstant)
             {
@@ -637,7 +650,27 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     {
                         fninfo = info.GetMessageFcnInfo(factorManager, methodSuffix, targetParameter, customArgumentTypes, isStochastic);
                     }
-                    catch (Exception ex)
+                    catch (ArgumentException ex)
+                    {
+                        ErrorNotSupported(ex);
+                        return;
+                    }
+                    catch (MissingMethodException ex)
+                    {
+                        ErrorNotSupported(ex);
+                        return;
+                    }
+                    catch (NotSupportedException ex)
+                    {
+                        ErrorNotSupported(ex);
+                        return;
+                    }
+                    catch (AmbiguousMatchException ex)
+                    {
+                        ErrorNotSupported(ex);
+                        return;
+                    }
+                    void ErrorNotSupported(Exception ex)
                     {
                         string opErr = "This model is not supported with " + alg.Name + " due to " + info.ToString() +
                                        ". Try using a different algorithm or expressing the model differently";
@@ -647,7 +680,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         }
                         else
                             Error(opErr, ex);
-                        return;
                     }
                 }
             }
@@ -701,12 +733,31 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
-        protected internal IStatement GetOperatorStatement(IAlgorithm alg, FactorManager.FactorInfo info, MessageFcnInfo fninfo, MessageInfo mi, string targetParameter,
-                                                           List<IExpression> args, IExpression index, bool isVariableFactor, bool isInit, bool useFactor)
+        /// <summary>
+        /// Creates an assignment statement that invokes a message operator.
+        /// </summary>
+        /// <param name="alg">The inference algorithm</param>
+        /// <param name="info">The factor</param>
+        /// <param name="fninfo">The message operator</param>
+        /// <param name="mi">The target of the message</param>
+        /// <param name="targetParameter">The factor parameter receiving the message</param>
+        /// <param name="args">The arguments of the message operator</param>
+        /// <param name="index">The index argument of the message operator</param>
+        /// <param name="isVariableFactor">True if the factor is a variable factor</param>
+        /// <param name="isInit">True if the message operator is an initializer.</param>
+        /// <param name="useFactor">True if the message operator is the factor itself.</param>
+        /// <returns>An assignment statement that invokes the message operator.</returns>
+        protected internal IExpressionStatement GetOperatorStatement(
+            IAlgorithm alg,
+            FactorManager.FactorInfo info,
+            MessageFcnInfo fninfo,
+            MessageInfo mi,
+            string targetParameter,
+            List<IExpression> args,
+            IExpression index,
+            bool isVariableFactor,
+            bool isInit,
+            bool useFactor)
         {
             List<IExpression> fullArgs = new List<IExpression>();
             if (fninfo.IsIndexedParameter == null) fullArgs.AddRange(args);
@@ -723,14 +774,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (index != null)
             {
                 if (fninfo.ResultIndexParameterIndex != fullArgs.Count)
-                    throw new NotSupportedException("'" + resultIndexName + "' is not the 2nd to last argument of " + StringUtil.MethodSignatureToString(fninfo.Method));
+                    Error("'" + resultIndexName + "' is not the 2nd to last argument of " + StringUtil.MethodSignatureToString(fninfo.Method));
                 fullArgs.Add(index);
                 msg = Builder.ArrayIndex(msg, index);
             }
             if (fninfo.PassResult)
             {
                 if (fninfo.ResultParameterIndex != fullArgs.Count)
-                    throw new NotSupportedException("'" + resultName + "' is not the last argument of " + StringUtil.MethodSignatureToString(fninfo.Method));
+                    Error("'" + resultName + "' is not the last argument of " + StringUtil.MethodSignatureToString(fninfo.Method));
                 fullArgs.Add(msg);
             }
             fullArgs = ConvertArguments(fninfo.Method, fullArgs);
@@ -749,12 +800,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // Get the quality band of the operator method and attach an attribute
             // Quality bands on the factor itself are optional, and are handled by
             // the general mechanism in IterativeProcessTransform.
-            if ((!useFactor) && (operatorMethod is IMethodInvokeExpression imie))
+            if (!useFactor && (operatorMethod is IMethodInvokeExpression imie))
             {
-                var mr = Recognizer.GetMethodReference(operatorMethod);
+                var mr = Recognizer.GetMethodReference(imie);
                 // Get the quality band of the operator method and attach an attribute
-                QualityBand opQB = Quality.GetQualityBand(mr.MethodInfo);
-                Context.OutputAttributes.Set(operatorMethod, new QualityBandCompilerAttribute(opQB));
+                QualityBand qualityBand = Quality.GetQualityBand(mr.MethodInfo);
+                Context.OutputAttributes.Set(imie, new QualityBandCompilerAttribute(qualityBand));
             }
 
             // Support for the 'TraceMessages' and 'ListenToMessages' attributes
@@ -827,7 +878,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (targetParameter.Length == 0) argName = "evidence";
             if (mi.channelDecl != null)
                 context.OutputAttributes.Set(assignExpr, new DescriptionAttribute("Message to '" + mi.channelDecl.Name + "' from " + info.Method.Name + " factor"));
-            IStatement st = Builder.ExprStatement(assignExpr);
+            var st = Builder.ExprStatement(assignExpr);
             if (fninfo.AllTriggers) needAllTriggers = true;
             else if (alg is VariationalMessagePassing vmp && !isVariableFactor && !vmp.UseDerivMessages && !fninfo.NoTriggers)
             {
@@ -851,12 +902,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 context.InputAttributes.CopyObjectAttributesTo<InitialiseBackward>(mi.channelDecl, context.OutputAttributes, st);
             return st;
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
-
-        private IMethodDeclaration messageUpdatedMethod;
 
         /// <summary>
         /// Checks to see if this operator is just copying one of its parameters and hence can be
@@ -887,7 +932,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     Type eltType = resultType.GetElementType();
                     if (Distribution.IsDistributionType(eltType) && Distribution.IsSettableTo(eltType, argToBeCopied.GetExpressionType()))
                     {
-                        if (resultType.GetArrayRank() != 1) throw new NotSupportedException("array rank > 1 is not supported in this context");
+                        if (resultType.GetArrayRank() != 1) Error("array rank > 1 is not supported in this context");
                         return Builder.StaticGenericMethod(new Func<Bernoulli[], Bernoulli[], Bernoulli[]>(ArrayHelper.SetTo),
                                                            new Type[] { eltType }, msg, argToBeCopied);
                     }
@@ -916,7 +961,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Type resultType = msg.GetExpressionType();
                 if (resultType.IsArray)
                 {
-                    if (resultType.GetArrayRank() != 1) throw new NotSupportedException("array rank > 1 is not supported in this context");
+                    if (resultType.GetArrayRank() != 1) Error("array rank > 1 is not supported in this context");
                     return Builder.StaticGenericMethod(new Func<double[], double, double[]>(ArrayHelper.SetAllElementsTo),
                                                        new Type[] { argToBeCopied.GetExpressionType() }, msg, argToBeCopied);
                 }
@@ -946,10 +991,30 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return null;
         }
 
-        private MessageInfo CreateBuffer(string name, Type type, IAlgorithm alg, FactorManager.FactorInfo info, MessageFcnInfo fcninfo,
-                                         MessageInfo miTgt, Dictionary<string, MessageInfo> msgInfo, Dictionary<string, Type> argumentTypes,
-                                         IReadOnlyDictionary<string, bool> isStochastic,
-                                         bool isVariableFactor)
+        /// <summary>
+        /// Adds statements that create a buffer for a message operator.
+        /// </summary>
+        /// <param name="name">Name of the buffer</param>
+        /// <param name="type">Type of the buffer</param>
+        /// <param name="alg">Inference algorithm</param>
+        /// <param name="info">The factor</param>
+        /// <param name="fcninfo">The message operator that requested the buffer</param>
+        /// <param name="miTgt">The target message that requested the buffer</param>
+        /// <param name="msgInfo">Modified to have the buffer</param>
+        /// <param name="argumentTypes">Modified to have the buffer</param>
+        /// <param name="isStochastic">Indicates whether each argument must be stochastic or not</param>
+        /// <param name="isVariableFactor">True if this is a variable factor</param>
+        private MessageInfo CreateBuffer(
+            string name,
+            Type type,
+            IAlgorithm alg,
+            FactorManager.FactorInfo info,
+            MessageFcnInfo fcninfo,
+            MessageInfo miTgt,
+            Dictionary<string, MessageInfo> msgInfo,
+            Dictionary<string, Type> argumentTypes,
+            IReadOnlyDictionary<string, bool> isStochastic,
+            bool isVariableFactor)
         {
             if (type != null)
                 argumentTypes[name] = type;
@@ -972,7 +1037,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     // must get buffer type from Init method
                     MessageFcnInfo fcninfoInit = info.GetMessageFcnInfo(factorManager, "Init", name, argumentTypes, isStochastic);
                     if (fcninfoInit.PassResultIndex)
-                        throw new Exception("Init method cannot use resultIndex");
+                    {
+                        Error("Init method expects resultIndex but this is not supported");
+                    }
                     type = fcninfoInit.Method.ReturnType;
                 }
                 argumentTypes[name] = type;
@@ -996,7 +1063,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IExpression msg = Builder.VarRefExpr(bufferDecl);
             MessageInfo mi = new MessageInfo
             {
-                channelDecl = miTgt.channelDecl,
+                ////channelDecl = miTgt.channelDecl,
                 messageFromFactor = msg,
                 messageToFactor = msg
             };
@@ -1143,15 +1210,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return false;
         }
 
-        private static bool HasParameter(MessageFcnInfo fcninfo, string name)
+        /// <summary>
+        /// Indicates whether the given factor parameter is an argument of the given message operator.
+        /// </summary>
+        /// <param name="fcninfo">The message operator</param>
+        /// <param name="name">The factor parameter name</param>
+        /// <returns>True if the factor parameter is an argument of the message operator</returns>
+        /// <exception cref="NotSupportedException">The message operator has an unrecognized argument.</exception>
+        private bool HasParameter(MessageFcnInfo fcninfo, string name)
         {
             ParameterInfo[] parameters = fcninfo.Method.GetParameters();
             foreach (ParameterInfo parameter in parameters)
             {
-                FactorEdge edge;
-                if (!fcninfo.factorEdgeOfParameter.TryGetValue(parameter.Name, out edge))
-                    throw new Exception("Unrecognized parameter " + parameter.Name + " in method " + StringUtil.MethodSignatureToString(fcninfo.Method));
-                if (edge.ParameterName == name) return true;
+                if (fcninfo.factorEdgeOfParameter.TryGetValue(parameter.Name, out FactorEdge edge)) 
+                {
+                    if (edge.ParameterName == name) return true;
+                }
+                else Error("Unrecognized parameter " + parameter.Name + " in method " + StringUtil.MethodSignatureToString(fcninfo.Method));
             }
             return false;
         }
@@ -2183,7 +2258,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (indexingDepth == varInfo.LiteralIndexingDepth - 1)
             {
                 // generate a separate statement for each array element
-                if (dimensions.Count != 1) throw new Exception("dimensions.Count != 1");
+                if (dimensions.Count != 1) throw new ArgumentException("dimensions.Count != 1", nameof(dimensions));
                 int sizeAsInt = (int)((ILiteralExpression)dimensions[0]).Value;
                 return Util.ArrayInit(sizeAsInt, j =>
                 {
@@ -2266,7 +2341,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected IExpression NewArrayFilled(Type elementType, IList<IExpression> sizes, IExpression elementExpr)
         {
-            if (sizes.Count > 2) throw new InvalidOperationException("Arrays of more than two dimensions are not yet supported.");
+            if (sizes.Count > 2) throw new NotImplementedException("Arrays of more than two dimensions are not yet supported.");
             IExpression[] args = new IExpression[sizes.Count + 1];
             Type[] argTypes = new Type[sizes.Count + 1];
             for (int i = 0; i < sizes.Count; i++)
@@ -2471,34 +2546,41 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         public class MessageInfo
         {
             internal IExpression messageFromFactor, messageToFactor;
-            internal IVariableDeclaration channelDecl;
+            internal readonly IVariableDeclaration channelDecl;
 
             /// <summary>
             /// True if the factor argument is a derived variable with non-unit derivative.
             /// </summary>
-            internal bool hasNonUnitDerivative;
+            internal readonly bool hasNonUnitDerivative;
+
+            public MessageInfo()
+            {
+            }
+
+            public MessageInfo(MessageTransform transform, IExpression channelRef)
+            {
+                IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(channelRef);
+                if (ivd == null)
+                    return;
+                channelDecl = ivd;
+                hasNonUnitDerivative = transform.context.InputAttributes.Has<DerivedVariable>(ivd) && transform.hasNonUnitDerivative.Contains(ivd);
+                if (transform.AllowDerivedParents)
+                    hasNonUnitDerivative = false;
+            }
 
             public override string ToString()
             {
-                return String.Format("MessageInfo(messageFromFactor: {0}, messageToFactor: {1}, channelDecl: {2}, hasNonUnitDerivative: {3})",
-                    messageFromFactor, messageToFactor, channelDecl, hasNonUnitDerivative);
+                return $"MessageInfo(messageFromFactor: {messageFromFactor}, messageToFactor: {messageToFactor}, channelDecl: {channelDecl}, hasNonUnitDerivative: {hasNonUnitDerivative})";
             }
         }
 
         /// <summary>
         /// Set the channelDecl field via the attributes applied to channelRef.
         /// </summary>
-        /// <param name="mi"></param>
-        /// <param name="channelRef"></param>
-        internal void FindChannelInfo(MessageInfo mi, IExpression channelRef)
+        /// <param name="mi">Will be modified</param>
+        /// <param name="channelRef">An expression for the channel</param>
+        internal void SetChannelInfo(MessageInfo mi, IExpression channelRef)
         {
-            IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(channelRef);
-            if (ivd == null)
-                return;
-            mi.channelDecl = ivd;
-            mi.hasNonUnitDerivative = context.InputAttributes.Has<DerivedVariable>(ivd) && hasNonUnitDerivative.Contains(ivd);
-            if (AllowDerivedParents)
-                mi.hasNonUnitDerivative = false;
         }
 
         private class ChannelToMessageInfo : ICompilerAttribute

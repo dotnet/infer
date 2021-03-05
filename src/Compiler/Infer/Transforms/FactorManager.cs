@@ -28,12 +28,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// Cache of FactorInfo for each factor method.
         /// </summary>
-        private static readonly IDictionary<MethodInfo, FactorInfo> InfoOfFactor = new Dictionary<MethodInfo, FactorInfo>();
+        private static readonly Dictionary<MethodInfo, FactorInfo> InfoOfFactor = new Dictionary<MethodInfo, FactorInfo>();
 
         /// <summary>
         /// Cache of loaded operator types for each factor method.
         /// </summary>
-        private static IDictionary<MethodInfo, IList<Type>> OperatorsOfFactor;
+        private static Dictionary<MethodInfo, List<Type>> OperatorsOfFactor;
 
         private static readonly List<object> DefaultPriorityList = new List<object>();
 
@@ -165,7 +165,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         private static void BuildCache()
         {
-            OperatorsOfFactor = new Dictionary<MethodInfo, IList<Type>>();
+            var operatorsOfFactor = new Dictionary<MethodInfo, List<Type>>();
             AppDomain app = AppDomain.CurrentDomain;
             Assembly[] assemblies = app.GetAssemblies();
             foreach (Assembly assembly in assemblies)
@@ -193,17 +193,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                 continue;
                             }
                             //if (method.IsGenericMethod) method = method.GetGenericMethodDefinition();
-                            IList<Type> operators;
-                            if (!OperatorsOfFactor.TryGetValue(method, out operators))
+                            if (!operatorsOfFactor.TryGetValue(method, out var operators))
                             {
                                 operators = new List<Type>();
+                                operatorsOfFactor[method] = operators;
                             }
                             operators.Add(type);
-                            OperatorsOfFactor[method] = operators;
                         }
                     }
                 }
             }
+            OperatorsOfFactor = operatorsOfFactor;
         }
 
         /// <summary>
@@ -789,7 +789,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     MessageFcnInfo info;
                     if (!MessageFcns.TryGetValue(methodKey, out info))
                     {
-                        IList<Type> operators = this.GetMessageOperators();
+                        var operators = this.GetMessageOperators();
                         List<Exception> errors = new List<Exception>();
                         IEnumerable<MessageFunctionBinding> bindings = this.FindMessageFunctions(
                             operators, methodSuffix, targetParameter, GetTypeArguments(this.Method), parameterTypes, isStochastic, errors);
@@ -884,7 +884,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <exception cref="NotSupportedException">The message function is not supported (as opposed to simply missing).</exception>
             public IEnumerable<MessageFcnInfo> GetMessageFcnInfos(string methodSuffix, string targetParameter, IReadOnlyDictionary<string, Type> parameterTypes)
             {
-                IList<Type> operators = this.GetMessageOperators();
+                var operators = this.GetMessageOperators();
                 var errors = new List<Exception>();
                 IEnumerable<MessageFunctionBinding> bindings = this.FindMessageFunctions(
                     operators, methodSuffix, targetParameter, GetTypeArguments(this.Method), parameterTypes, null, errors);
@@ -903,23 +903,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
 
             /// <summary>
-            /// Gets the list of the message operators of the method.
+            /// Gets the message operators of the method.
             /// </summary>
-            /// <returns></returns>
-            private IList<Type> GetMessageOperators()
+            /// <returns>The message operators of the method.</returns>
+            /// <exception cref="MissingMethodException">The method has no message operators.</exception>
+            private IEnumerable<Type> GetMessageOperators()
             {
                 MethodInfo method = this.Method;
 
                 // because this is an instance method, the constructor must have filled in OperatorsOfFactor.
-                IList<Type> operators;
-                bool hasOperators = OperatorsOfFactor.TryGetValue(method, out operators);
+                bool hasOperators = OperatorsOfFactor.TryGetValue(method, out var operators);
                 if (method.IsGenericMethod && !method.IsGenericMethodDefinition)
                 {
                     // if the method is generic, append the operators for its generic definition.
                     // i.e. if the method is GetItem<double> then append the operators for GetItem<T>.
                     method = method.GetGenericMethodDefinition();
-                    IList<Type> operators2;
-                    bool hasOperators2 = OperatorsOfFactor.TryGetValue(method, out operators2);
+                    bool hasOperators2 = OperatorsOfFactor.TryGetValue(method, out var operators2);
                     if (hasOperators2)
                     {
                         if (hasOperators)
@@ -930,14 +929,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         else
                         {
                             operators = operators2;
-                            hasOperators = true;
                         }
                     }
                 }
 
-                if (!hasOperators)
+                if (operators is null)
                 {
-                    throw new Exception("Factor " + StringUtil.MethodSignatureToString(this.Method) + " has no registered operators");
+                    throw new MissingMethodException("Factor " + StringUtil.MethodSignatureToString(this.Method) + " has no registered operators");
                 }
 
                 return operators;
@@ -1135,7 +1133,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         }
                         Type[] types = GetDesiredParameterTypes(parameters, customParameterTypes, factorEdgeOfParameter);
                         int returnValuePosition = -1;
-                        if (targetParameter.Length == 0 && !IsVoid && method.Name == epEvidenceMethodName)
+                        if (targetParameter != null && targetParameter.Length == 0 && !IsVoid && method.Name == epEvidenceMethodName)
                         {
                             // This is an EP evidence method.
                             // Check that one of the parameters corresponds to the return value.
@@ -1143,8 +1141,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             for (int i = 0; i < parameters.Length; i++)
                             {
                                 var parameter = parameters[i];
-                                FactorEdge edge = factorEdgeOfParameter[parameter.Name];
-                                if (edge.ParameterName == returnValue && !edge.IsOutgoingMessage)
+                                if (factorEdgeOfParameter.TryGetValue(parameter.Name, out FactorEdge edge) &&
+                                    edge.ParameterName == returnValue && !edge.IsOutgoingMessage)
                                 {
                                     returnValuePosition = i;
                                 }
