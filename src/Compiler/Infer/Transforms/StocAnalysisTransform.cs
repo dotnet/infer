@@ -35,8 +35,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             get { return "StocAnalysisTransform"; }
         }
 
-        private Set<IVariableDeclaration> varsWithConstantDefinition = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
-        private Dictionary<IVariableDeclaration, int> stochasticConditionsOf = new Dictionary<IVariableDeclaration, int>(new IdentityComparer<IVariableDeclaration>());
+        private Set<IVariableDeclaration> varsWithConstantDefinition = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        private Dictionary<IVariableDeclaration, int> stochasticConditionsOf = new Dictionary<IVariableDeclaration, int>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
         private int numberOfStochasticConditions;
         private bool convertConstants;
         // for DistributionAnalysis

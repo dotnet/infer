@@ -74,7 +74,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
         private Group GroupInstance = new Group();
         private int Count = 0;
         private Set<Node> childNodes = new Set<Node>();
-        private Dictionary<IModelExpression, Node> nodeOfExpr = new Dictionary<IModelExpression, Node>(new IdentityComparer<IModelExpression>());
+        private Dictionary<IModelExpression, Node> nodeOfExpr = new Dictionary<IModelExpression, Node>(ReferenceEqualityComparer<IModelExpression>.Instance);
         // condition variables that have already been linked to an expression
         private Dictionary<IModelExpression, List<Variable>> conditionVariables = new Dictionary<IModelExpression, List<Variable>>();
         private Dictionary<ConditionContext, Node> nodeOfContext = new Dictionary<ConditionContext, Node>();

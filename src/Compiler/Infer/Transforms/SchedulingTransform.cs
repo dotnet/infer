@@ -48,8 +48,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private ModelCompiler compiler;
         private int whileDepth;
         private List<IList<IStatement>> initStmtsOfWhile = new List<IList<IStatement>>();
-        private Set<IStatement> topLevelWhileStmts = new Set<IStatement>(new IdentityComparer<IStatement>());
-        private Dictionary<IWhileStatement, IWhileStatement> convertedWhiles = new Dictionary<IWhileStatement, IWhileStatement>(new IdentityComparer<IWhileStatement>());
+        private Set<IStatement> topLevelWhileStmts = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
+        private Dictionary<IWhileStatement, IWhileStatement> convertedWhiles = new Dictionary<IWhileStatement, IWhileStatement>(ReferenceEqualityComparer<IWhileStatement>.Instance);
         private List<IStatement> statementsToFinalize = new List<IStatement>();
         private Dictionary<NodeIndex, NodeIndex> groupOf;
         private Dictionary<NodeIndex, SerialLoopInfo> loopInfoOfGroup;
@@ -378,7 +378,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // It starts by constructing a dependency graph where inner while loops are single nodes.
                 // Then it recursively tests for cycles, constructing a schedule in the process.
                 // If there are no cycles, then the constructed schedule is returned.
-                Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+                Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
                 // if a DependencyInformation refers to an inner statement of a block, make it refer to the block instead
                 foreach (IStatement stmt in inputStmts)
                 {
@@ -759,7 +759,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 NodeIndex target = g.dependencyGraph.TargetOf(edge);
                 Set<NodeIndex> sourceGroups = new Set<NodeIndex>();
                 ForEachGroupOf(source, group => sourceGroups.Add(group));
-                Set<IVariableDeclaration> commonLoopVars = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+                Set<IVariableDeclaration> commonLoopVars = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                 ForEachGroupOf(target, group =>
                 {
                     if (sourceGroups.Contains(group))
@@ -1088,7 +1088,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     internal class LoopAnalysisTransform : ShallowCopyTransform
     {
         HashSet<IVariableDeclaration> loopVars;
-        public Dictionary<IStatement, HashSet<IVariableDeclaration>> loopVarsOfStatement = new Dictionary<IStatement, HashSet<IVariableDeclaration>>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, HashSet<IVariableDeclaration>> loopVarsOfStatement = new Dictionary<IStatement, HashSet<IVariableDeclaration>>(ReferenceEqualityComparer<IStatement>.Instance);
 
         protected override IStatement ConvertWhile(IWhileStatement iws)
         {

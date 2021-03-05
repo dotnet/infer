@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         internal void SpeedTest()
         {
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Factor), "ReplicateWithMarginal<>", typeof(bool[])).GetMethodInfo());
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
+            var parameterTypes = new Dictionary<string, Type>();
             Type ba = typeof(DistributionStructArray<Bernoulli, bool>);
             Type baa = typeof(DistributionRefArray<DistributionStructArray<Bernoulli, bool>, bool[]>);
             parameterTypes["Uses"] = baa;
@@ -99,10 +99,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Factor), "Not").GetMethodInfo());
             Console.WriteLine(info);
             Assert.True(info.IsDeterministicFactor);
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["Not"] = typeof(Bernoulli);
-            parameterTypes["B"] = typeof(Bernoulli);
-            parameterTypes["result"] = typeof(Bernoulli);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["Not"] = typeof(Bernoulli),
+                ["B"] = typeof(Bernoulli),
+                ["result"] = typeof(Bernoulli)
+            };
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Not", parameterTypes);
             Assert.False(fcninfo.PassResult);
             Assert.False(fcninfo.PassResultIndex);
@@ -115,14 +117,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void UnaryFactorInfo()
         {
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Factor), "Random<>", typeof(bool), typeof(Bernoulli)).GetMethodInfo());
-            Console.WriteLine(info);
             Assert.False(info.IsDeterministicFactor);
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["Random"] = typeof(Bernoulli);
-            parameterTypes["dist"] = typeof(Bernoulli);
-            parameterTypes["result"] = typeof(Bernoulli);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["Random"] = typeof(Bernoulli),
+                ["dist"] = typeof(Bernoulli),
+                ["result"] = typeof(Bernoulli)
+            };
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Random", parameterTypes);
-            Console.WriteLine(fcninfo);
             Assert.False(fcninfo.PassResult);
             Assert.False(fcninfo.PassResultIndex);
             Assert.Equal(1, fcninfo.Dependencies.Count);
@@ -134,24 +136,24 @@ namespace Microsoft.ML.Probabilistic.Tests
             FactorManager.FactorInfo info =
                 FactorManager.GetFactorInfo(new MethodReference(typeof(Constrain), "EqualRandom<,>", typeof(bool), typeof(Bernoulli)).GetMethodInfo());
             Assert.Equal(2, info.ParameterNames.Count);
-            Console.WriteLine(info);
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["value"] = typeof(Bernoulli);
-            parameterTypes["dist"] = typeof(Bernoulli);
-            parameterTypes["result"] = typeof(Bernoulli);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["value"] = typeof(Bernoulli),
+                ["dist"] = typeof(Bernoulli),
+                ["result"] = typeof(Bernoulli)
+            };
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "value", parameterTypes);
-            Console.WriteLine(fcninfo);
             Assert.False(fcninfo.PassResult);
             Assert.False(fcninfo.PassResultIndex);
             Assert.Equal(1, fcninfo.Dependencies.Count);
             Assert.Equal(1, fcninfo.Requirements.Count);
 
-            Console.WriteLine();
-            Console.WriteLine("All MessageFcnInfos:");
+            bool verbose = false;
+            if (verbose) Console.WriteLine("All MessageFcnInfos:");
             int count = 0;
             foreach (MessageFcnInfo fcninfo2 in info.GetMessageFcnInfos())
             {
-                Console.WriteLine(fcninfo2);
+                if (verbose) Console.WriteLine(fcninfo2);
                 CheckMessageFcnInfo(fcninfo2, info);
                 count++;
             }
@@ -179,17 +181,17 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             DependencyInformation depInfo;
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Factor), "Replicate<>", typeof(bool)).GetMethodInfo());
-            Console.WriteLine(info);
             Assert.True(info.IsDeterministicFactor);
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["Uses"] = typeof(Bernoulli[]);
-            parameterTypes["Def"] = typeof(Bernoulli);
-            parameterTypes["resultIndex"] = typeof(int);
-            parameterTypes["result"] = typeof(Bernoulli);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["Uses"] = typeof(Bernoulli[]),
+                ["Def"] = typeof(Bernoulli),
+                ["resultIndex"] = typeof(int),
+                ["result"] = typeof(Bernoulli)
+            };
             for (int i = 0; i < 3; i++)
             {
                 MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Uses", parameterTypes);
-                Console.WriteLine(fcninfo);
                 Assert.True(fcninfo.PassResult);
                 Assert.True(fcninfo.PassResultIndex);
                 Assert.Equal(2, fcninfo.Dependencies.Count);
@@ -199,12 +201,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 if (i == 0)
                 {
                     depInfo = FactorManager.GetDependencyInfo(fcninfo.Method);
-                    Console.WriteLine("Dependencies:");
-                    Console.WriteLine(StringUtil.ToString(depInfo.Dependencies));
-                    Console.WriteLine("Requirements:");
-                    Console.WriteLine(StringUtil.ToString(depInfo.Requirements));
-                    Console.WriteLine("Triggers:");
-                    Console.WriteLine(StringUtil.ToString(depInfo.Triggers));
                 }
             }
 
@@ -212,12 +208,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             MessageFcnInfo fcninfo3 = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Def", parameterTypes);
             Assert.True(fcninfo3.SkipIfAllUniform);
 
-            Console.WriteLine();
-            Console.WriteLine("All AverageConditional MessageFcnInfos:");
+            bool verbose = false;
+            if (verbose) Console.WriteLine("All AverageConditional MessageFcnInfos:");
             int count = 0;
             foreach (MessageFcnInfo fcninfo2 in info.GetMessageFcnInfos("AverageConditional", null, null))
             {
-                Console.WriteLine(fcninfo2);
+                if (verbose) Console.WriteLine(fcninfo2);
                 CheckMessageFcnInfo(fcninfo2, info);
                 count++;
             }
@@ -228,27 +224,21 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ReplicateMessageFcnInfo()
         {
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Factor), "Replicate<>", typeof(bool)).GetMethodInfo());
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["Uses"] = typeof(DistributionArray<Bernoulli>);
-            parameterTypes["Def"] = typeof(Bernoulli);
-            parameterTypes["result"] = typeof(Bernoulli); //typeof(DistributionArray<Bernoulli>);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["Uses"] = typeof(DistributionArray<Bernoulli>),
+                ["Def"] = typeof(Bernoulli),
+                ["result"] = typeof(Bernoulli) //typeof(DistributionArray<Bernoulli>);
+            };
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageLogarithm", "Def", parameterTypes);
-            Console.WriteLine(fcninfo);
             CheckMessageFcnInfo(fcninfo, info);
 
             parameterTypes["Uses"] = typeof(Bernoulli[]);
             fcninfo = info.GetMessageFcnInfo(factorManager, "AverageLogarithm", "Def", parameterTypes);
-            Console.WriteLine(fcninfo);
             CheckMessageFcnInfo(fcninfo, info);
 
             DependencyInformation depInfo;
             depInfo = FactorManager.GetDependencyInfo(fcninfo.Method);
-            Console.WriteLine("Dependencies:");
-            Console.WriteLine(StringUtil.ToString(depInfo.Dependencies));
-            Console.WriteLine("Requirements:");
-            Console.WriteLine(StringUtil.ToString(depInfo.Requirements));
-            Console.WriteLine("Triggers:");
-            Console.WriteLine(StringUtil.ToString(depInfo.Triggers));
         }
 
         [Fact]
@@ -258,11 +248,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             DependencyInformation depInfo;
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Factor), "UsesEqualDef<>", typeof(bool)).GetMethodInfo());
             Assert.True(!info.IsDeterministicFactor);
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["Uses"] = typeof(Bernoulli[]);
-            parameterTypes["Def"] = typeof(Bernoulli);
-            parameterTypes["resultIndex"] = typeof(int);
-            parameterTypes["result"] = typeof(Bernoulli);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["Uses"] = typeof(Bernoulli[]),
+                ["Def"] = typeof(Bernoulli),
+                ["resultIndex"] = typeof(int),
+                ["result"] = typeof(Bernoulli)
+            };
             for (int i = 0; i < 3; i++)
             {
                 MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageLogarithm", "Uses", parameterTypes);
@@ -276,12 +268,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 if (i == 0)
                 {
                     depInfo = FactorManager.GetDependencyInfo(fcninfo.Method);
-                    Console.WriteLine("Dependencies:");
-                    Console.WriteLine(StringUtil.ToString(depInfo.Dependencies));
-                    Console.WriteLine("Requirements:");
-                    Console.WriteLine(StringUtil.ToString(depInfo.Requirements));
-                    Console.WriteLine("Triggers:");
-                    Console.WriteLine(StringUtil.ToString(depInfo.Triggers));
                 }
             }
             parameterTypes.Remove("resultIndex");
@@ -290,12 +276,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(1, fcninfo2.Triggers.Count);
 
             depInfo = FactorManager.GetDependencyInfo(fcninfo2.Method);
-            Console.WriteLine("Dependencies:");
-            Console.WriteLine(StringUtil.ToString(depInfo.Dependencies));
-            Console.WriteLine("Requirements:");
-            Console.WriteLine(StringUtil.ToString(depInfo.Requirements));
-            Console.WriteLine("Triggers:");
-            Console.WriteLine(StringUtil.ToString(depInfo.Triggers));
         }
 
         [Fact]
@@ -303,24 +283,20 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void DifferenceFactorInfo()
         {
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Factor), "Difference").GetMethodInfo());
-            Console.WriteLine(info);
             Assert.True(info.IsDeterministicFactor);
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["Difference"] = typeof(Gaussian);
-            parameterTypes["A"] = typeof(Gaussian);
-            parameterTypes["B"] = typeof(Gaussian);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["Difference"] = typeof(Gaussian),
+                ["A"] = typeof(Gaussian),
+                ["B"] = typeof(Gaussian)
+            };
             //parameterTypes["result"] = typeof(Gaussian);
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Difference", parameterTypes);
             Assert.False(fcninfo.PassResult);
             Assert.False(fcninfo.PassResultIndex);
             Assert.Equal(2, fcninfo.Dependencies.Count);
             Assert.Equal(2, fcninfo.Requirements.Count);
-            Console.WriteLine(fcninfo);
 
-            Console.WriteLine("Parameter types:");
-            Console.WriteLine(StringUtil.CollectionToString(fcninfo.GetParameterTypes(), ","));
-
-            Console.WriteLine();
             try
             {
                 fcninfo = info.GetMessageFcnInfo(factorManager, "Rubbish", "Difference", parameterTypes);
@@ -333,52 +309,47 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Console.WriteLine("Different exception: " + ex);
             }
 
-            Console.WriteLine();
             Assert.Throws<ArgumentException>(() =>
             {
                 parameterTypes["result"] = typeof(double);
                 fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Difference", parameterTypes);
             });
 
-            Console.WriteLine();
-            Console.WriteLine("All messages to A:");
+            bool verbose = false;
+            if (verbose) Console.WriteLine("All messages to A:");
             int count = 0;
             foreach (MessageFcnInfo fcninfo2 in info.GetMessageFcnInfos(null, "A", null))
             {
-                Console.WriteLine(fcninfo2);
+                if (verbose) Console.WriteLine(fcninfo2);
                 CheckMessageFcnInfo(fcninfo2, info);
                 count++;
             }
             //Assert.Equal(8, count);
 
-            Console.WriteLine();
-            Console.WriteLine("All messages to Difference:");
+            if (verbose) Console.WriteLine("All messages to Difference:");
             count = 0;
             foreach (MessageFcnInfo fcninfo2 in info.GetMessageFcnInfos(null, "Difference", null))
             {
-                Console.WriteLine(fcninfo2);
                 CheckMessageFcnInfo(fcninfo2, info);
                 count++;
             }
             Assert.Equal(8, count);
 
-            Console.WriteLine();
-            Console.WriteLine("All AverageConditionals:");
+            if (verbose) Console.WriteLine("All AverageConditionals:");
             count = 0;
             foreach (MessageFcnInfo fcninfo2 in info.GetMessageFcnInfos("AverageConditional", null, null))
             {
-                Console.WriteLine(fcninfo2);
+                if (verbose) Console.WriteLine(fcninfo2);
                 CheckMessageFcnInfo(fcninfo2, info);
                 count++;
             }
             Assert.Equal(12, count);
 
-            Console.WriteLine();
-            Console.WriteLine("All MessageFcnInfos:");
+            if (verbose) Console.WriteLine("All MessageFcnInfos:");
             count = 0;
             foreach (MessageFcnInfo fcninfo2 in info.GetMessageFcnInfos())
             {
-                Console.WriteLine(fcninfo2);
+                if (verbose) Console.WriteLine(fcninfo2);
                 CheckMessageFcnInfo(fcninfo2, info);
                 count++;
             }
@@ -407,20 +378,17 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void IsPositiveFactorInfo()
         {
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new Func<double, bool>(Factor.IsPositive));
-            Console.WriteLine(info);
             Assert.True(info.IsDeterministicFactor);
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["isPositive"] = typeof(bool);
-            parameterTypes["x"] = typeof(Gaussian);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["isPositive"] = typeof(bool),
+                ["x"] = typeof(Gaussian)
+            };
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "x", parameterTypes);
             Assert.True(fcninfo.NotSupportedMessage == null);
             CheckMessageFcnInfo(fcninfo, info);
 
             DependencyInformation depInfo = FactorManager.GetDependencyInfo(fcninfo.Method);
-            Console.WriteLine("Dependencies:");
-            Console.WriteLine(StringUtil.ToString(depInfo.Dependencies));
-            Console.WriteLine("Requirements:");
-            Console.WriteLine(StringUtil.ToString(depInfo.Requirements));
 
             Assert.Throws<NotSupportedException>(() =>
             {
@@ -444,14 +412,15 @@ namespace Microsoft.ML.Probabilistic.Tests
         internal void ToMessageTest()
         {
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new Func<double, bool>(Factor.IsPositive));
-            IDictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["isPositive"] = typeof(bool);
-            parameterTypes["x"] = typeof(Gaussian);
+            var parameterTypes = new Dictionary<string, Type>
+            {
+                ["isPositive"] = typeof(bool),
+                ["x"] = typeof(Gaussian)
+            };
             MessageFcnInfo fcninfo;
             fcninfo = info.GetMessageFcnInfo(factorManager, "LogEvidenceRatio2", "", parameterTypes);
             CheckMessageFcnInfo(fcninfo, info);
             DependencyInformation depInfo = FactorManager.GetDependencyInfo(fcninfo.Method);
-            Console.WriteLine(depInfo);
         }
 
         internal void CheckMessageFcnInfo(MessageFcnInfo fcninfo, FactorManager.FactorInfo info)
@@ -479,9 +448,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(ShiftAlpha), "ToFactor<>").GetMethodInfo());
             Console.WriteLine(info);
-            Dictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["factor"] = typeof(double);
-            parameterTypes["result"] = typeof(double);
+            Dictionary<string, Type> parameterTypes = new Dictionary<string, Type>
+            {
+                ["factor"] = typeof(double),
+                ["result"] = typeof(double)
+            };
             Assert.Throws<ArgumentException>(() =>
             {
                 MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Variable", parameterTypes);
@@ -492,10 +463,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void MissingMethodFailure()
         {
             FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new Func<double, double, double>(Factor.Gaussian));
-            Dictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
-            parameterTypes["sample"] = typeof(Gaussian);
-            parameterTypes["mean"] = typeof(Gaussian);
-            parameterTypes["precision"] = typeof(Gaussian);
+            Dictionary<string, Type> parameterTypes = new Dictionary<string, Type>
+            {
+                ["sample"] = typeof(Gaussian),
+                ["mean"] = typeof(Gaussian),
+                ["precision"] = typeof(Gaussian)
+            };
             Assert.Throws<ArgumentException>(() =>
             {
                 MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Sample", parameterTypes);

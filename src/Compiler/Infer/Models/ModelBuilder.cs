@@ -30,16 +30,16 @@ namespace Microsoft.ML.Probabilistic.Models
         public ITypeDeclaration modelType;
         public AttributeRegistry<object, ICompilerAttribute> Attributes;
         private Stack<IModelExpression> toSearch = new Stack<IModelExpression>();
-        private Set<IModelExpression> searched = new Set<IModelExpression>(new IdentityComparer<IModelExpression>());
+        private Set<IModelExpression> searched = new Set<IModelExpression>(ReferenceEqualityComparer<IModelExpression>.Instance);
 
         /// <summary>
         /// The set of condition variables used in 'IfNot' blocks.  Filled in during search.
         /// </summary>
-        private Set<Variable> negatedConditionVariables = new Set<Variable>(new IdentityComparer<Variable>());
+        private Set<Variable> negatedConditionVariables = new Set<Variable>(ReferenceEqualityComparer<Variable>.Instance);
 
         // optimizes ModelBuilder.Compile
         internal List<Variable> observedVars = new List<Variable>();
-        internal Set<IVariable> variablesToInfer = new Set<IVariable>(new IdentityComparer<IVariable>());
+        internal Set<IVariable> variablesToInfer = new Set<IVariable>(ReferenceEqualityComparer<IVariable>.Instance);
 
         protected IMethodDeclaration modelMethod;
         protected Stack<IList<IStatement>> blockStack;
@@ -912,7 +912,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         protected void GetJaggedArrayIndicesAndSizes(IVariableArray array, out IList<IVariableDeclaration[]> jaggedIndexVars, out IList<IExpression[]> jaggedSizes)
         {
-            Set<IVariableDeclaration> allVars = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+            Set<IVariableDeclaration> allVars = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
             jaggedIndexVars = new List<IVariableDeclaration[]>();
             jaggedSizes = new List<IExpression[]>();
             while (true)

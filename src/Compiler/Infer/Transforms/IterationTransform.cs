@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private ModelCompiler compiler;
         LoopCountAnalysisTransform analysis;
-        Dictionary<IStatement, IEnumerable<IStatement>> clonesOfStatement = new Dictionary<IStatement, IEnumerable<IStatement>>(new IdentityComparer<IStatement>());
+        Dictionary<IStatement, IEnumerable<IStatement>> clonesOfStatement = new Dictionary<IStatement, IEnumerable<IStatement>>(ReferenceEqualityComparer<IStatement>.Instance);
         private LoopMergingInfo loopMergingInfo;
 
         public IterationTransform(ModelCompiler compiler)
@@ -441,7 +441,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
     internal class LoopCountAnalysisTransform : ShallowCopyTransform
     {
-        public Dictionary<IVariableDeclaration, int> loopVarCount = new Dictionary<IVariableDeclaration, int>(new IdentityComparer<IVariableDeclaration>());
+        public Dictionary<IVariableDeclaration, int> loopVarCount = new Dictionary<IVariableDeclaration, int>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         protected override IStatement ConvertFor(IForStatement ifs)
         {

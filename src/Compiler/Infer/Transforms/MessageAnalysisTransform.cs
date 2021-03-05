@@ -70,15 +70,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override IStatement ConvertExpressionStatement(IExpressionStatement ies)
         {
-            if (ies.Expression is IAssignExpression)
+            if (ies.Expression is IAssignExpression iae)
             {
-                IAssignExpression iae = (IAssignExpression) ies.Expression;
                 if (iae.Expression is IMethodInvokeExpression)
-                    factorExprs.Add(ies.Expression);
+                    factorExprs.Add(iae);
             }
-            else if (ies.Expression is IMethodInvokeExpression)
+            else if (ies.Expression is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression) ies.Expression;
                 if (CodeRecognizer.IsInfer(imie)) return ies;
                 factorExprs.Add(ies.Expression);
             }
@@ -197,20 +195,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             IExpression target = null;
             IMethodInvokeExpression imie;
-            if (factor is IAssignExpression)
+            if (factor is IAssignExpression iae)
             {
-                IAssignExpression iae = (IAssignExpression) factor;
                 target = iae.Target;
                 if (target is IVariableDeclarationExpression)
                 {
                     IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(target);
                     target = Builder.VarRefExpr(ivd);
                 }
-                imie = (IMethodInvokeExpression) iae.Expression;
+                imie = (IMethodInvokeExpression)iae.Expression;
             }
-            else imie = (IMethodInvokeExpression) factor;
-            NodeInfo info = new NodeInfo(imie);
-            info.info = CodeRecognizer.GetFactorInfo(context, imie);
+            else imie = (IMethodInvokeExpression)factor;
+            NodeInfo info = new NodeInfo(imie)
+            {
+                info = CodeRecognizer.GetFactorInfo(context, imie)
+            };
             if (target != null)
             {
                 info.isReturnOrOut.Add(true);
@@ -225,37 +224,44 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 bool isOut = (arg is IAddressOutExpression);
                 info.isReturnOrOut.Add(isOut);
-                info.arguments.Add(isOut ? ((IAddressOutExpression) arg).Expression : arg);
+                info.arguments.Add(isOut ? ((IAddressOutExpression)arg).Expression : arg);
             }
             return info;
         }
 
-        private MessageFcnInfo GetMessageFcnInfo(FactorManager.FactorInfo info, string methodSuffix, string targetParameter, IDictionary<string, Type> parameterTypes)
+        private MessageFcnInfo GetMessageFcnInfo(FactorManager.FactorInfo info, string methodSuffix, string targetParameter, IReadOnlyDictionary<string, Type> parameterTypes)
         {
-            List<string> factoryParameters = new List<string>();
-            while (true)
+            var factoryParameters = new List<KeyValuePair<string, Type>>();
+            MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, methodSuffix, targetParameter, parameterTypes);
+            ParameterInfo[] parameters = fcninfo.Method.GetParameters();
+            foreach (ParameterInfo parameter in parameters)
             {
-                MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, methodSuffix, targetParameter, parameterTypes);
-                ParameterInfo[] parameters = fcninfo.Method.GetParameters();
-                bool newFactoryParameters = false;
-                foreach (ParameterInfo parameter in parameters)
+                if (parameterTypes.ContainsKey(parameter.Name)) continue;
+                if (IsFactoryType(parameter.ParameterType))
                 {
-                    if (parameterTypes.ContainsKey(parameter.Name)) continue;
-                    if (IsFactoryType(parameter.ParameterType))
-                    {
-                        newFactoryParameters = true;
-                        Type[] typeArgs = parameter.ParameterType.GetGenericArguments();
-                        Type itemType = typeArgs[0];
-                        Type arrayType = Distribution.MakeDistributionArrayType(itemType, 1);
-                        Type factoryType = typeof (IArrayFactory<,>).MakeGenericType(itemType, arrayType);
-                        parameterTypes[parameter.Name] = factoryType;
-                        factoryParameters.Add(parameter.Name);
-                    }
+                    Type[] typeArgs = parameter.ParameterType.GetGenericArguments();
+                    Type itemType = typeArgs[0];
+                    Type arrayType = Distribution.MakeDistributionArrayType(itemType, 1);
+                    Type factoryType = typeof(IArrayFactory<,>).MakeGenericType(itemType, arrayType);
+                    factoryParameters.Add(new KeyValuePair<string,Type>(parameter.Name, factoryType));
                 }
-                if (newFactoryParameters) continue;
-                foreach (string factoryParameter in factoryParameters) parameterTypes.Remove(factoryParameter);
+            }
+            if (factoryParameters.Count > 0)
+            {
+                return GetMessageFcnInfo(info, methodSuffix, targetParameter, Append(parameterTypes, factoryParameters));
+            }
+            else
+            {
                 return fcninfo;
             }
+        }
+
+        private static Dictionary<TKey, TValue> Append<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> dict, IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs)
+        {
+            var result = new Dictionary<TKey, TValue>();
+            result.AddRange(dict);
+            result.AddRange(keyValuePairs);
+            return result;
         }
 
         private IVariableDeclaration GetFactoryVariable(Type type)
@@ -272,6 +278,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return ivd;
         }
 
+        /// <summary>
+        /// Returns true if type is IArrayFactory
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private bool IsFactoryType(Type type)
         {
             return type.Name == typeof (IArrayFactory<,>).Name;
@@ -503,17 +514,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private IExpression GetMessageExpression(IExpression expr, IDictionary<IVariableDeclaration, IVariableDeclaration> msgVars)
         {
-            if (expr is IVariableReferenceExpression)
+            if (expr is IVariableReferenceExpression ivre)
             {
-                IVariableReferenceExpression ivre = (IVariableReferenceExpression) expr;
                 IVariableDeclaration ivd = ivre.Variable.Resolve();
-                IVariableDeclaration msgVar;
-                if (msgVars.TryGetValue(ivd, out msgVar)) return Builder.VarRefExpr(msgVar);
+                if (msgVars.TryGetValue(ivd, out IVariableDeclaration msgVar)) return Builder.VarRefExpr(msgVar);
                 else return null;
             }
-            else if (expr is IArrayIndexerExpression)
+            else if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression) expr;
                 IExpression targetMsg = GetMessageExpression(iaie.Target, msgVars);
                 if (targetMsg == null) return null;
                 else return Builder.ArrayIndex(targetMsg, iaie.Indices);

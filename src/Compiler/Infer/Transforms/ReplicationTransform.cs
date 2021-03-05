@@ -342,8 +342,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 // split expr into a target and extra indices, where target will be replicated and extra indices will be added later
                 var extraIndices = new List<IEnumerable<IExpression>>();
-                IExpression exprToReplicate;
-                AddUnreplicatedIndices(rlc.loops[currentLoop], expr, extraIndices, out exprToReplicate);
+                AddUnreplicatedIndices(rlc.loops[currentLoop], expr, extraIndices, out IExpression exprToReplicate);
 
                 VariableInformation varInfo = VariableInformation.GetVariableInformation(context, baseVar);
                 IExpression loopSize = Recognizer.LoopSizeExpression(loop);
