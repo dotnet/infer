@@ -18,6 +18,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Factors;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Models;
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     public class StringFormatTests
     {
