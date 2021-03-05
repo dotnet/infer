@@ -403,7 +403,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static T SetTo<T, TValue>(T result, TValue value)
             where T : SettableTo<TValue>
         {
-            if (object.ReferenceEquals(result, null) || result.Equals(default(T))) result = (T)((ICloneable)value).Clone();
+            if (result == null || result.Equals(default(T))) result = (T)((ICloneable)value).Clone();
             else result.SetTo(value);
             return result;
         }
@@ -440,7 +440,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             where T : SettableToProduct<U>, SettableTo<U>, U, SettableToUniform
         {
             int count = dists.Count;
-            if ((object.ReferenceEquals(result, null) || result.Equals(default(T)))
+            if ((result == null || result.Equals(default(T)))
                 && count > 0) result = (T)((ICloneable)dists[0]).Clone();
             if (count > 1)
             {
@@ -473,7 +473,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             where T : SettableToProduct<U>, SettableTo<U>, U, SettableToUniform
         {
             int count = dists.Length;
-            if ((object.ReferenceEquals(result, null) || result.Equals(default(T)))
+            if ((result == null || result.Equals(default(T)))
                 && count > 0) result = (T)((ICloneable)dists[0]).Clone();
             if (count > 1)
             {
@@ -598,7 +598,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             where T : SettableToProduct<U>, SettableTo<U>, SettableToUniform, U
         {
             if (index < 0 || index > count) throw new ArgumentOutOfRangeException(nameof(index));
-            if ((object.ReferenceEquals(result, null) || result.Equals(default(T)))
+            if ((result == null || result.Equals(default(T)))
                 && count > 0) result = (T)((ICloneable)dists[0]).Clone();
             if (count == 0)
             {

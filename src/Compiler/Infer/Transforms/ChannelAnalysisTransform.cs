@@ -214,7 +214,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// </summary>
             protected Dictionary<IExpression, Dictionary<object, List<GroupKey>>> invertedIndex;
             protected static IVariableDeclaration tempDecl = Builder.VarDecl("_EmptyBinding", typeof(int));
-            public Dictionary<IStatement, Queue<int>> useNumberOfStatement = new Dictionary<IStatement, Queue<int>>(new IdentityComparer<IStatement>());
+            public Dictionary<IStatement, Queue<int>> useNumberOfStatement = new Dictionary<IStatement, Queue<int>>(ReferenceEqualityComparer<IStatement>.Instance);
             public int NumberOfUses;
 
             /// <summary>

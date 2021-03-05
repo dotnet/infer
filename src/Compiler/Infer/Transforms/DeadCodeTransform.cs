@@ -110,7 +110,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <summary>
             /// Nodes in the loop whose outputs are used by the loop before they are updated.
             /// </summary>
-            public Set<IStatement> initializers = new Set<IStatement>(new IdentityComparer<IStatement>());
+            public Set<IStatement> initializers = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
 
             public List<NodeIndex> tail;
             public List<NodeIndex> firstIterPostBlock = new List<NodeIndex>();

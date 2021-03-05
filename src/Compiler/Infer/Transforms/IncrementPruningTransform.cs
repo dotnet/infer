@@ -24,9 +24,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+        Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
         HashSet<IncrementStatement> incrementStatements = new HashSet<IncrementStatement>();
-        HashSet<IStatement> visitedStatements = new HashSet<IStatement>(new IdentityComparer<IStatement>());
+        HashSet<IStatement> visitedStatements = new HashSet<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
         bool inWhileLoop;
         int ancestorIndexOfWhile;
 

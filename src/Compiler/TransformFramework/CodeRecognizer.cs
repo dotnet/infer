@@ -589,7 +589,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 // if mutated = array[i][j] and affected = array[i] then j is extra index
                 // but if mutated = array[i][i] and affected = array[i] then i is not an extra index
                 Containers containers = Containers.GetContainersNeededForExpression(context, affected);
-                Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+                Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                 foreach (IStatement container in containers.inputs)
                 {
                     if (container is IForStatement ifs)
@@ -1410,7 +1410,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         internal Set<ConditionBinding> GetBindings(IStatement stmt)
         {
-            var bounds = new Dictionary<IVariableDeclaration, Bounds>(new IdentityComparer<IVariableDeclaration>());
+            var bounds = new Dictionary<IVariableDeclaration, Bounds>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
             AddLoopBounds(bounds, stmt);
             var bindings = new Set<ConditionBinding>();
             foreach (var entry in bounds)

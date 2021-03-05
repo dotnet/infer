@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private ChannelAnalysisTransform analysis;
 
         private readonly Dictionary<IVariableDeclaration, VariableToChannelInformation> usesOfVariable =
-            new Dictionary<IVariableDeclaration, VariableToChannelInformation>(new IdentityComparer<IVariableDeclaration>());
+            new Dictionary<IVariableDeclaration, VariableToChannelInformation>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         public override ITypeDeclaration Transform(ITypeDeclaration itd)
         {

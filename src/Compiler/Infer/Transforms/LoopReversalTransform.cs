@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal static bool debug;
         private LoopMergingInfo loopMergingInfo;
         private readonly Set<IVariableDeclaration> loopVarsToReverse = new Set<IVariableDeclaration>();
-        private readonly Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+        private readonly Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
         private Dictionary<IStatement, Set<IVariableDeclaration>> loopVarsToReverseInStatement;
         IBlockStatement debugBlock;
 
@@ -210,7 +210,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        public Dictionary<IStatement, Set<IVariableDeclaration>> loopVarsToReverseInStatement = new Dictionary<IStatement, Set<IVariableDeclaration>>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, Set<IVariableDeclaration>> loopVarsToReverseInStatement = new Dictionary<IStatement, Set<IVariableDeclaration>>(ReferenceEqualityComparer<IStatement>.Instance);
 
         public List<string> log = new List<string>();
 

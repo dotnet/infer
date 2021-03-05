@@ -25,13 +25,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <summary>
         /// Stores the dependency type of all dependent statements.
         /// </summary>
-        public Dictionary<IStatement, DependencyType> dependencyTypeOf = new Dictionary<IStatement, DependencyType>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, DependencyType> dependencyTypeOf = new Dictionary<IStatement, DependencyType>(ReferenceEqualityComparer<IStatement>.Instance);
 
         //public SortedDictionary<IStatement,DependencyType> dependencyTypeOf = new SortedDictionary<IStatement, DependencyType>(new StatementComparer());
         /// <summary>
         /// Stores the offsets of all dependent statements that have an offset.
         /// </summary>
-        public Dictionary<IStatement, IOffsetInfo> offsetIndexOf = new Dictionary<IStatement, IOffsetInfo>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, IOffsetInfo> offsetIndexOf = new Dictionary<IStatement, IOffsetInfo>(ReferenceEqualityComparer<IStatement>.Instance);
 
         /// <summary>
         /// True if this statement assigns to an output variable of the inference.
@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <summary>
         /// List of method arguments that the statement depends on.
         /// </summary>
-        public Set<IParameterDeclaration> ParameterDependencies = new Set<IParameterDeclaration>(new IdentityComparer<IParameterDeclaration>());
+        public Set<IParameterDeclaration> ParameterDependencies = new Set<IParameterDeclaration>(ReferenceEqualityComparer<IParameterDeclaration>.Instance);
 
         public void AddOffsetIndices(IOffsetInfo offsetIndex, IStatement ist)
         {
@@ -230,8 +230,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         public void Replace(Converter<IStatement, IStatement> converter)
         {
             List<IStatement> toRemove = new List<IStatement>();
-            Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(new IdentityComparer<IStatement>());
-            Dictionary<IStatement, IOffsetInfo> toAddOffset = new Dictionary<IStatement, IOffsetInfo>(new IdentityComparer<IStatement>());
+            Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(ReferenceEqualityComparer<IStatement>.Instance);
+            Dictionary<IStatement, IOffsetInfo> toAddOffset = new Dictionary<IStatement, IOffsetInfo>(ReferenceEqualityComparer<IStatement>.Instance);
             foreach (KeyValuePair<IStatement, DependencyType> entry in dependencyTypeOf)
             {
                 IStatement stmt = entry.Key;
@@ -338,8 +338,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         public void AddClones(Converter<IStatement, IEnumerable<IStatement>> getClones)
         {
             List<IStatement> toRemove = new List<IStatement>();
-            Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(new IdentityComparer<IStatement>());
-            Dictionary<IStatement, IOffsetInfo> toAddOffset = new Dictionary<IStatement, IOffsetInfo>(new IdentityComparer<IStatement>());
+            Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(ReferenceEqualityComparer<IStatement>.Instance);
+            Dictionary<IStatement, IOffsetInfo> toAddOffset = new Dictionary<IStatement, IOffsetInfo>(ReferenceEqualityComparer<IStatement>.Instance);
             foreach (KeyValuePair<IStatement, DependencyType> entry in dependencyTypeOf)
             {
                 IStatement stmt = entry.Key;

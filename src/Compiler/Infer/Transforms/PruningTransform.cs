@@ -114,7 +114,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (PruneUniformStmts)
             {
                 // When statements are pruned from the code, they must also be pruned from the DependencyInformation attributes of all other statements that might refer to them.
-                Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+                Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
                 foreach (NodeIndex targetIndex in g.dependencyGraph.Nodes)
                 {
                     if (g.isUniform[targetIndex])

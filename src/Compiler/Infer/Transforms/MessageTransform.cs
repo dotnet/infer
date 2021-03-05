@@ -73,12 +73,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// The set of variables that have at least one definition with a non-unit derivative
         /// </summary>
-        protected Set<IVariableDeclaration> hasNonUnitDerivative = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+        protected Set<IVariableDeclaration> hasNonUnitDerivative = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         protected Dictionary<IExpression, Type> initialiserType = new Dictionary<IExpression, Type>();
 
         protected Dictionary<IVariableDeclaration, IVariableDeclaration> derivOfVariable =
-            new Dictionary<IVariableDeclaration, IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+            new Dictionary<IVariableDeclaration, IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         private static readonly MessageDirection[] directions = { MessageDirection.Forwards, MessageDirection.Backwards };
 

@@ -142,7 +142,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override void DoConvertMethodBody(IList<IStatement> outputs, IList<IStatement> inputs)
         {
-            Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+            Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
             ProcessStatements(outputs, outputs, inputs, replacements);
             // update all dependencies
             foreach (IStatement ist in outputs)

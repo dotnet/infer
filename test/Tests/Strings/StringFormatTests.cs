@@ -279,7 +279,194 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine("names: \n" + engine.Infer(names));
         }
 
+        [Fact]
+        public void SemanticWebTest1()
+        {
+            var prop0 = "Tony Blair";
+            var prop1 = "6 May 1953";
+            var template = Variable.Random(StringDistribution.Any());
+            var text = Variable.StringFormat(template, prop0, prop1);
+
+            var engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            engine.NumberOfIterations = 1;
+
+            var textDist = engine.Infer<StringDistribution>(text);
+            Console.WriteLine("textDist={0}", textDist);
+
+            Assert.False(double.IsNegativeInfinity(textDist.GetLogProb("6 May 1953 is the date of birth of Tony Blair.")));
+        }
+
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        public void SemanticWebTest2()
+        {
+            var prop0Dist = StringDistribution.OneOf("Anthony Blair", "Tony Blair");
+            var prop1Dist = StringDistribution.OneOf("6 May 1953", "May 6, 1953");
+
+            var prop0 = Variable.Random(prop0Dist);
+            var prop1 = Variable.Random(prop1Dist);
+            var template = Variable.Random(StringDistribution.Any());
+            var text = Variable.StringFormat(template, prop0, prop1);
+
+            var engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            engine.NumberOfIterations = 1;
+
+            var textDist = engine.Infer<StringDistribution>(text);
+            Console.WriteLine("textDist={0}", textDist);
+
+            Assert.False(double.IsNegativeInfinity(textDist.GetLogProb("6 May 1953 is the date of birth of Tony Blair.")));
+            Assert.False(double.IsNegativeInfinity(textDist.GetLogProb("6 May 1953 is the date of birth of Anthony Blair.")));
+            Assert.False(double.IsNegativeInfinity(textDist.GetLogProb("Mr. Tony Blair was born on May 6, 1953.")));
+        }
+
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        public void SemanticWebTest2b()
+        {
+            var prop0Dist = StringDistribution.OneOf("Anthony Blair", "Tony Blair");
+            var prop0 = Variable.Random(prop0Dist);
+
+            var dateStrings = Variable.Observed(new[] { "6 May 1953", "May 6, 1953" });
+            var dateFormat = Variable.DiscreteUniform(dateStrings.Range);
+            var prop1 = ArrayIndex(dateStrings, dateFormat);
+
+            var template = Variable.Random(StringDistribution.Any());
+            var text = Variable.StringFormat(template, prop0, prop1);
+
+            var engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            engine.NumberOfIterations = 1;
+
+            var textDist = engine.Infer<StringDistribution>(text);
+            Console.WriteLine("textDist={0}", textDist);
+
+            Assert.False(double.IsNegativeInfinity(textDist.GetLogProb("6 May 1953 is the date of birth of Tony Blair.")));
+            Assert.False(double.IsNegativeInfinity(textDist.GetLogProb("6 May 1953 is the date of birth of Anthony Blair.")));
+            Assert.False(double.IsNegativeInfinity(textDist.GetLogProb("Mr. Tony Blair was born on May 6, 1953.")));
+        }
+
+        [Fact]
+        public void SemanticWebTest3()
+        {
+            // Simplified name model 
+            var prop0 = Variable.Random(NamePrior()).Named("prop0");
+            // Simplified date model any string ending in a digit
+            var prop1 = Variable.Random(
+                    StringDistribution.Char(DiscreteChar.Digit()) + StringDistribution.Any() + StringDistribution.Char(DiscreteChar.Digit()))
+                .Named("prop1");
+            var template = Variable.Random(StringDistribution.String("{0}") + WordStrings.WordMiddle() + StringDistribution.String("{1}"))
+                .Named("template");
+            var text = Variable.StringFormat(template, prop0, prop1).Named("text");
+            text.ObservedValue = "Tony Blair was born on 6 May 1953";
+
+            var engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            engine.NumberOfIterations = 1;
+
+            var prop0Dist = engine.Infer<StringDistribution>(prop0);
+            var prop1Dist = engine.Infer<StringDistribution>(prop1);
+            var templateDist = engine.Infer<StringDistribution>(template);
+
+            StringInferenceTestUtilities.TestProbability(prop0Dist, 1.0, "Tony Blair");
+            StringInferenceTestUtilities.TestProbability(prop1Dist, 0.5, "1953", "6 May 1953");
+            StringInferenceTestUtilities.TestProbability(templateDist, 0.5, "{0} was born on {1}", "{0} was born on 6 May {1}");
+        }
+
+        [Fact]
+        public void SemanticWebTest3b()
+        {
+            var prop0 = Variable.Random(NamePrior());
+
+            var dateStrings = Variable.Observed(new[] { "6 May 1953", "May 6, 1953" });
+            var dateFormat = Variable.DiscreteUniform(dateStrings.Range);
+            var prop1 = ArrayIndex(dateStrings, dateFormat);
+
+            var template = Variable.Random(StringDistribution.String("{0}") + WordStrings.WordMiddle() + StringDistribution.String("{1}"));
+            var text = Variable.StringFormat(template, prop0, prop1);
+            text.ObservedValue = "Tony Blair was born on May 6, 1953";
+
+            var engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            engine.NumberOfIterations = 1;
+
+            var prop0Dist = engine.Infer<StringDistribution>(prop0);
+            var prop1Dist = engine.Infer<StringDistribution>(prop1);
+            var templateDist = engine.Infer<StringDistribution>(template);
+            var dateFormatDist = engine.Infer<Discrete>(dateFormat);
+
+            StringInferenceTestUtilities.TestProbability(prop0Dist, 1.0, "Tony Blair");
+            StringInferenceTestUtilities.TestProbability(prop1Dist, 1.0, "May 6, 1953");
+            StringInferenceTestUtilities.TestProbability(templateDist, 1.0, "{0} was born on {1}");
+
+            //Assert.AreEqual(1.0, dateFormatDist[1]); // TODO: fix me
+        }
+
+        [Fact]
+        public void SemanticWebTest4()
+        {
+            var prop0 = Variable.Random(NamePrior());
+
+            var dateStrings = Variable.Observed(new[] { "6 May 1953", "May 6, 1953" });
+            var dateFormat = Variable.DiscreteUniform(dateStrings.Range);
+            var prop1 = ArrayIndex(dateStrings, dateFormat);
+
+            var template = Variable.Random(StringDistribution.String("{0}") + WordStrings.WordMiddle() + StringDistribution.String("{1}"));
+            var text = Variable.StringFormat(template, prop0, prop1);
+
+            var template2 = Variable.Random(StringDistribution.Any());
+            var fulltext = Variable.StringFormat(template2, text);
+
+            fulltext.ObservedValue = "I believe Mr Tony Blair was born on May 6, 1953 in Edinburgh, UK.";
+
+            var engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            engine.NumberOfIterations = 1;
+
+            var prop0Dist = engine.Infer<StringDistribution>(prop0);
+            var prop1Dist = engine.Infer<StringDistribution>(prop1);
+            var templateDist = engine.Infer<StringDistribution>(template);
+            var textDist = engine.Infer<StringDistribution>(text);
+            var dateFormatDist = engine.Infer<Discrete>(dateFormat);
+
+            StringInferenceTestUtilities.TestProbability(prop0Dist, 0.5, "Mr Tony", "Tony Blair");
+            StringInferenceTestUtilities.TestProbability(prop1Dist, 1.0, "May 6, 1953");
+            StringInferenceTestUtilities.TestProbability(templateDist, 0.5, "{0} was born on {1}", "{0} Blair was born on {1}");
+            StringInferenceTestUtilities.TestProbability(
+                textDist,
+                0.5,
+                "Tony Blair was born on May 6, 1953",
+                "Mr Tony Blair was born on May 6, 1953");
+
+            //Assert.AreEqual(1.0, dateFormatDist[1]); // TODO: fix me
+        }
+
         #region Helpers
+
+        private static Variable<string> ArrayIndex(VariableArray<string> array, Variable<int> index)
+        {
+            var res = Variable.Random(StringDistribution.Any());
+            using (Variable.Switch(index))
+            {
+                Variable.ConstrainEqual(res, array[index]);
+            }
+
+            return res;
+        }
+
+        private static StringDistribution NamePrior()
+        {
+            //TODO: make this closer to: 
+            // NP([\s\-]NP)*(\s[""\(]NP[""\)])?([\s\-]NP)+
+            var result = NamePart();
+            result.AppendInPlace(DiscreteChar.OneOf(' ', '-'));
+            result.AppendInPlace(NamePart());
+
+            return result;
+        }
+
+        private static StringDistribution NamePart() => StringDistribution.Char(DiscreteChar.Upper()) + StringDistribution.Lower(minLength: 0);
 
         private static StringDistribution WordString() => StringDistribution.OneOrMore(DiscreteChar.InRanges("azAZ09  __''\t\r"));
 

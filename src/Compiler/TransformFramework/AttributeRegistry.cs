@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 using Microsoft.ML.Probabilistic;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Utilities;
@@ -34,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
             else
             {
-                registry = new Dictionary<TObject, Set<TAttribute>>(new IdentityComparer<TObject>());
+                registry = new Dictionary<TObject, Set<TAttribute>>(ReferenceEqualityComparer<TObject>.Instance);
             }
         }
 
@@ -43,7 +45,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// </summary>
         protected bool IsIdentityEquality
         {
-            get { return (registry.Comparer is IdentityComparer<TObject>); }
+            get { return (registry.Comparer is ReferenceEqualityComparer<TObject>); }
         }
 
         /*public AttributeRegistry(IEqualityComparer<TObject> comparer)
@@ -324,16 +326,21 @@ namespace Microsoft.ML.Probabilistic.Compiler
         }
     }
 
-    internal class IdentityComparer<T> : EqualityComparer<T>
+    internal class ReferenceEqualityComparer<T> : IEqualityComparer<T>
+        where T : class
     {
-        public override bool Equals(T x, T y)
+        private ReferenceEqualityComparer()
         {
-            return object.ReferenceEquals(x, y);
         }
 
-        public override int GetHashCode(T obj)
-        {
-            return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
-        }
+        public static ReferenceEqualityComparer<T> Instance { get; } = new ReferenceEqualityComparer<T>();
+
+        #region IEqualityComparer<T> Members
+
+        public bool Equals(T x, T y) => ReferenceEquals(x, y);
+
+        public int GetHashCode(T obj) => RuntimeHelpers.GetHashCode(obj);
+
+        #endregion
     }
 }

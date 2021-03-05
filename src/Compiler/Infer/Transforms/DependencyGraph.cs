@@ -194,7 +194,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             bool deleteCancels = false,
             bool readAfterWriteOnly = false)
         {
-            Dictionary<IStatement, int> indexOfNode = new Dictionary<IStatement, int>(new IdentityComparer<IStatement>());
+            Dictionary<IStatement, int> indexOfNode = new Dictionary<IStatement, int>(ReferenceEqualityComparer<IStatement>.Instance);
             for (int i = 0; i < nodes.Count; i++)
             {
                 indexOfNode[nodes[i]] = i;

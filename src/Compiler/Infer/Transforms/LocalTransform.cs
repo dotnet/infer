@@ -350,7 +350,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// Maps an IForStatement to its LocalInfos
         /// </summary>
-        internal Dictionary<IStatement, Dictionary<IExpression, LocalInfo>> localInfoOfStmt = new Dictionary<IStatement, Dictionary<IExpression, LocalInfo>>(new IdentityComparer<IStatement>());
+        internal Dictionary<IStatement, Dictionary<IExpression, LocalInfo>> localInfoOfStmt = new Dictionary<IStatement, Dictionary<IExpression, LocalInfo>>(ReferenceEqualityComparer<IStatement>.Instance);
         private Stack<IStatement> openContainers = new Stack<IStatement>();
         private bool InPartitionedLoop;
         ModelCompiler compiler;
@@ -633,7 +633,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             info.count++;
             if (info.containingStatements == null)
             {
-                info.containingStatements = new HashSet<IStatement>(openContainers, new IdentityComparer<IStatement>());
+                info.containingStatements = new HashSet<IStatement>(openContainers, ReferenceEqualityComparer<IStatement>.Instance);
                 info.containers = GetContainers();
             }
             else
