@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool UsesGroups => false;
 
-        public TAutomaton AsAutomaton()
+        public virtual TAutomaton AsAutomaton()
         {
             var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.Builder();
             foreach (var entry in Dictionary)
@@ -481,6 +481,95 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             return normalizer.LogValue;
+        }
+
+        public override StringAutomaton AsAutomaton()
+        {
+            var dict = (SortedList<string, Weight>)Dictionary;
+            if (dict.Count == 0)
+                return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Zero();
+
+            var result = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder();
+            var end = result
+                .AddState()
+                .SetEndWeight(Weight.One);
+            var sharedPrefixWithPreviousLength = new int[dict.Count];
+            sharedPrefixWithPreviousLength[0] = 0;
+            for (int i = 1; i < dict.Count; ++i)
+                sharedPrefixWithPreviousLength[i] = GetSharedPrefixLength(dict.Keys[i - 1], dict.Keys[i]);
+
+            int processedEntriesCount = 0;
+            do
+            {
+                processedEntriesCount = ProcessEntries(processedEntriesCount, result.Start, 0, Weight.One);
+            }
+            while (processedEntriesCount < dict.Count);
+
+            return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromData(result.GetData(true));
+
+            int GetSharedPrefixLength(string x, string y)
+            {
+                var shorterLength = Math.Min(x.Length, y.Length);
+                int idx = 0;
+                while (idx < shorterLength && x[idx] == y[idx])
+                    ++idx;
+                return idx;
+            }
+
+            int ProcessEntries(int startIdx, Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, int currentSharedPrefixLength, Weight weightNormalizer)
+            {
+                int nextStartIdx = startIdx + 1;
+                int nextSharedPrefixLength = int.MaxValue;
+                while (nextStartIdx < sharedPrefixWithPreviousLength.Length && sharedPrefixWithPreviousLength[nextStartIdx] > currentSharedPrefixLength)
+                {
+                    nextSharedPrefixLength = Math.Min(nextSharedPrefixLength, sharedPrefixWithPreviousLength[nextStartIdx]);
+                    ++nextStartIdx;
+                }
+
+                if (nextStartIdx == startIdx + 1)
+                {
+                    string currentString = dict.Keys[startIdx];
+                    var weight = dict.Values[startIdx] * weightNormalizer;
+                    if (currentString.Length == currentSharedPrefixLength)
+                    {
+                        currentState.SetEndWeight(weight);
+                    }
+                    else if (currentString.Length == currentSharedPrefixLength + 1)
+                    {
+                        currentState.AddTransition(currentString[currentSharedPrefixLength], weight, end.Index);
+                    }
+                    else
+                    {
+                        currentState = currentState.AddTransition(currentString[currentSharedPrefixLength], weight);
+                        for (int i = currentSharedPrefixLength + 1; i < currentString.Length - 1; ++i)
+                        {
+                            currentState = currentState.AddTransition(currentString[i], Weight.One);
+                        }
+                        currentState.AddTransition(currentString[currentString.Length - 1], Weight.One, end.Index);
+                    }
+                }
+                else
+                {
+                    var batchTotalWeight = Weight.FromLogValue(MMath.LogSumExp(Enumerable.Range(startIdx, nextStartIdx - startIdx).Select(i => dict.Values[i].LogValue)));
+                    var weight = batchTotalWeight * weightNormalizer;
+                    var childBatchWeightNormalizer = Weight.Inverse(batchTotalWeight);
+
+                    string firstString = dict.Keys[startIdx];
+                    currentState = currentState.AddTransition(firstString[currentSharedPrefixLength], weight);
+                    for (int i = currentSharedPrefixLength + 1; i < nextSharedPrefixLength; ++i)
+                    {
+                        currentState = currentState.AddTransition(firstString[i], Weight.One);
+                    }
+                    int idx = startIdx;
+                    do
+                    {
+                        idx = ProcessEntries(idx, currentState, nextSharedPrefixLength, childBatchWeightNormalizer);
+                    }
+                    while (idx < nextStartIdx);
+                }
+
+                return nextStartIdx;
+            }
         }
     }
 

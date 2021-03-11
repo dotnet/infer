@@ -2504,8 +2504,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <returns>The number of states in the determinized automaton.</returns>
         private static int CountStates(params string[] values)
         {
-            var distribution = StringDistribution.OneOf(values);
-            var workspace = distribution.GetWorkspaceOrPoint();
+            var workspace = Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromLogValues(values.Select(v => new KeyValuePair<string, double>(v, 0.0)));
             workspace.TryDeterminize();
             return workspace.States.Count;
         }

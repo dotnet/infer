@@ -574,7 +574,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (pointMass != null && !other.UsesGroups)
             {
                 var logValue = other.GetLogValue(pointMass.Point);
-                if (logValue == 0.0)
+                if (double.IsNegativeInfinity(logValue))
+                    return Zero();
+                else if (logValue == 0.0)
                     return FromPointMass(pointMass);
                 else
                     return FromDictionary(
@@ -608,7 +610,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             resultList.Add(new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * Weight.FromLogValue(otherLogValue)));
                     }
                 }
-                return FromDictionary(
+                if (resultList.Count == 0)
+                    return Zero();
+                else if (resultList.Count == 1 && resultList[0].Value.LogValue == 0.0)
+                    return FromPoint(resultList[0].Key);
+                else
+                    return FromDictionary(
                         DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(resultList));
             }
 
