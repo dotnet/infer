@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// Represents a distribution using the quantiles at probabilities (1,...,n)/(n+1)
     /// </summary>
     [Serializable, DataContract]
-    public class InnerQuantiles : CanGetQuantile, CanGetProbLessThan
+    public class InnerQuantiles : CanGetQuantile<double>, CanGetProbLessThan<double>
     {
         /// <summary>
         /// Numbers in increasing order.  Cannot be empty.
@@ -43,7 +43,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             upperGaussian = GetUpperGaussian(quantiles);
         }
 
-        public static InnerQuantiles FromDistribution(int quantileCount, CanGetQuantile canGetQuantile)
+        public static InnerQuantiles FromDistribution(int quantileCount, CanGetQuantile<double> canGetQuantile)
         {
             if (quantileCount == 0) throw new ArgumentOutOfRangeException(nameof(quantileCount), quantileCount, "quantileCount == 0");
             var quantiles = Util.ArrayInit(quantileCount, i => canGetQuantile.GetQuantile((i + 1.0) / (quantileCount + 1.0)));
@@ -96,18 +96,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return GetProbLessThan(x, quantiles);
         }
 
-        private static void GetGaussianFromQuantiles(double x0, double p0, double x1, double p1, out double mean, out double deviation)
+        /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
         {
-            // solve for the Gaussian mean and stddev that yield:
-            // x0 = mean + stddev * NormalCdfInv(p0)
-            double z0 = MMath.NormalCdfInv(p0);
-            double z1 = MMath.NormalCdfInv(p1);
-            Matrix Z = new Matrix(new double[,] { { 1, z0 }, { 1, z1 } });
-            DenseVector X = DenseVector.FromArray(x0, x1);
-            DenseVector A = DenseVector.Zero(2);
-            A.SetToLeastSquares(X, Z);
-            mean = A[0];
-            deviation = A[1];
+            return Math.Max(0.0, GetProbLessThan(upperBound) - GetProbLessThan(lowerBound));
         }
 
         /// <summary>
@@ -208,6 +200,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 return result;
             }
+        }
+
+        private static void GetGaussianFromQuantiles(double x0, double p0, double x1, double p1, out double mean, out double deviation)
+        {
+            // solve for the Gaussian mean and stddev that yield:
+            // x0 = mean + stddev * NormalCdfInv(p0)
+            double z0 = MMath.NormalCdfInv(p0);
+            double z1 = MMath.NormalCdfInv(p1);
+            Matrix Z = new Matrix(new double[,] { { 1, z0 }, { 1, z1 } });
+            DenseVector X = DenseVector.FromArray(x0, x1);
+            DenseVector A = DenseVector.Zero(2);
+            A.SetToLeastSquares(X, Z);
+            mean = A[0];
+            deviation = A[1];
         }
 
         /// <summary>

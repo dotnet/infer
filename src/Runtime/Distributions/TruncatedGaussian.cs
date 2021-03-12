@@ -31,7 +31,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                                       CanGetMean<double>, CanGetVariance<double>, CanGetMeanAndVarianceOut<double, double>,
                                       CanGetLogNormalizer, CanGetLogAverageOf<TruncatedGaussian>,
                                       CanGetLogAverageOfPower<TruncatedGaussian>,
-                                      CanGetAverageLog<TruncatedGaussian>
+                                      CanGetAverageLog<TruncatedGaussian>,
+                                      CanGetProbLessThan<double>, CanGetQuantile<double>, ITruncatableDistribution<double>
     {
         /// <summary>
         /// Untruncated Gaussian
@@ -267,12 +268,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsProper())
             {
-                // need to check this handles no truncation correctly
-                double m = Gaussian.MeanTimesPrecision / Gaussian.Precision;
-                double s = Math.Sqrt(1 / Gaussian.Precision);
-                double Z = MMath.NormalCdf((UpperBound - m) / s)
-                           - MMath.NormalCdf((LowerBound - m) / s);
-                return MMath.LnSqrt2PI + 0.5 * (Gaussian.MeanTimesPrecision * Gaussian.MeanTimesPrecision / Gaussian.Precision - Math.Log(Gaussian.Precision)) + Math.Log(Z);
+                return Gaussian.GetLogNormalizer() + Math.Log(Gaussian.GetProbBetween(LowerBound, UpperBound));
             }
             else
             {
@@ -570,6 +566,46 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 var product = this * (that ^ power);
                 return product.GetLogNormalizer() - this.GetLogNormalizer() - power * that.GetLogNormalizer();
             }
+        }
+
+        /// <inheritdoc/>
+        public double GetProbLessThan(double x)
+        {
+            if (this.IsPointMass)
+            {
+                return (this.Point < x) ? 1.0 : 0.0;
+            }
+            else
+            {
+                double totalProbability = Gaussian.GetProbBetween(LowerBound, UpperBound);
+                return Gaussian.GetProbBetween(LowerBound, x) / totalProbability;
+            }
+        }
+
+        /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
+        {
+            double totalProbability = Gaussian.GetProbBetween(LowerBound, UpperBound);
+            return Gaussian.GetProbBetween(Math.Max(LowerBound, lowerBound), Math.Min(UpperBound, upperBound)) / totalProbability;
+        }
+
+        /// <inheritdoc/>
+        public double GetQuantile(double probability)
+        {
+            if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
+            if (probability > 1) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1");
+            double totalProbability = Gaussian.GetProbBetween(LowerBound, UpperBound);
+            double lowerProbability = Gaussian.GetProbLessThan(LowerBound);
+            return Math.Min(UpperBound, Math.Max(LowerBound, Gaussian.GetQuantile(probability * totalProbability + lowerProbability)));
+        }
+
+        /// <inheritdoc/>
+        public ITruncatableDistribution<double> Truncate(double lowerBound, double upperBound)
+        {
+            if (lowerBound > upperBound) throw new ArgumentOutOfRangeException($"lowerBound ({lowerBound}) > upperBound ({upperBound})");
+            if (lowerBound > this.UpperBound) throw new ArgumentOutOfRangeException($"lowerBound ({lowerBound}) > this.UpperBound ({this.UpperBound})");
+            if (upperBound < this.LowerBound) throw new ArgumentOutOfRangeException($"upperBound ({upperBound}) < this.LowerBound ({this.LowerBound})");
+            return new TruncatedGaussian(Gaussian, Math.Max(LowerBound, lowerBound), Math.Min(UpperBound, upperBound));
         }
 
         /// <summary>
