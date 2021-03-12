@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// Represents a distribution using the quantiles at probabilities (0,...,n-1)/(n-1)
     /// </summary>
     [Serializable, DataContract]
-    public class OuterQuantiles : CanGetQuantile, CanGetProbLessThan
+    public class OuterQuantiles : CanGetQuantile<double>, CanGetProbLessThan<double>
     {
         /// <summary>
         /// Numbers in increasing order.
@@ -83,7 +83,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
-        public static OuterQuantiles FromDistribution(int quantileCount, CanGetQuantile canGetQuantile)
+        public static OuterQuantiles FromDistribution(int quantileCount, CanGetQuantile<double> canGetQuantile)
         {
             var quantiles = Util.ArrayInit(quantileCount, i => canGetQuantile.GetQuantile(i / (quantileCount - 1.0)));
             return new OuterQuantiles(quantiles);
@@ -121,6 +121,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             // quantiles[index-1] < x <= quantiles[index]
             double frac = (x - quantiles[index - 1]) / (quantiles[index] - quantiles[index - 1]);
             return (index - 1 + frac) / (n - 1);
+        }
+
+        /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
+        {
+            return Math.Max(0.0, GetProbLessThan(upperBound) - GetProbLessThan(lowerBound));
         }
 
         /// <summary>

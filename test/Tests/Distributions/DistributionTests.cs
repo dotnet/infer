@@ -295,6 +295,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             //Assert.Equal(2.2, m);
             //Assert.Equal(3.3, v);
 
+            foreach (double x in new[] { 1.1, 4.4 })
+            {
+                double probLessThan = g.GetProbLessThan(x);
+                Assert.Equal(probLessThan, g.GetProbBetween(double.NegativeInfinity, x));
+                double quantile = g.GetQuantile(probLessThan);
+                Assert.Equal(System.Math.Max(lowerBound, x), quantile, 1e-4);
+            }
+
             var g2 = new TruncatedGaussian(4.4, 5.5, lowerBound, upperBound);
             DistributionTest(g, g2);
             PointMassTest(g, 7.7);
@@ -504,9 +512,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(2.2, m);
             Assert.Equal(3.3, v);
 
-            double x = 4.4;
-            double probLessThan = g.GetProbLessThan(x);
-            Assert.Equal(MMath.NormalCdf((x - 2.2) / System.Math.Sqrt(3.3)), probLessThan, 1e-4);
+            foreach (double x in new[] { 1.1, 4.4 })
+            {
+                double probLessThan = g.GetProbLessThan(x);
+                Assert.Equal(MMath.NormalCdf((x - m) / System.Math.Sqrt(v)), probLessThan, 1e-4);
+                Assert.Equal(probLessThan, g.GetProbBetween(double.NegativeInfinity, x));
+                Assert.Equal(probLessThan, g.GetProbBetween(2*m - x, double.PositiveInfinity));
+            }
 
             Gaussian g2 = new Gaussian(4.4, 5.5);
             /* Test in matlab:
@@ -777,6 +789,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             GammaMomentTest(g);
             GammaMomentTest(Gamma.FromShapeAndRate(1.7, 2));
             GammaMomentTest(Gamma.PointMass(2.3));
+
+            Assert.Equal(g.GetProbLessThan(0.1), g.GetProbBetween(0, 0.1));
+            Assert.Equal(g.GetProbBetween(0, 0.2), g.GetProbBetween(-1, 0.2));
 
             DistributionTest(g, new Gamma(10, 11));
             PointMassTest(g, 7.7);
@@ -1519,7 +1534,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void BetaTest()
         {
             Beta d = new Beta(0.2, 0.1);
-
+            Assert.Equal(d.GetProbLessThan(0.1), d.GetProbBetween(0, 0.1));
+            Assert.Equal(d.GetProbBetween(0, 0.2), d.GetProbBetween(-1, 0.2));
             DistributionTest(d, new Beta(4.4, 3.3));
             using (TestUtils.TemporarilyAllowBetaImproperSums)
             {

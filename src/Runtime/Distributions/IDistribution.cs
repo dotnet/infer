@@ -230,24 +230,32 @@ namespace Microsoft.ML.Probabilistic.Distributions
         ModeType GetMode();
     }
 
-    public interface CanGetProbLessThan
+    public interface CanGetProbLessThan<in T>
     {
         /// <summary>
         /// Returns the probability of drawing a sample less than x.
         /// </summary>
-        /// <param name="x">Any real number.</param>
+        /// <param name="x">Any number.</param>
         /// <returns>A real number in [0,1].</returns>
-        double GetProbLessThan(double x);
+        double GetProbLessThan(T x);
+
+        /// <summary>
+        /// Returns the probability mass in an interval.
+        /// </summary>
+        /// <param name="lowerBound">Inclusive</param>
+        /// <param name="upperBound">Exclusive</param>
+        /// <returns>A number between 0 and 1, inclusive.</returns>
+        double GetProbBetween(T lowerBound, T upperBound);
     }
 
-    public interface CanGetQuantile
+    public interface CanGetQuantile<out T>
     {
         /// <summary>
         /// Returns the largest value x such that GetProbLessThan(x) &lt;= probability.
         /// </summary>
         /// <param name="probability">A real number in [0,1].</param>
-        /// <returns></returns>
-        double GetQuantile(double probability);
+        /// <returns>A number</returns>
+        T GetQuantile(double probability);
     }
 
     /// <summary>

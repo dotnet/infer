@@ -10,7 +10,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <summary>
     /// Represents a distribution using the quantiles at arbitrary probabilities.
     /// </summary>
-    public class IrregularQuantiles : CanGetQuantile, CanGetProbLessThan
+    public class IrregularQuantiles : CanGetQuantile<double>, CanGetProbLessThan<double>
     {
         /// <summary>
         /// Sorted in ascending order.
@@ -69,6 +69,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double slope = (quantiles[largerIndex] - quantiles[smallerIndex]) / (probabilities[largerIndex] - probabilities[smallerIndex]);
                 return probabilities[smallerIndex] + (x - quantiles[smallerIndex]) / slope;
             }
+        }
+
+        /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
+        {
+            return System.Math.Max(0.0, GetProbLessThan(upperBound) - GetProbLessThan(lowerBound));
         }
 
         /// <summary>

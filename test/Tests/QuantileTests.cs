@@ -337,7 +337,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             CheckGetQuantile(inner, inner, (int)Math.Ceiling(100.0 / 8), (int)Math.Floor(100.0 * 7 / 8));
         }
 
-        internal void CheckGetQuantile(CanGetQuantile canGetQuantile, CanGetProbLessThan canGetProbLessThan, int minPercent = 0, int maxPercent = 100)
+        internal void CheckGetQuantile(CanGetQuantile<double> canGetQuantile, CanGetProbLessThan<double> canGetProbLessThan, int minPercent = 0, int maxPercent = 100)
         {
             for (int i = minPercent; i < maxPercent; i++)
             {
@@ -483,7 +483,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             CheckProbLessThan(est, x, maximumError);
         }
 
-        private void CheckProbLessThan(CanGetProbLessThan canGetProbLessThan, List<double> x, double maximumError)
+        private void CheckProbLessThan(CanGetProbLessThan<double> canGetProbLessThan, List<double> x, double maximumError)
         {
             x.Sort();
             var sortedData = new OuterQuantiles(x.ToArray());
