@@ -493,7 +493,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IndexedProperty<NodeIndex, Set<IParameterDeclaration>> parameterDependencies = dependencyGraph.CreateNodeData<Set<IParameterDeclaration>>(null);
             // stores virtual dependency edges along which parameterDeps should flow
             IndexedProperty<NodeIndex, Set<NodeIndex>> containerDependencies = dependencyGraph.CreateNodeData<Set<NodeIndex>>(null);
-            Dictionary<IStatement, int> indexOfNode = new Dictionary<IStatement, int>(new IdentityComparer<IStatement>());
+            Dictionary<IStatement, int> indexOfNode = new Dictionary<IStatement, int>(ReferenceEqualityComparer<IStatement>.Instance);
             Set<NodeIndex> inputNodes = new Set<NodeIndex>();
             Set<NodeIndex> loopNodes = new Set<NodeIndex>();
             int whileNodeIndex = -1;
@@ -583,7 +583,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // Additionally, if the statement is an assignment whose lhs is indexed by a parameter, then we need to re-execute the initializer statements
                 // when the parameter changes.  This case is also handled by GetConditionAndTargetIndexExpressions.
                 Set<IParameterDeclaration> parametersUsedInCondition =
-                    new Set<IParameterDeclaration>(new IdentityComparer<IParameterDeclaration>());
+                    new Set<IParameterDeclaration>(ReferenceEqualityComparer<IParameterDeclaration>.Instance);
                 parametersUsedInCondition.AddRange(Recognizer.GetConditionAndTargetIndexExpressions(ist)
                     .SelectMany(Recognizer.GetArgumentReferenceExpressions)
                     .Select(iare => iare.Parameter.Resolve()));
@@ -620,7 +620,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 nodes.Add(iws);
                 whileNodeIndex = dependencyGraph.AddNode();
                 indexOfNode[iws] = whileNodeIndex;
-                Set<IParameterDeclaration> parameterDeps = new Set<IParameterDeclaration>(new IdentityComparer<IParameterDeclaration>());
+                Set<IParameterDeclaration> parameterDeps = new Set<IParameterDeclaration>(ReferenceEqualityComparer<IParameterDeclaration>.Instance);
                 parameterDependencies[whileNodeIndex] = parameterDeps;
                 if (IsConvergenceLoop(iws))
                 {
@@ -813,7 +813,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     Set<IParameterDeclaration> initParams = initParameters[sourceIndex];
                     if (initParams == null)
-                        initParams = new Set<IParameterDeclaration>(new IdentityComparer<IParameterDeclaration>());
+                        initParams = new Set<IParameterDeclaration>(ReferenceEqualityComparer<IParameterDeclaration>.Instance);
                     initParams.AddRange(parameterDeps);
                     if (!hasLoopAncestor[loopNode])
                     {
@@ -886,7 +886,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // use the parameter dependencies to define subroutines
             List<Subroutine> subroutines = new List<Subroutine>();
             Dictionary<SubroutineDependencies, int> indexOfSubroutine = new Dictionary<SubroutineDependencies, int>();
-            Set<IParameterDeclaration> emptySet = new Set<IParameterDeclaration>(new IdentityComparer<IParameterDeclaration>());
+            Set<IParameterDeclaration> emptySet = new Set<IParameterDeclaration>(ReferenceEqualityComparer<IParameterDeclaration>.Instance);
             // loop statements in their original order
             foreach (NodeIndex target in dependencyGraph.Nodes)
             {
@@ -1414,8 +1414,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         Set<T> AddParameterDependencies<T>(Set<T> set, IEnumerable<T> itemsToAdd)
+            where T : class
         {
-            var result = Set<T>.FromEnumerable(new IdentityComparer<T>(), set);
+            var result = Set<T>.FromEnumerable(ReferenceEqualityComparer<T>.Instance, set);
             result.AddRange(itemsToAdd);
             return result;
         }

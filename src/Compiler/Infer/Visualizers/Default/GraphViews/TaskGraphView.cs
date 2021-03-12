@@ -76,7 +76,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
             }
             foreach (IStatement ist in looptasks) AddNode(g, ist, Stage.Update);
             foreach (IStatement ist in pretasks) AddEdges(g, ist, Stage.Initialisation);
-            Set<IStatement> edgesDone = new Set<IStatement>(new IdentityComparer<IStatement>());
+            Set<IStatement> edgesDone = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
             foreach (IStatement ist in looptasks)
             {
                 if (edgesDone.Contains(ist)) continue;
@@ -166,7 +166,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
 
         protected void SetNodeForStatement(IStatement ist, Stage stg, Node nd)
         {
-            if (!stmtNodeMap.ContainsKey(stg)) stmtNodeMap[stg] = new Dictionary<IStatement, Node>(new IdentityComparer<IStatement>());
+            if (!stmtNodeMap.ContainsKey(stg)) stmtNodeMap[stg] = new Dictionary<IStatement, Node>(ReferenceEqualityComparer<IStatement>.Instance);
             stmtNodeMap[stg][ist] = nd;
         }
 

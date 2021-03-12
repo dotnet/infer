@@ -186,11 +186,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected virtual IMethodDeclaration ConvertMethod(IMethodDeclaration imd)
         {
             context.OpenMember(imd);
-            if (imd is IConstructorDeclaration)
+            if (imd is IConstructorDeclaration icd)
             {
                 IConstructorDeclaration cd = Builder.ConstructorDecl();
                 context.SetPrimaryOutput(cd);
-                IMethodDeclaration cd2 = DoConvertConstructor(cd, (IConstructorDeclaration)imd);
+                IMethodDeclaration cd2 = DoConvertConstructor(cd, icd);
                 context.CloseMember(imd);
                 if (cd2 != null) context.InputAttributes.CopyObjectAttributesTo(imd, context.OutputAttributes, cd2);
                 return cd2;
@@ -504,57 +504,57 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected virtual IStatement DoConvertStatement(IStatement ist)
         {
-            if (ist is IBlockStatement)
+            if (ist is IBlockStatement ibs)
             {
-                return ConvertBlockAlreadyOpen((IBlockStatement)ist);
+                return ConvertBlockAlreadyOpen(ibs);
             }
-            else if (ist is IExpressionStatement)
+            else if (ist is IExpressionStatement ies)
             {
-                return ConvertExpressionStatement((IExpressionStatement)ist);
+                return ConvertExpressionStatement(ies);
             }
-            else if (ist is IMethodReturnStatement)
+            else if (ist is IMethodReturnStatement imrs)
             {
-                return ConvertReturnStatement((IMethodReturnStatement)ist);
+                return ConvertReturnStatement(imrs);
             }
-            else if (ist is IConditionStatement)
+            else if (ist is IConditionStatement ics)
             {
-                return ConvertCondition((IConditionStatement)ist);
+                return ConvertCondition(ics);
             }
-            else if (ist is IForStatement)
+            else if (ist is IForStatement ifs)
             {
-                return ConvertFor((IForStatement)ist);
+                return ConvertFor(ifs);
             }
-            else if (ist is IRepeatStatement)
+            else if (ist is IRepeatStatement irs)
             {
-                return ConvertRepeat((IRepeatStatement)ist);
+                return ConvertRepeat(irs);
             }
-            else if (ist is IWhileStatement)
+            else if (ist is IWhileStatement iws)
             {
-                return ConvertWhile((IWhileStatement)ist);
+                return ConvertWhile(iws);
             }
-            else if (ist is IForEachStatement)
+            else if (ist is IForEachStatement ifes)
             {
-                return ConvertForEach((IForEachStatement)ist);
+                return ConvertForEach(ifes);
             }
-            else if (ist is IUsingStatement)
+            else if (ist is IUsingStatement ius)
             {
-                return ConvertUsing((IUsingStatement)ist);
+                return ConvertUsing(ius);
             }
-            else if (ist is ICommentStatement)
+            else if (ist is ICommentStatement icms)
             {
-                return ConvertComment((ICommentStatement)ist);
+                return ConvertComment(icms);
             }
-            else if (ist is ISwitchStatement)
+            else if (ist is ISwitchStatement iss)
             {
-                return ConvertSwitch((ISwitchStatement)ist);
+                return ConvertSwitch(iss);
             }
-            else if (ist is IBreakStatement)
+            else if (ist is IBreakStatement ibrs)
             {
-                return ConvertBreak((IBreakStatement)ist);
+                return ConvertBreak(ibrs);
             }
-            else if (ist is IThrowExceptionStatement)
+            else if (ist is IThrowExceptionStatement ites)
             {
-                return ConvertThrow((IThrowExceptionStatement)ist);
+                return ConvertThrow(ites);
             }
             else throw new Exception("Unhandled statement: " + ist.GetType());
         }
@@ -584,10 +584,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected virtual void ConvertSwitchCase(IList<ISwitchCase> cases, ISwitchCase isc)
         {
             ISwitchCase isc2;
-            if (isc is IConditionCase)
+            if (isc is IConditionCase icc)
             {
                 IConditionCase cc = Builder.CondCase();
-                cc.Condition = ConvertExpression(((IConditionCase)isc).Condition);
+                cc.Condition = ConvertExpression(icc.Condition);
                 isc2 = cc;
             }
             else
@@ -645,49 +645,49 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected virtual IExpression DoConvertExpression(IExpression expr)
         {
-            if (expr is IAssignExpression) return ConvertAssign((IAssignExpression)expr);
-            if (expr is IMethodInvokeExpression) return ConvertMethodInvoke((IMethodInvokeExpression)expr);
-            if (expr is IMethodReferenceExpression) return ConvertMethodRefExpr((IMethodReferenceExpression)expr);
-            if (expr is IUnaryExpression) return ConvertUnary((IUnaryExpression)expr);
-            if (expr is ILiteralExpression) return ConvertLiteral((ILiteralExpression)expr);
-            if (expr is IVariableDeclarationExpression) return ConvertVariableDeclExpr((IVariableDeclarationExpression)expr);
-            if (expr is IVariableReferenceExpression) return ConvertVariableRefExpr((IVariableReferenceExpression)expr);
-            if (expr is IArrayIndexerExpression) return ConvertArrayIndexer((IArrayIndexerExpression)expr);
-            if (expr is IArrayCreateExpression) return ConvertArrayCreate((IArrayCreateExpression)expr);
-            if (expr is IArgumentReferenceExpression) return ConvertArgumentRef((IArgumentReferenceExpression)expr);
-            if (expr is IFieldReferenceExpression) return ConvertFieldRefExpr((IFieldReferenceExpression)expr);
-            if (expr is IBinaryExpression) return ConvertBinary((IBinaryExpression)expr);
-            if (expr is IPropertyReferenceExpression) return ConvertPropertyRefExpr((IPropertyReferenceExpression)expr);
-            if (expr is IThisReferenceExpression) return ConvertThis((IThisReferenceExpression)expr);
-            if (expr is IBlockExpression) return ConvertBlockExpr((IBlockExpression)expr);
-            if (expr is IConditionExpression) return ConvertConditionExpr((IConditionExpression)expr);
-            if (expr is ICastExpression) return ConvertCastExpr((ICastExpression)expr);
-            if (expr is ICheckedExpression) return ConvertCheckedExpr((ICheckedExpression)expr);
-            if (expr is IBaseReferenceExpression) return ConvertBaseRef((IBaseReferenceExpression)expr);
-            if (expr is ITypeReferenceExpression)
+            if (expr is IAssignExpression iae) return ConvertAssign(iae);
+            if (expr is IMethodInvokeExpression imie) return ConvertMethodInvoke(imie);
+            if (expr is IMethodReferenceExpression imre) return ConvertMethodRefExpr(imre);
+            if (expr is IUnaryExpression iue) return ConvertUnary(iue);
+            if (expr is ILiteralExpression ile) return ConvertLiteral(ile);
+            if (expr is IVariableDeclarationExpression ivde) return ConvertVariableDeclExpr(ivde);
+            if (expr is IVariableReferenceExpression ivre) return ConvertVariableRefExpr(ivre);
+            if (expr is IArrayIndexerExpression iaie) return ConvertArrayIndexer(iaie);
+            if (expr is IArrayCreateExpression iace) return ConvertArrayCreate(iace);
+            if (expr is IArgumentReferenceExpression iare) return ConvertArgumentRef(iare);
+            if (expr is IFieldReferenceExpression ifre) return ConvertFieldRefExpr(ifre);
+            if (expr is IBinaryExpression ibe) return ConvertBinary(ibe);
+            if (expr is IPropertyReferenceExpression ipre) return ConvertPropertyRefExpr(ipre);
+            if (expr is IThisReferenceExpression ithis) return ConvertThis(ithis);
+            if (expr is IBlockExpression ible) return ConvertBlockExpr(ible);
+            if (expr is IConditionExpression ice) return ConvertConditionExpr(ice);
+            if (expr is ICastExpression icaste) return ConvertCastExpr(icaste);
+            if (expr is ICheckedExpression iche) return ConvertCheckedExpr(iche);
+            if (expr is IBaseReferenceExpression ibre) return ConvertBaseRef(ibre);
+            if (expr is ITypeReferenceExpression itre)
             {
-                return ConvertTypeRefExpr((ITypeReferenceExpression)expr);
+                return ConvertTypeRefExpr(itre);
             }
-            if (expr is ITypeOfExpression)
+            if (expr is ITypeOfExpression itoe)
             {
-                return ConvertTypeOfExpr((ITypeOfExpression)expr);
+                return ConvertTypeOfExpr(itoe);
             }
-            if (expr is IDelegateCreateExpression)
+            if (expr is IDelegateCreateExpression idce)
             {
-                return ConvertDelegateCreate((IDelegateCreateExpression)expr);
+                return ConvertDelegateCreate(idce);
             }
-            if (expr is IObjectCreateExpression)
+            if (expr is IObjectCreateExpression ioce)
             {
-                return ConvertObjectCreate((IObjectCreateExpression)expr);
+                return ConvertObjectCreate(ioce);
             }
-            if (expr is IPropertyIndexerExpression) return ConvertPropertyIndexerExpr((IPropertyIndexerExpression)expr);
-            if (expr is IAddressDereferenceExpression) return ConvertAddressDereference((IAddressDereferenceExpression)expr);
-            if (expr is IAddressOutExpression) return ConvertAddressOut((IAddressOutExpression)expr);
-            if (expr is IAnonymousMethodExpression) return ConvertAnonymousMethodExpression((IAnonymousMethodExpression)expr);
-            if (expr is IDefaultExpression) return ConvertDefaultExpr((IDefaultExpression)expr);
-            if (expr is IEventReferenceExpression) return ConvertEventRefExpr((IEventReferenceExpression)expr);
-            if (expr is IDelegateInvokeExpression) return ConvertDelegateInvoke((IDelegateInvokeExpression)expr);
-            if (expr is ILambdaExpression) return ConvertLambda((ILambdaExpression)expr);
+            if (expr is IPropertyIndexerExpression ipie) return ConvertPropertyIndexerExpr(ipie);
+            if (expr is IAddressDereferenceExpression iade) return ConvertAddressDereference(iade);
+            if (expr is IAddressOutExpression iaoe) return ConvertAddressOut(iaoe);
+            if (expr is IAnonymousMethodExpression iame) return ConvertAnonymousMethodExpression(iame);
+            if (expr is IDefaultExpression ide) return ConvertDefaultExpr(ide);
+            if (expr is IEventReferenceExpression iere) return ConvertEventRefExpr(iere);
+            if (expr is IDelegateInvokeExpression idie) return ConvertDelegateInvoke(idie);
+            if (expr is ILambdaExpression lambda) return ConvertLambda(lambda);
             if (expr == null) Error("expression is null");
             else Error("Unhandled expression: " + expr + " " + expr.GetType().Name);
             return expr;
@@ -695,7 +695,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private IExpression ConvertLambda(ILambdaExpression iLambdaExpression)
         {
-            ILambdaExpression ile = new Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete.XLambdaExpression();
+            ILambdaExpression ile = new CodeModel.Concrete.XLambdaExpression();
             ile.Body = ConvertExpression(iLambdaExpression.Body);
             foreach (var ivd in iLambdaExpression.Parameters)
             {
@@ -859,7 +859,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected virtual IExpression ConvertDefaultExpr(IDefaultExpression ide)
         {
-            if (ide.Type is ITypeReference) ConvertTypeReference((ITypeReference)ide.Type);
+            if (ide.Type is ITypeReference itr) ConvertTypeReference(itr);
             return ide;
         }
 
@@ -1108,7 +1108,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 count++;
             }
-            return (newExprs == null) ? exprColl : newExprs;
+            return newExprs ?? exprColl;
         }
 
         protected virtual IExpression ConvertMethodInvoke(IMethodInvokeExpression imie)

@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         private bool convertingBrokenLoop;
-        private Dictionary<IVariableDeclaration, LoopVarInfo> loopVarInfos = new Dictionary<IVariableDeclaration, LoopVarInfo>(new IdentityComparer<IVariableDeclaration>());
+        private Dictionary<IVariableDeclaration, LoopVarInfo> loopVarInfos = new Dictionary<IVariableDeclaration, LoopVarInfo>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
         private bool hoistAttributes;
 
         internal LoopCuttingTransform(bool hoistAttributes)

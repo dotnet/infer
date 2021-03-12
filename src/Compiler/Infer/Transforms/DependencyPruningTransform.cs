@@ -28,7 +28,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal static bool debug;
         IBlockStatement debugBlock;
         private LoopMergingInfo loopMergingInfo;
-        private Dictionary<IStatement, int> indexOfStatement = new Dictionary<IStatement, int>(new IdentityComparer<IStatement>());
+        private Dictionary<IStatement, int> indexOfStatement = new Dictionary<IStatement, int>(ReferenceEqualityComparer<IStatement>.Instance);
 
         protected override void DoConvertMethodBody(IList<IStatement> outputs, IList<IStatement> inputs)
         {
@@ -65,7 +65,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             // collapse dependencies that have the same unique index.
             Dictionary<int, KeyValuePair<int, IStatement>> nodeOfUniqueIndex = new Dictionary<int, KeyValuePair<int, IStatement>>();
-            Set<IStatement> sourcesToRemove = new Set<IStatement>(new IdentityComparer<IStatement>());
+            Set<IStatement> sourcesToRemove = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
             foreach (IStatement source in di.GetDependenciesOfType(DependencyType.Dependency))
             {
                 int sourceIndex;

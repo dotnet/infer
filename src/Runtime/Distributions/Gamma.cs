@@ -40,7 +40,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                           CanGetMeanAndVarianceOut<double, double>, CanSetMeanAndVariance<double, double>,
                           CanGetLogAverageOf<Gamma>, CanGetLogAverageOfPower<Gamma>,
                           CanGetAverageLog<Gamma>, CanGetLogNormalizer, CanGetMode<double>,
-                          CanGetProbLessThan, CanGetQuantile
+                          CanGetProbLessThan<double>, CanGetQuantile<double>
     {
         /// <summary>
         /// Rate parameter for the distribution
@@ -450,11 +450,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else return Math.Exp(MMath.GammaLn(Shape + power) - MMath.GammaLn(Shape) - power * Math.Log(Rate));
         }
 
-        /// <summary>
-        /// Compute the probability that a sample from this distribution is less than x.
-        /// </summary>
-        /// <param name="x">Any real number.</param>
-        /// <returns>The cumulative gamma distribution at <paramref name="x"/></returns>
+        /// <inheritdoc/>
         public double GetProbLessThan(double x)
         {
             if (x < 0.0)
@@ -475,6 +471,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
                 return MMath.GammaLower(Shape, x * Rate);
+        }
+
+        /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
+        {
+            return TruncatedGamma.GammaProbBetween(Shape, Rate, lowerBound, upperBound);
         }
 
         /// <summary>
@@ -1173,8 +1175,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                double shape, scale;
-                GetShapeAndScale(out shape, out scale);
+                GetShapeAndScale(out double shape, out double scale);
                 string s = "Gamma(" + shape.ToString("g4") + ", " + scale.ToString("g4") + ")";
                 if (IsProper())
                 {

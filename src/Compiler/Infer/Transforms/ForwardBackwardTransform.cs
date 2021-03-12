@@ -64,8 +64,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// For each context, store a map from original statement to transformed statement
         /// </summary>
-        private Dictionary<ICollection<IStatement>, Dictionary<IStatement, IStatement>> transformedStmtsInContext = new Dictionary<ICollection<IStatement>, Dictionary<IStatement, IStatement>>(new IdentityComparer<object>());
-        private Dictionary<IStatement, Set<IVariableDeclaration>> reversedLoopVarsInStmt = new Dictionary<IStatement, Set<IVariableDeclaration>>(new IdentityComparer<IStatement>());
+        private Dictionary<ICollection<IStatement>, Dictionary<IStatement, IStatement>> transformedStmtsInContext = new Dictionary<ICollection<IStatement>, Dictionary<IStatement, IStatement>>(ReferenceEqualityComparer<object>.Instance);
+        private Dictionary<IStatement, Set<IVariableDeclaration>> reversedLoopVarsInStmt = new Dictionary<IStatement, Set<IVariableDeclaration>>(ReferenceEqualityComparer<IStatement>.Instance);
         private LoopMergingInfo loopMergingInfo;
         private Stack<StackFrame> stackFrames = new Stack<StackFrame>();
         private IVariableDeclaration currentLoopVar;
@@ -80,7 +80,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// For each original special statement, gives its transformed statement in each loop context
         /// </summary>
         private Dictionary<IStatement, Dictionary<Set<IVariableDeclaration>, IStatement>> specialTransformedStmts =
-            new Dictionary<IStatement, Dictionary<Set<IVariableDeclaration>, IStatement>>(new IdentityComparer<IStatement>());
+            new Dictionary<IStatement, Dictionary<Set<IVariableDeclaration>, IStatement>>(ReferenceEqualityComparer<IStatement>.Instance);
 
         protected class StackFrame
         {
@@ -152,7 +152,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="replacementsInContext"></param>
         private void CollectTransformedStmts(ICollection<IStatement> outputBlock, Dictionary<ICollection<IStatement>, Dictionary<IStatement, IStatement>> replacementsInContext)
         {
-            var replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+            var replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
             replacementsInContext[outputBlock] = replacements;
             Dictionary<IStatement, IStatement> transformedStmts;
             if (transformedStmtsInContext.TryGetValue(outputBlock, out transformedStmts))
@@ -230,9 +230,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             // construct a replacement dictionary for every context
             // the replacement will be an AnyStatement containing all transformed versions that are compatible with this context
-            var replacementsInContext = new Dictionary<ICollection<IStatement>, Dictionary<IStatement, IStatement>>(new IdentityComparer<object>());
+            var replacementsInContext = new Dictionary<ICollection<IStatement>, Dictionary<IStatement, IStatement>>(ReferenceEqualityComparer<object>.Instance);
             ICollection<IStatement> rootContext = outputs;
-            transformedStmtsInContext[rootContext] = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+            transformedStmtsInContext[rootContext] = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
             CollectTransformedStmts(rootContext, replacementsInContext);
             DistributeTransformedStmts(rootContext, replacementsInContext);
 
@@ -623,7 +623,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (loopIndex >= infos.Count)
             {
                 // start a new context
-                Dictionary<IStatement, IStatement> transformedStmts = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+                Dictionary<IStatement, IStatement> transformedStmts = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
                 if (transformedStmtsInContext.ContainsKey(outputStmts))
                     throw new Exception("Internal: context transformed twice");
                 transformedStmtsInContext[outputStmts] = transformedStmts;
@@ -693,7 +693,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                 }
                 // put the nodes into a Set for fast membership checking
-                Set<IStatement> originalStmts = new Set<IStatement>(new IdentityComparer<IStatement>());
+                Set<IStatement> originalStmts = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
                 foreach (NodeIndex node in currentBlock)
                 {
                     originalStmts.Add(inputStmts[node]);

@@ -110,7 +110,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <summary>
             /// Nodes in the loop whose outputs are used by the loop before they are updated.
             /// </summary>
-            public Set<IStatement> initializers = new Set<IStatement>(new IdentityComparer<IStatement>());
+            public Set<IStatement> initializers = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
 
             public List<NodeIndex> tail;
             public List<NodeIndex> firstIterPostBlock = new List<NodeIndex>();
@@ -261,9 +261,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             foreach (NodeIndex node in nodes)
             {
-                Loop nodeLoop = blockOfNode[node] as Loop;
                 // when the target is also in a while loop, you need the initializer to precede target's entire loop
-                NodeIndex target = (nodeLoop == null || nodeLoop.indices.Count == 0) ? node : nodeLoop.indices[0];
+                NodeIndex target = (!(blockOfNode[node] is Loop nodeLoop) || nodeLoop.indices.Count == 0) ? node : nodeLoop.indices[0];
                 foreach (NodeIndex source in g.dependencyGraph.SourcesOf(node))
                 {
                     if (source >= node && usedNodes.Contains(source) && blockOfNode[source] is Loop loop)

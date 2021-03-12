@@ -20,6 +20,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
 
     public struct Conversion
     {
+        public const int SameTypeCodeSubclassCount = 1000;
+        public const int OpImplicitSubclassCount = 2000;
+        public const int ChangeRankSubclassCount = 3000;
+        public const int SpecialImplicitSubclassCount = 10000;
+
         public Converter Converter;
 
         /// <summary>
@@ -132,7 +137,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             if (fromTypeCode == toTypeCode)
             {
                 // fromType has the same TypeCode but is not assignable to toType.
-                info.SubclassCount = 1000;
+                info.SubclassCount = SameTypeCodeSubclassCount;
                 return true;
             }
             info.Converter = GetPrimitiveConverter(fromType, toType);
@@ -381,8 +386,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             {
                 Type fromElementType = fromType.GetElementType();
                 Type toElementType = toType.GetGenericArguments()[0];
-                int elementSubclassCount;
-                bool ok = IsAssignableFrom(toElementType, fromElementType, out elementSubclassCount);
+                bool ok = IsAssignableFrom(toElementType, fromElementType, out int elementSubclassCount);
                 subclassCount += elementSubclassCount;
                 return ok;
             }
@@ -401,8 +405,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
         {
             info = new Conversion();
             if (fromType == typeof (Nullable)) return IsNullable(toType);
-            int subclassCount;
-            if (IsAssignableFrom(toType, fromType, out subclassCount))
+            if (IsAssignableFrom(toType, fromType, out int subclassCount))
             {
                 //(toType.IsAssignableFrom(fromType)) {
                 // toType is a superclass or an interface of fromType
@@ -481,7 +484,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 MethodInfo method = (MethodInfo) member;
                 if (method.ReturnType == toType)
                 {
-                    info.SubclassCount = 1000;
+                    info.SubclassCount = OpImplicitSubclassCount;
                     info.Converter = delegate (object value)
                     {
                         return Util.Invoke(method, null, value);
@@ -497,7 +500,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 ParameterInfo[] parameters = method.GetParameters();
                 if (parameters.Length == 1 && parameters[0].ParameterType == fromType)
                 {
-                    info.SubclassCount = 1000;
+                    info.SubclassCount = OpImplicitSubclassCount;
                     info.Converter = delegate (object value)
                     {
                         return Util.Invoke(method, null, value);
@@ -573,7 +576,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 int[] lengths = new int[toRank];
                 for (int i = 0; i < toRank; i++) lengths[i] = 1;
                 int[] index = new int[toRank];
-                info.SubclassCount = 1000;
+                info.SubclassCount = ChangeRankSubclassCount;
                 info.Converter = delegate(object item)
                     {
                         object value = item;
@@ -592,7 +595,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             }
             else if (toRank == 1 || fromRank == 1)
             {
-                info.SubclassCount = 1000;
+                info.SubclassCount = ChangeRankSubclassCount;
                 info.Converter = delegate(object fromArray) { return ChangeRank((Array) fromArray, toRank, toElementType, conv); };
                 return true;
             }
@@ -631,7 +634,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             Type returnType = signature.ReturnType;
             Type innerReturnType = inner.Method.ReturnType;
             Conversion conv;
-            if (!Conversion.TryGetConversion(innerReturnType, returnType, out conv))
+            if (!TryGetConversion(innerReturnType, returnType, out conv))
             {
                 throw new ArgumentException("Return type of the innerMethod (" + innerReturnType.Name + ") cannot be converted to the delegate return type (" + returnType.Name +
                                             ")");

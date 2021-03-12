@@ -33,10 +33,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         bool isInnerStatement;
         private LoopMergingInfo loopMergingInfo;
-        Set<IStatement> previousStatements = new Set<IStatement>(new IdentityComparer<IStatement>());
-        Dictionary<IStatement, IStatement> originalStatementOfClone = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
-        Dictionary<IStatement, IEnumerable<IStatement>> clonesOfStatement = new Dictionary<IStatement, IEnumerable<IStatement>>(new IdentityComparer<IStatement>());
-        Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+        Set<IStatement> previousStatements = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
+        Dictionary<IStatement, IStatement> originalStatementOfClone = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
+        Dictionary<IStatement, IEnumerable<IStatement>> clonesOfStatement = new Dictionary<IStatement, IEnumerable<IStatement>>(ReferenceEqualityComparer<IStatement>.Instance);
+        Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
         int whileCount;
 
         protected override IMethodDeclaration DoConvertMethod(IMethodDeclaration md, IMethodDeclaration imd)
@@ -59,7 +59,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="outputs"></param>
         private void PostProcessDependencies(ICollection<IStatement> outputs)
         {
-            Dictionary<IStatement, int> indexOfStatement = new Dictionary<IStatement, NodeIndex>(new IdentityComparer<IStatement>());
+            Dictionary<IStatement, int> indexOfStatement = new Dictionary<IStatement, NodeIndex>(ReferenceEqualityComparer<IStatement>.Instance);
             if (clonesOfStatement.Count == 0) return;
             DeadCodeTransform.ForEachStatement(outputs,
                 _ => { },

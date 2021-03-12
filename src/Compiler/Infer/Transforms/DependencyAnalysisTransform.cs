@@ -82,7 +82,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// Records all times that a variable is declared or assigned to
         /// </summary>
         private Dictionary<IVariableDeclaration, MutationInformation> mutInfos =
-            new Dictionary<IVariableDeclaration, MutationInformation>(new IdentityComparer<IVariableDeclaration>());
+            new Dictionary<IVariableDeclaration, MutationInformation>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         private bool convertingLoopInitializer;
 
@@ -103,7 +103,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Dictionary<IVariableDeclaration, CodeRecognizer.Bounds> bounds = null;
                 if (mutatedExpressions.Count > 0)
                 {
-                    bounds = new Dictionary<IVariableDeclaration, CodeRecognizer.Bounds>(new IdentityComparer<IVariableDeclaration>());
+                    bounds = new Dictionary<IVariableDeclaration, CodeRecognizer.Bounds>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                     Recognizer.AddLoopBounds(bounds, ist);
                 }
                 foreach (IExpression mutated in mutatedExpressions)
@@ -394,7 +394,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     Error("Cannot find dependency information for statement: " + ist);
                     continue;
                 }
-                var bounds = new Dictionary<IVariableDeclaration, CodeRecognizer.Bounds>(new IdentityComparer<IVariableDeclaration>());
+                var bounds = new Dictionary<IVariableDeclaration, CodeRecognizer.Bounds>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                 Recognizer.AddLoopBounds(bounds, ist);
                 bool debug = false;
                 if (debug)
@@ -427,7 +427,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 DependencyInformation di2 = (DependencyInformation)di.Clone();
                 di2.dependencyTypeOf.Clear();
                 // For each mutating statement, stores the loop indices in mutated that must be iterated to cover affected (i.e. loops that cannot be merged).
-                Dictionary<IStatement, Set<IVariableDeclaration>> extraIndicesOfStmt = new Dictionary<IStatement, Set<IVariableDeclaration>>(new IdentityComparer<IStatement>());
+                Dictionary<IStatement, Set<IVariableDeclaration>> extraIndicesOfStmt = new Dictionary<IStatement, Set<IVariableDeclaration>>(ReferenceEqualityComparer<IStatement>.Instance);
                 foreach (IStatement exprStmt in di.DeclDependencies)
                 {
                     var mutatingStmts = GetStatementsThatMutate(ist, exprStmt, true, false, ist, bounds, di2.offsetIndexOf, extraIndicesOfStmt);
@@ -551,7 +551,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 DependencyInformation di2 = context.InputAttributes.Get<DependencyInformation>(mutatingStmt);
                 if (di2.HasDependency(DependencyType.Cancels, affectedStmt))
                 {
-                    var replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
+                    var replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
                     replacements[mutatingStmt] = null;
                     di.Replace(replacements);
                     //DependencyType type = di.dependencyTypeOf[mutatingStmt];
@@ -1631,8 +1631,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         ignoreExpr = Builder.ArrayIndex(expr, ignoreIndex);
                 }
                 var offsets = new OffsetInfo();
-                var extraIndices = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
-                var bounds = new Dictionary<IVariableDeclaration, CodeRecognizer.Bounds>(new IdentityComparer<IVariableDeclaration>());
+                var extraIndices = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+                var bounds = new Dictionary<IVariableDeclaration, CodeRecognizer.Bounds>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                 var allocations = new List<Mutation>();
                 var mutationsOnly = new List<Mutation>();
                 foreach (Mutation m in mutations)
@@ -1664,12 +1664,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         if (extraIndices.Count > 0 && extraIndicesOfStmt != null)
                         {
                             extraIndicesOfStmt[m.stmt] = extraIndices;
-                            extraIndices = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+                            extraIndices = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                         }
                     }
                 }
                 // prune allocations that are fully overwritten by some other allocation or mutation
-                Set<IStatement> overwritten = new Set<IStatement>(new IdentityComparer<IStatement>());
+                Set<IStatement> overwritten = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
                 foreach (Mutation m in allocations)
                 {
                     IStatement ist = m.stmt;
