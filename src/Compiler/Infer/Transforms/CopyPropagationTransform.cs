@@ -66,8 +66,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected override IExpression ConvertAssign(IAssignExpression iae)
         {
             IExpression copyExpr = GetCopyExpr(iae.Target);
-            if (iae.Target is IVariableDeclarationExpression)
-                ConvertExpression((IVariableDeclarationExpression)iae.Target);
+            if (iae.Target is IVariableDeclarationExpression ivde)
+                ConvertExpression(ivde);
             if (iae.Expression.Equals(copyExpr))
                 return iae; // was 'null'
             // convert only right hand side
@@ -173,7 +173,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// The expressions currently being converted.  Used to catch transformation cycles.
         /// </summary>
-        private Set<IExpression> expressions = new Set<IExpression>();
+        private readonly Set<IExpression> expressions = new Set<IExpression>();
 
         /// <summary>
         /// Determines if the value of the supplied expression will always be equal
@@ -208,7 +208,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         /// <summary>
-        /// Analyses known copy expressions and attached CopyOfAttribute where appropriate.
+        /// Analyses known copy expressions and attaches CopyOfAttribute where appropriate.
         /// </summary>
         private class CopyAnalysisTransform : ShallowCopyTransform
         {
@@ -226,9 +226,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (context.InputAttributes.Has<Initializer>(stmt))
                         return iae;
                 }
-                var imie = iae.Expression as IMethodInvokeExpression;
                 // Look for assignments where the right hand side is a SetTo call
-                if (imie != null)
+                if (iae.Expression is IMethodInvokeExpression imie)
                 {
                     bool isCopy = Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Factor.Copy));
                     bool isSetTo = Recognizer.IsStaticGenericMethod(imie, typeof(ArrayHelper), "SetTo");
@@ -288,8 +287,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         }
                         if (isCopy || isSetTo)
                         {
-                            IExpression lhsPrefix, rhsPrefix;
-                            RemoveMatchingSuffixes(iae.Target, rhs, condContext, out lhsPrefix, out rhsPrefix);
+                            RemoveMatchingSuffixes(iae.Target, rhs, condContext, out IExpression lhsPrefix, out IExpression rhsPrefix);
                             copyAttr.copyMap[lhsPrefix] = new CopyOfAttribute.CopyContext { Expression = rhsPrefix, ConditionContext = condContext };
                         }
                         else if (isSetAllElementsTo)
@@ -332,12 +330,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             private void RemoveMatchingSuffixes(IExpression expr1, IExpression expr2, List<IConditionStatement> condContext, out IExpression prefix1, out IExpression prefix2)
             {
-                if (expr1 is IArrayIndexerExpression)
+                if (expr1 is IArrayIndexerExpression iaie1)
                 {
-                    IArrayIndexerExpression iaie1 = (IArrayIndexerExpression)expr1;
-                    if (expr2 is IArrayIndexerExpression)
+                    if (expr2 is IArrayIndexerExpression iaie2)
                     {
-                        IArrayIndexerExpression iaie2 = (IArrayIndexerExpression)expr2;
                         if (iaie1.Indices.Count == iaie2.Indices.Count)
                         {
                             bool allIndicesAreEqual = true;
@@ -401,9 +397,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (cc.IsValidContext(context))
                         return cc.Expression;
                 }
-                if (expr is IArrayIndexerExpression)
+                if (expr is IArrayIndexerExpression iaie)
                 {
-                    IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                     if (copiedInEveryElementMap.ContainsKey(iaie.Target))
                     {
                         var cc = copiedInEveryElementMap[iaie.Target];
@@ -416,18 +411,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         if (cc.Depth == 1 && cc.IsValidContext(context))
                             return cc.ExpressionAtIndex(new[] { iaie.Indices });
                     }
-                    if (iaie.Target is IArrayIndexerExpression)
+                    if (iaie.Target is IArrayIndexerExpression iaie2)
                     {
-                        var iaie2 = (IArrayIndexerExpression)iaie.Target;
                         if (copyAtIndexMap.ContainsKey(iaie2.Target))
                         {
                             var cc = copyAtIndexMap[iaie2.Target];
                             if (cc.Depth == 2 && cc.IsValidContext(context))
                                 return cc.ExpressionAtIndex(new[] { iaie2.Indices, iaie.Indices });
                         }
-                        if (iaie2.Target is IArrayIndexerExpression)
+                        if (iaie2.Target is IArrayIndexerExpression iaie3)
                         {
-                            var iaie3 = (IArrayIndexerExpression)iaie2.Target;
                             if (copyAtIndexMap.ContainsKey(iaie3.Target))
                             {
                                 var cc = copyAtIndexMap[iaie3.Target];

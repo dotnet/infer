@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
@@ -41,8 +40,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal static bool debug;
         private Dictionary<IStatement, Dictionary<IExpression, LocalAnalysisTransform.LocalInfo>> localInfoOfStmt;
-        private Stack<IStatement> openContainers = new Stack<IStatement>();
-        private ModelCompiler compiler;
+        private readonly Stack<IStatement> openContainers = new Stack<IStatement>();
+        private readonly ModelCompiler compiler;
         private bool isTransformingContainer;
 
         internal LocalTransform(ModelCompiler compiler)
