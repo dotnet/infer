@@ -583,6 +583,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
+        {
+            double totalProbability = Gaussian.GetProbBetween(LowerBound, UpperBound);
+            return Gaussian.GetProbBetween(Math.Max(LowerBound, lowerBound), Math.Min(UpperBound, upperBound)) / totalProbability;
+        }
+
+        /// <inheritdoc/>
         public double GetQuantile(double probability)
         {
             if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
@@ -590,13 +597,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double totalProbability = Gaussian.GetProbBetween(LowerBound, UpperBound);
             double lowerProbability = Gaussian.GetProbLessThan(LowerBound);
             return Math.Min(UpperBound, Math.Max(LowerBound, Gaussian.GetQuantile(probability * totalProbability + lowerProbability)));
-        }
-
-        /// <inheritdoc/>
-        public double GetProbBetween(double lowerBound, double upperBound)
-        {
-            double totalProbability = Gaussian.GetProbBetween(LowerBound, UpperBound);
-            return Gaussian.GetProbBetween(Math.Max(LowerBound, lowerBound), Math.Min(UpperBound, upperBound)) / totalProbability;
         }
 
         /// <inheritdoc/>

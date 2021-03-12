@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                                       CanGetMean<double>, CanGetVariance<double>, CanGetMeanAndVarianceOut<double, double>,
                                       CanGetLogNormalizer, CanGetLogAverageOf<TruncatedGamma>, CanGetLogAverageOfPower<TruncatedGamma>,
                                       CanGetAverageLog<TruncatedGamma>, CanGetMode<double>,
-                                      CanGetQuantile<double>
+                                      CanGetProbLessThan<double>, CanGetQuantile<double>
     {
         /// <summary>
         /// Untruncated Gamma
@@ -484,6 +484,27 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
+        /// <inheritdoc/>
+        public double GetProbLessThan(double x)
+        {
+            if (this.IsPointMass)
+            {
+                return (this.Point < x) ? 1.0 : 0.0;
+            }
+            else
+            {
+                double totalProbability = Gamma.GetProbBetween(LowerBound, UpperBound);
+                return Gamma.GetProbBetween(LowerBound, x) / totalProbability;
+            }
+        }
+
+        /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
+        {
+            double totalProbability = Gamma.GetProbBetween(LowerBound, UpperBound);
+            return Gamma.GetProbBetween(Math.Max(LowerBound, lowerBound), Math.Min(UpperBound, upperBound)) / totalProbability;
+        }
+
         public static double GetQuantile(Gamma gamma, double lowerBound, double upperBound, double probability)
         {
             if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
@@ -731,6 +752,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static double GammaProbBetween(double shape, double rate, double lowerBound, double upperBound, bool regularized = true)
         {
             lowerBound = Math.Max(0, lowerBound);
+            if (lowerBound >= upperBound) return 0;
             double rl = rate * lowerBound;
             // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
             bool lowerIsSmaller;

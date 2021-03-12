@@ -295,7 +295,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             //Assert.Equal(2.2, m);
             //Assert.Equal(3.3, v);
 
-            foreach (double x in new[] { 1.1, 4.4 })
+            foreach (double x in new[] { 1.1, 6.4 })
             {
                 double probLessThan = g.GetProbLessThan(x);
                 Assert.Equal(probLessThan, g.GetProbBetween(double.NegativeInfinity, x));
@@ -351,6 +351,14 @@ namespace Microsoft.ML.Probabilistic.Tests
              */
             Assert.True(MMath.AbsDiff(7.2174, m) < 1e-4);
             Assert.True(MMath.AbsDiff(1.9969, v) < 1e-4);
+
+            foreach (double x in new[] { 1.1, 6.4 })
+            {
+                double probLessThan = g.GetProbLessThan(x);
+                Assert.Equal(probLessThan, g.GetProbBetween(double.NegativeInfinity, x));
+                double quantile = g.GetQuantile(probLessThan);
+                Assert.Equal(System.Math.Max(lowerBound, x), quantile, 1e-4);
+            }
 
             var g2 = new TruncatedGamma(4.4, 5.5, lowerBound, upperBound);
             DistributionTest(g, g2);
