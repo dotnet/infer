@@ -85,14 +85,14 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
             IMethodDeclaration imd = imr.Resolve();
 
-            Type[] t = new Type[imr.Parameters.Count];
+            Type[] parameterTypes = new Type[imr.Parameters.Count];
             Type returnType = ToType(imr.ReturnType.Type);
 
-            for (int i = 0; i < t.Length; i++)
+            for (int i = 0; i < parameterTypes.Length; i++)
             {
                 IType ipt = imr.Parameters[i].ParameterType;
-                t[i] = ToType(imr.Parameters[i].ParameterType);
-                if (t[i] == null)
+                parameterTypes[i] = ToType(ipt);
+                if (parameterTypes[i] == null)
                     // This is a generic method. We won't deal with this here.
                     // Rather, when we find an instance, will hook up the method
                     // info at that point
@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 ConstructorInfo ci = null;
                 try
                 {
-                    ci = tp.GetConstructor(t);
+                    ci = tp.GetConstructor(parameterTypes);
                 }
                 catch
                 {
@@ -161,7 +161,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                                 !imr.Name.Equals("GetOpenBlocks") &&
                                 !imr.Name.Equals("ToArray"))
                             {
-                                mi = tp.GetMethod(imr.Name, bf, null, t, null);
+                                mi = tp.GetMethod(imr.Name, bf, null, parameterTypes, null);
                                 if ((mi == null) && (imr.Parameters.Count == 0))
                                 {
                                     // we may have a method reference which is just by name
@@ -175,7 +175,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         {
                         }
                         // Do it the long way
-                        mi = FindNonGenericMethod(tp, imr.Name, t, returnType, bf);
+                        mi = FindNonGenericMethod(tp, imr.Name, parameterTypes, returnType, bf);
                         if (mi != null)
                             break;
                     }
@@ -192,7 +192,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     }
 
                     bf |= BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
-                    mi = FindGenericMethod(tp, imr.Name, typeArgs, t, returnType, bf);
+                    mi = FindGenericMethod(tp, imr.Name, typeArgs, parameterTypes, returnType, bf);
                 }
             }
             catch (Exception)
@@ -284,22 +284,22 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 ParameterInfo[] parameters = genericMethod.GetParameters();
 
                 // compare the method parameters
-                //if (parameters.Length != parameterTypes.Length) continue;
+                if (parameters.Length != parameterTypes.Length) continue;
 
-                //for (int i = 0; i < parameters.Length; i++)
-                //{
-                //    if (parameters[i].ParameterType != parameterTypes[i])
-                //        continue;
-                //}
-                //if (returnType != null)
-                //{
-                //    if (!genericMethod.ReturnType.IsGenericParameter &&
-                //        !returnType.IsGenericParameter)
-                //    {
-                //        if (genericMethod.ReturnType.Name != returnType.Name)
-                //            continue;
-                //    }
-                //}
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    if (parameters[i].ParameterType != parameterTypes[i])
+                        continue;
+                }
+                if (returnType != null)
+                {
+                    if (!genericMethod.ReturnType.IsGenericParameter &&
+                        !returnType.IsGenericParameter)
+                    {
+                        if (genericMethod.ReturnType.Name != returnType.Name)
+                            continue;
+                    }
+                }
                 // if we're here, we got the right method.
                 return genericMethod;
             }
@@ -641,31 +641,36 @@ namespace Microsoft.ML.Probabilistic.Compiler
             mre.Target = target;
             mre.Method = GenericMethodRef(mi);
             mie.Method = mre;
-            ParameterInfo[] pis = mi.GetParameters();
+            ParameterInfo[] parameters = mi.GetParameters();
+            bool hasParamsArgument = false;
             for (int i = 0; i < args.Length; i++)
             {
                 IExpression expr = args[i];
-                if (i < pis.Length)
+                if (i < parameters.Length)
                 {
-                    if (pis[i].IsOut)
+                    var parameter = parameters[i];
+                    if (parameter.IsOut)
                     {
                         IAddressOutExpression aoe = AddrOutExpr();
                         aoe.Expression = expr;
                         expr = aoe;
                     }
-                    else
+                    else if (parameter.ParameterType.IsByRef)
                     {
-                        if (pis[i].ParameterType.IsByRef)
-                        {
-                            IAddressReferenceExpression are = AddrRefExpr();
-                            are.Expression = expr;
-                            expr = are;
-                        }
+                        IAddressReferenceExpression are = AddrRefExpr();
+                        are.Expression = expr;
+                        expr = are;
                     }
                 }
-                else
+                else if (!hasParamsArgument)
                 {
-                    // TODO: check that the method has a final 'params' argument
+                    // check that the method has a final 'params' argument
+                    var parameter = parameters[parameters.Length - 1];
+                    hasParamsArgument = parameter.GetCustomAttributes(typeof(ParamArrayAttribute), true).Length > 0;
+                    if (!hasParamsArgument)
+                    {
+                        throw new ArgumentException("Too many arguments provided");
+                    }
                 }
                 mie.Arguments.Add(expr);
             }

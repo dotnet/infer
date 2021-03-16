@@ -18,6 +18,14 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// </summary>
         public List<TransformInfo> InputStack = new List<TransformInfo>();
 
+        /// <summary>
+        /// The depth of the current point in the transformation
+        /// </summary>
+        public int Depth
+        {
+            get { return InputStack.Count; }
+        }
+
         # region Methods for finding ancestors
 
         /// <summary>
@@ -121,7 +129,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public List<T> FindAncestors<T>()
         {
             List<T> list = new List<T>();
-            foreach (TransformInfo ti in InputStack) if (ti.inputElement is T) list.Add((T) ti.inputElement);
+            foreach (TransformInfo ti in InputStack) if (ti.inputElement is T ancestor) list.Add(ancestor);
             return list;
         }
 
@@ -136,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             for (int i = 0; i < ancIndex; i++)
             {
                 TransformInfo ti = InputStack[i];
-                if (ti.inputElement is T) list.Add((T) ti.inputElement);
+                if (ti.inputElement is T ancestor) list.Add(ancestor);
             }
             return list;
         }
@@ -152,7 +160,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             for (int i = ancIndex + 1; i < InputStack.Count; i++)
             {
                 TransformInfo ti = InputStack[i];
-                if (ti.inputElement is T) list.Add((T) ti.inputElement);
+                if (ti.inputElement is T ancestor) list.Add(ancestor);
             }
             return list;
         }
@@ -167,7 +175,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             for (int i = 0; i < InputStack.Count; i++)
             {
                 TransformInfo ti = InputStack[i];
-                if (ti.inputElement is T) return (T) ti.inputElement;
+                if (ti.inputElement is T ancestor) return ancestor;
             }
             return default(T);
         }
@@ -204,14 +212,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
         }
 
         # endregion Methods for finding output
-
-        /// <summary>
-        /// The depth of the current point in the transformation
-        /// </summary>
-        public int Depth
-        {
-            get { return InputStack.Count; }
-        }
 
         # region Methods for adding statements
 

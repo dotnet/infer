@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Models.Attributes;
@@ -29,8 +28,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         private bool convertingBrokenLoop;
-        private Dictionary<IVariableDeclaration, LoopVarInfo> loopVarInfos = new Dictionary<IVariableDeclaration, LoopVarInfo>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
-        private bool hoistAttributes;
+        private readonly Dictionary<IVariableDeclaration, LoopVarInfo> loopVarInfos = new Dictionary<IVariableDeclaration, LoopVarInfo>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        private readonly bool hoistAttributes;
 
         internal LoopCuttingTransform(bool hoistAttributes)
         {
@@ -128,7 +127,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IConditionStatement cs = Builder.CondStmt();
                 cs.Condition = ConvertExpression(ics.Condition);
                 cs.Then = Builder.BlockStmt();
-                ((IBlockStatement) cs.Then).Statements.Add(st);
+                cs.Then.Statements.Add(st);
                 context.AddStatementBeforeCurrent(cs);
                 if (hoistAttributes)
                     context.InputAttributes.CopyObjectAttributesTo(st, context.OutputAttributes, cs);
@@ -182,7 +181,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 arrayType = Util.MakeArrayType(arrayType, 1);
             }
             Predicate<int> isPartitionedAtDepth = (depth => context.InputAttributes.Has<Partitioned>(Recognizer.GetVariableDeclaration(lvi.indexVarRefs[depth])));
-            Type messageType = (true && Distributions.Distribution.IsDistributionType(type))
+            Type messageType = Distributions.Distribution.IsDistributionType(type)
                                    ? MessageTransform.GetDistributionType(arrayType, type, type, 0, loops.Count, isPartitionedAtDepth)
                                    : MessageTransform.GetArrayType(arrayType, type, 0, isPartitionedAtDepth);
             lvi.arrayvd = Builder.VarDecl(ivd.Name, messageType);
@@ -245,11 +244,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected override IExpression ConvertAssign(IAssignExpression iae)
         {
             iae = (IAssignExpression) base.ConvertAssign(iae);
-            if (iae.Target is IArrayIndexerExpression && iae.Expression is IObjectCreateExpression)
+            if (iae.Target is IArrayIndexerExpression target && iae.Expression is IObjectCreateExpression ioce)
             {
-                IArrayIndexerExpression target = (IArrayIndexerExpression) iae.Target;
                 IExpression parent = target.Target;
-                IObjectCreateExpression ioce = (IObjectCreateExpression) iae.Expression;
                 Type type = Builder.ToType(ioce.Type);
                 if (MessageTransform.IsFileArray(type) && MessageTransform.IsFileArray(parent.GetExpressionType()) && ioce.Arguments.Count == 2)
                 {

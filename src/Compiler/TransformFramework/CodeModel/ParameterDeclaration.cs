@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
         /// <returns></returns>
         public override string ToString()
         {
-            ILanguageWriter writer = new CSharpWriter() as ILanguageWriter;
+            var writer = new CSharpWriter();
             return writer.ParameterDeclarationSource(this);
         }
 

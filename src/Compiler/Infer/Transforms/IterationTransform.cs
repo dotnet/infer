@@ -223,7 +223,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IndexedProperty<NodeIndex, bool> isUniform = graph2.CreateNodeData<bool>(true);
             foreach (StatementBlock block in blocks)
             {
-                if (block is Loop)
+                if (block is Loop loop)
                 {
                     foreach (NodeIndex i in block.indices)
                     {
@@ -255,9 +255,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             // add all statements in sc3 to whileBody, but remove while loops around a single statement.
                             foreach (IStatement ist in sc3)
                             {
-                                if (ist is IWhileStatement)
+                                if (ist is IWhileStatement iws2)
                                 {
-                                    IWhileStatement iws2 = (IWhileStatement)ist;
                                     if (iws2.Body.Statements.Count == 1)
                                     {
                                         whileBody.AddRange(iws2.Body.Statements);
@@ -280,7 +279,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         }
                         RegisterUnchangedStatements(whileBody);
                     }
-                    Loop loop = (Loop)block;
                     if (firstIterPostprocessing != null && firstIterPostprocessing.ContainsKey(loop))
                     {
                         var thenBlock = firstIterPostprocessing[loop];

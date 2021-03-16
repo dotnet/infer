@@ -14,7 +14,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// Used in MSL to indicate that a variable will be inferred.
         /// </summary>
         /// <param name="obj">A variable reference expression</param>
-        public static void Infer(object obj)
+        public static void Infer<T>(T obj)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// </summary>
         /// <param name="obj">A variable reference expression</param>
         /// <param name="name">The external name of the variable</param>
-        public static void Infer(object obj, string name)
+        public static void Infer<T>(T obj, string name)
         {
         }
 
@@ -33,7 +33,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="obj">A variable reference expression</param>
         /// <param name="name">The external name of the variable</param>
         /// <param name="query">The query type</param>
-        public static void Infer(object obj, string name, QueryType query)
+        public static void Infer<T>(T obj, string name, QueryType query)
         {
         }
 

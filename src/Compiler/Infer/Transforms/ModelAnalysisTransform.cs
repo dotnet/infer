@@ -38,13 +38,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             get { return "ModelAnalysisTransform"; }
         }
 
-        private ExpressionEvaluator evaluator = new ExpressionEvaluator();
-        private List<ConditionBinding> conditionContext = new List<ConditionBinding>();
+        private readonly ExpressionEvaluator evaluator = new ExpressionEvaluator();
+        private readonly List<ConditionBinding> conditionContext = new List<ConditionBinding>();
         /// <summary>
         /// Used to track recursive calls to ConvertArrayCreate
         /// </summary>
         private bool convertingArrayCreate;
-        private Stack<IStatement> arrayCreateStmts = new Stack<IStatement>();
+        private readonly Stack<IStatement> arrayCreateStmts = new Stack<IStatement>();
 
         /// <summary>
         /// Used to generate unique class names
@@ -108,11 +108,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             ss.Expression = ConvertExpression(iss.Expression);
             foreach (ISwitchCase isc in iss.Cases)
             {
-                if (isc is IConditionCase)
+                if (isc is IConditionCase icc)
                 {
-                    IExpression cond = ((IConditionCase) isc).Condition;
-                    ILiteralExpression ile = cond as ILiteralExpression;
-                    if ((ile != null) && (ile.Value is int) && ((int) ile.Value < 0)) continue;
+                    IExpression cond = icc.Condition;
+                    if ((cond is ILiteralExpression ile) && (ile.Value is int i) && (i < 0)) continue;
                 }
                 ConvertSwitchCase(ss.Cases, isc);
             }
@@ -156,9 +155,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (ipd == null)
             {
                 // assignment to a local variable
-                if (ae.Expression is IMethodInvokeExpression)
+                if (ae.Expression is IMethodInvokeExpression imie)
                 {
-                    IMethodInvokeExpression imie = (IMethodInvokeExpression)ae.Expression;
                     // this unfortunately duplicates some of the work done by SetStoch and IsStoch.
                     FactorManager.FactorInfo info = CodeRecognizer.GetFactorInfo(context, imie);
                     if (info != null && info.IsDeterministicFactor && !context.InputAttributes.Has<DerivedVariable>(ivd))
@@ -224,21 +222,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (decl != null && !context.InputAttributes.Has<IsInferred>(decl))
                     context.InputAttributes.Set(decl, new IsInferred());
                 // the arguments must not be substituted for their values, so we don't call ConvertExpression
-                List<IExpression> newArgs = new List<IExpression>();
-                foreach (var arg in imie.Arguments)
-                {
-                    newArgs.Add(CodeRecognizer.RemoveCast(arg));
-                }
-                IMethodInvokeExpression mie = Builder.MethodInvkExpr();
-                mie.Method = imie.Method;
-                mie.Arguments.AddRange(newArgs);
-                context.InputAttributes.CopyObjectAttributesTo(imie, context.OutputAttributes, mie);
-                return mie;                
+                var newArgs = imie.Arguments.Select(CodeRecognizer.RemoveCast);
+                IMethodInvokeExpression infer = Builder.MethodInvkExpr();
+                infer.Method = imie.Method;
+                infer.Arguments.AddRange(newArgs);
+                context.InputAttributes.CopyObjectAttributesTo(imie, context.OutputAttributes, infer);
+                return infer;                
             }
             IExpression converted = base.ConvertMethodInvoke(imie);
-            if (converted is IMethodInvokeExpression)
+            if (converted is IMethodInvokeExpression mie)
             {
-                var mie = (IMethodInvokeExpression)converted;
                 bool isAnd = Recognizer.IsStaticMethod(converted, new Func<bool, bool, bool>(Factors.Factor.And));
                 bool isOr = Recognizer.IsStaticMethod(converted, new Func<bool, bool, bool>(Factors.Factor.Or));
                 bool anyArgumentIsLiteral = mie.Arguments.Any(arg => arg is ILiteralExpression);
@@ -246,7 +239,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     if (isAnd)
                     {
-                        if (mie.Arguments.Any(arg => arg is ILiteralExpression && ((ILiteralExpression)arg).Value.Equals(false)))
+                        if (mie.Arguments.Any(arg => arg is ILiteralExpression ile && ile.Value.Equals(false)))
                             return Builder.LiteralExpr(false);
                         // any remaining literals must be true, and therefore can be ignored.
                         var reducedArguments = mie.Arguments.Where(arg => !(arg is ILiteralExpression));
@@ -255,7 +248,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                     else if (isOr)
                     {
-                        if (mie.Arguments.Any(arg => arg is ILiteralExpression && ((ILiteralExpression)arg).Value.Equals(true)))
+                        if (mie.Arguments.Any(arg => arg is ILiteralExpression ile && ile.Value.Equals(true)))
                             return Builder.LiteralExpr(true);
                         // any remaining literals must be false, and therefore can be ignored.
                         var reducedArguments = mie.Arguments.Where(arg => !(arg is ILiteralExpression));
@@ -273,9 +266,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 foreach (IExpression arg in mie.Arguments)
                 {
-                    if (arg is IAddressOutExpression)
+                    if (arg is IAddressOutExpression iaoe)
                     {
-                        IAddressOutExpression iaoe = (IAddressOutExpression)arg;
                         IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(iaoe.Expression);
                         if (ivd != null)
                         {
@@ -300,15 +292,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             try
             {
-                ICompilerAttribute value = evaluator.Evaluate(attrExpr) as ICompilerAttribute;
-                if (value == null)
+                if (!(evaluator.Evaluate(attrExpr) is ICompilerAttribute value))
                 {
                     throw new InvalidExpressionException("Expression must evaluate to an ICompilerAttribute");
                 }
                 // TODO: Fix this temporary hack to allow quoting of this expression later
-                if (value is MarginalPrototype)
+                if (value is MarginalPrototype mp)
                 {
-                    ((MarginalPrototype) value).prototypeExpression = ((IObjectCreateExpression) attrExpr).Arguments[0];
+                    mp.prototypeExpression = ((IObjectCreateExpression) attrExpr).Arguments[0];
                 }
                 object[] auas = value.GetType().GetCustomAttributes(typeof (AttributeUsageAttribute), true);
                 if (auas.Length > 0)
@@ -380,13 +371,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             foreach (var expr in exprs)
             {
-                if (expr is IBlockExpression)
+                if (expr is IBlockExpression ibe)
                 {
-                    IBlockExpression ibe = (IBlockExpression)expr;
                     if (!AllElementsAreLiteral(ibe.Expressions))
                         return false;
                 }
-                else if(!(expr is ILiteralExpression))
+                else if (!(expr is ILiteralExpression))
                 {
                     return false;
                 }
@@ -412,9 +402,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             IConditionStatement cs = Builder.CondStmt();
             cs.Condition = ConvertExpression(ics.Condition);
-            if (cs.Condition is ILiteralExpression)
+            if (cs.Condition is ILiteralExpression ile)
             {
-                bool value = (bool) ((ILiteralExpression) cs.Condition).Value;
+                bool value = (bool) ile.Value;
                 if (value)
                 {
                     if (ics.Then != null)
@@ -440,8 +430,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return null;
             }
             context.SetPrimaryOutput(cs);
-            IForStatement loop;
-            ConditionBinding binding = GateTransform.GetConditionBinding(cs.Condition, context, out loop);
+            ConditionBinding binding = GateTransform.GetConditionBinding(cs.Condition, context, out IForStatement loop);
             int startIndex = conditionContext.Count;
             conditionContext.Add(binding);
             cs.Then = ConvertBlock(ics.Then);
@@ -476,25 +465,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             iue = (IUnaryExpression)base.ConvertUnary(iue);
             if (iue.Operator == UnaryOperator.BooleanNot)
             {
-                if (iue.Expression is ILiteralExpression)
+                if (iue.Expression is ILiteralExpression expr)
                 {
-                    ILiteralExpression expr = (ILiteralExpression)iue.Expression;
-                    if (expr.Value is bool)
+                    if (expr.Value is bool b)
                     {
-                        return Builder.LiteralExpr(!(bool)expr.Value);
+                        return Builder.LiteralExpr(!b);
                     }
                 }
-                else if (iue.Expression is IUnaryExpression)
+                else if (iue.Expression is IUnaryExpression iue2)
                 {
-                    IUnaryExpression iue2 = (IUnaryExpression)iue.Expression;
                     if (iue2.Operator == UnaryOperator.BooleanNot) // double negation
                         return iue2.Expression;
                 }
-                else if (iue.Expression is IBinaryExpression)
+                else if (iue.Expression is IBinaryExpression ibe)
                 {
-                    IBinaryExpression ibe = (IBinaryExpression)iue.Expression;
-                    BinaryOperator negatedOp;
-                    if (Recognizer.TryNegateOperator(ibe.Operator, out negatedOp))
+                    if (Recognizer.TryNegateOperator(ibe.Operator, out BinaryOperator negatedOp))
                     {
                         // replace !(i==0) with (i != 0)
                         return Builder.BinaryExpr(ibe.Left, negatedOp, ibe.Right);
