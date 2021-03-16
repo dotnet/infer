@@ -570,8 +570,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 q = Q(ratio, A, B);
             double x = q.GetMean();
             double[] g = new double[] { x, 1, 0, 0 };
-            double bMean, bVariance;
-            GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, ratio, A), out bMean, out bVariance);
+            GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, ratio, A), out double bMean, out double bVariance);
             Gamma bMarginal = Gamma.FromMeanAndVariance(bMean, bVariance);
             Gamma result = new Gamma();
             result.SetToRatio(bMarginal, B, GammaProductOp_Laplace.ForceProper);
@@ -615,8 +614,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             // aVariance = E[shape2*(shape2+1)/(y_r/b + a_r)^2] - aMean^2 = var(shape2/(y_r/b + a_r)) + E[shape2/(y_r/b + a_r)^2]
             //           = shape2^2*var(1/(y_r/b + a_r)) + shape2*(var(1/(y_r/b + a_r)) + (aMean/shape2)^2)
             double[] g = new double[] { x * p, ratio.Rate * p2, -2 * p2 * p * ratio.Rate * A.Rate, 6 * p2 * p2 * ratio.Rate * A.Rate * A.Rate };
-            double pMean, pVariance;
-            GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, ratio, A), out pMean, out pVariance);
+            GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, ratio, A), out double pMean, out double pVariance);
             aMean = shape2 * pMean;
             aVariance = shape2 * shape2 * pVariance + shape2 * (pVariance + pMean * pMean);
 

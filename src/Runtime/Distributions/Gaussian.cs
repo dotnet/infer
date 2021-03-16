@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                              CanGetMean<double>, CanGetVariance<double>, CanGetMeanAndVarianceOut<double, double>,
                              CanSetMeanAndVariance<double, double>, CanGetLogAverageOf<Gaussian>, CanGetLogAverageOfPower<Gaussian>,
                              CanGetAverageLog<Gaussian>, CanGetLogNormalizer, CanGetMode<double>,
-                             CanGetProbLessThan, CanGetQuantile
+                             CanGetProbLessThan<double>, CanGetQuantile<double>, ITruncatableDistribution<double>
     {
         /// <summary>
         /// Mean times precision
@@ -248,11 +248,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else return 1.0 / Precision;
         }
 
-        /// <summary>
-        /// Compute the probability that a sample from this distribution is less than x.
-        /// </summary>
-        /// <param name="x">Any real number.</param>
-        /// <returns>The cumulative gaussian distribution at <paramref name="x"/></returns>
+        /// <inheritdoc/>
         public double GetProbLessThan(double x)
         {
             if (this.IsPointMass)
@@ -272,11 +268,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
-        /// <summary>
-        /// Returns the value x such that GetProbLessThan(x) == probability.
-        /// </summary>
-        /// <param name="probability">A real number in [0,1].</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public double GetQuantile(double probability)
         {
             if (probability < 0) throw new ArgumentOutOfRangeException("probability < 0");
@@ -295,6 +287,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double sqrtPrec = Math.Sqrt(Precision);
                 return MMath.NormalCdfInv(probability) / sqrtPrec + mean;
             }
+        }
+
+        /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
+        {
+            double mean = GetMean();
+            if (lowerBound > mean)
+            {
+                // same as below but more accurate
+                // For a Gaussian, CDF(2*mean - x) = 1 - CDF(x)
+                return Math.Max(0, GetProbLessThan(2 * mean - lowerBound) - GetProbLessThan(2 * mean - upperBound));
+            }
+            else
+            {
+                return Math.Max(0, GetProbLessThan(upperBound) - GetProbLessThan(lowerBound));
+            }
+        }
+
+        /// <inheritdoc/>
+        public ITruncatableDistribution<double> Truncate(double lowerBound, double upperBound)
+        {
+            if (lowerBound > upperBound) throw new ArgumentOutOfRangeException($"lowerBound ({lowerBound}) > upperBound ({upperBound})");
+            return new TruncatedGaussian(this, lowerBound, upperBound);
         }
 
         /// <summary>

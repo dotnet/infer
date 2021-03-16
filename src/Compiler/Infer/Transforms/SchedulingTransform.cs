@@ -48,8 +48,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private ModelCompiler compiler;
         private int whileDepth;
         private List<IList<IStatement>> initStmtsOfWhile = new List<IList<IStatement>>();
-        private Set<IStatement> topLevelWhileStmts = new Set<IStatement>(new IdentityComparer<IStatement>());
-        private Dictionary<IWhileStatement, IWhileStatement> convertedWhiles = new Dictionary<IWhileStatement, IWhileStatement>(new IdentityComparer<IWhileStatement>());
+        private Set<IStatement> topLevelWhileStmts = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
+        private Dictionary<IWhileStatement, IWhileStatement> convertedWhiles = new Dictionary<IWhileStatement, IWhileStatement>(ReferenceEqualityComparer<IWhileStatement>.Instance);
         private List<IStatement> statementsToFinalize = new List<IStatement>();
         private Dictionary<NodeIndex, NodeIndex> groupOf;
         private Dictionary<NodeIndex, SerialLoopInfo> loopInfoOfGroup;
@@ -152,7 +152,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (whileDepth == 1 && compiler.UseSpecialFirstIteration)
                 this.ForceInitializedNodes = true;
             var backEdgeSources = new List<IStatement>();
-            bool isCyclic = Schedule(outputInit, ws.Body.Statements, iws.Body.Statements, backEdgeSources, context.InputAttributes.Has<DoNotSchedule>(iws), offsetVarsToDelete);
+            bool isCyclic = Schedule(outputInit, ws.Body.Statements, (IReadOnlyList<IStatement>)iws.Body.Statements, backEdgeSources, context.InputAttributes.Has<DoNotSchedule>(iws), offsetVarsToDelete);
             this.ForceInitializedNodes = wasForceInitializedNodes;
             whileDepth--;
             Context.CloseStatement(iws.Body);
@@ -163,7 +163,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 context.InputAttributes.CopyObjectAttributesTo(iws, context.OutputAttributes, ws);
                 context.OutputAttributes.Set(ws, new InitializerSet(backEdgeSources));
                 // we still surround the body with a while(true) even if it is not cyclic, in order to ensure that the statements do not get separated later
-                if (!isCyclic && compiler.UseSerialSchedules)
+                if (backEdgeSources.Count == 0 && compiler.UseSerialSchedules)
                     context.OutputAttributes.Set(ws, new HasOffsetIndices());
             }
             if (whileDepth == 0)
@@ -218,7 +218,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="doNotSchedule">If true, the statements are added to outputLoop in their original order</param>
         /// <param name="offsetVarsToDelete">Offset edges on these variables will be deleted prior to scheduling</param>
         /// <returns>True if the schedule is cyclic, i.e. it needs to be iterated</returns>
-        protected bool Schedule(ICollection<IStatement> outputInit, ICollection<IStatement> outputLoop, IList<IStatement> inputStmts, ICollection<IStatement> backEdgeSources, bool doNotSchedule, ICollection<IVariableDeclaration> offsetVarsToDelete)
+        protected bool Schedule(ICollection<IStatement> outputInit, ICollection<IStatement> outputLoop, IReadOnlyList<IStatement> inputStmts, ICollection<IStatement> backEdgeSources, bool doNotSchedule, ICollection<IVariableDeclaration> offsetVarsToDelete)
         {
             if (ReferenceEquals(outputInit, outputLoop))
                 throw new ArgumentException("outputInit is the same object as outputLoop");
@@ -226,51 +226,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             DependencyGraph.debug = debug;
             IStatement firstIterPostBlock = ForwardBackwardTransform.ExtractFirstIterationPostProcessingBlock(context, ref inputStmts);
             DependencyGraph g = null;
-            if (!doNotSchedule)
-            {
-                // This code handles the case where the dependency graph is acyclic after deleting offset edges.
-                // It starts by constructing a dependency graph where inner while loops are single nodes.
-                // Then it recursively tests for cycles, constructing a schedule in the process.
-                // If there are no cycles, then the constructed schedule is returned.
-                Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(new IdentityComparer<IStatement>());
-                // if a DependencyInformation refers to an inner statement of a block, make it refer to the block instead
-                foreach (IStatement stmt in inputStmts)
-                {
-                    if (stmt is IWhileStatement)
-                    {
-                        IWhileStatement iws = (IWhileStatement)stmt;
-                        ForEachStatement(iws.Body.Statements, ist => replacements[ist] = iws);
-                    }
-                }
-                g = new DependencyGraph(context, inputStmts, replacements, ignoreMissingNodes: true, ignoreRequirements: false, deleteCancels: true);
-                if (g.dependencyGraph.Nodes.Count == 1 && !g.dependencyGraph.ContainsEdge(0, 0) && inputStmts[0] is IWhileStatement)
-                {
-                    IWhileStatement iws = (IWhileStatement)inputStmts[0];
-                    IWhileStatement ws = Builder.WhileStmt(iws);
-                    //context.SetPrimaryOutput(ws);
-                    ws.Condition = ConvertExpression(iws.Condition);
-                    ws.Body = Builder.BlockStmt();
-                    Context.OpenStatement(iws.Body);
-                    context.SetPrimaryOutput(ws.Body);
-                    bool isCyclic = Schedule(outputInit, ws.Body.Statements, iws.Body.Statements, backEdgeSources, context.InputAttributes.Has<DoNotSchedule>(iws), offsetVarsToDelete);
-                    Context.CloseStatement(iws.Body);
-                    if (!isCyclic)
-                    {
-                        outputLoop.Add(ws);
-                        context.OutputAttributes.Set(ws, new HasOffsetIndices());
-                        return isCyclic;
-                    }
-                    // fall through
-                }
-                bool anyBlockIsCyclic;
-                bool isStronglyConnected = DeleteOffsetEdges(g, outputInit, outputLoop, inputStmts, backEdgeSources, offsetVarsToDelete, out anyBlockIsCyclic);
-                if (!isStronglyConnected)
-                    return anyBlockIsCyclic;
-                // The dependency graph is cyclic even after deleting offset edges.  Fall through and schedule everything as a unit.
-            }
             bool makeSpecialFirst = (compiler.UseSpecialFirstIteration && whileDepth == 1);
-            bool newMethod = !compiler.UseExperimentalSerialSchedules;
-            if (newMethod || doNotSchedule)
+            bool experimental = compiler.UseExperimentalSerialSchedules;
+            if (!experimental || doNotSchedule)
             {
                 List<IStatement> flatStmts = new List<IStatement>();
                 ForEachLeafStatement(inputStmts, flatStmts.Add);
@@ -298,7 +256,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         // Delete negative offset index edges in forward loops, and positive offset index edges in backward loops.
                         // The source of these offset edges will always be available, so we don't need to consider them when scheduling.
                         // Needed for SerialTests.TrueSkillChainTest
-                        anyDeleted = DeleteOffsetEdges(g);
+                        anyDeleted = DeleteOffsetEdges(g, doNotSchedule);
                     }
                     bool showOffsetEdges = false;
                     if (debug && g.dependencyGraph.Nodes.Count < 200 && anyDeleted && showOffsetEdges)
@@ -307,41 +265,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (doNotSchedule)
                 {
                     AddConvertedStatements(outputLoop, inputStmts, new Range(0, inputStmts.Count), firstIterPostBlock);
-                    var usedNodes2 = DeadCodeTransform.CollectUses(g.dependencyGraph, g.dependencyGraph.Nodes);
-                    foreach (var usedNode in usedNodes2)
-                    {
-                        backEdgeSources.Add(flatStmts[usedNode]);
-                    }
+                    ForEachBackEdgeSource(g, g.dependencyGraph.Nodes, usedNode => backEdgeSources.Add(flatStmts[usedNode]));
                     return true;
                 }
                 inputStmts = flatStmts;
             }
-            List<NodeIndex> initSchedule;
-            List<NodeIndex> schedule1 = null; // special first iteration
-            var scheduler = new Scheduler();
-            scheduler.debug = debug;
-            scheduler.doRepair = compiler.EnforceTriggers;
-            scheduler.RecordText = this.RecordText;
-            scheduler.useExperimentalSerialSchedules = compiler.UseExperimentalSerialSchedules;
-            IndexedProperty<NodeIndex, HashSet<IVariableDeclaration>> loopVarsOfNode;
-            if (compiler.UseExperimentalSerialSchedules)
+            NodeIndex[] groupOf2;
+            if (experimental) groupOf2 = null;
+            else
             {
-                loopVarsOfNode = g.dependencyGraph.CreateNodeData<HashSet<IVariableDeclaration>>();
-                foreach (var node in g.dependencyGraph.Nodes)
-                {
-                    loopVarsOfNode[node] = analysis.loopVarsOfStatement[inputStmts[node]];
-                }
-                scheduler.loopVarsOfNode = loopVarsOfNode;
-                var ssinfo = GetSerialSchedulingInfo(g);
-                // sort infos by loop priority
-                SortByLoopPriority(context, ssinfo.loopInfos);
-                IWhileStatement parent = context.FindAncestor<IWhileStatement>();
-                context.OutputAttributes.Set(parent, ssinfo);
-                //st2.loopVarsWithOffset = ssinfo.loopInfos.Select(loopInfo => loopInfo.loopVar).ToList();
-            }
-            NodeIndex[] groupOf2 = null;
-            if (newMethod)
-            {
+                // Convert groupOf into an array.
                 groupOf2 = new NodeIndex[nextGroupIndex];
                 for (int i = 0; i < groupOf2.Length; i++)
                 {
@@ -364,32 +297,168 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                 }
             }
-            List<NodeIndex> schedule = null;
-            try
+            List<NodeIndex> initSchedule;
+            List<NodeIndex> schedule = Schedule(g, inputStmts, offsetVarsToDelete, out initSchedule, out bool isCyclic, groupOf2);
+            if (schedule == null)
             {
-                schedule = scheduler.IterationSchedule(g, groupOf: groupOf2, forceInitializedNodes: this.ForceInitializedNodes);
-                initSchedule = scheduler.InitSchedule(schedule, makeSpecialFirst && newMethod && false);
-            }
-            catch (Exception ex) when (!debug)
-            {
-                Error("Scheduling failed", ex);
-                if (schedule == null)
-                    schedule = new List<NodeIndex>(new Range(0, inputStmts.Count));
+                schedule = new List<NodeIndex>(new Range(0, inputStmts.Count));
                 RecordSchedule("Schedule", schedule, inputStmts);
                 AddConvertedStatements(outputLoop, inputStmts, schedule, firstIterPostBlock);
                 return true;
             }
-            if (context.trackTransform)
-                RecordSchedule("Init", initSchedule, inputStmts);
+            List<NodeIndex> schedule1 = null; // special first iteration
+            if (makeSpecialFirst)
+            {
+                // make a second schedule to follow the special first iteration
+                schedule = SecondSchedule(g, initSchedule, schedule, groupOf2, out schedule1);
+            }
 
             if (context.trackTransform)
             {
+                RecordSchedule("Init", initSchedule, inputStmts);
                 whileCount++;
                 // note that if the schedule contains while loops (due to newMethod=false) then their bodies will not be scheduled yet.
-                RecordSchedule(makeSpecialFirst ? "Special" : "Schedule", schedule, inputStmts);
+                if (schedule1 != null)
+                {
+                    RecordSchedule("Special", schedule1, inputStmts);
+                }
+                RecordSchedule("Schedule", schedule, inputStmts);
             }
 
             // output sources that are inside the convergence loop need to be finalized at the end
+            AddFinalizers(g, inputStmts, schedule);
+
+            if (initSchedule.Count > 0)
+            {
+                AddConvertedStatements(outputInit, inputStmts, initSchedule, null, compiler.AllowSerialInitialisers, compiler.AllowSerialInitialisers, groupOf2);
+            }
+            if (schedule1 != null)
+            {
+                // wrap the special first iteration in a fused block, to keep the statements together until IPT
+                IWhileStatement ws = Builder.FusedBlockStatement(Builder.LiteralExpr(true));
+                AddConvertedStatements(ws.Body.Statements, inputStmts, schedule1, null, compiler.AllowSerialInitialisers, compiler.AllowSerialInitialisers, groupOf2);
+                if (firstIterPostBlock != null)
+                {
+                    // put firstIterPostBlock at the end of the special first iteration
+                    ws.Body.Statements.AddRange(((IConditionStatement)firstIterPostBlock).Then.Statements);
+                    firstIterPostBlock = null;
+                }
+                outputInit.Add(ws);
+                context.OutputAttributes.Set(ws, new HasOffsetIndices());
+                initSchedule.AddRange(schedule1);
+            }
+            bool wasForceInitializedNodes = this.ForceInitializedNodes;
+            this.ForceInitializedNodes = false;
+            AddConvertedStatements(outputLoop, inputStmts, schedule, firstIterPostBlock, true, compiler.AllowSerialInitialisers, groupOf2);
+            this.ForceInitializedNodes = wasForceInitializedNodes;
+
+            // CheckSchedule will change the deleted edges.
+            CheckSchedule(g, experimental, initSchedule, schedule);
+            // This must run after CheckSchedule has changed the deleted edges.
+            ForEachBackEdgeSource(g, schedule, usedNode => backEdgeSources.Add(inputStmts[usedNode]));
+
+            LastScheduleLength = schedule.Count;
+            return isCyclic;
+        }
+
+        private void ForEachBackEdgeSource(DependencyGraph g, IEnumerable<NodeIndex> schedule, Action<NodeIndex> action)
+        {
+            var usedNodes = DeadCodeTransform.CollectUses(g.dependencyGraph, schedule, e => g.isDeleted[e]);
+            foreach (var usedNode in usedNodes)
+            {
+                action(usedNode);
+            }
+        }
+
+        private List<int> Schedule(DependencyGraph g, IReadOnlyList<IStatement> inputStmts, ICollection<IVariableDeclaration> offsetVarsToDelete, out List<int> initSchedule, out bool isCyclic, int[] groupOf2)
+        {
+            if (true)
+            {
+                // This code handles the case where the dependency graph is acyclic after deleting offset edges.
+                // It starts by constructing a dependency graph where inner while loops are single nodes.
+                // Then it recursively tests for cycles, constructing a schedule in the process.
+                // If there are no cycles, then the constructed schedule is returned.
+                Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
+                // if a DependencyInformation refers to an inner statement of a block, make it refer to the block instead
+                foreach (IStatement stmt in inputStmts)
+                {
+                    if (stmt is IWhileStatement)
+                    {
+                        IWhileStatement iws = (IWhileStatement)stmt;
+                        ForEachStatement(iws.Body.Statements, ist => replacements[ist] = iws);
+                    }
+                }
+                DependencyGraph g2 = new DependencyGraph(context, inputStmts, replacements, ignoreMissingNodes: true, ignoreRequirements: false, deleteCancels: true);
+#if false
+                if (g2.dependencyGraph.Nodes.Count == 1 && !g2.dependencyGraph.ContainsEdge(0, 0) && inputStmts[0] is IWhileStatement)
+                {
+                    IWhileStatement iws = (IWhileStatement)inputStmts[0];
+                    IWhileStatement ws = Builder.WhileStmt(iws);
+                    //context.SetPrimaryOutput(ws);
+                    ws.Condition = ConvertExpression(iws.Condition);
+                    ws.Body = Builder.BlockStmt();
+                    Context.OpenStatement(iws.Body);
+                    context.SetPrimaryOutput(ws.Body);
+                    bool isCyclic = Schedule(outputInit, ws.Body.Statements, (IReadOnlyList<IStatement>)iws.Body.Statements, backEdgeSources, context.InputAttributes.Has<DoNotSchedule>(iws), offsetVarsToDelete);
+                    Context.CloseStatement(iws.Body);
+                    if (!isCyclic)
+                    {
+                        outputLoop.Add(ws);
+                        context.OutputAttributes.Set(ws, new HasOffsetIndices());
+                        return isCyclic;
+                    }
+                    // fall through
+                }
+                List<int> schedule = DeleteOffsetEdges(g2, inputStmts, offsetVarsToDelete);
+                if (schedule != null)
+                    return schedule;
+#endif
+                // The dependency graph is cyclic even after deleting offset edges.  Fall through and schedule everything as a unit.
+            }
+            isCyclic = true;
+            var scheduler = new Scheduler();
+            scheduler.debug = debug;
+            scheduler.doRepair = compiler.EnforceTriggers;
+            scheduler.RecordText = this.RecordText;
+            scheduler.useExperimentalSerialSchedules = compiler.UseExperimentalSerialSchedules;
+            if (compiler.UseExperimentalSerialSchedules)
+            {
+                IndexedProperty<NodeIndex, HashSet<IVariableDeclaration>> loopVarsOfNode;
+                loopVarsOfNode = g.dependencyGraph.CreateNodeData<HashSet<IVariableDeclaration>>();
+                foreach (var node in g.dependencyGraph.Nodes)
+                {
+                    loopVarsOfNode[node] = analysis.loopVarsOfStatement[inputStmts[node]];
+                }
+                scheduler.loopVarsOfNode = loopVarsOfNode;
+                var ssinfo = GetSerialSchedulingInfo(g);
+                // sort infos by loop priority
+                SortByLoopPriority(context, ssinfo.loopInfos);
+                IWhileStatement parent = context.FindAncestor<IWhileStatement>();
+                context.OutputAttributes.Set(parent, ssinfo);
+                //st2.loopVarsWithOffset = ssinfo.loopInfos.Select(loopInfo => loopInfo.loopVar).ToList();
+            }
+            try
+            {
+                List<int> schedule = scheduler.IterationSchedule(g, groupOf: groupOf2, forceInitializedNodes: this.ForceInitializedNodes);
+                initSchedule = scheduler.InitSchedule(schedule, false);
+                bool showScheduleInfo = false;
+                if (showScheduleInfo)
+                {
+                    int maxBack = scheduler.MaxBackEdgeCount(schedule, out double maxBackOverLength);
+                    Trace.WriteLine($"schedule.Count = {schedule.Count}, max back = {maxBack}, product = {schedule.Count * maxBack}, max back/length = {maxBackOverLength}, product = {schedule.Count * maxBackOverLength}");
+                }
+                return schedule;
+            }
+            catch (Exception ex) when (!debug)
+            {
+                Error("Scheduling failed", ex);
+                initSchedule = null;
+                return null;
+            }
+        }
+
+        private void AddFinalizers(DependencyGraph g, IReadOnlyList<IStatement> inputStmts, List<int> schedule)
+        {
             Set<NodeIndex> outputSources = new Set<NodeIndex>();
             foreach (NodeIndex node in g.dependencyGraph.Nodes)
             {
@@ -422,117 +491,78 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         outputSources.Remove(source);
                 }
             }
-            if (makeSpecialFirst)
-            {
-                // make a second schedule to follow the special first iteration
-                schedule1 = schedule;
-                List<NodeIndex> combinedSchedule = new List<NodeIndex>();
-                combinedSchedule.AddRange(initSchedule);
-                combinedSchedule.AddRange(schedule);
-                scheduler = new Scheduler();
-                scheduler.debug = debug;
-                scheduler.doRepair = compiler.EnforceTriggers;
-                scheduler.RecordText = this.RecordText;
-                scheduler.useExperimentalSerialSchedules = compiler.UseExperimentalSerialSchedules;
-                // recover the set of reversed edges in the schedule and make them soft constraints
-                Set<EdgeIndex> reversedEdges = new Set<EdgeIndex>();
-                foreach (NodeIndex node in combinedSchedule)
-                {
-                    reversedEdges.Remove(g.dependencyGraph.EdgesInto(node));
-                    reversedEdges.AddRange(g.dependencyGraph.EdgesOutOf(node));
-                }
-                // construct the new set of initializedNodes (nodes which follow all of their parents in the first schedule, i.e. fresh nodes)
-                Set<NodeIndex> initializedNodes = g.initializedNodes;
-                g.initializedNodes = new Set<NodeIndex>();
-                Set<EdgeIndex> initializedEdges = g.initializedEdges;
-                g.initializedEdges = new Set<EdgeIndex>();
-                schedule = scheduler.IterationSchedule(g, groupOf: groupOf2, forceInitializedNodes: false, edgesToReverse: reversedEdges);
-                g.initializedNodes = initializedNodes;
-                g.initializedEdges = initializedEdges;
-                if (compiler.EnforceTriggers)
-                {
-                    combinedSchedule = scheduler.RepairCombinedSchedule(schedule, combinedSchedule);
-                    // extract the second part of the combined schedule after repair
-                    schedule1 = combinedSchedule.Skip(initSchedule.Count).ToList();
-                }
-                if (context.trackTransform)
-                    RecordSchedule("Schedule", schedule, inputStmts);
-            }
-            bool showScheduleInfo = false;
-            if (showScheduleInfo)
-            {
-                double maxBackOverLength;
-                int maxBack;
-                maxBack = scheduler.MaxBackEdgeCount(schedule, out maxBackOverLength);
-                Trace.WriteLine($"schedule.Count = {schedule.Count}, max back = {maxBack}, product = {schedule.Count * maxBack}, max back/length = {maxBackOverLength}, product = {schedule.Count * maxBackOverLength}");
-            }
-            if (initSchedule.Count > 0)
-            {
-                AddConvertedStatements(outputInit, inputStmts, initSchedule, null, compiler.AllowSerialInitialisers, compiler.AllowSerialInitialisers, groupOf2);
-            }
-            if (schedule1 != null)
-            {
-                // wrap the special first iteration in a fused block, to keep the statements together until IPT
-                IWhileStatement ws = Builder.FusedBlockStatement(Builder.LiteralExpr(true));
-                AddConvertedStatements(ws.Body.Statements, inputStmts, schedule1, null, compiler.AllowSerialInitialisers, compiler.AllowSerialInitialisers, groupOf2);
-                if (firstIterPostBlock != null)
-                {
-                    // put firstIterPostBlock at the end of the special first iteration
-                    ws.Body.Statements.AddRange(((IConditionStatement)firstIterPostBlock).Then.Statements);
-                    firstIterPostBlock = null;
-                }
-                outputInit.Add(ws);
-                context.OutputAttributes.Set(ws, new HasOffsetIndices());
-                initSchedule.AddRange(schedule1);
-            }
-            bool wasForceInitializedNodes = this.ForceInitializedNodes;
-            this.ForceInitializedNodes = false;
-            AddConvertedStatements(outputLoop, inputStmts, schedule, firstIterPostBlock, true, compiler.AllowSerialInitialisers, groupOf2);
-            this.ForceInitializedNodes = wasForceInitializedNodes;
+        }
 
-            var usedNodes = DeadCodeTransform.CollectUses(g.dependencyGraph, schedule);
-            foreach (var usedNode in usedNodes)
+        private List<int> SecondSchedule(DependencyGraph g, List<int> initSchedule, List<int> schedule, int[] groupOf2, out List<int> schedule1)
+        {
+            // schedule is now the special first iteration.
+            schedule1 = schedule;
+            List<NodeIndex> combinedSchedule = new List<NodeIndex>();
+            combinedSchedule.AddRange(initSchedule);
+            combinedSchedule.AddRange(schedule);
+            Scheduler scheduler = new Scheduler();
+            scheduler.debug = debug;
+            scheduler.doRepair = compiler.EnforceTriggers;
+            scheduler.RecordText = this.RecordText;
+            scheduler.useExperimentalSerialSchedules = compiler.UseExperimentalSerialSchedules;
+            // recover the set of reversed edges in the schedule and make them soft constraints
+            Set<EdgeIndex> reversedEdges = new Set<EdgeIndex>();
+            foreach (NodeIndex node in combinedSchedule)
             {
-                backEdgeSources.Add(inputStmts[usedNode]);
+                reversedEdges.Remove(g.dependencyGraph.EdgesInto(node));
+                reversedEdges.AddRange(g.dependencyGraph.EdgesOutOf(node));
+            }
+            // construct the new set of initializedNodes (nodes which follow all of their parents in the first schedule, i.e. fresh nodes)
+            Set<NodeIndex> initializedNodes = g.initializedNodes;
+            g.initializedNodes = new Set<NodeIndex>();
+            Set<EdgeIndex> initializedEdges = g.initializedEdges;
+            g.initializedEdges = new Set<EdgeIndex>();
+            schedule = scheduler.IterationSchedule(g, groupOf: groupOf2, forceInitializedNodes: false, edgesToReverse: reversedEdges);
+            g.initializedNodes = initializedNodes;
+            g.initializedEdges = initializedEdges;
+            if (compiler.EnforceTriggers)
+            {
+                combinedSchedule = scheduler.RepairCombinedSchedule(schedule, combinedSchedule);
+                // extract the second part of the combined schedule after repair
+                schedule1 = combinedSchedule.Skip(initSchedule.Count).ToList();
             }
 
-            bool checkSchedule = true;
-            if (checkSchedule)
+            return schedule;
+        }
+
+        private void CheckSchedule(DependencyGraph g, bool experimental, List<int> initSchedule, List<int> schedule)
+        {
+            Set<NodeIndex> available = Set<NodeIndex>.FromEnumerable(g.hasNonUniformInitializer);
+            available.AddRange(g.initializedNodes);
+            List<NodeIndex> fullSchedule = new List<EdgeIndex>();
+            fullSchedule.AddRange(initSchedule);
+            fullSchedule.AddRange(schedule);
+            fullSchedule.AddRange(schedule);
+            try
             {
-                Set<NodeIndex> available = Set<NodeIndex>.FromEnumerable(g.hasNonUniformInitializer);
-                available.AddRange(g.initializedNodes);
-                List<NodeIndex> fullSchedule = new List<EdgeIndex>();
-                fullSchedule.AddRange(initSchedule);
-                fullSchedule.AddRange(schedule);
-                fullSchedule.AddRange(schedule);
-                try
-                {
-                    g.CheckSchedule(fullSchedule, available);
-                }
-                catch (Exception ex)
-                {
-                    Error("Internal error: Invalid schedule", ex);
-                }
-                // restore offset edges
-                g.isDeleted.Clear();
-                if (newMethod && compiler.UseSerialSchedules)
-                    DeleteOffsetEdges(g);
-                available = Set<NodeIndex>.FromEnumerable(g.hasNonUniformInitializer);
-                available.AddRange(g.initializedNodes);
-                // check that all requirements are satisfied
-                List<string> shouldBeEmpty = g.CollectRequirements(initSchedule, available, true);
-                foreach (string message in shouldBeEmpty)
-                {
-                    Error(message);
-                }
-                shouldBeEmpty = g.CollectRequirements(schedule, available, false);
-                foreach (string message in shouldBeEmpty)
-                {
-                    Error(message);
-                }
+                g.CheckSchedule(fullSchedule, available);
             }
-            LastScheduleLength = schedule.Count;
-            return true;
+            catch (Exception ex)
+            {
+                Error("Internal error: Invalid schedule", ex);
+            }
+            // restore offset edges
+            g.isDeleted.Clear();
+            if (!experimental && compiler.UseSerialSchedules)
+                DeleteOffsetEdges(g);
+            available = Set<NodeIndex>.FromEnumerable(g.hasNonUniformInitializer);
+            available.AddRange(g.initializedNodes);
+            // check that all requirements are satisfied
+            List<string> shouldBeEmpty = g.CollectRequirements(initSchedule, available, true);
+            foreach (string message in shouldBeEmpty)
+            {
+                Error(message);
+            }
+            shouldBeEmpty = g.CollectRequirements(schedule, available, false);
+            foreach (string message in shouldBeEmpty)
+            {
+                Error(message);
+            }
         }
 
         internal static SerialSchedulingInfo GetSerialSchedulingInfo(DependencyGraph g)
@@ -583,7 +613,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             });
         }
 
-        private bool DeleteOffsetEdges(DependencyGraph g, ICollection<IStatement> outputInit, ICollection<IStatement> outputLoop, IList<IStatement> inputStmts, ICollection<IStatement> backEdgeSources, ICollection<IVariableDeclaration> offsetVarsToDelete, out bool anyBlockIsCyclic)
+        private List<NodeIndex> DeleteOffsetEdges(DependencyGraph g, IReadOnlyList<IStatement> inputStmts, ICollection<IVariableDeclaration> offsetVarsToDelete, out List<NodeIndex> initSchedule)
         {
             // note we could use SerialSchedulingInfo to do the deletion here
             bool anyBlockIsCyclicLocal;
@@ -597,22 +627,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         DrawOffsetEdges(g);
                 }
                 // if edges were deleted, recompute SCCs
-                bool anyBlockIsCyclicLocal2;
-                bool isStronglyConnected = ProcessStrongComponents(g, outputInit, outputLoop, inputStmts, backEdgeSources, offsetVarsToDelete, out anyBlockIsCyclicLocal2);
-                if (!isStronglyConnected)
+                List<NodeIndex> schedule = ProcessStrongComponents(g, inputStmts, offsetVarsToDelete, out initSchedule);
+                if (schedule != null)
                 {
-                    anyBlockIsCyclic = anyBlockIsCyclicLocal || anyBlockIsCyclicLocal2;
-                    return isStronglyConnected;
+                    return schedule;
                 }
                 // fall through
             }
-            anyBlockIsCyclic = false;
-            return true;
+            initSchedule = null;
+            return null;
         }
 
-        private bool ProcessStrongComponents(DependencyGraph g, ICollection<IStatement> outputInit, ICollection<IStatement> outputLoop, IList<IStatement> inputStmts, ICollection<IStatement> backEdgeSources, ICollection<IVariableDeclaration> offsetVarsToDelete, out bool anyBlockIsCyclic)
+        private List<NodeIndex> ProcessStrongComponents(DependencyGraph g, IReadOnlyList<IStatement> inputStmts, ICollection<IVariableDeclaration> offsetVarsToDelete, out List<NodeIndex> initSchedule)
         {
-            bool anyBlockIsCyclicLocal = false;
             bool isStronglyConnected = false;
             DirectedGraphFilter<NodeIndex, EdgeIndex> graph2 = new DirectedGraphFilter<NodeIndex, EdgeIndex>(g.dependencyGraph, edge => !g.isDeleted[edge]);
             StrongComponents2<NodeIndex> scc = new StrongComponents2<NodeIndex>(graph2.SourcesOf, graph2);
@@ -620,13 +647,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // BeginComponent is not needed since block is cleared by EndComponent
             //scc.BeginComponent += delegate() { block.Clear(); };
             scc.AddNode += block.Add;
-            List<IStatement> pendingOutput = new List<IStatement>();
-            List<IStatement> pendingReverse = new List<IStatement>();
+            List<NodeIndex> pendingOutput = new List<NodeIndex>();
+            List<NodeIndex> pendingReverse = new List<NodeIndex>();
+            List<NodeIndex> schedule = new List<NodeIndex>();
+            var initScheduleLocal = new List<NodeIndex>();
             scc.EndComponent += delegate ()
             {
-                List<IStatement> stmts = new List<IStatement>();
-                foreach (NodeIndex node in block)
-                    stmts.Add(inputStmts[node]);
                 bool isSingleStmt = (block.Count == 1 && !graph2.ContainsEdge(block[0], block[0]) && !(inputStmts[block[0]] is IWhileStatement));
                 if (isSingleStmt)
                 {
@@ -634,11 +660,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (this.ForceInitializedNodes && g.initializedNodes.Contains(node1))
                     {
                         // updates to initialized nodes must be put at the end, in reverse order
-                        AddConvertedStatements(pendingReverse, stmts, new Range(0, 1), null);
+                        pendingReverse.AddRange(block);
                     }
                     else
                     {
-                        AddConvertedStatements(pendingOutput, stmts, new Range(0, 1), null);
+                        RecordSchedule("Single", block, inputStmts);
+                        pendingOutput.AddRange(block);
                     }
                 }
                 else if (block.Count == inputStmts.Count)
@@ -647,32 +674,28 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 else
                 {
-                    List<IStatement> newOutput = new List<IStatement>();
-                    List<IStatement> init = new List<IStatement>();
-                    bool isCyclic = Schedule(init, newOutput, stmts, backEdgeSources, false, offsetVarsToDelete);
-                    // statements in init and newOutput have already been converted
-                    anyBlockIsCyclicLocal = anyBlockIsCyclicLocal || isCyclic;
-                    if (init.Count > 0)
+                    List<NodeIndex> schedule2 = Schedule(g, inputStmts, offsetVarsToDelete, out List<NodeIndex> initSchedule2, out bool isCyclic2, null);
+                    if (initSchedule2.Count > 0)
                     {
-                        outputInit.AddRange(pendingOutput);
-                        outputInit.AddRange(init);
-                        outputLoop.AddRange(pendingOutput);
+                        initScheduleLocal.AddRange(pendingOutput);
+                        initScheduleLocal.AddRange(initSchedule2);
+                        schedule.AddRange(pendingOutput);
                         pendingOutput.Clear();
                     }
                     if (this.ForceInitializedNodes)
                     {
                         // updates to initialized nodes must be put at the end, in reverse order
-                        foreach (IStatement ist in newOutput)
+                        foreach (NodeIndex node in schedule2)
                         {
-                            if (HasUserInitializedInitializer(context, ist))
-                                pendingReverse.Add(ist);
+                            if (HasUserInitializedInitializer(context, inputStmts[node]))
+                                pendingReverse.Add(node);
                             else
-                                pendingOutput.Add(ist);
+                                pendingOutput.Add(node);
                         }
                     }
                     else
                     {
-                        pendingOutput.AddRange(newOutput);
+                        pendingOutput.AddRange(schedule2);
                     }
                 }
                 block.Clear();
@@ -683,14 +706,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // add pendingReverse statements in reverse order
                 pendingReverse.Reverse();
                 pendingOutput.AddRange(pendingReverse);
-                outputLoop.AddRange(pendingOutput);
-                anyBlockIsCyclic = anyBlockIsCyclicLocal;
+                schedule.AddRange(pendingOutput);
+                initSchedule = initScheduleLocal;
+                return schedule;
             }
             else
             {
-                anyBlockIsCyclic = false;
+                initSchedule = null;
+                return null;
             }
-            return isStronglyConnected;
         }
 
         internal static bool IsUserInitialized(BasicTransformContext context, IStatement ist)
@@ -735,7 +759,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 NodeIndex target = g.dependencyGraph.TargetOf(edge);
                 Set<NodeIndex> sourceGroups = new Set<NodeIndex>();
                 ForEachGroupOf(source, group => sourceGroups.Add(group));
-                Set<IVariableDeclaration> commonLoopVars = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+                Set<IVariableDeclaration> commonLoopVars = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                 ForEachGroupOf(target, group =>
                 {
                     if (sourceGroups.Contains(group))
@@ -813,7 +837,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        internal void RecordSchedule(string prefix, IEnumerable<NodeIndex> schedule, IList<IStatement> inputStmts)
+        internal void RecordSchedule(string prefix, IEnumerable<NodeIndex> schedule, IReadOnlyList<IStatement> inputStmts)
         {
             // record the schedule for transform browser
             var itdOut = context.FindOutputForAncestor<ITypeDeclaration, ITypeDeclaration>();
@@ -822,9 +846,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             foreach (NodeIndex node in schedule)
             {
                 var stmt = inputStmts[node];
-                if(context.OutputAttributes.Has<BackEdgeAttribute>(stmt))
+                if (context.OutputAttributes.Has<BackEdgeAttribute>(stmt))
                 {
-                    foreach (var attr in context.OutputAttributes.GetAll<BackEdgeAttribute>(stmt)) {
+                    foreach (var attr in context.OutputAttributes.GetAll<BackEdgeAttribute>(stmt))
+                    {
                         block.Statements.Add(Builder.CommentStmt("Uses previous value of " + attr.Message));
                     }
                 }
@@ -859,7 +884,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             });
         }
 
-        internal static void DrawOffsetEdges(DependencyGraph g, Dictionary<NodeIndex, NodeIndex> groupOf = null)
+        internal static void DrawOffsetEdges(DependencyGraph g, Dictionary<NodeIndex, NodeIndex> groupOf = null, bool inThread = true)
         {
             if (Models.InferenceEngine.Visualizer?.DependencyGraphVisualizer != null)
             {
@@ -898,7 +923,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     new EdgeStylePredicate("NoInit", isNoInit, EdgeStyle.Dashed)
                 };
                 string title = "offset edges";
-                bool inThread = true;
                 if (inThread)
                 {
                     var viewThread = new System.Threading.Thread(delegate ()
@@ -989,7 +1013,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        private void AddConvertedStatements(ICollection<IStatement> output, IList<IStatement> inputStmts, IEnumerable<NodeIndex> nodes, IStatement firstIterPostBlock, bool allowNestedWhile = true,
+        private void AddConvertedStatements(ICollection<IStatement> output, IReadOnlyList<IStatement> inputStmts, IEnumerable<NodeIndex> nodes, IStatement firstIterPostBlock, bool allowNestedWhile = true,
                                             bool allowNestedInit = true, int[] groupOf = null)
         {
             List<IStatement> pendingOutput = new List<IStatement>();
@@ -1064,7 +1088,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     internal class LoopAnalysisTransform : ShallowCopyTransform
     {
         HashSet<IVariableDeclaration> loopVars;
-        public Dictionary<IStatement, HashSet<IVariableDeclaration>> loopVarsOfStatement = new Dictionary<IStatement, HashSet<IVariableDeclaration>>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, HashSet<IVariableDeclaration>> loopVarsOfStatement = new Dictionary<IStatement, HashSet<IVariableDeclaration>>(ReferenceEqualityComparer<IStatement>.Instance);
 
         protected override IStatement ConvertWhile(IWhileStatement iws)
         {

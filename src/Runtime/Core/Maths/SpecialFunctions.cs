@@ -4816,6 +4816,101 @@ rr = mpf('-0.99999824265582826');
             return a / 2 + b / 2 + ((a % 2) + (b % 2)) / 2;
         }
 
+        /// <summary>
+        /// Returns (weight1*value1 + weight2*value2)/(weight1 + weight2), avoiding underflow and overflow.  
+        /// The result is guaranteed to be between value1 and value2, monotonic in value1 and value2,
+        /// and equal to Average(value1, value2) when weight1 == weight2.
+        /// </summary>
+        /// <param name="weight1">Any number &gt;=0</param>
+        /// <param name="value1">Any number</param>
+        /// <param name="weight2">Any number &gt;=0</param>
+        /// <param name="value2">Any number</param>
+        /// <returns></returns>
+        public static double WeightedAverage(double weight1, double value1, double weight2, double value2)
+        {
+            if (weight1 < weight2)
+            {
+                return WeightedAverage(weight2, value2, weight1, value1);
+            }
+            // weight1 >= weight2
+            if (MMath.AreEqual(weight2, 0) || weight1 > double.MaxValue)
+            {
+                if (MMath.AreEqual(weight1, 0) || weight2 > double.MaxValue)
+                {
+                    return MMath.Average(value1, value2);
+                }
+                else
+                {
+                    return value1;
+                }
+            }
+            // Since overflow is easily detected, we start by scaling to avoid underflow.
+            // Normalize by weight2 to avoid underflow.
+            // weight1/weight2 >= 1
+            double ratio = weight1 / weight2;
+            double result;
+            if (ratio > double.MaxValue)
+            {
+                // Instead of scaling by 1/weight2, choose scale so that scale*(weight1+weight2) <= double.MaxValue.
+                // We know that (weight1+weight2) == weight1
+                // weight2 < 1
+                double scale = double.MaxValue / weight1; // scale >= 1 but scale*weight2 < 1
+                //result = (scale * weight1 * value1 + scale * weight2 * value2) / (scale * weight1 + scale * weight2);
+                double scaleWeight2Value2 = scale * weight2 * value2; // cannot overflow
+                result = (double.MaxValue * value1 + scaleWeight2Value2) / double.MaxValue;
+                if (double.IsNaN(result) || double.IsInfinity(result))
+                {
+                    // Overflow happened.  Scale down to avoid overflow.
+                    // We scale by a power of 2 to ensure that the result is rounded the same way as above.
+                    // Otherwise, the function would not always be monotonic in value1 and value2.
+                    const double ScaleBM1024 = 5.5626846462680035E-309; // ScaleB(1,-1024)
+                    const double nextBelowOne = double.MaxValue * ScaleBM1024; // nextBelowOne < 1
+                    // IsInfinity(result) implies value1 > 1 so the first term cannot underflow.
+                    // This cannot overflow, because the second term's magnitude is less than 1.
+                    result = (nextBelowOne * value1 + scaleWeight2Value2 * ScaleBM1024) / nextBelowOne;
+                    if (double.IsNaN(result)) return value1 + value2;
+                }
+            }
+            else
+            {
+                result = (ratio * value1 + value2) / (ratio + 1);
+                // IsNaN(result) happens in 2 ways:
+                // 1. denominator is infinity and numerator is +/-infinity
+                // 2. (weight1/weight2)*value1 + value2 is NaN
+                //    a. (weight1/weight2)*value1=inf and value2=-inf
+                //    b. (weight1/weight2)*value1 is NaN.  This implies (weight1/weight2)=inf and value1=0.
+                // In all cases, we must have weight1/weight2 > 1.
+                if (double.IsNaN(result) || double.IsInfinity(result))
+                {
+                    // Overflow happened.  Scale down to avoid overflow.
+                    // 0 <= weight2/weight1 <= 1
+                    // This case cannot overflow but can underflow.
+                    // It is not clear whether this result will be rounded the same way as above,
+                    // so it is not clear that this code ensures monotonicity.
+                    double ratio2 = weight2 / weight1;
+                    result = (0.5 * value1 + 0.5 * ratio2 * value2) / (0.5 + 0.5 * ratio2);
+                    if (double.IsNaN(result))
+                    {
+                        // a/b returns NaN in 4 cases:
+                        // 1. a=b=0
+                        // 2. abs(a)=abs(b)=infinity
+                        // 3. a is NaN
+                        // 4. b is NaN
+                        // (weight2/weight1) cannot be NaN since none of these cases can happen.
+                        // Therefore IsNaN(result) implies IsNaN(numerator).
+                        // IsNaN(numerator) happens in 2 ways:
+                        // 1. abs(value1)=inf and (weight2 / weight1) * value2 = -value1.  This implies abs(value2)=-value1.
+                        // 2. (weight2 / weight1) * value2 is NaN.  This implies (weight2/weight1)=0 and abs(value2)=inf.
+                        // In both cases, the weights are irrelevant since at least one value is infinite.
+                        return value1 + value2;
+                    }
+                }
+            }
+            result = Math.Min(result, Math.Max(value1, value2));
+            result = Math.Max(result, Math.Min(value1, value2));
+            return result;
+        }
+
         private static double RepresentationMidpoint(double lower, double upper)
         {
             if (lower == 0)

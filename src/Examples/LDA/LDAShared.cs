@@ -10,6 +10,7 @@ using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 using Range = Microsoft.ML.Probabilistic.Models.Range;
+using Microsoft.ML.Probabilistic.Utilities;
 
 namespace LDAExample
 {
@@ -158,7 +159,7 @@ namespace LDAExample
         /// <summary>
         /// Initialisation for breaking symmetry with respect to <see cref="Theta"/> (observed)
         /// </summary>
-        protected Variable<IDistribution<Vector[]>> ThetaInit;
+        protected VariableArray<Dirichlet> ThetaInit;
 
         /// <summary>
         /// Constructs an LDA model
@@ -236,8 +237,8 @@ namespace LDAExample
             evidenceDocBlock.CloseBlock();
 
             // Initialization to break symmetry
-            ThetaInit = Variable.New<IDistribution<Vector[]>>().Named("ThetaInit");
-            Theta.InitialiseTo(ThetaInit);
+            ThetaInit = Variable.Array<Dirichlet>(D).Named("ThetaInit");
+            Theta[D].InitialiseTo(ThetaInit[D]);
             EnginePhiDef = new InferenceEngine(new VariationalMessagePassing());
             EnginePhiDef.Compiler.ShowWarnings = false;
             EnginePhiDef.ModelName = "LDASharedPhiDef";
@@ -267,7 +268,7 @@ namespace LDAExample
         public virtual double Infer(Dictionary<int, int>[] wordsInDoc, double alpha, double beta, out Dirichlet[] postTheta, out Dirichlet[] postPhi)
         {
             int numDocs = wordsInDoc.Length;
-            postTheta = new Dirichlet[numDocs];
+            var thetaPosterior = new Dirichlet[numDocs];
             int numIters = Engine.NumberOfIterations;
             bool showProgress = Engine.ShowProgress;
             Engine.ShowProgress = false; // temporarily disable Infer.NET progress
@@ -326,20 +327,6 @@ namespace LDAExample
                         }
 
                         int numDocsInThisBatch = endDoc - startDoc;
-                        if (pass == 0)
-                        {
-                            ThetaInit.ObservedValue = LDAModel.GetInitialisation(numDocsInThisBatch, NumTopics, ThetaSparsity);
-                        }
-                        else
-                        {
-                            var thetaInit = new DirichletArray(numDocsInThisBatch);
-                            for (int d = 0; d < numDocsInThisBatch; d++)
-                            {
-                                thetaInit[d] = new Dirichlet(postTheta[d + startDoc]);
-                            }
-
-                            ThetaInit.ObservedValue = thetaInit;
-                        }
 
                         // Set up the observed values
                         if (NumDocuments.ObservedValue != numDocsInThisBatch)
@@ -352,6 +339,15 @@ namespace LDAExample
                                 ThetaPrior.ObservedValue[i] = Dirichlet.Symmetric(NumTopics, alpha);
                             }
                         }
+                        if (pass == 0)
+                        {
+                            ThetaInit.ObservedValue = LDAModel.GetInitialisation(numDocsInThisBatch, NumTopics, ThetaSparsity);
+                        }
+                        else
+                        {
+                            ThetaInit.ObservedValue = Util.ArrayInit(numDocsInThisBatch, d => new Dirichlet(thetaPosterior[d + startDoc]));
+                        }
+
 
                         int[] numWordsInDocBatch = new int[numDocsInThisBatch];
                         int[][] wordsInDocBatch = new int[numDocsInThisBatch][];
@@ -377,10 +373,8 @@ namespace LDAExample
                         var postThetaBatch = Engine.Infer<Dirichlet[]>(Theta);
                         for (int i = 0, j = startDoc; j < endDoc; i++, j++)
                         {
-                            postTheta[j] = postThetaBatch[i];
+                            thetaPosterior[j] = postThetaBatch[i];
                         }
-
-                        postPhi = Distribution.ToArray<Dirichlet[]>(Phi.Marginal<IDistribution<Vector[]>>());
 
                         if (showProgress)
                         {
@@ -405,7 +399,8 @@ namespace LDAExample
                 Console.WriteLine();
             }
 
-            postPhi = Distribution.ToArray<Dirichlet[]>(Phi.Marginal<IDistribution<Vector[]>>());
+            postTheta = thetaPosterior;
+            postPhi = Phi.Marginal<Dirichlet[]>();
 
             return Model.GetEvidenceForAll(PhiDefModel, DocModel);
         }
@@ -419,13 +414,7 @@ namespace LDAExample
         private static DirichletArray CreateUniformDirichletArray(
             int length, int valueLength, Sparsity sparsity)
         {
-            Dirichlet[] result = new Dirichlet[length];
-            for (int i = 0; i < length; i++)
-            {
-                result[i] = Dirichlet.Uniform(valueLength, sparsity);
-            }
-
-            return (DirichletArray)Distribution<Vector>.Array<Dirichlet>(result);
+            return new DirichletArray(length, i => Dirichlet.Uniform(valueLength, sparsity));
         }
     }
 }

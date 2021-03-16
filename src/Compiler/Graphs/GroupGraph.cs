@@ -378,8 +378,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                 dfsScheduleWithGroups = new DepthFirstSearch<NodeIndex>(predecessors, this);
                 dfsScheduleWithGroups.BackEdge += delegate (Edge<NodeIndex> edge)
                 {
-                    List<NodeIndex> cycle = new List<NodeIndex>();
-                    cycle.Add(edge.Target);
+                    List<NodeIndex> cycle = new List<NodeIndex>
+                    {
+                        edge.Target
+                    };
                     bool found = false;
                     dfsScheduleWithGroups.ForEachStackNode(delegate (NodeIndex node)
                     {

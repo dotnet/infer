@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
     {
         private List<TransformError> errorsAndWarnings = new List<TransformError>();
         public IReadOnlyList<TransformError> ErrorsAndWarnings { get { return errorsAndWarnings.AsReadOnly(); } }
-        protected Dictionary<object, List<TransformError>> errorMap = new Dictionary<object, List<TransformError>>(new IdentityComparer<object>());
+        protected Dictionary<object, List<TransformError>> errorMap = new Dictionary<object, List<TransformError>>(ReferenceEqualityComparer<object>.Instance);
         public int ErrorCount { get; private set; }
         public int WarningCount { get; private set; }
         public ICodeTransform Transform;

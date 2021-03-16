@@ -38,17 +38,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// Maps from a statement to the index of every position it occurs in the schedule (but only if it occurs more than once)
         /// </summary>
-        public Dictionary<IStatement, Set<NodeIndex>> duplicates = new Dictionary<IStatement, Set<NodeIndex>>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, Set<NodeIndex>> duplicates = new Dictionary<IStatement, Set<NodeIndex>>(ReferenceEqualityComparer<IStatement>.Instance);
 
         /// <summary>
         /// Maps from a source statement (which has not yet received an index) to the index of its targets
         /// </summary>
-        public Dictionary<IStatement, Set<NodeIndex>> backEdges = new Dictionary<IStatement, Set<EdgeIndex>>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, Set<NodeIndex>> backEdges = new Dictionary<IStatement, Set<EdgeIndex>>(ReferenceEqualityComparer<IStatement>.Instance);
 
         /// <summary>
         /// Maps from a statement to the last position it occurs in the schedule
         /// </summary>
-        public Dictionary<IStatement, NodeIndex> indexOfNode = new Dictionary<IStatement, int>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, NodeIndex> indexOfNode = new Dictionary<IStatement, int>(ReferenceEqualityComparer<IStatement>.Instance);
 
         public enum BackEdgeHandling
         {

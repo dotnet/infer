@@ -170,13 +170,15 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static int IndexOf<T>(this IEnumerable<T> list, T value)
         {
-            if (object.ReferenceEquals(value, null)) return FindIndex(list, delegate(T item) { return object.ReferenceEquals(item, null); });
+            if (list is Array array) return Array.IndexOf(array, value);
+            else if (value == null) return FindIndex(list, delegate(T item) { return item == null; });
             else return FindIndex(list, delegate(T item) { return value.Equals(item); });
         }
 
         public static int IndexOf<T>(this IEnumerable list, T value)
         {
-            if (object.ReferenceEquals(value, null)) return FindIndex<T>(list, delegate(T item) { return object.ReferenceEquals(item, null); });
+            if (list is Array array) return Array.IndexOf(array, value);
+            else if (value == null) return FindIndex<T>(list, delegate(T item) { return item == null; });
             else return FindIndex<T>(list, delegate(T item) { return value.Equals(item); });
         }
 
@@ -337,6 +339,8 @@ namespace Microsoft.ML.Probabilistic.Collections
     /// <typeparam name="T"></typeparam>
     public class ListComparer<T> : IEqualityComparer<IList<T>>
     {
+        public static ListComparer<T> Default { get; } = new ListComparer<T>();
+
         public bool Equals(IList<T> x, IList<T> y)
         {
             return ListComparer<T>.EqualLists(x, y);

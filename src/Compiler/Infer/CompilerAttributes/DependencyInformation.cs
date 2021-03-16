@@ -25,13 +25,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <summary>
         /// Stores the dependency type of all dependent statements.
         /// </summary>
-        public Dictionary<IStatement, DependencyType> dependencyTypeOf = new Dictionary<IStatement, DependencyType>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, DependencyType> dependencyTypeOf = new Dictionary<IStatement, DependencyType>(ReferenceEqualityComparer<IStatement>.Instance);
 
         //public SortedDictionary<IStatement,DependencyType> dependencyTypeOf = new SortedDictionary<IStatement, DependencyType>(new StatementComparer());
         /// <summary>
         /// Stores the offsets of all dependent statements that have an offset.
         /// </summary>
-        public Dictionary<IStatement, IOffsetInfo> offsetIndexOf = new Dictionary<IStatement, IOffsetInfo>(new IdentityComparer<IStatement>());
+        public Dictionary<IStatement, IOffsetInfo> offsetIndexOf = new Dictionary<IStatement, IOffsetInfo>(ReferenceEqualityComparer<IStatement>.Instance);
 
         /// <summary>
         /// True if this statement assigns to an output variable of the inference.
@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <summary>
         /// List of method arguments that the statement depends on.
         /// </summary>
-        public Set<IParameterDeclaration> ParameterDependencies = new Set<IParameterDeclaration>(new IdentityComparer<IParameterDeclaration>());
+        public Set<IParameterDeclaration> ParameterDependencies = new Set<IParameterDeclaration>(ReferenceEqualityComparer<IParameterDeclaration>.Instance);
 
         public void AddOffsetIndices(IOffsetInfo offsetIndex, IStatement ist)
         {
@@ -115,9 +115,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         {
             if (ReferenceEquals(dependencySt, ist))
                 return true;
-            if (dependencySt is AnyStatement)
+            if (dependencySt is AnyStatement anySt)
             {
-                AnyStatement anySt = (AnyStatement)dependencySt;
                 bool found = false;
                 ForEachStatement(anySt, st =>
                 {
@@ -126,10 +125,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 });
                 return found;
             }
-            if (dependencySt is IExpressionStatement && ist is IExpressionStatement)
+            if (dependencySt is IExpressionStatement es && ist is IExpressionStatement ies)
             {
-                IExpressionStatement es = (IExpressionStatement)dependencySt;
-                IExpressionStatement ies = (IExpressionStatement)ist;
                 return CodeBuilder.Instance.ContainsExpression(es.Expression, ies.Expression);
             }
             return false;
@@ -172,8 +169,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         public void Remove(DependencyType type, IStatement stmt)
         {
-            DependencyType depType;
-            if (dependencyTypeOf.TryGetValue(stmt, out depType))
+            if (dependencyTypeOf.TryGetValue(stmt, out DependencyType depType))
             {
                 depType = depType & (~type);
                 if (depType == 0)
@@ -223,20 +219,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         public void Replace(IDictionary<IStatement, IStatement> replacements)
         {
             Replace(delegate (IStatement ist)
-                {
-                    IStatement newStmt;
-                    if (replacements.TryGetValue(ist, out newStmt))
-                        return newStmt;
-                    else
-                        return ist;
-                });
+            {
+                if (replacements.TryGetValue(ist, out IStatement newStmt))
+                    return newStmt;
+                else
+                    return ist;
+            });
         }
 
         public void Replace(Converter<IStatement, IStatement> converter)
         {
             List<IStatement> toRemove = new List<IStatement>();
-            Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(new IdentityComparer<IStatement>());
-            Dictionary<IStatement, IOffsetInfo> toAddOffset = new Dictionary<IStatement, IOffsetInfo>(new IdentityComparer<IStatement>());
+            Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(ReferenceEqualityComparer<IStatement>.Instance);
+            Dictionary<IStatement, IOffsetInfo> toAddOffset = new Dictionary<IStatement, IOffsetInfo>(ReferenceEqualityComparer<IStatement>.Instance);
             foreach (KeyValuePair<IStatement, DependencyType> entry in dependencyTypeOf)
             {
                 IStatement stmt = entry.Key;
@@ -247,11 +242,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                     if (newStmt != null)
                     {
                         DependencyType type = entry.Value;
-                        IOffsetInfo offsetIndices;
-                        offsetIndexOf.TryGetValue(stmt, out offsetIndices);
-                        if (newStmt is AnyStatement)
+                        offsetIndexOf.TryGetValue(stmt, out IOffsetInfo offsetIndices);
+                        if (newStmt is AnyStatement anySt)
                         {
-                            AnyStatement anySt = (AnyStatement)newStmt;
                             DependencyType anyTypes = DependencyType.Requirement | DependencyType.SkipIfUniform;
                             DependencyType otherType = type & ~anyTypes;
                             if (otherType > 0)
@@ -295,9 +288,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             IStatement newStmt = converter(stmt);
             if (!ReferenceEquals(newStmt, stmt))
                 return newStmt;
-            else if (stmt is AnyStatement)
+            else if (stmt is AnyStatement anySt)
             {
-                AnyStatement anySt = (AnyStatement)stmt;
                 AnyStatement newAnySt = new AnyStatement();
                 bool replaced = false;
                 foreach (IStatement ist in anySt.Statements)
@@ -308,8 +300,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                     if (newStmt != null)
                     {
                         // flatten nested Any statements
-                        if (newStmt is AnyStatement)
-                            newAnySt.Statements.AddRange(((AnyStatement)newStmt).Statements);
+                        if (newStmt is AnyStatement nestedAnySt)
+                            newAnySt.Statements.AddRange(nestedAnySt.Statements);
                         else
                             newAnySt.Statements.Add(newStmt);
                     }
@@ -336,8 +328,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         {
             AddClones(delegate (IStatement ist)
             {
-                IEnumerable<IStatement> clones;
-                if (clonesOfStatement.TryGetValue(ist, out clones))
+                if (clonesOfStatement.TryGetValue(ist, out IEnumerable<IStatement> clones))
                     return clones;
                 else
                     return null;
@@ -347,14 +338,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         public void AddClones(Converter<IStatement, IEnumerable<IStatement>> getClones)
         {
             List<IStatement> toRemove = new List<IStatement>();
-            Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(new IdentityComparer<IStatement>());
-            Dictionary<IStatement, IOffsetInfo> toAddOffset = new Dictionary<IStatement, IOffsetInfo>(new IdentityComparer<IStatement>());
+            Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(ReferenceEqualityComparer<IStatement>.Instance);
+            Dictionary<IStatement, IOffsetInfo> toAddOffset = new Dictionary<IStatement, IOffsetInfo>(ReferenceEqualityComparer<IStatement>.Instance);
             foreach (KeyValuePair<IStatement, DependencyType> entry in dependencyTypeOf)
             {
                 IStatement stmt = entry.Key;
-                if (stmt is AnyStatement)
+                if (stmt is AnyStatement anySt)
                 {
-                    AnyStatement anySt = (AnyStatement)stmt;
                     AnyStatement newAnySt = new AnyStatement();
                     bool changed = false;
                     foreach (IStatement ist in anySt.Statements)
@@ -380,8 +370,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                     if (clones != null)
                     {
                         DependencyType type = entry.Value;
-                        IOffsetInfo offsetIndices;
-                        offsetIndexOf.TryGetValue(stmt, out offsetIndices);
+                        offsetIndexOf.TryGetValue(stmt, out IOffsetInfo offsetIndices);
                         if (type > 0)
                         {
                             foreach (var clone in clones)
@@ -413,8 +402,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         {
             foreach (IStatement ist in anySt.Statements)
             {
-                if (ist is AnyStatement)
-                    ForEachStatement((AnyStatement)ist, action);
+                if (ist is AnyStatement nestedAny)
+                    ForEachStatement(nestedAny, action);
                 else
                     action(ist);
             }
@@ -519,15 +508,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         public object Clone()
         {
-            DependencyInformation that = new DependencyInformation();
-            that.dependencyTypeOf = Clone(dependencyTypeOf);
-            // the OffsetInfo values inside the offsetIndexOf dictionary are not cloned.
-            that.offsetIndexOf = Clone(offsetIndexOf);
-            that.IsOutput = IsOutput;
-            that.IsUniform = IsUniform;
-            that.IsFresh = IsFresh;
-            that.ParameterDependencies = Clone(ParameterDependencies);
-            return that;
+            return new DependencyInformation
+            {
+                dependencyTypeOf = Clone(dependencyTypeOf),
+                // the OffsetInfo values inside the offsetIndexOf dictionary are not cloned.
+                offsetIndexOf = Clone(offsetIndexOf),
+                IsOutput = IsOutput,
+                IsUniform = IsUniform,
+                IsFresh = IsFresh,
+                ParameterDependencies = Clone(ParameterDependencies)
+            };
         }
 
         private List<T> Clone<T>(List<T> list)
@@ -725,12 +715,31 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
     {
     }
 
+    /// <summary>
+    /// Represents an offset dependency between a read and a write
+    /// </summary>
     internal class Offset
     {
+        /// <summary>
+        /// Loop counter variable
+        /// </summary>
         public readonly IVariableDeclaration loopVar;
+        /// <summary>
+        /// (loop counter of write) - (loop counter of read) 
+        /// The special value <see cref="DependencyAnalysisTransform.sequentialOffset"/> means that there is no fixed offset.
+        /// </summary>
         public readonly int offset;
+        /// <summary>
+        /// True if the first affected element will be mutated at an earlier loop iteration, based on the loop direction.
+        /// </summary>
         public readonly bool isAvailable;
 
+        /// <summary>
+        /// Create a new offset dependency
+        /// </summary>
+        /// <param name="loopVar">Loop counter</param>
+        /// <param name="offset">(loop counter of write) - (loop counter of read)</param>
+        /// <param name="isAvailable">True if the first affected element will be mutated at an earlier loop iteration, based on the loop direction</param>
         public Offset(IVariableDeclaration loopVar, int offset, bool isAvailable)
         {
             this.loopVar = loopVar;

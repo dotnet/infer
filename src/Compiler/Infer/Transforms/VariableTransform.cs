@@ -32,17 +32,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// All variables that have been assigned to so far
         /// </summary>
-        private Set<IVariableDeclaration> variablesAssigned = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+        private Set<IVariableDeclaration> variablesAssigned = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
-        private Set<IVariableDeclaration> variablesLackingVariableFactor = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+        private Set<IVariableDeclaration> variablesLackingVariableFactor = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         private Set<IExpression> targetsOfCurrentAssignment;
 
         private Dictionary<object, IVariableDeclaration> useOfVariable =
-            new Dictionary<object, IVariableDeclaration>(new IdentityComparer<object>());
+            new Dictionary<object, IVariableDeclaration>(ReferenceEqualityComparer<object>.Instance);
 
         private Dictionary<object, IVariableDeclaration> marginalOfVariable =
-            new Dictionary<object, IVariableDeclaration>(new IdentityComparer<object>());
+            new Dictionary<object, IVariableDeclaration>(ReferenceEqualityComparer<object>.Instance);
 
         private IAlgorithm algorithmDefault;
         private VariableAnalysisTransform analysis;
@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected override IExpression ConvertAssign(IAssignExpression iae)
         {
             var oldTargets = targetsOfCurrentAssignment;
-            targetsOfCurrentAssignment = new Set<IExpression>(new IdentityComparer<IExpression>());
+            targetsOfCurrentAssignment = new Set<IExpression>(ReferenceEqualityComparer<IExpression>.Instance);
             iae = (IAssignExpression)base.ConvertAssign(iae);
             targetsOfCurrentAssignment.Add(iae.Target);
             IExpression rhs = iae.Expression;
@@ -435,7 +435,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     /// </summary>
     internal class VariableAnalysisTransform : ShallowCopyTransform
     {
-        public Set<IVariableDeclaration> variablesExcludingVariableFactor = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+        public Set<IVariableDeclaration> variablesExcludingVariableFactor = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
         bool useJaggedSubarrayWithMarginal;
 
         public override string Name

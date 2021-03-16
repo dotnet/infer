@@ -137,12 +137,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public IMethodReference GetMethodReference(IExpression expr)
         {
-            if (!(expr is IMethodInvokeExpression))
+            if (!(expr is IMethodInvokeExpression mie))
                 return null;
-            IMethodInvokeExpression mie = (IMethodInvokeExpression)expr;
-            if (!(mie.Method is IMethodReferenceExpression))
+            if (!(mie.Method is IMethodReferenceExpression imre))
                 return null;
-            IMethodReferenceExpression imre = (IMethodReferenceExpression)mie.Method;
             return imre.Method;
         }
 
@@ -412,6 +410,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                                     // therefore available when mutated_offset < affected_offset which is always true.
                                     // if mutated_offset < 0 then element size-1 is never mutated so not available.
                                     // if affected_offset < 0 then last affected is (size-1+affected_offset) at last time so not available.
+                                    //isAvailable = (affected_offset >= 0); // TODO
                                     isAvailable = (affected_offset >= 0) && (mutated_offset >= 0);
                                 }
                                 offsets.Add(mutatedVar, offset, isAvailable);
@@ -588,7 +587,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 // if mutated = array[i][j] and affected = array[i] then j is extra index
                 // but if mutated = array[i][i] and affected = array[i] then i is not an extra index
                 Containers containers = Containers.GetContainersNeededForExpression(context, affected);
-                Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+                Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                 foreach (IStatement container in containers.inputs)
                 {
                     if (container is IForStatement ifs)
@@ -1409,7 +1408,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         internal Set<ConditionBinding> GetBindings(IStatement stmt)
         {
-            var bounds = new Dictionary<IVariableDeclaration, Bounds>(new IdentityComparer<IVariableDeclaration>());
+            var bounds = new Dictionary<IVariableDeclaration, Bounds>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
             AddLoopBounds(bounds, stmt);
             var bindings = new Set<ConditionBinding>();
             foreach (var entry in bounds)
@@ -1495,10 +1494,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public IExpression StripFieldsAndProperties(IExpression expr)
         {
-            if (expr is IPropertyReferenceExpression)
-                return ((IPropertyReferenceExpression)expr).Target;
-            else if (expr is IFieldReferenceExpression)
-                return ((IFieldReferenceExpression)expr).Target;
+            if (expr is IPropertyReferenceExpression ipre)
+                return ipre.Target;
+            else if (expr is IFieldReferenceExpression ifre)
+                return ifre.Target;
             else
                 return expr;
         }
@@ -1524,8 +1523,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 if (arrayExpr.Equals(expr))
                     return true;
-                if (expr is IArrayIndexerExpression)
-                    expr = ((IArrayIndexerExpression)expr).Target;
+                if (expr is IArrayIndexerExpression iaie)
+                    expr = iaie.Target;
                 else
                 {
                     IExpression oldexpr = expr;
@@ -1545,8 +1544,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public IParameterDeclaration GetParameterDeclaration(IExpression expr)
         {
             expr = GetTarget(expr);
-            if (expr is IArgumentReferenceExpression)
-                return ((IArgumentReferenceExpression)expr).Parameter.Resolve();
+            if (expr is IArgumentReferenceExpression iare)
+                return iare.Parameter.Resolve();
             else
                 return null;
         }
@@ -1560,8 +1559,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public IFieldReference GetFieldReference(IExpression expr)
         {
             expr = GetTarget(expr);
-            if (expr is IFieldReferenceExpression)
-                return ((IFieldReferenceExpression)expr).Field;
+            if (expr is IFieldReferenceExpression ifre)
+                return ifre.Field;
             else
                 return null;
         }
@@ -1575,10 +1574,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public IVariableDeclaration GetVariableDeclaration(IExpression expr)
         {
             expr = GetTarget(expr);
-            if (expr is IVariableReferenceExpression)
-                return ((IVariableReferenceExpression)expr).Variable.Resolve();
-            else if (expr is IVariableDeclarationExpression)
-                return ((IVariableDeclarationExpression)expr).Variable;
+            if (expr is IVariableReferenceExpression ivre)
+                return ivre.Variable.Resolve();
+            else if (expr is IVariableDeclarationExpression ivde)
+                return ivde.Variable;
             else
                 return null;
         }
@@ -1603,16 +1602,16 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public object GetArrayDeclaration(IExpression expr)
         {
             expr = StripIndexers(expr);
-            if (expr is IVariableReferenceExpression)
-                return ((IVariableReferenceExpression)expr).Variable.Resolve();
-            else if (expr is IVariableDeclarationExpression)
-                return ((IVariableDeclarationExpression)expr).Variable;
-            else if (expr is IArgumentReferenceExpression)
-                return ((IArgumentReferenceExpression)expr).Parameter.Resolve();
-            else if (expr is IFieldReferenceExpression)
-                return ((IFieldReferenceExpression)expr).Field.Resolve();
-            else if (expr is IPropertyReferenceExpression)
-                return ((IPropertyReferenceExpression)expr).Property.Resolve();
+            if (expr is IVariableReferenceExpression ivre)
+                return ivre.Variable.Resolve();
+            else if (expr is IVariableDeclarationExpression ivde)
+                return ivde.Variable;
+            else if (expr is IArgumentReferenceExpression iare)
+                return iare.Parameter.Resolve();
+            else if (expr is IFieldReferenceExpression ifre)
+                return ifre.Field.Resolve();
+            else if (expr is IPropertyReferenceExpression ipre)
+                return ipre.Property.Resolve();
             else
                 return null;
         }
@@ -1647,34 +1646,34 @@ namespace Microsoft.ML.Probabilistic.Compiler
         private void ForEachPrefix(IExpression expr, Action<IExpression> action)
         {
             // This method must be kept consistent with GetTargets.
-            if (expr is IArrayIndexerExpression)
-                ForEachPrefix(((IArrayIndexerExpression)expr).Target, action);
-            else if (expr is IAddressOutExpression)
-                ForEachPrefix(((IAddressOutExpression)expr).Expression, action);
-            else if (expr is IPropertyReferenceExpression)
-                ForEachPrefix(((IPropertyReferenceExpression)expr).Target, action);
-            else if (expr is IFieldReferenceExpression)
+            if (expr is IArrayIndexerExpression iaie)
+                ForEachPrefix(iaie.Target, action);
+            else if (expr is IAddressOutExpression iaoe)
+                ForEachPrefix(iaoe.Expression, action);
+            else if (expr is IPropertyReferenceExpression ipre)
+                ForEachPrefix(ipre.Target, action);
+            else if (expr is IFieldReferenceExpression ifre)
             {
-                IExpression target = ((IFieldReferenceExpression)expr).Target;
+                IExpression target = ifre.Target;
                 if (!(target is IThisReferenceExpression))
                     ForEachPrefix(target, action);
             }
-            else if (expr is ICastExpression)
-                ForEachPrefix(((ICastExpression)expr).Expression, action);
-            else if (expr is IPropertyIndexerExpression)
-                ForEachPrefix(((IPropertyIndexerExpression)expr).Target, action);
-            else if (expr is IEventReferenceExpression)
-                ForEachPrefix(((IEventReferenceExpression)expr).Target, action);
-            else if (expr is IUnaryExpression)
-                ForEachPrefix(((IUnaryExpression)expr).Expression, action);
-            else if (expr is IAddressReferenceExpression)
-                ForEachPrefix(((IAddressReferenceExpression)expr).Expression, action);
-            else if (expr is IMethodInvokeExpression)
-                ForEachPrefix(((IMethodInvokeExpression)expr).Method, action);
-            else if (expr is IMethodReferenceExpression)
-                ForEachPrefix(((IMethodReferenceExpression)expr).Target, action);
-            else if (expr is IDelegateInvokeExpression)
-                ForEachPrefix(((IDelegateInvokeExpression)expr).Target, action);
+            else if (expr is ICastExpression ice)
+                ForEachPrefix(ice.Expression, action);
+            else if (expr is IPropertyIndexerExpression ipie)
+                ForEachPrefix(ipie.Target, action);
+            else if (expr is IEventReferenceExpression iere)
+                ForEachPrefix(iere.Target, action);
+            else if (expr is IUnaryExpression iue)
+                ForEachPrefix(iue.Expression, action);
+            else if (expr is IAddressReferenceExpression iare)
+                ForEachPrefix(iare.Expression, action);
+            else if (expr is IMethodInvokeExpression imie)
+                ForEachPrefix(imie.Method, action);
+            else if (expr is IMethodReferenceExpression imre)
+                ForEachPrefix(imre.Target, action);
+            else if (expr is IDelegateInvokeExpression idie)
+                ForEachPrefix(idie.Target, action);
             action(expr);
         }
 
@@ -1687,8 +1686,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             foreach(var decl in GetVariablesAndParameters(expr))
             {
-                if (decl is IVariableDeclaration)
-                    yield return (IVariableDeclaration)decl;
+                if (decl is IVariableDeclaration ivd)
+                    yield return ivd;
             }
         }
 
@@ -1762,8 +1761,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public IEnumerable<IArgumentReferenceExpression> GetArgumentReferenceExpressions(IExpression expr)
         {
-            if (expr is IArgumentReferenceExpression)
-                yield return (IArgumentReferenceExpression)expr;
+            if (expr is IArgumentReferenceExpression are)
+                yield return are;
             else if (expr is IArrayIndexerExpression iaie)
             {
                 foreach (IExpression index in iaie.Indices)
@@ -1885,16 +1884,14 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns></returns>
         public IVariableDeclaration GetVariableDeclaration(IStatement ist)
         {
-            if (ist is IExpressionStatement)
+            if (ist is IExpressionStatement ies)
             {
-                IExpressionStatement ies = ist as IExpressionStatement;
-                if (ies.Expression is IVariableDeclarationExpression)
-                    return ((IVariableDeclarationExpression)ies.Expression).Variable;
-                else if (ies.Expression is IAssignExpression)
+                if (ies.Expression is IVariableDeclarationExpression ivde)
+                    return ivde.Variable;
+                else if (ies.Expression is IAssignExpression iae)
                 {
-                    IAssignExpression iae = ies.Expression as IAssignExpression;
-                    if (iae.Target is IVariableDeclarationExpression)
-                        return ((IVariableDeclarationExpression)iae.Target).Variable;
+                    if (iae.Target is IVariableDeclarationExpression ivde2)
+                        return ivde2.Variable;
                 }
             }
             return null;
@@ -2122,7 +2119,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 throw new ArgumentException("Loop condition does not have loop variable on the left");
             IExpressionStatement initializer = (IExpressionStatement)loop.Initializer;
             IAssignExpression initAssignExpr = (IAssignExpression)initializer.Expression;
-            IExpression initializationExpression = (IExpression)initAssignExpr.Expression;
+            IExpression initializationExpression = initAssignExpr.Expression;
 
             if (condition.Operator == BinaryOperator.LessThan)
             {
@@ -2167,14 +2164,14 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns></returns>
         public int ForLoopDepth(IStatement ist)
         {
-            if (ist is IForStatement)
+            if (ist is IForStatement ifs)
             {
-                return 1 + ForLoopDepth(((IForStatement)ist).Body);
+                return 1 + ForLoopDepth(ifs.Body);
             }
-            else if (ist is IBlockStatement)
+            else if (ist is IBlockStatement ibs)
             {
                 int maxLoopDepth = 0;
-                foreach (var st in ((IBlockStatement)ist).Statements)
+                foreach (var st in ibs.Statements)
                 {
                     int stDepth = ForLoopDepth(st);
                     if (stDepth > maxLoopDepth)
@@ -2184,9 +2181,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 return maxLoopDepth;
             }
-            else if (ist is IConditionStatement)
+            else if (ist is IConditionStatement ics)
             {
-                return ForLoopDepth(((IConditionStatement)ist).Then);
+                return ForLoopDepth(ics.Then);
             }
             else
             {
@@ -2197,9 +2194,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public IExpressionStatement FirstExpressionStatement(IStatement ist)
         {
-            if (ist is IForStatement)
+            if (ist is IForStatement ifs)
             {
-                foreach (var st in ((IForStatement)ist).Body.Statements)
+                foreach (var st in ifs.Body.Statements)
                 {
                     if (!(st is ICommentStatement))
                     {
@@ -2207,9 +2204,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     }
                 }
             }
-            else if (ist is IConditionStatement)
+            else if (ist is IConditionStatement ics)
             {
-                foreach (var st in ((IConditionStatement)ist).Then.Statements)
+                foreach (var st in ics.Then.Statements)
                 {
                     if (!(st is ICommentStatement))
                     {
@@ -2217,9 +2214,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     }
                 }
             }
-            else if (ist is IExpressionStatement)
+            else if (ist is IExpressionStatement ies)
             {
-                return (IExpressionStatement)ist;
+                return ies;
             }
             return null;
             //throw new Exception("Didn't find expression statement");
@@ -2285,8 +2282,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 return st;
             }
             if (expr is IArgumentReferenceExpression) return false;
-            if (expr is IPropertyReferenceExpression) return IsStochastic(context, ((IPropertyReferenceExpression)expr).Target);
-            if (expr is IFieldReferenceExpression) return IsStochastic(context, ((IFieldReferenceExpression)expr).Target);
+            if (expr is IPropertyReferenceExpression ipre) return IsStochastic(context, ipre.Target);
+            if (expr is IFieldReferenceExpression ifre) return IsStochastic(context, ifre.Target);
             if (expr is IArrayCreateExpression) return false;
             if (expr is IObjectCreateExpression ioce)
             {
@@ -2311,7 +2308,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 return IsStochastic(context, ipie.Target) || IsAnyStochastic(context, ipie.Indices);
             }
             if (expr is IAddressDereferenceExpression) return false;
-            if (expr is IAddressOutExpression) return IsStochastic(context, ((IAddressOutExpression)expr).Expression);
+            if (expr is IAddressOutExpression iaoe) return IsStochastic(context, iaoe.Expression);
             if (expr is ILambdaExpression) return false; // todo: stochastic case?
             if (expr is IAnonymousMethodExpression) return false;
             if (expr is ITypeOfExpression) return false;

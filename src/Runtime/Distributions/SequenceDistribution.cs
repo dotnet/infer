@@ -290,7 +290,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(distributions, "distributions");
 
-            var enumerable = distributions as IList<TThis> ?? distributions.ToList();
+            var enumerable = distributions as IReadOnlyList<TThis> ?? distributions.ToList();
             if (enumerable.Count == 1)
             {
                 if (!cloneIfSizeOne)
@@ -351,7 +351,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(sequences, "sequences");
 
-            var enumerable = sequences as IList<TSequence> ?? sequences.ToList();
+            var enumerable = sequences as IReadOnlyList<TSequence> ?? sequences.ToList();
             return OneOf(enumerable.Select(PointMass), false, true);
         }
 
@@ -966,10 +966,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (this.IsPointMass)
             {
-                return new List<TSequence>(new[] { this.Point });
+                return new[] { this.Point };
             }
 
-            this.EnsureNormalized();
+            if (tryDeterminize)
+            {
+                // Determinization of automaton may fail if distribution is not normalized.
+                // But if determinization was not requested, we don't want to pay price of normalization
+                this.EnsureNormalized();
+            }
+
             return this.sequenceToWeight.EnumerateSupport(maxCount, tryDeterminize);
         }
 
@@ -986,11 +992,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (this.IsPointMass)
             {
-                result = new List<TSequence>(new[] { this.Point });
+                result = new[] { this.Point };
                 return true;
             }
 
-            this.EnsureNormalized();
+            if (tryDeterminize)
+            {
+                // Determinization of automaton may fail if distribution is not normalized.
+                // But if determinization was not requested, we don't want to pay price of normalization
+                this.EnsureNormalized();
+            }
+
             return this.sequenceToWeight.TryEnumerateSupport(maxCount, out result, tryDeterminize);
         }
 
@@ -1384,7 +1396,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             
             if (this.IsPointMass)
             {
-                if (SequenceManipulator.SequencesAreEqual(sequence, this.point))
+                if (SequenceManipulator.SequenceEqualityComparer.Equals(sequence, this.point))
                 {
                     return 0;
                 }
@@ -1407,7 +1419,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             if (this.IsPointMass)
             {
-                return SequenceManipulator.SequencesAreEqual(sequence, this.point);
+                return SequenceManipulator.SequenceEqualityComparer.Equals(sequence, this.point);
             }
 
             // todo: stop GetLogValue early as soon as we know the weight is not neg infinity.

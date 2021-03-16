@@ -123,12 +123,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 FactorManager.FactorInfo info = context.InputAttributes.Get<FactorManager.FactorInfo>(imie);
                 if (info != null)
+                {
                     fcnInfo = info.GetMessageFcnInfoFromFactor();
+                }
                 else
                 {
                     ParameterInfo[] parameters = method.GetParameters();
-                    fcnInfo = new MessageFcnInfo(method, parameters);
-                    fcnInfo.DependencyInfo = FactorManager.GetDependencyInfo(method);
+                    fcnInfo = new MessageFcnInfo(method, parameters)
+                    {
+                        DependencyInfo = FactorManager.GetDependencyInfo(method)
+                    };
                 }
                 //context.InputAttributes.Set(method, fcnInfo);
             }

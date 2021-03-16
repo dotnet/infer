@@ -24,7 +24,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <summary>
         /// Maps statements into graph node numbers
         /// </summary>
-        private Dictionary<IStatement, NodeIndex> indexOf = new Dictionary<IStatement, NodeIndex>(new IdentityComparer<IStatement>());
+        private Dictionary<IStatement, NodeIndex> indexOf = new Dictionary<IStatement, NodeIndex>(ReferenceEqualityComparer<IStatement>.Instance);
 
         /// <summary>
         /// A graph where nodes are statements and edges indicate that loop merging is prohibited between them.
@@ -169,7 +169,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 ICollection<IVariableDeclaration> list = prohibitedLoopVars[edge];
                 if (list == null)
                 {
-                    list = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
+                    list = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
                     prohibitedLoopVars[edge] = list;
                 }
                 list.AddRange(loopVars);

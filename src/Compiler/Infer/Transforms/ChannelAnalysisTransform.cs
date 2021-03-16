@@ -7,11 +7,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
-using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Collections;
-using Microsoft.ML.Probabilistic.Factors;
+using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -31,16 +29,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        public Dictionary<IVariableDeclaration, UsageInfo> usageInfo = new Dictionary<IVariableDeclaration, UsageInfo>();
+        public readonly Dictionary<IVariableDeclaration, UsageInfo> usageInfo = new Dictionary<IVariableDeclaration, UsageInfo>();
         /// <summary>
         /// The set of all loop variables discovered so far
         /// </summary>
-        private Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>();
+        private readonly Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>();
 
         /// <summary>
         /// The list of bindings made by all conditional statements in the input stack
         /// </summary>
-        private List<ConditionBinding> conditionContext = new List<ConditionBinding>();
+        private readonly List<ConditionBinding> conditionContext = new List<ConditionBinding>();
 
         /// <summary>
         /// Analyse the condition body using an augmented conditionContext
@@ -85,8 +83,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (!varInfo.IsStochastic && varInfo.varType.Equals(typeof(int)) && Recognizer.GetLoopForVariable(context, ivd) == null)
                 {
                     // add the assignment as a binding
-                    if (target is IVariableDeclarationExpression)
-                        target = Builder.VarRefExpr(((IVariableDeclarationExpression)target).Variable);
+                    if (target is IVariableDeclarationExpression ivde)
+                        target = Builder.VarRefExpr(ivde.Variable);
                     ConditionBinding binding = new ConditionBinding(target, expr);
                     conditionContext.Add(binding);
                     // when current lexical scope ends, remove this binding?
@@ -122,8 +120,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (Recognizer.IsBeingIndexed(context) || Recognizer.IsBeingMutated(context, expr))
                 return expr;
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(expr);
-            UsageInfo info;
-            if (usageInfo.TryGetValue(ivd, out info))
+            if (usageInfo.TryGetValue(ivd, out UsageInfo info))
             {
                 info.indexingDepths.Add(0);
                 RegisterUse(info, expr);
@@ -149,8 +146,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(target);
                 if (ivd != null)
                 {
-                    UsageInfo info;
-                    if (usageInfo.TryGetValue(ivd, out info))
+                    if (usageInfo.TryGetValue(ivd, out UsageInfo info))
                     {
                         info.indexingDepths.Add(indices.Count);
                         RegisterUse(info, expr);
@@ -218,7 +214,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// </summary>
             protected Dictionary<IExpression, Dictionary<object, List<GroupKey>>> invertedIndex;
             protected static IVariableDeclaration tempDecl = Builder.VarDecl("_EmptyBinding", typeof(int));
-            public Dictionary<IStatement, Queue<int>> useNumberOfStatement = new Dictionary<IStatement, Queue<int>>(new IdentityComparer<IStatement>());
+            public Dictionary<IStatement, Queue<int>> useNumberOfStatement = new Dictionary<IStatement, Queue<int>>(ReferenceEqualityComparer<IStatement>.Instance);
             public int NumberOfUses;
 
             /// <summary>
@@ -254,9 +250,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     loopVars = (Set<IVariableDeclaration>)loopVars.Clone();
                     foreach (IStatement container in containers.inputs)
                     {
-                        if (container is IForStatement)
+                        if (container is IForStatement ifs)
                         {
-                            var loopVar = Recognizer.LoopVariable((IForStatement)container);
+                            var loopVar = Recognizer.LoopVariable(ifs);
                             loopVars.Remove(loopVar);
                         }
                     }
@@ -312,8 +308,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                 // Therefore we search only GroupKeys whose binding variables overlap with eb.
                                 foreach (var ivd in varsInBinding)
                                 {
-                                    List<GroupKey> keys;
-                                    if (dict.TryGetValue(ivd, out keys))
+                                    if (dict.TryGetValue(ivd, out List<GroupKey> keys))
                                         keysToSearch.AddRange(keys);
                                 }
                             }
@@ -445,7 +440,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 return Set<object>.FromEnumerable(bindings.Select(binding =>
                     Recognizer.GetVariablesAndParameters(binding.GetExpression())
-                    .Where(decl => !(decl is IVariableDeclaration) || !loopVars.Contains((IVariableDeclaration)decl))
+                    .Where(decl => !(decl is IVariableDeclaration declaration) || !loopVars.Contains(declaration))
                     ));
             }
 

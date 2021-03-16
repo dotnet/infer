@@ -2044,6 +2044,17 @@
         <para>The formula for the result is <c>log(factor(enter,selector,value))</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="EnterAverageConditional{TValue}(TValue, TValue[])">
+      <summary>EP message to <c>enter</c>.</summary>
+      <param name="value">Incoming message from <c>value</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>enter</c> as the random arguments are varied. The formula is <c>proj[p(enter) sum_(value) p(value) factor(enter,selector,value)]/p(enter)</c>.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="EnterAverageConditional{TValue, TResultList}(TValue, TResultList)">
       <summary>EP message to <c>enter</c>.</summary>
       <param name="value">Incoming message from <c>value</c>.</param>
@@ -2109,6 +2120,17 @@
       <returns>Zero.</returns>
       <remarks>
         <para>The formula for the result is <c>log(factor(enter,selector,value))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="EnterAverageLogarithm{TValue}(TValue, TValue[])">
+      <summary>VMP message to <c>enter</c>.</summary>
+      <param name="value">Incoming message from <c>value</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>enter</c> as the random arguments are varied. The formula is <c>proj[sum_(value) p(value) factor(enter,selector,value)]</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="EnterAverageLogarithm{TValue, TResultList}(TValue, TResultList)">
@@ -2208,6 +2230,17 @@
       </remarks>
     </message_doc>
     <message_doc name="EnterPartialAverageConditional{TValue, TResultList}(TValue, TResultList)">
+      <summary>EP message to <c>enterPartial</c>.</summary>
+      <param name="value">Incoming message from <c>value</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>enterPartial</c> as the random arguments are varied. The formula is <c>proj[p(enterPartial) sum_(value) p(value) factor(enterPartial,selector,value,indices)]/p(enterPartial)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="EnterPartialAverageConditional{TValue}(TValue, TValue[])">
       <summary>EP message to <c>enterPartial</c>.</summary>
       <param name="value">Incoming message from <c>value</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -2339,6 +2372,17 @@
       </remarks>
     </message_doc>
     <message_doc name="EnterPartialAverageLogarithm{TValue, TResultList}(TValue, TResultList)">
+      <summary>VMP message to <c>enterPartial</c>.</summary>
+      <param name="value">Incoming message from <c>value</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>enterPartial</c> as the random arguments are varied. The formula is <c>proj[sum_(value) p(value) factor(enterPartial,selector,value,indices)]</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="EnterPartialAverageLogarithm{TValue}(TValue, TValue[])">
       <summary>VMP message to <c>enterPartial</c>.</summary>
       <param name="value">Incoming message from <c>value</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -2653,6 +2697,17 @@
         <para>The outgoing message is a distribution matching the moments of <c>values</c> as the random arguments are varied. The formula is <c>proj[p(values) sum_(exit) p(exit) factor(exit,cases,values)]/p(values)</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="ValuesAverageConditional{TExit}(TExit, TExit[])">
+      <summary>EP message to <c>values</c>.</summary>
+      <param name="exit">Incoming message from <c>exit</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>values</c> as the random arguments are varied. The formula is <c>proj[p(values) sum_(exit) p(exit) factor(exit,cases,values)]/p(values)</c>.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="CasesAverageConditional{TDist}(TDist, TDist, int)">
       <summary>EP message to <c>cases</c>.</summary>
       <param name="exit">Incoming message from <c>exit</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
@@ -2766,6 +2821,17 @@
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="exit" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="ValuesAverageLogarithm{TExit}(TExit, TExit[])">
+      <summary>VMP message to <c>values</c>.</summary>
+      <param name="exit">Incoming message from <c>exit</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>values</c> with <c>exit</c> integrated out. The formula is <c>sum_exit p(exit) factor(exit,cases,values)</c>.</para>
+      </remarks>
     </message_doc>
     <message_doc name="ValuesAverageLogarithm{TExit, TResultList}(TExit, TResultList)">
       <summary>VMP message to <c>values</c>.</summary>
@@ -6012,7 +6078,7 @@
   </message_op_class>
   <message_op_class name="CutOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Factor.Cut{T}(T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Cut.Backward{T}(T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ValueAverageConditional{TDist}(TDist)">
       <summary>EP message to <c>value</c>.</summary>
@@ -6024,20 +6090,20 @@
         <para>The outgoing message is the factor viewed as a function of <c>value</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
-    <message_doc name="CutAverageConditional{TDist}(TDist)">
-      <summary>EP message to <c>cut</c>.</summary>
+    <message_doc name="BackwardAverageConditional{TDist}(TDist)">
+      <summary>EP message to <c>backward</c>.</summary>
       <param name="Value">Incoming message from <c>value</c>.</param>
-      <returns>The outgoing EP message to the <c>cut</c> argument.</returns>
+      <returns>The outgoing EP message to the <c>backward</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>cut</c> as the random arguments are varied. The formula is <c>proj[p(cut) sum_(value) p(value) factor(cut,value)]/p(cut)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>backward</c> as the random arguments are varied. The formula is <c>proj[p(backward) sum_(value) p(value) factor(backward,value)]/p(backward)</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="CutAverageConditional(T)">
-      <summary>EP message to <c>cut</c>.</summary>
+    <message_doc name="BackwardAverageConditional(T)">
+      <summary>EP message to <c>backward</c>.</summary>
       <param name="Value">Incoming message from <c>value</c>.</param>
-      <returns>The outgoing EP message to the <c>cut</c> argument.</returns>
+      <returns>The outgoing EP message to the <c>backward</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>cut</c> as the random arguments are varied. The formula is <c>proj[p(cut) sum_(value) p(value) factor(cut,value)]/p(cut)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>backward</c> as the random arguments are varied. The formula is <c>proj[p(backward) sum_(value) p(value) factor(backward,value)]/p(backward)</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="ValueAverageLogarithm{TDist}(TDist)">
@@ -6050,20 +6116,848 @@
         <para>The outgoing message is the factor viewed as a function of <c>value</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
-    <message_doc name="CutAverageLogarithm{TDist}(TDist)">
-      <summary>VMP message to <c>cut</c>.</summary>
+    <message_doc name="BackwardAverageLogarithm{TDist}(TDist)">
+      <summary>VMP message to <c>backward</c>.</summary>
       <param name="Value">Incoming message from <c>value</c>.</param>
-      <returns>The outgoing VMP message to the <c>cut</c> argument.</returns>
+      <returns>The outgoing VMP message to the <c>backward</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>cut</c> as the random arguments are varied. The formula is <c>proj[sum_(value) p(value) factor(cut,value)]</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>backward</c> as the random arguments are varied. The formula is <c>proj[sum_(value) p(value) factor(backward,value)]</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="CutAverageLogarithm(T)">
-      <summary>VMP message to <c>cut</c>.</summary>
+    <message_doc name="BackwardAverageLogarithm(T)">
+      <summary>VMP message to <c>backward</c>.</summary>
       <param name="Value">Incoming message from <c>value</c>.</param>
-      <returns>The outgoing VMP message to the <c>cut</c> argument.</returns>
+      <returns>The outgoing VMP message to the <c>backward</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>cut</c> as the random arguments are varied. The formula is <c>proj[sum_(value) p(value) factor(cut,value)]</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>backward</c> as the random arguments are varied. The formula is <c>proj[sum_(value) p(value) factor(backward,value)]</c>.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="CutForwardWhenOp{T}">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Cut.ForwardWhen{T}(T, bool)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="ValueAverageConditional{TDist}(TDist)">
+      <summary>EP message to <c>value</c>.</summary>
+      <param name="forwardWhen">Incoming message from <c>forwardWhen</c>.</param>
+      <returns>The outgoing EP message to the <c>value</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>value</c> as the random arguments are varied. The formula is <c>proj[p(value) sum_(forwardWhen) p(forwardWhen) factor(forwardWhen,value,shouldCut)]/p(value)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ForwardWhenAverageConditional{TDist}(TDist, bool, TDist)">
+      <summary>EP message to <c>forwardWhen</c>.</summary>
+      <param name="Value">Incoming message from <c>value</c>.</param>
+      <param name="shouldCut">Constant value for <c>shouldCut</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>forwardWhen</c> as the random arguments are varied. The formula is <c>proj[p(forwardWhen) sum_(value) p(value) factor(forwardWhen,value,shouldCut)]/p(forwardWhen)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ForwardWhenAverageConditional(T)">
+      <summary>EP message to <c>forwardWhen</c>.</summary>
+      <param name="Value">Incoming message from <c>value</c>.</param>
+      <returns>The outgoing EP message to the <c>forwardWhen</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>forwardWhen</c> as the random arguments are varied. The formula is <c>proj[p(forwardWhen) sum_(value) p(value) factor(forwardWhen,value,shouldCut)]/p(forwardWhen)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ValueAverageLogarithm{TDist}(TDist)">
+      <summary>VMP message to <c>value</c>.</summary>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>value</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ForwardWhenAverageLogarithm{TDist}(TDist)">
+      <summary>VMP message to <c>forwardWhen</c>.</summary>
+      <param name="Value">Incoming message from <c>value</c>.</param>
+      <returns>The outgoing VMP message to the <c>forwardWhen</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>forwardWhen</c> as the random arguments are varied. The formula is <c>proj[sum_(value) p(value) factor(forwardWhen,value,shouldCut)]</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ForwardWhenAverageLogarithm(T)">
+      <summary>VMP message to <c>forwardWhen</c>.</summary>
+      <param name="Value">Incoming message from <c>value</c>.</param>
+      <returns>The outgoing VMP message to the <c>forwardWhen</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>forwardWhen</c> as the random arguments are varied. The formula is <c>proj[sum_(value) p(value) factor(forwardWhen,value,shouldCut)]</c>.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="DifferenceBetaOp">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Difference(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="DifferenceAverageConditional(Beta, Beta)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(a,b) p(a,b) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gaussian, Beta)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(difference,b) p(difference,b) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="difference" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gaussian, Beta)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(difference,a) p(difference,a) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="difference" /> is not a proper distribution.</exception>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="DoublePlusOp">
+    <doc>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.Difference(double, double)" /></description></item><item><description><see cref="Factor.Plus(double, double)" /></description></item></list>, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="LogAverageFactor(Gaussian, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="Sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_sum">Outgoing message to <c>sum</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a) p(a) factor(difference,a,b))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, Gaussian, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="Sum">Constant value for <c>a</c>.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_a">Outgoing message to <c>a</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(difference) p(difference) factor(difference,a,b))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, double, Gaussian, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="Sum">Constant value for <c>a</c>.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <param name="to_b">Outgoing message to <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(b) p(b) factor(difference,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="Sum">Constant value for <c>a</c>.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(difference,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="SumAverageConditional(Gaussian, Gaussian)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(difference,b) p(difference,b) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(double, Gaussian)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(b) p(b) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(Gaussian, double)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(difference) p(difference) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(double, double)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>a</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gaussian, Gaussian)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="Sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(a,b) p(a,b) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(double, Gaussian)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="Sum">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(b) p(b) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gaussian, double)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="Sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(a) p(a) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(double, double)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="Sum">Constant value for <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>difference</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gaussian, Gaussian)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="Sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a,difference) p(a,difference) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(double, Gaussian)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="Sum">Constant value for <c>a</c>.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(difference) p(difference) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gaussian, double)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="Sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a) p(a) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(double, double)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="Sum">Constant value for <c>a</c>.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>b</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="DoubleMinusEvidenceOp">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Difference(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="LogEvidenceRatio(Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="difference">Incoming message from <c>difference</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(difference) p(difference) factor(difference,a,b) / sum_difference p(difference) messageTo(difference))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="difference">Constant value for <c>difference</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(difference,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, Gaussian, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="difference">Constant value for <c>difference</c>.</param>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="to_a">Outgoing message to <c>a</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a) p(a) factor(difference,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, double, Gaussian, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="difference">Constant value for <c>difference</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <param name="to_b">Outgoing message to <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(b) p(b) factor(difference,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="PlusWrappedGaussianOp">
+    <doc>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.Difference(double, double)" /></description></item><item><description><see cref="Factor.Plus(double, double)" /></description></item></list>, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="SumAverageConditional(WrappedGaussian, WrappedGaussian)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(difference,b) p(difference,b) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(WrappedGaussian, double)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(difference) p(difference) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(double, WrappedGaussian)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(b) p(b) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(WrappedGaussian, WrappedGaussian)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(a,b) p(a,b) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(WrappedGaussian, double)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(a) p(a) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(WrappedGaussian, WrappedGaussian)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a,difference) p(a,difference) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(WrappedGaussian, double)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a) p(a) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AverageLogFactor(WrappedGaussian)">
+      <summary>Evidence message for VMP.</summary>
+      <param name="sum">Incoming message from <c>a</c>.</param>
+      <returns>Zero.</returns>
+      <remarks>
+        <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="SumAverageLogarithm(WrappedGaussian, WrappedGaussian)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. Because the factor is deterministic, <c>difference</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(b) p(b) log(sum_difference p(difference) factor(difference,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageLogarithm(WrappedGaussian, double)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>a</c> with <c>difference</c> integrated out. The formula is <c>sum_difference p(difference) factor(difference,a,b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageLogarithm(double, WrappedGaussian)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(difference,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(WrappedGaussian, WrappedGaussian)">
+      <summary>VMP message to <c>difference</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(difference,a,b)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(WrappedGaussian, double)">
+      <summary>VMP message to <c>difference</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[sum_(a) p(a) factor(difference,a,b)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(WrappedGaussian, WrappedGaussian)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>difference</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_difference p(difference) factor(difference,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(WrappedGaussian, double)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. The formula is <c>exp(sum_(a) p(a) log(factor(difference,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="PlusTruncatedGaussianOp">
+    <doc>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.Difference(double, double)" /></description></item><item><description><see cref="Factor.Plus(double, double)" /></description></item></list>, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="SumAverageConditional(double, TruncatedGaussian)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(b) p(b) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(TruncatedGaussian, double)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(difference) p(difference) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(TruncatedGaussian, Gaussian)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(difference,b) p(difference,b) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(Gaussian, TruncatedGaussian)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(difference,b) p(difference,b) factor(difference,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(TruncatedGaussian, double)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(a) p(a) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(double, TruncatedGaussian)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="sum">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(b) p(b) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gaussian, Gaussian)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(a,b) p(a,b) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gaussian, TruncatedGaussian)">
+      <summary>EP message to <c>difference</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[p(difference) sum_(a,b) p(a,b) factor(difference,a,b)]/p(difference)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gaussian, Gaussian)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a,difference) p(a,difference) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gaussian, TruncatedGaussian)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a,difference) p(a,difference) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(TruncatedGaussian, double)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a) p(a) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(double, TruncatedGaussian)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="sum">Constant value for <c>a</c>.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(difference) p(difference) factor(difference,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, TruncatedGaussian, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sum">Constant value for <c>a</c>.</param>
+      <param name="a">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(difference) p(difference) factor(difference,a,b))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, double, TruncatedGaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sum">Constant value for <c>a</c>.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(b) p(b) factor(difference,a,b))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogAverageFactor(TruncatedGaussian, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sum">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>difference</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a) p(a) factor(difference,a,b))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="DoubleMinusVmpOp">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Difference(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="AverageLogFactor()">
+      <summary>Evidence message for VMP.</summary>
+      <returns>Zero.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(difference,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="DifferenceAverageLogarithm(Gaussian, Gaussian)">
+      <summary>VMP message to <c>difference</c>.</summary>
+      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(difference,a,b)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="DifferenceAverageLogarithm(double, Gaussian)">
+      <summary>VMP message to <c>difference</c>.</summary>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[sum_(b) p(b) factor(difference,a,b)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="DifferenceAverageLogarithm(Gaussian, double)">
+      <summary>VMP message to <c>difference</c>.</summary>
+      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[sum_(a) p(a) factor(difference,a,b)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="DifferenceAverageLogarithm(double, double)">
+      <summary>VMP message to <c>difference</c>.</summary>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>difference</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(Gaussian, Gaussian)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="Difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. Because the factor is deterministic, <c>difference</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(b) p(b) log(sum_difference p(difference) factor(difference,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Difference" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(Gaussian, double)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="Difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>a</c> with <c>difference</c> integrated out. The formula is <c>sum_difference p(difference) factor(difference,a,b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Difference" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(double, Gaussian)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="Difference">Constant value for <c>difference</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(difference,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(double, double)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="Difference">Constant value for <c>difference</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>a</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(Gaussian, Gaussian)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="Difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>difference</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_difference p(difference) factor(difference,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Difference" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(Gaussian, double)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="Difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>b</c> with <c>difference</c> integrated out. The formula is <c>sum_difference p(difference) factor(difference,a,b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Difference" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(double, Gaussian)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="Difference">Constant value for <c>difference</c>.</param>
+      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. The formula is <c>exp(sum_(a) p(a) log(factor(difference,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(double, double)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="Difference">Constant value for <c>difference</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>b</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
   </message_op_class>
@@ -7847,7 +8741,7 @@
         <para>The formula for the result is <c>log(factor(exp,d))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor(Gamma, double)">
+    <message_doc name="LogAverageFactor(CanGetLogProb{double}, double)">
       <summary>Evidence message for EP.</summary>
       <param name="exp">Incoming message from <c>exp</c>.</param>
       <param name="d">Constant value for <c>d</c>.</param>
@@ -7903,6 +8797,53 @@
       <remarks>
         <para>The formula for the result is <c>log(sum_(d) p(d) factor(exp,d))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(GammaPower, Gaussian, GammaPower, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="exp">Incoming message from <c>exp</c>.</param>
+      <param name="d">Incoming message from <c>d</c>.</param>
+      <param name="to_exp">Outgoing message to <c>exp</c>.</param>
+      <param name="to_d">Previous outgoing message to <c>d</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(exp,d) p(exp,d) factor(exp,d) / sum_exp p(exp) messageTo(exp))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(GammaPower, Gaussian, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="exp">Incoming message from <c>exp</c>.</param>
+      <param name="d">Incoming message from <c>d</c>.</param>
+      <param name="to_d">Previous outgoing message to <c>d</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(exp,d) p(exp,d) factor(exp,d))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ExpAverageConditional(GammaPower, Gaussian, Gaussian)">
+      <summary>EP message to <c>exp</c>.</summary>
+      <param name="exp">Incoming message from <c>exp</c>.</param>
+      <param name="d">Incoming message from <c>d</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_d">Previous outgoing message to <c>d</c>.</param>
+      <returns>The outgoing EP message to the <c>exp</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>exp</c> as the random arguments are varied. The formula is <c>proj[p(exp) sum_(d) p(d) factor(exp,d)]/p(exp)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="d" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="DAverageConditional(GammaPower, Gaussian, Gaussian)">
+      <summary>EP message to <c>d</c>.</summary>
+      <param name="exp">Incoming message from <c>exp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="d">Incoming message from <c>d</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_d">Previous outgoing message to <c>d</c>.</param>
+      <returns>The outgoing EP message to the <c>d</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>d</c> as the random arguments are varied. The formula is <c>proj[p(d) sum_(exp) p(exp) factor(exp,d)]/p(d)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="exp" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="d" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="ExpAverageConditional(Gamma, Gaussian, Gaussian)">
       <summary>EP message to <c>exp</c>.</summary>
@@ -7982,6 +8923,19 @@
       <exception cref="ImproperMessageException">
         <paramref name="d" /> is not a proper distribution.</exception>
     </message_doc>
+    <message_doc name="ExpAverageLogarithm(Gaussian, GammaPower)">
+      <summary>VMP message to <c>exp</c>.</summary>
+      <param name="d">Incoming message from <c>d</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>exp</c> as the random arguments are varied. The formula is <c>proj[sum_(d) p(d) factor(exp,d)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="d" /> is not a proper distribution.</exception>
+    </message_doc>
     <message_doc name="DAverageLogarithm(Gamma, NonconjugateGaussian, NonconjugateGaussian)">
       <summary>VMP message to <c>d</c>.</summary>
       <param name="exp">Incoming message from <c>exp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
@@ -8036,14 +8990,6 @@
         <para>The outgoing message is the factor viewed as a function of <c>d</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
-    <message_doc name="ExpAverageLogarithm(double)">
-      <summary>VMP message to <c>exp</c>.</summary>
-      <param name="d">Constant value for <c>d</c>.</param>
-      <returns>The outgoing VMP message to the <c>exp</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>exp</c> conditioned on the given values.</para>
-      </remarks>
-    </message_doc>
   </message_op_class>
   <message_op_class name="ExpOp_Slow">
     <doc>
@@ -8061,6 +9007,17 @@
         <paramref name="exp" /> is not a proper distribution.</exception>
       <exception cref="ImproperMessageException">
         <paramref name="d" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="DAverageConditional(Gamma, double)">
+      <summary>EP message to <c>d</c>.</summary>
+      <param name="exp">Incoming message from <c>exp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="d">Constant value for <c>d</c>.</param>
+      <returns>The outgoing EP message to the <c>d</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>d</c> as the random arguments are varied. The formula is <c>proj[p(d) sum_(exp) p(exp) factor(exp,d)]/p(d)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="exp" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="DAverageConditional(Gamma, Gaussian)">
       <summary>EP message to <c>d</c>.</summary>
@@ -8089,8 +9046,8 @@
       <param name="exp">Incoming message from <c>exp</c>.</param>
       <param name="d">Incoming message from <c>d</c>.</param>
       <param name="dmode" />
-      <param name="dmin" />
-      <param name="dmax" />
+      <param name="dminMinusMode" />
+      <param name="dmaxMinusMode" />
       <returns />
       <remarks>
         <para />
@@ -9541,6 +10498,50 @@
         <para>The outgoing message is the factor viewed as a function of <c>b</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
+    <message_doc name="ProductAverageConditional(double, TruncatedGaussian)">
+      <summary>EP message to <c>product</c>.</summary>
+      <param name="A">Constant value for <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>product</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>product</c> as the random arguments are varied. The formula is <c>proj[p(product) sum_(b) p(b) factor(product,a,b)]/p(product)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="ProductAverageConditional(TruncatedGaussian, double)">
+      <summary>EP message to <c>product</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>product</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>product</c> as the random arguments are varied. The formula is <c>proj[p(product) sum_(a) p(a) factor(product,a,b)]/p(product)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="A" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(TruncatedGaussian, double)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="Product">Incoming message from <c>product</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(product) p(product) factor(product,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Product" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(TruncatedGaussian, double)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="Product">Incoming message from <c>product</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Constant value for <c>a</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(product) p(product) factor(product,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Product" /> is not a proper distribution.</exception>
+    </message_doc>
   </message_op_class>
   <message_op_class name="GaussianProductOp_Slow">
     <doc>
@@ -10823,6 +11824,28 @@
         <paramref name="B" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="ProductAverageLogarithm(Gaussian, double)">
+      <summary>VMP message to <c>product</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>product</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>product</c> as the random arguments are varied. The formula is <c>proj[sum_(a) p(a) factor(product,a,b)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="A" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="ProductAverageLogarithm(double, TruncatedGaussian)">
+      <summary>VMP message to <c>product</c>.</summary>
+      <param name="A">Constant value for <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>product</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>product</c> as the random arguments are varied. The formula is <c>proj[sum_(b) p(b) factor(product,a,b)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="ProductAverageLogarithm(TruncatedGaussian, double)">
       <summary>VMP message to <c>product</c>.</summary>
       <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="B">Constant value for <c>b</c>.</param>
@@ -12263,6 +13286,17 @@
       <returns>Average of the factor's log-value across the given argument distributions.</returns>
       <remarks>
         <para>The formula for the result is <c>log(factor(Exit,cases,values))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ValuesAverageLogarithm{TExit}(TExit, TExit[])">
+      <summary>VMP message to <c>values</c>.</summary>
+      <param name="exit">Incoming message from <c>Exit</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>values</c>. The formula is <c>exp(sum_(Exit) p(Exit) log(factor(Exit,cases,values)))</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="ValuesAverageLogarithm{TExit, TResultList}(TExit, TResultList)">
@@ -16609,6 +17643,17 @@
       <param name="array">Incoming message from <c>array</c>.</param>
       <param name="indices" />
       <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="MaxOfOthers_MonteCarlo(IList{Gaussian}, IList{Gaussian})">
+      <summary />
+      <param name="array">Incoming message from <c>array</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
       <remarks>
         <para />
       </remarks>
@@ -22355,372 +23400,6 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="DoublePlusOp">
-    <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.Plus(double, double)" /></description></item><item><description><see cref="Factor.Difference(double, double)" /></description></item></list>, given random arguments to the function.</summary>
-    </doc>
-    <message_doc name="SumAverageConditional(WrappedGaussian, WrappedGaussian)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(A,B) p(A,B) factor(Sum,A,B)]/p(Sum)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageConditional(WrappedGaussian, double)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(A) p(A) factor(Sum,A,B)]/p(Sum)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageConditional(double, WrappedGaussian)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(B) p(B) factor(Sum,A,B)]/p(Sum)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageConditional(WrappedGaussian, WrappedGaussian)">
-      <summary>EP message to <c>A</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(Sum,B) p(Sum,B) factor(Sum,A,B)]/p(A)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageConditional(WrappedGaussian, double)">
-      <summary>EP message to <c>A</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(A)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(WrappedGaussian, WrappedGaussian)">
-      <summary>EP message to <c>B</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(Sum,A) p(Sum,A) factor(Sum,A,B)]/p(B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(WrappedGaussian, double)">
-      <summary>EP message to <c>B</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageConditional(double, TruncatedGaussian)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(B) p(B) factor(Sum,A,B)]/p(Sum)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageConditional(TruncatedGaussian, double)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(A) p(A) factor(Sum,A,B)]/p(Sum)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageConditional(TruncatedGaussian, double)">
-      <summary>EP message to <c>A</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(A)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageConditional(double, TruncatedGaussian)">
-      <summary>EP message to <c>A</c>.</summary>
-      <param name="sum">Constant value for <c>Sum</c>.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(B) p(B) factor(Sum,A,B)]/p(A)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(TruncatedGaussian, double)">
-      <summary>EP message to <c>B</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(double, TruncatedGaussian)">
-      <summary>EP message to <c>B</c>.</summary>
-      <param name="sum">Constant value for <c>Sum</c>.</param>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(A) p(A) factor(Sum,A,B)]/p(B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="LogAverageFactor(double, TruncatedGaussian, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="sum">Constant value for <c>Sum</c>.</param>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(A) p(A) factor(Sum,A,B))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="LogAverageFactor(double, double, TruncatedGaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="sum">Constant value for <c>Sum</c>.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(B) p(B) factor(Sum,A,B))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="LogAverageFactor(TruncatedGaussian, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(Sum) p(Sum) factor(Sum,A,B))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="LogAverageFactor(Gaussian, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="Sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="to_sum">Outgoing message to <c>sum</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(Sum) p(Sum) factor(Sum,A,B))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="LogAverageFactor(double, Gaussian, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="Sum">Constant value for <c>Sum</c>.</param>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="to_a">Outgoing message to <c>a</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(A) p(A) factor(Sum,A,B))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="LogAverageFactor(double, double, Gaussian, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="Sum">Constant value for <c>Sum</c>.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Incoming message from <c>B</c>.</param>
-      <param name="to_b">Outgoing message to <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(B) p(B) factor(Sum,A,B))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(double, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="Sum">Constant value for <c>Sum</c>.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(factor(Sum,A,B))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="SumAverageConditional(Gaussian, Gaussian)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(A,B) p(A,B) factor(Sum,A,B)]/p(Sum)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageConditional(double, Gaussian)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(B) p(B) factor(Sum,A,B)]/p(Sum)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageConditional(Gaussian, double)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(A) p(A) factor(Sum,A,B)]/p(Sum)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageConditional(double, double)">
-      <summary>EP message to <c>Sum</c>.</summary>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>Sum</c> conditioned on the given values.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AAverageConditional(Gaussian, Gaussian)">
-      <summary>EP message to <c>A</c>.</summary>
-      <param name="Sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(Sum,B) p(Sum,B) factor(Sum,A,B)]/p(A)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Sum" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageConditional(double, Gaussian)">
-      <summary>EP message to <c>A</c>.</summary>
-      <param name="Sum">Constant value for <c>Sum</c>.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(B) p(B) factor(Sum,A,B)]/p(A)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageConditional(Gaussian, double)">
-      <summary>EP message to <c>A</c>.</summary>
-      <param name="Sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(A)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageConditional(double, double)">
-      <summary>EP message to <c>A</c>.</summary>
-      <param name="Sum">Constant value for <c>Sum</c>.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>A</c> conditioned on the given values.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="BAverageConditional(Gaussian, Gaussian)">
-      <summary>EP message to <c>B</c>.</summary>
-      <param name="Sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(Sum,A) p(Sum,A) factor(Sum,A,B)]/p(B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Sum" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(double, Gaussian)">
-      <summary>EP message to <c>B</c>.</summary>
-      <param name="Sum">Constant value for <c>Sum</c>.</param>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(A) p(A) factor(Sum,A,B)]/p(B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(Gaussian, double)">
-      <summary>EP message to <c>B</c>.</summary>
-      <param name="Sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(double, double)">
-      <summary>EP message to <c>B</c>.</summary>
-      <param name="Sum">Constant value for <c>Sum</c>.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>B</c> conditioned on the given values.</para>
-      </remarks>
-    </message_doc>
-  </message_op_class>
   <message_op_class name="DoublePlusEvidenceOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.Plus(double, double)" />, given random arguments to the function.</summary>
@@ -22769,97 +23448,6 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.Plus(double, double)" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="AverageLogFactor(WrappedGaussian)">
-      <summary>Evidence message for VMP.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>.</param>
-      <returns>Zero.</returns>
-      <remarks>
-        <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="SumAverageLogarithm(WrappedGaussian, WrappedGaussian)">
-      <summary>VMP message to <c>Sum</c>.</summary>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[sum_(A,B) p(A,B) factor(Sum,A,B)]</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageLogarithm(WrappedGaussian, double)">
-      <summary>VMP message to <c>Sum</c>.</summary>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing VMP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[sum_(A) p(A) factor(Sum,A,B)]</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="SumAverageLogarithm(double, WrappedGaussian)">
-      <summary>VMP message to <c>Sum</c>.</summary>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>Sum</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[sum_(B) p(B) factor(Sum,A,B)]</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(WrappedGaussian, WrappedGaussian)">
-      <summary>VMP message to <c>A</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>A</c>. Because the factor is deterministic, <c>Sum</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(B) p(B) log(sum_Sum p(Sum) factor(Sum,A,B)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(WrappedGaussian, double)">
-      <summary>VMP message to <c>A</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>B</c>.</param>
-      <returns>The outgoing VMP message to the <c>A</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>A</c> with <c>Sum</c> integrated out. The formula is <c>sum_Sum p(Sum) factor(Sum,A,B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(WrappedGaussian, WrappedGaussian)">
-      <summary>VMP message to <c>B</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>B</c>. Because the factor is deterministic, <c>Sum</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(A) p(A) log(sum_Sum p(Sum) factor(Sum,A,B)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(WrappedGaussian, double)">
-      <summary>VMP message to <c>B</c>.</summary>
-      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Constant value for <c>A</c>.</param>
-      <returns>The outgoing VMP message to the <c>B</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>B</c> with <c>Sum</c> integrated out. The formula is <c>sum_Sum p(Sum) factor(Sum,A,B)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="sum" /> is not a proper distribution.</exception>
-    </message_doc>
     <message_doc name="AverageLogFactor(Gaussian)">
       <summary>Evidence message for VMP.</summary>
       <param name="sum">Incoming message from <c>Sum</c>.</param>
@@ -23088,6 +23676,227 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.Plus(double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="SumAverageConditional(GammaPower, GammaPower, GammaPower)">
+      <summary>EP message to <c>Sum</c>.</summary>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(A,B) p(A,B) factor(Sum,A,B)]/p(Sum)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(GammaPower, GammaPower, GammaPower, GammaPower, GammaPower)">
+      <summary>EP message to <c>A</c>.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_a">Previous outgoing message to <c>a</c>.</param>
+      <param name="to_b">Previous outgoing message to <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(Sum,B) p(Sum,B) factor(Sum,A,B)]/p(A)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional2(GammaPower, GammaPower, GammaPower, GammaPower)">
+      <summary />
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para />
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="GammaPowerFromDerivLogZ(GammaPower, double, double)">
+      <summary />
+      <param name="a">Incoming message from <c>A</c>.</param>
+      <param name="dlogZ" />
+      <param name="ddlogZ" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="GetInverseGammaMomentDerivs(GammaPower, out double, out double, out double, out double, out double, out double)">
+      <summary />
+      <param name="gammaPower" />
+      <param name="mean" />
+      <param name="dmean" />
+      <param name="ddmean" />
+      <param name="variance" />
+      <param name="dvariance" />
+      <param name="ddvariance" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="GetInverseGammaDerivs(double, double, double, double, double, double, out double, out double, out double, out double)">
+      <summary />
+      <param name="mean" />
+      <param name="dmean" />
+      <param name="ddmean" />
+      <param name="variance" />
+      <param name="dvariance" />
+      <param name="ddvariance" />
+      <param name="ds" />
+      <param name="dds" />
+      <param name="dr" />
+      <param name="ddr" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="GetGammaMomentDerivs(GammaPower, out double, out double, out double, out double, out double, out double)">
+      <summary />
+      <param name="gammaPower" />
+      <param name="mean" />
+      <param name="dmean" />
+      <param name="ddmean" />
+      <param name="variance" />
+      <param name="dvariance" />
+      <param name="ddvariance" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="GetGammaDerivs(double, double, double, double, double, double, out double, out double, out double, out double)">
+      <summary />
+      <param name="mean" />
+      <param name="dmean" />
+      <param name="ddmean" />
+      <param name="variance" />
+      <param name="dvariance" />
+      <param name="ddvariance" />
+      <param name="ds" />
+      <param name="dds" />
+      <param name="dr" />
+      <param name="ddr" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="GetDerivLogZ(GammaPower, GammaPower, double, double, double, double, out double, out double)">
+      <summary />
+      <param name="sum">Incoming message from <c>Sum</c>.</param>
+      <param name="toSum" />
+      <param name="ds" />
+      <param name="dds" />
+      <param name="dr" />
+      <param name="ddr" />
+      <param name="dlogZ" />
+      <param name="ddlogZ" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="GetPosteriorMeanAndVariance(Gamma, double, double, out double, out double)">
+      <summary />
+      <param name="prior" />
+      <param name="dlogZ" />
+      <param name="ddlogZ" />
+      <param name="mean" />
+      <param name="variance" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="BAverageConditional(GammaPower, GammaPower, GammaPower, GammaPower, GammaPower)">
+      <summary>EP message to <c>B</c>.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_a">Previous outgoing message to <c>a</c>.</param>
+      <param name="to_b">Previous outgoing message to <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(Sum,A) p(Sum,A) factor(Sum,A,B)]/p(B)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional2(GammaPower, GammaPower, GammaPower, GammaPower)">
+      <summary />
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para />
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogAverageFactor(GammaPower, GammaPower, GammaPower)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(Sum,A,B) p(Sum,A,B) factor(Sum,A,B))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(GammaPower, GammaPower, GammaPower)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(Sum,A,B) p(Sum,A,B) factor(Sum,A,B) / sum_Sum p(Sum) messageTo(Sum))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
     <message_doc name="SumAverageConditional(GammaPower, double)">
       <summary>EP message to <c>Sum</c>.</summary>
       <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
@@ -23150,11 +23959,72 @@
       <exception cref="ImproperMessageException">
         <paramref name="b" /> is not a proper distribution.</exception>
     </message_doc>
+    <message_doc name="SumAverageLogarithm(GammaPower, GammaPower, GammaPower)">
+      <summary>VMP message to <c>Sum</c>.</summary>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[sum_(A,B) p(A,B) factor(Sum,A,B)]</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="MeanInverseOfSum(GammaPower, GammaPower)">
+      <summary />
+      <param name="a">Incoming message from <c>A</c>.</param>
+      <param name="b">Incoming message from <c>B</c>.</param>
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="InvGammaFromShapeAndMeanInverse(double, double)">
+      <summary />
+      <param name="shape" />
+      <param name="meanInverse" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="InvGammaFromMeanAndMeanInverse(double, double)">
+      <summary />
+      <param name="mean" />
+      <param name="meanInverse" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
     <message_doc name="AAverageLogarithm(Gamma, Gamma, Gamma)">
       <summary>VMP message to <c>A</c>.</summary>
       <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>A</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>A</c>. Because the factor is deterministic, <c>Sum</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(B) p(B) log(sum_Sum p(Sum) factor(Sum,A,B)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(GammaPower, GammaPower, GammaPower, GammaPower, GammaPower)">
+      <summary>VMP message to <c>A</c>.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_a">Previous outgoing message to <c>a</c>.</param>
+      <param name="to_b">Previous outgoing message to <c>b</c>.</param>
       <returns>The outgoing VMP message to the <c>A</c> argument.</returns>
       <remarks>
         <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>A</c>. Because the factor is deterministic, <c>Sum</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(B) p(B) log(sum_Sum p(Sum) factor(Sum,A,B)))</c>.</para>
@@ -23182,193 +24052,23 @@
       <exception cref="ImproperMessageException">
         <paramref name="b" /> is not a proper distribution.</exception>
     </message_doc>
-  </message_op_class>
-  <message_op_class name="DoubleMinusEvidenceOp">
-    <doc>
-      <summary>Provides outgoing messages for <see cref="Factor.Difference(double, double)" />, given random arguments to the function.</summary>
-    </doc>
-    <message_doc name="LogEvidenceRatio(Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="difference">Incoming message from <c>difference</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+    <message_doc name="BAverageLogarithm(GammaPower, GammaPower, GammaPower, GammaPower, GammaPower)">
+      <summary>VMP message to <c>B</c>.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_a">Previous outgoing message to <c>a</c>.</param>
+      <param name="to_b">Previous outgoing message to <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>B</c> argument.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(difference) p(difference) factor(difference,a,b) / sum_difference p(difference) messageTo(difference))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>B</c>. Because the factor is deterministic, <c>Sum</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(A) p(A) log(sum_Sum p(Sum) factor(Sum,A,B)))</c>.</para>
       </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(double, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="difference">Constant value for <c>difference</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(factor(difference,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(double, Gaussian, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="difference">Constant value for <c>difference</c>.</param>
-      <param name="a">Incoming message from <c>a</c>.</param>
-      <param name="to_a">Outgoing message to <c>a</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(a) p(a) factor(difference,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(double, double, Gaussian, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="difference">Constant value for <c>difference</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Incoming message from <c>b</c>.</param>
-      <param name="to_b">Outgoing message to <c>b</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(b) p(b) factor(difference,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-  </message_op_class>
-  <message_op_class name="DoubleMinusVmpOp">
-    <doc>
-      <summary>Provides outgoing messages for <see cref="Factor.Difference(double, double)" />, given random arguments to the function.</summary>
-    </doc>
-    <message_doc name="AverageLogFactor()">
-      <summary>Evidence message for VMP.</summary>
-      <returns>Zero.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(factor(difference,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="DifferenceAverageLogarithm(Gaussian, Gaussian)">
-      <summary>VMP message to <c>difference</c>.</summary>
-      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(difference,a,b)]</c>.</para>
-      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
       <exception cref="ImproperMessageException">
         <paramref name="a" /> is not a proper distribution.</exception>
       <exception cref="ImproperMessageException">
         <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="DifferenceAverageLogarithm(double, Gaussian)">
-      <summary>VMP message to <c>difference</c>.</summary>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[sum_(b) p(b) factor(difference,a,b)]</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="DifferenceAverageLogarithm(Gaussian, double)">
-      <summary>VMP message to <c>difference</c>.</summary>
-      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>difference</c> as the random arguments are varied. The formula is <c>proj[sum_(a) p(a) factor(difference,a,b)]</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="DifferenceAverageLogarithm(double, double)">
-      <summary>VMP message to <c>difference</c>.</summary>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>difference</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>difference</c> conditioned on the given values.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(Gaussian, Gaussian)">
-      <summary>VMP message to <c>a</c>.</summary>
-      <param name="Difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. Because the factor is deterministic, <c>difference</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(b) p(b) log(sum_difference p(difference) factor(difference,a,b)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Difference" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(Gaussian, double)">
-      <summary>VMP message to <c>a</c>.</summary>
-      <param name="Difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>a</c> with <c>difference</c> integrated out. The formula is <c>sum_difference p(difference) factor(difference,a,b)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Difference" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(double, Gaussian)">
-      <summary>VMP message to <c>a</c>.</summary>
-      <param name="Difference">Constant value for <c>difference</c>.</param>
-      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(difference,a,b)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="b" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(double, double)">
-      <summary>VMP message to <c>a</c>.</summary>
-      <param name="Difference">Constant value for <c>difference</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>a</c> conditioned on the given values.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(Gaussian, Gaussian)">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="Difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>difference</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_difference p(difference) factor(difference,a,b)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Difference" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(Gaussian, double)">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="Difference">Incoming message from <c>difference</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>b</c> with <c>difference</c> integrated out. The formula is <c>sum_difference p(difference) factor(difference,a,b)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="Difference" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(double, Gaussian)">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="Difference">Constant value for <c>difference</c>.</param>
-      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. The formula is <c>exp(sum_(a) p(a) log(factor(difference,a,b)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="a" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(double, double)">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="Difference">Constant value for <c>difference</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>b</c> conditioned on the given values.</para>
-      </remarks>
     </message_doc>
   </message_op_class>
   <message_op_class name="DoublePlusOp_NoSkip">
@@ -24378,6 +25078,33 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Pow(double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="GammaFromMeanAndMeanInverse(double, double)">
+      <summary />
+      <param name="mean" />
+      <param name="meanInverse" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="GammaFromGammaPower(GammaPower)">
+      <summary />
+      <param name="message" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="FromMeanPowerAndMeanLog(double, double, double)">
+      <summary />
+      <param name="meanPower" />
+      <param name="meanLog" />
+      <param name="power" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
     <message_doc name="PowAverageConditional(TruncatedGamma, double)">
       <summary>EP message to <c>pow</c>.</summary>
       <param name="x">Incoming message from <c>x</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
@@ -24389,16 +25116,33 @@
       <exception cref="ImproperMessageException">
         <paramref name="x" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="GammaFromMeanAndMeanInverse(double, double)">
-      <summary />
-      <param name="mean" />
-      <param name="meanInverse" />
-      <returns />
-      <remarks>
-        <para />
-      </remarks>
-    </message_doc>
     <message_doc name="XAverageConditional(Gamma, TruncatedGamma, double)">
+      <summary>EP message to <c>x</c>.</summary>
+      <param name="pow">Incoming message from <c>pow</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="x">Incoming message from <c>x</c>.</param>
+      <param name="y">Constant value for <c>y</c>.</param>
+      <returns>The outgoing EP message to the <c>x</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>x</c> as the random arguments are varied. The formula is <c>proj[p(x) sum_(pow) p(pow) factor(pow,x,y)]/p(x)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="pow" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="PowAverageConditional(TruncatedGamma, double, GammaPower)">
+      <summary>EP message to <c>pow</c>.</summary>
+      <param name="x">Incoming message from <c>x</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="y">Constant value for <c>y</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>pow</c> as the random arguments are varied. The formula is <c>proj[p(pow) sum_(x) p(x) factor(pow,x,y)]/p(pow)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="x" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="XAverageConditional(GammaPower, TruncatedGamma, double)">
       <summary>EP message to <c>x</c>.</summary>
       <param name="pow">Incoming message from <c>pow</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="x">Incoming message from <c>x</c>.</param>
@@ -24439,14 +25183,6 @@
       <exception cref="ImproperMessageException">
         <paramref name="pow" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="GammaFromGammaPower(GammaPower)">
-      <summary />
-      <param name="message" />
-      <returns />
-      <remarks>
-        <para />
-      </remarks>
-    </message_doc>
     <message_doc name="LogAverageFactor(GammaPower, GammaPower, double)">
       <summary>Evidence message for EP.</summary>
       <param name="pow">Incoming message from <c>pow</c>.</param>
@@ -24485,16 +25221,6 @@
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="pow" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="FromMeanPowerAndMeanLog(double, double, double)">
-      <summary />
-      <param name="meanPower" />
-      <param name="meanLog" />
-      <param name="power" />
-      <returns />
-      <remarks>
-        <para />
-      </remarks>
     </message_doc>
     <message_doc name="GammaPowerFromDifferentPower(GammaPower, double)">
       <summary />
@@ -26146,6 +26872,16 @@
         <para />
       </remarks>
     </message_doc>
+    <message_doc name="UsesDeriv{T}(T[])">
+      <summary />
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
     <message_doc name="UsesAverageLogarithm2{T, TDef}(TDef, T)">
       <summary />
       <param name="Def">Incoming message from <c>Def</c>.</param>
@@ -26360,7 +27096,7 @@
       <exception cref="ImproperMessageException">
         <paramref name="Def" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="MarginalGibbs{TDist}(T, GibbsMarginal{TDist, T})">
+    <message_doc name="MarginalGibbs{TDist, TDomain}(TDomain, GibbsMarginal{TDist, TDomain})">
       <summary />
       <param name="Def">Incoming message from <c>Def</c>.</param>
       <param name="to_marginal" />
@@ -26369,7 +27105,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="MarginalGibbs{TDist}(T[], GibbsMarginal{TDist, T})">
+    <message_doc name="MarginalGibbs2{TDist}(T[], GibbsMarginal{TDist, T})">
       <summary />
       <param name="Uses">Incoming message from <c>Uses</c>.</param>
       <param name="to_marginal" />
@@ -30880,6 +31616,15 @@
       <exception cref="ImproperMessageException">
         <paramref name="sum" /> is not a proper distribution.</exception>
     </message_doc>
+    <message_doc name="SumExcept(IList{Gaussian}, int)">
+      <summary />
+      <param name="array">Incoming message from <c>array</c>.</param>
+      <param name="excludedIndex" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
     <message_doc name="ArrayAverageConditional(Gaussian, Gaussian, Gaussian[], Gaussian[])">
       <summary>EP message to <c>array</c>.</summary>
       <param name="sum">Incoming message from <c>sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
@@ -32458,6 +33203,17 @@
         <para />
       </remarks>
     </message_doc>
+    <message_doc name="UseMaxConditional{TDist, T}(T, TDist)">
+      <summary />
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
     <message_doc name="DefMaxConditional{T}(T)">
       <summary />
       <param name="Use">Incoming message from <c>use</c>.</param>
@@ -32482,6 +33238,17 @@
       <summary />
       <param name="def">Incoming message from <c>def</c>.</param>
       <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="MarginalMaxConditional{TDist, T}(T, TDist)">
+      <summary />
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
       <remarks>
         <para />
       </remarks>
@@ -32518,12 +33285,34 @@
         <para>The outgoing message is a distribution matching the moments of <c>marginal</c> as the random arguments are varied. The formula is <c>proj[p(marginal) sum_(use,def) p(use,def) factor(use,def,marginal)]/p(marginal)</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="MarginalAverageConditional{TDist, T}(T, TDist)">
+      <summary>EP message to <c>marginal</c>.</summary>
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>marginal</c> as the random arguments are varied. The formula is <c>proj[p(marginal) sum_(def) p(def) factor(use,def,marginal)]/p(marginal)</c>.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="MarginalAverageConditionalInit{T}(T)">
       <summary />
       <param name="def">Incoming message from <c>def</c>.</param>
       <returns />
       <remarks>
         <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="UseAverageConditional{TDist, T}(T, TDist)">
+      <summary>EP message to <c>use</c>.</summary>
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>use</c> as the random arguments are varied. The formula is <c>proj[p(use) sum_(def) p(def) factor(use,def,marginal)]/p(use)</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="UseAverageConditional{T}(T)">
@@ -32632,7 +33421,7 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="DerivedVariableVmpOp">
+  <message_op_class name="DerivedVariableVmpOp{T}">
     <doc>
       <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.DerivedVariableVmp{T}(T, out T)" /></description></item><item><description><see cref="Factor.DerivedVariableInitVmp{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
@@ -32643,7 +33432,7 @@
         <para>The formula for the result is <c>log(factor(use,def,marginal))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="MarginalAverageLogarithm{T, TDef}(TDef, T)">
+    <message_doc name="MarginalAverageLogarithm{TDist}(TDist, TDist)">
       <summary>VMP message to <c>marginal</c>.</summary>
       <param name="Def">Incoming message from <c>def</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -32654,7 +33443,18 @@
         <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>marginal</c>. The formula is <c>exp(sum_(def) p(def) log(factor(use,def,marginal)))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="MarginalAverageLogarithmInit{T}(T)">
+    <message_doc name="MarginalAverageLogarithm{TDist, TPoint}(TPoint, TDist)">
+      <summary>VMP message to <c>marginal</c>.</summary>
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>marginal</c>. The formula is <c>exp(sum_(def) p(def) log(factor(use,def,marginal)))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="MarginalAverageLogarithmInit{TDist}(TDist)">
       <summary />
       <param name="def">Incoming message from <c>def</c>.</param>
       <returns />
@@ -32662,7 +33462,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="UseAverageLogarithm{T, TDef}(TDef, T)">
+    <message_doc name="UseAverageLogarithm{TDist}(TDist, TDist)">
       <summary>VMP message to <c>use</c>.</summary>
       <param name="Def">Incoming message from <c>def</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -32673,7 +33473,26 @@
         <para>The outgoing message is a distribution matching the moments of <c>use</c> as the random arguments are varied. The formula is <c>proj[sum_(def) p(def) factor(use,def,marginal)]</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="UseAverageLogarithmInit{T}(T)">
+    <message_doc name="UseAverageLogarithm{TDist, TPoint}(TPoint, TDist)">
+      <summary>VMP message to <c>use</c>.</summary>
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>use</c> as the random arguments are varied. The formula is <c>proj[sum_(def) p(def) factor(use,def,marginal)]</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="UseAverageLogarithm(T)">
+      <summary>VMP message to <c>use</c>.</summary>
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <returns>The outgoing VMP message to the <c>use</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>use</c> as the random arguments are varied. The formula is <c>proj[sum_(def) p(def) factor(use,def,marginal)]</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="UseAverageLogarithmInit{TDist}(TDist)">
       <summary />
       <param name="def">Incoming message from <c>def</c>.</param>
       <returns />
@@ -32681,7 +33500,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="DefAverageLogarithm{T}(T, T)">
+    <message_doc name="DefAverageLogarithm{TDist}(TDist, TDist)">
       <summary>VMP message to <c>def</c>.</summary>
       <param name="Use">Incoming message from <c>use</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>

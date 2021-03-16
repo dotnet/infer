@@ -14,6 +14,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public interface ISequenceManipulator<TSequence, TElement>
         where TSequence : class, IEnumerable<TElement>
     {
+        IEqualityComparer<TSequence> SequenceEqualityComparer { get; }
+
         /// <summary>
         /// Converts a given collection of elements to a sequence.
         /// </summary>
@@ -35,15 +37,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="index">The position.</param>
         /// <returns>The element at the given position in the sequence.</returns>
         TElement GetElement(TSequence sequence, int index);
-
-        /// <summary>
-        /// Checks if given sequences are equal.
-        /// Sequences are considered equal if they contain the same elements in the same order.
-        /// </summary>
-        /// <param name="sequence1">The first sequence.</param>
-        /// <param name="sequence2">The second sequence.</param>
-        /// <returns><see langword="true"/> if the sequences are equal, <see langword="false"/> otherwise.</returns>
-        bool SequencesAreEqual(TSequence sequence1, TSequence sequence2);
 
         /// <summary>
         /// Creates a sequence by copying the first sequence and then appending the second sequence to it.

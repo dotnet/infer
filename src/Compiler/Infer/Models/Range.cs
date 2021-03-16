@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Helps build class declarations
         /// </summary>
-        private static CodeBuilder Builder = CodeBuilder.Instance;
+        private static readonly CodeBuilder Builder = CodeBuilder.Instance;
 
         /// <summary>
         /// Model expression for size of the range

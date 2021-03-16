@@ -49,6 +49,23 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests a model where the compiler generates redundant assignments.
+        /// </summary>
+        internal void RedundantAssignmentTest()
+        {
+            var r = new Range(10).Named("range");
+            var x = Variable<double>.Array(r).Named("variable_array");
+            using (var t1 = Variable.ForEach(r))
+            {
+                x[t1.Index] = Variable.GaussianFromMeanAndPrecision(0, 1);
+            }
+
+            var inferenceEngine = new InferenceEngine { ShowFactorGraph = false, Algorithm = new ExpectationPropagation(), NumberOfIterations = 10 };
+
+            inferenceEngine.Infer<Gaussian[]>(x);
+        }
+
+        /// <summary>
         /// The "Eight Schools" example from https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html
         /// </summary>
         [Fact]

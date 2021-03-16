@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private bool isTopLevel;
         private LoopMergingInfo loopMergingInfo;
         private List<IStatement> openContainers = new List<IStatement>();
-        private Dictionary<IStatement, Set<int>> stmtsOfContainer = new Dictionary<IStatement, Set<int>>(new IdentityComparer<IStatement>());
+        private Dictionary<IStatement, Set<int>> stmtsOfContainer = new Dictionary<IStatement, Set<int>>(ReferenceEqualityComparer<IStatement>.Instance);
 
         protected override IMethodDeclaration DoConvertMethod(IMethodDeclaration md, IMethodDeclaration imd)
         {

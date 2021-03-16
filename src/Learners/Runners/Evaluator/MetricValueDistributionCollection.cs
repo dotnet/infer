@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <summary>
         /// The mapping from metric names to metric value distributions.
         /// </summary>
-        private readonly IDictionary<string, MetricValueDistribution> metricNameToValueDistribution =
+        private readonly Dictionary<string, MetricValueDistribution> metricNameToValueDistribution =
             new Dictionary<string, MetricValueDistribution>();
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            return StringUtil.DictionaryToString(this.metricNameToValueDistribution, " | ");
+            return StringUtil.DictionaryToString<string,MetricValueDistribution>(this.metricNameToValueDistribution, " | ");
         }
     }
 }

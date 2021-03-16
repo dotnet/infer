@@ -139,6 +139,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public int ComponentCount => this.components.Count;
 
+            public int TotalStatesCount { get; private set; }
+
             /// <summary>
             /// Gets the strongly connected component by its index.
             /// Component indices are assigned in the reverse topological order (i.e. <see cref="Root"/> is in the last component).
@@ -277,6 +279,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                         components.Add(new StronglyConnectedComponent(
                             this.automaton, this.transitionFilter, statesInComponent, this.useApproximateClosure));
+                        this.TotalStatesCount += statesInComponent.Count;
                     }
                 }
 

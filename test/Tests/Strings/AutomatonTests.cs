@@ -2202,21 +2202,28 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void EnumerateSupport()
         {
             var builder = new StringAutomaton.Builder();
-            builder.AddStates(6);
+            builder.AddStates(10);
 
             builder[0].AddTransition(DiscreteChar.UniformOver('a', 'b'), Weight.FromValue(1), 1);
             builder[0].AddTransition(DiscreteChar.UniformOver('c', 'd'), Weight.FromValue(1), 2);
+            builder[0].AddEpsilonTransition(Weight.FromValue(1), 7);
+            builder[0].AddTransition(DiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 8);
+
             builder[2].AddTransition(DiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 3);
             builder[2].AddTransition(DiscreteChar.UniformOver('g', 'h'), Weight.FromValue(1), 4);
             builder[2].AddEpsilonTransition(Weight.FromValue(1), 4);
             builder[4].AddTransition(DiscreteChar.UniformOver('i', 'j'), Weight.FromValue(1), 5);
             builder[4].AddTransition(DiscreteChar.UniformOver('k', 'l'), Weight.FromValue(1), 5);
+            builder[8].AddTransition(DiscreteChar.UniformOver('g', 'h'), Weight.FromValue(0), 9);
+            builder[8].AddEpsilonTransition(Weight.FromValue(1), 10);
 
-            builder[0].SetEndWeight(Weight.FromValue(1));
             builder[1].SetEndWeight(Weight.FromValue(1));
             builder[3].SetEndWeight(Weight.FromValue(1));
             builder[5].SetEndWeight(Weight.FromValue(1));
             builder[6].SetEndWeight(Weight.FromValue(1));
+            builder[7].SetEndWeight(Weight.FromValue(1));
+            builder[9].SetEndWeight(Weight.FromValue(1));
+            builder[10].SetEndWeight(Weight.FromValue(1));
 
             var automaton = builder.GetAutomaton();
 
@@ -2231,10 +2238,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 "de", "df",
                 "dgi", "dgj", "dgk", "dgl",
                 "dhi", "dhj", "dhk", "dhl",
-                "di", "dj", "dk", "dl"
+                "di", "dj", "dk", "dl",
+                "e", "f",
             };
 
-            var calculatedSupport1= new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: false));
+            var calculatedSupport1 = new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: false));
             Assert.True(calculatedSupport1.SetEquals(expectedSupport));
 
             var calculatedSupport2 = new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: true));

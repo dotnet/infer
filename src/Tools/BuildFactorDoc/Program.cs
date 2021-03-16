@@ -16,7 +16,7 @@ namespace Microsoft.ML.Probabilistic.Tools.BuildFactorDoc
 
     class Program
     {
-        static private string defaultXmlDocFilePath = Path.Combine("..", "..", "..", "..", "..", "Runtime", "Factors", "FactorDocs.xml");
+        private static readonly string defaultXmlDocFilePath = Path.Combine("..", "..", "..", "..", "..", "Runtime", "Factors", "FactorDocs.xml");
 
         static int Main(string[] args)
         {
@@ -119,21 +119,12 @@ Returns:
 
         private static void ShowErrorMessage(StartStatus status)
         {
-            string msg;
-
-            switch(status)
+            string msg = status switch
             {
-                case StartStatus.NoArgument:
-                    msg = $"No given argument and default file (\"{Path.GetFullPath(defaultXmlDocFilePath)}\") is not found!\n";
-                    break;
-                case StartStatus.NotExistingFile:
-                    msg = "File is not exist!\n";
-                    break;
-                default:
-                    msg = "";
-                    break;
-            }
-
+                StartStatus.NoArgument => $"No given argument and default file (\"{Path.GetFullPath(defaultXmlDocFilePath)}\") is not found!\n",
+                StartStatus.NotExistingFile => "File does not exist!\n",
+                _ => "",
+            };
             msg += "Give '-h' or '--help' argument to get reference";
             Console.WriteLine(msg);
         }

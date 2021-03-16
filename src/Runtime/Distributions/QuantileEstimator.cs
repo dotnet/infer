@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// Subsamples data to provide accurate estimation of quantiles.
     /// </summary>
     [Serializable, DataContract]
-    public class QuantileEstimator : CanGetProbLessThan, CanGetQuantile
+    public class QuantileEstimator : CanGetProbLessThan<double>, CanGetQuantile<double>
     {
         // Reference: 
         // "Quantiles over Data Streams: An Experimental Study"
@@ -107,12 +107,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public double GetProbLessThan(double x)
         {
-            double lowerItem;
-            double upperItem;
-            long lowerRank;
-            long lowerWeight, minLowerWeight, upperWeight, minUpperWeight;
-            long itemCount;
-            GetAdjacentItems(x, out lowerItem, out upperItem, out lowerRank, out lowerWeight, out upperWeight, out minLowerWeight, out minUpperWeight, out itemCount);
+            GetAdjacentItems(x, out double lowerItem, out double upperItem, out long lowerRank, out long lowerWeight, out long upperWeight, out long minLowerWeight, out long minUpperWeight, out long itemCount);
             if (lowerRank == 0) return 0;
             if (lowerRank == itemCount) return 1;
             if (InterpolationType == 0)
@@ -135,6 +130,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double frac = (x - lowerItem) / (upperItem - lowerItem);
                 return (lowerRank - 1 + frac) / (itemCount - 1);
             }
+        }
+
+        /// <inheritdoc/>
+        public double GetProbBetween(double lowerBound, double upperBound)
+        {
+            return Math.Max(0.0, GetProbLessThan(upperBound) - GetProbLessThan(lowerBound));
         }
 
         /// <summary>

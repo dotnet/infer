@@ -520,6 +520,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The cumulative gamma distribution at <paramref name="x"/></returns>
         public double GetProbLessThan(double x)
         {
+            if (x < 0) return 0;
             if (Power == 0) return (x > 1) ? 1.0 : 0.0;
             double probLessThan = Gamma.FromShapeAndRate(Shape, Rate).GetProbLessThan(Math.Pow(x, 1 / Power));
             if (Power > 0)

@@ -149,13 +149,12 @@ namespace LDAExample
             Console.WriteLine(String.Format("\nTraining {0}LDA model...\n", shared ? "batched " : "non-batched "));
 
             // Train the model - we will also get rough estimates of execution time and memory
-            Dirichlet[] postTheta, postPhi;
             GC.Collect();
             PerformanceCounter memCounter = new PerformanceCounter("Memory", "Available MBytes");
             float preMem = memCounter.NextValue();
             stopWatch.Reset();
             stopWatch.Start();
-            double logEvidence = model.Infer(trainWordsInTrainDoc, alpha, beta, out postTheta, out postPhi);
+            double logEvidence = model.Infer(trainWordsInTrainDoc, alpha, beta, out Dirichlet[] postTheta, out Dirichlet[] postPhi);
             stopWatch.Stop();
             float postMem = memCounter.NextValue();
             double approxMB = preMem - postMem;
