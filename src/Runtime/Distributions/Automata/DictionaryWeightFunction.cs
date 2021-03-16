@@ -515,7 +515,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 int lenX = postfixInfo[x].postfixLength;
                 int lenY = postfixInfo[y].postfixLength;
                 if (lenX == 0 || lenY == 0)
-                    return x - y;
+                    return lenX - lenY;
 
                 var shorterLength = Math.Min(lenX, lenY);
                 var strX = dict.Keys[x];
@@ -524,7 +524,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 while (idx <= shorterLength && strX[strX.Length - idx] == strY[strY.Length - idx])
                     ++idx;
                 if (idx > shorterLength)
-                    return x - y;
+                    return lenX - lenY;
                 return strX[strX.Length - idx] - strY[strY.Length - idx];
             }));
 
@@ -539,9 +539,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 sharedPostfixWithPrevLen = sharedPostfixWithNextLen;
                 nextOriginalIdx = reversedStringSortIndex[i + 1];
                 sharedPostfixWithNextLen = GetSharedPostfixLength(dict.Keys[curOriginalIdx], postfixInfo[curOriginalIdx].postfixLength, dict.Keys[nextOriginalIdx], postfixInfo[nextOriginalIdx].postfixLength);
-                firstSharedStateIdx = ProcessPostfix(i, sharedPostfixWithPrevLen, firstSharedStateIdx, sharedPostfixWithNextLen);
+                firstSharedStateIdx = ProcessPostfix(curOriginalIdx, sharedPostfixWithPrevLen, firstSharedStateIdx, sharedPostfixWithNextLen);
             }
-            ProcessPostfix(dict.Count - 1, sharedPostfixWithNextLen, firstSharedStateIdx, 0);
+            ProcessPostfix(reversedStringSortIndex[dict.Count - 1], sharedPostfixWithNextLen, firstSharedStateIdx, 0);
 
             return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromData(result.GetData(true));
 
