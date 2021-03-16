@@ -35,7 +35,7 @@ namespace Microsoft.ML.Probabilistic.Tests.TestAllCompilerOptions
                 var free = bool.Parse(args[2]);
                 var copies = bool.Parse(args[3]);
                 var optimise = bool.Parse(args[4]);
-                var result = CompilerOptionsTestUtils.TestAllCompilerOptions(
+                var result = TestUtils.TestAllCompilerOptions(
                     workingDirectory,
                     loadTestAssembly: true,
                     loops: loops,
