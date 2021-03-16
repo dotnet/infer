@@ -361,7 +361,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
         }
 
         // must be kept in sync with Binding.TypesAssignableFrom
-        public static bool IsAssignableFrom(Type toType, Type fromType, out int subclassCount)
+        private static bool IsAssignableFrom(Type toType, Type fromType, out int subclassCount)
         {
             bool isObject = false;
             subclassCount = 0;

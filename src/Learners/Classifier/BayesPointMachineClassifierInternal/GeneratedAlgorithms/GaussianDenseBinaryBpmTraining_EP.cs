@@ -55,7 +55,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		private DistributionStructArray<Gaussian,double> weightConstraints;
 		/// <summary>Field backing the WeightPriors property</summary>
 		private DistributionStructArray<Gaussian,double> weightPriors;
-		public DistributionStructArray<Gaussian,double> Weights_depth1_B;
 		public Gaussian[][] Weights_depth1_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public Gaussian[] Weights_depth1_rep_B_toDef;
@@ -235,11 +234,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.OnProgressChanged(new ProgressChangedEventArgs(iteration));
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.Weights_depth1_B[FeatureRange] = ArrayHelper.SetTo<Gaussian>(this.Weights_depth1_B[FeatureRange], this.Weights_depth1_rep_B_toDef[FeatureRange]);
-			}
 			for(int _iv = 0; _iv<this.featureCount; _iv++) {
-				this.Weights_uses_B[1][_iv] = ArrayHelper.SetTo<Gaussian>(this.Weights_uses_B[1][_iv], this.Weights_depth1_B[_iv]);
+				this.Weights_uses_B[1][_iv] = ArrayHelper.SetTo<Gaussian>(this.Weights_uses_B[1][_iv], this.Weights_depth1_rep_B_toDef[_iv]);
 			}
 			this.Weights_use_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_uses_B, this.Weights_use_B);
 			this.Weights_marginal_F = VariableOp.MarginalAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_use_B, this.weightPriors, this.Weights_marginal_F);
@@ -354,7 +350,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.Weights_uses_B[1] = ArrayHelper.MakeUniform<DistributionStructArray<Gaussian,double>>(this.weightPriors);
 			this.Weights_uses_B[0] = ArrayHelper.MakeUniform<DistributionStructArray<Gaussian,double>>(this.weightPriors);
 			this.Weights_uses_F[1] = ArrayHelper.MakeUniform<DistributionStructArray<Gaussian,double>>(this.weightPriors);
-			this.Weights_depth1_B = ArrayHelper.MakeUniform<DistributionStructArray<Gaussian,double>>(this.weightPriors);
 			this.Changed_WeightPriors_isDone = true;
 		}
 

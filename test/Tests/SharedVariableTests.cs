@@ -722,15 +722,17 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
             }
-            z.InitialiseTo(Distribution<int>.Array(Util.ArrayInit(outer.SizeAsInt, i =>
-                                                                                   Util.ArrayInit(inner.SizeAsInt, j =>
-                                                                                                                   Discrete.PointMass(Rand.Int(cRange.SizeAsInt),
-                                                                                                                                      cRange.SizeAsInt)))));
+            Rand.Restart(0);
+            var zInit = Util.ArrayInit(outer.SizeAsInt, i =>
+                Util.ArrayInit(inner.SizeAsInt, j =>
+                Discrete.PointMass(Rand.Int(cRange.SizeAsInt), cRange.SizeAsInt)));
+            z.InitialiseTo(Distribution<int>.Array(zInit));
             bool geForceProper = GateEnterOp<double>.ForceProper;
             try
             {
                 GateEnterOp<double>.ForceProper = true;
-                InferenceEngine engine = new InferenceEngine(); //new VariationalMessagePassing());
+                InferenceEngine engine = new InferenceEngine();
+                engine.ShowProgress = false;
                 for (int pass = 0; pass < 50; pass++)
                 {
                     for (int c = 0; c < numChunks; c++)

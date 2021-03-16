@@ -8,7 +8,6 @@ using System.Text;
 using System.Reflection;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Factors;
@@ -25,6 +24,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     /// </summary>
     internal class CopyPropagationTransform : ShallowCopyTransform
     {
+        private readonly Stack<Type> formalTypeStack = new Stack<Type>();
+
         public override string Name
         {
             get { return "CopyPropagationTransform"; }
@@ -92,13 +93,29 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IExpression copyExpr = GetCopyExpr(iaie);
             if (copyExpr != null)
                 return copyExpr;
-            var aie = base.ConvertArrayIndexer(iaie);
-            // If part of the expression has been replaced, check the whole again
-            if (!ReferenceEquals(aie, iaie))
+            formalTypeStack.Push(typeof(int));
+            IList<IExpression> newIndices = ConvertCollection(iaie.Indices);
+            formalTypeStack.Pop();
+            Type arrayType;
+            if (iaie.Indices.Count == 1) 
             {
-                return ConvertArrayIndexer((IArrayIndexerExpression)aie);
+                var elementType = FormalTypeStackApplies() ? formalTypeStack.Peek() : iaie.GetExpressionType();
+                // This must be IReadOnlyList not IList to allow covariance.
+                arrayType = typeof(IReadOnlyList<>).MakeGenericType(elementType);
             }
-            return aie;
+            else arrayType = iaie.Target.GetExpressionType();
+            formalTypeStack.Push(arrayType);
+            IExpression newTarget = ConvertExpression(iaie.Target);
+            formalTypeStack.Pop();
+            if (ReferenceEquals(newTarget, iaie.Target) &&
+                ReferenceEquals(newIndices, iaie.Indices))
+                return iaie;
+            IArrayIndexerExpression aie = Builder.ArrayIndxrExpr();
+            aie.Target = newTarget;
+            aie.Indices.AddRange(newIndices);
+            Context.InputAttributes.CopyObjectAttributesTo(iaie, context.OutputAttributes, aie);
+            // Since part of the expression has been replaced, check the whole again
+            return ConvertArrayIndexer(aie);
         }
 
         /// <summary>
@@ -110,9 +127,27 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             // should not convert if on LHS
             IExpression copyExpr = GetCopyExpr(ivre);
-            if (copyExpr != null)
+            if (copyExpr != null && CanBeReplacedBy(ivre, copyExpr.GetExpressionType()))
+            {
                 return copyExpr;
-            return ivre;
+            }
+            else
+            {
+                return ivre;
+            }
+        }
+
+        private bool CanBeReplacedBy(IExpression expr, Type replacementType)
+        {
+            return (FormalTypeStackApplies() && formalTypeStack.Peek().IsAssignableFrom(replacementType)) ||
+                 expr.GetExpressionType().IsAssignableFrom(replacementType);
+        }
+
+        private bool FormalTypeStackApplies()
+        {
+            if (formalTypeStack.Count == 0) return false;
+            var previousElement = context.InputStack[context.Depth - 2].inputElement;
+            return (previousElement is IMethodInvokeExpression) || (previousElement is IArrayIndexerExpression);
         }
 
         internal static MessageFcnInfo GetMessageFcnInfo(BasicTransformContext context, IMethodInvokeExpression imie)
@@ -145,24 +180,26 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return imie;
             IMethodInvokeExpression mie = Builder.MethodInvkExpr();
             MessageFcnInfo fcnInfo = GetMessageFcnInfo(context, imie);
+            var parameters = fcnInfo.Method.GetParameters();
             bool changed = false;
-            for (int i = 0; i < imie.Arguments.Count; i++)
+            var arguments = imie.Arguments.Select((arg, i) =>
             {
-                IExpression arg = imie.Arguments[i];
-                IExpression expr;
                 if ((fcnInfo != null) && (i == fcnInfo.ResultParameterIndex))
                 {
                     // if argument is 'result' argument, do not convert
-                    expr = arg;
+                    return arg;
                 }
                 else
                 {
-                    expr = ConvertExpression(arg);
+                    formalTypeStack.Push(parameters[i].ParameterType);
+                    var expr = ConvertExpression(arg);
+                    formalTypeStack.Pop();
                     if (!ReferenceEquals(expr, arg))
                         changed = true;
+                    return expr;
                 }
-                mie.Arguments.Add(expr);
-            }
+            });
+            mie.Arguments.AddRange(arguments);
             mie.Method = (IMethodReferenceExpression)ConvertExpression(imie.Method);
             if (ReferenceEquals(mie.Method, imie.Method) && !changed)
                 return imie;
@@ -328,38 +365,33 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return iae;
             }
 
-            private void RemoveMatchingSuffixes(IExpression expr1, IExpression expr2, List<IConditionStatement> condContext, out IExpression prefix1, out IExpression prefix2)
+            private void RemoveMatchingSuffixes(IExpression lhs, IExpression rhs, List<IConditionStatement> condContext, out IExpression lhsPrefix, out IExpression rhsPrefix)
             {
-                if (expr1 is IArrayIndexerExpression iaie1)
+                if ((lhs is IArrayIndexerExpression iaie1) &&
+                    (rhs is IArrayIndexerExpression iaie2) &&
+                    (iaie1.Indices.Count == iaie2.Indices.Count))
                 {
-                    if (expr2 is IArrayIndexerExpression iaie2)
+                    bool allIndicesAreEqual = Enumerable.Range(0, iaie1.Indices.Count).All(i =>
                     {
-                        if (iaie1.Indices.Count == iaie2.Indices.Count)
-                        {
-                            bool allIndicesAreEqual = true;
-                            for (int i = 0; i < iaie1.Indices.Count; i++)
-                            {
-                                IExpression index1 = iaie1.Indices[i];
-                                IExpression index2 = iaie2.Indices[i];
-                                // indices only match if they are loop variables, because then we know that this is the only assignment for the whole array.
-                                // literal indices, on the other hand, can appear in multiple assignments, e.g. array[0] = Copy(x0[0]), array[1] = Copy(x1[0]).
-                                if (!(index1 is IVariableReferenceExpression)
-                                    || !(index2 is IVariableReferenceExpression)
-                                    || !index1.Equals(index2)
-                                    || AnyConditionsDependOnLoopVariable(condContext, Recognizer.GetVariableDeclaration(index1)))
-                                    allIndicesAreEqual = false;
-                            }
-                            if (allIndicesAreEqual)
-                            {
-                                RemoveMatchingSuffixes(iaie1.Target, iaie2.Target, condContext, out prefix1, out prefix2);
-                                if (prefix1.GetExpressionType().Equals(prefix2.GetExpressionType()))
-                                    return;
-                            }
-                        }
+                        IExpression index1 = iaie1.Indices[i];
+                        IExpression index2 = iaie2.Indices[i];
+                        // indices only match if they are loop variables, because then we know that this is the only assignment for the whole array.
+                        // literal indices, on the other hand, can appear in multiple assignments, e.g. array[0] = Copy(x0[0]), array[1] = Copy(x1[0]).
+                        return (index1 is IVariableReferenceExpression) &&
+                            (index2 is IVariableReferenceExpression) &&
+                            index1.Equals(index2) &&
+                            !AnyConditionsDependOnLoopVariable(condContext, Recognizer.GetVariableDeclaration(index1));
+                    });
+                    if (allIndicesAreEqual)
+                    {
+                        // By removing suffixes we may substitute a collection for another collection with the same elements but a different collection type.
+                        // CopyPropagationTransform must check that this is valid.
+                        RemoveMatchingSuffixes(iaie1.Target, iaie2.Target, condContext, out lhsPrefix, out rhsPrefix);
+                        return;
                     }
                 }
-                prefix1 = expr1;
-                prefix2 = expr2;
+                lhsPrefix = lhs;
+                rhsPrefix = rhs;
             }
 
             private bool AnyConditionsDependOnLoopVariable(List<IConditionStatement> condContext, IVariableDeclaration find)
@@ -372,7 +404,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     Containers c = context.InputAttributes.Get<Containers>(ivd);
                     if (c == null)
                     {
-                        context.Error("Containers not found for '" + ivd.Name + "'.");
+                        context.Error($"Containers not found for '{ivd.Name}'.");
                         return false;
                     }
                     return c.Contains(ifs);

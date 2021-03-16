@@ -24,9 +24,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
-        HashSet<IncrementStatement> incrementStatements = new HashSet<IncrementStatement>();
-        HashSet<IStatement> visitedStatements = new HashSet<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
+        readonly Dictionary<IStatement, IStatement> replacements = new Dictionary<IStatement, IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
+        readonly HashSet<IncrementStatement> incrementStatements = new HashSet<IncrementStatement>();
+        readonly HashSet<IStatement> visitedStatements = new HashSet<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
         bool inWhileLoop;
         int ancestorIndexOfWhile;
 
@@ -97,8 +97,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override IStatement DoConvertStatement(IStatement ist)
         {
-            if (ist is IWhileStatement)
-                return ConvertWhile((IWhileStatement)ist);
+            if (ist is IWhileStatement iws)
+                return ConvertWhile(iws);
             if (replacements.ContainsKey(ist))
                 return null;
             bool isIncrement = context.InputAttributes.Has<IncrementStatement>(ist);
@@ -125,8 +125,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     // Add to the initializerSet (assuming the non-increment statement is hoisted).
                     // This will only work correctly if the non-increment is in DependencyInformation.Initializers.
                     // This code currently does nothing since InitializerSet is only attached later by SchedulingTransform.
-                    var iws = context.GetAncestor(ancestorIndexOfWhile);
-                    var initializerSet = context.GetAttribute<InitializerSet>(iws);
+                    var iws2 = context.GetAncestor(ancestorIndexOfWhile);
+                    var initializerSet = context.GetAttribute<InitializerSet>(iws2);
                     if (initializerSet != null)
                     {
                         initializerSet.initializers.Add(ist);

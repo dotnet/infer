@@ -20,19 +20,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <summary>
         /// Helps build class declarations
         /// </summary>
-        private static CodeBuilder Builder = CodeBuilder.Instance;
+        private static readonly CodeBuilder Builder = CodeBuilder.Instance;
 
         /// <summary>
         /// Helps recognize code patterns
         /// </summary>
-        private static CodeRecognizer Recognizer = CodeRecognizer.Instance;
+        private static readonly CodeRecognizer Recognizer = CodeRecognizer.Instance;
 
         /// <summary>
         /// Outermost container is first.
         /// </summary>
-        internal List<IStatement> inputs = new List<IStatement>();
+        internal readonly List<IStatement> inputs = new List<IStatement>();
 
-        internal List<IStatement> outputs = new List<IStatement>();
+        internal readonly List<IStatement> outputs = new List<IStatement>();
 
         /// <summary>
         /// The number of containers
@@ -74,11 +74,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                     // This is needed to allow re-ordering nested loops.  Otherwise, the inner loop variable would always require the outer loop around it.
                     // It is also useful for ignoring conditioned loops.
                     TransformInfo ti = context.InputStack[ancIndex2];
-                    IForStatement ifs = ti.inputElement as IForStatement;
+                    IForStatement ifs = (IForStatement)ti.inputElement;
                     IStatement container = CreateContainer(ifs);
                     inputs.Add(container);
 #if ignoreOutput
-                outputs.Add(container);
+                    outputs.Add(container);
 #else
                     outputs.Add((IStatement)ti.PrimaryOutput);
 #endif
@@ -191,6 +191,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         {
         }
 
+        private Containers(Containers c)
+        {
+            inputs.AddRange(c.inputs);
+            outputs.AddRange(c.outputs);
+        }
+
         public override string ToString()
         {
             return "Containers(" + StringUtil.ToString(inputs) + ")";
@@ -234,9 +240,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            var c = obj as Containers;
-            if (c == null) return false;
-            return SetEquals(c);
+            return (obj is Containers c) && SetEquals(c);
         }
 
         /// <summary>
@@ -290,12 +294,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         {
             if (ReferenceEquals(st1, st2))
                 return true;
-            if (st1 is IForStatement)
+            if (st1 is IForStatement ifs1)
             {
-                IForStatement ifs1 = (IForStatement)st1;
-                if (st2 is IForStatement)
+                if (st2 is IForStatement ifs2)
                 {
-                    IForStatement ifs2 = (IForStatement)st2;
                     if (ignoreLoopDirection && Recognizer.IsForwardLoop(ifs1) != Recognizer.IsForwardLoop(ifs2))
                     {
                         ifs2 = (IForStatement)CreateContainer(ifs2);
@@ -308,22 +310,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 }
                 else return false;
             }
-            else if (st1 is IConditionStatement)
+            else if (st1 is IConditionStatement ics1)
             {
-                IConditionStatement ics1 = (IConditionStatement)st1;
-                if (st2 is IConditionStatement)
+                if (st2 is IConditionStatement ics2)
                 {
-                    IConditionStatement ics2 = (IConditionStatement)st2;
                     return ics1.Condition.Equals(ics2.Condition);
                 }
                 else return false;
             }
-            else if (st1 is IRepeatStatement)
+            else if (st1 is IRepeatStatement irs1)
             {
-                IRepeatStatement irs1 = (IRepeatStatement)st1;
-                if (st2 is IRepeatStatement)
+                if (st2 is IRepeatStatement irs2)
                 {
-                    IRepeatStatement irs2 = (IRepeatStatement)st2;
                     return irs1.Count.Equals(irs2.Count);
                 }
                 else return false;
@@ -333,14 +331,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         public static int ContainerGetHashCode(IStatement st)
         {
-            if (st is IForStatement)
+            if (st is IForStatement ifs)
             {
-                IForStatement ifs = (IForStatement)st;
                 return ifs.Initializer.GetHashCode();
             }
-            else if (st is IConditionStatement)
+            else if (st is IConditionStatement ics)
             {
-                IConditionStatement ics = (IConditionStatement)st;
                 return ics.Condition.GetHashCode();
             }
             else return st.GetHashCode();
@@ -421,9 +417,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             for (int i = 0; i < inputs.Count; i++)
             {
                 IStatement container = inputs[i];
-                if (!found && container is IRepeatStatement)
+                if (!found && container is IRepeatStatement rs)
                 {
-                    IRepeatStatement rs = (IRepeatStatement)container;
                     if (rs.Count.Equals(irs.Count))
                     {
                         found = true;
@@ -455,9 +450,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             // loop ancestors starting from innermost
             foreach (IStatement ist in ancestors)
             {
-                if (ist is IForStatement)
+                if (ist is IForStatement loop)
                 {
-                    IForStatement loop = (IForStatement)ist;
                     IVariableDeclaration loopVar = Recognizer.LoopVariable(loop);
                     try
                     {
@@ -478,9 +472,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                         context.Error("GetLoopsNeededForExpression", ex);
                     }
                 }
-                else if (includeConditionals && (ist is IConditionStatement))
+                else if (includeConditionals && (ist is IConditionStatement ics))
                 {
-                    IConditionStatement ics = (IConditionStatement)ist;
                     bool found = false;
                     var conditionVariables = Recognizer.GetVariables(ics.Condition).Select(Builder.VarRefExpr);
                     foreach (IExpression conditionVariable in conditionVariables)
@@ -513,9 +506,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         {
             containedExpressions.Add(expr);
             IVariableDeclaration baseVar = Recognizer.GetVariableDeclaration(expr);
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                var iaie = (IArrayIndexerExpression)expr;
                 foreach (var ind in iaie.Indices) AddToContainedExpressions(containedExpressions, ind, context);
             }
             if (baseVar == null) return;
@@ -523,9 +515,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             if (containers == null) throw new Exception("Containers not found for: " + baseVar);
             foreach (IStatement container in containers.inputs)
             {
-                if (container is IForStatement)
+                if (container is IForStatement ifs)
                 {
-                    containedExpressions.Add(Builder.VarRefExpr(Recognizer.LoopVariable((IForStatement)container)));
+                    containedExpressions.Add(Builder.VarRefExpr(Recognizer.LoopVariable(ifs)));
                 }
             }
         }
@@ -741,11 +733,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             for (int i = 0; i < containers.inputs.Count; i++)
             {
                 IStatement container = containers.inputs[i];
-                if (container is IConditionStatement)
+                if (container is IConditionStatement ics)
                 {
-                    IConditionStatement ics = (IConditionStatement)container;
                     IExpression condition = ics.Condition;
-                    if (condition is IBinaryExpression && ((IBinaryExpression)condition).Operator == BinaryOperator.BooleanAnd)
+                    if (condition is IBinaryExpression ibe && ibe.Operator == BinaryOperator.BooleanAnd)
                     {
                         // split the condition into conjuncts
                         List<IExpression> conditions = new List<IExpression>();
@@ -776,9 +767,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                         if (!ContainsExpression(containers.inputs, context, condition)) continue;
                     }
                 }
-                else if (container is IRepeatStatement)
+                else if (container is IRepeatStatement irs)
                 {
-                    IRepeatStatement irs = (IRepeatStatement)container;
                     if (!ContainsExpression(containers.inputs, context, irs.Count)) continue;
                 }
                 result.inputs.Add(container);
@@ -789,12 +779,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         internal static void ForEachConjunct(IExpression expr, Action<IExpression> action)
         {
-            IBinaryExpression ibe = expr as IBinaryExpression;
-            if (ibe == null || ibe.Operator != BinaryOperator.BooleanAnd) action(expr);
-            else
+            if (expr is IBinaryExpression ibe && ibe.Operator == BinaryOperator.BooleanAnd)
             {
                 ForEachConjunct(ibe.Left, action);
                 ForEachConjunct(ibe.Right, action);
+            }
+            else
+            {
+                action(expr);
             }
         }
 
@@ -804,9 +796,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             for (int i = 0; i < containers.inputs.Count; i++)
             {
                 IStatement container = containers.inputs[i];
-                if (container is IConditionStatement)
+                if (container is IConditionStatement ics)
                 {
-                    IConditionStatement ics = (IConditionStatement)container;
                     if (CodeRecognizer.IsStochastic(context, ics.Condition)) continue;
                 }
                 result.inputs.Add(container);
@@ -822,9 +813,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             for (int i = 0; i < containers.inputs.Count; i++)
             {
                 IStatement container = containers.inputs[i];
-                if (container is IConditionStatement)
+                if (container is IConditionStatement ics)
                 {
-                    IConditionStatement ics = (IConditionStatement)container;
                     if (CodeRecognizer.IsStochastic(context, ics.Condition))
                     {
                         conditionals.inputs.Add(container);
@@ -858,9 +848,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         internal static Containers Append(Containers containers, Containers extraContainers)
         {
-            Containers result = new Containers();
-            result.inputs = new List<IStatement>(containers.inputs);
-            result.outputs = new List<IStatement>(containers.outputs);
+            Containers result = new Containers(containers);
             for (int i = 0; i < extraContainers.inputs.Count; i++)
             {
                 IStatement input = extraContainers.inputs[i];
@@ -875,9 +863,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         internal static Containers Append(Containers containers, IEnumerable<IStatement> extraContainers)
         {
-            Containers result = new Containers();
-            result.inputs = new List<IStatement>(containers.inputs);
-            result.outputs = new List<IStatement>(containers.outputs);
+            Containers result = new Containers(containers);
             foreach (IStatement loop in extraContainers)
             {
                 result.inputs.Add(loop);
@@ -888,9 +874,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         internal static Containers Append(Containers containers, IEnumerable<IForStatement> extraLoops)
         {
-            Containers result = new Containers();
-            result.inputs = new List<IStatement>(containers.inputs);
-            result.outputs = new List<IStatement>(containers.outputs);
+            Containers result = new Containers(containers);
             foreach (IStatement loop in extraLoops)
             {
                 result.inputs.Add(loop);
@@ -923,13 +907,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         internal static void SetBodyTo(IStatement container, IBlockStatement block)
         {
-            if (container is IForStatement)
+            if (container is IForStatement ifs)
             {
-                ((IForStatement)container).Body = block;
+                ifs.Body = block;
             }
-            else if (container is IConditionStatement)
+            else if (container is IConditionStatement ics)
             {
-                ((IConditionStatement)container).Then = block;
+                ics.Then = block;
             }
             else
             {
@@ -965,9 +949,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 else
                     outermostContainer = child;
                 parent = child;
-                if (child is IBrokenForStatement)
+                if (child is IBrokenForStatement ifs)
                 {
-                    IBrokenForStatement ifs = (IBrokenForStatement)child;
                     loopBreakers.Add(Recognizer.LoopBreakStatement(ifs));
                 }
             }
@@ -990,9 +973,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <returns></returns>
         internal static IStatement CreateContainer(IStatement prototype)
         {
-            if (prototype is IForStatement)
+            if (prototype is IForStatement loop)
             {
-                IForStatement loop = (IForStatement)prototype;
                 IForStatement ifs = Builder.ForStmt(loop);
                 ifs.Initializer = loop.Initializer;
                 ifs.Condition = loop.Condition;
@@ -1000,14 +982,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 ifs.Body = Builder.BlockStmt();
                 return ifs;
             }
-            else if (prototype is IConditionStatement)
+            else if (prototype is IConditionStatement cond)
             {
-                IConditionStatement cond = (IConditionStatement)prototype;
                 return Builder.CondStmt(cond.Condition, Builder.BlockStmt());
             }
-            else if (prototype is IRepeatStatement)
+            else if (prototype is IRepeatStatement irs)
             {
-                IRepeatStatement irs = (IRepeatStatement)prototype;
                 return Builder.RepeatStmt(irs.Count);
             }
             else
@@ -1028,17 +1008,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         internal static IList<IStatement> Statements(IStatement container)
         {
-            if (container is IForStatement)
+            if (container is IForStatement ifs)
             {
-                return ((IForStatement)container).Body.Statements;
+                return ifs.Body.Statements;
             }
-            else if (container is IConditionStatement)
+            else if (container is IConditionStatement ics)
             {
-                return ((IConditionStatement)container).Then.Statements;
+                return ics.Then.Statements;
             }
-            else if (container is IRepeatStatement)
+            else if (container is IRepeatStatement irs)
             {
-                return ((IRepeatStatement)container).Body.Statements;
+                return irs.Body.Statements;
             }
             else
             {
@@ -1079,14 +1059,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         {
             if (ReferenceEquals(st1, st2))
                 return st1;
-            if (st1 is IForStatement)
+            if (st1 is IForStatement ifs1)
             {
-                IForStatement ifs1 = (IForStatement)st1;
                 bool isForward = Recognizer.IsForwardLoop(ifs1);
                 bool isBroken = ifs1 is IBrokenForStatement;
-                if (st2 is IForStatement)
+                if (st2 is IForStatement ifs2)
                 {
-                    IForStatement ifs2 = (IForStatement)st2;
                     if (ignoreLoopDirection && isForward != Recognizer.IsForwardLoop(ifs2))
                     {
                         ifs2 = (IForStatement)CreateContainer(ifs2);
@@ -1104,23 +1082,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 }
                 // fall through
             }
-            else if (st1 is IConditionStatement)
+            else if (st1 is IConditionStatement ics1)
             {
-                IConditionStatement ics1 = (IConditionStatement)st1;
-                if (st2 is IConditionStatement)
+                if (st2 is IConditionStatement ics2)
                 {
-                    IConditionStatement ics2 = (IConditionStatement)st2;
                     if (ics1.Condition.Equals(ics2.Condition)) return st1;
                     // fall through
                 }
                 // fall through
             }
-            else if (st1 is IRepeatStatement)
+            else if (st1 is IRepeatStatement irs1)
             {
-                IRepeatStatement irs1 = (IRepeatStatement)st1;
-                if (st2 is IRepeatStatement)
+                if (st2 is IRepeatStatement irs2)
                 {
-                    IRepeatStatement irs2 = (IRepeatStatement)st2;
                     if (irs1.Count.Equals(irs2.Count)) return st1;
                     // fall through
                 }

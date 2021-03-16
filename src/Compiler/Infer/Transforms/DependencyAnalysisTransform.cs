@@ -865,15 +865,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (context.InputAttributes.Has<DeterministicConstraint>(imie))
                 dependencyInformation.IsOutput = true;
 
-            MethodBase method = null;
-            IMethodReferenceExpression imre = null;
-            if (imie.Method is IMethodReferenceExpression)
-            {
-                imre = (IMethodReferenceExpression)imie.Method;
-                IMethodReference imr = imre.Method;
-                method = Builder.ToMethod(imr) as MethodInfo;
-            }
-            if (method == null)
+            if (!(imie.Method is IMethodReferenceExpression imre) ||
+                !(Builder.ToMethod(imre.Method) is MethodInfo method))
             {
                 Error("Could not find method for : " + imie.Method);
                 return imie;
