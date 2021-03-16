@@ -1374,7 +1374,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="automaton1">The first automaton.</param>
         /// <param name="automaton2">The second automaton.</param>
-        /// <param name="tryDeterminize">When to try to dterminize the product.</param>
+        /// <param name="tryDeterminize">When to try to determinize the product.</param>
         public void SetToProduct(TThis automaton1, TThis automaton2, bool tryDeterminize)
         {
             Argument.CheckIfNotNull(automaton1, "automaton1");

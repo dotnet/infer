@@ -418,6 +418,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var resultTransitions = ReadOnlyArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
                 var nextResultTransitionIndex = 0;
 
+                // Keeping the highest index of end state is preferred because it avoids backwards
+                // transitions after remapping. Keeping the heuristic for detecting enumerable
+                // automata effective.
+                var lastEndStatesWithNoTransitions = -1;
+                var isEndState = new byte[this.states.Count];
+
+                for (var i = 0; i < resultStates.Count; ++i)
+                {
+                    var state = this.states[i];
+                    if (!state.EndWeight.IsZero && state.FirstTransitionIndex == -1)
+                    {
+                        isEndState[i] = 1;
+                        lastEndStatesWithNoTransitions = i;
+                    }
+                }
+
                 for (var i = 0; i < resultStates.Count; ++i)
                 {
                     var firstResultTransitionIndex = nextResultTransitionIndex;
@@ -429,6 +445,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         Debug.Assert(
                             transition.DestinationStateIndex < resultStates.Count,
                             "Destination indexes must be in valid range");
+
+                        if (isEndState[transition.DestinationStateIndex] != 0)
+                        {
+                            var multiplier = this.states[transition.DestinationStateIndex].EndWeight / this.states[lastEndStatesWithNoTransitions].EndWeight;
+                            transition.DestinationStateIndex = lastEndStatesWithNoTransitions;
+                            transition.Weight *= multiplier;
+                        }
+
                         resultTransitions[nextResultTransitionIndex] = transition;
                         ++nextResultTransitionIndex;
                         hasEpsilonTransitions = hasEpsilonTransitions || transition.IsEpsilon;

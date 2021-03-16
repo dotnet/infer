@@ -395,7 +395,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder.Start.AddTransition('a', Weight.One).AddTransition('c', Weight.One).SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
             StringAutomaton automatonSqr = automaton.Product(automaton);
-            Assert.Equal(4, automatonSqr.States.Count);
+            Assert.Equal(3, automatonSqr.States.Count);
         }
 
         /// <summary>
@@ -1159,7 +1159,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringAutomaton.ConstantOn(1.0, string.Empty)));
             
             Assert.Equal("ab[ef|cd]", automaton.ToString(AutomatonFormats.Friendly));
-            Assert.Equal("ab(|ef|cd)", automaton.ToString(AutomatonFormats.Regexp));
+            Assert.Equal("ab(ef|cd|)", automaton.ToString(AutomatonFormats.Regexp));
         }
 
         /// <summary>
@@ -2116,9 +2116,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void CountDeterminizedStates()
         {
             Assert.Equal(2, CountStates("a"));
-            Assert.Equal(4, CountStates("a", "ba"));
-            Assert.Equal(5, CountStates("a", "ba", "bb"));
-            Assert.Equal(6, CountStates("a", "ba", "bb", "d"));
+            Assert.Equal(3, CountStates("a", "ba"));
+            Assert.Equal(3, CountStates("a", "ba", "bb"));
+            Assert.Equal(3, CountStates("a", "ba", "bb", "d"));
         }
 
         //[Fact]
