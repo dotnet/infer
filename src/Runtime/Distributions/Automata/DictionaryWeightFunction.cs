@@ -488,6 +488,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var dict = (SortedList<string, Weight>)Dictionary;
             if (dict.Count == 0)
                 return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Zero();
+            if (dict.Count == 1)
+                return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.ConstantOnLog(dict.Values[0].LogValue, dict.Keys[0]);
 
             var result = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder();
             var end = result
@@ -498,12 +500,48 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             for (int i = 1; i < dict.Count; ++i)
                 sharedPrefixWithPreviousLength[i] = GetSharedPrefixLength(dict.Keys[i - 1], dict.Keys[i]);
 
+            var postfixInfo = new (int postfixLength, int prefixEndStateIndex, char postfixTransitionChar, Weight postfixTransitionWeight)[dict.Count];
+
             int processedEntriesCount = 0;
             do
             {
-                processedEntriesCount = ProcessEntries(processedEntriesCount, result.Start, 0, Weight.One);
+                processedEntriesCount = ProcessPrefixes(processedEntriesCount, result.Start, 0, Weight.One);
             }
             while (processedEntriesCount < dict.Count);
+
+            var reversedStringSortIndex = Enumerable.Range(0, dict.Count).ToArray();
+            Array.Sort(reversedStringSortIndex, new Comparison<int>((x, y) =>
+            {
+                int lenX = postfixInfo[x].postfixLength;
+                int lenY = postfixInfo[y].postfixLength;
+                if (lenX == 0 || lenY == 0)
+                    return x - y;
+
+                var shorterLength = Math.Min(lenX, lenY);
+                var strX = dict.Keys[x];
+                var strY = dict.Keys[y];
+                int idx = 1;
+                while (idx <= shorterLength && strX[strX.Length - idx] == strY[strY.Length - idx])
+                    ++idx;
+                if (idx > shorterLength)
+                    return x - y;
+                return strX[strX.Length - idx] - strY[strY.Length - idx];
+            }));
+
+            int curOriginalIdx = 0;
+            int nextOriginalIdx = reversedStringSortIndex[0];
+            int sharedPostfixWithPrevLen = 0;
+            int sharedPostfixWithNextLen = 0;
+            int firstSharedStateIdx = end.Index;
+            for (int i = 0; i < dict.Count - 1; ++i)
+            {
+                curOriginalIdx = nextOriginalIdx;
+                sharedPostfixWithPrevLen = sharedPostfixWithNextLen;
+                nextOriginalIdx = reversedStringSortIndex[i + 1];
+                sharedPostfixWithNextLen = GetSharedPostfixLength(dict.Keys[curOriginalIdx], postfixInfo[curOriginalIdx].postfixLength, dict.Keys[nextOriginalIdx], postfixInfo[nextOriginalIdx].postfixLength);
+                firstSharedStateIdx = ProcessPostfix(i, sharedPostfixWithPrevLen, firstSharedStateIdx, sharedPostfixWithNextLen);
+            }
+            ProcessPostfix(dict.Count - 1, sharedPostfixWithNextLen, firstSharedStateIdx, 0);
 
             return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromData(result.GetData(true));
 
@@ -516,7 +554,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return idx;
             }
 
-            int ProcessEntries(int startIdx, Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, int currentSharedPrefixLength, Weight weightNormalizer)
+            int GetSharedPostfixLength(string x, int postfixLengthX, string y, int postfixLengthY)
+            {
+                var shorterLength = Math.Min(postfixLengthX, postfixLengthY);
+                int idx = 1;
+                while (idx <= shorterLength && x[x.Length - idx] == y[y.Length - idx])
+                    ++idx;
+                return idx - 1;
+            }
+
+            int ProcessPrefixes(int startIdx, Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, int currentSharedPrefixLength, Weight weightNormalizer)
             {
                 int nextStartIdx = startIdx + 1;
                 int nextSharedPrefixLength = int.MaxValue;
@@ -540,12 +587,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                     else
                     {
-                        currentState = currentState.AddTransition(currentString[currentSharedPrefixLength], weight);
-                        for (int i = currentSharedPrefixLength + 1; i < currentString.Length - 1; ++i)
-                        {
-                            currentState = currentState.AddTransition(currentString[i], Weight.One);
-                        }
-                        currentState.AddTransition(currentString[currentString.Length - 1], Weight.One, end.Index);
+                        postfixInfo[startIdx] = (currentString.Length - currentSharedPrefixLength - 1, currentState.Index, currentString[currentSharedPrefixLength], weight);
                     }
                 }
                 else
@@ -563,12 +605,53 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     int idx = startIdx;
                     do
                     {
-                        idx = ProcessEntries(idx, currentState, nextSharedPrefixLength, childBatchWeightNormalizer);
+                        idx = ProcessPrefixes(idx, currentState, nextSharedPrefixLength, childBatchWeightNormalizer);
                     }
                     while (idx < nextStartIdx);
                 }
 
                 return nextStartIdx;
+            }
+
+            int ProcessPostfix(int idx, int sharedPostfixWithPrevLength, int firstStateOfPostfixSharedWithPrevIdx, int sharedPostfixWithNextLength)
+            {
+                (int postfixLength, int prefixEndStateIndex, char postfixTransitionChar, Weight postfixTransitionWeight) = postfixInfo[idx];
+                int firstStateOfPostfixSharedWithNextIdx = end.Index;
+                if (postfixLength != 0)
+                {
+                    var currentState = result[prefixEndStateIndex];
+                    int transitionsUntilPostfixSharedWithNext = postfixLength - sharedPostfixWithNextLength;
+                    if (postfixLength == sharedPostfixWithPrevLength)
+                    {
+                        currentState = currentState.AddTransition(postfixTransitionChar, postfixTransitionWeight, firstStateOfPostfixSharedWithPrevIdx);
+                    }
+                    else
+                    {
+                        currentState = currentState.AddTransition(postfixTransitionChar, postfixTransitionWeight);
+                        var currentString = dict.Keys[idx];
+                        for (int i = currentString.Length - postfixLength; i < currentString.Length - sharedPostfixWithPrevLength - 1; ++i)
+                        {
+                            if (transitionsUntilPostfixSharedWithNext == 0)
+                                firstStateOfPostfixSharedWithNextIdx = currentState.Index;
+
+                            currentState = currentState.AddTransition(currentString[i], Weight.One);
+                            --transitionsUntilPostfixSharedWithNext;
+                        }
+                        if (transitionsUntilPostfixSharedWithNext == 0)
+                            firstStateOfPostfixSharedWithNextIdx = currentState.Index;
+                        currentState = currentState.AddTransition(currentString[currentString.Length - sharedPostfixWithPrevLength - 1], Weight.One, firstStateOfPostfixSharedWithPrevIdx);
+                        --transitionsUntilPostfixSharedWithNext;
+                    }
+                    if (transitionsUntilPostfixSharedWithNext >= 0)
+                    {
+                        for (int i = 0; i < transitionsUntilPostfixSharedWithNext; ++i)
+                            currentState = result[currentState.TransitionIterator.Value.DestinationStateIndex];
+
+                        firstStateOfPostfixSharedWithNextIdx = currentState.Index;
+                    }
+                }
+
+                return firstStateOfPostfixSharedWithNextIdx;
             }
         }
     }
