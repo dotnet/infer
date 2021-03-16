@@ -1232,6 +1232,69 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
+        /// Defines a constant which is a 1D array.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="value">The constant list.</param>
+        /// <returns>A new constant variable.</returns>
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Constant<T>(IReadOnlyList<T> value)
+        {
+            return Constant(value, new Range(value.Count));
+        }
+
+        /// <summary>
+        /// Defines a constant which is a 1D array.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="value">The constant list.</param>
+        /// <param name="r">The range associated with this constant list.</param>
+        /// <returns>A new constant variable.</returns>
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Constant<T>(IReadOnlyList<T> value, Range r)
+        {
+            var result = new VariableArray<Variable<T>, IReadOnlyList<T>>(Constant(default(T)), r)
+            {
+                ObservedValue = value,
+                IsReadOnly = true
+            };
+
+            // Inherit sparsity from vector - this may be explicitly over-ridden
+            if (value != null && value.Count > 0 && value[0] is Vector)
+            {
+                var vector = value[0] as Vector;
+                result.SetSparsity(vector.Sparsity);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Defines a constant which is a 2-D jagged array.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="value">The constant list of lists.</param>
+        /// <param name="r1">The range associated with the first index.</param>
+        /// <param name="r2">The range associated with the second index.</param>
+        /// <returns>A new constant jagged array variable.</returns>
+        public static VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>> Constant<T>(IReadOnlyList<IReadOnlyList<T>> value, Range r1, Range r2)
+        {
+            var result = new VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>>(Constant(default(IReadOnlyList<T>), r2), r1)
+            {
+                ObservedValue = value,
+                IsReadOnly = true
+            };
+
+            // Inherit sparsity from vector - this may be explicitly over-ridden
+            if (value != null && value.Count > 0 && value[0] != null &&
+                value[0].Count > 0 && value[0][0] is Vector)
+            {
+                Vector vector = value[0][0] as Vector;
+                result.SetSparsity(vector.Sparsity);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Creates a variable and observes it.
         /// </summary>
         /// <typeparam name="T">The type of the observed value</typeparam>
@@ -1352,6 +1415,7 @@ namespace Microsoft.ML.Probabilistic.Models
             return g;
         }
 
+#if false
         /// <summary>
         /// Creates a variable array and observes it.
         /// </summary>
@@ -1395,6 +1459,52 @@ namespace Microsoft.ML.Probabilistic.Models
             var result = new VariableArray<VariableArray<Variable<T>, IList<T>>, IList<IList<T>>>(Constant(default(IList<T>), r2), r1);
             result.ObservedValue = observedValue;
             return result;
+        }
+#endif
+
+        /// <summary>
+        /// Creates a variable array and observes it.
+        /// </summary>
+        /// <typeparam name="T">The type of the observed array elements.</typeparam>
+        /// <param name="observedValue">The observed value.</param>
+        /// <returns>A new variable.</returns>
+        /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Observed<T>(IReadOnlyList<T> observedValue)
+        {
+            return Observed(observedValue, new Range(observedValue.Count));
+        }
+
+        /// <summary>
+        /// Creates a variable array and observes it.
+        /// </summary>
+        /// <typeparam name="T">The type of the observed array elements.</typeparam>
+        /// <param name="observedValue">The observed value.</param>
+        /// <param name="r">The range used to index the array.</param>
+        /// <returns>A new variable.</returns>
+        /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Observed<T>(IReadOnlyList<T> observedValue, Range r)
+        {
+            return new VariableArray<Variable<T>, IReadOnlyList<T>>(Constant(default(T)), r)
+            {
+                ObservedValue = observedValue
+            };
+        }
+
+        /// <summary>
+        /// Creates a jagged variable array and observes it.
+        /// </summary>
+        /// <typeparam name="T">The type of the observed array elements.</typeparam>
+        /// <param name="observedValue">The observed value.</param>
+        /// <param name="r1">The range used for the first index.</param>
+        /// <param name="r2">The range used for the second index.</param>
+        /// <returns>A new variable.</returns>
+        /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
+        public static VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>> Observed<T>(IReadOnlyList<IReadOnlyList<T>> observedValue, Range r1, Range r2)
+        {
+            return new VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>>(Constant(default(IReadOnlyList<T>), r2), r1)
+            {
+                ObservedValue = observedValue
+            };
         }
 
         /// <summary>
@@ -1855,7 +1965,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         //****************************** FACTOR METHODS ********************************
 
-        #region Factor convenience methods
+#region Factor convenience methods
 
         /****************** Convenience methods for various commonly used distributions and factors*********************/
 
@@ -3969,6 +4079,23 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
+        /// Gets a variable array containing different items of a source list.
+        /// </summary>
+        /// <typeparam name="T">The domain type of array elements.</typeparam>
+        /// <param name="array">The source array.</param>
+        /// <param name="indices">Variable array containing the indices of the elements to get.  The indices must all be different.</param>
+        /// <returns>variable array with the specified items.</returns>
+        /// <remarks>
+        /// To allow duplicate indices, use <see cref="GetItems"/>.
+        /// </remarks>
+        public static VariableArray<T> Subarray<T>(VariableArray<T> array, VariableArray<Variable<int>, IReadOnlyList<int>> indices)
+        {
+            var result = new VariableArray<T>(indices.Range);
+            result.SetTo(IndexingFactor.Subarray, array, indices);
+            return result;
+        }
+
+        /// <summary>
         /// Gets a jagged variable array containing different items of a source list.
         /// </summary>
         /// <typeparam name="T">The domain type of array elements.</typeparam>
@@ -4200,7 +4327,7 @@ namespace Microsoft.ML.Probabilistic.Models
             return result;
         }
 
-        #region Variable<char> factories
+#region Variable<char> factories
 
         /// <summary>
         /// Creates a character random variable defined by a discrete distribution induced by a given probability vector.
@@ -4296,9 +4423,9 @@ namespace Microsoft.ML.Probabilistic.Models
             return Variable.Random(DiscreteChar.Whitespace());
         }
 
-        #endregion
+#endregion
 
-        #region Variable<string> factories
+#region Variable<string> factories
 
         /// <summary>
         /// Creates a string random variable from a uniform distribution over all possible strings.
@@ -4645,9 +4772,9 @@ namespace Microsoft.ML.Probabilistic.Models
             return Variable<string>.Factor(Factor.StringFromArray, chars);
         }
 
-        #endregion
+#endregion
 
-        #region Operations on characters and strings
+#region Operations on characters and strings
 
         /// <summary>
         /// Creates a string random variable which is a substring of a given string.
@@ -4718,15 +4845,15 @@ namespace Microsoft.ML.Probabilistic.Models
             return Variable<char>.Factor(Factor.Single, substr);
         }
 
-        #endregion
+#endregion
 
 #if SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS
 #pragma warning restore 419
 #endif
 
-        #endregion Factor convenience methods
+#endregion Factor convenience methods
 
-        #region Constraint convenience methods
+#region Constraint convenience methods
 
         /****************** Convenience methods for various commonly used constraints*********************/
 
@@ -4838,9 +4965,9 @@ namespace Microsoft.ML.Probabilistic.Models
             ConstrainEqualRandom<T, TDist>(a, Constant(b));
         }
 
-        #endregion Constraint convenience methods
+#endregion Constraint convenience methods
 
-        #region Undirected factor convenience methods
+#region Undirected factor convenience methods
 
         /// <summary>
         /// Adds a Potts factor between two boolean variables (max product only!).
@@ -4896,7 +5023,7 @@ namespace Microsoft.ML.Probabilistic.Models
             Variable.Constrain(Undirected.LinearTrunc, a, b, logUnitCost, maxCost);
         }
 
-        #endregion
+#endregion
 
         //****************************** OPERATOR METHODS ********************************
         /// <summary>

@@ -15,9 +15,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
     using System.Globalization;
     using System.Collections.Concurrent;
 
-    /// <summary>
-    /// Singleton class to help build class declarations.
-    /// </summary>
+/// <summary>
+/// Singleton class to help build class declarations.
+/// </summary>
     public partial class CodeBuilder
     {
         /// <summary>

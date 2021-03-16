@@ -432,7 +432,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="dists"></param>
         /// <returns><c>result</c>, unless it is not SettableTo&lt;T&gt; in which case an element of dists may be returned.</returns>
 #if true
-        public static T SetToProductOfAll<T, U>(T result, IList<U> dists)
+        public static T SetToProductOfAll<T, U>(T result, IReadOnlyList<U> dists)
 #else
         public static T SetToProductOfAll<T, U, UList>(T result, UList dists)
             where UList : IList<U>  // this is significantly faster than IList<T> in the signature, for arrays
@@ -501,7 +501,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="dists"></param>
         /// <param name="index"></param>
         /// <returns><c>result</c></returns>
-        public static T SetToProductWithAllExcept<T, U>(T result, IList<U> dists, int index)
+        public static T SetToProductWithAllExcept<T, U>(T result, IReadOnlyList<U> dists, int index)
             where T : SettableToProduct<T, U>
         {
             for (int i = 0; i < dists.Count; i++)
@@ -536,7 +536,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="result"></param>
         /// <param name="dists"></param>
         /// <returns><c>result</c></returns>
-        public static T SetToProductWithAll<T, U>(T result, IList<U> dists)
+        public static T SetToProductWithAll<T, U>(T result, IReadOnlyList<U> dists)
             where T : SettableToProduct<T, U>
         {
             return SetToProductWithAllExcept<T, U>(result, dists, dists.Count);

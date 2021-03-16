@@ -95,7 +95,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
         [MultiplyAll]
         public static TDist DefGibbs<TDist>(
-            [SkipIfAllUniform] IList<TDist> Uses,
+            [SkipIfAllUniform] IReadOnlyList<TDist> Uses,
             TDist result)
             where TDist : IDistribution<T>, Sampleable<T>, SettableTo<TDist>, SettableToProduct<TDist>, SettableToRatio<TDist>
         {
@@ -128,7 +128,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [Stochastic]
         [SkipIfAllUniform]
         public static GibbsMarginal<TDist, T> MarginalGibbs<TDist>(
-            IList<TDist> Uses,
+            IReadOnlyList<TDist> Uses,
             [SkipIfUniform] TDist Def,
             GibbsMarginal<TDist, T> to_marginal)
             where TDist : IDistribution<T>, SettableToProduct<TDist>, SettableToRatio<TDist>, SettableTo<TDist>, Sampleable<T>
@@ -220,7 +220,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp2{T}"]/message_doc[@name="Conditional{TDist}(IList{TDist}, TDist, TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
-        public static TDist Conditional<TDist>(IList<TDist> Uses, [SkipIfAnyUniform] TDist Def, TDist result)
+        public static TDist Conditional<TDist>(IReadOnlyList<TDist> Uses, [SkipIfAnyUniform] TDist Def, TDist result)
             where TDist : SettableTo<TDist>, SettableToProduct<TDist>
         {
             result.SetTo(Def);
@@ -372,7 +372,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
         //[MultiplyAll]
         public static TDist DefGibbs<TDist>(
-            [SkipIfAllUniform] IList<TDist> Uses,
+            [SkipIfAllUniform] IReadOnlyList<TDist> Uses,
             TDist result)
             where TDist : IDistribution<T>, Sampleable<T>, SettableTo<TDist>, SettableToProduct<TDist>, SettableToRatio<TDist>
         {

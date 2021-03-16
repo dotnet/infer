@@ -198,8 +198,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return ae;
         }
 
+        private void CheckMethodArgumentCount(IMethodInvokeExpression imie)
+        {
+            MethodInfo method = (MethodInfo)imie.Method.Method.MethodInfo;
+            var parameters = method.GetParameters();
+            if (parameters.Length != imie.Arguments.Count)
+            {
+                Error($"Method given {imie.Arguments.Count} argument(s) but expected {parameters.Length}");
+            }
+        }
+
         protected override IExpression ConvertMethodInvoke(IMethodInvokeExpression imie)
         {
+            CheckMethodArgumentCount(imie);
             if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, ICompilerAttribute, PlaceHolder>(Attrib.Var)))
             {
                 IVariableReferenceExpression ivre = imie.Arguments[0] as IVariableReferenceExpression;

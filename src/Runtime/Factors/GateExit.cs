@@ -79,7 +79,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateExitingOp"]/message_doc[@name="UsesAverageLogarithm{T}(IList{T}, T, int, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
         [SkipIfAllUniform]
-        public static T UsesAverageLogarithm<T>([AllExceptIndex] IList<T> Uses, T Def, int resultIndex, T result)
+        public static T UsesAverageLogarithm<T>([AllExceptIndex] IReadOnlyList<T> Uses, T Def, int resultIndex, T result)
             where T : SettableTo<T>, SettableToProduct<T>
         {
             if (resultIndex == 0)

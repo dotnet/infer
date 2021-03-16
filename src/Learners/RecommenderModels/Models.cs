@@ -80,10 +80,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             else
             {
                 // Features
-                var nonZeroUserFeatureCounts = Variable.Observed(default(IList<int>), user).Named("NonZeroUserFeatureCounts");
+                var nonZeroUserFeatureCounts = Variable.Observed(default(IReadOnlyList<int>), user).Named("NonZeroUserFeatureCounts");
                 var nonZeroUserFeature = new Range(nonZeroUserFeatureCounts[user]).Named("nonZeroUserFeature");
-                var nonZeroUserFeatureIndices = Variable.Observed(default(IList<IList<int>>), user, nonZeroUserFeature).Named("NonZeroUserFeatureIndices");
-                var nonZeroUserFeatureValues = Variable.Observed(default(IList<IList<double>>), user, nonZeroUserFeature).Named("NonZeroUserFeatureValues");
+                var nonZeroUserFeatureIndices = Variable.Observed(default(IReadOnlyList<IReadOnlyList<int>>), user, nonZeroUserFeature).Named("NonZeroUserFeatureIndices");
+                var nonZeroUserFeatureValues = Variable.Observed(default(IReadOnlyList<IReadOnlyList<double>>), user, nonZeroUserFeature).Named("NonZeroUserFeatureValues");
 
                 // Feature weights
                 var userTraitFeatureWeightVariance = Variable.Observed(default(double)).Named("UserTraitFeatureWeightPriorVariance");
@@ -141,9 +141,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
                 var userTraitsMessage = Variable.Observed(default(GaussianMatrix)).Named("UserTraitsMessage");
                 var userBiasMessage = Variable.Observed(default(GaussianArray)).Named("UserBiasMessage");
                 var userThresholdsMessage = Variable.Observed(default(GaussianMatrix)).Named("UserThresholdsMessage");
-                Variable.ConstrainEqualRandom<double[][], GaussianMatrix>(userTraits, userTraitsMessage);
-                Variable.ConstrainEqualRandom<double[], GaussianArray>(userBias, userBiasMessage);
-                Variable.ConstrainEqualRandom<double[][], GaussianMatrix>(userThresholds, userThresholdsMessage);
+                Variable.ConstrainEqualRandom(userTraits, userTraitsMessage);
+                Variable.ConstrainEqualRandom(userBias, userBiasMessage);
+                Variable.ConstrainEqualRandom(userThresholds, userThresholdsMessage);
                 userTraits.AddAttribute(QueryTypes.MarginalDividedByPrior);
                 userBias.AddAttribute(QueryTypes.MarginalDividedByPrior);
                 userThresholds.AddAttribute(QueryTypes.MarginalDividedByPrior);
@@ -183,10 +183,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             else
             {
                 // Features
-                var nonZeroItemFeatureCounts = Variable.Observed(default(IList<int>), item).Named("NonZeroItemFeatureCounts");
+                var nonZeroItemFeatureCounts = Variable.Observed(default(IReadOnlyList<int>), item).Named("NonZeroItemFeatureCounts");
                 var nonZeroItemFeature = new Range(nonZeroItemFeatureCounts[item]).Named("nonZeroItemFeature");
-                var nonZeroItemFeatureIndices = Variable.Observed(default(IList<IList<int>>), item, nonZeroItemFeature).Named("NonZeroItemFeatureIndices");
-                var nonZeroItemFeatureValues = Variable.Observed(default(IList<IList<double>>), item, nonZeroItemFeature).Named("NonZeroItemFeatureValues");
+                var nonZeroItemFeatureIndices = Variable.Observed(default(IReadOnlyList<IReadOnlyList<int>>), item, nonZeroItemFeature).Named("NonZeroItemFeatureIndices");
+                var nonZeroItemFeatureValues = Variable.Observed(default(IReadOnlyList<IReadOnlyList<double>>), item, nonZeroItemFeature).Named("NonZeroItemFeatureValues");
 
                 // Feature weights
                 var itemTraitFeatureWeightVariance = Variable.Observed(default(double)).Named("ItemTraitFeatureWeightPriorVariance");
@@ -222,8 +222,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
                 // Trait and bias messages
                 var itemTraitsMessage = Variable.Observed(default(GaussianMatrix)).Named("ItemTraitsMessage");
                 var itemBiasMessage = Variable.Observed(default(GaussianArray)).Named("ItemBiasMessage");
-                Variable.ConstrainEqualRandom<double[][], GaussianMatrix>(itemTraits, itemTraitsMessage);
-                Variable.ConstrainEqualRandom<double[], GaussianArray>(itemBias, itemBiasMessage);
+                Variable.ConstrainEqualRandom(itemTraits, itemTraitsMessage);
+                Variable.ConstrainEqualRandom(itemBias, itemBiasMessage);
                 itemTraits.AddAttribute(QueryTypes.MarginalDividedByPrior);
                 itemBias.AddAttribute(QueryTypes.MarginalDividedByPrior);
                 itemTraits.AddAttribute(QueryTypes.Marginal);
@@ -267,8 +267,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             }
 
             // Observation data
-            var userIds = Variable.Observed(default(IList<int>), observation).Named("UserIds");
-            var itemIds = Variable.Observed(default(IList<int>), observation).Named("ItemIds");
+            var userIds = Variable.Observed(default(IReadOnlyList<int>), observation).Named("UserIds");
+            var itemIds = Variable.Observed(default(IReadOnlyList<int>), observation).Named("ItemIds");
             var ratings = Variable.IList<int>(observation).Named("Ratings");
             if (buildTrainingModel)
             {
