@@ -1016,7 +1016,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             // defining whole array at once.
             // passing whole array to method.
             // passing given array to method.
-            items = Factor.GetItems(array, arrayGiven);
+            items = IndexingFactor.GetItems(array, arrayGiven);
             double[,] array2D = new double[arrayLength, scalarGiven];
             for (int j = 0; j < arrayLength; j++)
             {

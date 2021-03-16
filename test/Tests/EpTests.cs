@@ -4699,9 +4699,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             /// </summary>        
             public void Run()
             {
-                /////////////////////////////////////////
                 // Reading Data and Checking Missing Data
-                /////////////////////////////////////////
 
                 // Get the raw data
                 int nClass = 4; // Number of Classes              
@@ -4728,9 +4726,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 xValues = new VariableArray<Vector>[nClass];
 
 
-                /////////////////////////////////////////
                 // The MultiState Probit Regression Model
-                /////////////////////////////////////////                              
 
                 // All the variables and the model      
                 Variable<Vector>[] weights = new Variable<Vector>[nClass];
@@ -4787,9 +4783,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
 
-                /////////////////////////////////////////
                 // Inference and Display of Results
-                /////////////////////////////////////////        
                 for (int c = 0; c < nClass; c++)
                 {
                     // Set the prior on the weights                 

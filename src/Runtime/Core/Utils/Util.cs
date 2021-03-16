@@ -160,9 +160,12 @@ namespace Microsoft.ML.Probabilistic.Utilities
         {
             try
             {
-                return type.IsArray || (type == typeof(System.Collections.IList)) ||
-                       (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>)) ||
-                       (type.GetInterface(typeof(IList<>).Name, false) != null);
+                return type.IsArray || 
+                    (type == typeof(System.Collections.IList)) ||
+                    (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>)) ||
+                    (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>)) ||
+                    (type.GetInterface(typeof(IReadOnlyList<>).Name, false) != null) ||
+                    (type.GetInterface(typeof(IList<>).Name, false) != null);
             }
             catch (AmbiguousMatchException)
             {

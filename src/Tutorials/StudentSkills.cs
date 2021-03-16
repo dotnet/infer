@@ -114,7 +114,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 responses[t] = new bool[nQuestions];
                 for (int q = 0; q < nQuestions; q++)
                 {
-                    bool hasAllSkills = Factor.AllTrue(Factor.Subarray(hasSkill[t], skillsRequired[q]));
+                    bool hasAllSkills = Factor.AllTrue(IndexingFactor.Subarray(hasSkill[t], skillsRequired[q]));
                     if (hasAllSkills)
                     {
                         responses[t][q] = (Rand.Double() > slip[q]);

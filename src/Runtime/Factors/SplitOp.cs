@@ -10,7 +10,7 @@ using Microsoft.ML.Probabilistic.Factors.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Factors
 {
-    [FactorMethod(typeof(Factor), "Split<>")]
+    [FactorMethod(typeof(IndexingFactor), "Split<>")]
     [Quality(QualityBand.Preview)]
     public static class SplitOp<T>
     {

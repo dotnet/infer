@@ -436,23 +436,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return Infer<Distribution>(var, QueryTypes.MarginalDividedByPrior);
         }
 
-        ///// <summary>
-        ///// Optimize the engine to infer only the specified variables, overriding any previous calls to RestrictInferenceTo.
-        ///// </summary>
-        ///// <param name="vars">The variables whose marginals are to be inferred</param>
-        //public void RestrictInferenceTo(params IVariable[] vars)
-        //{
-        //    RestrictInferenceTo((IEnumerable<IVariable>)vars);
-        //}
-        ///// <summary>
-        ///// Optimize the engine to infer only the specified variables, overriding any previous calls to RestrictInferenceTo.
-        ///// </summary>
-        ///// <param name="vars">The variables whose marginals are to be inferred</param>
-        //public void RestrictInferenceTo(IEnumerable<IVariable> vars)
-        //{
-        //    mb.Build(this, true, vars);
-        //    compiledAlgorithms.Clear();
-        //}
         private IList<IVariable> optimiseForVariables = null;
 
         /// <summary>

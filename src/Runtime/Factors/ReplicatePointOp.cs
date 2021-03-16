@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    [FactorMethod(typeof(Factor), "Replicate<>", Default = false)]
+    [FactorMethod(typeof(VariableFactor), "Replicate<>", Default = false)]
     [Buffers("toDef")]
     [Quality(QualityBand.Preview)]
     public static class ReplicatePointOp

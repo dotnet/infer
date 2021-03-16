@@ -369,8 +369,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     dependencyExpr[parameter.Name] = dependency;
 
                     // Requirement attributes are more complex since they can stack.
-                    if (parameter.IsDefined(typeof(SkipIfAnyUniformAttribute), false)
-                        )
+                    if (parameter.IsDefined(typeof(SkipIfAnyUniformAttribute), false))
                     {
                         Type t = dependency.GetExpressionType();
                         IExpression requirement = Util.IsIList(t)

@@ -67,14 +67,14 @@ namespace Microsoft.ML.Probabilistic
             }
         }
 
-        public static IReadOnlyList<ICommunicatorRequest> SendSubarrays<T>(ICommunicator comm, int tag, IList<T> array, int[][] indices)
+        public static IReadOnlyList<ICommunicatorRequest> SendSubarrays<T>(ICommunicator comm, int tag, IReadOnlyList<T> array, int[][] indices)
         {
             List<ICommunicatorRequest> requests = new List<ICommunicatorRequest>();
             for (int destination = 0; destination < comm.Size; destination++)
             {
                 if (destination == comm.Rank)
                     continue;
-                var request = comm.ImmediateSend(Factors.Factor.Subarray<T>(array, indices[destination]), destination, tag);
+                var request = comm.ImmediateSend(Factors.IndexingFactor.Subarray<T>(array, indices[destination]), destination, tag);
                 requests.Add(request);
             }
             return requests;

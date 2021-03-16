@@ -304,16 +304,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 double vdouble2;
                 vdouble2 = Factor.Gaussian(25, 0.014399999999999998);
-                skills[range3] = Factor.Copy<double>(vdouble2);
+                skills[range3] = VariableFactor.Copy<double>(vdouble2);
             }
             for (int range2 = 0; range2 < 1; range2++)
             {
                 double vdouble8 = Factor.Gaussian(skills[games_Item1[range2]], 0.014399999999999998);
-                GaussianFromMeanAndPrecisionSample0[range2] = Factor.Copy<double>(vdouble8);
+                GaussianFromMeanAndPrecisionSample0[range2] = VariableFactor.Copy<double>(vdouble8);
                 double vdouble14 = Factor.Gaussian(skills[games_Item2[range2]], 0.014399999999999998);
-                GaussianFromMeanAndPrecisionSample1[range2] = Factor.Copy<double>(vdouble14);
+                GaussianFromMeanAndPrecisionSample1[range2] = VariableFactor.Copy<double>(vdouble14);
                 double vdouble18 = Factor.Difference(GaussianFromMeanAndPrecisionSample0[range2], GaussianFromMeanAndPrecisionSample1[range2]);
-                inputSequence_Item1[range2] = Factor.Copy<double>(vdouble18);
+                inputSequence_Item1[range2] = VariableFactor.Copy<double>(vdouble18);
                 bool vbool0 = outcome[range2] == 1;
                 if (vbool0)
                 {
@@ -483,7 +483,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        private void GetItemsModel(IList<int> indices)
+        private void GetItemsModel(IReadOnlyList<int> indices)
         {
             double[] c = new double[] {1, 2, 3, 4};
             double[] array = new double[4];
@@ -492,7 +492,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 array[i] = Gaussian.Sample(c[i], 1);
             }
             double[] x = new double[indices.Count];
-            x = Factor.GetItems(array, indices);
+            x = IndexingFactor.GetItems(array, indices);
             InferNet.Infer(array, nameof(array));
             InferNet.Infer(x, nameof(x));
         }

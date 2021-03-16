@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         internal IndexedProperty<NodeIndex, bool> isUniform;
 
-        // Edge properties ////////////////////////////////////////////////
+        // Edge properties
         internal IndexedProperty<EdgeIndex, bool> isRequired;
         internal IndexedProperty<EdgeIndex, byte> bitsProvided;
         internal IndexedProperty<EdgeIndex, bool> isTrigger, isFreshEdge;
@@ -84,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal IndexedProperty<EdgeIndex, bool> isCancels;
         internal Dictionary<EdgeIndex, IOffsetInfo> OffsetIndices = new Dictionary<EdgeIndex, IOffsetInfo>();
 
-        // Debugging /////////////////////////////////////////////////////
+        // Debugging
         public Converter<NodeIndex, string> NodeToString;
         public Converter<NodeIndex, string> NodeToShortString;
         internal IReadOnlyList<IStatement> Nodes;

@@ -490,35 +490,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 Console.WriteLine("Warning: LBFGS resulted in an increased objective function");
             return result;
         }
-
-        ///// <summary>
-        ///// Evidence message for VMP
-        ///// </summary>
-        // Adding up these values across all factors and variables gives the log-evidence estimate for VMP.
-        //public static double AverageLogFactor<GaussianList>([SkipIfAnyUniform] GaussianList x, Dirichlet softmax, Dirichlet to_softmax)
-        //{
-        //    double logSumExp = LogSumExpMPlusHalfV(x);
-        //    var ns = softmax.PseudoCount - 1.0;
-        //    double innerProduct = x.ListZip(softmax.PseudoCount, (i, j) => i.GetMean() * (j - 1.0))
-        //        .EnumerableSum(i => i);
-        //    double sum_n = softmax.PseudoCount.EnumerableSum(i => i - 1.0);
-        //    return innerProduct - sum_n * logSumExp - softmax.GetLogNormalizer() - to_softmax.GetAverageLog(softmax); ;
-        //}
-
-        ///// <summary>
-        ///// Helper function to calculation log sum_k exp(m_k+v_k/2), which is an upper bound
-        ///// on E[log sum_k exp(x_k)] when x_k ~ N(m_k,v_k)
-        ///// </summary>
-        //private static double LogSumExpMPlusHalfV(IList<Gaussian> x)
-        //{
-        //    return MMath.LogSumExpSparse(x.ListSelect(i =>
-        //    {
-        //        double m, v;
-        //        i.GetMeanAndVariance(out m, out v);
-        //        return m + .5 * v;
-        //    }
-        //        ));
-        //}
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="SoftmaxOp_Bohning"]/doc/*'/>

@@ -1016,12 +1016,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         */
 
             Variable<int> index = Variable.New<int>().Named("index");
-            Variable<int> h = Variable<int>.Factor(Factor.GetItem, c, index).Named("h").Attrib(new MarginalPrototype(Discrete.Uniform(2)));
+            Variable<int> h = Variable<int>.Factor(IndexingFactor.GetItem, c, index).Named("h").Attrib(new MarginalPrototype(Discrete.Uniform(2)));
             Variable.ConstrainEqual(h, 1);
             index.ObservedValue = 1;
 
             Variable<int> index2 = Variable.New<int>().Named("index2");
-            Variable<int> h2 = Variable<int>.Factor(Factor.GetItem, c, index2).Named("h2").Attrib(new MarginalPrototype(Discrete.Uniform(2)));
+            Variable<int> h2 = Variable<int>.Factor(IndexingFactor.GetItem, c, index2).Named("h2").Attrib(new MarginalPrototype(Discrete.Uniform(2)));
             Variable.ConstrainEqual(h2, 0);
             index2.ObservedValue = 2;
 

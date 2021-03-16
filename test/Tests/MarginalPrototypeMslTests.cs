@@ -218,10 +218,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(new Bernoulli(0.5));
             }
-            bool c = Factor.GetItem(array, 1);
+            bool c = IndexingFactor.GetItem(array, 1);
             bool[] d = new bool[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
         }
@@ -246,10 +246,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(new Poisson(1.0));
             }
-            int c = Factor.GetItem(array, 1);
+            int c = IndexingFactor.GetItem(array, 1);
             int[] d = new int[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
@@ -275,10 +275,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(new Discrete(0.3, 0.3, 0.4));
             }
-            int c = Factor.GetItem(array, 1);
+            int c = IndexingFactor.GetItem(array, 1);
             int[] d = new int[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
@@ -304,10 +304,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(Beta.FromMeanAndVariance(0.5, 1.0));
             }
-            double c = Factor.GetItem(array, 1);
+            double c = IndexingFactor.GetItem(array, 1);
             double[] d = new double[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
@@ -333,10 +333,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(Gamma.FromMeanAndVariance(1.0, 1.0));
             }
-            double c = Factor.GetItem(array, 1);
+            double c = IndexingFactor.GetItem(array, 1);
             double[] d = new double[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
@@ -362,10 +362,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(Gaussian.FromMeanAndVariance(1.0, 1.0));
             }
-            double c = Factor.GetItem(array, 1);
+            double c = IndexingFactor.GetItem(array, 1);
             double[] d = new double[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
@@ -391,10 +391,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(Dirichlet.Uniform(3));
             }
-            Vector c = Factor.GetItem(array, 1);
+            Vector c = IndexingFactor.GetItem(array, 1);
             Vector[] d = new Vector[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
@@ -422,10 +422,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(new VectorGaussian(mean, prec));
             }
-            Vector c = Factor.GetItem(array, 1);
+            Vector c = IndexingFactor.GetItem(array, 1);
             Vector[] d = new Vector[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
@@ -451,10 +451,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(new Wishart(3, 1.0, 1.0));
             }
-            PositiveDefiniteMatrix c = Factor.GetItem(array, 1);
+            PositiveDefiniteMatrix c = IndexingFactor.GetItem(array, 1);
             PositiveDefiniteMatrix[] d = new PositiveDefiniteMatrix[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));
@@ -497,10 +497,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 array[i] = Factor.Random(sgp);
             }
-            IFunction c = Factor.GetItem(array, 1);
+            IFunction c = IndexingFactor.GetItem(array, 1);
             IFunction[] d = new IFunction[2];
             if (true) // preserve the previous assignment
-                d = Factor.GetItems(array, new int[] { 0, 2 });
+                d = IndexingFactor.GetItems(array, new int[] { 0, 2 });
 
             InferNet.Infer(c, nameof(c));
             InferNet.Infer(d, nameof(d));

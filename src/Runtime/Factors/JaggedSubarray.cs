@@ -13,7 +13,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an array item.</typeparam>
-    [FactorMethod(typeof(Factor), "JaggedSubarray<>", Default = true)]
+    [FactorMethod(typeof(IndexingFactor), "JaggedSubarray<>", Default = true)]
     [Buffers("marginal")]
     [Quality(QualityBand.Mature)]
     public static class JaggedSubarrayOp<T>
@@ -449,7 +449,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    [FactorMethod(typeof(Factor), "JaggedSubarray<>", Default = false)]
+    [FactorMethod(typeof(IndexingFactor), "JaggedSubarray<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class JaggedSubarrayOp_NoDivide<T>
     {
@@ -512,7 +512,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     //// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an array item.</typeparam>
-    [FactorMethod(typeof(Factor), "JaggedSubarrayWithMarginal<>", Default = true)]
+    [FactorMethod(typeof(IndexingFactor), "JaggedSubarrayWithMarginal<>", Default = true)]
     [Quality(QualityBand.Preview)]
     public static class JaggedSubarrayWithMarginalOp<T>
     {

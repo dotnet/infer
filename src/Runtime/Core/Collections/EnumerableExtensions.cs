@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Collections
@@ -303,89 +304,6 @@ namespace Microsoft.ML.Probabilistic.Collections
         public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> list)
         {
             return list.ToList();
-        }
-    }
-
-    /// <summary>
-    /// An equality comparer for IEnumerable that requires elements at the same position to match
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class EnumerableComparer<T> : IEqualityComparer<IEnumerable<T>>, IEqualityComparer<ICollection<T>>
-    {
-        public bool Equals(IEnumerable<T> x, IEnumerable<T> y)
-        {
-            return EnumerableExtensions.AreEqual(x, y);
-        }
-
-        public int GetHashCode(IEnumerable<T> obj)
-        {
-            return Hash.GetHashCodeAsSequence(obj);
-        }
-
-        public bool Equals(ICollection<T> x, ICollection<T> y)
-        {
-            return EnumerableExtensions.AreEqual(x, y);
-        }
-
-        public int GetHashCode(ICollection<T> obj)
-        {
-            return Hash.GetHashCodeAsSequence(obj);
-        }
-    }
-
-    /// <summary>
-    /// An equality comparer for IList that requires elements at the same index to match
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class ListComparer<T> : IEqualityComparer<IList<T>>
-    {
-        public static ListComparer<T> Default { get; } = new ListComparer<T>();
-
-        public bool Equals(IList<T> x, IList<T> y)
-        {
-            return ListComparer<T>.EqualLists(x, y);
-        }
-
-        int IEqualityComparer<IList<T>>.GetHashCode(IList<T> list)
-        {
-            return GetHashCode(list);
-        }
-
-        public static bool EqualLists(IList<T> x, IList<T> y)
-        {
-            if (x == null) return y == null;
-            if (y == null) return false;
-            if (x.Count != y.Count) return false;
-            for (int i = 0; i < x.Count; i++) if (!Util.AreEqual(x[i], y[i])) return false;
-            return true;
-        }
-
-        public static int GetHashCode(IList<T> list)
-        {
-            int hash = Hash.Combine(Hash.Start, list.Count);
-            foreach (T obj in list)
-            {
-                hash = Hash.Combine(hash, obj == null ? 0 : obj.GetHashCode());
-            }
-            return hash;
-        }
-    }
-
-    /// <summary>
-    /// An equality comparer that requires the sequence of keys and values to match
-    /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    /// <typeparam name="TValue"></typeparam>
-    public class DictionaryComparer<TKey, TValue> : EnumerableComparer<KeyValuePair<TKey, TValue>>, IEqualityComparer<Dictionary<TKey, TValue>>
-    {
-        public bool Equals(Dictionary<TKey, TValue> x, Dictionary<TKey, TValue> y)
-        {
-            return Equals((IEnumerable<KeyValuePair<TKey, TValue>>) x, (IEnumerable<KeyValuePair<TKey, TValue>>) y);
-        }
-
-        public int GetHashCode(Dictionary<TKey, TValue> obj)
-        {
-            return GetHashCode((IEnumerable<KeyValuePair<TKey, TValue>>) obj);
         }
     }
 

@@ -269,14 +269,16 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             // Observation data
             var userIds = Variable.Observed(default(IReadOnlyList<int>), observation).Named("UserIds");
             var itemIds = Variable.Observed(default(IReadOnlyList<int>), observation).Named("ItemIds");
-            var ratings = Variable.IList<int>(observation).Named("Ratings");
+            IJaggedVariableArray<Variable<int>> ratings;
             if (buildTrainingModel)
             {
-                ratings.ObservedValue = default(IList<int>);
-                ratings.SetValueRange(ratingValue);
+                var observedRatings = Variable.Observed(default(IReadOnlyList<int>), observation).Named("Ratings");
+                observedRatings.SetValueRange(ratingValue);
+                ratings = observedRatings;
             }
             else
             {
+                ratings = Variable.Array<int>(observation).Named("Ratings");
                 ratings[observation] = Variable.DiscreteUniform(ratingValue).ForEach(observation);
             }
 

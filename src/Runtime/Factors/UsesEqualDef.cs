@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>")]
+    [FactorMethod(typeof(VariableFactor), "UsesEqualDef<>")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefOp
     {
@@ -157,7 +157,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefGibbsOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of the variable.</typeparam>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>")]
+    [FactorMethod(typeof(VariableFactor), "UsesEqualDef<>")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefGibbsOp<T>
     {
@@ -326,7 +326,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefGibbsOp2{T}"]/doc/*'/>
     /// <typeparam name="T">The type of the variable.</typeparam>
-    [FactorMethod(typeof(Factor), "UsesEqualDefGibbs<>")]
+    [FactorMethod(typeof(VariableFactor), "UsesEqualDefGibbs<>")]
     [Buffers("sample", "conditional", "marginalEstimator", "sampleAcc", "conditionalAcc")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefGibbsOp2<T>
@@ -510,7 +510,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefMaxOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>")]
+    [FactorMethod(typeof(VariableFactor), "UsesEqualDef<>")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefMaxOp
     {
@@ -546,7 +546,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefVmpBufferOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>", Default = true)]
+    [FactorMethod(typeof(VariableFactor), "UsesEqualDef<>", Default = true)]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefVmpBufferOp
     {
@@ -581,7 +581,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefVmpOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>")]
+    [FactorMethod(typeof(VariableFactor), "UsesEqualDef<>")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefVmpOp
     {

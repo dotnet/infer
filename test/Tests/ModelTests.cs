@@ -1333,9 +1333,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Range d = new Range(3).Named("d");
 
 
-            ///////////////////////
             // Node 1
-            ///////////////////////
 
             // Mixture component means
             var means1 = Variable.Array(Variable.Array<double>(d), k);
@@ -1381,9 +1379,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             z.InitialiseTo(Distribution<int>.Array(zinit));
 
 
-            /////////////////////////////
             // Node 2
-            /////////////////////////////
 
             // Mixture component means
             var means2 = Variable.Array(Variable.Array<double>(d), k).Named("mean2");
@@ -1439,7 +1435,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             z2.InitialiseTo(Distribution<int>.Array(zinit2));
 
 
-            /////////////////////////////
 
 
             // The inference
@@ -2912,7 +2907,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void VariableOfGenericType()
         {
             Variable<List<double>> a = Variable.Constant(new List<double>(new double[] { 5 }));
-            Variable<double> y = Variable<double>.Factor(Factor.GetItem, a, 0);
+            Variable<double> y = Variable<double>.Factor(IndexingFactor.GetItem, a, 0);
             Variable<double> x = Variable.GaussianFromMeanAndVariance(y, 1);
             InferenceEngine engine = new InferenceEngine();
             Gaussian xActual = engine.Infer<Gaussian>(x);

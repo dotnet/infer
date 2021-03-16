@@ -1949,7 +1949,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             PointMassSampleTest(distribution, value);
         }
 
-        // Generic high-level tests ///////////////////////////////////////////////////////////////////////////
+        #region Generic high-level tests 
 
         internal static void DistributionTest<T>(T a, T b, bool doSumWithNegativeWeightsTests = true)
             where T : SettableToProduct<T>, SettableToRatio<T>, SettableToPower<T>, SettableToUniform, SettableToWeightedSum<T>,
@@ -2102,7 +2102,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             SetMomentTest(a, mean, variance);
         }
 
-        // Helper tests ///////////////////////////////////////////////////////////////////////////
+        #endregion
+
+        #region Helper tests
 
         private static void InnerProductWithUniformTest<DomainType, T>(T a, DomainType value)
             where T : CanGetLogAverageOf<T>, CanGetLogAverageOfPower<T>, SettableToUniform, ICloneable, CanGetLogProb<DomainType>
@@ -2492,6 +2494,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             else
                 throw new NotImplementedException();
         }
+
+        #endregion
     }
 
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS

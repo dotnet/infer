@@ -176,7 +176,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VectorElementOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "GetItem<>", typeof(double), typeof(Vector), typeof(int))]
+    [FactorMethod(typeof(IndexingFactor), "GetItem<>", typeof(double), typeof(Vector), typeof(int))]
     [Buffers("ArrayMean", "ArrayVariance")]
     [Quality(QualityBand.Preview)]
     public static class VectorElementOp

@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 #if true
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExitingVariableOp"]/doc/*'/>
     /// <remarks><para>
-    /// This factor is like <see cref="Factor.ReplicateWithMarginal{T}"/> except <c>Uses[0]</c> plays the role of <c>Def</c>,
+    /// This factor is like <see cref="VariableFactor.ReplicateWithMarginal{T}"/> except <c>Uses[0]</c> plays the role of <c>Def</c>,
     /// and <c>Def</c> is considered a <c>Use</c>. Needed only when a variable exits a gate in VMP.
     /// </para></remarks>
     [FactorMethod(typeof(Gate), "ExitingVariable<>")]
@@ -62,7 +62,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateExitingOp"]/doc/*'/>
     /// <remarks><para>
-    /// This factor is like <see cref="Factor.Replicate{T}"/> except <c>Uses[0]</c> plays the role of <c>Def</c>,
+    /// This factor is like <see cref="VariableFactor.Replicate{T}"/> except <c>Uses[0]</c> plays the role of <c>Def</c>,
     /// and <c>Def</c> is considered a <c>Use</c>. Needed only when a variable exits a gate in VMP.
     /// </para></remarks>
     [FactorMethod(typeof(Gate), "ReplicateExiting<>")]
@@ -809,25 +809,27 @@ namespace Microsoft.ML.Probabilistic.Factors
             throw new ArgumentException("cases is all false");
         }
 
-        ///// <summary>
-        ///// Gibbs message to 'Exit'
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <typeparam name="TDomain"></typeparam>
-        ///// <param name="cases"></param>
-        ///// <param name="values"></param>
-        ///// <param name="result"></param>
-        ///// <returns></returns>
-        //public static T ExitAverageConditional<T, TDomain>(IList<bool> cases, IList<TDomain> values, T result)
-        //    where T : IDistribution<TDomain>
-        //{
-        //    for (int i = 0; i < cases.Count; i++)
-        //    {
-        //        if (cases[i]) return Distribution.SetPoint<T,TDomain>(result, values[i]);
-        //    }
-        //    // cases was entirely false
-        //    throw new ArgumentException("cases is all false");
-        //}
+#if false
+        /// <summary>
+        /// Gibbs message to 'Exit'
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TDomain"></typeparam>
+        /// <param name="cases"></param>
+        /// <param name="values"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static T ExitAverageConditional<T, TDomain>(IList<bool> cases, IList<TDomain> values, T result)
+            where T : IDistribution<TDomain>
+        {
+            for (int i = 0; i < cases.Count; i++)
+            {
+                if (cases[i]) return Distribution.SetPoint<T, TDomain>(result, values[i]);
+            }
+            // cases was entirely false
+            throw new ArgumentException("cases is all false");
+        }
+#endif
 
         //-- VMP ------------------------------------------------------------------------------------------------
 

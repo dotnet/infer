@@ -186,7 +186,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (rhs is IMethodInvokeExpression)
             {
                 IMethodInvokeExpression imie = (IMethodInvokeExpression)rhs;
-                if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Factor.Copy)) && ancIndex < context.InputStack.Count - 2)
+                if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy)) && ancIndex < context.InputStack.Count - 2)
                 {
                     IExpression arg = imie.Arguments[0];
                     IVariableDeclaration ivd2 = Recognizer.GetVariableDeclaration(arg);
@@ -220,7 +220,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             context.OutputAttributes.Remove<InitialiseTo>(vi.declaration);
 
                             IExpression copyExpr = Builder.StaticGenericMethod(
-                                new Func<PlaceHolder, PlaceHolder>(Factor.Copy), genArgs, useExpr2);
+                                new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy), genArgs, useExpr2);
                             var copyStmt = Builder.AssignStmt(useExpr, copyExpr);
                             context.AddStatementAfterCurrent(copyStmt);
                         }
@@ -241,7 +241,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 Delegate d = algorithm.GetVariableFactor(isDerived, it != null);
                 if (isPointEstimate)
-                    d = new Models.FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Factor.VariablePoint);
+                    d = new Models.FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.VariablePoint);
                 if (it == null)
                 {
                     variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, defExpr, marginalExpr);
@@ -334,7 +334,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     targetsOfCurrentAssignment.Add(iaoe.Expression);
                 }
             }
-            if (Recognizer.IsStaticGenericMethod(imie, new Func<IList<PlaceHolder>, int[][], PlaceHolder[][]>(Factor.JaggedSubarray)))
+            if (Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(IndexingFactor.JaggedSubarray)))
             {
                 IExpression arrayExpr = imie.Arguments[0];
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(imie.Arguments[0]);
@@ -354,7 +354,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     // none of the arguments should need to be transformed
                     IExpression indicesExpr = imie.Arguments[1];
                     IExpression marginalExpr = Builder.VarRefExpr(marginalOfVariable[ivd]);
-                    IMethodInvokeExpression mie = Builder.StaticGenericMethod(new Models.FuncOut<IList<PlaceHolder>, int[][], IList<PlaceHolder>, PlaceHolder[][]>(Factor.JaggedSubarrayWithMarginal),
+                    IMethodInvokeExpression mie = Builder.StaticGenericMethod(new Models.FuncOut<IReadOnlyList<PlaceHolder>, int[][], IReadOnlyList<PlaceHolder>, PlaceHolder[][]>(IndexingFactor.JaggedSubarrayWithMarginal),
                         new Type[] { Utilities.Util.GetElementType(arrayExpr.GetExpressionType()) },
                         arrayExpr, indicesExpr, marginalExpr);
                     return mie;
@@ -453,7 +453,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override IExpression ConvertMethodInvoke(IMethodInvokeExpression imie)
         {
-            if (useJaggedSubarrayWithMarginal && Recognizer.IsStaticGenericMethod(imie, new Func<IList<PlaceHolder>, int[][], PlaceHolder[][]>(Factor.JaggedSubarray)))
+            if (useJaggedSubarrayWithMarginal && Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(IndexingFactor.JaggedSubarray)))
             {
                 IExpression arrayExpr = imie.Arguments[0];
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(arrayExpr);

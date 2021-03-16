@@ -379,6 +379,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 if (face.Equals(toType)) return true;
                 subclassCount++;
             }
+            // array covariance (C# 2.0 specification, sec 20.5.9)
+            if (fromType.IsArray && fromType.GetArrayRank() == 1 && toType.IsGenericType && toType.GetGenericTypeDefinition().Equals(typeof(IList<>)))
+            {
+                Type fromElementType = fromType.GetElementType();
+                Type toElementType = toType.GetGenericArguments()[0];
+                bool ok = IsAssignableFrom(toElementType, fromElementType, out int elementSubclassCount);
+                subclassCount += elementSubclassCount;
+                return ok;
+            }
             if (toType.IsAssignableFrom(fromType)) return true;
             return false;
         }
@@ -396,7 +405,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             if (fromType == typeof (Nullable)) return IsNullable(toType);
             if (IsAssignableFrom(toType, fromType, out int subclassCount))
             {
-                //(toType.IsAssignableFrom(fromType)) {
                 // toType is a superclass or an interface of fromType
                 info.SubclassCount = subclassCount;
                 return true;

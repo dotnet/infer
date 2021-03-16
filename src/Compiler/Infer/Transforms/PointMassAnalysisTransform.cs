@@ -59,7 +59,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (imie != null)
             {
                 // TODO: consider using a method attribute for this
-                if (Recognizer.IsStaticGenericMethod(imie, new Models.FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Factor.VariablePoint))
+                if (Recognizer.IsStaticGenericMethod(imie, new Models.FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.VariablePoint))
                     )
                 {
                     targetIsPointMass = true;
@@ -85,13 +85,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         variablesDefinedPointMass.Add(targetVar, list);
                     }
                     // this code needs to be synchronized with MessageTransform.ConvertMethodInvoke
-                    if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, int, PlaceHolder[]>(Factor.Replicate)) ||
-                        Recognizer.IsStaticGenericMethod(imie, new Func<IList<PlaceHolder>, IList<int>, PlaceHolder[]>(Factor.GetItems)) ||
-                        Recognizer.IsStaticGenericMethod(imie, new Func<IList<PlaceHolder>, IList<IList<int>>, PlaceHolder[][]>(Factor.GetJaggedItems)) ||
-                        Recognizer.IsStaticGenericMethod(imie, new Func<IList<PlaceHolder>, IList<IList<IList<int>>>, PlaceHolder[][][]>(Factor.GetDeepJaggedItems)) ||
-                        Recognizer.IsStaticGenericMethod(imie, new Func<IList<IList<PlaceHolder>>, IList<int>, IList<int>, PlaceHolder[]>(Factor.GetItemsFromJagged)) ||
-                        Recognizer.IsStaticGenericMethod(imie, new Func<IList<IList<IList<PlaceHolder>>>, IList<int>, IList<int>, IList<int>, PlaceHolder[]>(Factor.GetItemsFromDeepJagged)) ||
-                        Recognizer.IsStaticGenericMethod(imie, new Func<IList<IList<PlaceHolder>>, IList<IList<int>>, IList<IList<int>>, PlaceHolder[][]>(Factor.GetJaggedItemsFromJagged))
+                    if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, int, PlaceHolder[]>(VariableFactor.Replicate)) ||
+                        Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(IndexingFactor.GetItems)) ||
+                        Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<int>>, PlaceHolder[][]>(IndexingFactor.GetJaggedItems)) ||
+                        Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<IReadOnlyList<int>>>, PlaceHolder[][][]>(IndexingFactor.GetDeepJaggedItems)) ||
+                        Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<IReadOnlyList<PlaceHolder>>, IReadOnlyList<int>, IReadOnlyList<int>, PlaceHolder[]>(IndexingFactor.GetItemsFromJagged)) ||
+                        Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<IReadOnlyList<IReadOnlyList<PlaceHolder>>>, IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>, PlaceHolder[]>(IndexingFactor.GetItemsFromDeepJagged)) ||
+                        Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<IReadOnlyList<PlaceHolder>>, IReadOnlyList<IReadOnlyList<int>>, IReadOnlyList<IReadOnlyList<int>>, PlaceHolder[][]>(IndexingFactor.GetJaggedItemsFromJagged))
                         )
                     {
                         list.Add(imie);

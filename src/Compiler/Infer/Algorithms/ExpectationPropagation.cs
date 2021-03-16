@@ -24,13 +24,13 @@ namespace Microsoft.ML.Probabilistic.Algorithms
         {
             if (derived)
             {
-                if (initialised) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder>(Factor.DerivedVariableInit);
-                else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Factor.DerivedVariable);
+                if (initialised) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.DerivedVariableInit);
+                else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.DerivedVariable);
             }
             else
             {
-                if (initialised) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder>(Factor.VariableInit);
-                else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Factor.Variable);
+                if (initialised) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.VariableInit);
+                else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.Variable);
             }
         }
 

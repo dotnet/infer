@@ -1579,7 +1579,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="instanceSource">The source of instances to get the user identifiers from.</param>
             /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
             /// <returns>The list of user identifiers.</returns>
-            public IList<int> GetUserIds(NativeDataset instanceSource, int batchNumber = 0)
+            public IReadOnlyList<int> GetUserIds(NativeDataset instanceSource, int batchNumber = 0)
             {
                 if (batchNumber != 0)
                 {
@@ -1595,7 +1595,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="instanceSource">The source of instances to get the item identifiers from.</param>
             /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
             /// <returns>The list of item identifiers.</returns>
-            public IList<int> GetItemIds(NativeDataset instanceSource, int batchNumber = 0)
+            public IReadOnlyList<int> GetItemIds(NativeDataset instanceSource, int batchNumber = 0)
             {
                 if (batchNumber != 0)
                 {
@@ -1611,7 +1611,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="instanceSource">The source of instances to get the ratings from.</param>
             /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
             /// <returns>The list of ratings</returns>
-            public IList<int> GetRatings(NativeDataset instanceSource, int batchNumber = 0)
+            public IReadOnlyList<int> GetRatings(NativeDataset instanceSource, int batchNumber = 0)
             {
                 if (batchNumber != 0)
                 {
@@ -1680,7 +1680,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="featureSource">The source to obtain features from.</param>
             /// <returns>An array of non-zero user feature arrays where the outer array is indexed by user id.</returns>
             /// <remarks>This function will be called during training if the user feature support is enabled.</remarks>
-            public IList<IList<double>> GetAllUserNonZeroFeatureValues(NativeDataset featureSource)
+            public IReadOnlyList<IReadOnlyList<double>> GetAllUserNonZeroFeatureValues(NativeDataset featureSource)
             {
                 return featureSource.NonZeroUserFeatureValues;
             }
@@ -1691,7 +1691,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="featureSource">The source to obtain feature indices from.</param>
             /// <returns>An array of non-zero user feature index arrays where the outer array is indexed by user id.</returns>
             /// <remarks>This function will be called during training if the user feature support is enabled.</remarks>
-            public IList<IList<int>> GetAllUserNonZeroFeatureIndices(NativeDataset featureSource)
+            public IReadOnlyList<IReadOnlyList<int>> GetAllUserNonZeroFeatureIndices(NativeDataset featureSource)
             {
                 return featureSource.NonZeroUserFeatureIndices;
             }
@@ -1702,7 +1702,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="featureSource">The source to obtain features from.</param>
             /// <returns>An array of non-zero item feature arrays where the outer array is indexed by item id</returns>
             /// <remarks>This function will be called during training if the item feature support is enabled.</remarks>
-            public IList<IList<double>> GetAllItemNonZeroFeatureValues(NativeDataset featureSource)
+            public IReadOnlyList<IReadOnlyList<double>> GetAllItemNonZeroFeatureValues(NativeDataset featureSource)
             {
                 return featureSource.NonZeroItemFeatureValues;
             }
@@ -1713,7 +1713,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="featureSource">The source to obtain feature indices from.</param>
             /// <returns>An array of non-zero item feature index arrays where the outer array is indexed by item id</returns>
             /// <remarks>This function will be called during training if the item feature support is enabled.</remarks>
-            public IList<IList<int>> GetAllItemNonZeroFeatureIndices(NativeDataset featureSource)
+            public IReadOnlyList<IReadOnlyList<int>> GetAllItemNonZeroFeatureIndices(NativeDataset featureSource)
             {
                 return featureSource.NonZeroItemFeatureIndices;
             }
@@ -1725,7 +1725,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="userId">The user identifier.</param>
             /// <returns>Non-zero feature values for the user.</returns>
             /// <remarks>This function will be called during prediction for cold users if the user feature support is enabled.</remarks>
-            public IList<double> GetSingleUserNonZeroFeatureValues(NativeDataset featureSource, int userId)
+            public IReadOnlyList<double> GetSingleUserNonZeroFeatureValues(NativeDataset featureSource, int userId)
             {
                 return featureSource.NonZeroUserFeatureValues[userId];
             }
@@ -1737,7 +1737,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="userId">The user identifier.</param>
             /// <returns>Non-zero feature indices for the user.</returns>
             /// <remarks>This function will be called during prediction for cold users if the user feature support is enabled.</remarks>
-            public IList<int> GetSingleUserNonZeroFeatureIndices(NativeDataset featureSource, int userId)
+            public IReadOnlyList<int> GetSingleUserNonZeroFeatureIndices(NativeDataset featureSource, int userId)
             {
                 return featureSource.NonZeroUserFeatureIndices[userId];
             }
@@ -1749,7 +1749,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="itemId">The item identifier.</param>
             /// <returns>Non-zero feature values for the item.</returns>
             /// <remarks>This function will be called during prediction for cold items if the item feature support is enabled.</remarks>
-            public IList<double> GetSingleItemNonZeroFeatureValues(NativeDataset featureSource, int itemId)
+            public IReadOnlyList<double> GetSingleItemNonZeroFeatureValues(NativeDataset featureSource, int itemId)
             {
                 return featureSource.NonZeroItemFeatureValues[itemId];
             }
@@ -1761,7 +1761,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="itemId">The item identifier.</param>
             /// <returns>Non-zero feature values for the item.</returns>
             /// <remarks>This function will be called during prediction for cold items if the item feature support is enabled.</remarks>
-            public IList<int> GetSingleItemNonZeroFeatureIndices(NativeDataset featureSource, int itemId)
+            public IReadOnlyList<int> GetSingleItemNonZeroFeatureIndices(NativeDataset featureSource, int itemId)
             {
                 return featureSource.NonZeroItemFeatureIndices[itemId];
             }

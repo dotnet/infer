@@ -76,11 +76,6 @@ namespace Microsoft.ML.Probabilistic.Models.Attributes
         }
     }
 
-    ///// <summary>
-    ///// Attribute which indicates a sparse marginal prototype
-    ///// </summary>
-    //public class Sparse : Attribute { }
-
     /// <summary>
     /// Changes the order of inference updates in Expectation Propagation.
     /// When attached to a Range, indicates that the elements of VariableArrays indexed by the range should be updated sequentially rather than in parallel.

@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                 Error("Could not determine type of expression: " + iae.Target);
                                 return iae;
                             }
-                            IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Factor.Copy), new Type[] {tp},
+                            IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy), new Type[] {tp},
                                                                            Builder.VarRefExpr(cloneVar));
                             iae = Builder.AssignExpr(iae.Target, copy);
                         }
