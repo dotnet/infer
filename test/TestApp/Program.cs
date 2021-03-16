@@ -91,6 +91,7 @@ namespace TestApp
                 InferenceEngine.DefaultEngine.Compiler.RecommendedQuality = QualityBand.Preview;
                 InferenceEngine.DefaultEngine.Compiler.GenerateInMemory = true;
                 InferenceEngine.DefaultEngine.Compiler.WriteSourceFiles = false;
+                TestUtils.TestAllCompilerOptions();
                 //TestUtils.TestAllCompilerOptions(path);
                 //TestUtils.RunAllTests(path);
                 //using(TextWriter writer = new StreamWriter(@"..\..\RunAllTests.cs")) {
