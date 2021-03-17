@@ -14,7 +14,7 @@
     At some point the URL will be removed, but for now certain interfaces have not been updated to use the
     embedded icon.
     -->
-    <iconUrl>https://raw.githubusercontent.com/dotnet/infer/master/docs/images/infernet.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/dotnet/infer/main/docs/images/infernet.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains complete machine learning applications including a classifier and a recommender system.</description>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
