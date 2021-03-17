@@ -483,6 +483,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return normalizer.LogValue;
         }
 
+        /// <summary>
+        /// Converts the current <see cref="StringDictionaryWeightFunction"/> to a deterministic automaton,
+        /// compressing shared suffixes. When the current <see cref="StringDictionaryWeightFunction"/> is
+        /// normalized, the resulting automaton is stochastic.
+        /// </summary>
+        /// <returns>A deterministic <see cref="StringAutomaton"/>.</returns>
         public override StringAutomaton AsAutomaton()
         {
             var dict = (SortedList<string, Weight>)Dictionary;
@@ -500,7 +506,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             for (int i = 1; i < dict.Count; ++i)
                 sharedPrefixWithPreviousLength[i] = GetSharedPrefixLength(dict.Keys[i - 1], dict.Keys[i]);
 
-            var postfixInfo = new (int postfixLength, int prefixEndStateIndex, char postfixTransitionChar, Weight postfixTransitionWeight)[dict.Count];
+            var suffixInfo = new (int suffixLength, int prefixEndStateIndex, char suffixTransitionChar, Weight suffixTransitionWeight)[dict.Count];
 
             int processedEntriesCount = 0;
             do
@@ -510,10 +516,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             while (processedEntriesCount < dict.Count);
 
             var reversedStringSortIndex = Enumerable.Range(0, dict.Count).ToArray();
+            // Alphabetical sorting of reversed suffixes.
             Array.Sort(reversedStringSortIndex, new Comparison<int>((x, y) =>
             {
-                int lenX = postfixInfo[x].postfixLength;
-                int lenY = postfixInfo[y].postfixLength;
+                int lenX = suffixInfo[x].suffixLength;
+                int lenY = suffixInfo[y].suffixLength;
                 if (lenX == 0 || lenY == 0)
                     return lenX - lenY;
 
@@ -538,10 +545,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 curOriginalIdx = nextOriginalIdx;
                 sharedPostfixWithPrevLen = sharedPostfixWithNextLen;
                 nextOriginalIdx = reversedStringSortIndex[i + 1];
-                sharedPostfixWithNextLen = GetSharedPostfixLength(dict.Keys[curOriginalIdx], postfixInfo[curOriginalIdx].postfixLength, dict.Keys[nextOriginalIdx], postfixInfo[nextOriginalIdx].postfixLength);
-                firstSharedStateIdx = ProcessPostfix(curOriginalIdx, sharedPostfixWithPrevLen, firstSharedStateIdx, sharedPostfixWithNextLen);
+                sharedPostfixWithNextLen = GetSharedSuffixLength(dict.Keys[curOriginalIdx], suffixInfo[curOriginalIdx].suffixLength, dict.Keys[nextOriginalIdx], suffixInfo[nextOriginalIdx].suffixLength);
+                firstSharedStateIdx = ProcessSuffix(curOriginalIdx, sharedPostfixWithPrevLen, firstSharedStateIdx, sharedPostfixWithNextLen);
             }
-            ProcessPostfix(reversedStringSortIndex[dict.Count - 1], sharedPostfixWithNextLen, firstSharedStateIdx, 0);
+            ProcessSuffix(reversedStringSortIndex[dict.Count - 1], sharedPostfixWithNextLen, firstSharedStateIdx, 0);
 
             return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromData(result.GetData(true));
 
@@ -554,19 +561,33 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return idx;
             }
 
-            int GetSharedPostfixLength(string x, int postfixLengthX, string y, int postfixLengthY)
+            // Length of a suffix shared by x.Substring(x.Length - suffixLengthX) and y.Substring(y.Length - suffixLengthY)
+            int GetSharedSuffixLength(string x, int suffixLengthX, string y, int suffixLengthY)
             {
-                var shorterLength = Math.Min(postfixLengthX, postfixLengthY);
+                var shorterLength = Math.Min(suffixLengthX, suffixLengthY);
                 int idx = 1;
                 while (idx <= shorterLength && x[x.Length - idx] == y[y.Length - idx])
                     ++idx;
                 return idx - 1;
             }
 
+            // Recursively creates a part of the result automaton that corresponds to shared prefixes and populates suffixInfo.
+            // Every call is responsible for processing substrings [currentSharedPrefixLength..] of strings in dict.Keys starting at index
+            // startIdx that have at least one additional shared character. Newly created part of the automaton will be attached to currentState.
+            //
+            // sharedPrefixWithPreviousLength must be populated prior to calling this. Deterministicity of the resulting automaton is guaranteed
+            // by the alphabetical sorting of string in dict.Keys, which ensures that strings that share a prefix will fall into the same batch.
+            //
+            // When weightNormalizer equals to the inverse of the total weight of the currently processed batch, the newly created part of the automaton
+            // will be stochastic.
+            //
+            // Returns the index of the first string that doesn't share at least (currentSharedPrefixLength + 1) first chars with dict.Keys[startIdx].
+            // If that index lies within the batch of strings being processed, i.e. sharing a prefix of length currentSharedPrefixLength,
+            // this function should then be called again for that index.
             int ProcessPrefixes(int startIdx, Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, int currentSharedPrefixLength, Weight weightNormalizer)
             {
-                int nextStartIdx = startIdx + 1;
-                int nextSharedPrefixLength = int.MaxValue;
+                int nextStartIdx = startIdx + 1; // Starting index of the next batch
+                int nextSharedPrefixLength = int.MaxValue; // Length of the prefix shared by all string in the current batch
                 while (nextStartIdx < sharedPrefixWithPreviousLength.Length && sharedPrefixWithPreviousLength[nextStartIdx] > currentSharedPrefixLength)
                 {
                     nextSharedPrefixLength = Math.Min(nextSharedPrefixLength, sharedPrefixWithPreviousLength[nextStartIdx]);
@@ -575,23 +596,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 if (nextStartIdx == startIdx + 1)
                 {
+                    // Current batch consists of a single string. End recursion.
                     string currentString = dict.Keys[startIdx];
                     var weight = dict.Values[startIdx] * weightNormalizer;
                     if (currentString.Length == currentSharedPrefixLength)
                     {
+                        // String ends on the current state, which is not the shared end state, because
+                        // there're other stings, for which the current string is a prefix.
                         currentState.SetEndWeight(weight);
                     }
                     else if (currentString.Length == currentSharedPrefixLength + 1)
                     {
+                        // Just one more character, so the corresponding transition should lead to the end state.
                         currentState.AddTransition(currentString[currentSharedPrefixLength], weight, end.Index);
                     }
                     else
                     {
-                        postfixInfo[startIdx] = (currentString.Length - currentSharedPrefixLength - 1, currentState.Index, currentString[currentSharedPrefixLength], weight);
+                        // Multiple characters left, populate an entry in suffixInfo.
+                        suffixInfo[startIdx] = (currentString.Length - currentSharedPrefixLength - 1, currentState.Index, currentString[currentSharedPrefixLength], weight);
                     }
                 }
                 else
                 {
+                    // Multiple entries in the batch.
+                    // Append a sequence corresponding to shared prefix and make recursive calls at the split.
                     var batchTotalWeight = Weight.FromLogValue(MMath.LogSumExp(Enumerable.Range(startIdx, nextStartIdx - startIdx).Select(i => dict.Values[i].LogValue)));
                     var weight = batchTotalWeight * weightNormalizer;
                     var childBatchWeightNormalizer = Weight.Inverse(batchTotalWeight);
@@ -613,45 +641,53 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return nextStartIdx;
             }
 
-            int ProcessPostfix(int idx, int sharedPostfixWithPrevLength, int firstStateOfPostfixSharedWithPrevIdx, int sharedPostfixWithNextLength)
+            // Adds states and transitions corresponding to the suffix of dict.Keys[idx] to the result automaton.
+            // Reuses part of the suffix shared with previously processed suffixes.
+            // Returns the index of the first state that can be reused by the next suffix.
+            // Numbers of characters shared with previous and next suffixes are supplied as parameters.
+            int ProcessSuffix(int idx, int sharedSuffixWithPrevLength, int firstStateOfSuffixSharedWithPrevIdx, int sharedSuffixWithNextLength)
             {
-                (int postfixLength, int prefixEndStateIndex, char postfixTransitionChar, Weight postfixTransitionWeight) = postfixInfo[idx];
-                int firstStateOfPostfixSharedWithNextIdx = end.Index;
-                if (postfixLength != 0)
+                (int suffixLength, int prefixEndStateIndex, char suffixTransitionChar, Weight suffixTransitionWeight) = suffixInfo[idx];
+                int firstStateOfSuffixSharedWithNextIdx = end.Index;
+                if (suffixLength != 0)
                 {
                     var currentState = result[prefixEndStateIndex];
-                    int transitionsUntilPostfixSharedWithNext = postfixLength - sharedPostfixWithNextLength;
-                    if (postfixLength == sharedPostfixWithPrevLength)
+                    int transitionsUntilSuffixSharedWithNext = suffixLength - sharedSuffixWithNextLength;
+                    if (suffixLength == sharedSuffixWithPrevLength)
                     {
-                        currentState = currentState.AddTransition(postfixTransitionChar, postfixTransitionWeight, firstStateOfPostfixSharedWithPrevIdx);
+                        // The first transition leads to the shared part.
+                        currentState = currentState.AddTransition(suffixTransitionChar, suffixTransitionWeight, firstStateOfSuffixSharedWithPrevIdx);
                     }
                     else
                     {
-                        currentState = currentState.AddTransition(postfixTransitionChar, postfixTransitionWeight);
+                        // Adding states and transitions not shared with previously processed suffix.
+                        currentState = currentState.AddTransition(suffixTransitionChar, suffixTransitionWeight);
                         var currentString = dict.Keys[idx];
-                        for (int i = currentString.Length - postfixLength; i < currentString.Length - sharedPostfixWithPrevLength - 1; ++i)
+                        for (int i = currentString.Length - suffixLength; i < currentString.Length - sharedSuffixWithPrevLength - 1; ++i)
                         {
-                            if (transitionsUntilPostfixSharedWithNext == 0)
-                                firstStateOfPostfixSharedWithNextIdx = currentState.Index;
+                            if (transitionsUntilSuffixSharedWithNext == 0)
+                                firstStateOfSuffixSharedWithNextIdx = currentState.Index;
 
                             currentState = currentState.AddTransition(currentString[i], Weight.One);
-                            --transitionsUntilPostfixSharedWithNext;
+                            --transitionsUntilSuffixSharedWithNext;
                         }
-                        if (transitionsUntilPostfixSharedWithNext == 0)
-                            firstStateOfPostfixSharedWithNextIdx = currentState.Index;
-                        currentState = currentState.AddTransition(currentString[currentString.Length - sharedPostfixWithPrevLength - 1], Weight.One, firstStateOfPostfixSharedWithPrevIdx);
-                        --transitionsUntilPostfixSharedWithNext;
+                        if (transitionsUntilSuffixSharedWithNext == 0)
+                            firstStateOfSuffixSharedWithNextIdx = currentState.Index;
+                        currentState = currentState.AddTransition(currentString[currentString.Length - sharedSuffixWithPrevLength - 1], Weight.One, firstStateOfSuffixSharedWithPrevIdx);
+                        --transitionsUntilSuffixSharedWithNext;
                     }
-                    if (transitionsUntilPostfixSharedWithNext >= 0)
+                    if (transitionsUntilSuffixSharedWithNext >= 0)
                     {
-                        for (int i = 0; i < transitionsUntilPostfixSharedWithNext; ++i)
+                        // If we didn't encounter the state, from which the part shared with the next suffix starts yet,
+                        // find it within the part shared with the previous suffix.
+                        for (int i = 0; i < transitionsUntilSuffixSharedWithNext; ++i)
                             currentState = result[currentState.TransitionIterator.Value.DestinationStateIndex];
 
-                        firstStateOfPostfixSharedWithNextIdx = currentState.Index;
+                        firstStateOfSuffixSharedWithNextIdx = currentState.Index;
                     }
                 }
 
-                return firstStateOfPostfixSharedWithNextIdx;
+                return firstStateOfSuffixSharedWithNextIdx;
             }
         }
     }
