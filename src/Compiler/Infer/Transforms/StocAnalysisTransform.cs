@@ -35,12 +35,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             get { return "StocAnalysisTransform"; }
         }
 
-        private Set<IVariableDeclaration> varsWithConstantDefinition = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
-        private Dictionary<IVariableDeclaration, int> stochasticConditionsOf = new Dictionary<IVariableDeclaration, int>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        private readonly Set<IVariableDeclaration> varsWithConstantDefinition = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        private readonly Dictionary<IVariableDeclaration, int> stochasticConditionsOf = new Dictionary<IVariableDeclaration, int>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
         private int numberOfStochasticConditions;
-        private bool convertConstants;
+        private readonly bool convertConstants;
         // for DistributionAnalysis
-        private Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>();
+        private readonly Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>();
         private bool inPartialLoop;
 
         internal StocAnalysisTransform(bool convertConstants = false)
@@ -53,9 +53,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             for (int argIndex = 0; argIndex < imie.Arguments.Count; argIndex++)
             {
                 IExpression arg = imie.Arguments[argIndex];
-                if (arg is IAddressOutExpression)
+                if (arg is IAddressOutExpression iaoe)
                 {
-                    IAddressOutExpression iaoe = (IAddressOutExpression)arg;
                     IExpression target = iaoe.Expression;
                     bool targetHasLiteralIndices = inPartialLoop;
                     object targetDecl = Recognizer.GetDeclaration(target);
@@ -65,8 +64,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     {
                         SetMarginalPrototype(target, targetDecl, mpa, mpa2, targetHasLiteralIndices);
                     }
-                    IVariableDeclaration ivd = targetDecl as IVariableDeclaration;
-                    if (ivd != null)
+                    if (targetDecl is IVariableDeclaration ivd)
                     {
                         SetStoch(target, CodeRecognizer.IsStochastic(context, imie) || IsStochContext(ivd));
                     }
@@ -128,11 +126,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 else if (domainType.Equals(typeof(int)))
                 {
                     Type distType = typeof(Discrete);
-                    Exception exception;
-                    MethodInfo method = (MethodInfo)Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(distType, "PointMass",
-                                                                                             BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod |
-                                                                                             BindingFlags.FlattenHierarchy,
-                                                                                             null, new Type[] { domainType, typeof(int) }, out exception);
+                    MethodInfo method = (MethodInfo)Reflection.Invoker.GetBestMethod(distType, "PointMass",
+                        BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod |
+                        BindingFlags.FlattenHierarchy,
+                        null, new Type[] { domainType, typeof(int) }, out Exception exception);
                     if (method != null)
                     {
                         IExpression cardinalityExpression = GetIntCardinalityExpression(rhs, ae.Target, targetHasLiteralIndices);
@@ -153,9 +150,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (ipd == null)
             {
                 bool setStoch = true;
-                if (ae.Expression is IArrayCreateExpression)
+                if (ae.Expression is IArrayCreateExpression iace)
                 {
-                    IArrayCreateExpression iace = (IArrayCreateExpression)ae.Expression;
                     // Array creation with no initialiser can be either for stochastic or deterministic
                     // variables, so just return without marking the variable.
                     if (iace.Initializer == null) setStoch = false;
@@ -195,9 +191,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected void SetStoch(IExpression expr, bool stoch)
         {
             if (expr is IArgumentReferenceExpression) return;
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                SetStoch(((IArrayIndexerExpression)expr).Target, stoch);
+                SetStoch(iaie.Target, stoch);
                 return;
             }
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(expr);
@@ -601,7 +597,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
 
                     Type tp = CodeBuilder.MakeJaggedArrayType(sourceType, sizes2);
-                    string name = (targetDecl is IParameterDeclaration) ? ((IParameterDeclaration)targetDecl).Name : ((IVariableDeclaration)targetDecl).Name;
+                    string name = (targetDecl is IParameterDeclaration ipd) ? ipd.Name : ((IVariableDeclaration)targetDecl).Name;
                     name = VariableInformation.GenerateName(context, name + "_mp");
                     mpVar = Builder.VarDecl(name, tp);
                     IList<IStatement> stmts = Builder.StmtCollection();
@@ -1367,8 +1363,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 else if ((mp.prototype is GammaPower) || typeof(GammaPower).IsAssignableFrom(mp.prototypeExpression.GetExpressionType()))
                 {
                     IExpression powerExpression;
-                    if (mp.prototype is GammaPower)
-                        powerExpression = Builder.LiteralExpr(((GammaPower)mp.prototype).Power);
+                    if (mp.prototype is GammaPower gp)
+                        powerExpression = Builder.LiteralExpr(gp.Power);
                     else
                         powerExpression = GetGammaPowerExpression(mp.prototypeExpression);
                     powerExpression = Builder.BinaryExpr(BinaryOperator.Multiply, powerExpression, imie.Arguments[1]);
@@ -1457,16 +1453,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 (mpa2.prototypeExpression != null && mpa2.prototypeExpression.Equals(mpa.prototypeExpression));
             if (compatible && mpa2.prototype != mpa.prototype)
             {
-                SettableToUniform prototype = mpa.prototype as SettableToUniform;
-                SettableToUniform prototype2 = mpa2.prototype as SettableToUniform;
-                if (prototype == null || prototype2 == null)
-                    compatible = false;
-                else
+                if (mpa.prototype is SettableToUniform prototype && mpa2.prototype is SettableToUniform prototype2)
                 {
                     prototype.SetToUniform();
                     prototype2.SetToUniform();
                     compatible = prototype.Equals(prototype2);
                 }
+                else
+                    compatible = false;
             }
             return compatible;
         }
@@ -1612,14 +1606,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns></returns>
         protected IExpression ReplaceIndices(Containers containers, Set<IVariableDeclaration> keepVars, IExpression expr)
         {
-            if (expr is ICastExpression)
+            if (expr is ICastExpression ice)
             {
-                ICastExpression ice = (ICastExpression)expr;
                 return Builder.CastExpr(ReplaceIndices(containers, keepVars, ice.Expression), ice.TargetType);
             }
-            else if (expr is IArrayIndexerExpression)
+            else if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 IExpression[] newIndices = new IExpression[iaie.Indices.Count];
                 for (int i = 0; i < newIndices.Length; i++)
                 {
@@ -1627,9 +1619,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 return Builder.ArrayIndex(ReplaceIndices(containers, keepVars, iaie.Target), newIndices);
             }
-            else if (expr is IMethodInvokeExpression)
+            else if (expr is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression)expr;
                 IMethodInvokeExpression imie2 = Builder.MethodInvkExpr();
                 imie2.Method = imie.Method;
                 if (imie.Method.Method.Name.Equals("get_Item"))
@@ -1648,9 +1639,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 return imie2;
             }
-            else if (expr is IPropertyReferenceExpression)
+            else if (expr is IPropertyReferenceExpression ipre)
             {
-                IPropertyReferenceExpression ipre = (IPropertyReferenceExpression)expr;
                 return Builder.PropRefExpr(ReplaceIndices(containers, keepVars, ipre.Target), ipre.Property);
             }
             return expr;
@@ -1682,11 +1672,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     return Builder.LiteralExpr(0);
                 }
             }
-            else if (expr is IArrayIndexerExpression)
+            else if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 IExpression target = ReplaceVarsNotContained(containers, keepVars, iaie.Target);
-                if (target is ILiteralExpression && ((ILiteralExpression)target).Value.Equals(0))
+                if (target is ILiteralExpression ile && ile.Value.Equals(0))
                     return Builder.LiteralExpr(0);
                 else
                 {
@@ -1786,20 +1775,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             MarginalPrototype mpa = GetMarginalPrototype(source, targetDecl);
             if (mpa != null)
             {
-                if (mpa.prototype is Microsoft.ML.Probabilistic.Distributions.Dirichlet)
+                if (mpa.prototype is Dirichlet d)
                 {
-                    Microsoft.ML.Probabilistic.Distributions.Dirichlet d = (Microsoft.ML.Probabilistic.Distributions.Dirichlet)mpa.prototype;
                     return Builder.LiteralExpr(d.Dimension);
                 }
-                else if (mpa.prototype is Microsoft.ML.Probabilistic.Distributions.VectorGaussian)
+                else if (mpa.prototype is VectorGaussian vg)
                 {
-                    Microsoft.ML.Probabilistic.Distributions.VectorGaussian d = (Microsoft.ML.Probabilistic.Distributions.VectorGaussian)mpa.prototype;
-                    return Builder.LiteralExpr(d.Dimension);
+                    return Builder.LiteralExpr(vg.Dimension);
                 }
-                else if (mpa.prototype is Microsoft.ML.Probabilistic.Distributions.SparseGaussianList)
+                else if (mpa.prototype is SparseGaussianList sgl)
                 {
-                    Microsoft.ML.Probabilistic.Distributions.SparseGaussianList d = (Microsoft.ML.Probabilistic.Distributions.SparseGaussianList)mpa.prototype;
-                    return Builder.LiteralExpr(d.Dimension);
+                    return Builder.LiteralExpr(sgl.Dimension);
                 }
                 else if (mpa.prototype == null && mpa.prototypeExpression != null)
                 {
@@ -1809,15 +1795,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (lengthExpr == null)
                         lengthExpr = GetVectorGaussianLengthExpression(mpe);
                     if (lengthExpr == null)
-                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, Microsoft.ML.Probabilistic.Distributions.SparseGaussianList>(Microsoft.ML.Probabilistic.Distributions.SparseGaussianList.FromSize));
+                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, SparseGaussianList>(SparseGaussianList.FromSize));
                     if (lengthExpr == null)
-                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, Microsoft.ML.Probabilistic.Distributions.SparseGammaList>(Microsoft.ML.Probabilistic.Distributions.SparseGammaList.FromSize));
+                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, SparseGammaList>(SparseGammaList.FromSize));
                     if (lengthExpr == null)
-                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, Microsoft.ML.Probabilistic.Distributions.SparseBernoulliList>(Microsoft.ML.Probabilistic.Distributions.SparseBernoulliList.FromSize));
+                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, SparseBernoulliList>(SparseBernoulliList.FromSize));
                     if (lengthExpr == null)
-                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, Microsoft.ML.Probabilistic.Distributions.SparseBetaList>(Microsoft.ML.Probabilistic.Distributions.SparseBetaList.FromSize));
+                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, SparseBetaList>(SparseBetaList.FromSize));
                     if (lengthExpr == null)
-                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset>(Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset.FromSize));
+                        lengthExpr = GetSparseListLengthExpression(mpe, new Func<int, BernoulliIntegerSubset>(BernoulliIntegerSubset.FromSize));
                     if (lengthExpr != null && !HasExtraIndices(lengthExpr, targetDecl))
                     {
                         return lengthExpr;
@@ -1858,25 +1844,24 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             MarginalPrototype mpa = GetMarginalPrototype(source, targetDecl);
             if (mpa != null)
             {
-                if (mpa.prototype is Microsoft.ML.Probabilistic.Distributions.Discrete)
+                if (mpa.prototype is Discrete d)
                 {
-                    Microsoft.ML.Probabilistic.Distributions.Discrete d = (Microsoft.ML.Probabilistic.Distributions.Discrete)mpa.prototype;
                     return Builder.LiteralExpr(d.Dimension);
                 }
                 else if (mpa.prototype == null && mpa.prototypeExpression != null)
                 {
                     IExpression discreteExpression = mpa.prototypeExpression;
-                    if (Recognizer.IsStaticMethod(discreteExpression, typeof(Microsoft.ML.Probabilistic.Distributions.Discrete), "Uniform"))
+                    if (Recognizer.IsStaticMethod(discreteExpression, typeof(Discrete), "Uniform"))
                     {
                         IMethodInvokeExpression imie = (IMethodInvokeExpression)discreteExpression;
                         return imie.Arguments[0];
                     }
-                    if (Recognizer.IsStaticMethod(discreteExpression, typeof(Microsoft.ML.Probabilistic.Distributions.Discrete), "PointMass"))
+                    if (Recognizer.IsStaticMethod(discreteExpression, typeof(Discrete), "PointMass"))
                     {
                         IMethodInvokeExpression imie = (IMethodInvokeExpression)discreteExpression;
                         return imie.Arguments[1];
                     }
-                    return Builder.PropRefExpr(discreteExpression, typeof(Microsoft.ML.Probabilistic.Distributions.Discrete), "Dimension", typeof(int));
+                    return Builder.PropRefExpr(discreteExpression, typeof(Discrete), "Dimension", typeof(int));
                 }
             }
             if (!CodeRecognizer.IsStochastic(context, source) && !ReferenceEquals(source, targetDecl))
@@ -1899,22 +1884,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 MarginalPrototype mpa = GetMarginalPrototype(source, targetDecl);
                 if (mpa != null)
                 {
-                    if (mpa.prototype is Microsoft.ML.Probabilistic.Distributions.Wishart)
+                    if (mpa.prototype is Wishart w)
                     {
-                        Microsoft.ML.Probabilistic.Distributions.Wishart d = (Microsoft.ML.Probabilistic.Distributions.Wishart)mpa.prototype;
-                        return Builder.LiteralExpr(d.Dimension);
+                        return Builder.LiteralExpr(w.Dimension);
                     }
                     else if (mpa.prototype == null && mpa.prototypeExpression != null)
                     {
                         IExpression wishartExpression = mpa.prototypeExpression;
                         if (typeof(Wishart).IsAssignableFrom(wishartExpression.GetExpressionType()))
                         {
-                            if (Recognizer.IsStaticMethod(wishartExpression, typeof(Microsoft.ML.Probabilistic.Distributions.Wishart), "Uniform"))
+                            if (Recognizer.IsStaticMethod(wishartExpression, typeof(Wishart), "Uniform"))
                             {
                                 IMethodInvokeExpression imie = (IMethodInvokeExpression)wishartExpression;
                                 return imie.Arguments[0];
                             }
-                            return Builder.PropRefExpr(wishartExpression, typeof(Microsoft.ML.Probabilistic.Distributions.Wishart), "Dimension", typeof(int));
+                            return Builder.PropRefExpr(wishartExpression, typeof(Wishart), "Dimension", typeof(int));
                         }
                     }
                 }
@@ -1954,7 +1938,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     return ReplaceIndices(size, targetDecl);
                 }
                 // fall through
-                arrayType = (sourceDecl is IVariableDeclaration) ? ((IVariableDeclaration)sourceDecl).VariableType.DotNetType : ((IParameterDeclaration)sourceDecl).ParameterType.DotNetType;
+                arrayType = (sourceDecl is IVariableDeclaration ivd) ? ivd.VariableType.DotNetType : ((IParameterDeclaration)sourceDecl).ParameterType.DotNetType;
                 for (int bracket = 0; bracket < depth; bracket++)
                 {
                     arrayType = arrayType.GetElementType();

@@ -81,9 +81,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return 0.0;
             double[] nodes = new double[QuadratureNodeCount];
             double[] weights = new double[QuadratureNodeCount];
-            double mD, vD;
             Gaussian dMarginal = d * to_d;
-            dMarginal.GetMeanAndVariance(out mD, out vD);
+            dMarginal.GetMeanAndVariance(out double mD, out double vD);
             Quadrature.GaussianNodesAndWeights(mD, vD, nodes, weights);
             if (!to_d.IsUniform())
             {
@@ -254,9 +253,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 to_d = new Gaussian(MMath.Digamma(exp.Shape - 1) - Math.Log(exp.Rate), MMath.Trigamma(exp.Shape - 1));
             }
 
-            double mD, vD;
             Gaussian dMarginal = d * to_d;
-            dMarginal.GetMeanAndVariance(out mD, out vD);
+            dMarginal.GetMeanAndVariance(out double mD, out double vD);
 
             // Quadrature cannot get more than 6 digits of precision.
             // So in cases where extra precision is required, use another approach.
@@ -322,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             else
             {
-                Converter<double, double> p = delegate (double y) { return d.GetLogProb(y) + (exp.Shape - 1) * y - exp.Rate * Math.Exp(y); };
+                double p(double y) { return d.GetLogProb(y) + (exp.Shape - 1) * y - exp.Rate * Math.Exp(y); }
                 double sc = Math.Sqrt(vD);
                 double offset = p(mD);
                 double relTol = 1e-16;
@@ -384,13 +382,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             // f(x,y) = Ga(exp(y); shape, rate) = exp(y*(shape-1) -rate*exp(y))
             double[] nodes = new double[QuadratureNodeCount];
             double[] weights = new double[QuadratureNodeCount];
-            double moD, voD;
-            d.GetMeanAndVariance(out moD, out voD);
-            double mD, vD;
+            d.GetMeanAndVariance(out double moD, out double voD);
             if (result.IsUniform() && exp.Shape > 1)
                 result = new Gaussian(MMath.Digamma(exp.Shape - 1) - Math.Log(exp.Rate), MMath.Trigamma(exp.Shape - 1));
             Gaussian dMarginal = d * result;
-            dMarginal.GetMeanAndVariance(out mD, out vD);
+            dMarginal.GetMeanAndVariance(out double mD, out double vD);
             if (vD == 0)
                 return ExpOp_Slow.DAverageConditional(exp, d);
             // Do not add mD to the quadrature nodes because it will lose precision in the nodes when mD has large magnitude.
@@ -476,8 +472,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Gamma ExpAverageLogarithm([Proper] Gaussian d)
         {
             if (d.IsPointMass) return Gamma.PointMass(Math.Exp(d.Point));
-            double mD, vD;
-            d.GetMeanAndVariance(out mD, out vD);
+            d.GetMeanAndVariance(out double mD, out double vD);
             return ExpDistribution(mD, vD);
         }
 
@@ -495,8 +490,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [Quality(QualityBand.Experimental)]
         public static Gamma ExpAverageLogarithm([Proper] NonconjugateGaussian d)
         {
-            double mD, vD;
-            d.GetMeanAndVariance(out mD, out vD);
+            d.GetMeanAndVariance(out double mD, out double vD);
             return ExpDistribution(mD, vD);
         }
 
@@ -504,8 +498,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static GammaPower ExpAverageLogarithm([Proper] Gaussian d, GammaPower result)
         {
             if (d.IsPointMass) return GammaPower.PointMass(Math.Exp(d.Point), result.Power);
-            double mD, vD;
-            d.GetMeanAndVariance(out mD, out vD);
+            d.GetMeanAndVariance(out double mD, out double vD);
             // E[exp(d)] = exp(mD + vD/2)
             double logMeanMinusMeanLog = vD / 2;
             double logMean = mD + logMeanMinusMeanLog;
@@ -574,8 +567,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             var a = exp.Shape;
             var v_opt = 1.0 / (a - 1.0);
             var b = exp.Rate;
-            double m = 0.0, v = 0.0;
-            d.GetMeanAndVariance(out m, out v);
+            d.GetMeanAndVariance(out double m, out double v);
             if (a > 1)
             {
                 var mf = Math.Log((a - 1) / b) - .5 * v_opt;
@@ -623,8 +615,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (exp.IsPointMass)
                 return DAverageLogarithm(exp.Point);
 
-            double m, v;
-            d.GetMeanAndVariance(out m, out v);
+            d.GetMeanAndVariance(out double m, out double v);
             /* --------- This update comes from T. Minka's equations for non-conjugate VMP. -------- */
             Gaussian result = new Gaussian();
             result.Precision = exp.Rate * Math.Exp(m + v / 2);
@@ -707,8 +698,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 return DAverageConditional(exp, d.Point);
             }
-            double dmode, dminMinusMode, dmaxMinusMode;
-            GetIntegrationBounds(exp, d, out dmode, out dminMinusMode, out dmaxMinusMode);
+            GetIntegrationBounds(exp, d, out double dmode, out double dminMinusMode, out double dmaxMinusMode);
             if (dminMinusMode == dmaxMinusMode) return DAverageConditional(exp, d.Point);
             double expmode = Math.Exp(dmode);
             int n = QuadratureNodeCount;
@@ -737,14 +727,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             // with deriv = -v*b*exp(x)
             // or x = log((a-1 - (x-m)/v)/b)
             // with deriv = -1/((a-1)v - (x-m))
-            double mx, vx;
-            d.GetMeanAndVariance(out mx, out vx);
+            d.GetMeanAndVariance(out double mx, out double vx);
             double aMinus1 = exp.Shape - 1;
             double b = exp.Rate;
             double x = mx;
-            double lowerBound;
-            if (aMinus1 == 0) lowerBound = Math.Log(1e-16 * Math.Abs(mx / vx / b));
-            else lowerBound = Math.Log(1e-16 * Math.Abs(aMinus1 / b));
             for (int iter = 0; iter < 1000; iter++)
             {
                 double oldx = x;
@@ -782,14 +768,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             double expMode = Math.Exp(mode);
             // We want to find where LogFactorMinusMode == logUlp1, so we find zeroes of the difference.
             double logUlp1 = Math.Log(MMath.Ulp1);
-            Func<double, double> func = delegate (double xMinusMode)
+            double func(double xMinusMode)
             {
                 return LogFactorMinusMode(xMinusMode, exp, d, mode, expMode) - logUlp1;
-            };
-            Func<double, double> deriv = delegate (double xMinusMode)
+            }
+            double deriv(double xMinusMode)
             {
                 return -exp.Rate * expMode * Math.Exp(xMinusMode) - xMinusMode * d.Precision + (d.MeanTimesPrecision - mode * d.Precision) + (exp.Shape - 1);
-            };
+            }
             List<double> zeroes = GaussianOp_Slow.FindZeroes(func, deriv, new double[] { 0 }, new double[0]);
             dminMinusMode = MMath.Min(zeroes);
             dmaxMinusMode = MMath.Max(zeroes);
@@ -995,11 +981,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (exp.IsPointMass)
                 return ExpOp.DAverageLogarithm(exp.Point);
 
-            double m, v;
-            d.GetMeanAndVariance(out m, out v);
-            double mu, s2;
+            d.GetMeanAndVariance(out double m, out double v);
             var prior = d / to_d;
-            prior.GetMeanAndVariance(out mu, out s2);
+            prior.GetMeanAndVariance(out double mu, out double s2);
             var z = Vector.Zero(2);
             z[0] = m;
             z[1] = Math.Log(v);

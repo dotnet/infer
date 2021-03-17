@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Concurrent;
 using System.Reflection;
 using Microsoft.ML.Probabilistic;
+using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;

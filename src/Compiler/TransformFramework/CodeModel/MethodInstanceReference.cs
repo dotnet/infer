@@ -183,10 +183,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
             if (GenericArguments.Count > 0)
             {
                 genericArgString.Append("<");
-                genericArgString.Append(GenericArguments);
+                genericArgString.Append(StringUtil.CollectionToString(GenericArguments, ","));
                 genericArgString.Append(">");
             }
-            return "MethodInstanceReference: " + GenericMethod + genericArgString + "(" + Parameters + ")";
+            return "MethodInstanceReference: " + GenericMethod + genericArgString + Util.CollectionToString(Parameters);
         }
 
         public override bool Equals(object obj)

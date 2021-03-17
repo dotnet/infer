@@ -25,17 +25,17 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Helps build class declarations
         /// </summary>
-        private static CodeBuilder Builder = CodeBuilder.Instance;
+        private static readonly CodeBuilder Builder = CodeBuilder.Instance;
 
         public ITypeDeclaration modelType;
         public AttributeRegistry<object, ICompilerAttribute> Attributes;
-        private Stack<IModelExpression> toSearch = new Stack<IModelExpression>();
-        private Set<IModelExpression> searched = new Set<IModelExpression>(ReferenceEqualityComparer<IModelExpression>.Instance);
+        private readonly Stack<IModelExpression> toSearch = new Stack<IModelExpression>();
+        private readonly Set<IModelExpression> searched = new Set<IModelExpression>(ReferenceEqualityComparer<IModelExpression>.Instance);
 
         /// <summary>
         /// The set of condition variables used in 'IfNot' blocks.  Filled in during search.
         /// </summary>
-        private Set<Variable> negatedConditionVariables = new Set<Variable>(ReferenceEqualityComparer<Variable>.Instance);
+        private readonly Set<Variable> negatedConditionVariables = new Set<Variable>(ReferenceEqualityComparer<Variable>.Instance);
 
         // optimizes ModelBuilder.Compile
         internal List<Variable> observedVars = new List<Variable>();
@@ -68,7 +68,6 @@ namespace Microsoft.ML.Probabilistic.Models
             modelMethod = Builder.MethodDecl(MethodVisibility.Public, "Model", typeof(void), modelType);
             IBlockStatement body = Builder.BlockStmt();
             modelMethod.Body = body;
-            //blocks = new List<IList<IStatement>>();
             blockStack = new Stack<IList<IStatement>>();
             blockStack.Push(body.Statements);
             modelType.Methods.Add(modelMethod);
@@ -173,7 +172,6 @@ namespace Microsoft.ML.Probabilistic.Models
 
         private void AddStatement(IStatement ist)
         {
-            //blocks[blocks.Count - 1].Add(ist);
             blockStack.Peek().Add(ist);
         }
 
@@ -593,7 +591,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     // for a constant, we must get the variable reference, not the value
                     if (isConstant) varExpr = Builder.VarRefExpr((IVariableDeclaration)variable.GetDeclaration());
                     AddStatement(Builder.ExprStatement(
-                        Builder.StaticMethod(new Action<object>(InferNet.Infer), varExpr, varName, queryExpr)));
+                        Builder.StaticMethod(new Action<object, string, QueryType>(InferNet.Infer), varExpr, varName, queryExpr)));
                 }
                 BuildStatementBlocks(stBlocks, false);
             }
@@ -1007,7 +1005,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     IExpression array = variable.GetExpression();
                     IExpression valueIsNotNull = Builder.BinaryExpr(array, BinaryOperator.ValueInequality, Builder.LiteralExpr(null));
                     IConditionStatement cs = Builder.CondStmt(valueIsNotNull, Builder.BlockStmt());
-                    var constraint = new Action<int, int>(Microsoft.ML.Probabilistic.Factors.Constrain.Equal);
+                    var constraint = new Action<int, int>(Constrain.Equal);
                     Type arrayType = array.GetExpressionType();
                     int rank = vi.sizes[0].Length;
                     //Util.GetElementType(arrayType, out rank);

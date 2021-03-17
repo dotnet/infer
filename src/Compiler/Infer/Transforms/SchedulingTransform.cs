@@ -297,8 +297,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                 }
             }
-            List<NodeIndex> initSchedule;
-            List<NodeIndex> schedule = Schedule(g, inputStmts, offsetVarsToDelete, out initSchedule, out bool isCyclic, groupOf2);
+            List<NodeIndex> schedule = Schedule(g, inputStmts, offsetVarsToDelete, out List<int> initSchedule, out bool isCyclic, groupOf2);
             if (schedule == null)
             {
                 schedule = new List<NodeIndex>(new Range(0, inputStmts.Count));
@@ -382,9 +381,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // if a DependencyInformation refers to an inner statement of a block, make it refer to the block instead
                 foreach (IStatement stmt in inputStmts)
                 {
-                    if (stmt is IWhileStatement)
+                    if (stmt is IWhileStatement iws)
                     {
-                        IWhileStatement iws = (IWhileStatement)stmt;
                         ForEachStatement(iws.Body.Statements, ist => replacements[ist] = iws);
                     }
                 }

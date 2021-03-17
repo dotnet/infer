@@ -33,7 +33,7 @@ namespace Microsoft.ML.Probabilistic.Collections
     /// </para>
     /// </remarks>
     [Serializable]
-    public class FileArray<T> : IArray<T>, IDisposable, ICloneable
+    public class FileArray<T> : IArray<T>, IReadOnlyList<T>, IDisposable, ICloneable
     {
         protected readonly int count;
         protected readonly string prefix;
@@ -45,7 +45,7 @@ namespace Microsoft.ML.Probabilistic.Collections
             get { return prefix; }
         }
 
-        private static object folderLock = new object();
+        private static readonly object folderLock = new object();
 
         /// <summary>
         /// Create a file array

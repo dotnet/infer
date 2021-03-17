@@ -11,6 +11,14 @@ namespace Microsoft.ML.Probabilistic.Tests.Core
     public class UtilsTests
     {
         [Fact]
+        public void GetElementType()
+        {
+            int rank;
+            Assert.Equal(typeof(bool), Utilities.Util.GetElementType(typeof(IReadOnlyList<bool>), out rank));
+            Assert.Equal(1, rank);
+        }
+
+        [Fact]
         public void TestCartesianProduct()
         {
             var lists = new List<IEnumerable<string>>

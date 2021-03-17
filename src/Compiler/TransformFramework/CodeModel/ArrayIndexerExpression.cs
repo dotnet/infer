@@ -85,7 +85,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
             if (arrayType.IsArray)
                 return arrayType.GetElementType();
             else
-                return Microsoft.ML.Probabilistic.Utilities.Util.GetElementType(arrayType);
+                return Utilities.Util.GetElementType(arrayType);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Utilities;
 
     /// <summary>
-    /// A repository of commonly used factor methods.
+    /// Contains commonly used factor methods.
     /// </summary>
     [Quality(QualityBand.Stable)]
     public static class Factor

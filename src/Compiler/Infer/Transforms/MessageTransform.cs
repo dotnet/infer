@@ -273,10 +273,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // Find information about the messages for each argument and work out their types
             Dictionary<string, MessageInfo> msgInfo = new Dictionary<string, MessageInfo>();
             if (debug)
+            {
                 context.InputAttributes.Set(imie, new MessageInfoDict()
                 {
                     msgInfo = msgInfo
                 });
+            }
             var argumentTypes = new Dictionary<string, Type>();
             var resultTypes = new Dictionary<string, Type>();
             var isStochastic = new Dictionary<string, bool>();
@@ -1284,7 +1286,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected IExpression ConvertInfer(IMethodInvokeExpression imie)
         {
-            //IStatement ist = context.FindOutputForAncestor<IStatement, IStatement>();
             IStatement ist = context.FindAncestor<IStatement>();
             context.OutputAttributes.Set(ist, new OperatorStatement());
             object decl = Recognizer.GetDeclaration(imie.Arguments[0]);
@@ -1310,16 +1311,20 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     MessageDirection direction = (query == QueryTypes.MarginalDividedByPrior) ? MessageDirection.Backwards : MessageDirection.Forwards;
                     MessageArrayInformation mai = (direction == MessageDirection.Backwards) ? ctmi.bck : ctmi.fwd;
-                    mie.Arguments[0] = Builder.VarRefExpr(mai.decl);
+                    var arguments = mie.Arguments.ToArray();
+                    arguments[0] = Builder.VarRefExpr(mai.decl);
+                    var type = mai.decl.VariableType.DotNetType;
+                    var method = ((MethodInfo)mie.Method.Method.MethodInfo).GetGenericMethodDefinition().MakeGenericMethod(type);
+                    mie = Builder.StaticGenericMethod(method, arguments);
                 }
                 if (mie.Arguments.Count == 1)
                 {
                     string varName;
-                    if (decl is IParameterDeclaration ipd) varName = ipd.Name;
-                    else varName = ((IVariableDeclaration)decl).Name;
                     ChannelInfo ci = context.InputAttributes.Get<ChannelInfo>(decl);
                     if (ci != null) varName = ci.varInfo.Name;
-                    mie.Arguments.Add(Builder.LiteralExpr(varName));
+                    else if (decl is IParameterDeclaration ipd) varName = ipd.Name;
+                    else varName = ((IVariableDeclaration)decl).Name;
+                    mie = Builder.StaticGenericMethod(new Action<object,string>(InferNet.Infer), mie.Arguments[0], Builder.LiteralExpr(varName));
                 }
             }
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(mie.Arguments[0]);
