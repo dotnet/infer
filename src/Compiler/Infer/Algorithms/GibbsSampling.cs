@@ -26,8 +26,8 @@ namespace Microsoft.ML.Probabilistic.Algorithms
 
         public override Delegate GetVariableFactor(bool derived, bool initialised)
         {
-            if (derived) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.DerivedVariableGibbs);
-            else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.VariableGibbs);
+            if (derived) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Clone.DerivedVariableGibbs);
+            else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Clone.VariableGibbs);
         }
 
         /// <summary>

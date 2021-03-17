@@ -939,7 +939,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                                            new Type[] { eltType }, msg, argToBeCopied);
                     }
                     else
-                        return Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy<PlaceHolder>),
+                        return Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy<PlaceHolder>),
                                                            new Type[] { sourceType }, argToBeCopied);
                 }
                 else
@@ -950,7 +950,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         return Builder.StaticGenericMethod(new Func<Bernoulli, Bernoulli, Bernoulli>(ArrayHelper.SetTo),
                                                            new Type[] { resultType }, msg, argToBeCopied);
                     else
-                        return Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy<PlaceHolder>),
+                        return Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy<PlaceHolder>),
                                                            new Type[] { sourceType }, argToBeCopied);
                 }
             }

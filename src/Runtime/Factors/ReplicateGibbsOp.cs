@@ -17,8 +17,8 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of the variable being replicated.</typeparam>
-    [FactorMethod(typeof(VariableFactor), "Replicate<>", Default = true)]
-    [FactorMethod(typeof(VariableFactor), "ReplicateWithMarginal<>", Default = true)]
+    [FactorMethod(typeof(Clone), "Replicate<>", Default = true)]
+    [FactorMethod(typeof(Clone), "ReplicateWithMarginal<>", Default = true)]
     [Quality(QualityBand.Mature)]
     public static class ReplicateGibbsOp<T>
     {
@@ -195,7 +195,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp2{T}"]/doc/*'/>
     /// <typeparam name="T">The type of the replicated variable.</typeparam>
-    [FactorMethod(typeof(VariableFactor), "ReplicateWithMarginalGibbs<>")]
+    [FactorMethod(typeof(Clone), "ReplicateWithMarginalGibbs<>")]
     [Buffers("sample", "conditional", "marginalEstimator", "sampleAcc", "conditionalAcc")]
     [Quality(QualityBand.Mature)]
     public static class ReplicateGibbsOp2<T>

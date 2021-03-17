@@ -678,7 +678,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected MarginalPrototype InferMarginalPrototypeOut(IMethodInvokeExpression imie, int argIndex, IExpression target, object targetDecl)
         {
-            if (Recognizer.IsStaticGenericMethod(imie, new FuncOut<PlaceHolder[], int, PlaceHolder[], PlaceHolder[]>(IndexingFactor.Split)))
+            if (Recognizer.IsStaticGenericMethod(imie, new FuncOut<PlaceHolder[], int, PlaceHolder[], PlaceHolder[]>(Collection.Split)))
             {
                 IExpression source = imie.Arguments[0];
                 IExpression count = imie.Arguments[1];
@@ -742,7 +742,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 mpa.prototypeExpression = mpe;
                 return mpa;
             }
-            else if (Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int, PlaceHolder>(IndexingFactor.GetItem)))
+            else if (Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int, PlaceHolder>(Collection.GetItem)))
             {
                 if (imie.Arguments.Count == 2)
                 {
@@ -784,9 +784,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
             }
             else if (
-                Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(IndexingFactor.GetItems)) ||
-                Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(IndexingFactor.Subarray)) ||
-                Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(IndexingFactor.SplitSubarray))
+                Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(Collection.GetItems)) ||
+                Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(Collection.Subarray)) ||
+                Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(Collection.SplitSubarray))
                 )
             {
                 if (imie.Arguments.Count == 2)
@@ -796,7 +796,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     int targetDepth = Recognizer.GetIndexingDepth(target);
                     VariableInformation targetInfo = VariableInformation.GetVariableInformation(context, targetDecl);
                     CopyIndexVariables(target, indices);
-                    bool isSplitSubarray = Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(IndexingFactor.SplitSubarray));
+                    bool isSplitSubarray = Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(Collection.SplitSubarray));
                     int indexingDepth = isSplitSubarray ? 2 : 1;
                     targetInfo.DefineIndexVarsUpToDepth(context, targetDepth + indexingDepth);
                     IExpression index = indices;
@@ -890,7 +890,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
             }
             else if (
-                Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy)) ||
+                Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Clone.Copy)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Diode.Copy)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Cut.Backward)) ||
                 Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, bool, PlaceHolder>(Cut.ForwardWhen)) ||
@@ -1378,7 +1378,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IExpression dimensionExpression = GetArrayLengthExpression(imie.Arguments[0], targetDecl);
                 return GetDiscretePrototypeExpression(targetDecl, dimensionExpression);
             }
-            else if (Recognizer.IsStaticGenericMethod(imie, new FuncOut<PlaceHolder[], int, PlaceHolder[], PlaceHolder[]>(IndexingFactor.Split)))
+            else if (Recognizer.IsStaticGenericMethod(imie, new FuncOut<PlaceHolder[], int, PlaceHolder[], PlaceHolder[]>(Collection.Split)))
             {
                 IExpression source = imie.Arguments[0];
                 return GetSplitMarginalPrototype(source, target, targetDecl);

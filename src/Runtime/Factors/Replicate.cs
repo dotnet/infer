@@ -16,7 +16,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_Divide"]/doc/*'/>
-    [FactorMethod(typeof(VariableFactor), "Replicate<>", Default = true)]
+    [FactorMethod(typeof(Clone), "Replicate<>", Default = true)]
     [Buffers("marginal", "toDef")]
     [Quality(QualityBand.Mature)]
     public static class ReplicateOp_Divide
@@ -97,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="Replicate2BufferOp"]/doc/*'/>
-    [FactorMethod(typeof(VariableFactor), "Replicate<>", Default = false)]
+    [FactorMethod(typeof(Clone), "Replicate<>", Default = false)]
     [Buffers("marginal")]
     [Quality(QualityBand.Preview)]
     public static class Replicate2BufferOp
@@ -285,7 +285,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateBufferOp"]/doc/*'/>
-    [FactorMethod(typeof(VariableFactor), "ReplicateWithMarginal<>", Default = true)]
+    [FactorMethod(typeof(Clone), "ReplicateWithMarginal<>", Default = true)]
     [Quality(QualityBand.Preview)]
     public static class ReplicateBufferOp
     {
@@ -341,8 +341,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_NoDivide"]/doc/*'/>
-    [FactorMethod(typeof(VariableFactor), "Replicate<>", Default = false)]
-    [FactorMethod(typeof(VariableFactor), "ReplicateWithMarginal<>", Default = false)]
+    [FactorMethod(typeof(Clone), "Replicate<>", Default = false)]
+    [FactorMethod(typeof(Clone), "ReplicateWithMarginal<>", Default = false)]
     [Quality(QualityBand.Mature)]
     public static class ReplicateOp_NoDivide
     {
@@ -433,8 +433,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp"]/doc/*'/>
-    [FactorMethod(typeof(VariableFactor), "Replicate<>", Default = true)]
-    [FactorMethod(typeof(VariableFactor), "ReplicateWithMarginal<>", Default = true)]
+    [FactorMethod(typeof(Clone), "Replicate<>", Default = true)]
+    [FactorMethod(typeof(Clone), "ReplicateWithMarginal<>", Default = true)]
     [Quality(QualityBand.Mature)]
     public static class ReplicateOp
     {
@@ -560,7 +560,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateMaxOp"]/doc/*'/>
-    [FactorMethod(typeof(VariableFactor), "Replicate<>")]
+    [FactorMethod(typeof(Clone), "Replicate<>")]
     [Quality(QualityBand.Mature)]
     public static class ReplicateMaxOp
     {

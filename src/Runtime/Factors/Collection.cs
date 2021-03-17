@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// Contains commonly used factor methods.
     /// </summary>
     [Quality(QualityBand.Stable)]
-    public static class IndexingFactor
+    public static class Collection
     {
         /// <summary>
         /// Get an element of an array.

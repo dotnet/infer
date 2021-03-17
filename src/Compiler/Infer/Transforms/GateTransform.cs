@@ -301,7 +301,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (!context.InputAttributes.Has<DerivedVariable>(selectorDecl))
                         context.OutputAttributes.Set(selectorDecl, new DerivedVariable());
                     conditionInfo.selector = Builder.VarRefExpr(selectorDecl);
-                    IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy),
+                    IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy),
                         new Type[] {transformedLhs.GetExpressionType()}, transformedLhs);
                     stmts.Add(Builder.AssignStmt(conditionInfo.selector, copy));
                     conditionInfo.AddCasesStatements(context, stmts);
@@ -1309,7 +1309,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         casesVar = avi.DeriveIndexedVariable(stmts, context, ToString(item), new List<IList<IExpression>> {indices});
                         casesVars[caseNumber] = casesVar;
                         IExpression copy = Builder.StaticGenericMethod(
-                            new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy<PlaceHolder>), new Type[] {typeof (bool)}, item);
+                            new Func<PlaceHolder, PlaceHolder>(Clone.Copy<PlaceHolder>), new Type[] {typeof (bool)}, item);
                         IStatement assignSt = Builder.AssignStmt(Builder.VarRefExpr(casesVar), copy);
                         context.OutputAttributes.Set(copy, new CasesCopy());
                         stmts.Add(assignSt);
@@ -1560,7 +1560,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 //   exprType expr_caseNum = rhs;  
                 //   expr_clones[caseNum] = Factor.Copy(expr_caseNum);
                 IExpression copyExpr = Builder.StaticGenericMethod(
-                    new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy), new Type[] {exprType}, caseVarRef);
+                    new Func<PlaceHolder, PlaceHolder>(Clone.Copy), new Type[] {exprType}, caseVarRef);
                 assignSt = Builder.AssignStmt(item, copyExpr);
                 // want the grouping to come from the definition, not the variable being cloned
                 context.InputAttributes.Remove<GroupMember>(caseVar);
@@ -1569,7 +1569,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 // expr_caseNum[i][j] = Factor.Copy(expr_clones[i][j][caseNum]);
                 IExpression copyExpr = Builder.StaticGenericMethod(
-                    new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy), new Type[] {exprType}, item);
+                    new Func<PlaceHolder, PlaceHolder>(Clone.Copy), new Type[] {exprType}, item);
                 assignSt = Builder.AssignStmt(caseVarRef, copyExpr);
             }
             context.OutputAttributes.Set(assignSt, condInfo);

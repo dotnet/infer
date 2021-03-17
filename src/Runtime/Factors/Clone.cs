@@ -12,10 +12,10 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Utilities;
 
     /// <summary>
-    /// Contains commonly used factor methods.
+    /// Contains factor methods for cloning.
     /// </summary>
     [Quality(QualityBand.Stable)]
-    public static class VariableFactor
+    public static class Clone
     {
         /// <summary>
         /// An internal factor.

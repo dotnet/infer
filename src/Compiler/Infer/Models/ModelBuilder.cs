@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     timestamps.Add(mi.timestamp);
                 }
             }
-            Collection.Sort(timestamps, exprs);
+            CollectionExtensions.Sort(timestamps, exprs);
             foreach (IModelExpression expr in exprs)
             {
                 BuildExpressionUntyped(expr);

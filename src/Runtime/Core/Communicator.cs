@@ -74,7 +74,7 @@ namespace Microsoft.ML.Probabilistic
             {
                 if (destination == comm.Rank)
                     continue;
-                var request = comm.ImmediateSend(Factors.IndexingFactor.Subarray<T>(array, indices[destination]), destination, tag);
+                var request = comm.ImmediateSend(Factors.Collection.Subarray<T>(array, indices[destination]), destination, tag);
                 requests.Add(request);
             }
             return requests;

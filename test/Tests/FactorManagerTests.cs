@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         // turn on PrintStatistics in Binding.cs
         internal void SpeedTest()
         {
-            FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(VariableFactor), "ReplicateWithMarginal<>", typeof(bool[])).GetMethodInfo());
+            FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Clone), "ReplicateWithMarginal<>", typeof(bool[])).GetMethodInfo());
             var parameterTypes = new Dictionary<string, Type>();
             Type ba = typeof(DistributionStructArray<Bernoulli, bool>);
             Type baa = typeof(DistributionRefArray<DistributionStructArray<Bernoulli, bool>, bool[]>);
@@ -180,7 +180,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ReplicateFactorInfo()
         {
             DependencyInformation depInfo;
-            FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(VariableFactor), "Replicate<>", typeof(bool)).GetMethodInfo());
+            FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Clone), "Replicate<>", typeof(bool)).GetMethodInfo());
             Assert.True(info.IsDeterministicFactor);
             var parameterTypes = new Dictionary<string, Type>
             {
@@ -223,7 +223,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ReplicateMessageFcnInfo()
         {
-            FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(VariableFactor), "Replicate<>", typeof(bool)).GetMethodInfo());
+            FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Clone), "Replicate<>", typeof(bool)).GetMethodInfo());
             var parameterTypes = new Dictionary<string, Type>
             {
                 ["Uses"] = typeof(DistributionArray<Bernoulli>),
@@ -246,7 +246,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void UsesEqualDefFactorInfo()
         {
             DependencyInformation depInfo;
-            FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(VariableFactor), "UsesEqualDef<>", typeof(bool)).GetMethodInfo());
+            FactorManager.FactorInfo info = FactorManager.GetFactorInfo(new MethodReference(typeof(Clone), "UsesEqualDef<>", typeof(bool)).GetMethodInfo());
             Assert.True(!info.IsDeterministicFactor);
             var parameterTypes = new Dictionary<string, Type>
             {

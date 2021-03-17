@@ -13,7 +13,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     ///<include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(IndexingFactor), "GetItems<>", Default = true)]
+    [FactorMethod(typeof(Collection), "GetItems<>", Default = true)]
     [Quality(QualityBand.Mature)]
     [Buffers("marginal")]
     public static class GetItemsOp<T>
@@ -433,7 +433,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     ///<include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/doc/*'/>
     /// <typeparam name="T">The type of a list element.</typeparam>
-    [FactorMethod(typeof(IndexingFactor), "GetItems<>", Default = false)]
+    [FactorMethod(typeof(Collection), "GetItems<>", Default = false)]
     [Buffers("partial")]
     [Quality(QualityBand.Mature)]
     public static class GetItemsOp2<T>

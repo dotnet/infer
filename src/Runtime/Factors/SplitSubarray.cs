@@ -13,7 +13,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an array item.</typeparam>
-    [FactorMethod(typeof(IndexingFactor), "SplitSubarray<>", Default = true)]
+    [FactorMethod(typeof(Collection), "SplitSubarray<>", Default = true)]
     [Quality(QualityBand.Preview)]
     public static class SplitSubarrayOp<T>
     {

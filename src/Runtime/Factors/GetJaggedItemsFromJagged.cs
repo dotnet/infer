@@ -13,7 +13,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsFromJaggedOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(IndexingFactor), "GetJaggedItemsFromJagged<>", Default = true)]
+    [FactorMethod(typeof(Collection), "GetJaggedItemsFromJagged<>", Default = true)]
     [Quality(QualityBand.Mature)]
     [Buffers("marginal")]
     public static class GetJaggedItemsFromJaggedOp<T>

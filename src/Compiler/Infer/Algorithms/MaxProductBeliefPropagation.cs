@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Algorithms
 
         public override Delegate GetVariableFactor(bool derived, bool initialised)
         {
-            return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(VariableFactor.VariableMax);
+            return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Clone.VariableMax);
         }
 
         /// <summary>

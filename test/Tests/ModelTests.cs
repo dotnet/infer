@@ -2907,7 +2907,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void VariableOfGenericType()
         {
             Variable<List<double>> a = Variable.Constant(new List<double>(new double[] { 5 }));
-            Variable<double> y = Variable<double>.Factor(IndexingFactor.GetItem, a, 0);
+            Variable<double> y = Variable<double>.Factor(Collection.GetItem, a, 0);
             Variable<double> x = Variable.GaussianFromMeanAndVariance(y, 1);
             InferenceEngine engine = new InferenceEngine();
             Gaussian xActual = engine.Infer<Gaussian>(x);

@@ -153,7 +153,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (indexingDepth == bracket)
             {
                 Type tp = rhs.GetExpressionType();
-                IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy<PlaceHolder>), new Type[] { tp }, rhs);
+                IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy<PlaceHolder>), new Type[] { tp }, rhs);
                 IStatement copySt = Builder.AssignStmt(lhs, copy);
                 stmts.Add(copySt);
             }

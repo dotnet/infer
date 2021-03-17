@@ -370,7 +370,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // Create replicate factor
                 Type returnType = Builder.ToType(repVar.VariableType);
                 IMethodInvokeExpression repMethod = Builder.StaticGenericMethod(
-                    new Func<PlaceHolder, int, PlaceHolder[]>(VariableFactor.Replicate),
+                    new Func<PlaceHolder, int, PlaceHolder[]>(Clone.Replicate),
                     new Type[] {returnType.GetElementType()}, exprToReplicate, loopSize);
 
                 IExpression assignExpression = Builder.AssignExpr(Builder.VarRefExpr(repVar), repMethod);

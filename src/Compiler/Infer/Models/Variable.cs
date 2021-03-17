@@ -3704,7 +3704,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             VariableArray<T> head = Variable.Array<T>(headRange);
             tail = Variable.Array<T>(tailRange);
-            head.SetTo(IndexingFactor.Split, array, headRange.Size, tail);
+            head.SetTo(Collection.Split, array, headRange.Size, tail);
             return head;
         }
 
@@ -3723,7 +3723,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             VariableArray<TItem, T[]> head = ReplaceRanges(array, headRange);
             tail = ReplaceRanges(array, tailRange);
-            head.SetTo(IndexingFactor.Split, array, headRange.Size, tail);
+            head.SetTo(Collection.Split, array, headRange.Size, tail);
             return head;
         }
 
@@ -3747,7 +3747,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A new double variable equal to <c>source[index]</c></returns>
         public static Variable<double> GetItem(Variable<Vector> source, Variable<int> index)
         {
-            return Variable<double>.Factor(IndexingFactor.GetItem<double>, source, index);
+            return Variable<double>.Factor(Collection.GetItem<double>, source, index);
         }
 
 
@@ -3759,7 +3759,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A new variable that is constrained to equal the argument.</returns>
         public static Variable<T> Copy<T>(Variable<T> x)
         {
-            Variable<T> result = Variable<T>.Factor(VariableFactor.Copy<T>, x);
+            Variable<T> result = Variable<T>.Factor(Clone.Copy<T>, x);
             Range valueRange = x.GetValueRange(false);
             if (valueRange != null)
                 result.AddAttribute(new ValueRange(valueRange));
@@ -4005,7 +4005,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> Subarray<T>(Variable<T[]> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(IndexingFactor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -4022,7 +4022,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> Subarray<T>(Variable<IReadOnlyList<T>> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(IndexingFactor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -4039,7 +4039,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> Subarray<T>(VariableArray<T> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(IndexingFactor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -4057,7 +4057,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> Subarray2<T>(VariableArray<T> array, VariableArray<int> indices, VariableArray<T> array2)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(IndexingFactor.Subarray2, array, indices, array2);
+            result.SetTo(Collection.Subarray2, array, indices, array2);
             return result;
         }
 
@@ -4074,7 +4074,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> Subarray<T>(VariableArray<T> array, VariableArray<Variable<int>, IReadOnlyList<int>> indices)
         {
             var result = new VariableArray<T>(indices.Range);
-            result.SetTo(IndexingFactor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -4091,7 +4091,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<VariableArray<T>, T[][]> SplitSubarray<T>(VariableArray<T> array, VariableArray<VariableArray<int>, int[][]> indices)
         {
             VariableArray<VariableArray<T>, T[][]> result = Variable.Array(Variable<T>.Array(indices[indices.Range].Range), indices.Range);
-            result.SetTo(IndexingFactor.SplitSubarray, array, indices);
+            result.SetTo(Collection.SplitSubarray, array, indices);
             return result;
         }
 
@@ -4110,7 +4110,7 @@ namespace Microsoft.ML.Probabilistic.Models
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             var result = ReplaceRanges(array, indices);
-            result.SetTo(IndexingFactor.SplitSubarray, array, indices);
+            result.SetTo(Collection.SplitSubarray, array, indices);
             return result;
         }
 
@@ -4128,7 +4128,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<VariableArray<T>, T[][]> JaggedSubarray<T>(VariableArray<T> array, VariableArray<VariableArray<int>, int[][]> indices)
         {
             VariableArray<VariableArray<T>, T[][]> result = Variable.Array(Variable<T>.Array(indices[indices.Range].Range), indices.Range);
-            result.SetTo(IndexingFactor.JaggedSubarray, array, indices);
+            result.SetTo(Collection.JaggedSubarray, array, indices);
             return result;
         }
 
@@ -4147,7 +4147,7 @@ namespace Microsoft.ML.Probabilistic.Models
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             VariableArray<TItem, T[]> result = ReplaceRanges(array, indices);
-            result.SetTo(IndexingFactor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -4253,7 +4253,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> GetItems<T>(Variable<T[]> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(IndexingFactor.GetItems, array, indices);
+            result.SetTo(Collection.GetItems, array, indices);
             return result;
         }
 
@@ -4270,7 +4270,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> GetItems<T>(Variable<IReadOnlyList<T>> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(IndexingFactor.GetItems, array, indices);
+            result.SetTo(Collection.GetItems, array, indices);
             return result;
         }
 
@@ -4287,7 +4287,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> GetItems<T>(VariableArray<T> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(IndexingFactor.GetItems, array, indices);
+            result.SetTo(Collection.GetItems, array, indices);
             return result;
         }
 
@@ -4306,7 +4306,7 @@ namespace Microsoft.ML.Probabilistic.Models
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             VariableArray<TItem, T[]> result = ReplaceRanges(array, indices);
-            result.SetTo(IndexingFactor.GetItems, array, indices);
+            result.SetTo(Collection.GetItems, array, indices);
             return result;
         }
 
@@ -5499,7 +5499,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     // with Variable.New, if the variable is an array element, or is being used inside a condition block.  In these cases, the lhs should be
                     // defined as a copy of the rhs.
                     //throw new InvalidOperationException(variable+" was not defined in this condition block.");
-                    MethodInvoke mi = new MethodInvoke(new Func<T, T>(Factors.VariableFactor.Copy<T>).Method, variable);
+                    MethodInvoke mi = new MethodInvoke(new Func<T, T>(Factors.Clone.Copy<T>).Method, variable);
                     SetTo(mi);
                     return;
                 }

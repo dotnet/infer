@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 #if true
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExitingVariableOp"]/doc/*'/>
     /// <remarks><para>
-    /// This factor is like <see cref="VariableFactor.ReplicateWithMarginal{T}"/> except <c>Uses[0]</c> plays the role of <c>Def</c>,
+    /// This factor is like <see cref="Clone.ReplicateWithMarginal{T}"/> except <c>Uses[0]</c> plays the role of <c>Def</c>,
     /// and <c>Def</c> is considered a <c>Use</c>. Needed only when a variable exits a gate in VMP.
     /// </para></remarks>
     [FactorMethod(typeof(Gate), "ExitingVariable<>")]
@@ -62,7 +62,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateExitingOp"]/doc/*'/>
     /// <remarks><para>
-    /// This factor is like <see cref="VariableFactor.Replicate{T}"/> except <c>Uses[0]</c> plays the role of <c>Def</c>,
+    /// This factor is like <see cref="Clone.Replicate{T}"/> except <c>Uses[0]</c> plays the role of <c>Def</c>,
     /// and <c>Def</c> is considered a <c>Use</c>. Needed only when a variable exits a gate in VMP.
     /// </para></remarks>
     [FactorMethod(typeof(Gate), "ReplicateExiting<>")]

@@ -264,7 +264,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (rhs != null && rhs is IMethodInvokeExpression imie)
                 {
                     bool copyPropagation = false;
-                    if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy)) && copyPropagation)
+                    if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Clone.Copy)) && copyPropagation)
                     {
                         // if a variable is a copy, use the original expression since it will give more precise dependencies.
                         defExpr = imie.Arguments[0];
@@ -276,7 +276,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 //   x_uses = Replicate(x, useCount)
                 var genArgs = new Type[] { ivd.VariableType.DotNetType };
                 IMethodInvokeExpression repMethod = Builder.StaticGenericMethod(
-                    new Func<PlaceHolder, int, PlaceHolder[]>(VariableFactor.Replicate),
+                    new Func<PlaceHolder, int, PlaceHolder[]>(Clone.Replicate),
                     genArgs, defExpr, Builder.LiteralExpr(useCount));
                 bool isGateExitRandom = context.InputAttributes.Has<Algorithms.VariationalMessagePassing.GateExitRandomVariable>(ivd);
                 if (isGateExitRandom)

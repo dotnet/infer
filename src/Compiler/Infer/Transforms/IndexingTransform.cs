@@ -121,7 +121,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         // into:
                         //   array_item0 = f()
                         //   array[0] = Copy(array_item0)
-                        IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy<PlaceHolder>), new Type[] { iaie.GetExpressionType() },
+                        IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy<PlaceHolder>), new Type[] { iaie.GetExpressionType() },
                                                                        info.clone);
                         IStatement copySt = Builder.AssignStmt(iaie, copy);
                         context.AddStatementAfterCurrent(copySt);
@@ -201,7 +201,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             newvd = varInfo.DeriveArrayVariable(stmts, context, name, loopSize, Recognizer.GetVariableDeclaration(innerIndex), indices);
                             if (!context.InputAttributes.Has<DerivedVariable>(newvd))
                                 context.InputAttributes.Set(newvd, new DerivedVariable());
-                            IExpression getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<IReadOnlyList<IReadOnlyList<PlaceHolder>>>, IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>, PlaceHolder[]>(IndexingFactor.GetItemsFromDeepJagged),
+                            IExpression getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<IReadOnlyList<IReadOnlyList<PlaceHolder>>>, IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>, PlaceHolder[]>(Collection.GetItemsFromDeepJagged),
                                new Type[] { tp }, iaie3.Target, index.Target, index2.Target, index3.Target);
                             context.InputAttributes.CopyObjectAttributesTo<Algorithm>(baseVar, context.OutputAttributes, getItems);
                             stmts.Add(Builder.AssignStmt(Builder.VarRefExpr(newvd), getItems));
@@ -278,12 +278,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         IExpression getItems;
                         if (innerLoops.Count == 1)
                         {
-                            getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<IReadOnlyList<PlaceHolder>>, IReadOnlyList<int>, IReadOnlyList<int>, PlaceHolder[]>(IndexingFactor.GetItemsFromJagged),
+                            getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<IReadOnlyList<PlaceHolder>>, IReadOnlyList<int>, IReadOnlyList<int>, PlaceHolder[]>(Collection.GetItemsFromJagged),
                                                                                new Type[] { tp }, target.Target, indexTarget, index2Target);
                         }
                         else if (innerLoops.Count == 2)
                         {
-                            getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<IReadOnlyList<PlaceHolder>>, IReadOnlyList<IReadOnlyList<int>>, IReadOnlyList<IReadOnlyList<int>>, PlaceHolder[][]>(IndexingFactor.GetJaggedItemsFromJagged),
+                            getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<IReadOnlyList<PlaceHolder>>, IReadOnlyList<IReadOnlyList<int>>, IReadOnlyList<IReadOnlyList<int>>, PlaceHolder[][]>(Collection.GetJaggedItemsFromJagged),
                                                                                new Type[] { tp }, target.Target, indexTarget, index2Target);
                         }
                         else
@@ -372,17 +372,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             IExpression getItems;
                             if (innerLoops.Count == 1)
                             {
-                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(IndexingFactor.GetItems),
+                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(Collection.GetItems),
                                                                                new Type[] { tp }, iaie.Target, indexTarget);
                             }
                             else if (innerLoops.Count == 2)
                             {
-                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<int>>, PlaceHolder[][]>(IndexingFactor.GetJaggedItems),
+                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<int>>, PlaceHolder[][]>(Collection.GetJaggedItems),
                                                                                new Type[] { tp }, iaie.Target, indexTarget);
                             }
                             else if (innerLoops.Count == 3)
                             {
-                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<IReadOnlyList<int>>>, PlaceHolder[][][]>(IndexingFactor.GetDeepJaggedItems),
+                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<IReadOnlyList<int>>>, PlaceHolder[][][]>(Collection.GetDeepJaggedItems),
                                                                                new Type[] { tp }, iaie.Target, indexTarget);
                             }
                             else
@@ -418,7 +418,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         // into:
                         //   array_item0 = f()
                         //   array[0] = Copy(array_item0)
-                        IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy), new Type[] { tp }, newExpr);
+                        IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy), new Type[] { tp }, newExpr);
                         IStatement copySt = Builder.AssignStmt(iaie, copy);
                         stmtsAfter.Add(copySt);
                         if (!context.InputAttributes.Has<DerivedVariable>(baseVar))
@@ -431,7 +431,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         // into:
                         //   array_item0 = Copy(array[0])
                         //   x = f(array_item0)
-                        IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy), new Type[] { tp }, iaie);
+                        IExpression copy = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy), new Type[] { tp }, iaie);
                         IStatement copySt = Builder.AssignStmt(Builder.VarRefExpr(newvd), copy);
                         //if (attr != null) context.OutputAttributes.Set(copySt, attr);
                         stmts.Add(copySt);
@@ -535,7 +535,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 imie = (IMethodInvokeExpression)result;
             else
                 return result;
-            if (UseJaggedSubarray && Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, IReadOnlyList<PlaceHolder>>(IndexingFactor.Subarray)))
+            if (UseJaggedSubarray && Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, IReadOnlyList<PlaceHolder>>(Collection.Subarray)))
             {
                 // check for the form Subarray(arrayExpr, indices[i]) where arrayExpr does not depend on i
                 IExpression arrayExpr = imie.Arguments[0];
@@ -595,7 +595,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         IVariableDeclaration newvd = tempInfo.DeriveArrayVariable(stmts, context, name, loopSize, Recognizer.GetVariableDeclaration(innerIndex));
                         if (!context.InputAttributes.Has<DerivedVariable>(newvd))
                             context.InputAttributes.Set(newvd, new DerivedVariable());
-                        IExpression rhs = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(IndexingFactor.JaggedSubarray),
+                        IExpression rhs = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(Collection.JaggedSubarray),
                                                                       new Type[] { elementType }, arrayExpr, index.Target);
                         context.InputAttributes.CopyObjectAttributesTo<Algorithm>(newvd, context.OutputAttributes, rhs);
                         stmts.Add(Builder.AssignStmt(Builder.VarRefExpr(newvd), rhs));
@@ -617,7 +617,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
                         // convert into arrayExpr_indices[i]
                         IExpression newExpr = Builder.ArrayIndex(Builder.VarRefExpr(newvd), innerIndex);
-                        newExpr = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(VariableFactor.Copy<PlaceHolder>), new Type[] { newExpr.GetExpressionType() }, newExpr);
+                        newExpr = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy<PlaceHolder>), new Type[] { newExpr.GetExpressionType() }, newExpr);
                         return newExpr;
                     }
                 }

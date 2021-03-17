@@ -3080,7 +3080,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserThresholdPriorVarianceForThreshold = new double[this.userThresholdCount];
 			for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 				if (userThreshold==this.middleUserThresholdIndex) {
-					this.UserThresholdPriorVarianceForThreshold[userThreshold] = VariableFactor.Copy<double>(0.0);
+					this.UserThresholdPriorVarianceForThreshold[userThreshold] = Clone.Copy<double>(0.0);
 				}
 			}
 			this.Changed_MiddleUserThresholdIndex_UserThresholdCount_isDone = true;
@@ -3094,7 +3094,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 				if (userThreshold!=this.middleUserThresholdIndex) {
-					this.UserThresholdPriorVarianceForThreshold[userThreshold] = VariableFactor.Copy<double>(this.userThresholdPriorVariance);
+					this.UserThresholdPriorVarianceForThreshold[userThreshold] = Clone.Copy<double>(this.userThresholdPriorVariance);
 				}
 			}
 			this.Changed_MiddleUserThresholdIndex_UserThresholdCount_UserThresholdPriorVariance_isDone = true;

@@ -5685,7 +5685,7 @@
   </message_op_class>
   <message_op_class name="CopyOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.Copy{T}(T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.Copy{T}(T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(T, T)">
       <summary>Evidence message for EP.</summary>
@@ -5969,7 +5969,7 @@
   </message_op_class>
   <message_op_class name="MaxProductCopyOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.Copy{T}(T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.Copy{T}(T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ValueMaxConditional{TDist}(TDist, TDist)">
       <summary />
@@ -15208,7 +15208,7 @@
   </message_op_class>
   <message_op_class name="GetDeepJaggedItemsOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetDeepJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{IReadOnlyList{int}}})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetDeepJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{IReadOnlyList{int}}})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IList{IList{IList{T}}}, IList{T}, IList{IList{IList{int}}})">
       <summary>Evidence message for EP.</summary>
@@ -15451,7 +15451,7 @@
   </message_op_class>
   <message_op_class name="GetDeepJaggedItemsPointOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetDeepJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{IReadOnlyList{int}}})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetDeepJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{IReadOnlyList{int}}})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditional{ItemType, ItemType2, DistributionType}(IList{DistributionType}, IList{IList{IList{int}}}, int, ItemType)">
       <summary>EP message to <c>items</c>.</summary>
@@ -15471,7 +15471,7 @@
   </message_op_class>
   <message_op_class name="GetItemOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItem{T}(IReadOnlyList{T}, int)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItem{T}(IReadOnlyList{T}, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(T, IList{T}, int)">
       <summary>Evidence message for EP.</summary>
@@ -15646,7 +15646,7 @@
   </message_op_class>
   <message_op_class name="GetItem2DOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItem2D{T}(T[,], int, int)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItem2D{T}(T[,], int, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor{Distribution}(Distribution, Distribution)">
       <summary>Evidence message for EP.</summary>
@@ -15783,7 +15783,7 @@
   </message_op_class>
   <message_op_class name="GetItemsOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItems{T}(IReadOnlyList{T}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItems{T}(IReadOnlyList{T}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IReadOnlyList{T}, IReadOnlyList{T}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
@@ -16071,7 +16071,7 @@
   </message_op_class>
   <message_op_class name="GetItemsOp2{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItems{T}(IReadOnlyList{T}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItems{T}(IReadOnlyList{T}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditionalInit{TDist}(DistributionStructArray{TDist, T}, IReadOnlyList{int})">
       <summary />
@@ -16161,7 +16161,7 @@
   </message_op_class>
   <message_op_class name="GetItemsPointOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItems{T}(IReadOnlyList{T}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItems{T}(IReadOnlyList{T}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditional{DistributionType}(IList{DistributionType}, IList{int}, int, DistributionType)">
       <summary>EP message to <c>items</c>.</summary>
@@ -16181,7 +16181,7 @@
   </message_op_class>
   <message_op_class name="GetItemsFromDeepJaggedOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItemsFromDeepJagged{T}(IReadOnlyList{IReadOnlyList{IReadOnlyList{T}}}, IReadOnlyList{int}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItemsFromDeepJagged{T}(IReadOnlyList{IReadOnlyList{IReadOnlyList{T}}}, IReadOnlyList{int}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IList{T}, IList{IList{IList{T}}}, IList{int}, IList{int}, IList{int})">
       <summary>Evidence message for EP.</summary>
@@ -16487,7 +16487,7 @@
   </message_op_class>
   <message_op_class name="GetItemsFromDeepJaggedPointOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItemsFromDeepJagged{T}(IReadOnlyList{IReadOnlyList{IReadOnlyList{T}}}, IReadOnlyList{int}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItemsFromDeepJagged{T}(IReadOnlyList{IReadOnlyList{IReadOnlyList{T}}}, IReadOnlyList{int}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditional{DistributionArrayArrayType, DistributionArrayType, DistributionType}(IList{DistributionArrayArrayType}, IList{int}, IList{int}, IList{int}, int, DistributionType)">
       <summary>EP message to <c>items</c>.</summary>
@@ -16509,7 +16509,7 @@
   </message_op_class>
   <message_op_class name="GetItemsFromJaggedOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IList{T}, IList{IList{T}}, IList{int}, IList{int})">
       <summary>Evidence message for EP.</summary>
@@ -16788,7 +16788,7 @@
   </message_op_class>
   <message_op_class name="GetItemsFromJaggedPointOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditional{DistributionArrayType, DistributionType}(IList{DistributionArrayType}, IList{int}, IList{int}, int, DistributionType)">
       <summary>EP message to <c>items</c>.</summary>
@@ -16809,7 +16809,7 @@
   </message_op_class>
   <message_op_class name="GetJaggedItemsPointOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditional{ItemType, DistributionType}(IList{DistributionType}, IList{IList{int}}, int, ItemType)">
       <summary>EP message to <c>items</c>.</summary>
@@ -16829,7 +16829,7 @@
   </message_op_class>
   <message_op_class name="GetJaggedItemsOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IList{IList{T}}, IList{T}, IList{IList{int}})">
       <summary>Evidence message for EP.</summary>
@@ -17072,7 +17072,7 @@
   </message_op_class>
   <message_op_class name="GetJaggedItemsFromJaggedPointOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetJaggedItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetJaggedItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditional{ItemType, DistributionType}(IList{ItemType}, IList{IList{int}}, IList{IList{int}}, int, ItemType)">
       <summary>EP message to <c>items</c>.</summary>
@@ -17093,7 +17093,7 @@
   </message_op_class>
   <message_op_class name="GetJaggedItemsFromJaggedOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetJaggedItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetJaggedItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IList{IList{T}}, IList{IList{T}}, IList{IList{int}}, IList{IList{int}})">
       <summary>Evidence message for EP.</summary>
@@ -20247,7 +20247,7 @@
   </message_op_class>
   <message_op_class name="JaggedSubarrayOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.JaggedSubarray{T}(IReadOnlyList{T}, int[][])" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.JaggedSubarray{T}(IReadOnlyList{T}, int[][])" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
@@ -20491,7 +20491,7 @@
   </message_op_class>
   <message_op_class name="JaggedSubarrayOp_NoDivide{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.JaggedSubarray{T}(IReadOnlyList{T}, int[][])" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.JaggedSubarray{T}(IReadOnlyList{T}, int[][])" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditional{DistributionType, ArrayType, ItemType}(ArrayType, IReadOnlyList{DistributionType}, IList{int[]}, IList{DistributionType}, ArrayType)">
       <summary>EP message to <c>items</c>.</summary>
@@ -20512,7 +20512,7 @@
   </message_op_class>
   <message_op_class name="JaggedSubarrayWithMarginalOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.JaggedSubarrayWithMarginal{T}(IReadOnlyList{T}, int[][], out IReadOnlyList{T})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.JaggedSubarrayWithMarginal{T}(IReadOnlyList{T}, int[][], out IReadOnlyList{T})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor{ItemType}(IList{ItemType}, IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
@@ -26537,7 +26537,7 @@
   </message_op_class>
   <message_op_class name="ReplicateOp_Divide">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="DefAverageConditional{T}(T, T)">
       <summary>EP message to <c>Def</c>.</summary>
@@ -26619,7 +26619,7 @@
   </message_op_class>
   <message_op_class name="Replicate2BufferOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="UsesAverageConditional{T}(IReadOnlyList{T}, T, T, int, T)">
       <summary>EP message to <c>Uses</c>.</summary>
@@ -26728,7 +26728,7 @@
   </message_op_class>
   <message_op_class name="ReplicateOp_NoDivide">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="VariableFactor.Replicate{T}(T, int)" /></description></item><item><description><see cref="VariableFactor.ReplicateWithMarginal{T}(T, int, out T)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.Replicate{T}(T, int)" /></description></item><item><description><see cref="Clone.ReplicateWithMarginal{T}(T, int, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
     <message_doc name="MarginalAverageConditional{T}(IReadOnlyList{T}, T, T)">
       <summary />
@@ -26809,7 +26809,7 @@
   </message_op_class>
   <message_op_class name="ReplicateOp">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="VariableFactor.Replicate{T}(T, int)" /></description></item><item><description><see cref="VariableFactor.ReplicateWithMarginal{T}(T, int, out T)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.Replicate{T}(T, int)" /></description></item><item><description><see cref="Clone.ReplicateWithMarginal{T}(T, int, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor()">
       <summary>Evidence message for EP.</summary>
@@ -26932,7 +26932,7 @@
   </message_op_class>
   <message_op_class name="ReplicateMaxOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="UsesMaxConditional{T}(IReadOnlyList{T}, T, int, T)">
       <summary />
@@ -26988,7 +26988,7 @@
   </message_op_class>
   <message_op_class name="ReplicateGibbsOp{T}">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="VariableFactor.Replicate{T}(T, int)" /></description></item><item><description><see cref="VariableFactor.ReplicateWithMarginal{T}(T, int, out T)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.Replicate{T}(T, int)" /></description></item><item><description><see cref="Clone.ReplicateWithMarginal{T}(T, int, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogEvidenceRatio{TDist}(IList{TDist}, T)">
       <summary>Evidence message for EP.</summary>
@@ -27125,7 +27125,7 @@
   </message_op_class>
   <message_op_class name="ReplicatePointOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogEvidenceRatio{T}(IList{T})">
       <summary>Evidence message for EP.</summary>
@@ -27204,7 +27204,7 @@
   </message_op_class>
   <message_op_class name="ReplicateBufferOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.ReplicateWithMarginal{T}(T, int, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.ReplicateWithMarginal{T}(T, int, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="UsesAverageConditional{T}(IReadOnlyList{T}, T, T, int, T)">
       <summary>EP message to <c>Uses</c>.</summary>
@@ -27241,7 +27241,7 @@
   </message_op_class>
   <message_op_class name="ReplicateGibbsOp2{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.ReplicateWithMarginalGibbs{T}(T, int, int, int, out T, out T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.ReplicateWithMarginalGibbs{T}(T, int, int, int, out T, out T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ConditionalInit{TDist}(TDist)">
       <summary>Initialize the buffer <c>conditional</c>.</summary>
@@ -29594,7 +29594,7 @@
   </message_op_class>
   <message_op_class name="SplitOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.Split{T}(IReadOnlyList{T}, int, out T[])" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.Split{T}(IReadOnlyList{T}, int, out T[])" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogEvidenceRatio(IReadOnlyList{T}, IReadOnlyList{T}, int, IReadOnlyList{T})">
       <summary>Evidence message for EP.</summary>
@@ -29837,7 +29837,7 @@
   </message_op_class>
   <message_op_class name="SplitSubarrayOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.SplitSubarray{T}(IReadOnlyList{T}, int[][])" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.SplitSubarray{T}(IReadOnlyList{T}, int[][])" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{T}, IList{IList{int}})">
       <summary>Evidence message for EP.</summary>
@@ -30584,7 +30584,7 @@
   </message_op_class>
   <message_op_class name="SubarrayOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.Subarray{T}(IReadOnlyList{T}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.Subarray{T}(IReadOnlyList{T}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(IReadOnlyList{T}, IReadOnlyList{T}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
@@ -30790,7 +30790,7 @@
   </message_op_class>
   <message_op_class name="SubarrayOp2{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.Subarray2{T}(IReadOnlyList{T}, IReadOnlyList{int}, IReadOnlyList{T})" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.Subarray2{T}(IReadOnlyList{T}, IReadOnlyList{int}, IReadOnlyList{T})" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ItemsAverageConditional{DistributionType, ResultType}(IList{DistributionType}, IList{int}, IList{DistributionType}, ResultType)">
       <summary>EP message to <c>items</c>.</summary>
@@ -31159,7 +31159,7 @@
   </message_op_class>
   <message_op_class name="VectorElementOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItem{T}(IReadOnlyList{T}, int)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItem{T}(IReadOnlyList{T}, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ArrayVarianceInit(VectorGaussian)">
       <summary>Initialize the buffer <c>ArrayVariance</c>.</summary>
@@ -31350,7 +31350,7 @@
   </message_op_class>
   <message_op_class name="GetItemOp{double}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="IndexingFactor.GetItem{T}(IReadOnlyList{T}, int)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Collection.GetItem{T}(IReadOnlyList{T}, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(double, IList{double}, int)">
       <summary>Evidence message for EP.</summary>
@@ -32447,7 +32447,7 @@
   </message_op_class>
   <message_op_class name="UsesEqualDefOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogEvidenceRatio1{T}(IList{T}, T)">
       <summary />
@@ -32542,7 +32542,7 @@
   </message_op_class>
   <message_op_class name="UsesEqualDefGibbsOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="GibbsEvidence{TDist}(IList{TDist}, TDist, GibbsMarginal{TDist, T})">
       <summary />
@@ -32656,7 +32656,7 @@
   </message_op_class>
   <message_op_class name="UsesEqualDefMaxOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="UsesMaxConditional{T}(IReadOnlyList{T}, T, int, T)">
       <summary />
@@ -32703,7 +32703,7 @@
   </message_op_class>
   <message_op_class name="UsesEqualDefVmpBufferOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="MarginalAverageLogarithm{T}(IReadOnlyList{T}, T, T)">
       <summary>VMP message to <c>Marginal</c>.</summary>
@@ -32743,7 +32743,7 @@
   </message_op_class>
   <message_op_class name="UsesEqualDefVmpOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.UsesEqualDef{T}(T, int, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="AverageLogFactor{T}(T)">
       <summary>Evidence message for VMP.</summary>
@@ -32793,7 +32793,7 @@
   </message_op_class>
   <message_op_class name="UsesEqualDefGibbsOp2{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.UsesEqualDefGibbs{T}(T, int, int, int, out T, out T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.UsesEqualDefGibbs{T}(T, int, int, int, out T, out T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ConditionalInit{TDist}(TDist)">
       <summary>Initialize the buffer <c>conditional</c>.</summary>
@@ -32983,7 +32983,7 @@
   </message_op_class>
   <message_op_class name="VariableOp">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="VariableFactor.Variable{T}(T, out T)" /></description></item><item><description><see cref="VariableFactor.VariableInit{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.Variable{T}(T, out T)" /></description></item><item><description><see cref="Clone.VariableInit{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogEvidenceRatio{T}(T)">
       <summary>Evidence message for EP.</summary>
@@ -33032,7 +33032,7 @@
   </message_op_class>
   <message_op_class name="VariableVmpOp">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="VariableFactor.Variable{T}(T, out T)" /></description></item><item><description><see cref="VariableFactor.VariableInit{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.Variable{T}(T, out T)" /></description></item><item><description><see cref="Clone.VariableInit{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
     <message_doc name="AverageLogFactor{T}(T)">
       <summary>Evidence message for VMP.</summary>
@@ -33095,7 +33095,7 @@
   </message_op_class>
   <message_op_class name="VariableGibbsOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariableGibbs{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariableGibbs{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="GibbsEvidence{TDist, T}(TDist, TDist, GibbsMarginal{TDist, T})">
       <summary />
@@ -33182,7 +33182,7 @@
   </message_op_class>
   <message_op_class name="VariableMaxOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariableMax{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariableMax{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="UseMaxConditional{T}(T, T)">
       <summary />
@@ -33256,7 +33256,7 @@
   </message_op_class>
   <message_op_class name="DerivedVariableOp">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="VariableFactor.DerivedVariable{T}(T, out T)" /></description></item><item><description><see cref="VariableFactor.DerivedVariableInit{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.DerivedVariable{T}(T, out T)" /></description></item><item><description><see cref="Clone.DerivedVariableInit{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor()">
       <summary>Evidence message for EP.</summary>
@@ -33334,7 +33334,7 @@
   </message_op_class>
   <message_op_class name="DerivedVariableGibbsOp">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="VariableFactor.DerivedVariableGibbs{T}(T, out T)" /></description></item><item><description><see cref="VariableFactor.DerivedVariableInitGibbs{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.DerivedVariableGibbs{T}(T, out T)" /></description></item><item><description><see cref="Clone.DerivedVariableInitGibbs{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
     <message_doc name="GibbsEvidence()">
       <summary />
@@ -33423,7 +33423,7 @@
   </message_op_class>
   <message_op_class name="DerivedVariableVmpOp{T}">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="VariableFactor.DerivedVariableVmp{T}(T, out T)" /></description></item><item><description><see cref="VariableFactor.DerivedVariableInitVmp{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.DerivedVariableVmp{T}(T, out T)" /></description></item><item><description><see cref="Clone.DerivedVariableInitVmp{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
     <message_doc name="AverageLogFactor()">
       <summary>Evidence message for VMP.</summary>
@@ -33514,7 +33514,7 @@
   </message_op_class>
   <message_op_class name="VariablePointOp{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)">
       <summary>EP message to <c>marginal</c>.</summary>
@@ -33543,7 +33543,7 @@
   </message_op_class>
   <message_op_class name="VariablePointOpBase">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogEvidenceRatio{TDist}(TDist, TDist, TDist)">
       <summary>Evidence message for EP.</summary>
@@ -33605,7 +33605,7 @@
   </message_op_class>
   <message_op_class name="VariablePointOp_Mean{T}">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)">
       <summary>EP message to <c>marginal</c>.</summary>
@@ -33634,7 +33634,7 @@
   </message_op_class>
   <message_op_class name="VariablePointOp_Rprop">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="BufferInit()">
       <summary>Initialize the buffer <c>buffer</c>.</summary>
@@ -33670,7 +33670,7 @@
   </message_op_class>
   <message_op_class name="VariablePointOp_RpropTruncatedGaussian">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="BufferTGInit()">
       <summary>Initialize the buffer <c>bufferTG</c>.</summary>
@@ -33706,7 +33706,7 @@
   </message_op_class>
   <message_op_class name="VariablePointOp_RpropTruncatedGamma">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="BufferTGaInit()">
       <summary>Initialize the buffer <c>bufferTGa</c>.</summary>
@@ -33742,7 +33742,7 @@
   </message_op_class>
   <message_op_class name="VariablePointOp_RpropGamma">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="Buffer0Init()">
       <summary>Initialize the buffer <c>buffer0</c>.</summary>
@@ -33778,7 +33778,7 @@
   </message_op_class>
   <message_op_class name="VariablePointOp_RpropBeta">
     <doc>
-      <summary>Provides outgoing messages for <see cref="VariableFactor.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="BufferBetaInit()">
       <summary>Initialize the buffer <c>bufferBeta</c>.</summary>

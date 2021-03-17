@@ -12,7 +12,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(IndexingFactor), "GetItem<>")]
+    [FactorMethod(typeof(Collection), "GetItem<>")]
     [Quality(QualityBand.Mature)]
     public static class GetItemOp<T>
     {
