@@ -745,6 +745,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <param name="replacementGenericArgs">Replacement generic arguments</param>
         /// <param name="args">Argument expressions</param>
         /// <returns>The method invoke expression</returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public IMethodInvokeExpression StaticGenericMethod(Delegate d, Type[] replacementGenericArgs, params IExpression[] args)
         {
             MethodInfo mi = d.Method.GetGenericMethodDefinition().MakeGenericMethod(replacementGenericArgs);
