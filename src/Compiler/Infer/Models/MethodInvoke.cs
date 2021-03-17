@@ -65,10 +65,9 @@ namespace Microsoft.ML.Probabilistic.Models
             this.Containers = new List<IStatementBlock>(containers);
             foreach (IModelExpression arg in args)
             {
-                if (ReferenceEquals(arg, null)) throw new ArgumentNullException();
-                if (arg is Variable)
+                if (arg is null) throw new ArgumentNullException();
+                if (arg is Variable v)
                 {
-                    Variable v = (Variable) arg;
                     if (v.IsObserved) continue;
                     foreach (ConditionBlock cb in v.GetContainers<ConditionBlock>())
                     {
@@ -139,7 +138,7 @@ namespace Microsoft.ML.Probabilistic.Models
             // find the base variable
             foreach (ICompilerAttribute attr in attributes)
             {
-                if (attr is AttributeType) yield return (AttributeType) attr;
+                if (attr is AttributeType type) yield return type;
             }
         }
 
@@ -233,7 +232,7 @@ namespace Microsoft.ML.Probabilistic.Models
           return sb.ToString();
         }
 
-        internal IEnumerable<IModelExpression> returnValueAndArgs()
+        internal IEnumerable<IModelExpression> ReturnValueAndArgs()
         {
             if (returnValue != null) yield return returnValue;
             foreach (IModelExpression arg in args) yield return arg;
@@ -246,12 +245,11 @@ namespace Microsoft.ML.Probabilistic.Models
         internal Set<Range> GetLocalRangeSet()
         {
             Set<Range> ranges = new Set<Range>();
-            foreach (IModelExpression arg in returnValueAndArgs()) ForEachRange(arg, ranges.Add);
+            foreach (IModelExpression arg in ReturnValueAndArgs()) ForEachRange(arg, ranges.Add);
             foreach (IStatementBlock b in Containers)
             {
-                if (b is HasRange)
+                if (b is HasRange br)
                 {
-                    HasRange br = (HasRange) b;
                     ranges.Remove(br.Range);
                 }
             }
@@ -265,15 +263,14 @@ namespace Microsoft.ML.Probabilistic.Models
         internal List<Range> GetLocalRangeList()
         {
             List<Range> ranges = new List<Range>();
-            foreach (IModelExpression arg in returnValueAndArgs())
+            foreach (IModelExpression arg in ReturnValueAndArgs())
             {
                 ForEachRange(arg, delegate(Range r) { if (!ranges.Contains(r)) ranges.Add(r); });
             }
             foreach (IStatementBlock b in Containers)
             {
-                if (b is HasRange)
+                if (b is HasRange br)
                 {
-                    HasRange br = (HasRange) b;
                     ranges.Remove(br.Range);
                 }
             }
@@ -282,14 +279,13 @@ namespace Microsoft.ML.Probabilistic.Models
 
         internal static void ForEachRange(IModelExpression arg, Action<Range> action)
         {
-            if (arg is Range)
+            if (arg is Range range)
             {
-                action((Range) arg);
+                action(range);
                 return;
             }
-            else if (arg is Variable)
+            else if (arg is Variable v)
             {
-                Variable v = (Variable) arg;
                 if (v.IsLoopIndex)
                 {
                     action(v.loopRange);
@@ -330,9 +326,8 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns></returns>
         internal static List<List<Range>> GetRangeBrackets(IModelExpression arg, IDictionary<IModelExpression, List<List<Range>>> dict)
         {
-            if (arg is Variable)
+            if (arg is Variable v)
             {
-                Variable v = (Variable) arg;
                 if (v.IsArrayElement)
                 {
                     List<List<Range>> brackets = GetRangeBrackets(v.ArrayVariable, dict);
@@ -340,7 +335,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     // must add item indices after array's indices
                     foreach (IModelExpression expr in v.indices)
                     {
-                        if (expr is Range) indices.Add((Range) expr);
+                        if (expr is Range range) indices.Add(range);
                         else
                         {
                             List<List<Range>> argBrackets = GetRangeBrackets(expr, dict);

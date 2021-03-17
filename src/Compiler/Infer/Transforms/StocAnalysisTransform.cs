@@ -184,10 +184,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return base.ConvertVariableDecl(ivd);
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         protected void SetStoch(IExpression expr, bool stoch)
         {
             if (expr is IArgumentReferenceExpression) return;
@@ -204,34 +200,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             if (stoch)
             {
-                if (false)
-                {
-                    if (varsWithConstantDefinition.Contains(ivd))
-                    {
-                        Error("Cannot assign a stochastic value to a constant or an array with constant elements");
-                        return;
-                    }
-                }
                 VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
                 vi.IsStochastic = true;
             }
             else
             {
-                if (false)
-                {
-                    if (CodeRecognizer.IsStochastic(context, ivd) || IsStochContext(ivd))
-                    {
-                        Error("Cannot assign a constant value to random variable '" + ivd.Name + "'.");
-                        return;
-                    }
-                }
                 varsWithConstantDefinition.Add(ivd);
             }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         protected bool IsStochContext(IVariableDeclaration ivd)
         {

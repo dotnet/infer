@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
-using Microsoft.ML.Probabilistic;
 using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Compiler

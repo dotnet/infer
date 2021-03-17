@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Collections;
@@ -62,8 +61,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             context.SetPrimaryOutput(ics);
             ConvertExpression(ics.Condition);
-            IForStatement loop = null;
-            ConditionBinding binding = GateTransform.GetConditionBinding(ics.Condition, context, out loop);
+            ConditionBinding binding = GateTransform.GetConditionBinding(ics.Condition, context, out IForStatement loop);
             IExpression caseValue = binding.rhs;
             if (!GateTransform.IsLiteralOrLoopVar(context, caseValue, out loop))
             {
@@ -593,10 +591,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return expr;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Returns an expression equal to expr1 and expr2 under their respective bindings, or null if the expressions are not equal.  
         /// </summary>
@@ -605,8 +599,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="expr2"></param>
         /// <param name="bindings2"></param>
         /// <returns></returns>
-        private static IExpression Unify(IExpression expr1, IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings1, IExpression expr2,
-                                          IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings2)
+        private static IExpression Unify(
+            IExpression expr1,
+            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings1,
+            IExpression expr2,
+            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings2)
         {
             if (expr1.Equals(expr2))
             {
@@ -628,7 +625,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     return expr2;
                 }
             }
-            if (false)
+            bool lift = false;
+            if (lift)
             {
                 IExpression lifted1 = GetLiftedExpression(expr1, bindings1);
                 IExpression lifted2 = GetLiftedExpression(expr2, bindings2);
@@ -636,10 +634,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             return Builder.StaticMethod(new Func<int>(GateAnalysisTransform.AnyIndex));
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         private static IExpression GetLiftedExpression(IExpression expr, IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings)
         {

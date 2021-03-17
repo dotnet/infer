@@ -65,8 +65,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 
         public int GetEdge(int source, int target)
         {
-            int edge;
-            if (TryGetEdge(source, target, out edge)) return edge;
+            if (TryGetEdge(source, target, out int edge)) return edge;
             else throw new EdgeNotFoundException(source, target);
         }
 
@@ -109,8 +108,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
         /// <exception cref="EdgeNotFoundException">If there is no edge from source to target.</exception>
         public int GetAnyEdge(int source, int target)
         {
-            int result;
-            if (AnyEdge(source, target, out result))
+            if (AnyEdge(source, target, out int result))
             {
                 return result;
             }
@@ -217,23 +215,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
             return edge;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         public bool RemoveEdge(int edge)
         {
             if (IsReadOnly) throw new NotSupportedException("Graph is read only");
             throw new Exception("The method or operation is not implemented.");
-            Edge<int> edgeStruct = edges[edge];
-            outEdges[edgeStruct.Source].Remove(edge);
-            inEdges[edgeStruct.Target].Remove(edge);
-            // FIXME edge remains in edges array.
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         public int AddNode()
         {

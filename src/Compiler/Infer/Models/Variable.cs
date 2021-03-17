@@ -2413,10 +2413,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return Variable<bool>.Random<bool>(Distributions.Bernoulli.FromLogOdds(logOdds));
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Creates a Boolean random variable with the probability of being true specified by the input's
         /// logistic function, which is represented by a random variable.
@@ -2426,20 +2422,9 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>Returns a Boolean random variable.</returns>
         public static Variable<bool> BernoulliFromLogOdds(Variable<double> logOdds)
         {
-            if (false)
-            {
-                return Variable<bool>.Factor(Factor.BernoulliFromLogOdds, logOdds);
-            }
-            else
-            {
-                Variable<double> probTrue = Logistic(logOdds).Attrib(new DoNotInfer());
-                return Bernoulli(probTrue);
-            }
+            Variable<double> probTrue = Logistic(logOdds).Attrib(new DoNotInfer());
+            return Bernoulli(probTrue);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         /// Creates a random variable that is statistically defined by a Discrete distribution with a specified
@@ -2524,10 +2509,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return DiscreteUniform(Constant(size));
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Create a random integer by drawing uniformly from a range.
         /// </summary>
@@ -2535,23 +2516,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A random integer with an equal probability of taking any value in the range.</returns>
         public static Variable<int> DiscreteUniform(Range range)
         {
-            if (true)
-            {
-                Variable<int> sample = Variable.New<int>();
-                sample.SetTo(Factor.DiscreteUniform, range.Size);
-                return sample.Attrib(new ValueRange(range));
-            }
-            else
-            {
-                Variable<Discrete> prior = Variable.New<Discrete>().Attrib(new DoNotInfer());
-                prior.SetTo(Distributions.Discrete.Uniform, range.Size);
-                return Variable<int>.Random(prior).Attrib(new ValueRange(range));
-            }
+            Variable<int> sample = Variable.New<int>();
+            sample.SetTo(Factor.DiscreteUniform, range.Size);
+            return sample.Attrib(new ValueRange(range));
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         /// Creates a random variable that is statistically defined by a Discrete distribution with the number
@@ -2741,10 +2709,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return intVar;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Creates a random int variable x where p(x=k) is proportional to exp(logProbs[k]), i.e. the softmax function of the logProbs.
         /// </summary>
@@ -2756,10 +2720,6 @@ namespace Microsoft.ML.Probabilistic.Models
             Variable<Vector> probs = Variable.Softmax(logProbs).Attrib(new DoNotInfer());
             return Variable.Discrete(probs);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         ///  Creates a Beta-distributed random variable with specified mean and variance
@@ -5458,10 +5418,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return new Variable<T>(this);
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Sets the value of a random variable.  Should only be invoked on variables created using New() which 
         /// do not yet have a value.
@@ -5476,33 +5432,24 @@ namespace Microsoft.ML.Probabilistic.Models
             if (variable.initialiseTo != null) initialiseTo = variable.initialiseTo;
             if (variable.initialiseBackwardTo != null)
                 initialiseBackwardTo = variable.initialiseBackwardTo;
-            if (false)
+            // copy all conditional definitions from the given variable to this.
+            List<ConditionBlock> currentConditions = ConditionBlock.GetOpenBlocks<ConditionBlock>();
+            bool foundDef = false;
+            foreach (MethodInvoke mi in variable.GetDefinitionsMadeWithin(currentConditions))
             {
-                MethodInvoke mi = variable.GetDefinition();
-                if (mi == null) throw new InvalidOperationException(variable + " was not defined in this condition block.");
+                foundDef = true;
                 SetTo(mi);
             }
-            else
+            // copying of item definitions is handled by VariableArrayBase.SetTo()
+            if (!foundDef)
             {
-                // copy all conditional definitions from the given variable to this.
-                List<ConditionBlock> currentConditions = ConditionBlock.GetOpenBlocks<ConditionBlock>();
-                bool foundDef = false;
-                foreach (MethodInvoke mi in variable.GetDefinitionsMadeWithin(currentConditions))
-                {
-                    foundDef = true;
-                    SetTo(mi);
-                }
-                // copying of item definitions is handled by VariableArrayBase.SetTo()
-                if (!foundDef)
-                {
-                    // The rhs variable does not have a definition made within this context.  This can happen if the variable was created
-                    // with Variable.New, if the variable is an array element, or is being used inside a condition block.  In these cases, the lhs should be
-                    // defined as a copy of the rhs.
-                    //throw new InvalidOperationException(variable+" was not defined in this condition block.");
-                    MethodInvoke mi = new MethodInvoke(new Func<T, T>(Factors.Clone.Copy<T>).Method, variable);
-                    SetTo(mi);
-                    return;
-                }
+                // The rhs variable does not have a definition made within this context.  This can happen if the variable was created
+                // with Variable.New, if the variable is an array element, or is being used inside a condition block.  In these cases, the lhs should be
+                // defined as a copy of the rhs.
+                //throw new InvalidOperationException(variable+" was not defined in this condition block.");
+                MethodInvoke mi = new MethodInvoke(new Func<T, T>(Factors.Clone.Copy<T>).Method, variable);
+                SetTo(mi);
+                return;
             }
             // variable must not have any constraints
             if (variable.constraints.Count > 0) throw new InvalidOperationException(variable + " has constraints. The argument of SetTo must not have constraints.");
@@ -5517,10 +5464,6 @@ namespace Microsoft.ML.Probabilistic.Models
             // The following is valid but adds unnecessary code to the MSL.
             //variable.SetTo(Factors.Factor.Copy, this);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         /// A special factor attached to variables whose definition was consumed by SetTo().

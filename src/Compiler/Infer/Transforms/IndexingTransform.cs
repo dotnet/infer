@@ -66,10 +66,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return ivde;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// This method does all the work of converting literal indexing expressions.
         /// </summary>
@@ -523,10 +519,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 sb.Append(indExpr.ToString());
             }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         protected override IExpression ConvertMethodInvoke(IMethodInvokeExpression imie)
         {

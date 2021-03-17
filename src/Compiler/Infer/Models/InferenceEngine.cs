@@ -100,10 +100,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// The ModelBuilder used to construct MSL from in-memory graphs of Variables etc.
         /// </summary>
-        private ModelBuilder mb = new ModelBuilder();
+        private readonly ModelBuilder mb = new ModelBuilder();
 
-        private ConcurrentStack<CompiledAlgorithmInfo> compiledAlgorithms = new ConcurrentStack<CompiledAlgorithmInfo>();
-        private Dictionary<IVariable, CompiledAlgorithmInfo> compiledAlgorithmForVariable = new Dictionary<IVariable, CompiledAlgorithmInfo>();
+        private readonly ConcurrentStack<CompiledAlgorithmInfo> compiledAlgorithms = new ConcurrentStack<CompiledAlgorithmInfo>();
+        private readonly Dictionary<IVariable, CompiledAlgorithmInfo> compiledAlgorithmForVariable = new Dictionary<IVariable, CompiledAlgorithmInfo>();
 
         private class CompiledAlgorithmInfo
         {
@@ -307,7 +307,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         internal static T ConvertValueToDistribution<T>(object value)
         {
-            if (value is T) return (T)value;
+            if (value is T t) return t;
             Type toType = typeof(T);
             Type domainType = value.GetType();
             MethodInfo method = new Func<Converter<object, object>>(InferenceEngine.GetValueToDistributionConverter<object, object>).Method.GetGenericMethodDefinition();
@@ -397,7 +397,7 @@ namespace Microsoft.ML.Probabilistic.Models
         internal static T ConvertDistributionToType<T>(object obj)
         {
             // Fast path if the object is already of the right type
-            if (obj is T) return (T)obj;
+            if (obj is T t) return t;
 
             // Conversion from PointMass to an instance of T set to a point mass, if T supports HasPoint.
             Type fromType = obj.GetType();
@@ -573,8 +573,7 @@ namespace Microsoft.ML.Probabilistic.Models
         internal IGeneratedAlgorithm GetCompiledInferenceAlgorithm(bool inferOnlySpecifiedVars, IVariable var)
         {
             // optimize the case of repeated inference on the same variable
-            CompiledAlgorithmInfo info;
-            if (compiledAlgorithmForVariable.TryGetValue(var, out info))
+            if (compiledAlgorithmForVariable.TryGetValue(var, out CompiledAlgorithmInfo info))
             {
                 //SetObservedValues(info);
                 return info.exec;
@@ -684,14 +683,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             foreach (WeakReference weakRef in allEngineInstances.Keys)
             {
-                InferenceEngine engine = weakRef.Target as InferenceEngine;
-                if (engine == null)
-                {
-                    // The engine has been freed, so we can remove it from the dictionary.
-                    EmptyStruct value;
-                    allEngineInstances.TryRemove(weakRef, out value);
-                }
-                else
+                if (weakRef.Target is InferenceEngine engine)
                 {
                     var modelExpressions = engine.mb.ModelExpressions;
                     if (modelExpressions != null && modelExpressions.Contains(expr))
@@ -700,6 +692,11 @@ namespace Microsoft.ML.Probabilistic.Models
                         engine.InvalidateCompiledAlgorithms();
                     }
                 }
+                else
+                {
+                    // The engine has been freed, so we can remove it from the dictionary.
+                    allEngineInstances.TryRemove(weakRef, out EmptyStruct value);
+                }
             }
         }
 
@@ -707,14 +704,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             foreach (WeakReference weakRef in allEngineInstances.Keys)
             {
-                InferenceEngine engine = weakRef.Target as InferenceEngine;
-                if (engine == null)
-                {
-                    // The engine has been freed, so we can remove it from the dictionary.
-                    EmptyStruct value;
-                    allEngineInstances.TryRemove(weakRef, out value);
-                }
-                else
+                if (weakRef.Target is InferenceEngine engine)
                 {
                     foreach (CompiledAlgorithmInfo info in engine.compiledAlgorithms)
                     {
@@ -723,6 +713,11 @@ namespace Microsoft.ML.Probabilistic.Models
                             info.exec.SetObservedValue(var.NameInGeneratedCode, ((HasObservedValue)var).ObservedValue);
                         }
                     }
+                }
+                else
+                {
+                    // The engine has been freed, so we can remove it from the dictionary.
+                    allEngineInstances.TryRemove(weakRef, out EmptyStruct value);
                 }
             }
         }

@@ -94,10 +94,11 @@ namespace Microsoft.ML.Probabilistic.Algorithms
         {
             if (alg2 is ExpectationPropagation)
             {
-                MethodReference mref = new MethodReference(typeof (ShiftAlpha), isFromFactor ? "FromFactor<>" : "ToFactor<>");
-                mref.TypeArguments = new Type[] {channelType};
                 args.Add(1.0);
-                return mref;
+                return new MethodReference(typeof(ShiftAlpha), isFromFactor ? "FromFactor<>" : "ToFactor<>")
+                {
+                    TypeArguments = new Type[] { channelType }
+                };
             }
             throw new InferCompilerException("Cannot convert from " + Name + " to " + alg2.Name);
         }
