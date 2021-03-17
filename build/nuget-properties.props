@@ -23,7 +23,7 @@
     At some point the URL will be removed, but for now certain interfaces have not been updated to use the
     PackageIcon element.
     -->
-    <PackageIconUrl>https://raw.githubusercontent.com/dotnet/infer/master/docs/images/infernet.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/dotnet/infer/main/docs/images/infernet.png</PackageIconUrl>
     <PackageTags>Infer.NET machine learning Bayesian inference probabilistic</PackageTags>
     <RepositoryUrl>https://github.com/dotnet/infer.git</RepositoryUrl>
     <RepositoryCommit>$(CommitId)</RepositoryCommit>
