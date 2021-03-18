@@ -423,7 +423,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (includeDebugInformation)
             {
                 // Embedded option doesn't seem to work
-                // Explanation of options: https://github.com/dotnet/designs/blob/master/accepted/diagnostics/debugging-with-symbols-and-sources.md
+                // Explanation of options: https://github.com/dotnet/designs/blob/main/accepted/diagnostics/debugging-with-symbols-and-sources.md
                 emitOptions = emitOptions.WithDebugInformationFormat(DebugInformationFormat.PortablePdb);
             }
             else

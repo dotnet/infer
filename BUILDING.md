@@ -91,7 +91,7 @@ In Runtime project settings > Build:
 1. Add ";LAPACK" to the Conditional compilation symbols.
 1. Check `Allow unsafe code`.
 
-You can also use other BLAS/LAPACK libraries compatible with MKL.  If your library is not called "mkl_rt.dll", change the `dllName` string in [Lapack.cs](https://github.com/dotnet/infer/blob/master/src/Runtime/Core/Maths/Lapack.cs).
+You can also use other BLAS/LAPACK libraries compatible with MKL.  If your library is not called "mkl_rt.dll", change the `dllName` string in [Lapack.cs](https://github.com/dotnet/infer/blob/main/src/Runtime/Core/Maths/Lapack.cs).
 
 When using this special build of Infer.NET, you must tell your code where to find the MKL dynamic libraries.
 1. Download [Intel MKL](https://software.intel.com/en-us/mkl/) which includes redistributables. Typically, this is installed in  `C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\redist\intel64_win`. We'll reference this folder as *MKL_DIR*.
