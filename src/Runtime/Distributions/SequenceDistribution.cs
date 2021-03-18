@@ -990,11 +990,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The strings supporting this distribution</returns>
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
         {
-            if (this.IsPointMass)
-            {
-                return new[] { this.Point };
-            }
-
             if (tryDeterminize)
             {
                 // Determinization of automaton may fail if distribution is not normalized.
@@ -1016,12 +1011,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>True if successful, false otherwise.</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
         {
-            if (this.IsPointMass)
-            {
-                result = new[] { this.Point };
-                return true;
-            }
-
             if (tryDeterminize)
             {
                 // Determinization of automaton may fail if distribution is not normalized.
@@ -1046,16 +1035,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>For each component, the list of element distributions and the log mixture weight for that component.</returns>
         public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumerateComponents()
         {
-            if (this.IsPointMass)
-            {
-                var singleton = new List<Tuple<List<TElementDistribution>, double>>
-                {
-                   new Tuple<List<TElementDistribution>, double>(this.Point.Select(el => new TElementDistribution { Point = el }).ToList(),0)
-                };
-
-                return singleton;
-            }
-
             return this.sequenceToWeight.EnumeratePaths();
         }
 
