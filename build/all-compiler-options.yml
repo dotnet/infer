@@ -12,6 +12,7 @@ pool:
   - vstest
 
 trigger: none # disable CI build
+pr: none # disable PR build
 
 variables:
   Configuration: Release
@@ -20,7 +21,7 @@ schedules:
 - cron: "30 23 * * 3"
   branches:
     include:
-    - master
+    - main
 
 jobs:
 - job: Test
