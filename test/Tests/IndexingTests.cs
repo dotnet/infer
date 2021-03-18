@@ -131,8 +131,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var featureCounts = Variable.Array<int>(instanceRange).Named("featureCounts");
             var featureCountRange = new Range(featureCounts[instanceRange]).Named("dependentFeatureCountRange");
 
-            var features = Variable.Array<VariableArray<double>, double[][]>(Variable.Array<double>(featureCountRange), instanceRange).Named("features");
-            var featureIndices = Variable.Array<VariableArray<int>, int[][]>(Variable.Array<int>(featureCountRange), instanceRange).Named("featureIndices");
+            var features = Variable.Array(Variable.Array<double>(featureCountRange), instanceRange).Named("features");
+            var featureIndices = Variable.Array(Variable.Array<int>(featureCountRange), instanceRange).Named("featureIndices");
             featureIndices[instanceRange].SetValueRange(totalFeatureRange);
 
             var instances = Variable.Array<int>(observationRange).Named("instances");
@@ -181,8 +181,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var featureCounts = Variable.Array<int>(instanceRange).Named("featureCounts");
             var featureCountRange = new Range(featureCounts[instanceRange]).Named("dependentFeatureCountRange");
 
-            var features = Variable.Array<VariableArray<double>, double[][]>(Variable.Array<double>(featureCountRange), instanceRange).Named("features");
-            var featureIndices = Variable.Array<VariableArray<int>, int[][]>(Variable.Array<int>(featureCountRange), instanceRange).Named("featureIndices");
+            var features = Variable.Array(Variable.Array<double>(featureCountRange), instanceRange).Named("features");
+            var featureIndices = Variable.Array(Variable.Array<int>(featureCountRange), instanceRange).Named("featureIndices");
             featureIndices[instanceRange].SetValueRange(totalFeatureRange);
 
             var instances = Variable.Array<int>(observationRange).Named("instances");

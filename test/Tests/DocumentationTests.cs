@@ -481,9 +481,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void DeepJaggedArrayExample()
         {
             var a = Variable.Array<Vector>(new Range(1));
-            var b = Variable.Array<VariableArray<Vector>, Vector[][]>(a, new Range(2));
-            var c = Variable.Array<VariableArray<VariableArray<Vector>, Vector[][]>, Vector[][][]>(b, new Range(3));
-            var d = Variable.Array<VariableArray<VariableArray<VariableArray<Vector>, Vector[][]>, Vector[][][]>, Vector[][][][]>(c, new Range(4));
+            //var b = Variable.Array<VariableArray<Vector>, Vector[][]>(a, new Range(2));
+            //var b = Variable<Vector[]>.Array(a, new Range(2));
+            var b = Variable.Array(a, new Range(2));
+            //var c = Variable.Array<VariableArray<VariableArray<Vector>, Vector[][]>, Vector[][][]>(b, new Range(3));
+            var c = Variable.Array(b, new Range(3));
+            //var d = Variable.Array<VariableArray<VariableArray<VariableArray<Vector>, Vector[][]>, Vector[][][]>, Vector[][][][]>(c, new Range(4));
+            var d = Variable.Array(c, new Range(4));
         }
 
         [Fact]

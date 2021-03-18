@@ -38,17 +38,17 @@ namespace Microsoft.ML.Probabilistic.Models
         private readonly Set<Variable> negatedConditionVariables = new Set<Variable>(ReferenceEqualityComparer<Variable>.Instance);
 
         // optimizes ModelBuilder.Compile
-        internal List<Variable> observedVars = new List<Variable>();
-        internal Set<IVariable> variablesToInfer = new Set<IVariable>(ReferenceEqualityComparer<IVariable>.Instance);
+        internal readonly List<Variable> observedVars = new List<Variable>();
+        internal readonly Set<IVariable> variablesToInfer = new Set<IVariable>(ReferenceEqualityComparer<IVariable>.Instance);
 
-        protected IMethodDeclaration modelMethod;
-        protected Stack<IList<IStatement>> blockStack;
-        protected bool inferOnlySpecifiedVars = false;
+        private IMethodDeclaration modelMethod;
+        private Stack<IList<IStatement>> blockStack;
+        private bool inferOnlySpecifiedVars = false;
 
         /// <summary>
         /// Mapping from constant values to their declarations in the generated code.
         /// </summary>
-        protected Dictionary<object, IVariableDeclaration> constants = new Dictionary<object, IVariableDeclaration>();
+        private readonly Dictionary<object, IVariableDeclaration> constants = new Dictionary<object, IVariableDeclaration>();
 
         internal IReadOnlyCollection<IModelExpression> ModelExpressions { get; private set; }
 
@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     timestamps.Add(mi.timestamp);
                 }
             }
-            CollectionExtensions.Sort(timestamps, exprs);
+            Sort(timestamps, exprs);
             foreach (IModelExpression expr in exprs)
             {
                 BuildExpressionUntyped(expr);
@@ -136,15 +136,22 @@ namespace Microsoft.ML.Probabilistic.Models
             return modelType;
         }
 
-        internal static string ToString(IVariable[] vars)
+        /// <summary>
+        /// Sort a pair of collections according to the values in the first collection
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="keys"></param>
+        /// <param name="items"></param>
+        private static void Sort<T, U>(ICollection<T> keys, ICollection<U> items)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Variable v in vars)
-            {
-                if (sb.Length > 0) sb.Append(",");
-                sb.Append(v.Name);
-            }
-            return sb.ToString();
+            T[] keyArray = keys.ToArray();
+            U[] itemArray = items.ToArray();
+            Array.Sort(keyArray, itemArray);
+            keys.Clear();
+            keys.AddRange(keyArray);
+            items.Clear();
+            items.AddRange(itemArray);
         }
 
         /// <summary>

@@ -5993,21 +5993,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return new VariableArray<T>(r);
         }
 
-        // TODO: uncomment this method when the bug in C++ compiler is fixed
-        /// <summary>
-        /// Create a 1D array of random variables of specified type.
-        /// </summary>
-        /// <typeparam name="TItem">The variable type of an item.</typeparam>
-        /// <param name="itemPrototype">An object of type <c>TItem</c> that serves as a prototype for the array elements.</param>
-        /// <param name="r">A <c>Range</c> object that is initialized with the array's length.</param>
-        /// <returns>Returns a <c>VariableArray</c> object whose length is also defined by <paramref name="r"/>. Each element of this
-        /// array is a object of type <c>TItem</c> whose prototype is defined by <paramref name="itemPrototype"/>.</returns>
-        public static VariableArray<TItem, T[]> Array<TItem>(TItem itemPrototype, Range r)
-          where TItem : Variable<T>, SettableTo<TItem>, ICloneable
-        {
-            return new VariableArray<TItem, T[]>(itemPrototype, r);
-        }
-
         /// <summary>
         /// Creates a random variable with the specified prior distribution
         /// </summary>

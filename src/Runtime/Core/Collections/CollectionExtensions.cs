@@ -14,24 +14,6 @@ namespace Microsoft.ML.Probabilistic.Collections
     public static class CollectionExtensions
     {
         /// <summary>
-        /// Sort a pair of collections according to the values in the first collection
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="U"></typeparam>
-        /// <param name="keys"></param>
-        /// <param name="items"></param>
-        public static void Sort<T, U>(ICollection<T> keys, ICollection<U> items)
-        {
-            T[] keyArray = keys.ToArray();
-            U[] itemArray = items.ToArray();
-            Array.Sort(keyArray, itemArray);
-            keys.Clear();
-            keys.AddRange(keyArray);
-            items.Clear();
-            items.AddRange(itemArray);
-        }
-
-        /// <summary>
         /// Add multiple items to a collection
         /// </summary>
         /// <typeparam name="T">The item type</typeparam>
