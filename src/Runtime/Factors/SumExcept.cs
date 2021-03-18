@@ -24,7 +24,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        public static Gaussian SumExceptAverageConditional([SkipIfAllUniform] IList<Gaussian> array, int index)
+        public static Gaussian SumExceptAverageConditional([SkipIfAllUniform] IReadOnlyList<Gaussian> array, int index)
         {
             if(array.Count == 2)
             {
@@ -47,7 +47,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.FromMeanAndVariance(mean, variance);
         }
 
-        public static ArrayType ArrayAverageConditional<ArrayType>([SkipIfUniform] Gaussian sumExcept, IList<Gaussian> array, int index, ArrayType result)
+        public static ArrayType ArrayAverageConditional<ArrayType>([SkipIfUniform] Gaussian sumExcept, IReadOnlyList<Gaussian> array, int index, ArrayType result)
             where ArrayType : IList<Gaussian>
         {
             if (sumExcept.Precision == 0 || array.Count <= 2)

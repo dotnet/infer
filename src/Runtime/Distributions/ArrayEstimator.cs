@@ -11,47 +11,6 @@ using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Distributions
 {
-    ///// <summary>
-    ///// Estimator for a DistributionArray type, where samples are in the form of a 1-D array of sample elements
-    ///// </summary>
-    ///// <typeparam name="ItemEstimator">Type of estimator for each array element.</typeparam>
-    ///// <typeparam name="DistributionArray">Type of DistributionArray to estimate.</typeparam>
-    ///// <typeparam name="Distribution">Type of DistributionArray element.</typeparam>
-    ///// <typeparam name="Sample">Type of a SampleArray element - can be distributions.</typeparam>
-    //public class ArrayEstimator<ItemEstimator, DistributionArray, Distribution, Sample>
-    //    : ArrayEstimator<ItemEstimator, DistributionArray, Distribution, Sample[], Sample>,
-    //    SettableTo<ArrayEstimator<ItemEstimator, DistributionArray, Distribution, Sample>>
-    //    where DistributionArray : IList<Distribution>
-    //    where ItemEstimator : Estimator<Distribution>, Accumulator<Sample>, SettableTo<ItemEstimator>, ICloneable
-    //    where Distribution : SettableTo<Distribution>
-    //{
-    //    /// <summary>
-    //    /// Constructs an ArrayEstimator
-    //    /// </summary>
-    //    /// <param name="length"></param>
-    //    /// <param name="createEstimator"></param>
-    //    public ArrayEstimator(int length, Converter<int, ItemEstimator> createEstimator) : base(length, createEstimator)
-    //    {
-    //    }
-
-    //    /// <summary>
-    //    /// Constructs an ArrayEstimator
-    //    /// </summary>
-    //    /// <param name="estimators"></param>
-    //    public ArrayEstimator(ItemEstimator[] estimators) : base(estimators)
-    //    {
-    //    }
-
-    //    /// <summary>
-    //    /// Sets one ArrayEstimator to another
-    //    /// </summary>
-    //    /// <param name="value"></param>
-    //    public void SetTo(ArrayEstimator<ItemEstimator, DistributionArray, Distribution, Sample> value)
-    //    {
-    //        base.SetTo(value);
-    //    }
-    //}
-
     /// <summary>
     /// Estimator for a DistributionArray type.
     /// </summary>

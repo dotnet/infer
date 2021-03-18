@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="userIds">The user identifiers.</param>
         /// <param name="itemIds">The item identifiers.</param>
         /// <param name="ratings">The ratings.</param>
-        public InstanceData(IList<int> userIds, IList<int> itemIds, IList<int> ratings)
+        public InstanceData(IReadOnlyList<int> userIds, IReadOnlyList<int> itemIds, IReadOnlyList<int> ratings)
         {
             Debug.Assert(
                 userIds != null && itemIds != null && ratings != null,
@@ -35,16 +35,16 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <summary>
         /// Gets the user identifiers.
         /// </summary>
-        public IList<int> UserIds { get; private set; }
+        public IReadOnlyList<int> UserIds { get; private set; }
 
         /// <summary>
         /// Gets the item identifiers.
         /// </summary>
-        public IList<int> ItemIds { get; private set; }
+        public IReadOnlyList<int> ItemIds { get; private set; }
 
         /// <summary>
         /// Gets the ratings.
         /// </summary>
-        public IList<int> Ratings { get; private set; }
+        public IReadOnlyList<int> Ratings { get; private set; }
     }
 }

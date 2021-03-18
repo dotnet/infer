@@ -25,12 +25,14 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <returns>The size of the specified dimension of the array.</returns>
         int GetLength(int dimension);
 
-        ///// <summary>
-        ///// Get or set an element of a multidimensional array.
-        ///// </summary>
-        ///// <param name="indices">Zero-based indices into the multidimensional array.</param>
-        ///// <returns>The element at the specified position.</returns>
-        //T this[params int[] indices] { get; set; }
+#if false
+        /// <summary>
+        /// Get or set an element of a multidimensional array.
+        /// </summary>
+        /// <param name="indices">Zero-based indices into the multidimensional array.</param>
+        /// <returns>The element at the specified position.</returns>
+        T this[params int[] indices] { get; set; }
+#endif
     }
 
     /// <summary>

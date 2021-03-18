@@ -131,74 +131,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             this.IsMarginal = isMarginal;
         }
 
-        ///// <summary>
-        ///// Convert an array type into a distribution type.
-        ///// </summary>
-        ///// <param name="arrayType">A scalar, array, multidimensional array, or IList type.</param>
-        ///// <param name="innermostElementType">Type of innermost array element (may be itself an array, if the array is compound).</param>
-        ///// <param name="newInnermostElementType">Distribution type to use for the innermost array elements.</param>
-        ///// <param name="useDistributionArrays">Convert outer arrays to DistributionArrays.</param>
-        ///// <returns>A distribution type with the same structure as <paramref name="arrayType"/> but whose element type is <paramref name="newInnermostElementType"/>.</returns>
-        ///// <remarks>
-        ///// Similar to <see cref="Util.ChangeElementType"/> but converts arrays to DistributionArrays.
-        ///// </remarks>
-        //public static Type GetDistributionType(Type arrayType, Type innermostElementType, Type newInnermostElementType, bool useDistributionArrays)
-        //{
-        //   if (arrayType == innermostElementType) return newInnermostElementType;
-        //   int rank;
-        //   Type elementType = Util.GetElementType(arrayType, out rank);
-        //   if (elementType == null) throw new ArgumentException(arrayType + " is not an array type with innermost element type " + innermostElementType);
-        //   Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, useDistributionArrays);
-        //   if (useDistributionArrays)
-        //   {
-        //      return Distribution.MakeDistributionArrayType(innerType, rank);
-        //   }
-        //   else
-        //   {
-        //      return CodeBuilder.MakeArrayType(innerType, rank);
-        //   }
-        //}
-
-        ///// <summary>
-        ///// Convert an array type into a distribution type, converting a specified number of inner arrays to DistributionArrays.
-        ///// </summary>
-        ///// <param name="arrayType"></param>
-        ///// <param name="innermostElementType"></param>
-        ///// <param name="newInnermostElementType"></param>
-        ///// <param name="depth">The current depth from the declaration type.</param>
-        ///// <param name="useDistributionArraysDepth">The number of inner arrays to convert to DistributionArrays</param>
-        ///// <returns></returns>
-        //public static Type GetDistributionType(Type arrayType, Type innermostElementType, Type newInnermostElementType, int depth, int useDistributionArraysDepth)
-        //{
-        //   if (arrayType == innermostElementType) return newInnermostElementType;
-        //   int rank;
-        //   Type elementType = Util.GetElementType(arrayType, out rank);
-        //   if (elementType == null) throw new ArgumentException(arrayType + " is not an array type.");
-        //   Type innerType = GetDistributionType(elementType, innermostElementType, newInnermostElementType, depth + 1, useDistributionArraysDepth);
-        //   if ((depth >= useDistributionArraysDepth) && (useDistributionArraysDepth >= 0))
-        //   {
-        //      return Distribution.MakeDistributionArrayType(innerType, rank);
-        //   }
-        //   else
-        //   {
-        //      return CodeBuilder.MakeArrayType(innerType, rank);
-        //   }
-        //}
-
-        //public Type GetMessageType()
-        //{
-        //   int distArraysDepth = 0;
-        //   if (IsUse) distArraysDepth = 1; // first array is [], then distribution arrays
-        //   Type domainType = Distribution.GetDomainType(varInfo.marginalType);
-        //   Type messageType = GetDistributionType(channelType, domainType, varInfo.marginalType, 0, distArraysDepth);
-        //   return messageType;
-        //}
-
         public IExpression ReplaceWithUsesChannel(IExpression expr, IExpression usageIndex)
         {
-            IExpression target;
-            List<IList<IExpression>> indices = Recognizer.GetIndices(expr, out target);
-            IExpression newExpr = null;
+            List<IList<IExpression>> indices = Recognizer.GetIndices(expr, out IExpression target);
+            IExpression newExpr;
             if (target is IVariableDeclarationExpression) newExpr = (usageIndex == null) ? (IExpression)Builder.VarDeclExpr(decl) : Builder.VarRefExpr(decl);
             else if (target is IVariableReferenceExpression) newExpr = Builder.VarRefExpr(decl);
             else throw new Exception("Unexpected indexing target: " + target);
@@ -214,7 +150,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         public override string ToString()
         {
             if (decl == null) return "ChannelInfo(decl=null)";
-            return String.Format("ChannelInfo({0},isUse={1},isMarginal={2})", decl.ToString(), IsUse, IsMarginal);
+            return $"ChannelInfo({decl.ToString()},isUse={IsUse},isMarginal={IsMarginal})";
         }
     }
 }

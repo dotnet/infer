@@ -1897,10 +1897,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 return 0;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 429
-#endif
-
         /// <summary>
         /// Add the declarations of all loop variables in expr to indVars.
         /// </summary>
@@ -1930,10 +1926,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
             throw new NotImplementedException("Unsupported expression type in AddIndexers(): " + expr.GetType());
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 429
-#endif
 
         private IEnumerable<IExpression> GetFlattenedIndices(IExpression expr)
         {

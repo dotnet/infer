@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>")]
+    [FactorMethod(typeof(Clone), "UsesEqualDef<>")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefOp
     {
@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefOp"]/message_doc[@name="MarginalAverageConditional{T}(IList{T}, T, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
         [MultiplyAll]
-        public static T MarginalAverageConditional<T>([NoInit] IList<T> Uses, T Def, T result)
+        public static T MarginalAverageConditional<T>([NoInit] IReadOnlyList<T> Uses, T Def, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             result.SetTo(Def);
@@ -113,7 +113,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="T">The type of the messages.</typeparam>
         // TM: SkipIfUniform on Def added as a stronger constraint, to prevent improper messages in EP.
         //[SkipIfAllUniform]
-        public static T UsesAverageConditional<T>([AllExceptIndex] IList<T> Uses, [SkipIfAllUniform] T Def, int resultIndex, T result)
+        public static T UsesAverageConditional<T>([AllExceptIndex] IReadOnlyList<T> Uses, [SkipIfAllUniform] T Def, int resultIndex, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Count)
@@ -141,7 +141,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefOp"]/message_doc[@name="DefAverageConditional{T}(IList{T}, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
         [MultiplyAll]
-        public static T DefAverageConditional<T>([SkipIfAllUniform] IList<T> Uses, T result)
+        public static T DefAverageConditional<T>([SkipIfAllUniform] IReadOnlyList<T> Uses, T result)
             where T : SettableToProduct<T>, SettableTo<T>, SettableToUniform
         {
             return Distribution.SetToProductOfAll(result, Uses);
@@ -157,7 +157,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefGibbsOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of the variable.</typeparam>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>")]
+    [FactorMethod(typeof(Clone), "UsesEqualDef<>")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefGibbsOp<T>
     {
@@ -202,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [Stochastic]
         //[SkipIfAllUniform("Uses","Def")]
         public static GibbsMarginal<TDist, T> MarginalGibbs<TDist>(
-            IList<TDist> Uses,
+            IReadOnlyList<TDist> Uses,
             [Proper] TDist Def,
             GibbsMarginal<TDist, T> to_marginal) // must not be called 'result', because its value is used
             where TDist : IDistribution<T>, SettableToProduct<TDist>, SettableToRatio<TDist>, SettableTo<TDist>, Sampleable<T>
@@ -222,7 +222,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="TDist">The type of the distribution over the variable.</typeparam>
         [Stochastic]
         public static GibbsMarginal<TDist, T> MarginalGibbs<TDist>(
-            IList<TDist> Uses,
+            IReadOnlyList<TDist> Uses,
             T Def,
             GibbsMarginal<TDist, T> to_marginal) // must not be called 'result', because its value is used
             where TDist : IDistribution<T>, SettableToProduct<TDist>, SettableToRatio<TDist>, SettableTo<TDist>, Sampleable<T>
@@ -314,7 +314,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="TDist">The type of the distribution over the variable.</typeparam>
         //[MultiplyAll]
         public static TDist DefGibbs<TDist>(
-            [SkipIfAllUniform] IList<TDist> Uses,
+            [SkipIfAllUniform] IReadOnlyList<TDist> Uses,
             TDist result)
             where TDist : IDistribution<T>, Sampleable<T>, SettableTo<TDist>, SettableToProduct<TDist>, SettableToRatio<TDist>
         {
@@ -326,7 +326,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefGibbsOp2{T}"]/doc/*'/>
     /// <typeparam name="T">The type of the variable.</typeparam>
-    [FactorMethod(typeof(Factor), "UsesEqualDefGibbs<>")]
+    [FactorMethod(typeof(Clone), "UsesEqualDefGibbs<>")]
     [Buffers("sample", "conditional", "marginalEstimator", "sampleAcc", "conditionalAcc")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefGibbsOp2<T>
@@ -340,7 +340,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefGibbsOp2{T}"]/message_doc[@name="Conditional{TDist}(IList{TDist}, TDist, TDist)"]/*'/>
-        public static TDist Conditional<TDist>(IList<TDist> Uses, [SkipIfAnyUniform] TDist Def, TDist result)
+        public static TDist Conditional<TDist>(IReadOnlyList<TDist> Uses, [SkipIfAnyUniform] TDist Def, TDist result)
             where TDist : SettableTo<TDist>, SettableToProduct<TDist>
         {
             result.SetTo(Def);
@@ -499,7 +499,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="TDist">The type of the distribution over the variable.</typeparam>
         //[MultiplyAll]
         public static TDist DefGibbs<TDist>(
-            [SkipIfAllUniform] IList<TDist> Uses,
+            [SkipIfAllUniform] IReadOnlyList<TDist> Uses,
             TDist result)
             where TDist : IDistribution<T>, Sampleable<T>, SettableTo<TDist>, SettableToProduct<TDist>, SettableToRatio<TDist>
         {
@@ -510,13 +510,13 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefMaxOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>")]
+    [FactorMethod(typeof(Clone), "UsesEqualDef<>")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefMaxOp
     {
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefMaxOp"]/message_doc[@name="UsesMaxConditional{T}(IList{T}, T, int, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
-        public static T UsesMaxConditional<T>([AllExceptIndex] IList<T> Uses, [SkipIfUniform] T Def, int resultIndex, T result)
+        public static T UsesMaxConditional<T>([AllExceptIndex] IReadOnlyList<T> Uses, [SkipIfUniform] T Def, int resultIndex, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             T res = UsesEqualDefOp.UsesAverageConditional<T>(Uses, Def, resultIndex, result);
@@ -527,7 +527,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefMaxOp"]/message_doc[@name="DefMaxConditional{T}(IList{T}, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
-        public static T DefMaxConditional<T>([SkipIfAllUniform] IList<T> Uses, T result)
+        public static T DefMaxConditional<T>([SkipIfAllUniform] IReadOnlyList<T> Uses, T result)
             where T : SettableToProduct<T>, SettableTo<T>, SettableToUniform
         {
             return UsesEqualDefOp.DefAverageConditional<T>(Uses, result);
@@ -535,7 +535,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefMaxOp"]/message_doc[@name="MarginalMaxConditional{T}(IList{T}, T, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
-        public static T MarginalMaxConditional<T>(IList<T> Uses, [SkipIfUniform] T Def, T result)
+        public static T MarginalMaxConditional<T>(IReadOnlyList<T> Uses, [SkipIfUniform] T Def, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             T res = UsesEqualDefOp.MarginalAverageConditional<T>(Uses, Def, result);
@@ -546,7 +546,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefVmpBufferOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>", Default = true)]
+    [FactorMethod(typeof(Clone), "UsesEqualDef<>", Default = true)]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefVmpBufferOp
     {
@@ -554,7 +554,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="T">The type of the messages.</typeparam>
         [SkipIfAllUniform]
         [MultiplyAll]
-        public static T MarginalAverageLogarithm<T>([NoInit] IList<T> Uses, T Def, T result)
+        public static T MarginalAverageLogarithm<T>([NoInit] IReadOnlyList<T> Uses, T Def, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             result.SetTo(Def);
@@ -581,7 +581,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefVmpOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "UsesEqualDef<>")]
+    [FactorMethod(typeof(Clone), "UsesEqualDef<>")]
     [Quality(QualityBand.Mature)]
     public static class UsesEqualDefVmpOp
     {
@@ -597,7 +597,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UsesEqualDefVmpOp"]/message_doc[@name="MarginalAverageLogarithm{T}(IList{T}, T, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
         [SkipIfAllUniform]
-        public static T MarginalAverageLogarithm<T>(IList<T> Uses, T Def, T result)
+        public static T MarginalAverageLogarithm<T>(IReadOnlyList<T> Uses, T Def, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             return UsesAverageLogarithm(Uses, Def, 0, result);
@@ -607,7 +607,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="T">The type of the messages.</typeparam>
         [SkipIfAllUniform]
         [MultiplyAll]
-        public static T UsesAverageLogarithm<T>([NoInit] IList<T> Uses, T Def, int resultIndex, T result)
+        public static T UsesAverageLogarithm<T>([NoInit] IReadOnlyList<T> Uses, T Def, int resultIndex, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             result.SetTo(Def);
@@ -619,7 +619,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         // TM: Proper added on Def to avoid improper messages.
         [SkipIfAllUniform]
         [MultiplyAll]
-        public static T DefAverageLogarithm<T>([NoInit] IList<T> Uses, T Def, T result)
+        public static T DefAverageLogarithm<T>([NoInit] IReadOnlyList<T> Uses, T Def, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             return UsesAverageLogarithm(Uses, Def, 0, result);

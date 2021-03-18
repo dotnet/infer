@@ -182,7 +182,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="array">An array to get the batch of elements from.</param>
         /// <param name="totalBatchCount">The total number of batches.</param>
         /// <returns>The array elements for the specified batch.</returns>
-        public static IList<T> GetBatch<T>(int batch, T[] array, int totalBatchCount)
+        public static IReadOnlyList<T> GetBatch<T>(int batch, T[] array, int totalBatchCount)
         {
             if (array == null)
             {

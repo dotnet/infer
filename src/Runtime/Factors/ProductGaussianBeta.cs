@@ -214,183 +214,185 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.FromMeanAndPrecision(x, -dhx);
         }
 
-        ///// <summary>
-        ///// EP message to 'product'.
-        ///// </summary>
-        ///// <param name="Product">Incoming message from 'product'.</param>
-        ///// <param name="A">Incoming message from 'a'.</param>
-        ///// <param name="B">Incoming message from 'b'.</param>
-        ///// <returns>The outgoing EP message to the 'product' argument.</returns>
-        ///// <remarks><para>
-        ///// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'product'.
-        ///// The formula is <c>int f(product,x) q(x) dx</c> where <c>x = (a,b)</c>.
-        ///// </para></remarks>
-        //public static Gaussian ProductAverageConditional(Gaussian Product, Gaussian A, Beta B)
-        //{
-        //   A.GetMeanAndVariance(out mA, out vA);
-        //   double mB, vB;
-        //   B.GetMeanAndVariance(out mB, out vB);
-        //   double mProduct, vProduct;
-        //   Product.GetMeanAndVariance(out mProduct, out vProduct);
-        //   // algorithm: quadrature on A from -1 to 1, plus quadrature on 1/A from -1 to 1.
-        //   double z = 0, sumX = 0, sumX2 = 0;
-        //   for (int i = 0; i <= QuadratureNodeCount; i++)
-        //   {
-        //      double a = (2.0 * i) / QuadratureNodeCount - 1;
-        //      double logfA = Gaussian.GetLogProb(mProduct, a * mB, vProduct + a * a * vB) + Gaussian.GetLogProb(a, mA, vA);
-        //      double fA = Math.Exp(logfA);
+#if false
+        /// <summary>
+        /// EP message to 'product'.
+        /// </summary>
+        /// <param name="Product">Incoming message from 'product'.</param>
+        /// <param name="A">Incoming message from 'a'.</param>
+        /// <param name="B">Incoming message from 'b'.</param>
+        /// <returns>The outgoing EP message to the 'product' argument.</returns>
+        /// <remarks><para>
+        /// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'product'.
+        /// The formula is <c>int f(product,x) q(x) dx</c> where <c>x = (a,b)</c>.
+        /// </para></remarks>
+        public static Gaussian ProductAverageConditional(Gaussian Product, Gaussian A, Beta B)
+        {
+            A.GetMeanAndVariance(out mA, out vA);
+            double mB, vB;
+            B.GetMeanAndVariance(out mB, out vB);
+            double mProduct, vProduct;
+            Product.GetMeanAndVariance(out mProduct, out vProduct);
+            // algorithm: quadrature on A from -1 to 1, plus quadrature on 1/A from -1 to 1.
+            double z = 0, sumX = 0, sumX2 = 0;
+            for (int i = 0; i <= QuadratureNodeCount; i++)
+            {
+                double a = (2.0 * i) / QuadratureNodeCount - 1;
+                double logfA = Gaussian.GetLogProb(mProduct, a * mB, vProduct + a * a * vB) + Gaussian.GetLogProb(a, mA, vA);
+                double fA = Math.Exp(logfA);
 
-        //      z += fA;
-        //      double b = (mB * vProduct + a * mProduct * vB) / (vProduct + a * a * vB);
-        //      double b2 = b * b + (vProduct * vB) / (vProduct + a * a * vB);
-        //      double x = a * b;
-        //      double x2 = a * a * b2;
-        //      sumX += x * fA;
-        //      sumX2 += x2 * fA;
+                z += fA;
+                double b = (mB * vProduct + a * mProduct * vB) / (vProduct + a * a * vB);
+                double b2 = b * b + (vProduct * vB) / (vProduct + a * a * vB);
+                double x = a * b;
+                double x2 = a * a * b2;
+                sumX += x * fA;
+                sumX2 += x2 * fA;
 
-        //      double invA = a;
-        //      a = 1.0 / invA;
-        //      double logfInvA = Gaussian.GetLogProb(mProduct * invA, mB, vProduct * invA * invA + vB) + Gaussian.GetLogProb(a, mA, vA) - Math.Log(Math.Abs(invA + Double.Epsilon));
-        //      double fInvA = Math.Exp(logfInvA);
-        //      z += fInvA;
-        //      b = (mB * vProduct + a * mProduct * vB) / (vProduct + a * a * vB);
-        //      b2 = b * b + (vProduct * vB) / (vProduct + a * a * vB);
-        //      x = a * b;
-        //      x2 = a * a * b2;
-        //      sumX += x * fInvA;
-        //      sumX2 += x2 * fInvA;
-        //   }
-        //   double mean = sumX / z;
-        //   double var = sumX2 / z - mean * mean;
-        //   Gaussian result = Gaussian.FromMeanAndVariance(mean, var);
-        //   if (ForceProper) result.SetToRatioProper(result, Product);
-        //   else result.SetToRatio(result, Product);
-        //   return result;
-        //}
-        ///// <summary>
-        ///// EP message to 'a'.
-        ///// </summary>
-        ///// <param name="Product">Incoming message from 'product'.</param>
-        ///// <param name="A">Incoming message from 'a'.</param>
-        ///// <param name="B">Incoming message from 'b'.</param>
-        ///// <returns>The outgoing EP message to the 'a' argument.</returns>
-        ///// <remarks><para>
-        ///// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'a'.
-        ///// The formula is <c>int f(a,x) q(x) dx</c> where <c>x = (product,b)</c>.
-        ///// </para></remarks>
-        //public static Gaussian AAverageConditional([SkipIfUniform] Gaussian Product, Gaussian A, Gaussian B)
-        //{
-        //   if (B.IsPointMass) return AAverageConditional(Product, B.Point);
-        //   if (A.IsPointMass || Product.IsUniform()) return Gaussian.Uniform();
-        //   Gaussian result = new Gaussian();
-        //   // algorithm: quadrature on A from -1 to 1, plus quadrature on 1/A from -1 to 1.
-        //   double mProduct, vProduct;
-        //   Product.GetMeanAndVariance(out mProduct, out vProduct);
-        //   double mA, vA;
-        //   A.GetMeanAndVariance(out mA, out vA);
-        //   double mB, vB;
-        //   B.GetMeanAndVariance(out mB, out vB);
-        //   double z = 0, sumA = 0, sumA2 = 0;
-        //   for (int i = 0; i <= QuadratureNodeCount; i++)
-        //   {
-        //      double a = (2.0 * i) / QuadratureNodeCount - 1;
-        //      double logfA = Gaussian.GetLogProb(mProduct, a * mB, vProduct + a * a * vB) + Gaussian.GetLogProb(a, mA, vA);
-        //      double fA = Math.Exp(logfA);
-        //      z += fA;
-        //      sumA += a * fA;
-        //      sumA2 += a * a * fA;
+                double invA = a;
+                a = 1.0 / invA;
+                double logfInvA = Gaussian.GetLogProb(mProduct * invA, mB, vProduct * invA * invA + vB) + Gaussian.GetLogProb(a, mA, vA) - Math.Log(Math.Abs(invA + Double.Epsilon));
+                double fInvA = Math.Exp(logfInvA);
+                z += fInvA;
+                b = (mB * vProduct + a * mProduct * vB) / (vProduct + a * a * vB);
+                b2 = b * b + (vProduct * vB) / (vProduct + a * a * vB);
+                x = a * b;
+                x2 = a * a * b2;
+                sumX += x * fInvA;
+                sumX2 += x2 * fInvA;
+            }
+            double mean = sumX / z;
+            double var = sumX2 / z - mean * mean;
+            Gaussian result = Gaussian.FromMeanAndVariance(mean, var);
+            if (ForceProper) result.SetToRatioProper(result, Product);
+            else result.SetToRatio(result, Product);
+            return result;
+        }
+        /// <summary>
+        /// EP message to 'a'.
+        /// </summary>
+        /// <param name="Product">Incoming message from 'product'.</param>
+        /// <param name="A">Incoming message from 'a'.</param>
+        /// <param name="B">Incoming message from 'b'.</param>
+        /// <returns>The outgoing EP message to the 'a' argument.</returns>
+        /// <remarks><para>
+        /// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'a'.
+        /// The formula is <c>int f(a,x) q(x) dx</c> where <c>x = (product,b)</c>.
+        /// </para></remarks>
+        public static Gaussian AAverageConditional([SkipIfUniform] Gaussian Product, Gaussian A, Gaussian B)
+        {
+            if (B.IsPointMass) return AAverageConditional(Product, B.Point);
+            if (A.IsPointMass || Product.IsUniform()) return Gaussian.Uniform();
+            Gaussian result = new Gaussian();
+            // algorithm: quadrature on A from -1 to 1, plus quadrature on 1/A from -1 to 1.
+            double mProduct, vProduct;
+            Product.GetMeanAndVariance(out mProduct, out vProduct);
+            double mA, vA;
+            A.GetMeanAndVariance(out mA, out vA);
+            double mB, vB;
+            B.GetMeanAndVariance(out mB, out vB);
+            double z = 0, sumA = 0, sumA2 = 0;
+            for (int i = 0; i <= QuadratureNodeCount; i++)
+            {
+                double a = (2.0 * i) / QuadratureNodeCount - 1;
+                double logfA = Gaussian.GetLogProb(mProduct, a * mB, vProduct + a * a * vB) + Gaussian.GetLogProb(a, mA, vA);
+                double fA = Math.Exp(logfA);
+                z += fA;
+                sumA += a * fA;
+                sumA2 += a * a * fA;
 
-        //      double invA = a;
-        //      a = 1.0 / invA;
-        //      double logfInvA = Gaussian.GetLogProb(mProduct * invA, mB, vProduct * invA * invA + vB) + Gaussian.GetLogProb(a, mA, vA) - Math.Log(Math.Abs(invA + Double.Epsilon));
-        //      double fInvA = Math.Exp(logfInvA);
-        //      z += fInvA;
-        //      sumA += a * fInvA;
-        //      sumA2 += a * a * fInvA;
-        //   }
-        //   double mean = sumA / z;
-        //   double var = sumA2 / z - mean * mean;
-        //   result.SetMeanAndVariance(mean, var);
-        //   if (ForceProper) result.SetToRatioProper(result, A);
-        //   else result.SetToRatio(result, A);
-        //   return result;
-        //}
-        ///// <summary>
-        ///// EP message to 'a'.
-        ///// </summary>
-        ///// <param name="Product">Constant value for 'product'.</param>
-        ///// <param name="A">Incoming message from 'a'.</param>
-        ///// <param name="B">Incoming message from 'b'.</param>
-        ///// <returns>The outgoing EP message to the 'a' argument.</returns>
-        ///// <remarks><para>
-        ///// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'a'.
-        ///// The formula is <c>int f(a,x) q(x) dx</c> where <c>x = (product,b)</c>.
-        ///// </para></remarks>
-        //public static Gaussian AAverageConditional(double Product, Gaussian A, Gaussian B)
-        //{
-        //   return AAverageConditional(Gaussian.PointMass(Product), A, B);
-        //}
-        ///// <summary>
-        ///// EP message to 'b'.
-        ///// </summary>
-        ///// <param name="Product">Incoming message from 'product'.</param>
-        ///// <param name="A">Incoming message from 'a'.</param>
-        ///// <param name="B">Incoming message from 'b'.</param>
-        ///// <returns>The outgoing EP message to the 'b' argument.</returns>
-        ///// <remarks><para>
-        ///// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'b'.
-        ///// The formula is <c>int f(b,x) q(x) dx</c> where <c>x = (product,a)</c>.
-        ///// </para></remarks>
-        //public static Gaussian BAverageConditional([SkipIfUniform] Gaussian Product, Gaussian A, Beta B)
-        //{
-        //   //return AAverageConditional(Product, B, A);
-        //}
+                double invA = a;
+                a = 1.0 / invA;
+                double logfInvA = Gaussian.GetLogProb(mProduct * invA, mB, vProduct * invA * invA + vB) + Gaussian.GetLogProb(a, mA, vA) - Math.Log(Math.Abs(invA + Double.Epsilon));
+                double fInvA = Math.Exp(logfInvA);
+                z += fInvA;
+                sumA += a * fInvA;
+                sumA2 += a * a * fInvA;
+            }
+            double mean = sumA / z;
+            double var = sumA2 / z - mean * mean;
+            result.SetMeanAndVariance(mean, var);
+            if (ForceProper) result.SetToRatioProper(result, A);
+            else result.SetToRatio(result, A);
+            return result;
+        }
+        /// <summary>
+        /// EP message to 'a'.
+        /// </summary>
+        /// <param name="Product">Constant value for 'product'.</param>
+        /// <param name="A">Incoming message from 'a'.</param>
+        /// <param name="B">Incoming message from 'b'.</param>
+        /// <returns>The outgoing EP message to the 'a' argument.</returns>
+        /// <remarks><para>
+        /// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'a'.
+        /// The formula is <c>int f(a,x) q(x) dx</c> where <c>x = (product,b)</c>.
+        /// </para></remarks>
+        public static Gaussian AAverageConditional(double Product, Gaussian A, Gaussian B)
+        {
+            return AAverageConditional(Gaussian.PointMass(Product), A, B);
+        }
+        /// <summary>
+        /// EP message to 'b'.
+        /// </summary>
+        /// <param name="Product">Incoming message from 'product'.</param>
+        /// <param name="A">Incoming message from 'a'.</param>
+        /// <param name="B">Incoming message from 'b'.</param>
+        /// <returns>The outgoing EP message to the 'b' argument.</returns>
+        /// <remarks><para>
+        /// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'b'.
+        /// The formula is <c>int f(b,x) q(x) dx</c> where <c>x = (product,a)</c>.
+        /// </para></remarks>
+        public static Gaussian BAverageConditional([SkipIfUniform] Gaussian Product, Gaussian A, Beta B)
+        {
+            //return AAverageConditional(Product, B, A);
+        }
 
-        ///// <summary>
-        ///// EP message to 'b'.
-        ///// </summary>
-        ///// <param name="Product">Incoming message from 'product'.</param>
-        ///// <param name="A">Incoming message from 'a'.</param>
-        ///// <param name="B">Incoming message from 'b'.</param>
-        ///// <returns>The outgoing EP message to the 'b' argument.</returns>
-        ///// <remarks><para>
-        ///// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'b'.
-        ///// The formula is <c>int f(b,x) q(x) dx</c> where <c>x = (product,a)</c>.
-        ///// </para></remarks>
-        //public static Gaussian BAverageConditional([SkipIfUniform] Gaussian Product, Beta A, Gaussian B)
-        //{
-        //   //return AAverageConditional(Product, B, A);
-        //}
-        ///// <summary>
-        ///// EP message to 'b'.
-        ///// </summary>
-        ///// <param name="Product">Constant value for 'product'.</param>
-        ///// <param name="A">Incoming message from 'a'.</param>
-        ///// <param name="B">Incoming message from 'b'.</param>
-        ///// <returns>The outgoing EP message to the 'b' argument.</returns>
-        ///// <remarks><para>
-        ///// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'b'.
-        ///// The formula is <c>int f(b,x) q(x) dx</c> where <c>x = (product,a)</c>.
-        ///// </para></remarks>
-        //public static Beta BAverageConditional(double Product, Gaussian A, Beta B)
-        //{
-        //   //return AAverageConditional(Product, B, A);
-        //}
+        /// <summary>
+        /// EP message to 'b'.
+        /// </summary>
+        /// <param name="Product">Incoming message from 'product'.</param>
+        /// <param name="A">Incoming message from 'a'.</param>
+        /// <param name="B">Incoming message from 'b'.</param>
+        /// <returns>The outgoing EP message to the 'b' argument.</returns>
+        /// <remarks><para>
+        /// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'b'.
+        /// The formula is <c>int f(b,x) q(x) dx</c> where <c>x = (product,a)</c>.
+        /// </para></remarks>
+        public static Gaussian BAverageConditional([SkipIfUniform] Gaussian Product, Beta A, Gaussian B)
+        {
+            //return AAverageConditional(Product, B, A);
+        }
+        /// <summary>
+        /// EP message to 'b'.
+        /// </summary>
+        /// <param name="Product">Constant value for 'product'.</param>
+        /// <param name="A">Incoming message from 'a'.</param>
+        /// <param name="B">Incoming message from 'b'.</param>
+        /// <returns>The outgoing EP message to the 'b' argument.</returns>
+        /// <remarks><para>
+        /// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'b'.
+        /// The formula is <c>int f(b,x) q(x) dx</c> where <c>x = (product,a)</c>.
+        /// </para></remarks>
+        public static Beta BAverageConditional(double Product, Gaussian A, Beta B)
+        {
+            //return AAverageConditional(Product, B, A);
+        }
 
-        ///// <summary>
-        ///// EP message to 'b'.
-        ///// </summary>
-        ///// <param name="Product">Constant value for 'product'.</param>
-        ///// <param name="A">Incoming message from 'a'.</param>
-        ///// <param name="B">Incoming message from 'b'.</param>
-        ///// <returns>The outgoing EP message to the 'b' argument.</returns>
-        ///// <remarks><para>
-        ///// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'b'.
-        ///// The formula is <c>int f(b,x) q(x) dx</c> where <c>x = (product,a)</c>.
-        ///// </para></remarks>
-        //public static Gaussian BAverageConditional(double Product, Beta A, Gaussian B)
-        //{
-        //   //return AAverageConditional(Product, B, A);
-        //}
+        /// <summary>
+        /// EP message to 'b'.
+        /// </summary>
+        /// <param name="Product">Constant value for 'product'.</param>
+        /// <param name="A">Incoming message from 'a'.</param>
+        /// <param name="B">Incoming message from 'b'.</param>
+        /// <returns>The outgoing EP message to the 'b' argument.</returns>
+        /// <remarks><para>
+        /// The outgoing message is the integral of the factor times incoming messages, over all arguments except 'b'.
+        /// The formula is <c>int f(b,x) q(x) dx</c> where <c>x = (product,a)</c>.
+        /// </para></remarks>
+        public static Gaussian BAverageConditional(double Product, Beta A, Gaussian B)
+        {
+            //return AAverageConditional(Product, B, A);
+        }
+#endif
     }
 }

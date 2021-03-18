@@ -218,27 +218,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         protected virtual IEventDeclaration ConvertEvent(ITypeDeclaration td, IEventDeclaration ifd)
         {
-            return ifd;
-            IEventDeclaration fd = Builder.EventDecl();
-            fd.Attributes.AddRange(ifd.Attributes);
-            fd.DeclaringType = td;
-            fd.Documentation = ifd.Documentation;
-            fd.EventType = ifd.EventType;
-            fd.GenericEvent = ifd.GenericEvent;
-            fd.InvokeMethod = ConvertMethodReference(ifd.InvokeMethod);
-            fd.Name = CheckIdentifier(ifd.Name);
-            return fd;
+            bool shallow = true;
+            if (shallow) return ifd;
+            else
+            {
+                IEventDeclaration fd = Builder.EventDecl();
+                fd.Attributes.AddRange(ifd.Attributes);
+                fd.DeclaringType = td;
+                fd.Documentation = ifd.Documentation;
+                fd.EventType = ifd.EventType;
+                fd.GenericEvent = ifd.GenericEvent;
+                fd.InvokeMethod = ConvertMethodReference(ifd.InvokeMethod);
+                fd.Name = CheckIdentifier(ifd.Name);
+                return fd;
+            }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         protected virtual void ConvertFields(ITypeDeclaration td, ITypeDeclaration itd)
         {
@@ -255,30 +251,26 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         protected virtual IFieldDeclaration ConvertField(ITypeDeclaration td, IFieldDeclaration ifd)
         {
-            return ifd;
-            IFieldDeclaration fd = Builder.FieldDecl();
-            fd.Attributes.AddRange(ifd.Attributes);
-            fd.DeclaringType = td;
-            fd.Documentation = ifd.Documentation;
-            fd.FieldType = ifd.FieldType;
-            fd.Initializer = ifd.Initializer;
-            fd.Literal = ifd.Literal;
-            fd.Name = CheckIdentifier(ifd.Name);
-            fd.ReadOnly = ifd.ReadOnly;
-            fd.Visibility = ifd.Visibility;
-            fd.Static = ifd.Static;
-            return fd;
+            bool shallow = true;
+            if (shallow) return ifd;
+            else
+            {
+                IFieldDeclaration fd = Builder.FieldDecl();
+                fd.Attributes.AddRange(ifd.Attributes);
+                fd.DeclaringType = td;
+                fd.Documentation = ifd.Documentation;
+                fd.FieldType = ifd.FieldType;
+                fd.Initializer = ifd.Initializer;
+                fd.Literal = ifd.Literal;
+                fd.Name = CheckIdentifier(ifd.Name);
+                fd.ReadOnly = ifd.ReadOnly;
+                fd.Visibility = ifd.Visibility;
+                fd.Static = ifd.Static;
+                return fd;
+            }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         protected virtual void ConvertProperties(ITypeDeclaration td, ITypeDeclaration itd)
         {
@@ -367,24 +359,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             ConvertStatements(outputs, inputs);
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         protected virtual IParameterDeclaration ConvertMethodParameter(IParameterDeclaration ipd, int index)
         {
             // must not convert declarations by default, else references will get messed up
             return ipd;
-            IParameterDeclaration pd = Builder.ParamDecl();
-            pd.Name = ipd.Name;
-            pd.ParameterType = ipd.ParameterType;
-            pd.Attributes.AddRange(ipd.Attributes);
-            return pd;
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         protected virtual IBlockStatement ConvertBlock(IBlockStatement inputBlock)
         {

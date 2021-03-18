@@ -11,7 +11,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(Factor), "GetItems<>", Default = false)]
+    [FactorMethod(typeof(Collection), "GetItems<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetItemsPointOp<T>
     {
@@ -33,7 +33,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsFromJaggedOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(Factor), "GetItemsFromJagged<>", Default = false)]
+    [FactorMethod(typeof(Collection), "GetItemsFromJagged<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetItemsFromJaggedPointOp<T>
     {
@@ -58,7 +58,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsFromDeepJaggedOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(Factor), "GetItemsFromDeepJagged<>", Default = false)]
+    [FactorMethod(typeof(Collection), "GetItemsFromDeepJagged<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetItemsFromDeepJaggedPointOp<T>
     {
@@ -86,7 +86,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsPointOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(Factor), "GetJaggedItems<>", Default = false)]
+    [FactorMethod(typeof(Collection), "GetJaggedItems<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetJaggedItemsPointOp<T>
     {
@@ -118,7 +118,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsPointOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(Factor), "GetDeepJaggedItems<>", Default = false)]
+    [FactorMethod(typeof(Collection), "GetDeepJaggedItems<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetDeepJaggedItemsPointOp<T>
     {
@@ -158,7 +158,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsFromJaggedPointOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(Factor), "GetJaggedItemsFromJagged<>", Default = false)]
+    [FactorMethod(typeof(Collection), "GetJaggedItemsFromJagged<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class GetJaggedItemsFromJaggedPointOp<T>
     {

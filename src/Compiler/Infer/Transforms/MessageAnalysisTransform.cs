@@ -83,30 +83,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return ies;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         protected override IMethodDeclaration ConvertMethod(IMethodDeclaration imd)
         {
             base.ConvertMethod(imd);
             PostProcess();
-            if (false)
-            {
-                Console.WriteLine("inferred types:");
-                foreach (KeyValuePair<IVariableDeclaration, IVariableDeclaration> entry in fwdMessageVars)
-                {
-                    IVariableDeclaration msgVar = entry.Value;
-                    //IExpression init = messageInitExprs[msgVar];
-                    //Console.WriteLine("{0} = {1}", msgVar, init);
-                }
-            }
             return imd;
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         private void PostProcess()
         {

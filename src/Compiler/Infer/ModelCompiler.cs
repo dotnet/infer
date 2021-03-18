@@ -759,13 +759,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
         internal List<ITypeDeclaration> GetTransformedDeclaration(ITypeDeclaration itd, MethodBase method, AttributeRegistry<object, ICompilerAttribute> inputAttributes)
         {
             TransformerChain tc = ConstructTransformChain(method);
-            List<ITypeDeclaration> output;
             try
             {
                 Compiling?.Invoke(this, new CompileEventArgs());
                 bool trackTransform = (BrowserMode != BrowserMode.Never);
-                List<TransformError> warnings;
-                output = tc.TransformToDeclaration(itd, inputAttributes, trackTransform, ShowProgress, out warnings, CatchExceptions, TreatWarningsAsErrors);
+                List<ITypeDeclaration> output = tc.TransformToDeclaration(itd, inputAttributes, trackTransform, ShowProgress, out List<TransformError> warnings, CatchExceptions, TreatWarningsAsErrors);
                 OnCompiled(new CompileEventArgs()
                     {
                         Warnings = warnings
@@ -787,6 +785,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         }
                     }
                 }
+                return output;
             }
             catch (TransformFailedException ex)
             {
@@ -794,7 +793,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 if (BrowserMode != BrowserMode.Never) ShowBrowser(tc, GeneratedSourceFolder, itd.Name);
                 throw new CompilationFailedException(ex.Results, ex.Message);
             }
-            return output;
         }
 
         private void OnCompiled(CompileEventArgs e)

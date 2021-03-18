@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         internal IndexedProperty<NodeIndex, bool> isUniform;
 
-        // Edge properties ////////////////////////////////////////////////
+        // Edge properties
         internal IndexedProperty<EdgeIndex, bool> isRequired;
         internal IndexedProperty<EdgeIndex, byte> bitsProvided;
         internal IndexedProperty<EdgeIndex, bool> isTrigger, isFreshEdge;
@@ -84,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal IndexedProperty<EdgeIndex, bool> isCancels;
         internal Dictionary<EdgeIndex, IOffsetInfo> OffsetIndices = new Dictionary<EdgeIndex, IOffsetInfo>();
 
-        // Debugging /////////////////////////////////////////////////////
+        // Debugging
         public Converter<NodeIndex, string> NodeToString;
         public Converter<NodeIndex, string> NodeToShortString;
         internal IReadOnlyList<IStatement> Nodes;
@@ -1575,16 +1575,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             dfsFreshDescendantIsBusy = false;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         internal void ForEachFreshDescendant(DepthFirstSearch<NodeIndex> dfs, NodeIndex node, Action<NodeIndex> action)
         {
             dfs.Clear();
             dfs.ClearActions();
             dfs.DiscoverNode += action;
-            if (false)
+            bool findloops = false;
+            if (findloops)
             {
                 dfs.BackEdge += delegate (Edge<NodeIndex> edge)
                     {
@@ -1597,10 +1594,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             dfs.SearchFrom(node);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         // caching this dfs significantly improves memory performance.
         private DepthFirstSearch<NodeIndex> dfsTriggees;

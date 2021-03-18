@@ -30,17 +30,17 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <summary>
         /// Gets the array of arrays of non-zero feature values for each entity.
         /// </summary>
-        public IList<IList<double>> NonZeroFeatureValues { get; private set; }
+        public IReadOnlyList<IReadOnlyList<double>> NonZeroFeatureValues { get; private set; }
 
         /// <summary>
         /// Gets the array of arrays of non-zero feature indices for each entity.
         /// </summary>
-        public IList<IList<int>> NonZeroFeatureIndices { get; private set; }
+        public IReadOnlyList<IReadOnlyList<int>> NonZeroFeatureIndices { get; private set; }
 
         /// <summary>
         /// Gets the array non-zero feature counts for each entity.
         /// </summary>
-        public IList<int> NonZeroFeatureCounts { get; private set; }
+        public IReadOnlyList<int> NonZeroFeatureCounts { get; private set; }
 
         /// <summary>
         /// Gets the number of entities.
@@ -56,8 +56,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <returns>The created sparse feature matrix.</returns>
         public static SparseFeatureMatrix Create(
             int featureCount,
-            IList<IList<double>> nonZeroFeatureValues,
-            IList<IList<int>> nonZeroFeatureIndices)
+            IReadOnlyList<IReadOnlyList<double>> nonZeroFeatureValues,
+            IReadOnlyList<IReadOnlyList<int>> nonZeroFeatureIndices)
         {
             Debug.Assert(CanBeCreatedFrom(nonZeroFeatureValues, nonZeroFeatureIndices), "Invalid arguments provided.");
 
@@ -103,8 +103,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// True if a sparse feature matrix can be created from the specified arguments, false otherwise.
         /// </returns>
         public static bool CanBeCreatedFrom(
-            IList<IList<double>> nonZeroFeatureValues,
-            IList<IList<int>> nonZeroFeatureIndices)
+            IReadOnlyList<IReadOnlyList<double>> nonZeroFeatureValues,
+            IReadOnlyList<IReadOnlyList<int>> nonZeroFeatureIndices)
         {
             if (nonZeroFeatureValues == null || nonZeroFeatureIndices == null)
             {

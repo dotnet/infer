@@ -323,15 +323,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                 else if (Containers.FindContainers(context).Count == 0) info.isInitialized = true;
                             }
                         }
-                        else if (iae.Expression is IArrayCreateExpression)
+                        else if (iae.Expression is IArrayCreateExpression iace)
                         {
-                            var iace = (IArrayCreateExpression)iae.Expression;
                             Type elementType = Util.GetElementType(type);
                             newRhs = Builder.ArrayCreateExpr(elementType, GetReducedDimensions(iace.Dimensions, info.maxDepthWhereDimensionCouldMatter[indexingDepth], arrayDepth));
                         }
-                        else if (iae.Expression is IObjectCreateExpression)
+                        else if (iae.Expression is IObjectCreateExpression ioce)
                         {
-                            var ioce = (IObjectCreateExpression)iae.Expression;
                             newRhs = Builder.NewObject(type, GetReducedDimensions(ioce.Arguments, info.maxDepthWhereDimensionCouldMatter[indexingDepth], arrayDepth));
                         }
                         else throw new InferCompilerException($"Unexpected expression type: {iae.Expression.GetType()}");

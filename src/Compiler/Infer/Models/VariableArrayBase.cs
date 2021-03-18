@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Gets the items
         /// </summary>
         /// <returns></returns>
-        Dictionary<IList<IModelExpression>, IVariable> GetItemsUntyped();
+        Dictionary<IReadOnlyList<IModelExpression>, IVariable> GetItemsUntyped();
     }
 
     /// <summary>
@@ -164,7 +164,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 }
             }
             IVariable item;
-            Dictionary<IList<IModelExpression>, IVariable> itemVariables = ((HasItemVariables) array).GetItemsUntyped();
+            Dictionary<IReadOnlyList<IModelExpression>, IVariable> itemVariables = ((HasItemVariables) array).GetItemsUntyped();
             if (itemVariables.TryGetValue(index, out item)) return (TItem) item;
             // the item must be in the same containers as the array (not the currently open containers)
             if (itemPrototype is IVariableArray)
@@ -226,9 +226,9 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// All item variables referring to this array.
         /// </summary>
-        internal Dictionary<IList<IModelExpression>, IVariable> items = new Dictionary<IList<IModelExpression>, IVariable>(new ListComparer<IModelExpression>());
+        internal Dictionary<IReadOnlyList<IModelExpression>, IVariable> items = new Dictionary<IReadOnlyList<IModelExpression>, IVariable>(new ReadOnlyListComparer<IModelExpression>());
 
-        Dictionary<IList<IModelExpression>, IVariable> HasItemVariables.GetItemsUntyped()
+        Dictionary<IReadOnlyList<IModelExpression>, IVariable> HasItemVariables.GetItemsUntyped()
         {
             return items;
         }

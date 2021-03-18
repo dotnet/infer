@@ -462,7 +462,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 liveVariables.Remove(ivd);
             }
-            else if (iae.Target is IFieldReferenceExpression && ((IFieldReferenceExpression)iae.Target).Field.Equals(ifr))
+            else if (iae.Target is IFieldReferenceExpression ifre && ifre.Field.Equals(ifr))
             {
                 liveFields.Remove(ifd);
             }

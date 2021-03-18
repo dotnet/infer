@@ -214,7 +214,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <returns>The average parameter distribution excluding feature contributions.</returns>
         private static Gaussian GetAverageParameterExcludingFeatureContribution(
             IEnumerable<Gaussian> entityParameters,
-            IList<Gaussian> weights,
+            IReadOnlyList<Gaussian> weights,
             SparseFeatureMatrix features)
         {
             var adjustedEntityParameters = entityParameters.Select((gaussian, i) => 
@@ -230,7 +230,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="nonZeroValues">The sparse feature values.</param>
         /// <param name="nonZeroIndices">The sparse feature indices.</param>
         /// <returns>The contribution of the features.</returns>
-        private static Gaussian ComputeFeatureContribution(IList<Gaussian> weights, IList<double> nonZeroValues, IList<int> nonZeroIndices)
+        private static Gaussian ComputeFeatureContribution(IReadOnlyList<Gaussian> weights, IReadOnlyList<double> nonZeroValues, IReadOnlyList<int> nonZeroIndices)
         {
             Debug.Assert(nonZeroValues.Count == nonZeroIndices.Count, "The number of values must be equal to the number of indices.");
             int count = nonZeroValues.Count;

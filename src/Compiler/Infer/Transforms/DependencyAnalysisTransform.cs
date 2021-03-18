@@ -1102,7 +1102,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return iExpression;
         }
 
-        // Expression types on which a statement can have dependencies /////////////////////////////////////////////
+#region Expression types on which a statement can have dependencies 
 
         // Add dependencies on this property reference
         // We cannot use base.ConvertPropertyRefExpr because we want the dependency to be on the entire expression,
@@ -1162,7 +1162,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return iaie;
         }
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+#endregion
 
         /// <summary>
         /// Converts the indices in all brackets of expr, but not the innermost target.

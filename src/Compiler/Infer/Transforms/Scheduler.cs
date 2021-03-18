@@ -75,11 +75,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal IndexedProperty<NodeIndex, HashSet<IVariableDeclaration>> loopVarsOfNode;
         internal List<IVariableDeclaration> loopVarsWithOffset;
 
-        // variables used by initialization /////////////////////////
+        // variables used by initialization
         private Set<EdgeIndex> backwardInSchedule;
         private bool mustInitBackwardEdges;
 
-        // variables used by UpdateCosts ///////////////////////////
+        // variables used by UpdateCosts
         /// <summary>
         /// precomputed all-pairs distances to reduce time at expense of memory. 
         /// distance[source][target] is the number of directed edges on the shortest path from source to target.
@@ -90,7 +90,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         // used for updating edge costs
         private Stack<EdgeIndex> newBackEdges = new Stack<EdgeIndex>();
 
-        // variables used by PropagateConstraints ////////////////////
+        // variables used by PropagateConstraints
         // cached dfs objects to reduce gc
         private DepthFirstSearch<NodeIndex> dfsAncestorsWithoutGroups, dfsAncestorsWithGroups;
         private DepthFirstSearch<NodeIndex> dfsDescendantsWithoutGroups, dfsDescendantsWithGroups;
@@ -99,7 +99,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private Dictionary<NodeIndex, OffsetBoundCollection> ancestorOffset = new Dictionary<NodeIndex, OffsetBoundCollection>();
         private Dictionary<NodeIndex, OffsetBoundCollection> descendantOffset = new Dictionary<NodeIndex, OffsetBoundCollection>();
 
-        // variables used by GetSchedule /////////////////////////////
+        // variables used by GetSchedule
         private DepthFirstSearch<NodeIndex> dfsSchedule;
         private List<NodeIndex> schedule;
 

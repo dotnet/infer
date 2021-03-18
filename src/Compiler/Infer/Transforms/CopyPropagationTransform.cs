@@ -266,7 +266,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // Look for assignments where the right hand side is a SetTo call
                 if (iae.Expression is IMethodInvokeExpression imie)
                 {
-                    bool isCopy = Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Factor.Copy));
+                    bool isCopy = Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, PlaceHolder>(Clone.Copy));
                     bool isSetTo = Recognizer.IsStaticGenericMethod(imie, typeof(ArrayHelper), "SetTo");
                     bool isSetAllElementsTo = Recognizer.IsStaticGenericMethod(imie, typeof(ArrayHelper), "SetAllElementsTo");
                     bool isGetItemsPoint = Recognizer.IsStaticGenericMethod(imie, typeof(GetItemsPointOp<>), "ItemsAverageConditional");

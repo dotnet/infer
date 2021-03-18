@@ -1006,10 +1006,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 return true;
             }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
             public static bool IsAssignableFrom(Type t1, Type t2)
             {
                 if (t1.IsAssignableFrom(t2)) return true;
@@ -1025,20 +1021,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 }
                 else if (t1.IsGenericParameter && t2.IsGenericParameter)
                 {
-                    // ignore type constraints when matching generic parameters
-                    return (t1.Name == t2.Name);
-                    GenericParameterFactory.Constraints constraints1 =
-                        GenericParameterFactory.Constraints.FromTypeParameter(t1);
-                    GenericParameterFactory.Constraints constraints2 =
-                        GenericParameterFactory.Constraints.FromTypeParameter(t2);
-                    return IsAssignableFrom(constraints1, constraints2);
+                    bool ignoreTypeConstraints = true;
+                    if (ignoreTypeConstraints) return (t1.Name == t2.Name);
+                    else
+                    {
+                        GenericParameterFactory.Constraints constraints1 =
+                            GenericParameterFactory.Constraints.FromTypeParameter(t1);
+                        GenericParameterFactory.Constraints constraints2 =
+                            GenericParameterFactory.Constraints.FromTypeParameter(t2);
+                        return IsAssignableFrom(constraints1, constraints2);
+                    }
                 }
                 else return false;
             }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
             /// <summary>
             /// True if c2 is more constrained than c1.

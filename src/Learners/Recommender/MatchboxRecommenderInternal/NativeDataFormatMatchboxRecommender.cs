@@ -874,8 +874,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
             // Retrieve the user features
             int userFeatureCount = 0;
-            IList<IList<double>> nonZeroUserFeatureValues = null;
-            IList<IList<int>> nonZeroUserFeatureIndices = null;
+            IReadOnlyList<IReadOnlyList<double>> nonZeroUserFeatureValues = null;
+            IReadOnlyList<IReadOnlyList<int>> nonZeroUserFeatureIndices = null;
             if (this.Settings.Training.UseUserFeatures)
             {
                 userFeatureCount = this.mapping.GetUserFeatureCount(featureSource);
@@ -885,8 +885,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
             // Retrieve the item features
             int itemFeatureCount = 0;
-            IList<IList<double>> nonZeroItemFeatureValues = null;
-            IList<IList<int>> nonZeroItemFeatureIndices = null;
+            IReadOnlyList<IReadOnlyList<double>> nonZeroItemFeatureValues = null;
+            IReadOnlyList<IReadOnlyList<int>> nonZeroItemFeatureIndices = null;
             if (this.Settings.Training.UseItemFeatures)
             {
                 itemFeatureCount = this.mapping.GetItemFeatureCount(featureSource);
@@ -1102,8 +1102,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         private SparseFeatureVector GetEntityFeatures(
             bool useFeatures,
             FeatureParameterDistribution featureParameterPosterior,
-            Func<IList<double>> nonZeroFeatureValuesRetriever,
-            Func<IList<int>> nonZeroFeatureIndicesRetriever)
+            Func<IReadOnlyList<double>> nonZeroFeatureValuesRetriever,
+            Func<IReadOnlyList<int>> nonZeroFeatureIndicesRetriever)
         {
             if (!useFeatures)
             {
@@ -1181,9 +1181,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="itemCount">The number of items returned by the mapping.</param>
         /// <param name="ratingCount">The upper bound on the rating values.</param>
         private void CheckInstanceDataConsistency(
-            IList<int> userIds,
-            IList<int> itemIds,
-            IList<int> ratings,
+            IReadOnlyList<int> userIds,
+            IReadOnlyList<int> itemIds,
+            IReadOnlyList<int> ratings,
             int userCount,
             int itemCount,
             int ratingCount)
@@ -1231,10 +1231,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="userCount">The number of users returned by the mapping.</param>
         /// <param name="itemCount">The number of items returned by the mapping.</param>
         private void CheckFeatureDataConsistency(
-            IList<IList<double>> nonZeroUserFeatureValues,
-            IList<IList<int>> nonZeroUserFeatureIndices,
-            IList<IList<double>> nonZeroItemFeatureValues,
-            IList<IList<int>> nonZeroItemFeatureIndices,
+            IReadOnlyList<IReadOnlyList<double>> nonZeroUserFeatureValues,
+            IReadOnlyList<IReadOnlyList<int>> nonZeroUserFeatureIndices,
+            IReadOnlyList<IReadOnlyList<double>> nonZeroItemFeatureValues,
+            IReadOnlyList<IReadOnlyList<int>> nonZeroItemFeatureIndices,
             int userCount,
             int itemCount)
         {

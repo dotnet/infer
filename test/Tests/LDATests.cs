@@ -328,7 +328,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Type type = obj.GetType();
                 if (Util.IsIList(type))
                 {
-                    return (double) Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(typeof (LDATests), "SparsityFraction", obj);
+                    return (double)Compiler.Reflection.Invoker.InvokeStatic(typeof (LDATests), "SparsityFraction", obj);
                 }
                 else throw new NotImplementedException();
             }
@@ -360,7 +360,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             if ((a is Diffable) || Util.IsIList(a.GetType()))
             {
-                return (double) Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(typeof (LDATests), "MaxDiff", a, b);
+                return (double)Compiler.Reflection.Invoker.InvokeStatic(typeof (LDATests), "MaxDiff", a, b);
             }
             else throw new NotImplementedException();
         }

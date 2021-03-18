@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Utilities;
 
@@ -33,10 +32,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         public AccumulationTransform()
         {
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 429
-#endif
 
         protected override IStatement DoConvertStatement(IStatement ist)
         {
@@ -174,10 +169,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
     }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 429
-#endif
 
     /// <summary>
     /// Attached to methods.

@@ -249,12 +249,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression conditionalsExpr = Builder.VarRefExpr(vtci.conditionalsChannel.decl);
                     if (isDerived)
                     {
-                        Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Factor.ReplicateWithMarginalGibbs);
+                        Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Clone.ReplicateWithMarginalGibbs);
                         variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, burnInExpr, thinExpr, marginalExpr, samplesExpr, conditionalsExpr);
                     }
                     else
                     {
-                        Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Factor.UsesEqualDefGibbs);
+                        Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Clone.UsesEqualDefGibbs);
                         variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, burnInExpr, thinExpr, marginalExpr, samplesExpr, conditionalsExpr);
                     }
                 }
@@ -263,11 +263,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     Delegate d;
                     if (isDerived)
                     {
-                        d = new FuncOut<PlaceHolder, int, PlaceHolder, PlaceHolder[]>(Factor.ReplicateWithMarginal<PlaceHolder>);
+                        d = new FuncOut<PlaceHolder, int, PlaceHolder, PlaceHolder[]>(Clone.ReplicateWithMarginal<PlaceHolder>);
                     }
                     else
                     {
-                        d = new FuncOut<PlaceHolder, int, PlaceHolder, PlaceHolder[]>(Factor.UsesEqualDef<PlaceHolder>);
+                        d = new FuncOut<PlaceHolder, int, PlaceHolder, PlaceHolder[]>(Clone.UsesEqualDef<PlaceHolder>);
                     }
                     variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, defExpr, countExpr, marginalExpr);
                 }
@@ -473,7 +473,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression thinExpr = Builder.LiteralExpr(1);
                     IExpression samplesExpr = Builder.VarRefExpr(vtci.samplesChannel.decl);
                     IExpression conditionalsExpr = Builder.VarRefExpr(vtci.conditionalsChannel.decl);
-                    Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Factor.ReplicateWithMarginalGibbs);
+                    Delegate d = new FuncOut3<PlaceHolder, int, int, int, PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder[]>(Clone.ReplicateWithMarginalGibbs);
                     variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, expr, countExpr, burnInExpr, thinExpr, marginalExpr, samplesExpr, conditionalsExpr);
                 }
                 else
@@ -481,7 +481,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     vtci.samplesChannel = vtci.marginalChannel;
                     vtci.conditionalsChannel = vtci.marginalChannel;
 
-                    Delegate d = new FuncOut<PlaceHolder, int, PlaceHolder, PlaceHolder[]>(Factor.ReplicateWithMarginal);
+                    Delegate d = new FuncOut<PlaceHolder, int, PlaceHolder, PlaceHolder[]>(Clone.ReplicateWithMarginal);
                     variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, expr, countExpr, marginalExpr);
                 }
                 CreateUsesChannel(vi, 0, vtci, stmts);

@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 
 namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
 {
@@ -79,32 +78,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
 
         #endregion Object Overrides
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Get expression type
         /// </summary>
         public override Type GetExpressionType()
         {
             return Target.Property.PropertyType.DotNetType;
-            Type arrayType = this.Target.GetExpressionType();
-            if (arrayType == null)
-                return null;
-
-            if (arrayType.IsArray)
-                return arrayType.GetElementType();
-
-            if (arrayType.IsGenericType)
-                return arrayType.GetGenericArguments()[0];
-
-            return null;
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
-
     }
 }

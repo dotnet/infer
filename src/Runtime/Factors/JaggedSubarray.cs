@@ -13,17 +13,15 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an array item.</typeparam>
-    [FactorMethod(typeof(Factor), "JaggedSubarray<>", Default = true)]
+    [FactorMethod(typeof(Collection), "JaggedSubarray<>", Default = true)]
     [Buffers("marginal")]
     [Quality(QualityBand.Mature)]
     public static class JaggedSubarrayOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogAverageFactor{ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogAverageFactor<ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
-            where ItemType : IList<T>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogAverageFactor(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
+        public static double LogAverageFactor(IReadOnlyList<IReadOnlyList<T>> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
         {
-            IEqualityComparer<T> equalityComparer = Utilities.Util.GetEqualityComparer<T>();
+            IEqualityComparer<T> equalityComparer = Util.GetEqualityComparer<T>();
             for (int i = 0; i < indices.Count; i++)
             {
                 for (int j = 0; j < indices[i].Count; j++)
@@ -35,28 +33,22 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio{ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogEvidenceRatio<ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
-            where ItemType : IList<T>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
+        public static double LogEvidenceRatio(IReadOnlyList<IReadOnlyList<T>> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
         {
-            return LogAverageFactor<ItemType>(items, array, indices);
+            return LogAverageFactor(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="AverageLogFactor{ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double AverageLogFactor<ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
-            where ItemType : IList<T>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="AverageLogFactor(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
+        public static double AverageLogFactor(IReadOnlyList<IReadOnlyList<T>> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
         {
-            return LogAverageFactor<ItemType>(items, array, indices);
+            return LogAverageFactor(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{ItemType}, IList{DistributionType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{DistributionType}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogAverageFactor<DistributionType, ItemType>(IList<ItemType> items, IList<DistributionType> array, IList<IList<int>> indices)
+        public static double LogAverageFactor<DistributionType>(IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>
-            where ItemType : IList<DistributionType>
         {
             double z = 0.0;
             Dictionary<int, DistributionType> productBefore = new Dictionary<int, DistributionType>();
@@ -77,23 +69,19 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{ItemType}, IList{DistributionType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{DistributionType}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType, ItemType>(IList<ItemType> items, IList<DistributionType> array, IList<IList<int>> indices)
+        public static double AverageLogFactor<DistributionType>(IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>
-            where ItemType : IList<DistributionType>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IReadOnlyList{DistributionType}, IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogAverageFactor<DistributionType, ItemType>(IList<DistributionType> array, IList<ItemType> items, IList<IList<int>> indices)
+        public static double LogAverageFactor<DistributionType>(IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<T>> items, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, CanGetLogProb<T>
-            where ItemType : IList<T>
         {
             double z = 0.0;
             Dictionary<int, DistributionType> productBefore = new Dictionary<int, DistributionType>();
@@ -114,33 +102,27 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemType}(IReadOnlyList{DistributionType}, IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogEvidenceRatio<DistributionType, ItemType>(IList<DistributionType> array, IList<ItemType> items, IList<IList<int>> indices)
+        public static double LogEvidenceRatio<DistributionType>(IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<T>> items, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, CanGetLogProb<T>
-            where ItemType : IList<T>
         {
-            return LogAverageFactor<DistributionType, ItemType>(array, items, indices);
+            return LogAverageFactor(array, items, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IReadOnlyList{DistributionType}, IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType, ItemType>(IList<DistributionType> array, IList<ItemType> items, IList<IList<int>> indices)
+        public static double AverageLogFactor<DistributionType>(IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<T>> items, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, CanGetLogProb<T>
-            where ItemType : IList<T>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogAverageFactor<DistributionType, ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double LogAverageFactor<DistributionType>(IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : CanGetLogProb<T>
-            where ItemType : IList<DistributionType>
         {
             double z = 0.0;
             for (int i = 0; i < indices.Count; i++)
@@ -149,37 +131,29 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [Skip]
-        public static double LogEvidenceRatio<DistributionType, ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double LogEvidenceRatio<DistributionType>(IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : CanGetLogProb<T>
-            where ItemType : IList<DistributionType>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType, ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double AverageLogFactor<DistributionType>(IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : CanGetLogProb<T>
-            where ItemType : IList<DistributionType>
         {
             return 0.0;
         }
 
 #if true
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemArrayType, ItemType}(ItemArrayType, IList{DistributionType}, IList{IList{int}}, ItemArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{DistributionType}, IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{DistributionType}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemArrayType">The type of an incoming message from <c>items</c>.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogEvidenceRatio<DistributionType, ItemArrayType, ItemType>(
-            ItemArrayType items, IList<DistributionType> array, IList<IList<int>> indices, ItemArrayType to_items)
-            where ItemArrayType : IList<ItemType>
-            where ItemType : IList<DistributionType>
+        public static double LogEvidenceRatio<DistributionType>(
+            IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices, IReadOnlyList<IReadOnlyList<DistributionType>> to_items)
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>, ICloneable
         {
             // this code is adapted from GetItemsOp
@@ -219,7 +193,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>.
     /// Adding up these values across all factors and variables gives the log-evidence estimate for EP.
     /// </para></remarks>
-        public static double LogEvidenceRatio<DistributionType, ItemArrayType, ItemType>(ItemArrayType items, IList<DistributionType> array, IList<IList<int>> indices)
+        public static double LogEvidenceRatio<DistributionType, ItemArrayType, ItemType>(ItemArrayType items, IReadOnlyList<DistributionType> array, IList<IList<int>> indices)
             where ItemArrayType : IList<ItemType>, ICloneable
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>, ICloneable
@@ -282,16 +256,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (ArrayType)array.Clone();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemType}(ArrayType, IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [SkipIfAllUniform("array", "items")]
-        public static ArrayType Marginal<ArrayType, DistributionType, ItemType>(
-            ArrayType array, [NoInit] IList<ItemType> items, IList<IList<int>> indices, ArrayType result)
+        public static ArrayType Marginal<ArrayType, DistributionType>(
+            ArrayType array, [NoInit] IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : SettableToProduct<DistributionType>
-            where ItemType : IList<DistributionType>
         {
             if(items.Count != indices.Count)
                 throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
@@ -312,19 +284,17 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="MarginalIncrement{ArrayType, DistributionType, ItemType}(ArrayType, ItemType, ItemType, IList{IList{int}}, int)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="MarginalIncrement{ArrayType, DistributionType, ItemType}(ArrayType, IReadOnlyList{DistributionType}, IReadOnlyList{DistributionType}, IReadOnlyList{IReadOnlyList{int}}, int)"]/*'/>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static ArrayType MarginalIncrement<ArrayType, DistributionType, ItemType>(
+        public static ArrayType MarginalIncrement<ArrayType, DistributionType>(
             ArrayType result,
-            ItemType to_item,
-            [SkipIfUniform] ItemType item, // SkipIfUniform on 'item' causes this line to be pruned when the backward messages aren't changing
-            IList<IList<int>> indices,
+            IReadOnlyList<DistributionType> to_item,
+            [SkipIfUniform] IReadOnlyList<DistributionType> item, // SkipIfUniform on 'item' causes this line to be pruned when the backward messages aren't changing
+            IReadOnlyList<IReadOnlyList<int>> indices,
             int resultIndex)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : SettableToProduct<DistributionType>
-            where ItemType : IList<DistributionType>
         {
             int i = resultIndex;
             var indices_i = indices[i];
@@ -339,15 +309,15 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType, ItemType}(ItemType, ArrayType, ArrayType, IList{IList{int}}, int, ItemType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType, ItemType}(IReadOnlyList{DistributionType}, ArrayType, ArrayType, IReadOnlyList{IReadOnlyList{int}}, int, ItemType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         public static ItemType ItemsAverageConditional<ArrayType, DistributionType, ItemType>(
-            [Indexed, Cancels] ItemType items, // items dependency must be ignored for Sequential schedule
+            [Indexed, Cancels] IReadOnlyList<DistributionType> items, // items dependency must be ignored for Sequential schedule
             [IgnoreDependency] ArrayType array,
             [SkipIfAllUniform] ArrayType marginal,
-            IList<IList<int>> indices,
+            IReadOnlyList<IReadOnlyList<int>> indices,
             int resultIndex,
             ItemType result)
             where ArrayType : IList<DistributionType>
@@ -369,14 +339,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static ArrayType ArrayAverageConditional<DistributionType, ArrayType, ItemType>(
-            [SkipIfAllUniform] IList<ItemType> items, IList<IList<int>> indices, ArrayType result)
+        public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
+            [SkipIfAllUniform] IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
-            where ItemType : IList<DistributionType>
             where DistributionType : SettableToProduct<DistributionType>
         {
             if(items.Count != indices.Count)
@@ -399,14 +367,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IList{IList{int}}, IList{ItemType}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{T}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static ArrayType ArrayAverageConditional<DistributionType, ArrayType, ItemType>(
-            IList<IList<int>> indices, IList<ItemType> items, ArrayType result)
+        public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
+            IReadOnlyList<IReadOnlyList<int>> indices, IReadOnlyList<IReadOnlyList<T>> items, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
-            where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
             if (items.Count != indices.Count)
@@ -426,12 +392,12 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         //-- VMP -------------------------------------------------------------------------------------------------------------
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ItemsAverageLogarithm{DistributionType, ItemType, ResultType}(IList{DistributionType}, IList{IList{int}}, ResultType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ItemsAverageLogarithm{DistributionType, ItemType, ResultType}(IReadOnlyList{DistributionType}, IReadOnlyList{IReadOnlyList{int}}, ResultType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         /// <typeparam name="ResultType">The type of the outgoing message.</typeparam>
         public static ResultType ItemsAverageLogarithm<DistributionType, ItemType, ResultType>(
-            [SkipIfAllUniform] IList<DistributionType> array, IList<IList<int>> indices, ResultType result)
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices, ResultType result)
             where ResultType : IList<ItemType>
             where ItemType : IList<DistributionType>
             where DistributionType : SettableTo<DistributionType>
@@ -448,14 +414,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType, ItemType>(
-            [SkipIfAllUniform] IList<ItemType> items, IList<IList<int>> indices, ArrayType result)
+        public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType>(
+            [SkipIfAllUniform] IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
-            where ItemType : IList<DistributionType>
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
         {
             if (items.Count != indices.Count)
@@ -473,27 +437,25 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IList{IList{int}}, IList{ItemType}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{T}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType, ItemType>(
-            IList<IList<int>> indices, IList<ItemType> items, ArrayType result)
+        public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType>(
+            IReadOnlyList<IReadOnlyList<int>> indices, IReadOnlyList<IReadOnlyList<T>> items, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
-            where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
-            return ArrayAverageConditional<DistributionType, ArrayType, ItemType>(indices, items, result);
+            return ArrayAverageConditional<DistributionType, ArrayType>(indices, items, result);
         }
     }
 
-    [FactorMethod(typeof(Factor), "JaggedSubarray<>", Default = false)]
+    [FactorMethod(typeof(Collection), "JaggedSubarray<>", Default = false)]
     [Quality(QualityBand.Experimental)]
     public static class JaggedSubarrayOp_NoDivide<T>
     {
         public static ArrayType ItemsAverageConditional<DistributionType, ArrayType, ItemType>(
             ArrayType items, 
-            [SkipIfAllUniform] IList<DistributionType> array, 
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> array, 
             IList<int[]> indices, 
             IList<DistributionType> to_array, 
             ArrayType result)
@@ -550,13 +512,13 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     //// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an array item.</typeparam>
-    [FactorMethod(typeof(Factor), "JaggedSubarrayWithMarginal<>", Default = true)]
+    [FactorMethod(typeof(Collection), "JaggedSubarrayWithMarginal<>", Default = true)]
     [Quality(QualityBand.Preview)]
     public static class JaggedSubarrayWithMarginalOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogAverageFactor{ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogAverageFactor{ItemType}(IList{ItemType}, IList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogAverageFactor<ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double LogAverageFactor<ItemType>(IList<ItemType> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where ItemType : IList<T>
         {
             IEqualityComparer<T> equalityComparer = Utilities.Util.GetEqualityComparer<T>();
@@ -571,26 +533,26 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogEvidenceRatio{ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogEvidenceRatio{ItemType}(IList{ItemType}, IList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogEvidenceRatio<ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double LogEvidenceRatio<ItemType>(IList<ItemType> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where ItemType : IList<T>
         {
             return LogAverageFactor<ItemType>(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="AverageLogFactor{ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="AverageLogFactor{ItemType}(IList{ItemType}, IList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double AverageLogFactor<ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double AverageLogFactor<ItemType>(IList<ItemType> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where ItemType : IList<T>
         {
             return LogAverageFactor<ItemType>(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{ItemType}, IList{DistributionType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{ItemType}, IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogAverageFactor<DistributionType, ItemType>(IList<ItemType> items, IList<DistributionType> array, IList<IList<int>> indices)
+        public static double LogAverageFactor<DistributionType, ItemType>(IList<ItemType> items, IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>
             where ItemType : IList<DistributionType>
         {
@@ -613,21 +575,21 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{ItemType}, IList{DistributionType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{ItemType}, IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType, ItemType>(IList<ItemType> items, IList<DistributionType> array, IList<IList<int>> indices)
+        public static double AverageLogFactor<DistributionType, ItemType>(IList<ItemType> items, IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>
             where ItemType : IList<DistributionType>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogAverageFactor<DistributionType, ItemType>(IList<DistributionType> array, IList<ItemType> items, IList<IList<int>> indices)
+        public static double LogAverageFactor<DistributionType, ItemType>(IReadOnlyList<DistributionType> array, IList<ItemType> items, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, CanGetLogProb<T>
             where ItemType : IList<T>
         {
@@ -650,33 +612,31 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogEvidenceRatio<DistributionType, ItemType>(IList<DistributionType> array, IList<ItemType> items, IList<IList<int>> indices)
+        public static double LogEvidenceRatio<DistributionType, ItemType>(IReadOnlyList<DistributionType> array, IList<ItemType> items, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, CanGetLogProb<T>
             where ItemType : IList<T>
         {
             return LogAverageFactor<DistributionType, ItemType>(array, items, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{DistributionType}, IList{ItemType}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType, ItemType>(IList<DistributionType> array, IList<ItemType> items, IList<IList<int>> indices)
+        public static double AverageLogFactor<DistributionType, ItemType>(IReadOnlyList<DistributionType> array, IList<ItemType> items, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : IDistribution<T>, CanGetLogProb<T>
             where ItemType : IList<T>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType, ItemType}(IList{ItemType}, IList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogAverageFactor<DistributionType, ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double LogAverageFactor<DistributionType>(IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : CanGetLogProb<T>
-            where ItemType : IList<DistributionType>
         {
             double z = 0.0;
             for (int i = 0; i < indices.Count; i++)
@@ -685,22 +645,22 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemType}(IList{ItemType}, IList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [Skip]
-        public static double LogEvidenceRatio<DistributionType, ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double LogEvidenceRatio<DistributionType, ItemType>(IList<ItemType> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : CanGetLogProb<T>
             where ItemType : IList<DistributionType>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{ItemType}, IList{T}, IList{IList{int}})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType, ItemType}(IList{ItemType}, IList{T}, IReadOnlyList{IReadOnlyList{int}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType, ItemType>(IList<ItemType> items, IList<T> array, IList<IList<int>> indices)
+        public static double AverageLogFactor<DistributionType, ItemType>(IList<ItemType> items, IReadOnlyList<T> array, IReadOnlyList<IReadOnlyList<int>> indices)
             where DistributionType : CanGetLogProb<T>
             where ItemType : IList<DistributionType>
         {
@@ -708,14 +668,10 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
 #if true
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemArrayType, ItemType}(ItemArrayType, IList{DistributionType}, IList{IList{int}}, ItemArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType, ItemArrayType, ItemType}(ItemArrayType, IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}}, ItemArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemArrayType">The type of an incoming message from <c>items</c>.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static double LogEvidenceRatio<DistributionType, ItemArrayType, ItemType>(
-            ItemArrayType items, IList<DistributionType> array, IList<IList<int>> indices, ItemArrayType to_items)
-            where ItemArrayType : IList<ItemType>
-            where ItemType : IList<DistributionType>
+        public static double LogEvidenceRatio<DistributionType>(
+            IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices, IReadOnlyList<IReadOnlyList<DistributionType>> to_items)
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>, ICloneable
         {
             // this code is adapted from GetItemsOp
@@ -755,7 +711,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>.
     /// Adding up these values across all factors and variables gives the log-evidence estimate for EP.
     /// </para></remarks>
-        public static double LogEvidenceRatio<DistributionType, ItemArrayType, ItemType>(ItemArrayType items, IList<DistributionType> array, IList<IList<int>> indices)
+        public static double LogEvidenceRatio<DistributionType, ItemArrayType, ItemType>(ItemArrayType items, IReadOnlyList<DistributionType> array, IList<IList<int>> indices)
             where ItemArrayType : IList<ItemType>, ICloneable
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>, ICloneable
@@ -810,13 +766,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 #endif
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemType}(ArrayType, IList{ItemType}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [SkipIfAllUniform("array", "items")]
         public static ArrayType MarginalAverageConditional<ArrayType, DistributionType, ItemType>(
-            ArrayType array, [NoInit] IList<ItemType> items, IList<IList<int>> indices, ArrayType result)
+            ArrayType array, [NoInit] IList<ItemType> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : SettableToProduct<DistributionType>
             where ItemType : IList<DistributionType>
@@ -840,14 +796,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemArrayType, ItemType}(ArrayType, IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemArrayType, ItemType}(ArrayType, IList{ItemType}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemArrayType">The type of an incoming message from <c>items</c>.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [SkipIfAllUniform("array", "items")]
         public static ArrayType MarginalAverageConditional<ArrayType, DistributionType, ItemArrayType, ItemType>(
-            ArrayType array, [NoInit] IList<ItemType> items, IList<IList<int>> indices, ArrayType result)
+            ArrayType array, [NoInit] IList<ItemType> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : HasPoint<T>
             where ItemType : IList<T>
@@ -871,14 +827,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="MarginalIncrementItems{ArrayType, DistributionType, ItemType}(ItemType, ItemType, IList{IList{int}}, int, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="MarginalIncrementItems{ArrayType, DistributionType, ItemType}(ItemType, ItemType, IReadOnlyList{IReadOnlyList{int}}, int, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         public static ArrayType MarginalIncrementItems<ArrayType, DistributionType, ItemType>(
             [Indexed, SkipIfUniform] ItemType item, // SkipIfUniform on 'item' causes this line to be pruned when the backward messages aren't changing
             [Indexed, Cancels] ItemType to_item,    // Cancels since updating to_item does not require recomputing the increment
-            IList<IList<int>> indices,
+            IReadOnlyList<IReadOnlyList<int>> indices,
             int resultIndex,
             ArrayType result)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
@@ -898,7 +854,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType, ItemType}(ItemType, ArrayType, ArrayType, IList{IList{int}}, int, ItemType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType, ItemType}(ItemType, ArrayType, ArrayType, IReadOnlyList{IReadOnlyList{int}}, int, ItemType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -906,7 +862,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             [Indexed, Cancels] ItemType items, // items dependency must be ignored for Sequential schedule
             ArrayType array,
             [SkipIfAllUniform] ArrayType to_marginal,
-            IList<IList<int>> indices,
+            IReadOnlyList<IReadOnlyList<int>> indices,
             int resultIndex,
             ItemType result)
             where ArrayType : IList<DistributionType>
@@ -952,12 +908,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IList{IList{int}}, IList{ItemType}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{int}}, IList{ItemType}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         public static ArrayType ArrayAverageConditional<DistributionType, ArrayType, ItemType>(
-            IList<IList<int>> indices, IList<ItemType> items, ArrayType result)
+            IReadOnlyList<IReadOnlyList<int>> indices, IList<ItemType> items, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
             where ItemType : IList<T>
             where DistributionType : HasPoint<T>
@@ -989,12 +945,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ItemsAverageLogarithm{DistributionType, ItemType, ResultType}(IList{DistributionType}, IList{IList{int}}, ResultType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ItemsAverageLogarithm{DistributionType, ItemType, ResultType}(IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}}, ResultType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         /// <typeparam name="ResultType">The type of the outgoing message.</typeparam>
         public static ResultType ItemsAverageLogarithm<DistributionType, ItemType, ResultType>(
-            [SkipIfAllUniform] IList<DistributionType> array, IList<IList<int>> indices, ResultType result)
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices, ResultType result)
             where ResultType : IList<ItemType>
             where ItemType : IList<DistributionType>
             where DistributionType : SettableTo<DistributionType>
@@ -1011,12 +967,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IList{ItemType}, IList{IList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IList{ItemType}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType, ItemType>(
-            [SkipIfAllUniform] IList<ItemType> items, IList<IList<int>> indices, ArrayType result)
+            [SkipIfAllUniform] IList<ItemType> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
@@ -1036,12 +992,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IList{IList{int}}, IList{ItemType}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{int}}, IList{ItemType}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType, ItemType>(
-            IList<IList<int>> indices, IList<ItemType> items, ArrayType result)
+            IReadOnlyList<IReadOnlyList<int>> indices, IList<ItemType> items, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
             where ItemType : IList<T>
             where DistributionType : HasPoint<T>

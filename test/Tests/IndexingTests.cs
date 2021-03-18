@@ -131,8 +131,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var featureCounts = Variable.Array<int>(instanceRange).Named("featureCounts");
             var featureCountRange = new Range(featureCounts[instanceRange]).Named("dependentFeatureCountRange");
 
-            var features = Variable.Array<VariableArray<double>, double[][]>(Variable.Array<double>(featureCountRange), instanceRange).Named("features");
-            var featureIndices = Variable.Array<VariableArray<int>, int[][]>(Variable.Array<int>(featureCountRange), instanceRange).Named("featureIndices");
+            var features = Variable.Array(Variable.Array<double>(featureCountRange), instanceRange).Named("features");
+            var featureIndices = Variable.Array(Variable.Array<int>(featureCountRange), instanceRange).Named("featureIndices");
             featureIndices[instanceRange].SetValueRange(totalFeatureRange);
 
             var instances = Variable.Array<int>(observationRange).Named("instances");
@@ -181,8 +181,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var featureCounts = Variable.Array<int>(instanceRange).Named("featureCounts");
             var featureCountRange = new Range(featureCounts[instanceRange]).Named("dependentFeatureCountRange");
 
-            var features = Variable.Array<VariableArray<double>, double[][]>(Variable.Array<double>(featureCountRange), instanceRange).Named("features");
-            var featureIndices = Variable.Array<VariableArray<int>, int[][]>(Variable.Array<int>(featureCountRange), instanceRange).Named("featureIndices");
+            var features = Variable.Array(Variable.Array<double>(featureCountRange), instanceRange).Named("features");
+            var featureIndices = Variable.Array(Variable.Array<int>(featureCountRange), instanceRange).Named("featureIndices");
             featureIndices[instanceRange].SetValueRange(totalFeatureRange);
 
             var instances = Variable.Array<int>(observationRange).Named("instances");
@@ -220,7 +220,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<double> array = Variable.Array<double>(item);
             array[item] = Variable.GaussianFromMeanAndVariance(0, 1).ForEach(item);
             Variable<int> index = Variable.New<int>().Named("index");
-            Variable<double> x = Variable<double>.Factor(Factor.GetItem, array, index);
+            Variable<double> x = Variable<double>.Factor(Collection.GetItem, array, index);
             Variable.ConstrainEqual(x, 7.0);
             //Variable<double> y = Variable<double>.Factor(Factor.GetItem,array,index);
             //Variable.ConstrainEqual(x,7.0);
@@ -753,7 +753,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<bool> array = Variable.Array<bool>(item).Named("array");
             array[item] = Variable.Bernoulli(0.3).ForEach(item);
             Variable<int> index = Variable.New<int>().Named("index");
-            Variable<bool> x = Variable<bool>.Factor(Factor.GetItem, array, index).Named("x");
+            Variable<bool> x = Variable<bool>.Factor(Collection.GetItem, array, index).Named("x");
             // this doesn't work:
             //Variable<bool> x = array[index];
             x.ObservedValue = true;
@@ -1603,7 +1603,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var range1 = indices.Range;
             var range2 = indices[range1].Range;
             var result = Variable.Array(Variable.Array<T>(range2), range1);
-            result.SetTo(Factor.GetJaggedItems, array, indices);
+            result.SetTo(Collection.GetJaggedItems, array, indices);
             return result;
         }
 
@@ -1740,7 +1740,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var range2 = indices[range1].Range;
             var range3 = indices[range1][range2].Range;
             var result = Variable.Array(Variable.Array(Variable.Array<T>(range3), range2), range1);
-            result.SetTo(Factor.GetDeepJaggedItems, array, indices);
+            result.SetTo(Collection.GetDeepJaggedItems, array, indices);
             return result;
         }
 
@@ -1885,7 +1885,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public static VariableArray<T> GetItemsFromJagged<T>(VariableArray<VariableArray<T>, T[][]> array, VariableArray<int> indices, VariableArray<int> indices2)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.GetItemsFromJagged, array, indices, indices2);
+            result.SetTo(Collection.GetItemsFromJagged, array, indices, indices2);
             return result;
         }
 
@@ -2004,7 +2004,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public static VariableArray<T> GetItemsFromDeepJagged<T>(VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]> array, VariableArray<int> indices, VariableArray<int> indices2, VariableArray<int> indices3)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.GetItemsFromDeepJagged, array, indices, indices2, indices3);
+            result.SetTo(Collection.GetItemsFromDeepJagged, array, indices, indices2, indices3);
             return result;
         }
 
@@ -2124,7 +2124,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var range1 = indices.Range;
             var range2 = indices[range1].Range;
             var result = Variable.Array(Variable.Array<T>(range2), range1);
-            result.SetTo(Factor.GetJaggedItemsFromJagged, array, indices, indices2);
+            result.SetTo(Collection.GetJaggedItemsFromJagged, array, indices, indices2);
             return result;
         }
 
@@ -2273,7 +2273,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var index = Variable.Observed(2).Named("index");
             using (Variable.ForEach(N))
             {
-                var x = Variable<double>.Factor(Factor.GetItem, array[N], index).Named("x");
+                var x = Variable<double>.Factor(Collection.GetItem, array[N], index).Named("x");
                 Variable.ConstrainPositive(x);
             }
             var engine = new InferenceEngine();

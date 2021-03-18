@@ -14,16 +14,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel
         /// </summary>
         IMethodReference InvokeMethod { get; set; }
 
-        ///// <summary>
-        ///// Reference to method which allows client code to add a handler. If null
-        ///// then <see cref="RemoveMethod"/> must be null.
-        ///// </summary>
-        //IMethodReference AddMethod { get; set; }
+#if false
+        /// <summary>
+        /// Reference to method which allows client code to add a handler. If null
+        /// then <see cref="RemoveMethod"/> must be null.
+        /// </summary>
+        IMethodReference AddMethod { get; set; }
 
-        ///// <summary>
-        ///// Reference to method which allows client code to remove a handler. If null
-        ///// then <see cref="AddMethod"/> must be null.
-        ///// </summary>
-        //IMethodReference RemoveMethod { get; set; }
+        /// <summary>
+        /// Reference to method which allows client code to remove a handler. If null
+        /// then <see cref="AddMethod"/> must be null.
+        /// </summary>
+        IMethodReference RemoveMethod { get; set; }
+#endif
     }
 }

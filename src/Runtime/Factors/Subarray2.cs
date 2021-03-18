@@ -13,7 +13,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="SubarrayOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an array item.</typeparam>
-    [FactorMethod(typeof(Factor), "Subarray2<>")]
+    [FactorMethod(typeof(Collection), "Subarray2<>")]
     [Quality(QualityBand.Experimental)]
     public static class SubarrayOp2<T>
     {

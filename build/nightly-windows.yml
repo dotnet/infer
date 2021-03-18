@@ -4,7 +4,7 @@
 
 # Nightly build for Windows. Tests on x86 and x64. Produces NuGet packages
 
-name: 0.3.$(Date:yyMM).$(Date:dd)$(Rev:rr)
+name: 0.4.$(Date:yyMM).$(Date:dd)$(Rev:rr)
 
 resources:
 - repo: self

@@ -4055,7 +4055,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
                 if (b)
                 {
-                    bool x = Factor.GetItem(array, 0);
+                    bool x = Collection.GetItem(array, 0);
                     Constrain.EqualRandom(x, new Bernoulli(pXCondT));
                     InferNet.Infer(x, nameof(x));
                 }

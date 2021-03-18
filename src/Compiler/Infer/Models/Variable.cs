@@ -180,7 +180,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="prefix"></param>
         /// <param name="list"></param>
         /// <returns></returns>
-        protected static bool IsPrefixOf<T>(IList<T> prefix, IList<T> list)
+        protected static bool IsPrefixOf<T>(IReadOnlyList<T> prefix, IReadOnlyList<T> list)
         {
             if (prefix.Count > list.Count) return false;
             for (int i = 0; i < prefix.Count; i++)
@@ -197,7 +197,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        protected static bool ShorterIsPrefixOfLonger<T>(IList<T> a, IList<T> b)
+        protected static bool ShorterIsPrefixOfLonger<T>(IReadOnlyList<T> a, IReadOnlyList<T> b)
         {
             int count = System.Math.Min(a.Count, b.Count);
             for (int i = 0; i < count; i++)
@@ -221,10 +221,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         /// <param name="currentConditions"></param>
         /// <returns></returns>
-        protected bool HasAnyItemDefined(IList<ConditionBlock> currentConditions)
+        protected bool HasAnyItemDefined(IReadOnlyList<ConditionBlock> currentConditions)
         {
             if (definition != null) return true;
-            foreach (IList<ConditionBlock> defConditions in conditionalDefinitions.Keys)
+            foreach (var defConditions in conditionalDefinitions.Keys)
             {
                 if (ShorterIsPrefixOfLonger(defConditions, currentConditions)) return true;
             }
@@ -240,17 +240,17 @@ namespace Microsoft.ML.Probabilistic.Models
             return false;
         }
 
-        protected bool HasDefinedItem(IList<ConditionBlock> currentConditions, List<List<IModelExpression>> indices, int depth)
+        protected bool HasDefinedItem(IReadOnlyList<ConditionBlock> currentConditions, List<List<IModelExpression>> indices, int depth)
         {
             if (depth >= indices.Count) return HasAnyItemDefined(currentConditions);
             if (definition != null) return true;
-            foreach (IList<ConditionBlock> defConditions in conditionalDefinitions.Keys)
+            foreach (var defConditions in conditionalDefinitions.Keys)
             {
                 if (ShorterIsPrefixOfLonger(defConditions, currentConditions)) return true;
             }
             if (this is HasItemVariables hiv)
             {
-                foreach (KeyValuePair<IList<IModelExpression>, IVariable> entry in hiv.GetItemsUntyped())
+                foreach (KeyValuePair<IReadOnlyList<IModelExpression>, IVariable> entry in hiv.GetItemsUntyped())
                 {
                     if (MayOverlap(entry.Key, indices[depth]))
                     {
@@ -262,7 +262,7 @@ namespace Microsoft.ML.Probabilistic.Models
             return false;
         }
 
-        protected bool MayOverlap(IList<IModelExpression> list1, IList<IModelExpression> list2)
+        protected bool MayOverlap(IReadOnlyList<IModelExpression> list1, IReadOnlyList<IModelExpression> list2)
         {
             Assert.IsTrue(list1.Count == list2.Count);
             for (int i = 0; i < list1.Count; i++)
@@ -310,7 +310,7 @@ namespace Microsoft.ML.Probabilistic.Models
             }
             else
             {
-                foreach (IList<ConditionBlock> defConditions in conditionalDefinitions.Keys)
+                foreach (var defConditions in conditionalDefinitions.Keys)
                 {
                     if (IsPrefixOf(context, defConditions))
                     {
@@ -323,8 +323,8 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Stores definitions of this variable which are given in condition blocks.
         /// </summary>
-        internal Dictionary<IList<ConditionBlock>, MethodInvoke> conditionalDefinitions =
-            new Dictionary<IList<ConditionBlock>, MethodInvoke>(new ListComparer<ConditionBlock>());
+        internal Dictionary<IReadOnlyList<ConditionBlock>, MethodInvoke> conditionalDefinitions =
+            new Dictionary<IReadOnlyList<ConditionBlock>, MethodInvoke>(new ReadOnlyListComparer<ConditionBlock>());
 
         /// <summary>
         /// Field backing the IsObserved property for base variables.  Unused for non-base variables.
@@ -463,7 +463,7 @@ namespace Microsoft.ML.Probabilistic.Models
                         else
                         {
                             if (conditionalDefinitions.Count > 1) throw new Exception("Variable " + this + " has multiple definitions so cannot be inlined");
-                            foreach (KeyValuePair<IList<ConditionBlock>, MethodInvoke> entry in conditionalDefinitions)
+                            foreach (KeyValuePair<IReadOnlyList<ConditionBlock>, MethodInvoke> entry in conditionalDefinitions)
                             {
                                 return entry.Value.GetMethodInvokeExpression(inline: true);
                             }
@@ -1232,6 +1232,69 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
+        /// Defines a constant which is a 1D array.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="value">The constant list.</param>
+        /// <returns>A new constant variable.</returns>
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Constant<T>(IReadOnlyList<T> value)
+        {
+            return Constant(value, new Range(value.Count));
+        }
+
+        /// <summary>
+        /// Defines a constant which is a 1D array.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="value">The constant list.</param>
+        /// <param name="r">The range associated with this constant list.</param>
+        /// <returns>A new constant variable.</returns>
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Constant<T>(IReadOnlyList<T> value, Range r)
+        {
+            var result = new VariableArray<Variable<T>, IReadOnlyList<T>>(Constant(default(T)), r)
+            {
+                ObservedValue = value,
+                IsReadOnly = true
+            };
+
+            // Inherit sparsity from vector - this may be explicitly over-ridden
+            if (value != null && value.Count > 0 && value[0] is Vector)
+            {
+                var vector = value[0] as Vector;
+                result.SetSparsity(vector.Sparsity);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Defines a constant which is a 2-D jagged array.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="value">The constant list of lists.</param>
+        /// <param name="r1">The range associated with the first index.</param>
+        /// <param name="r2">The range associated with the second index.</param>
+        /// <returns>A new constant jagged array variable.</returns>
+        public static VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>> Constant<T>(IReadOnlyList<IReadOnlyList<T>> value, Range r1, Range r2)
+        {
+            var result = new VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>>(Constant(default(IReadOnlyList<T>), r2), r1)
+            {
+                ObservedValue = value,
+                IsReadOnly = true
+            };
+
+            // Inherit sparsity from vector - this may be explicitly over-ridden
+            if (value != null && value.Count > 0 && value[0] != null &&
+                value[0].Count > 0 && value[0][0] is Vector)
+            {
+                Vector vector = value[0][0] as Vector;
+                result.SetSparsity(vector.Sparsity);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Creates a variable and observes it.
         /// </summary>
         /// <typeparam name="T">The type of the observed value</typeparam>
@@ -1352,6 +1415,7 @@ namespace Microsoft.ML.Probabilistic.Models
             return g;
         }
 
+#if false
         /// <summary>
         /// Creates a variable array and observes it.
         /// </summary>
@@ -1395,6 +1459,52 @@ namespace Microsoft.ML.Probabilistic.Models
             var result = new VariableArray<VariableArray<Variable<T>, IList<T>>, IList<IList<T>>>(Constant(default(IList<T>), r2), r1);
             result.ObservedValue = observedValue;
             return result;
+        }
+#endif
+
+        /// <summary>
+        /// Creates a variable array and observes it.
+        /// </summary>
+        /// <typeparam name="T">The type of the observed array elements.</typeparam>
+        /// <param name="observedValue">The observed value.</param>
+        /// <returns>A new variable.</returns>
+        /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Observed<T>(IReadOnlyList<T> observedValue)
+        {
+            return Observed(observedValue, new Range(observedValue.Count));
+        }
+
+        /// <summary>
+        /// Creates a variable array and observes it.
+        /// </summary>
+        /// <typeparam name="T">The type of the observed array elements.</typeparam>
+        /// <param name="observedValue">The observed value.</param>
+        /// <param name="r">The range used to index the array.</param>
+        /// <returns>A new variable.</returns>
+        /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Observed<T>(IReadOnlyList<T> observedValue, Range r)
+        {
+            return new VariableArray<Variable<T>, IReadOnlyList<T>>(Constant(default(T)), r)
+            {
+                ObservedValue = observedValue
+            };
+        }
+
+        /// <summary>
+        /// Creates a jagged variable array and observes it.
+        /// </summary>
+        /// <typeparam name="T">The type of the observed array elements.</typeparam>
+        /// <param name="observedValue">The observed value.</param>
+        /// <param name="r1">The range used for the first index.</param>
+        /// <param name="r2">The range used for the second index.</param>
+        /// <returns>A new variable.</returns>
+        /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
+        public static VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>> Observed<T>(IReadOnlyList<IReadOnlyList<T>> observedValue, Range r1, Range r2)
+        {
+            return new VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>>(Constant(default(IReadOnlyList<T>), r2), r1)
+            {
+                ObservedValue = observedValue
+            };
         }
 
         /// <summary>
@@ -1855,7 +1965,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         //****************************** FACTOR METHODS ********************************
 
-        #region Factor convenience methods
+#region Factor convenience methods
 
         /****************** Convenience methods for various commonly used distributions and factors*********************/
 
@@ -2303,10 +2413,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return Variable<bool>.Random<bool>(Distributions.Bernoulli.FromLogOdds(logOdds));
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Creates a Boolean random variable with the probability of being true specified by the input's
         /// logistic function, which is represented by a random variable.
@@ -2316,20 +2422,9 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>Returns a Boolean random variable.</returns>
         public static Variable<bool> BernoulliFromLogOdds(Variable<double> logOdds)
         {
-            if (false)
-            {
-                return Variable<bool>.Factor(Factor.BernoulliFromLogOdds, logOdds);
-            }
-            else
-            {
-                Variable<double> probTrue = Logistic(logOdds).Attrib(new DoNotInfer());
-                return Bernoulli(probTrue);
-            }
+            Variable<double> probTrue = Logistic(logOdds).Attrib(new DoNotInfer());
+            return Bernoulli(probTrue);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         /// Creates a random variable that is statistically defined by a Discrete distribution with a specified
@@ -2414,10 +2509,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return DiscreteUniform(Constant(size));
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Create a random integer by drawing uniformly from a range.
         /// </summary>
@@ -2425,23 +2516,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A random integer with an equal probability of taking any value in the range.</returns>
         public static Variable<int> DiscreteUniform(Range range)
         {
-            if (true)
-            {
-                Variable<int> sample = Variable.New<int>();
-                sample.SetTo(Factor.DiscreteUniform, range.Size);
-                return sample.Attrib(new ValueRange(range));
-            }
-            else
-            {
-                Variable<Discrete> prior = Variable.New<Discrete>().Attrib(new DoNotInfer());
-                prior.SetTo(Distributions.Discrete.Uniform, range.Size);
-                return Variable<int>.Random(prior).Attrib(new ValueRange(range));
-            }
+            Variable<int> sample = Variable.New<int>();
+            sample.SetTo(Factor.DiscreteUniform, range.Size);
+            return sample.Attrib(new ValueRange(range));
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         /// Creates a random variable that is statistically defined by a Discrete distribution with the number
@@ -2631,10 +2709,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return intVar;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Creates a random int variable x where p(x=k) is proportional to exp(logProbs[k]), i.e. the softmax function of the logProbs.
         /// </summary>
@@ -2646,10 +2720,6 @@ namespace Microsoft.ML.Probabilistic.Models
             Variable<Vector> probs = Variable.Softmax(logProbs).Attrib(new DoNotInfer());
             return Variable.Discrete(probs);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         ///  Creates a Beta-distributed random variable with specified mean and variance
@@ -3594,7 +3664,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             VariableArray<T> head = Variable.Array<T>(headRange);
             tail = Variable.Array<T>(tailRange);
-            head.SetTo(Factor.Split, array, headRange.Size, tail);
+            head.SetTo(Collection.Split, array, headRange.Size, tail);
             return head;
         }
 
@@ -3613,7 +3683,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             VariableArray<TItem, T[]> head = ReplaceRanges(array, headRange);
             tail = ReplaceRanges(array, tailRange);
-            head.SetTo(Factor.Split, array, headRange.Size, tail);
+            head.SetTo(Collection.Split, array, headRange.Size, tail);
             return head;
         }
 
@@ -3637,7 +3707,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A new double variable equal to <c>source[index]</c></returns>
         public static Variable<double> GetItem(Variable<Vector> source, Variable<int> index)
         {
-            return Variable<double>.Factor(Factor.GetItem<double>, source, index);
+            return Variable<double>.Factor(Collection.GetItem<double>, source, index);
         }
 
 
@@ -3649,7 +3719,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A new variable that is constrained to equal the argument.</returns>
         public static Variable<T> Copy<T>(Variable<T> x)
         {
-            Variable<T> result = Variable<T>.Factor(Factor.Copy<T>, x);
+            Variable<T> result = Variable<T>.Factor(Clone.Copy<T>, x);
             Range valueRange = x.GetValueRange(false);
             if (valueRange != null)
                 result.AddAttribute(new ValueRange(valueRange));
@@ -3895,7 +3965,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> Subarray<T>(Variable<T[]> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -3909,10 +3979,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <remarks>
         /// To allow duplicate indices, use <see cref="GetItems"/>.
         /// </remarks>
-        public static VariableArray<T> Subarray<T>(Variable<IList<T>> array, VariableArray<int> indices)
+        public static VariableArray<T> Subarray<T>(Variable<IReadOnlyList<T>> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -3929,7 +3999,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> Subarray<T>(VariableArray<T> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -3947,7 +4017,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> Subarray2<T>(VariableArray<T> array, VariableArray<int> indices, VariableArray<T> array2)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.Subarray2, array, indices, array2);
+            result.SetTo(Collection.Subarray2, array, indices, array2);
             return result;
         }
 
@@ -3961,10 +4031,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <remarks>
         /// To allow duplicate indices, use <see cref="GetItems"/>.
         /// </remarks>
-        public static VariableArray<T> Subarray<T>(VariableArray<T> array, VariableArray<Variable<int>, IList<int>> indices)
+        public static VariableArray<T> Subarray<T>(VariableArray<T> array, VariableArray<Variable<int>, IReadOnlyList<int>> indices)
         {
             var result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -3981,7 +4051,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<VariableArray<T>, T[][]> SplitSubarray<T>(VariableArray<T> array, VariableArray<VariableArray<int>, int[][]> indices)
         {
             VariableArray<VariableArray<T>, T[][]> result = Variable.Array(Variable<T>.Array(indices[indices.Range].Range), indices.Range);
-            result.SetTo(Factor.SplitSubarray, array, indices);
+            result.SetTo(Collection.SplitSubarray, array, indices);
             return result;
         }
 
@@ -4000,7 +4070,7 @@ namespace Microsoft.ML.Probabilistic.Models
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             var result = ReplaceRanges(array, indices);
-            result.SetTo(Factor.SplitSubarray, array, indices);
+            result.SetTo(Collection.SplitSubarray, array, indices);
             return result;
         }
 
@@ -4018,7 +4088,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<VariableArray<T>, T[][]> JaggedSubarray<T>(VariableArray<T> array, VariableArray<VariableArray<int>, int[][]> indices)
         {
             VariableArray<VariableArray<T>, T[][]> result = Variable.Array(Variable<T>.Array(indices[indices.Range].Range), indices.Range);
-            result.SetTo(Factor.JaggedSubarray, array, indices);
+            result.SetTo(Collection.JaggedSubarray, array, indices);
             return result;
         }
 
@@ -4037,7 +4107,7 @@ namespace Microsoft.ML.Probabilistic.Models
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             VariableArray<TItem, T[]> result = ReplaceRanges(array, indices);
-            result.SetTo(Factor.Subarray, array, indices);
+            result.SetTo(Collection.Subarray, array, indices);
             return result;
         }
 
@@ -4143,7 +4213,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> GetItems<T>(Variable<T[]> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.GetItems, array, indices);
+            result.SetTo(Collection.GetItems, array, indices);
             return result;
         }
 
@@ -4157,10 +4227,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <remarks>
         /// If the indices are known to be all different, use <see cref="Subarray"/> for greater efficiency.
         /// </remarks>
-        public static VariableArray<T> GetItems<T>(Variable<IList<T>> array, VariableArray<int> indices)
+        public static VariableArray<T> GetItems<T>(Variable<IReadOnlyList<T>> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.GetItems, array, indices);
+            result.SetTo(Collection.GetItems, array, indices);
             return result;
         }
 
@@ -4177,7 +4247,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<T> GetItems<T>(VariableArray<T> array, VariableArray<int> indices)
         {
             VariableArray<T> result = new VariableArray<T>(indices.Range);
-            result.SetTo(Factor.GetItems, array, indices);
+            result.SetTo(Collection.GetItems, array, indices);
             return result;
         }
 
@@ -4196,11 +4266,11 @@ namespace Microsoft.ML.Probabilistic.Models
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             VariableArray<TItem, T[]> result = ReplaceRanges(array, indices);
-            result.SetTo(Factor.GetItems, array, indices);
+            result.SetTo(Collection.GetItems, array, indices);
             return result;
         }
 
-        #region Variable<char> factories
+#region Variable<char> factories
 
         /// <summary>
         /// Creates a character random variable defined by a discrete distribution induced by a given probability vector.
@@ -4296,9 +4366,9 @@ namespace Microsoft.ML.Probabilistic.Models
             return Variable.Random(DiscreteChar.Whitespace());
         }
 
-        #endregion
+#endregion
 
-        #region Variable<string> factories
+#region Variable<string> factories
 
         /// <summary>
         /// Creates a string random variable from a uniform distribution over all possible strings.
@@ -4645,9 +4715,9 @@ namespace Microsoft.ML.Probabilistic.Models
             return Variable<string>.Factor(Factor.StringFromArray, chars);
         }
 
-        #endregion
+#endregion
 
-        #region Operations on characters and strings
+#region Operations on characters and strings
 
         /// <summary>
         /// Creates a string random variable which is a substring of a given string.
@@ -4718,15 +4788,15 @@ namespace Microsoft.ML.Probabilistic.Models
             return Variable<char>.Factor(Factor.Single, substr);
         }
 
-        #endregion
+#endregion
 
 #if SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS
 #pragma warning restore 419
 #endif
 
-        #endregion Factor convenience methods
+#endregion Factor convenience methods
 
-        #region Constraint convenience methods
+#region Constraint convenience methods
 
         /****************** Convenience methods for various commonly used constraints*********************/
 
@@ -4838,9 +4908,9 @@ namespace Microsoft.ML.Probabilistic.Models
             ConstrainEqualRandom<T, TDist>(a, Constant(b));
         }
 
-        #endregion Constraint convenience methods
+#endregion Constraint convenience methods
 
-        #region Undirected factor convenience methods
+#region Undirected factor convenience methods
 
         /// <summary>
         /// Adds a Potts factor between two boolean variables (max product only!).
@@ -4896,7 +4966,7 @@ namespace Microsoft.ML.Probabilistic.Models
             Variable.Constrain(Undirected.LinearTrunc, a, b, logUnitCost, maxCost);
         }
 
-        #endregion
+#endregion
 
         //****************************** OPERATOR METHODS ********************************
         /// <summary>
@@ -5348,10 +5418,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return new Variable<T>(this);
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Sets the value of a random variable.  Should only be invoked on variables created using New() which 
         /// do not yet have a value.
@@ -5366,33 +5432,24 @@ namespace Microsoft.ML.Probabilistic.Models
             if (variable.initialiseTo != null) initialiseTo = variable.initialiseTo;
             if (variable.initialiseBackwardTo != null)
                 initialiseBackwardTo = variable.initialiseBackwardTo;
-            if (false)
+            // copy all conditional definitions from the given variable to this.
+            List<ConditionBlock> currentConditions = ConditionBlock.GetOpenBlocks<ConditionBlock>();
+            bool foundDef = false;
+            foreach (MethodInvoke mi in variable.GetDefinitionsMadeWithin(currentConditions))
             {
-                MethodInvoke mi = variable.GetDefinition();
-                if (mi == null) throw new InvalidOperationException(variable + " was not defined in this condition block.");
+                foundDef = true;
                 SetTo(mi);
             }
-            else
+            // copying of item definitions is handled by VariableArrayBase.SetTo()
+            if (!foundDef)
             {
-                // copy all conditional definitions from the given variable to this.
-                List<ConditionBlock> currentConditions = ConditionBlock.GetOpenBlocks<ConditionBlock>();
-                bool foundDef = false;
-                foreach (MethodInvoke mi in variable.GetDefinitionsMadeWithin(currentConditions))
-                {
-                    foundDef = true;
-                    SetTo(mi);
-                }
-                // copying of item definitions is handled by VariableArrayBase.SetTo()
-                if (!foundDef)
-                {
-                    // The rhs variable does not have a definition made within this context.  This can happen if the variable was created
-                    // with Variable.New, if the variable is an array element, or is being used inside a condition block.  In these cases, the lhs should be
-                    // defined as a copy of the rhs.
-                    //throw new InvalidOperationException(variable+" was not defined in this condition block.");
-                    MethodInvoke mi = new MethodInvoke(new Func<T, T>(Factors.Factor.Copy<T>).Method, variable);
-                    SetTo(mi);
-                    return;
-                }
+                // The rhs variable does not have a definition made within this context.  This can happen if the variable was created
+                // with Variable.New, if the variable is an array element, or is being used inside a condition block.  In these cases, the lhs should be
+                // defined as a copy of the rhs.
+                //throw new InvalidOperationException(variable+" was not defined in this condition block.");
+                MethodInvoke mi = new MethodInvoke(new Func<T, T>(Factors.Clone.Copy<T>).Method, variable);
+                SetTo(mi);
+                return;
             }
             // variable must not have any constraints
             if (variable.constraints.Count > 0) throw new InvalidOperationException(variable + " has constraints. The argument of SetTo must not have constraints.");
@@ -5407,10 +5464,6 @@ namespace Microsoft.ML.Probabilistic.Models
             // The following is valid but adds unnecessary code to the MSL.
             //variable.SetTo(Factors.Factor.Copy, this);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         /// A special factor attached to variables whose definition was consumed by SetTo().
@@ -5940,20 +5993,6 @@ namespace Microsoft.ML.Probabilistic.Models
             return new VariableArray<T>(r);
         }
 
-        // TODO: uncomment this method when the bug in C++ compiler is fixed
-        ///// <summary>
-        ///// Create a 1D array of random variables of specified type.
-        ///// </summary>
-        ///// <typeparam name="TItem">The variable type of an item.</typeparam>
-        ///// <param name="itemPrototype">An object of type <c>TItem</c> that serves as a prototype for the array elements.</param>
-        ///// <param name="r">A <c>Range</c> object that is initialized with the array's length.</param>
-        ///// <returns>Returns a <c>VariableArray</c> object whose length is also defined by <paramref name="r"/>. Each element of this
-        ///// array is a object of type <c>TItem</c> whose prototype is defined by <paramref name="itemPrototype"/>.</returns>
-        //public static VariableArray<TItem, T[]> Array<TItem>(TItem itemPrototype, Range r)
-        //  where TItem : Variable<T>, SettableTo<TItem>, ICloneable
-        //{
-        //  return new VariableArray<TItem, T[]>(itemPrototype, r);
-        //}
         /// <summary>
         /// Creates a random variable with the specified prior distribution
         /// </summary>

@@ -11,9 +11,9 @@ using Microsoft.ML.Probabilistic.Compiler;
 namespace Microsoft.ML.Probabilistic.Models
 {
     /// <summary>
-    /// Interface to an array of variables.
+    /// Interface to a jagged array of variables.
     /// </summary>
-    public interface IVariableArray<T> : IVariable, IVariableArray
+    public interface IJaggedVariableArray<TItem> : IVariableArray
     {
         /// <summary>
         /// Range for variable array
@@ -25,7 +25,14 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        Variable<T> this[IModelExpression index] { get; set; }
+        TItem this[IModelExpression index] { get; set; }
+    }
+
+    /// <summary>
+    /// Interface to an array of variables.
+    /// </summary>
+    public interface IVariableArray<T> : IJaggedVariableArray<Variable<T>>
+    {
     }
 
     /// <summary>
@@ -33,7 +40,7 @@ namespace Microsoft.ML.Probabilistic.Models
     /// </summary>
     /// <typeparam name="TItem">Item type</typeparam>
     /// <typeparam name="TArray">Array type</typeparam>
-    public class VariableArray<TItem, TArray> : VariableArrayBase<TItem, TArray>, SettableTo<VariableArray<TItem, TArray>>, IVariableArray
+    public class VariableArray<TItem, TArray> : VariableArrayBase<TItem, TArray>, SettableTo<VariableArray<TItem, TArray>>, IJaggedVariableArray<TItem>
         where TItem : Variable, ICloneable, SettableTo<TItem>
     {
         /// <summary>
@@ -93,6 +100,17 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             get { return this[Variable.Constant(index)]; }
             set { this[Variable.Constant(index)] = value; }
+        }
+
+        /// <summary>
+        /// Sets/Gets element in array given by index expression
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        TItem IJaggedVariableArray<TItem>.this[IModelExpression index]
+        {
+            get { return this[index]; }
+            set { this[index] = value; }
         }
 
         /// <summary>
@@ -256,17 +274,6 @@ namespace Microsoft.ML.Probabilistic.Models
                 itemPrototype2.containers = StatementBlock.GetOpenBlocks();
             }
             return new VariableArray<T>(itemPrototype2, newRange);
-        }
-
-        /// <summary>
-        /// Sets/Gets element in array given by index expression
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        Variable<T> IVariableArray<T>.this[IModelExpression index]
-        {
-            get { return this[index]; }
-            set { this[(Range) index] = value; }
         }
     }
 }

@@ -23,12 +23,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <summary>
         /// Gets the array of non-zero feature values.
         /// </summary>
-        public IList<double> NonZeroFeatureValues { get; private set; }
+        public IReadOnlyList<double> NonZeroFeatureValues { get; private set; }
 
         /// <summary>
         /// Gets the array of non-zero feature indices.
         /// </summary>
-        public IList<int> NonZeroFeatureIndices { get; private set; }
+        public IReadOnlyList<int> NonZeroFeatureIndices { get; private set; }
 
         /// <summary>
         /// Gets the total number of features.
@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="nonZeroFeatureIndices">The array of non-zero feature indices.</param>
         /// <param name="featureCount">The total number of features in the vector.</param>
         /// <returns>The created sparse feature vector.</returns>
-        public static SparseFeatureVector Create(IList<double> nonZeroFeatureValues, IList<int> nonZeroFeatureIndices, int featureCount)
+        public static SparseFeatureVector Create(IReadOnlyList<double> nonZeroFeatureValues, IReadOnlyList<int> nonZeroFeatureIndices, int featureCount)
         {
             Debug.Assert(CanBeCreatedFrom(nonZeroFeatureValues, nonZeroFeatureIndices, featureCount), "Invalid arguments provided.");
 
@@ -82,7 +82,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// True if a sparse feature vector can be created from the specified arguments, false otherwise.
         /// </returns>
         public static bool CanBeCreatedFrom(
-            IList<double> nonZeroFeatureValues, IList<int> nonZeroFeatureIndices, int featureCount)
+            IReadOnlyList<double> nonZeroFeatureValues, IReadOnlyList<int> nonZeroFeatureIndices, int featureCount)
         {
             if (featureCount < 0)
             {
