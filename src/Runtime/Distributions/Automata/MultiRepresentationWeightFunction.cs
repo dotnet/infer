@@ -290,17 +290,23 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return FromDictionary(dictionary.NormalizeStructure());
                     }
                 case TAutomaton automaton:
-                    if (!automaton.UsesGroups && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false, 4 * MaxDictionarySize))
+                    if (!automaton.UsesGroups)
                     {
-                        // TODO: compute values along with support
-                        var list = support.Select(seq => new KeyValuePair<TSequence, Weight>(seq, Weight.FromLogValue(automaton.GetLogValue(seq)))).ToList();
-                        if (list.Count == 1)
+                        if (automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false, 4 * MaxDictionarySize))
                         {
-                            return FromPoint(list.First().Key);
+                            // TODO: compute values along with support
+                            var list = support.Select(seq => new KeyValuePair<TSequence, Weight>(seq, Weight.FromLogValue(automaton.GetLogValue(seq)))).ToList();
+                            if (list.Count == 1)
+                                return FromPoint(list.First().Key);
+                            else
+                                return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(list));
                         }
-                        else
+                        // TryEnumerateSupport(..., maxTraversedPaths) is allowed to quit early
+                        // on complex automata, so we need to explicitly check for point mass
+                        var point = automaton.TryComputePoint();
+                        if (point != null)
                         {
-                            return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(list));
+                            return FromPoint(point);
                         }
                     }
                     break;

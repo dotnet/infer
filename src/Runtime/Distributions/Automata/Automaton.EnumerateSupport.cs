@@ -74,7 +74,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var limitedResult = new List<TSequence>();
             try
             {
-                foreach (var seq in this.EnumerateSupportInternal(tryDeterminize))
+                foreach (var seq in this.EnumerateSupportInternal(tryDeterminize, maxTraversedPaths))
                 {
                     if (seq == null || limitedResult.Count >= maxCount)
                     {
