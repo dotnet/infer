@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Concurrent;
 using System.Reflection;
 using Microsoft.ML.Probabilistic;
+using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
@@ -91,7 +92,7 @@ namespace TestApp
                 InferenceEngine.DefaultEngine.Compiler.RecommendedQuality = QualityBand.Preview;
                 InferenceEngine.DefaultEngine.Compiler.GenerateInMemory = true;
                 InferenceEngine.DefaultEngine.Compiler.WriteSourceFiles = false;
-                TestUtils.TestAllCompilerOptions(true);
+                TestUtils.TestAllCompilerOptions();
                 //TestUtils.TestAllCompilerOptions(path);
                 //TestUtils.RunAllTests(path);
                 //using(TextWriter writer = new StreamWriter(@"..\..\RunAllTests.cs")) {

@@ -148,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <returns>The labels in native data format.</returns>
         /// <exception cref="BayesPointMachineClassifierException">Thrown if a label is unknown.</exception>
         protected override int[] GetNativeLabels(
-            IList<TInstance> instances, TInstanceSource instanceSource, TLabelSource labelSource = default(TLabelSource))
+            IReadOnlyList<TInstance> instances, TInstanceSource instanceSource, TLabelSource labelSource = default(TLabelSource))
         {
             Debug.Assert(instances != null, "The instances must not be null.");
             Debug.Assert(instances.All(instance => instance != null), "An instance must not be null.");

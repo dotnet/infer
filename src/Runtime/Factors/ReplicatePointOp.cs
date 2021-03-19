@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    [FactorMethod(typeof(Factor), "Replicate<>", Default = false)]
+    [FactorMethod(typeof(Clone), "Replicate<>", Default = false)]
     [Buffers("toDef")]
     [Quality(QualityBand.Preview)]
     public static class ReplicatePointOp
@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="T">The type of the messages.</typeparam>       
         [MultiplyAll]
         [Fresh]
-        public static T ToDef<T>([SkipIfAllUniform] IList<T> Uses, T result)
+        public static T ToDef<T>([SkipIfAllUniform] IReadOnlyList<T> Uses, T result)
             where T : SettableToProduct<T>, SettableTo<T>, SettableToUniform
         {
             return Distribution.SetToProductOfAll(result, Uses);

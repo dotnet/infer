@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Collections;
@@ -33,37 +32,36 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// The list of bindings made by all conditional statements in the input stack
         /// </summary>
-        private List<ConditionBinding> conditionContext = new List<ConditionBinding>();
+        private readonly List<ConditionBinding> conditionContext = new List<ConditionBinding>();
 
         /// <summary>
         /// The list of open gate blocks.  gateBlockContext.Count &lt;= conditionContext.Count.
         /// </summary>
-        private List<GateBlock> gateBlockContext = new List<GateBlock>();
+        private readonly List<GateBlock> gateBlockContext = new List<GateBlock>();
 
         /// <summary>
         /// A dictionary mapping condition left-hand sides to GateBlocks.  Used to associate multiple conditional statements with the same GateBlock.
         /// </summary>
-        private Dictionary<Set<ConditionBinding>, Dictionary<IExpression, GateBlock>> gateBlocks =
+        private readonly Dictionary<Set<ConditionBinding>, Dictionary<IExpression, GateBlock>> gateBlocks =
             new Dictionary<Set<ConditionBinding>, Dictionary<IExpression, GateBlock>>();
 
         /// <summary>
         /// A dictionary storing the set of conditions in which a variable is declared.  Used for checking that a variable is defined in all conditions.
         /// </summary>
-        private Dictionary<IVariableDeclaration, ICollection<ConditionBinding>> declarationBindings =
+        private readonly Dictionary<IVariableDeclaration, ICollection<ConditionBinding>> declarationBindings =
             new Dictionary<IVariableDeclaration, ICollection<ConditionBinding>>();
 
         /// <summary>
         /// A dictionary storing the set of conditions in which a variable is defined.  Used for checking that a variable is defined in all conditions.
         /// </summary>
-        private Dictionary<IVariableDeclaration, Set<ICollection<ConditionBinding>>> definitionBindings =
+        private readonly Dictionary<IVariableDeclaration, Set<ICollection<ConditionBinding>>> definitionBindings =
             new Dictionary<IVariableDeclaration, Set<ICollection<ConditionBinding>>>();
 
         protected override IStatement ConvertCondition(IConditionStatement ics)
         {
             context.SetPrimaryOutput(ics);
             ConvertExpression(ics.Condition);
-            IForStatement loop = null;
-            ConditionBinding binding = GateTransform.GetConditionBinding(ics.Condition, context, out loop);
+            ConditionBinding binding = GateTransform.GetConditionBinding(ics.Condition, context, out IForStatement loop);
             IExpression caseValue = binding.rhs;
             if (!GateTransform.IsLiteralOrLoopVar(context, caseValue, out loop))
             {
@@ -510,8 +508,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             for (int i = 0; i < context.InputStack.Count; i++)
             {
-                IStatement st = context.InputStack[i].inputElement as IStatement;
-                if (st != null && context.InputAttributes.Get<GateBlock>(st) == gateBlock) return i;
+                if (context.InputStack[i].inputElement is IStatement st && 
+                    context.InputAttributes.Get<GateBlock>(st) == gateBlock) return i;
             }
             return -1;
         }
@@ -533,9 +531,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns></returns>
         private IExpression ReplaceLocalIndices(GateBlock gateBlock, IExpression expr)
         {
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression) expr;
                 IExpression target = ReplaceLocalIndices(gateBlock, iaie.Target);
                 List<IExpression> indices = new List<IExpression>();
                 bool replaced = !ReferenceEquals(target, iaie.Target);
@@ -566,8 +563,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 IVariableDeclaration ivd = entry.Key;
                 ExpressionWithBindings eb = entry.Value;
-                List<ExpressionWithBindings> ebs;
-                if (gateBlock.variablesUsed.TryGetValue(ivd, out ebs))
+                if (gateBlock.variablesUsed.TryGetValue(ivd, out List<ExpressionWithBindings> ebs))
                 {
                     List<ExpressionWithBindings> keep = new List<ExpressionWithBindings>();
                     foreach (ExpressionWithBindings eb2 in ebs)
@@ -595,10 +591,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return expr;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Returns an expression equal to expr1 and expr2 under their respective bindings, or null if the expressions are not equal.  
         /// </summary>
@@ -607,8 +599,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="expr2"></param>
         /// <param name="bindings2"></param>
         /// <returns></returns>
-        private static IExpression Unify(IExpression expr1, IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings1, IExpression expr2,
-                                          IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings2)
+        private static IExpression Unify(
+            IExpression expr1,
+            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings1,
+            IExpression expr2,
+            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings2)
         {
             if (expr1.Equals(expr2))
             {
@@ -630,7 +625,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     return expr2;
                 }
             }
-            if (false)
+            bool lift = false;
+            if (lift)
             {
                 IExpression lifted1 = GetLiftedExpression(expr1, bindings1);
                 IExpression lifted2 = GetLiftedExpression(expr2, bindings2);
@@ -638,10 +634,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             return Builder.StaticMethod(new Func<int>(GateAnalysisTransform.AnyIndex));
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         private static IExpression GetLiftedExpression(IExpression expr, IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings)
         {
@@ -725,12 +717,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 IExpression prefix1 = prefixes1[i];
                 IExpression prefix2 = prefixes2[i];
-                if (prefix1 is IArrayIndexerExpression)
+                if (prefix1 is IArrayIndexerExpression iaie1)
                 {
-                    IArrayIndexerExpression iaie1 = (IArrayIndexerExpression) prefix1;
-                    if (prefix2 is IArrayIndexerExpression)
+                    if (prefix2 is IArrayIndexerExpression iaie2)
                     {
-                        IArrayIndexerExpression iaie2 = (IArrayIndexerExpression) prefix2;
                         if (iaie1.Indices.Count != iaie2.Indices.Count) throw new Exception("Array rank mismatch: " + eb1 + "," + eb2);
                         IList<IExpression> indices = Builder.ExprCollection();
                         for (int ind = 0; ind < iaie1.Indices.Count; ind++)

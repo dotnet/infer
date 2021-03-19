@@ -361,15 +361,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
         }
 
         // must be kept in sync with Binding.TypesAssignableFrom
-        public static bool IsAssignableFrom(Type toType, Type fromType, out int subclassCount)
+        private static bool IsAssignableFrom(Type toType, Type fromType, out int subclassCount)
         {
-            bool isObject = false;
             subclassCount = 0;
             for (Type baseType = fromType; baseType != null; baseType = baseType.BaseType)
             {
                 if (baseType.Equals(typeof (object)))
                 {
-                    isObject = true;
                     break;
                 }
                 if (baseType.Equals(toType)) return true;
@@ -382,7 +380,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 subclassCount++;
             }
             // array covariance (C# 2.0 specification, sec 20.5.9)
-            if (fromType.IsArray && fromType.GetArrayRank() == 1 && toType.IsGenericType && toType.GetGenericTypeDefinition().Equals(typeof (IList<>)))
+            if (fromType.IsArray && fromType.GetArrayRank() == 1 && toType.IsGenericType && toType.GetGenericTypeDefinition().Equals(typeof(IList<>)))
             {
                 Type fromElementType = fromType.GetElementType();
                 Type toElementType = toType.GetGenericArguments()[0];
@@ -390,7 +388,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 subclassCount += elementSubclassCount;
                 return ok;
             }
-            if (isObject && toType.Equals(typeof (object))) return true;
+            if (toType.IsAssignableFrom(fromType)) return true;
             return false;
         }
 
@@ -407,7 +405,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             if (fromType == typeof (Nullable)) return IsNullable(toType);
             if (IsAssignableFrom(toType, fromType, out int subclassCount))
             {
-                //(toType.IsAssignableFrom(fromType)) {
                 // toType is a superclass or an interface of fromType
                 info.SubclassCount = subclassCount;
                 return true;

@@ -692,7 +692,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="instanceSource">The source of instances to get the user identifiers from.</param>
             /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
             /// <returns>The list of user identifiers.</returns>
-            public IList<int> GetUserIds(TInstanceSource instanceSource, int batchNumber = 0)
+            public IReadOnlyList<int> GetUserIds(TInstanceSource instanceSource, int batchNumber = 0)
             {
                 this.UpdateInstanceRepresentation(instanceSource);
                 return Utilities.GetBatch(batchNumber, this.userIds, this.batchCount);
@@ -704,7 +704,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="instanceSource">The source of instances to get the item identifiers from.</param>
             /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
             /// <returns>The list of item identifiers.</returns>
-            public IList<int> GetItemIds(TInstanceSource instanceSource, int batchNumber = 0)
+            public IReadOnlyList<int> GetItemIds(TInstanceSource instanceSource, int batchNumber = 0)
             {
                 this.UpdateInstanceRepresentation(instanceSource);
                 return Utilities.GetBatch(batchNumber, this.itemIds, this.batchCount);
@@ -716,7 +716,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="instanceSource">The source of instances to get the ratings from.</param>
             /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
             /// <returns>The list of ratings</returns>
-            public IList<int> GetRatings(TInstanceSource instanceSource, int batchNumber = 0)
+            public IReadOnlyList<int> GetRatings(TInstanceSource instanceSource, int batchNumber = 0)
             {
                 Debug.Assert(!this.isTrained, "This method should not be called after training.");
                 this.UpdateInstanceRepresentation(instanceSource);
@@ -792,7 +792,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="featureSource">The source to obtain features from.</param>
             /// <returns>An array of non-zero user feature arrays where the outer array is indexed by user id.</returns>
             /// <remarks>This function will be called during training if the user feature support is enabled.</remarks>
-            public IList<IList<double>> GetAllUserNonZeroFeatureValues(TFeatureSource featureSource)
+            public IReadOnlyList<IReadOnlyList<double>> GetAllUserNonZeroFeatureValues(TFeatureSource featureSource)
             {
                 Debug.Assert(
                     this.UseUserFeatures == true, "This method must not be called when user features are not enabled.");
@@ -807,7 +807,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="featureSource">The source to obtain feature indices from.</param>
             /// <returns>An array of non-zero user feature index arrays where the outer array is indexed by user id.</returns>
             /// <remarks>This function will be called during training if the user feature support is enabled.</remarks>
-            public IList<IList<int>> GetAllUserNonZeroFeatureIndices(TFeatureSource featureSource)
+            public IReadOnlyList<IReadOnlyList<int>> GetAllUserNonZeroFeatureIndices(TFeatureSource featureSource)
             {
                 Debug.Assert(
                     this.UseUserFeatures == true, "This method must not be called when user features are not enabled.");
@@ -822,7 +822,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="featureSource">The source to obtain features from.</param>
             /// <returns>An array of non-zero item feature arrays where the outer array is indexed by item id</returns>
             /// <remarks>This function will be called during training if the item feature support is enabled.</remarks>
-            public IList<IList<double>> GetAllItemNonZeroFeatureValues(TFeatureSource featureSource)
+            public IReadOnlyList<IReadOnlyList<double>> GetAllItemNonZeroFeatureValues(TFeatureSource featureSource)
             {
                 Debug.Assert(
                     this.UseItemFeatures == true, "This method must not be called when item features are not enabled.");
@@ -837,7 +837,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="featureSource">The source to obtain feature indices from.</param>
             /// <returns>An array of non-zero item feature index arrays where the outer array is indexed by item id</returns>
             /// <remarks>This function will be called during training if the item feature support is enabled.</remarks>
-            public IList<IList<int>> GetAllItemNonZeroFeatureIndices(TFeatureSource featureSource)
+            public IReadOnlyList<IReadOnlyList<int>> GetAllItemNonZeroFeatureIndices(TFeatureSource featureSource)
             {
                 Debug.Assert(
                     this.UseItemFeatures == true, "This method must not be called when item features are not enabled.");
@@ -853,7 +853,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="userId">The user identifier.</param>
             /// <returns>Non-zero feature values for the user.</returns>
             /// <remarks>This function will be called during prediction for cold users if the user feature support is enabled.</remarks>
-            public IList<double> GetSingleUserNonZeroFeatureValues(TFeatureSource featureSource, int userId)
+            public IReadOnlyList<double> GetSingleUserNonZeroFeatureValues(TFeatureSource featureSource, int userId)
             {
                 Debug.Assert(
                     this.UseUserFeatures == true, "This method must not be called when user features are not enabled.");
@@ -869,7 +869,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="userId">The user identifier.</param>
             /// <returns>Non-zero feature indices for the user.</returns>
             /// <remarks>This function will be called during prediction for cold users if the user feature support is enabled.</remarks>
-            public IList<int> GetSingleUserNonZeroFeatureIndices(TFeatureSource featureSource, int userId)
+            public IReadOnlyList<int> GetSingleUserNonZeroFeatureIndices(TFeatureSource featureSource, int userId)
             {
                 Debug.Assert(
                     this.UseUserFeatures == true, "This method must not be called when user features are not enabled.");
@@ -885,7 +885,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="itemId">The item identifier.</param>
             /// <returns>Non-zero feature values for the item.</returns>
             /// <remarks>This function will be called during prediction for cold items if the item feature support is enabled.</remarks>
-            public IList<double> GetSingleItemNonZeroFeatureValues(TFeatureSource featureSource, int itemId)
+            public IReadOnlyList<double> GetSingleItemNonZeroFeatureValues(TFeatureSource featureSource, int itemId)
             {
                 Debug.Assert(
                     this.UseItemFeatures == true, "This method must not be called when item features are not enabled.");
@@ -901,7 +901,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="itemId">The item identifier.</param>
             /// <returns>Non-zero feature values for the item.</returns>
             /// <remarks>This function will be called during prediction for cold items if the item feature support is enabled.</remarks>
-            public IList<int> GetSingleItemNonZeroFeatureIndices(TFeatureSource featureSource, int itemId)
+            public IReadOnlyList<int> GetSingleItemNonZeroFeatureIndices(TFeatureSource featureSource, int itemId)
             {
                 Debug.Assert(
                     this.UseItemFeatures == true, "This method must not be called when item features are not enabled.");

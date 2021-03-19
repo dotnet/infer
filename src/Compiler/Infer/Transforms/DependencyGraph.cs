@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         internal IndexedProperty<NodeIndex, bool> isUniform;
 
-        // Edge properties ////////////////////////////////////////////////
+        // Edge properties
         internal IndexedProperty<EdgeIndex, bool> isRequired;
         internal IndexedProperty<EdgeIndex, byte> bitsProvided;
         internal IndexedProperty<EdgeIndex, bool> isTrigger, isFreshEdge;
@@ -84,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal IndexedProperty<EdgeIndex, bool> isCancels;
         internal Dictionary<EdgeIndex, IOffsetInfo> OffsetIndices = new Dictionary<EdgeIndex, IOffsetInfo>();
 
-        // Debugging /////////////////////////////////////////////////////
+        // Debugging
         public Converter<NodeIndex, string> NodeToString;
         public Converter<NodeIndex, string> NodeToShortString;
         internal IReadOnlyList<IStatement> Nodes;
@@ -159,26 +159,25 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal static IExpression TargetExpression(IStatement ist)
         {
-            if (ist is IForStatement)
-                return TargetExpression(((IForStatement)ist).Body.Statements[0]);
-            else if (ist is IConditionStatement)
-                return TargetExpression(((IConditionStatement)ist).Then.Statements[0]);
-            else if (ist is IBlockStatement)
-                return TargetExpression(((IBlockStatement)ist).Statements[0]);
-            else if (ist is ICommentStatement)
+            if (ist is IForStatement ifs)
+                return TargetExpression(ifs.Body.Statements[0]);
+            else if (ist is IConditionStatement ics)
+                return TargetExpression(ics.Then.Statements[0]);
+            else if (ist is IBlockStatement ibs)
+                return TargetExpression(ibs.Statements[0]);
+            else if (ist is ICommentStatement icms)
             {
-                ICommentStatement ics = (ICommentStatement)ist;
-                return CodeBuilder.Instance.LiteralExpr(ics.Comment.Text);
+                return CodeBuilder.Instance.LiteralExpr(icms.Comment.Text);
             }
-            else if (ist is IExpressionStatement)
+            else if (ist is IExpressionStatement ies)
             {
-                IExpression expr = ((IExpressionStatement)ist).Expression;
-                if (expr is IAssignExpression)
+                IExpression expr = ies.Expression;
+                if (expr is IAssignExpression iae)
                 {
-                    expr = ((IAssignExpression)expr).Target;
+                    expr = iae.Target;
                 }
-                if (expr is IVariableDeclarationExpression)
-                    return CodeBuilder.Instance.LiteralExpr(((IVariableDeclarationExpression)expr).Variable.Name);
+                if (expr is IVariableDeclarationExpression ivde)
+                    return CodeBuilder.Instance.LiteralExpr(ivde.Variable.Name);
                 else
                     return expr;
             }
@@ -536,8 +535,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // label 'Cancels' edges
                 foreach (IStatement source in di.GetDependenciesOfType(DependencyType.Cancels))
                 {
-                    int sourceIndex;
-                    if (indexOfNode.TryGetValue(source, out sourceIndex))
+                    if (indexOfNode.TryGetValue(source, out int sourceIndex))
                     {
                         try
                         {
@@ -545,7 +543,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             isCancels[edge] = true;
                             // TODO: this deletion should be done outside of the constructor.
                             if (deleteCancels)
+                            {
                                 isDeleted[edge] = true;
+                                if (debug)
+                                    Trace.WriteLine($"Deleted cancels edge ({sourceIndex},{targetIndex})");
+                            }
                         }
                         catch (AmbiguousEdgeException)
                         {
@@ -1573,16 +1575,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             dfsFreshDescendantIsBusy = false;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         internal void ForEachFreshDescendant(DepthFirstSearch<NodeIndex> dfs, NodeIndex node, Action<NodeIndex> action)
         {
             dfs.Clear();
             dfs.ClearActions();
             dfs.DiscoverNode += action;
-            if (false)
+            bool findloops = false;
+            if (findloops)
             {
                 dfs.BackEdge += delegate (Edge<NodeIndex> edge)
                     {
@@ -1595,10 +1594,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             dfs.SearchFrom(node);
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         // caching this dfs significantly improves memory performance.
         private DepthFirstSearch<NodeIndex> dfsTriggees;

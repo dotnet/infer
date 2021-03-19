@@ -297,8 +297,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                 }
             }
-            List<NodeIndex> initSchedule;
-            List<NodeIndex> schedule = Schedule(g, inputStmts, offsetVarsToDelete, out initSchedule, out bool isCyclic, groupOf2);
+            List<NodeIndex> schedule = Schedule(g, inputStmts, offsetVarsToDelete, out List<int> initSchedule, out bool isCyclic, groupOf2);
             if (schedule == null)
             {
                 schedule = new List<NodeIndex>(new Range(0, inputStmts.Count));
@@ -382,9 +381,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // if a DependencyInformation refers to an inner statement of a block, make it refer to the block instead
                 foreach (IStatement stmt in inputStmts)
                 {
-                    if (stmt is IWhileStatement)
+                    if (stmt is IWhileStatement iws)
                     {
-                        IWhileStatement iws = (IWhileStatement)stmt;
                         ForEachStatement(iws.Body.Statements, ist => replacements[ist] = iws);
                     }
                 }
@@ -938,22 +936,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162, 429
-#endif
-
         /// <summary>
         /// Wraps a statement with FusedBlockStatements according to its hierarchical group memberships.
         /// </summary>
         private class GroupWrapper
         {
-            int[] groupOf;
-            Stack<ICollection<IStatement>> containerStack = new Stack<ICollection<IStatement>>();
-            Stack<NodeIndex> groupStack = new Stack<int>();
-            Set<NodeIndex> currentGroups = new Set<int>();
-            List<NodeIndex> newGroups = new List<int>();
-            BasicTransformContext context;
-            Dictionary<NodeIndex, SerialLoopInfo> loopInfoOfGroup;
+            readonly int[] groupOf;
+            readonly Stack<ICollection<IStatement>> containerStack = new Stack<ICollection<IStatement>>();
+            readonly Stack<NodeIndex> groupStack = new Stack<int>();
+            readonly Set<NodeIndex> currentGroups = new Set<int>();
+            readonly List<NodeIndex> newGroups = new List<int>();
+            readonly BasicTransformContext context;
+            readonly Dictionary<NodeIndex, SerialLoopInfo> loopInfoOfGroup;
 
             public GroupWrapper(BasicTransformContext context, ICollection<IStatement> output, int[] groupOf, Dictionary<NodeIndex, SerialLoopInfo> loopInfoOfGroup)
             {

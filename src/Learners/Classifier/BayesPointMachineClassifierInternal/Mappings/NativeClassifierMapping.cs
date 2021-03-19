@@ -297,7 +297,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <param name="labelSource">An optional label source.</param>
         /// <returns>The labels in native data format.</returns>
         protected abstract TNativeLabel[] GetNativeLabels(
-            IList<TInstance> instances,
+            IReadOnlyList<TInstance> instances,
             TInstanceSource instanceSource,
             TLabelSource labelSource = default(TLabelSource));
 
@@ -479,7 +479,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// </summary>
         /// <param name="instances">The instances to cache the feature vectors for.</param>
         /// <param name="instanceSource">An optional instance source.</param>
-        private void CacheAllFeatureVectors(IList<TInstance> instances, TInstanceSource instanceSource = default(TInstanceSource))
+        private void CacheAllFeatureVectors(IReadOnlyList<TInstance> instances, TInstanceSource instanceSource = default(TInstanceSource))
         {
             Debug.Assert(instances != null, "The instances must not be null.");
             Debug.Assert(instances.All(instance => instance != null), "An instance must not be null.");

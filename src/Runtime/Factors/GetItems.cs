@@ -11,15 +11,15 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Attributes;
     using Utilities;
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/doc/*'/>
+    ///<include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(Factor), "GetItems<>", Default = true)]
+    [FactorMethod(typeof(Collection), "GetItems<>", Default = true)]
     [Quality(QualityBand.Mature)]
     [Buffers("marginal")]
     public static class GetItemsOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogAverageFactor(IList{T}, IList{T}, IList{int})"]/*'/>
-        public static double LogAverageFactor(IList<T> items, IList<T> array, IList<int> indices)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogAverageFactor(IReadOnlyList{T}, IReadOnlyList{T}, IReadOnlyList{int})"]/*'/>
+        public static double LogAverageFactor(IReadOnlyList<T> items, IReadOnlyList<T> array, IReadOnlyList<int> indices)
         {
             IEqualityComparer<T> equalityComparer = Utilities.Util.GetEqualityComparer<T>();
             for (int i = 0; i < items.Count; i++)
@@ -29,21 +29,21 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogEvidenceRatio(IList{T}, IList{T}, IList{int})"]/*'/>
-        public static double LogEvidenceRatio(IList<T> items, IList<T> array, IList<int> indices)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogEvidenceRatio(IReadOnlyList{T}, IReadOnlyList{T}, IReadOnlyList{int})"]/*'/>
+        public static double LogEvidenceRatio(IReadOnlyList<T> items, IReadOnlyList<T> array, IReadOnlyList<int> indices)
         {
             return LogAverageFactor(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="AverageLogFactor(IList{T}, IList{T}, IList{int})"]/*'/>
-        public static double AverageLogFactor(IList<T> items, IList<T> array, IList<int> indices)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="AverageLogFactor(IReadOnlyList{T}, IReadOnlyList{T}, IReadOnlyList{int})"]/*'/>
+        public static double AverageLogFactor(IReadOnlyList<T> items, IReadOnlyList<T> array, IReadOnlyList<int> indices)
         {
             return LogAverageFactor(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IList{DistributionType}, IList{DistributionType}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IReadOnlyList{DistributionType}, IReadOnlyList{DistributionType}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        public static double LogAverageFactor<DistributionType>(IList<DistributionType> items, IList<DistributionType> array, IList<int> indices)
+        public static double LogAverageFactor<DistributionType>(IReadOnlyList<DistributionType> items, IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices)
             where DistributionType : IDistribution<T>, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>
         {
             double z = 0.0;
@@ -62,18 +62,18 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IList{DistributionType}, IList{DistributionType})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IReadOnlyList{DistributionType}, IReadOnlyList{DistributionType})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType>(IList<DistributionType> items, IList<DistributionType> array)
+        public static double AverageLogFactor<DistributionType>(IReadOnlyList<DistributionType> items, IReadOnlyList<DistributionType> array)
             where DistributionType : SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IList{T}, IList{DistributionType}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IReadOnlyList{T}, IReadOnlyList{DistributionType}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        public static double LogAverageFactor<DistributionType>(IList<T> items, IList<DistributionType> array, IList<int> indices)
+        public static double LogAverageFactor<DistributionType>(IReadOnlyList<T> items, IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices)
             where DistributionType : HasPoint<T>, CanGetLogProb<T>
         {
             double z = 0.0;
@@ -92,26 +92,26 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IList{T}, IList{DistributionType}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IReadOnlyList{T}, IReadOnlyList{DistributionType}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        public static double LogEvidenceRatio<DistributionType>(IList<T> items, IList<DistributionType> array, IList<int> indices)
+        public static double LogEvidenceRatio<DistributionType>(IReadOnlyList<T> items, IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices)
             where DistributionType : HasPoint<T>, CanGetLogProb<T>
         {
             return LogAverageFactor<DistributionType>(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IList{T}, IList{DistributionType})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IReadOnlyList{T}, IReadOnlyList{DistributionType})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType>(IList<T> items, IList<DistributionType> array)
+        public static double AverageLogFactor<DistributionType>(IReadOnlyList<T> items, IReadOnlyList<DistributionType> array)
             where DistributionType : HasPoint<T>, CanGetLogProb<T>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IList{DistributionType}, IList{T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IReadOnlyList{DistributionType}, IReadOnlyList{T}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        public static double LogAverageFactor<DistributionType>(IList<DistributionType> items, IList<T> array, IList<int> indices)
+        public static double LogAverageFactor<DistributionType>(IReadOnlyList<DistributionType> items, IReadOnlyList<T> array, IReadOnlyList<int> indices)
             where DistributionType : CanGetLogProb<T>
         {
             double z = 0.0;
@@ -120,19 +120,19 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IList{DistributionType}, IList{T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IReadOnlyList{DistributionType}, IReadOnlyList{T}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [Skip]
-        public static double LogEvidenceRatio<DistributionType>(IList<DistributionType> items, IList<T> array, IList<int> indices)
+        public static double LogEvidenceRatio<DistributionType>(IReadOnlyList<DistributionType> items, IReadOnlyList<T> array, IReadOnlyList<int> indices)
             where DistributionType : CanGetLogProb<T>
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IList{DistributionType}, IList{T})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IReadOnlyList{DistributionType}, IReadOnlyList{T})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [Skip]
-        public static double AverageLogFactor<DistributionType>(IList<DistributionType> items, IList<T> array)
+        public static double AverageLogFactor<DistributionType>(IReadOnlyList<DistributionType> items, IReadOnlyList<T> array)
             where DistributionType : CanGetLogProb<T>
         {
             return 0.0;
@@ -140,10 +140,10 @@ namespace Microsoft.ML.Probabilistic.Factors
 
 
 #if true
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IList{DistributionType}, IList{DistributionType}, IList{int}, IList{DistributionType})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IReadOnlyList{DistributionType}, IReadOnlyList{DistributionType}, IReadOnlyList{int}, IReadOnlyList{DistributionType})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static double LogEvidenceRatio<DistributionType>(
-            IList<DistributionType> items, IList<DistributionType> array, IList<int> indices, IList<DistributionType> to_items)
+            IReadOnlyList<DistributionType> items, IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices, IReadOnlyList<DistributionType> to_items)
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>, ICloneable
         {
             // this code is adapted from GetItemsOp
@@ -176,8 +176,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>.
     /// Adding up these values across all factors and variables gives the log-evidence estimate for EP.
     /// </para></remarks>
-        public static double LogEvidenceRatio<DistributionType, ArrayType>(ArrayType items, IList<DistributionType> array, IList<int> indices)
-            where ArrayType : IList<DistributionType>, ICloneable
+        public static double LogEvidenceRatio<DistributionType, ArrayType>(ArrayType items, IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices)
+            where ArrayType : IReadOnlyList<DistributionType>, ICloneable
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>, CanGetLogAverageOf<DistributionType>, ICloneable
         {
             // result is LogAverageFactor - sum_i toItems[i].LogAverageOf(items[i])
@@ -231,12 +231,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (ArrayType)array.Clone();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="Marginal2{ArrayType, DistributionType}(ArrayType, IList{DistributionType}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="Marginal2{ArrayType, DistributionType}(ArrayType, IReadOnlyList{DistributionType}, IReadOnlyList{int}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [SkipIfAllUniform("array", "items")]
         public static ArrayType Marginal2<ArrayType, DistributionType>(
-            ArrayType array, [NoInit] IList<DistributionType> items, IList<int> indices, ArrayType result)
+            ArrayType array, [NoInit] IReadOnlyList<DistributionType> items, IReadOnlyList<int> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : SettableToProduct<DistributionType>
         {
@@ -257,7 +257,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [SkipIfAllUniform("array", "to_array")]
         [MultiplyAll]
         public static ArrayType Marginal<ArrayType, DistributionType>(
-            ArrayType array, [NoInit] ArrayType to_array, ArrayType result)
+            IReadOnlyList<DistributionType> array, [NoInit] IReadOnlyList<DistributionType> to_array, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : SettableToProduct<DistributionType>
         {
@@ -270,11 +270,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="MarginalIncrement{ArrayType, DistributionType}(ArrayType, DistributionType, DistributionType, IList{int}, int)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="MarginalIncrement{ArrayType, DistributionType}(ArrayType, DistributionType, DistributionType, IReadOnlyList{int}, int)"]/*'/>
         /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static ArrayType MarginalIncrement<ArrayType, DistributionType>(
-            ArrayType result, DistributionType to_item, [SkipIfUniform] DistributionType item, IList<int> indices, int resultIndex)
+            ArrayType result, DistributionType to_item, [SkipIfUniform] DistributionType item, IReadOnlyList<int> indices, int resultIndex)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : SettableToProduct<DistributionType>
         {
@@ -285,14 +285,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType}(DistributionType, ArrayType, ArrayType, IReadOnlyList{int}, int, DistributionType)"]/*'/>
         /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static DistributionType ItemsAverageConditional<ArrayType, DistributionType>(
             [Indexed, Cancels] DistributionType items,
             [IgnoreDependency] ArrayType array, // must have an (unused) 'array' argument to determine the type of 'marginal' buffer
             [SkipIfAllUniform] ArrayType marginal,
-            IList<int> indices,
+            IReadOnlyList<int> indices,
             int resultIndex, 
             DistributionType result)
             where ArrayType : IList<DistributionType>
@@ -303,11 +303,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IList{DistributionType}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IReadOnlyList{DistributionType}, IReadOnlyList{int}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the resulting array.</typeparam>
         public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
-            [SkipIfAllUniform] IList<DistributionType> items, IList<int> indices, ArrayType result)
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> items, IReadOnlyList<int> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : SettableToProduct<DistributionType>
         {
@@ -323,11 +323,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IList{T}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IReadOnlyList{T}, IReadOnlyList{int}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the resulting array.</typeparam>
         public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
-            [SkipIfAllUniform] IList<T> items, IList<int> indices, ArrayType result)
+            [SkipIfAllUniform] IReadOnlyList<T> items, IReadOnlyList<int> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : HasPoint<T>
         {
@@ -345,10 +345,10 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         //-- VMP -------------------------------------------------------------------------------------------------------------
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ItemsAverageLogarithm{DistributionType}(IList{DistributionType}, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ItemsAverageLogarithm{DistributionType}(IReadOnlyList{DistributionType}, IReadOnlyList{int}, int, DistributionType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static DistributionType ItemsAverageLogarithm<DistributionType>(
-            [SkipIfAllUniform] IList<DistributionType> array, IList<int> indices, int resultIndex, DistributionType result)
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices, int resultIndex, DistributionType result)
             where DistributionType : SettableTo<DistributionType>
         {
             int i = resultIndex;
@@ -357,7 +357,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         public static ResultType ItemsAverageLogarithm2<DistributionType, ResultType>(
-            [SkipIfAllUniform] IList<DistributionType> array, IList<int> indices, ResultType result)
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices, ResultType result)
             where ResultType : IList<DistributionType>
             where DistributionType : SettableTo<DistributionType>
         {
@@ -370,11 +370,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ItemsAverageLogarithmInit{TDist}(DistributionStructArray{TDist, T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ItemsAverageLogarithmInit{TDist}(DistributionStructArray{TDist, T}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="TDist">The type of a distribution over array elements.</typeparam>
         [Skip]
         public static DistributionStructArray<TDist, T> ItemsAverageLogarithmInit<TDist>(
-            [IgnoreDependency] DistributionStructArray<TDist, T> array, IList<int> indices)
+            [IgnoreDependency] DistributionStructArray<TDist, T> array, IReadOnlyList<int> indices)
             where TDist : struct,
                 SettableToProduct<TDist>,
                 SettableToRatio<TDist>,
@@ -389,11 +389,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             return new DistributionStructArray<TDist, T>(indices.Count, i => (TDist) array[indices[i]].Clone());
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ItemsAverageLogarithmInit{TDist}(DistributionRefArray{TDist, T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ItemsAverageLogarithmInit{TDist}(DistributionRefArray{TDist, T}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="TDist">The type of a distribution over array elements.</typeparam>
         [Skip]
         public static DistributionRefArray<TDist, T> ItemsAverageLogarithmInit<TDist>(
-            [IgnoreDependency] DistributionRefArray<TDist, T> array, IList<int> indices)
+            [IgnoreDependency] DistributionRefArray<TDist, T> array, IReadOnlyList<int> indices)
             where TDist : class,
                 SettableTo<TDist>,
                 SettableToProduct<TDist>,
@@ -409,21 +409,21 @@ namespace Microsoft.ML.Probabilistic.Factors
             return new DistributionRefArray<TDist, T>(indices.Count, i => (TDist) array[indices[i]].Clone());
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType}(IList{DistributionType}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType}(IReadOnlyList{DistributionType}, IReadOnlyList{int}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the resulting array.</typeparam>
         public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType>(
-            [SkipIfAllUniform] IList<DistributionType> items, IList<int> indices, ArrayType result)
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> items, IReadOnlyList<int> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
         {
             return ArrayAverageConditional(items, indices, result);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType}(IList{T}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType}(IReadOnlyList{T}, IReadOnlyList{int}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the resulting array.</typeparam>
-        public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType>(IList<T> items, IList<int> indices, ArrayType result)
+        public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType>(IReadOnlyList<T> items, IReadOnlyList<int> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : HasPoint<T>
         {
@@ -431,18 +431,18 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/doc/*'/>
+    ///<include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/doc/*'/>
     /// <typeparam name="T">The type of a list element.</typeparam>
-    [FactorMethod(typeof(Factor), "GetItems<>", Default = false)]
+    [FactorMethod(typeof(Collection), "GetItems<>", Default = false)]
     [Buffers("partial")]
     [Quality(QualityBand.Mature)]
     public static class GetItemsOp2<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/message_doc[@name="ItemsAverageConditionalInit{TDist}(DistributionStructArray{TDist, T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/message_doc[@name="ItemsAverageConditionalInit{TDist}(DistributionStructArray{TDist, T}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="TDist">The type of a distribution over array elements.</typeparam>
         [Skip]
         public static DistributionStructArray<TDist, T> ItemsAverageConditionalInit<TDist>(
-            [IgnoreDependency] DistributionStructArray<TDist, T> array, IList<int> indices)
+            [IgnoreDependency] DistributionStructArray<TDist, T> array, IReadOnlyList<int> indices)
             where TDist : struct,
                 SettableToProduct<TDist>,
                 SettableToRatio<TDist>,
@@ -457,11 +457,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             return new DistributionStructArray<TDist, T>(indices.Count, i => (TDist) array[indices[i]].Clone());
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/message_doc[@name="ItemsAverageConditionalInit{TDist}(DistributionRefArray{TDist, T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/message_doc[@name="ItemsAverageConditionalInit{TDist}(DistributionRefArray{TDist, T}, IReadOnlyList{int})"]/*'/>
         /// <typeparam name="TDist">The type of a distribution over array elements.</typeparam>
         [Skip]
         public static DistributionRefArray<TDist, T> ItemsAverageConditionalInit<TDist>(
-            [IgnoreDependency] DistributionRefArray<TDist, T> array, IList<int> indices)
+            [IgnoreDependency] DistributionRefArray<TDist, T> array, IReadOnlyList<int> indices)
             where TDist : class,
                 SettableTo<TDist>,
                 SettableToProduct<TDist>,
@@ -480,9 +480,9 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static DistributionType ItemsAverageConditional2<DistributionType>(
             [Indexed, Cancels] DistributionType items,
-            [SkipIfAllUniform] IList<DistributionType> array,
-            [Fresh] IList<DistributionType> to_array,
-            IList<int> indices,
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> array,
+            [Fresh] IReadOnlyList<DistributionType> to_array,
+            IReadOnlyList<int> indices,
             int resultIndex,
             DistributionType result)
             where DistributionType : SettableToProduct<DistributionType>, SettableToRatio<DistributionType>
@@ -493,12 +493,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/message_doc[@name="ItemsAverageConditional{DistributionType}(DistributionType, IList{DistributionType}, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/message_doc[@name="ItemsAverageConditional{DistributionType}(DistributionType, IReadOnlyList{DistributionType}, IReadOnlyList{int}, int, DistributionType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static DistributionType ItemsAverageConditional<DistributionType>(
             [Indexed] DistributionType partial,
-            [SkipIfAllUniform] IList<DistributionType> array,
-            IList<int> indices,
+            [SkipIfAllUniform] IReadOnlyList<DistributionType> array,
+            IReadOnlyList<int> indices,
             int resultIndex,
             DistributionType result)
             where DistributionType : SettableToProduct<DistributionType>, SettableToRatio<DistributionType>
@@ -530,12 +530,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/message_doc[@name="Partial{DistributionType}(DistributionType, IList{DistributionType}, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetItemsOp2{T}"]/message_doc[@name="Partial{DistributionType}(DistributionType, IReadOnlyList{DistributionType}, IReadOnlyList{int}, int, DistributionType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static DistributionType Partial<DistributionType>(
             [Indexed, Cancels] DistributionType items,
-            [Fresh] IList<DistributionType> to_array,
-            IList<int> indices,
+            [Fresh] IReadOnlyList<DistributionType> to_array,
+            IReadOnlyList<int> indices,
             int resultIndex,
             DistributionType result)
             where DistributionType : SettableToProduct<DistributionType>, SettableToRatio<DistributionType>
@@ -551,7 +551,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Mature)]
     public static class GetItemsBufferOp2<T>
     {
-        public static ArrayType MarginalInit<ArrayType, DistributionType>(ArrayType array, IList<DistributionType> items, IList<int> indices)
+        public static ArrayType MarginalInit<ArrayType, DistributionType>(ArrayType array, IReadOnlyList<DistributionType> items, IReadOnlyList<int> indices)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>, ICloneable
             where DistributionType : SettableToProduct<DistributionType>
         {
@@ -566,7 +566,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        public static ArrayType Marginal<ArrayType, DistributionType>(ArrayType marginal, DistributionType to_item, DistributionType item, IList<int> indices, int resultIndex)
+        public static ArrayType Marginal<ArrayType, DistributionType>(ArrayType marginal, DistributionType to_item, DistributionType item, IReadOnlyList<int> indices, int resultIndex)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : SettableToProduct<DistributionType>
         {
@@ -578,8 +578,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        public static DistributionType ItemsAverageConditional<ArrayType, DistributionType>([MatchingIndex] IList<DistributionType> items, [IgnoreDependency] ArrayType array,
-                                                                                            [SkipIfAllUniform] ArrayType marginal, IList<int> indices, int resultIndex,
+        public static DistributionType ItemsAverageConditional<ArrayType, DistributionType>([MatchingIndex] IReadOnlyList<DistributionType> items, [IgnoreDependency] IReadOnlyList<DistributionType> array,
+                                                                                            [SkipIfAllUniform] ArrayType marginal, IReadOnlyList<int> indices, int resultIndex,
                                                                                             DistributionType result)
             where ArrayType : IList<DistributionType>
             where DistributionType : SettableToProduct<DistributionType>, SettableToRatio<DistributionType>

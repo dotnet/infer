@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Utilities;
 
@@ -45,10 +44,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
 
         #region Object overrides
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         public override bool Equals(object obj)
         {
             if (this == obj)
@@ -62,7 +57,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
                 Namespace != type.Namespace ||
                 !Util.AreEqual(BaseType, type.BaseType))
                 return false;
-            return true;
+
+            bool deepEquality = false;
+            if (!deepEquality) return true;
             if (Interface != type.Interface ||
                 Abstract != type.Abstract ||
                 Sealed != type.Sealed ||
@@ -76,10 +73,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
             if (!EnumerableExtensions.AreEqual(NestedTypes, type.NestedTypes)) return false;
             return true;
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         public override int GetHashCode()
         {

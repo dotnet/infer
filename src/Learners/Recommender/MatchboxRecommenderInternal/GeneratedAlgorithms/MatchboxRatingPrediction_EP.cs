@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>Field backing the ItemCount property</summary>
 		private int itemCount;
 		/// <summary>Field backing the ItemIds property</summary>
-		private IList<int> itemIds;
+		private IReadOnlyList<int> itemIds;
 		public DistributionStructArray<Gaussian,double>[] itemTrait_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_itemItemIds_observation__F;
 		/// <summary>Message from use of 'ItemTraits'</summary>
@@ -126,7 +126,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>Field backing the UserCount property</summary>
 		private int userCount;
 		/// <summary>Field backing the UserIds property</summary>
-		private IList<int> userIds;
+		private IReadOnlyList<int> userIds;
 		/// <summary>Field backing the UserThresholdCount property</summary>
 		private int userThresholdCount;
 		/// <summary>Field backing the UserThresholdNoiseVariance property</summary>
@@ -221,7 +221,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'ItemIds'</summary>
-		public IList<int> ItemIds
+		public IReadOnlyList<int> ItemIds
 		{
 			get {
 				return this.itemIds;
@@ -357,7 +357,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'UserIds'</summary>
-		public IList<int> UserIds
+		public IReadOnlyList<int> UserIds
 		{
 			get {
 				return this.userIds;
@@ -1243,11 +1243,11 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				return ;
 			}
 			if (variableName=="UserIds") {
-				this.UserIds = (IList<int>)value;
+				this.UserIds = (IReadOnlyList<int>)value;
 				return ;
 			}
 			if (variableName=="ItemIds") {
-				this.ItemIds = (IList<int>)value;
+				this.ItemIds = (IReadOnlyList<int>)value;
 				return ;
 			}
 			if (variableName=="AffinityNoiseVariance") {

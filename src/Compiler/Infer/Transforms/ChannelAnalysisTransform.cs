@@ -100,9 +100,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
             if (vi.IsStochastic)
             {
-                UsageInfo info = new UsageInfo();
-                info.containers = new Containers(context);
-                usageInfo[ivd] = info;
+                usageInfo[ivd] = new UsageInfo
+                {
+                    containers = new Containers(context)
+                };
             }
             if (Recognizer.GetAncestorIndexOfLoopBeingInitialized(context) != -1)
                 loopVars.Add(ivd);
@@ -139,8 +140,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // Only register the full indexer expression, not its sub-expressions
             if (Recognizer.IsBeingIndexed(context) || Recognizer.IsBeingMutated(context, expr))
                 return expr;
-            IExpression target;
-            List<IList<IExpression>> indices = Recognizer.GetIndices(expr, out target);
+            List<IList<IExpression>> indices = Recognizer.GetIndices(expr, out IExpression target);
             if (target is IVariableReferenceExpression)
             {
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(target);
@@ -172,9 +172,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // so that uses in disjoint deterministic conditions can get the same number.
             Set<ConditionBinding> bindings = new Set<ConditionBinding>();
             bindings.AddRange(conditionContext);
-            ExpressionWithBinding eb = new ExpressionWithBinding();
-            eb.Expression = expr;
-            eb.Binding = bindings;
+            ExpressionWithBinding eb = new ExpressionWithBinding
+            {
+                Expression = expr,
+                Binding = bindings
+            };
             return info.GetUseNumber(eb, loopVars);
         }
 
@@ -202,7 +204,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// Containers of the variable declaration
             /// </summary>
             public Containers containers;
-            public Microsoft.ML.Probabilistic.Collections.SortedSet<int> indexingDepths = new Microsoft.ML.Probabilistic.Collections.SortedSet<int>();
+            public Collections.SortedSet<int> indexingDepths = new Microsoft.ML.Probabilistic.Collections.SortedSet<int>();
             /// <summary>
             /// The set of all uses, organized into groups such that the members of each group are disjoint, i.e.
             /// they access different parts of the variable (such as different elements of an array) or they
@@ -482,10 +484,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             public override bool Equals(object obj)
             {
-                ExpressionWithBinding that = obj as ExpressionWithBinding;
-                if (that == null)
-                    return false;
-                return Expression.Equals(that.Expression) && Binding.Equals(that.Binding);
+                return (obj is ExpressionWithBinding that) &&
+                    Expression.Equals(that.Expression) &&
+                    Binding.Equals(that.Binding);
             }
 
             public override int GetHashCode()

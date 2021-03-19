@@ -115,10 +115,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Find the most specific Binding for a generic method.
         /// </summary>
@@ -135,7 +131,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             {
                 exception = errors[0];
                 string message = exception.Message + " of method ";
-                if (true)
+                bool useShortString = true;
+                if (useShortString)
                 {
                     message += GetParameterMismatchString(method, actuals);
                 }
@@ -165,10 +162,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             //if (iter.MoveNext()) throw new System.Reflection.AmbiguousMatchException();
             return best;
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         /// <summary>
         /// True if the binding has no explicit conversions (excluding the first) and at most one nonzero conversion.
@@ -457,10 +450,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Infer type parameter bindings.
         /// </summary>
@@ -514,7 +503,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                             foreach (Type alternate in TypesAssignableFrom(actual))
                             {
                                 binding.Types[formal] = alternate;
-                                if (true)
+                                bool checkConstraints = true;
+                                if (checkConstraints)
                                 {
                                     // check right away if this binding satisfies the constraints on formal.
                                     // this can sometimes improve performance.
@@ -659,7 +649,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 if (!anyMatch || innerErrors.Count > 0)
                 {
                     string formalString = StringUtil.TypeToString(formal);
-                    if (false)
+                    bool usePreciseMessage = false;
+                    if (usePreciseMessage)
                     {
                         // this block tries to make the error message more precise.
                         // however it can significantly slow down the code due to exceptions being thrown.
@@ -688,10 +679,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
                 }
             }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         protected static string PositionString(int position)
         {

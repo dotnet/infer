@@ -70,7 +70,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of the variable.</typeparam>
-    [FactorMethod(typeof(Factor), "VariablePoint<>", Default = false)]
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = false)]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp<T> : VariablePointOpBase
     {
@@ -96,7 +96,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Mean{T}"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "VariablePoint<>", Default = false)]
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = false)]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp_Mean<T> : VariablePointOpBase
     {
@@ -232,7 +232,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    [FactorMethod(typeof(Factor), "VariablePoint<>", Default = true)]
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = true)]
     [Buffers("buffer")]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp_Rprop : VariablePointOpBase
@@ -279,7 +279,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    [FactorMethod(typeof(Factor), "VariablePoint<>", Default = true)]
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = true)]
     [Buffers("bufferTG")]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp_RpropTruncatedGaussian : VariablePointOpBase
@@ -329,7 +329,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    [FactorMethod(typeof(Factor), "VariablePoint<>", Default = true)]
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = true)]
     [Buffers("bufferTGa")]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp_RpropTruncatedGamma : VariablePointOpBase
@@ -405,7 +405,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    [FactorMethod(typeof(Factor), "VariablePoint<>", Default = true)]
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = true)]
     [Buffers("buffer0")]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp_RpropGamma : VariablePointOpBase
@@ -476,7 +476,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    [FactorMethod(typeof(Factor), "VariablePoint<>", Default = true)]
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = true)]
     [Buffers("bufferBeta")]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp_RpropBeta : VariablePointOpBase

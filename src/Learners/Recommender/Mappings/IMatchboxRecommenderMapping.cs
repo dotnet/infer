@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// Note that this method can be called concurrently from multiple threads, 
         /// so its implementation must be thread-safe.
         /// </remarks>
-        IList<int> GetUserIds(TInstanceSource instanceSource, int batchNumber = 0);
+        IReadOnlyList<int> GetUserIds(TInstanceSource instanceSource, int batchNumber = 0);
 
         /// <summary>
         /// Gets the list of item identifiers from a given instance source.
@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// Note that this method can be called concurrently from multiple threads, 
         /// so its implementation must be thread-safe.
         /// </remarks>
-        IList<int> GetItemIds(TInstanceSource instanceSource, int batchNumber = 0);
+        IReadOnlyList<int> GetItemIds(TInstanceSource instanceSource, int batchNumber = 0);
 
         /// <summary>
         /// Gets the list of ratings from a given instance source.
@@ -56,7 +56,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// Note that this method can be called concurrently from multiple threads, 
         /// so its implementation must be thread-safe.
         /// </remarks>
-        IList<int> GetRatings(TInstanceSource instanceSource, int batchNumber = 0);
+        IReadOnlyList<int> GetRatings(TInstanceSource instanceSource, int batchNumber = 0);
 
         /// <summary>
         /// Gets the number of users from a given instance source.
@@ -100,7 +100,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="featureSource">The source to obtain features from.</param>
         /// <returns>An array of non-zero user feature arrays where the outer array is indexed by user id.</returns>
         /// <remarks>This function will be called during training if the user feature support is enabled.</remarks>
-        IList<IList<double>> GetAllUserNonZeroFeatureValues(TFeatureSource featureSource);
+        IReadOnlyList<IReadOnlyList<double>> GetAllUserNonZeroFeatureValues(TFeatureSource featureSource);
 
         /// <summary>
         /// Gets non-zero feature values for all items present in a given feature source.
@@ -108,7 +108,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="featureSource">The source to obtain features from.</param>
         /// <returns>An array of non-zero item feature arrays where the outer array is indexed by item id</returns>
         /// <remarks>This function will be called during training if the item feature support is enabled.</remarks>
-        IList<IList<double>> GetAllItemNonZeroFeatureValues(TFeatureSource featureSource);
+        IReadOnlyList<IReadOnlyList<double>> GetAllItemNonZeroFeatureValues(TFeatureSource featureSource);
 
         /// <summary>
         /// Gets non-zero feature indices for all users present in a given feature source.
@@ -116,7 +116,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="featureSource">The source to obtain feature indices from.</param>
         /// <returns>An array of non-zero user feature index arrays where the outer array is indexed by user id.</returns>
         /// <remarks>This function will be called during training if the user feature support is enabled.</remarks>
-        IList<IList<int>> GetAllUserNonZeroFeatureIndices(TFeatureSource featureSource);
+        IReadOnlyList<IReadOnlyList<int>> GetAllUserNonZeroFeatureIndices(TFeatureSource featureSource);
 
         /// <summary>
         /// Gets non-zero feature indices for all items present in a given feature source.
@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="featureSource">The source to obtain feature indices from.</param>
         /// <returns>An array of non-zero item feature index arrays where the outer array is indexed by item id</returns>
         /// <remarks>This function will be called during training if the item feature support is enabled.</remarks>
-        IList<IList<int>> GetAllItemNonZeroFeatureIndices(TFeatureSource featureSource);
+        IReadOnlyList<IReadOnlyList<int>> GetAllItemNonZeroFeatureIndices(TFeatureSource featureSource);
 
         /// <summary>
         /// Gets non-zero feature values for a given user.
@@ -133,7 +133,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="userId">The user identifier.</param>
         /// <returns>Non-zero feature values for the user.</returns>
         /// <remarks>This function will be called during prediction for cold users if the user feature support is enabled.</remarks>
-        IList<double> GetSingleUserNonZeroFeatureValues(TFeatureSource featureSource, int userId);
+        IReadOnlyList<double> GetSingleUserNonZeroFeatureValues(TFeatureSource featureSource, int userId);
 
         /// <summary>
         /// Gets non-zero feature values for a given item.
@@ -142,7 +142,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="itemId">The item identifier.</param>
         /// <returns>Non-zero feature values for the item.</returns>
         /// <remarks>This function will be called during prediction for cold items if the item feature support is enabled.</remarks>
-        IList<double> GetSingleItemNonZeroFeatureValues(TFeatureSource featureSource, int itemId);
+        IReadOnlyList<double> GetSingleItemNonZeroFeatureValues(TFeatureSource featureSource, int itemId);
 
         /// <summary>
         /// Gets non-zero feature indices for a given user.
@@ -151,7 +151,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="userId">The user identifier.</param>
         /// <returns>Non-zero feature indices for the user.</returns>
         /// <remarks>This function will be called during prediction for cold users if the user feature support is enabled.</remarks>
-        IList<int> GetSingleUserNonZeroFeatureIndices(TFeatureSource featureSource, int userId);
+        IReadOnlyList<int> GetSingleUserNonZeroFeatureIndices(TFeatureSource featureSource, int userId);
 
         /// <summary>
         /// Gets non-zero feature indices for a given item.
@@ -160,6 +160,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="itemId">The item identifier.</param>
         /// <returns>Non-zero feature values for the item.</returns>
         /// <remarks>This function will be called during prediction for cold items if the item feature support is enabled.</remarks>
-        IList<int> GetSingleItemNonZeroFeatureIndices(TFeatureSource featureSource, int itemId);
+        IReadOnlyList<int> GetSingleItemNonZeroFeatureIndices(TFeatureSource featureSource, int itemId);
     }
 }

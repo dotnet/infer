@@ -160,9 +160,12 @@ namespace Microsoft.ML.Probabilistic.Utilities
         {
             try
             {
-                return type.IsArray || (type == typeof(System.Collections.IList)) ||
-                       (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>)) ||
-                       (type.GetInterface(typeof(IList<>).Name, false) != null);
+                return type.IsArray || 
+                    (type == typeof(System.Collections.IList)) ||
+                    (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>)) ||
+                    (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>)) ||
+                    (type.GetInterface(typeof(IReadOnlyList<>).Name, false) != null) ||
+                    (type.GetInterface(typeof(IList<>).Name, false) != null);
             }
             catch (AmbiguousMatchException)
             {
@@ -187,23 +190,35 @@ namespace Microsoft.ML.Probabilistic.Utilities
                 rank = 1;
                 return typeof(object);
             }
-            else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>))
+            else if (type.IsGenericType)
             {
-                rank = 1;
-                return type.GetGenericArguments()[0];
+                Type genericTypeDefinition = type.GetGenericTypeDefinition();
+                if (genericTypeDefinition == typeof(IList<>) ||
+                    genericTypeDefinition == typeof(IReadOnlyList<>))
+                {
+                    rank = 1;
+                    return type.GetGenericArguments()[0];
+                }
+                // Fall through
+            }
+            // may throw AmbiguousMatchException
+            Type face = type.GetInterface(typeof(IArray2D<>).Name, false);
+            if (face != null)
+            {
+                rank = 2;
+                return face.GetGenericArguments()[0];
             }
             else
             {
-                // may throw AmbiguousMatchException
-                Type face = type.GetInterface(typeof(IArray2D<>).Name, false);
+                face = type.GetInterface(typeof(IList<>).Name, false);
                 if (face != null)
                 {
-                    rank = 2;
+                    rank = 1;
                     return face.GetGenericArguments()[0];
                 }
                 else
                 {
-                    face = type.GetInterface(typeof(IList<>).Name, false);
+                    face = type.GetInterface(typeof(IReadOnlyList<>).Name, false);
                     if (face != null)
                     {
                         rank = 1;

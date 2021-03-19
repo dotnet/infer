@@ -198,7 +198,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>The constant 'CurrentRating'</summary>
 		public int[] CurrentRating;
 		public DistributionStructArray<Gaussian,double> ItemBias_F;
-		public DistributionStructArray<Gaussian,double> ItemBias_itemItemIds_observation__B;
 		public DistributionStructArray<Gaussian,double> ItemBias_itemItemIds_observation__F;
 		/// <summary>Message to marginal of 'ItemBias'</summary>
 		public DistributionStructArray<Gaussian,double> ItemBias_marginal_F;
@@ -218,7 +217,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public Gaussian ItemBiasFeatureWeights_F_reduced;
 		/// <summary>Message to marginal of 'ItemBiasFeatureWeights'</summary>
 		public DistributionStructArray<Gaussian,double> ItemBiasFeatureWeights_marginal_F;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemBiasFeatureWeights_NonZeroItemFeatureIndices_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemBiasFeatureWeights_NonZeroItemFeatureIndices_F;
 		/// <summary>Field backing the ItemBiasInitializer property</summary>
 		private DistributionStructArray<Gaussian,double> itemBiasInitializer;
@@ -234,7 +232,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>Field backing the ItemFeatureCount property</summary>
 		private int itemFeatureCount;
 		/// <summary>Field backing the ItemIds property</summary>
-		private IList<int> itemIds;
+		private IReadOnlyList<int> itemIds;
 		public DistributionStructArray<Gaussian,double>[] itemTrait_B;
 		/// <summary>Field backing the ItemTraitFeatureWeightPriorVariance property</summary>
 		private double itemTraitFeatureWeightPriorVariance;
@@ -260,7 +258,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_depth0_uses_F_1__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_F;
 		public Gaussian[][] ItemTraits_index10_index10_0__index10__B;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_itemItemIds_observation__B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_itemItemIds_observation__F;
 		/// <summary>Message to marginal of 'ItemTraits'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_marginal_F;
@@ -288,21 +285,21 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionStructArray<Gaussian,double>[] NoisyUserThresholds_use_B;
 		public DistributionStructArray<Gaussian,double>[] nonZeroItemBiasFeatureWeights_B;
 		/// <summary>Field backing the NonZeroItemFeatureCounts property</summary>
-		private IList<int> nonZeroItemFeatureCounts;
+		private IReadOnlyList<int> nonZeroItemFeatureCounts;
 		/// <summary>Field backing the NonZeroItemFeatureIndices property</summary>
-		private IList<IList<int>> nonZeroItemFeatureIndices;
+		private IReadOnlyList<IReadOnlyList<int>> nonZeroItemFeatureIndices;
 		/// <summary>Field backing the NonZeroItemFeatureValues property</summary>
-		private IList<IList<double>> nonZeroItemFeatureValues;
+		private IReadOnlyList<IReadOnlyList<double>> nonZeroItemFeatureValues;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] nonZeroItemTraitFeatureWeights_B;
 		public DistributionStructArray<Gaussian,double>[] nonZeroUserBiasFeatureWeightProducts_B;
 		public DistributionStructArray<Gaussian,double>[] nonZeroUserBiasFeatureWeightProducts_F;
 		public DistributionStructArray<Gaussian,double>[] nonZeroUserBiasFeatureWeights_B;
 		/// <summary>Field backing the NonZeroUserFeatureCounts property</summary>
-		private IList<int> nonZeroUserFeatureCounts;
+		private IReadOnlyList<int> nonZeroUserFeatureCounts;
 		/// <summary>Field backing the NonZeroUserFeatureIndices property</summary>
-		private IList<IList<int>> nonZeroUserFeatureIndices;
+		private IReadOnlyList<IReadOnlyList<int>> nonZeroUserFeatureIndices;
 		/// <summary>Field backing the NonZeroUserFeatureValues property</summary>
-		private IList<IList<double>> nonZeroUserFeatureValues;
+		private IReadOnlyList<IReadOnlyList<double>> nonZeroUserFeatureValues;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] nonZeroUserTraitFeatureWeightProducts_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] nonZeroUserTraitFeatureWeightProducts_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] nonZeroUserTraitFeatureWeights_B;
@@ -311,13 +308,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>Field backing the ObservationCount property</summary>
 		private int observationCount;
 		/// <summary>Field backing the Ratings property</summary>
-		private IList<int> ratings;
+		private IReadOnlyList<int> ratings;
 		/// <summary>Field backing the TraitCount property</summary>
 		private int traitCount;
 		/// <summary>Buffer for DoubleIsBetweenOp.XAverageConditional</summary>
 		public double[] true_logZ;
 		public DistributionStructArray<Gaussian,double> UserBias_F;
-		public DistributionStructArray<Gaussian,double> UserBias_itemUserIds_observation__B;
 		public DistributionStructArray<Gaussian,double> UserBias_itemUserIds_observation__F;
 		/// <summary>Message to marginal of 'UserBias'</summary>
 		public DistributionStructArray<Gaussian,double> UserBias_marginal_F;
@@ -337,7 +333,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public Gaussian UserBiasFeatureWeights_F_reduced;
 		/// <summary>Message to marginal of 'UserBiasFeatureWeights'</summary>
 		public DistributionStructArray<Gaussian,double> UserBiasFeatureWeights_marginal_F;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserBiasFeatureWeights_NonZeroUserFeatureIndices_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserBiasFeatureWeights_NonZeroUserFeatureIndices_F;
 		/// <summary>Field backing the UserBiasInitializer property</summary>
 		private DistributionStructArray<Gaussian,double> userBiasInitializer;
@@ -353,7 +348,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>Field backing the UserFeatureCount property</summary>
 		private int userFeatureCount;
 		/// <summary>Field backing the UserIds property</summary>
-		private IList<int> userIds;
+		private IReadOnlyList<int> userIds;
 		/// <summary>Field backing the UserThresholdCount property</summary>
 		private int userThresholdCount;
 		/// <summary>Field backing the UserThresholdNoiseVariance property</summary>
@@ -373,7 +368,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>Buffer for GetItemsOp&lt;double[]&gt;.ItemsAverageConditional&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, DistributionStructArray&lt;Gaussian, double&gt;&gt;</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_depth0_uses_F_1__marginal;
 		public DistributionStructArray<Gaussian,double> UserThresholds_F_reduced;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_itemUserIds_observation__B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_itemUserIds_observation__F;
 		/// <summary>Message to marginal of 'UserThresholds'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_marginal_F;
@@ -414,7 +408,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionStructArray<Gaussian,double>[] userTraitMean_B;
 		public DistributionStructArray<Gaussian,double>[] userTraitMean_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_F;
-		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_itemUserIds_observation__B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_itemUserIds_observation__F;
 		/// <summary>Message to marginal of 'UserTraits'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_marginal_F;
@@ -755,7 +748,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'ItemIds'</summary>
-		public IList<int> ItemIds
+		public IReadOnlyList<int> ItemIds
 		{
 			get {
 				return this.itemIds;
@@ -998,7 +991,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'NonZeroItemFeatureCounts'</summary>
-		public IList<int> NonZeroItemFeatureCounts
+		public IReadOnlyList<int> NonZeroItemFeatureCounts
 		{
 			get {
 				return this.nonZeroItemFeatureCounts;
@@ -1041,7 +1034,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'NonZeroItemFeatureIndices'</summary>
-		public IList<IList<int>> NonZeroItemFeatureIndices
+		public IReadOnlyList<IReadOnlyList<int>> NonZeroItemFeatureIndices
 		{
 			get {
 				return this.nonZeroItemFeatureIndices;
@@ -1082,7 +1075,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'NonZeroItemFeatureValues'</summary>
-		public IList<IList<double>> NonZeroItemFeatureValues
+		public IReadOnlyList<IReadOnlyList<double>> NonZeroItemFeatureValues
 		{
 			get {
 				return this.nonZeroItemFeatureValues;
@@ -1123,7 +1116,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'NonZeroUserFeatureCounts'</summary>
-		public IList<int> NonZeroUserFeatureCounts
+		public IReadOnlyList<int> NonZeroUserFeatureCounts
 		{
 			get {
 				return this.nonZeroUserFeatureCounts;
@@ -1166,7 +1159,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'NonZeroUserFeatureIndices'</summary>
-		public IList<IList<int>> NonZeroUserFeatureIndices
+		public IReadOnlyList<IReadOnlyList<int>> NonZeroUserFeatureIndices
 		{
 			get {
 				return this.nonZeroUserFeatureIndices;
@@ -1207,7 +1200,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'NonZeroUserFeatureValues'</summary>
-		public IList<IList<double>> NonZeroUserFeatureValues
+		public IReadOnlyList<IReadOnlyList<double>> NonZeroUserFeatureValues
 		{
 			get {
 				return this.nonZeroUserFeatureValues;
@@ -1302,7 +1295,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'Ratings'</summary>
-		public IList<int> Ratings
+		public IReadOnlyList<int> Ratings
 		{
 			get {
 				return this.ratings;
@@ -1653,7 +1646,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>The externally-specified value of 'UserIds'</summary>
-		public IList<int> UserIds
+		public IReadOnlyList<int> UserIds
 		{
 			get {
 				return this.userIds;
@@ -2264,11 +2257,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.vdouble__61_B[observation][userThreshold] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.NoisyUserThresholds_use_B[observation][userThreshold], this.userThresholdNoiseVariance);
 					this.UserThresholdsObs_B[observation][userThreshold] = GaussianProductOp_SHG09.AAverageConditional(this.vdouble__61_B[observation][userThreshold], 1.0);
 				}
-				for(int trait = 0; trait<this.traitCount; trait++) {
-					this.UserTraits_itemUserIds_observation__B[observation][trait] = ArrayHelper.SetTo<Gaussian>(this.UserTraits_itemUserIds_observation__B[observation][trait], this.userTrait_B[observation][trait]);
-				}
 			}
-			this.UserTraits_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserTraits_itemUserIds_observation__B, this.userIds, this.UserTraits_uses_B[1]);
+			this.UserTraits_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.userTrait_B, this.userIds, this.UserTraits_uses_B[1]);
 			this.UserTraits_use_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserTraits_uses_B, this.UserTraits_use_B);
 			for(int user = 0; user<this.userCount; user++) {
 				for(int trait = 0; trait<this.traitCount; trait++) {
@@ -2276,7 +2266,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				}
 			}
 			for(int trait = 0; trait<this.traitCount; trait++) {
-				this.UserTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.UserTraitFeatureWeights_F[trait], this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_B[trait], this.nonZeroUserFeatureIndices, this.UserTraitFeatureWeights_use_F_trait__marginal[trait]);
+				this.UserTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian>(this.UserTraitFeatureWeights_F[trait], this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_B[trait], this.nonZeroUserFeatureIndices, this.UserTraitFeatureWeights_use_F_trait__marginal[trait]);
 			}
 			for(int user = 0; user<this.userCount; user++) {
 				for(int trait = 0; trait<this.traitCount; trait++) {
@@ -2289,13 +2279,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					for(int nonZeroUserFeature = 0; nonZeroUserFeature<this.nonZeroUserFeatureCounts[user]; nonZeroUserFeature++) {
 						this.nonZeroUserTraitFeatureWeights_B[user][trait][nonZeroUserFeature] = GaussianProductOpBase.AAverageConditional(this.nonZeroUserTraitFeatureWeightProducts_B[user][trait][nonZeroUserFeature], this.nonZeroUserFeatureValues[user][nonZeroUserFeature]);
 					}
-					this.UserTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.UserTraitFeatureWeights_use_F_trait__marginal[trait], this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_F[trait][user], this.nonZeroUserTraitFeatureWeights_B[user][trait], this.nonZeroUserFeatureIndices, user);
+					this.UserTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian>(this.UserTraitFeatureWeights_use_F_trait__marginal[trait], this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_F[trait][user], this.nonZeroUserTraitFeatureWeights_B[user][trait], this.nonZeroUserFeatureIndices, user);
 				}
 			}
-			for(int observation = 0; observation<this.observationCount; observation++) {
-				this.UserBias_itemUserIds_observation__B[observation] = ArrayHelper.SetTo<Gaussian>(this.UserBias_itemUserIds_observation__B[observation], this.userBiasObs_B[observation]);
-			}
-			this.UserBias_uses_B[1] = GetItemsOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.UserBias_itemUserIds_observation__B, this.userIds, this.UserBias_uses_B[1]);
+			this.UserBias_uses_B[1] = GetItemsOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.userBiasObs_B, this.userIds, this.UserBias_uses_B[1]);
 			this.UserBias_use_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionStructArray<Gaussian,double>>(this.UserBias_uses_B, this.UserBias_use_B);
 			for(int user = 0; user<this.userCount; user++) {
 				this.userBiasMean_B[user] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.UserBias_use_B[user], this.userBiasVariance);
@@ -2311,14 +2298,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.UserBiasFeatureWeights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalIncrementItems<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.nonZeroUserBiasFeatureWeights_B[user], this.UserBiasFeatureWeights_NonZeroUserFeatureIndices_F[user], this.nonZeroUserFeatureIndices, user, this.UserBiasFeatureWeights_marginal_F);
 			}
 			for(int trait = 0; trait<this.traitCount; trait++) {
-				this.ItemTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemTraitFeatureWeights_F[trait], this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_B[trait], this.nonZeroItemFeatureIndices, this.ItemTraitFeatureWeights_use_F_trait__marginal[trait]);
+				this.ItemTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian>(this.ItemTraitFeatureWeights_F[trait], this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_B[trait], this.nonZeroItemFeatureIndices, this.ItemTraitFeatureWeights_use_F_trait__marginal[trait]);
 			}
-			for(int observation = 0; observation<this.observationCount; observation++) {
-				for(int trait = 0; trait<this.traitCount; trait++) {
-					this.ItemTraits_itemItemIds_observation__B[observation][trait] = ArrayHelper.SetTo<Gaussian>(this.ItemTraits_itemItemIds_observation__B[observation][trait], this.itemTrait_B[observation][trait]);
-				}
-			}
-			this.ItemTraits_depth0_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.ItemTraits_itemItemIds_observation__B, this.itemIds, this.ItemTraits_depth0_uses_B[1]);
+			this.ItemTraits_depth0_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.itemTrait_B, this.itemIds, this.ItemTraits_depth0_uses_B[1]);
 			this.ItemTraits_depth0_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.ItemTraits_depth0_uses_B, this.ItemTraits_depth0_B);
 			for(int item = 0; item<this.itemCount; item++) {
 				for(int trait = 0; trait<this.traitCount; trait++) {
@@ -2334,13 +2316,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					for(int nonZeroItemFeature = 0; nonZeroItemFeature<this.nonZeroItemFeatureCounts[item]; nonZeroItemFeature++) {
 						this.nonZeroItemTraitFeatureWeights_B[item][trait][nonZeroItemFeature] = GaussianProductOpBase.AAverageConditional(this.vdouble____11_B[item][trait][nonZeroItemFeature], this.nonZeroItemFeatureValues[item][nonZeroItemFeature]);
 					}
-					this.ItemTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemTraitFeatureWeights_use_F_trait__marginal[trait], this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_F[trait][item], this.nonZeroItemTraitFeatureWeights_B[item][trait], this.nonZeroItemFeatureIndices, item);
+					this.ItemTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian>(this.ItemTraitFeatureWeights_use_F_trait__marginal[trait], this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_F[trait][item], this.nonZeroItemTraitFeatureWeights_B[item][trait], this.nonZeroItemFeatureIndices, item);
 				}
 			}
-			for(int observation = 0; observation<this.observationCount; observation++) {
-				this.ItemBias_itemItemIds_observation__B[observation] = ArrayHelper.SetTo<Gaussian>(this.ItemBias_itemItemIds_observation__B[observation], this.itemBiasObs_B[observation]);
-			}
-			this.ItemBias_uses_B[1] = GetItemsOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemBias_itemItemIds_observation__B, this.itemIds, this.ItemBias_uses_B[1]);
+			this.ItemBias_uses_B[1] = GetItemsOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.itemBiasObs_B, this.itemIds, this.ItemBias_uses_B[1]);
 			this.ItemBias_use_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionStructArray<Gaussian,double>>(this.ItemBias_uses_B, this.ItemBias_use_B);
 			for(int item = 0; item<this.itemCount; item++) {
 				this.itemBiasMean_B[item] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.ItemBias_use_B[item], this.itemBiasVariance);
@@ -2388,16 +2367,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.UserThresholds_uses_B[0][userThreshold][1] = ArrayHelper.SetTo<Gaussian>(this.UserThresholds_uses_B[0][userThreshold][1], this.UserThresholds_rep_B_toDef[userThreshold]);
 				}
 			}
-			for(int observation = 0; observation<this.observationCount; observation++) {
-				for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
-					if (!this.useSharedUserThresholds) {
-						this.UserThresholds_itemUserIds_observation__B[observation][userThreshold] = ArrayHelper.SetTo<Gaussian>(this.UserThresholds_itemUserIds_observation__B[observation][userThreshold], this.UserThresholdsObs_B[observation][userThreshold]);
-					}
-				}
-			}
 			if (!this.useSharedUserThresholds) {
 				if (!this.useSharedUserThresholds) {
-					this.UserThresholds_depth0_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserThresholds_itemUserIds_observation__B, this.userIds, this.UserThresholds_depth0_uses_B[1]);
+					this.UserThresholds_depth0_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserThresholdsObs_B, this.userIds, this.UserThresholds_depth0_uses_B[1]);
 				}
 			}
 			for(int user = 0; user<this.userCount; user++) {
@@ -2522,27 +2494,11 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 						this.UserThresholds_depth0_uses_F_1__marginal = GetItemsOp<double[]>.MarginalIncrement<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,DistributionStructArray<Gaussian,double>>(this.UserThresholds_depth0_uses_F_1__marginal, this.UserThresholds_itemUserIds_observation__F[observation], this.UserThresholdsObs_B[observation], this.userIds, observation);
 					}
 					this.UserTraits_uses_F_1__marginal = GetItemsOp<double[]>.MarginalIncrement<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,DistributionStructArray<Gaussian,double>>(this.UserTraits_uses_F_1__marginal, this.UserTraits_itemUserIds_observation__F[observation], this.userTrait_B[observation], this.userIds, observation);
-					for(int trait = 0; trait<this.traitCount; trait++) {
-						this.UserTraits_itemUserIds_observation__B[observation][trait] = ArrayHelper.SetTo<Gaussian>(this.UserTraits_itemUserIds_observation__B[observation][trait], this.userTrait_B[observation][trait]);
-					}
-					this.UserBias_itemUserIds_observation__B[observation] = ArrayHelper.SetTo<Gaussian>(this.UserBias_itemUserIds_observation__B[observation], this.userBiasObs_B[observation]);
-					for(int trait = 0; trait<this.traitCount; trait++) {
-						this.ItemTraits_itemItemIds_observation__B[observation][trait] = ArrayHelper.SetTo<Gaussian>(this.ItemTraits_itemItemIds_observation__B[observation][trait], this.itemTrait_B[observation][trait]);
-					}
-					this.ItemBias_itemItemIds_observation__B[observation] = ArrayHelper.SetTo<Gaussian>(this.ItemBias_itemItemIds_observation__B[observation], this.itemBiasObs_B[observation]);
-					for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
-						if (this.useSharedUserThresholds) {
-							this.UserThresholds_rep_B[userThreshold][observation] = ArrayHelper.SetTo<Gaussian>(this.UserThresholds_rep_B[userThreshold][observation], this.UserThresholdsObs_B[observation][userThreshold]);
-						}
-						if (!this.useSharedUserThresholds) {
-							this.UserThresholds_itemUserIds_observation__B[observation][userThreshold] = ArrayHelper.SetTo<Gaussian>(this.UserThresholds_itemUserIds_observation__B[observation][userThreshold], this.UserThresholdsObs_B[observation][userThreshold]);
-						}
-					}
 				}
-				this.UserTraits_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserTraits_itemUserIds_observation__B, this.userIds, this.UserTraits_uses_B[1]);
+				this.UserTraits_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.userTrait_B, this.userIds, this.UserTraits_uses_B[1]);
 				this.UserTraits_use_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserTraits_uses_B, this.UserTraits_use_B);
 				for(int trait = 0; trait<this.traitCount; trait++) {
-					this.UserTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.UserTraitFeatureWeights_F[trait], this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_B[trait], this.nonZeroUserFeatureIndices, this.UserTraitFeatureWeights_use_F_trait__marginal[trait]);
+					this.UserTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian>(this.UserTraitFeatureWeights_F[trait], this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_B[trait], this.nonZeroUserFeatureIndices, this.UserTraitFeatureWeights_use_F_trait__marginal[trait]);
 				}
 				for(int user = 0; user<this.userCount; user++) {
 					for(int trait = 0; trait<this.traitCount; trait++) {
@@ -2556,12 +2512,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 						for(int nonZeroUserFeature = 0; nonZeroUserFeature<this.nonZeroUserFeatureCounts[user]; nonZeroUserFeature++) {
 							this.nonZeroUserTraitFeatureWeights_B[user][trait][nonZeroUserFeature] = GaussianProductOpBase.AAverageConditional(this.nonZeroUserTraitFeatureWeightProducts_B[user][trait][nonZeroUserFeature], this.nonZeroUserFeatureValues[user][nonZeroUserFeature]);
 						}
-						this.UserTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.UserTraitFeatureWeights_use_F_trait__marginal[trait], this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_F[trait][user], this.nonZeroUserTraitFeatureWeights_B[user][trait], this.nonZeroUserFeatureIndices, user);
+						this.UserTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian>(this.UserTraitFeatureWeights_use_F_trait__marginal[trait], this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_F[trait][user], this.nonZeroUserTraitFeatureWeights_B[user][trait], this.nonZeroUserFeatureIndices, user);
 						this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_B[trait][user] = ArrayHelper.SetTo<DistributionStructArray<Gaussian,double>>(this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_B[trait][user], this.nonZeroUserTraitFeatureWeights_B[user][trait]);
 						this.UserTraits_F[user][trait] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.userTraitMean_F[user][trait], this.userTraitVariance);
 					}
 				}
-				this.UserBias_uses_B[1] = GetItemsOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.UserBias_itemUserIds_observation__B, this.userIds, this.UserBias_uses_B[1]);
+				this.UserBias_uses_B[1] = GetItemsOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.userBiasObs_B, this.userIds, this.UserBias_uses_B[1]);
 				this.UserBias_use_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionStructArray<Gaussian,double>>(this.UserBias_uses_B, this.UserBias_use_B);
 				for(int user = 0; user<this.userCount; user++) {
 					this.userBiasMean_B[user] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.UserBias_use_B[user], this.userBiasVariance);
@@ -2578,9 +2534,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.UserBias_F[user] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.userBiasMean_F[user], this.userBiasVariance);
 				}
 				for(int trait = 0; trait<this.traitCount; trait++) {
-					this.ItemTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemTraitFeatureWeights_F[trait], this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_B[trait], this.nonZeroItemFeatureIndices, this.ItemTraitFeatureWeights_use_F_trait__marginal[trait]);
+					this.ItemTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian>(this.ItemTraitFeatureWeights_F[trait], this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_B[trait], this.nonZeroItemFeatureIndices, this.ItemTraitFeatureWeights_use_F_trait__marginal[trait]);
 				}
-				this.ItemTraits_depth0_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.ItemTraits_itemItemIds_observation__B, this.itemIds, this.ItemTraits_depth0_uses_B[1]);
+				this.ItemTraits_depth0_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.itemTrait_B, this.itemIds, this.ItemTraits_depth0_uses_B[1]);
 				this.ItemTraits_depth0_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.ItemTraits_depth0_uses_B, this.ItemTraits_depth0_B);
 				for(int item = 0; item<this.itemCount; item++) {
 					for(int trait = 0; trait<this.traitCount; trait++) {
@@ -2596,12 +2552,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 						for(int nonZeroItemFeature = 0; nonZeroItemFeature<this.nonZeroItemFeatureCounts[item]; nonZeroItemFeature++) {
 							this.nonZeroItemTraitFeatureWeights_B[item][trait][nonZeroItemFeature] = GaussianProductOpBase.AAverageConditional(this.vdouble____11_B[item][trait][nonZeroItemFeature], this.nonZeroItemFeatureValues[item][nonZeroItemFeature]);
 						}
-						this.ItemTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemTraitFeatureWeights_use_F_trait__marginal[trait], this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_F[trait][item], this.nonZeroItemTraitFeatureWeights_B[item][trait], this.nonZeroItemFeatureIndices, item);
+						this.ItemTraitFeatureWeights_use_F_trait__marginal[trait] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian>(this.ItemTraitFeatureWeights_use_F_trait__marginal[trait], this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_F[trait][item], this.nonZeroItemTraitFeatureWeights_B[item][trait], this.nonZeroItemFeatureIndices, item);
 						this.ItemTraits_F[item][trait] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.itemTraitMean_F[item][trait], this.itemTraitVariance);
 						this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_B[trait][item] = ArrayHelper.SetTo<DistributionStructArray<Gaussian,double>>(this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_B[trait][item], this.nonZeroItemTraitFeatureWeights_B[item][trait]);
 					}
 				}
-				this.ItemBias_uses_B[1] = GetItemsOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemBias_itemItemIds_observation__B, this.itemIds, this.ItemBias_uses_B[1]);
+				this.ItemBias_uses_B[1] = GetItemsOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.itemBiasObs_B, this.itemIds, this.ItemBias_uses_B[1]);
 				this.ItemBias_use_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionStructArray<Gaussian,double>>(this.ItemBias_uses_B, this.ItemBias_use_B);
 				for(int item = 0; item<this.itemCount; item++) {
 					this.itemBiasMean_B[item] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.ItemBias_use_B[item], this.itemBiasVariance);
@@ -2626,6 +2582,13 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				for(int item = 0; item<this.itemCount; item++) {
 					this.ItemBias_use_F[item] = ArrayHelper.SetTo<Gaussian>(this.ItemBias_use_F[item], this.ItemBias_F[item]);
 				}
+				for(int observation = 0; observation<this.observationCount; observation++) {
+					for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
+						if (this.useSharedUserThresholds) {
+							this.UserThresholds_rep_B[userThreshold][observation] = ArrayHelper.SetTo<Gaussian>(this.UserThresholds_rep_B[userThreshold][observation], this.UserThresholdsObs_B[observation][userThreshold]);
+						}
+					}
+				}
 				for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 					if (this.useSharedUserThresholds) {
 						this.UserThresholds_rep_B_toDef[userThreshold] = ReplicateOp_Divide.ToDef<Gaussian>(this.UserThresholds_rep_B[userThreshold], this.UserThresholds_rep_B_toDef[userThreshold]);
@@ -2634,7 +2597,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				}
 				if (!this.useSharedUserThresholds) {
 					if (!this.useSharedUserThresholds) {
-						this.UserThresholds_depth0_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserThresholds_itemUserIds_observation__B, this.userIds, this.UserThresholds_depth0_uses_B[1]);
+						this.UserThresholds_depth0_uses_B[1] = GetItemsOp<double[]>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>,DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>>(this.UserThresholdsObs_B, this.userIds, this.UserThresholds_depth0_uses_B[1]);
 					}
 				}
 				for(int user = 0; user<this.userCount; user++) {
@@ -2645,7 +2608,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.OnProgressChanged(new ProgressChangedEventArgs(iteration));
 			}
 			for(int trait = 0; trait<this.traitCount; trait++) {
-				this.UserTraitFeatureWeights_use_B[trait] = JaggedSubarrayOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>,DistributionStructArray<Gaussian,double>>(this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_B[trait], this.nonZeroUserFeatureIndices, this.UserTraitFeatureWeights_use_B[trait]);
+				this.UserTraitFeatureWeights_use_B[trait] = JaggedSubarrayOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.UserTraitFeatureWeights_NonZeroUserFeatureIndices_B[trait], this.nonZeroUserFeatureIndices, this.UserTraitFeatureWeights_use_B[trait]);
 				for(int userFeature = 0; userFeature<this.userFeatureCount; userFeature++) {
 					this.UserTraitFeatureWeights_marginal_F[trait][userFeature] = VariableOp.MarginalAverageConditional<Gaussian>(this.UserTraitFeatureWeights_use_B[trait][userFeature], this.UserTraitFeatureWeights_F_reduced, this.UserTraitFeatureWeights_marginal_F[trait][userFeature]);
 				}
@@ -2661,7 +2624,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.UserBias_marginal_F[user] = VariableOp.MarginalAverageConditional<Gaussian>(this.UserBias_use_B[user], this.UserBias_F[user], this.UserBias_marginal_F[user]);
 			}
 			for(int trait = 0; trait<this.traitCount; trait++) {
-				this.ItemTraitFeatureWeights_use_B[trait] = JaggedSubarrayOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>,DistributionStructArray<Gaussian,double>>(this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_B[trait], this.nonZeroItemFeatureIndices, this.ItemTraitFeatureWeights_use_B[trait]);
+				this.ItemTraitFeatureWeights_use_B[trait] = JaggedSubarrayOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemTraitFeatureWeights_NonZeroItemFeatureIndices_B[trait], this.nonZeroItemFeatureIndices, this.ItemTraitFeatureWeights_use_B[trait]);
 				for(int itemFeature = 0; itemFeature<this.itemFeatureCount; itemFeature++) {
 					this.ItemTraitFeatureWeights_marginal_F[trait][itemFeature] = VariableOp.MarginalAverageConditional<Gaussian>(this.ItemTraitFeatureWeights_use_B[trait][itemFeature], this.ItemTraitFeatureWeights_F_reduced, this.ItemTraitFeatureWeights_marginal_F[trait][itemFeature]);
 				}
@@ -2682,7 +2645,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			if (this.Changed_ItemBiasFeatureWeightPriorVariance_ItemCount_ItemFeatureCount_NonZeroItemFeatureCounts_NonZe55_isDone&&((!initialise)||this.Changed_ItemBiasFeatureWeightPriorVariance_ItemCount_ItemFeatureCount_NonZeroItemFeatureCounts_NonZe55_isInitialised)) {
 				return ;
 			}
-			this.ItemBiasFeatureWeights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemBiasFeatureWeights_F, this.ItemBiasFeatureWeights_NonZeroItemFeatureIndices_B, this.nonZeroItemFeatureIndices, this.ItemBiasFeatureWeights_marginal_F);
+			this.ItemBiasFeatureWeights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.ItemBiasFeatureWeights_F, this.nonZeroItemBiasFeatureWeights_B, this.nonZeroItemFeatureIndices, this.ItemBiasFeatureWeights_marginal_F);
 			this.Changed_ItemBiasFeatureWeightPriorVariance_ItemCount_ItemFeatureCount_NonZeroItemFeatureCounts_NonZe55_isDone = true;
 			this.Changed_ItemBiasFeatureWeightPriorVariance_ItemCount_ItemFeatureCount_NonZeroItemFeatureCounts_NonZe55_isInitialised = true;
 		}
@@ -2770,7 +2733,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.ItemBias_use_B = new DistributionStructArray<Gaussian,double>(this.itemCount);
 			this.itemBiasMean_B = new Gaussian[this.itemCount];
 			this.ItemBiasFeatureWeights_NonZeroItemFeatureIndices_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.itemCount);
-			this.ItemBiasFeatureWeights_NonZeroItemFeatureIndices_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.itemCount);
 			this.nonZeroItemBiasFeatureWeights_B = new DistributionStructArray<Gaussian,double>[this.itemCount];
 			this.vdouble__44_F = new DistributionStructArray<Gaussian,double>[this.itemCount];
 			this.itemBiasMean_F = new Gaussian[this.itemCount];
@@ -2828,7 +2790,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int item = 0; item<this.itemCount; item++) {
 				this.ItemBiasFeatureWeights_NonZeroItemFeatureIndices_F[item] = new DistributionStructArray<Gaussian,double>(this.nonZeroItemFeatureCounts[item]);
-				this.ItemBiasFeatureWeights_NonZeroItemFeatureIndices_B[item] = new DistributionStructArray<Gaussian,double>(this.nonZeroItemFeatureCounts[item]);
 				this.nonZeroItemBiasFeatureWeights_B[item] = new DistributionStructArray<Gaussian,double>(this.nonZeroItemFeatureCounts[item]);
 				this.vdouble__44_F[item] = new DistributionStructArray<Gaussian,double>(this.nonZeroItemFeatureCounts[item]);
 				this.vdouble__44_B[item] = new DistributionStructArray<Gaussian,double>(this.nonZeroItemFeatureCounts[item]);
@@ -2846,7 +2807,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			for(int item = 0; item<this.itemCount; item++) {
 				for(int nonZeroItemFeature = 0; nonZeroItemFeature<this.nonZeroItemFeatureCounts[item]; nonZeroItemFeature++) {
 					this.ItemBiasFeatureWeights_NonZeroItemFeatureIndices_F[item][nonZeroItemFeature] = Gaussian.Uniform();
-					this.ItemBiasFeatureWeights_NonZeroItemFeatureIndices_B[item][nonZeroItemFeature] = Gaussian.Uniform();
 					this.nonZeroItemBiasFeatureWeights_B[item][nonZeroItemFeature] = Gaussian.Uniform();
 					this.vdouble__44_F[item][nonZeroItemFeature] = Gaussian.Uniform();
 					this.vdouble__44_B[item][nonZeroItemFeature] = Gaussian.Uniform();
@@ -3120,7 +3080,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserThresholdPriorVarianceForThreshold = new double[this.userThresholdCount];
 			for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 				if (userThreshold==this.middleUserThresholdIndex) {
-					this.UserThresholdPriorVarianceForThreshold[userThreshold] = Factor.Copy<double>(0.0);
+					this.UserThresholdPriorVarianceForThreshold[userThreshold] = Clone.Copy<double>(0.0);
 				}
 			}
 			this.Changed_MiddleUserThresholdIndex_UserThresholdCount_isDone = true;
@@ -3134,7 +3094,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 				if (userThreshold!=this.middleUserThresholdIndex) {
-					this.UserThresholdPriorVarianceForThreshold[userThreshold] = Factor.Copy<double>(this.userThresholdPriorVariance);
+					this.UserThresholdPriorVarianceForThreshold[userThreshold] = Clone.Copy<double>(this.userThresholdPriorVariance);
 				}
 			}
 			this.Changed_MiddleUserThresholdIndex_UserThresholdCount_UserThresholdPriorVariance_isDone = true;
@@ -3147,7 +3107,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			if (this.Changed_NonZeroUserFeatureCounts_NonZeroUserFeatureIndices_numberOfIterationsDecreased_UserBiasFeatu45_isDone&&((!initialise)||this.Changed_NonZeroUserFeatureCounts_NonZeroUserFeatureIndices_numberOfIterationsDecreased_UserBiasFeatu45_isInitialised)) {
 				return ;
 			}
-			this.UserBiasFeatureWeights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.UserBiasFeatureWeights_F, this.UserBiasFeatureWeights_NonZeroUserFeatureIndices_B, this.nonZeroUserFeatureIndices, this.UserBiasFeatureWeights_marginal_F);
+			this.UserBiasFeatureWeights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.UserBiasFeatureWeights_F, this.nonZeroUserBiasFeatureWeights_B, this.nonZeroUserFeatureIndices, this.UserBiasFeatureWeights_marginal_F);
 			this.Changed_NonZeroUserFeatureCounts_NonZeroUserFeatureIndices_numberOfIterationsDecreased_UserBiasFeatu45_isDone = true;
 			this.Changed_NonZeroUserFeatureCounts_NonZeroUserFeatureIndices_numberOfIterationsDecreased_UserBiasFeatu45_isInitialised = true;
 		}
@@ -3184,7 +3144,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			for(int user = 0; user<this.userCount; user++) {
 				for(int nonZeroUserFeature = 0; nonZeroUserFeature<this.nonZeroUserFeatureCounts[user]; nonZeroUserFeature++) {
 					this.UserBiasFeatureWeights_NonZeroUserFeatureIndices_F[user][nonZeroUserFeature] = Gaussian.Uniform();
-					this.UserBiasFeatureWeights_NonZeroUserFeatureIndices_B[user][nonZeroUserFeature] = Gaussian.Uniform();
 					this.nonZeroUserBiasFeatureWeights_B[user][nonZeroUserFeature] = Gaussian.Uniform();
 					this.nonZeroUserBiasFeatureWeightProducts_F[user][nonZeroUserFeature] = Gaussian.Uniform();
 					this.nonZeroUserBiasFeatureWeightProducts_B[user][nonZeroUserFeature] = Gaussian.Uniform();
@@ -3220,7 +3179,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int user = 0; user<this.userCount; user++) {
 				this.UserBiasFeatureWeights_NonZeroUserFeatureIndices_F[user] = new DistributionStructArray<Gaussian,double>(this.nonZeroUserFeatureCounts[user]);
-				this.UserBiasFeatureWeights_NonZeroUserFeatureIndices_B[user] = new DistributionStructArray<Gaussian,double>(this.nonZeroUserFeatureCounts[user]);
 				this.nonZeroUserBiasFeatureWeights_B[user] = new DistributionStructArray<Gaussian,double>(this.nonZeroUserFeatureCounts[user]);
 				this.nonZeroUserBiasFeatureWeightProducts_F[user] = new DistributionStructArray<Gaussian,double>(this.nonZeroUserFeatureCounts[user]);
 				this.nonZeroUserBiasFeatureWeightProducts_B[user] = new DistributionStructArray<Gaussian,double>(this.nonZeroUserFeatureCounts[user]);
@@ -3253,8 +3211,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.vdouble112_B[observation] = Gaussian.Uniform();
 				this.vdouble109_B[observation] = Gaussian.Uniform();
 				this.vdouble111_B[observation] = Gaussian.Uniform();
-				this.UserBias_itemUserIds_observation__B[observation] = Gaussian.Uniform();
-				this.ItemBias_itemItemIds_observation__B[observation] = Gaussian.Uniform();
 			}
 			this.Changed_numberOfIterationsDecreased_ObservationCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeigh31_isDone = true;
 			this.Changed_numberOfIterationsDecreased_ObservationCount_Init_AffinityNoiseVariance_ItemBiasFeatureWeigh31_isInitialised = true;
@@ -3294,12 +3250,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				}
 			}
 			this.userTrait_B_new = ArrayHelper.CopyStorage<DistributionStructArray<Gaussian,double>[]>(this.userTrait_B);
-			for(int observation = 0; observation<this.observationCount; observation++) {
-				for(int trait = 0; trait<this.traitCount; trait++) {
-					this.UserTraits_itemUserIds_observation__B[observation][trait] = Gaussian.Uniform();
-					this.ItemTraits_itemItemIds_observation__B[observation][trait] = Gaussian.Uniform();
-				}
-			}
 			this.Changed_numberOfIterationsDecreased_ObservationCount_TraitCount_Init_AffinityNoiseVariance_ItemBiasF30_isDone = true;
 			this.Changed_numberOfIterationsDecreased_ObservationCount_TraitCount_Init_AffinityNoiseVariance_ItemBiasF30_isInitialised = true;
 		}
@@ -3343,11 +3293,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					}
 					if (this.useSharedUserThresholds) {
 						this.UserThresholds_rep_B[userThreshold][observation] = Gaussian.Uniform();
-					}
-					if (!this.useSharedUserThresholds) {
-						if (!this.useSharedUserThresholds) {
-							this.UserThresholds_itemUserIds_observation__B[observation][userThreshold] = Gaussian.Uniform();
-						}
 					}
 				}
 			}
@@ -3549,10 +3494,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.vdouble111_B = new Gaussian[this.observationCount];
 			this.NoisyUserThresholds_use_B = new DistributionStructArray<Gaussian,double>[this.observationCount];
 			this.vdouble__61_B = new DistributionStructArray<Gaussian,double>[this.observationCount];
-			this.UserTraits_itemUserIds_observation__B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.observationCount);
-			this.UserBias_itemUserIds_observation__B = new DistributionStructArray<Gaussian,double>(this.observationCount);
-			this.ItemTraits_itemItemIds_observation__B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.observationCount);
-			this.ItemBias_itemItemIds_observation__B = new DistributionStructArray<Gaussian,double>(this.observationCount);
 			if (this.observationCount>0) {
 				this.vbool6_reduced = true;
 				Constrain.Equal<bool>(true, this.vbool6_reduced);
@@ -3586,8 +3527,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.userTrait_B[observation] = new DistributionStructArray<Gaussian,double>(this.traitCount);
 				this.vdouble__51_F[observation] = new DistributionStructArray<Gaussian,double>(this.traitCount);
 				this.vdouble__51_B[observation] = new DistributionStructArray<Gaussian,double>(this.traitCount);
-				this.UserTraits_itemUserIds_observation__B[observation] = new DistributionStructArray<Gaussian,double>(this.traitCount);
-				this.ItemTraits_itemItemIds_observation__B[observation] = new DistributionStructArray<Gaussian,double>(this.traitCount);
 			}
 			this.Changed_ObservationCount_TraitCount_isDone = true;
 		}
@@ -3632,13 +3571,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.UserThresholds_rep_B[userThreshold] = new Gaussian[this.observationCount];
 				}
 			}
-			for(int observation = 0; observation<this.observationCount; observation++) {
-				if (!this.useSharedUserThresholds) {
-					if (!this.useSharedUserThresholds) {
-						this.UserThresholds_itemUserIds_observation__B[observation] = new DistributionStructArray<Gaussian,double>(this.userThresholdCount);
-					}
-				}
-			}
 			this.Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds_isDone = true;
 		}
 
@@ -3652,7 +3584,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				if (!this.useSharedUserThresholds) {
 					this.UserThresholds_itemUserIds_observation__F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.observationCount);
 				}
-				this.UserThresholds_itemUserIds_observation__B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.observationCount);
 			}
 			this.Changed_ObservationCount_UseSharedUserThresholds_isDone = true;
 		}
@@ -3666,9 +3597,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserTraitFeatureWeights_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.traitCount);
 			this.UserTraitFeatureWeights_marginal_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.traitCount);
 			this.UserTraitFeatureWeights_use_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.traitCount);
-			this.ItemTraits_trait_index10_0__0__B = new Gaussian[this.traitCount][];
-			this.ItemTraits_index10_index10_0__index10__B = new Gaussian[this.traitCount][];
 			this.vbool3 = new bool[this.traitCount][];
+			this.ItemTraits_index10_index10_0__index10__B = new Gaussian[this.traitCount][];
+			this.ItemTraits_trait_index10_0__0__B = new Gaussian[this.traitCount][];
 			for(int trait = 0; trait<this.traitCount; trait++) {
 				this.vbool3[trait] = new bool[this.traitCount];
 			}
@@ -3860,7 +3791,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserBias_use_B = new DistributionStructArray<Gaussian,double>(this.userCount);
 			this.userBiasMean_B = new Gaussian[this.userCount];
 			this.UserBiasFeatureWeights_NonZeroUserFeatureIndices_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.userCount);
-			this.UserBiasFeatureWeights_NonZeroUserFeatureIndices_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.userCount);
 			this.nonZeroUserBiasFeatureWeights_B = new DistributionStructArray<Gaussian,double>[this.userCount];
 			this.nonZeroUserBiasFeatureWeightProducts_F = new DistributionStructArray<Gaussian,double>[this.userCount];
 			this.userBiasMean_F = new Gaussian[this.userCount];
@@ -3985,7 +3915,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserThresholds_rep_F = default(Gaussian[][]);
 			this.UserThresholds_itemUserIds_observation__F = default(DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>);
 			this.UserThresholds_rep_B = default(Gaussian[][]);
-			this.UserThresholds_itemUserIds_observation__B = default(DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>);
 			this.Changed_UseSharedUserThresholds_isDone = true;
 		}
 
@@ -4436,15 +4365,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				return ;
 			}
 			if (variableName=="NonZeroUserFeatureCounts") {
-				this.NonZeroUserFeatureCounts = (IList<int>)value;
+				this.NonZeroUserFeatureCounts = (IReadOnlyList<int>)value;
 				return ;
 			}
 			if (variableName=="NonZeroUserFeatureIndices") {
-				this.NonZeroUserFeatureIndices = (IList<IList<int>>)value;
+				this.NonZeroUserFeatureIndices = (IReadOnlyList<IReadOnlyList<int>>)value;
 				return ;
 			}
 			if (variableName=="NonZeroUserFeatureValues") {
-				this.NonZeroUserFeatureValues = (IList<IList<double>>)value;
+				this.NonZeroUserFeatureValues = (IReadOnlyList<IReadOnlyList<double>>)value;
 				return ;
 			}
 			if (variableName=="UserTraitFeatureWeightPriorVariance") {
@@ -4504,15 +4433,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				return ;
 			}
 			if (variableName=="NonZeroItemFeatureCounts") {
-				this.NonZeroItemFeatureCounts = (IList<int>)value;
+				this.NonZeroItemFeatureCounts = (IReadOnlyList<int>)value;
 				return ;
 			}
 			if (variableName=="NonZeroItemFeatureIndices") {
-				this.NonZeroItemFeatureIndices = (IList<IList<int>>)value;
+				this.NonZeroItemFeatureIndices = (IReadOnlyList<IReadOnlyList<int>>)value;
 				return ;
 			}
 			if (variableName=="NonZeroItemFeatureValues") {
-				this.NonZeroItemFeatureValues = (IList<IList<double>>)value;
+				this.NonZeroItemFeatureValues = (IReadOnlyList<IReadOnlyList<double>>)value;
 				return ;
 			}
 			if (variableName=="ItemTraitFeatureWeightPriorVariance") {
@@ -4548,15 +4477,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				return ;
 			}
 			if (variableName=="UserIds") {
-				this.UserIds = (IList<int>)value;
+				this.UserIds = (IReadOnlyList<int>)value;
 				return ;
 			}
 			if (variableName=="ItemIds") {
-				this.ItemIds = (IList<int>)value;
+				this.ItemIds = (IReadOnlyList<int>)value;
 				return ;
 			}
 			if (variableName=="Ratings") {
-				this.Ratings = (IList<int>)value;
+				this.Ratings = (IReadOnlyList<int>)value;
 				return ;
 			}
 			if (variableName=="AffinityNoiseVariance") {

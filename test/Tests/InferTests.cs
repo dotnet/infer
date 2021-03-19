@@ -3461,16 +3461,16 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void InitialiseArrayItemsFromIListTest()
+        public void InitialiseArrayItemsFromIReadOnlyList()
         {
             Range item = new Range(2);
             var xInit = Gaussian.PointMass(3);
-            IList<Gaussian> xInitList = new List<Gaussian>();
+            var xInitList = new List<Gaussian>();
             for (int i = 0; i < item.SizeAsInt; i++)
             {
                 xInitList.Add(xInit);
             }
-            var xInitArray = Variable.Observed(xInitList, item).Named("xInit");
+            var xInitArray = Variable.Observed((IReadOnlyList<Gaussian>)xInitList, item).Named("xInit");
             VariableArray<double> x = Variable.Array<double>(item).Named("x");
             x[item] = Variable.GaussianFromMeanAndVariance(0, 100).ForEach(item);
             VariableArray<double> y = Variable.Array<double>(item).Named("y");

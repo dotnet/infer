@@ -13,7 +13,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
-    [FactorMethod(typeof(Factor), "GetDeepJaggedItems<>", Default = true)]
+    [FactorMethod(typeof(Collection), "GetDeepJaggedItems<>", Default = true)]
     [Quality(QualityBand.Mature)]
     [Buffers("marginal")]
     public static class GetDeepJaggedItemsOp<T>

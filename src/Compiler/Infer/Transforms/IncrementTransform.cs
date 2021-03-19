@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     /// </summary>
     internal class IncrementTransform : ShallowCopyTransform
     {
-        private IncrementAnalysisTransform analysis;
+        private readonly IncrementAnalysisTransform analysis;
         protected Dictionary<object, List<Containers>> containersOfUpdate = new Dictionary<object, List<Containers>>();
         bool isOperatorStatement;
 
@@ -114,7 +114,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
     internal class IncrementAnalysisTransform : ShallowCopyTransform
     {
-        private ModelCompiler compiler;
+        private readonly ModelCompiler compiler;
         /// <summary>
         /// Maps from variable/field declaration to increment statement, or null if loop ended before variable was updated.
         /// </summary>

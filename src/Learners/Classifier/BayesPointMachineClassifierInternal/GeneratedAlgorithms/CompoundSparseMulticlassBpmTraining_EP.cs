@@ -549,7 +549,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					for(int _iv = 0; _iv<this.featureCount; _iv++) {
 						this.Weights_depth1_F[ClassRange][_iv] = ArrayHelper.SetTo<Gaussian>(this.Weights_depth1_F[ClassRange][_iv], this.Weights_uses_F[ClassRange][_iv][1]);
 					}
-					this.Weights_depth1_F_ClassRange__marginal[ClassRange] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.Weights_depth1_F[ClassRange], this.Weights_FeatureIndexes_B[ClassRange], this.featureIndexes, this.Weights_depth1_F_ClassRange__marginal[ClassRange]);
+					this.Weights_depth1_F_ClassRange__marginal[ClassRange] = JaggedSubarrayOp<double>.Marginal<DistributionStructArray<Gaussian,double>,Gaussian>(this.Weights_depth1_F[ClassRange], this.Weights_FeatureIndexes_B[ClassRange], this.featureIndexes, this.Weights_depth1_F_ClassRange__marginal[ClassRange]);
 				}
 				for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 					for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {
@@ -594,12 +594,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						for(int InstanceFeatureRanges = 0; InstanceFeatureRanges<this.instanceFeatureCounts[InstanceRange]; InstanceFeatureRanges++) {
 							this.IndexedWeights_B[InstanceRange][ClassRange][InstanceFeatureRanges] = GaussianProductOpBase.BAverageConditional(this.FeatureScores_B[InstanceRange][ClassRange][InstanceFeatureRanges], this.featureValues[InstanceRange][InstanceFeatureRanges]);
 						}
-						this.Weights_depth1_F_ClassRange__marginal[ClassRange] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.Weights_depth1_F_ClassRange__marginal[ClassRange], this.Weights_FeatureIndexes_F[ClassRange][InstanceRange], this.IndexedWeights_B[InstanceRange][ClassRange], this.featureIndexes, InstanceRange);
+						this.Weights_depth1_F_ClassRange__marginal[ClassRange] = JaggedSubarrayOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian>(this.Weights_depth1_F_ClassRange__marginal[ClassRange], this.Weights_FeatureIndexes_F[ClassRange][InstanceRange], this.IndexedWeights_B[InstanceRange][ClassRange], this.featureIndexes, InstanceRange);
 						this.Weights_FeatureIndexes_B[ClassRange][InstanceRange] = ArrayHelper.SetTo<DistributionStructArray<Gaussian,double>>(this.Weights_FeatureIndexes_B[ClassRange][InstanceRange], this.IndexedWeights_B[InstanceRange][ClassRange]);
 					}
 				}
 				for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {
-					this.Weights_depth1_B[ClassRange] = JaggedSubarrayOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>,DistributionStructArray<Gaussian,double>>(this.Weights_FeatureIndexes_B[ClassRange], this.featureIndexes, this.Weights_depth1_B[ClassRange]);
+					this.Weights_depth1_B[ClassRange] = JaggedSubarrayOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.Weights_FeatureIndexes_B[ClassRange], this.featureIndexes, this.Weights_depth1_B[ClassRange]);
 					for(int _iv = 0; _iv<this.featureCount; _iv++) {
 						this.Weights_uses_B[ClassRange][_iv][1] = ArrayHelper.SetTo<Gaussian>(this.Weights_uses_B[ClassRange][_iv][1], this.Weights_depth1_B[ClassRange][_iv]);
 					}

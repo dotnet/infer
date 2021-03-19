@@ -26,6 +26,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Xunit.Sdk;
     using Microsoft.ML.Probabilistic.Models;
     using Microsoft.ML.Probabilistic.Factors;
+    using System.Threading;
 
     public static class TestUtils
     {
@@ -223,33 +224,31 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine($"mscorlib version {coreAssemblyInfo.ProductVersion}");
         }
 
-        public static int TestAllCompilerOptions(bool loadTestAssembly = false)
+        public static int TestAllCompilerOptions(
+            string workingDirectory,
+            bool loadTestAssembly,
+            bool loops,
+            bool free,
+            bool copies,
+            bool optimise,
+            string path = null)
         {
+            Directory.SetCurrentDirectory(workingDirectory);
+
             var assembly = Assembly.GetCallingAssembly();
             if (loadTestAssembly)
                 assembly = Assembly.Load("Microsoft.ML.Probabilistic.Tests");
-            var tests = FindTestMethods(assembly);
-
-            ////tests = tests.Where(m => m.Name.Contains("ChainWithTransitionParameterTest3")).ToArray();
+            var tests = TestUtils.FindTestMethods(assembly, path);
 
             Console.WriteLine($"Running {tests.Length} tests with all compiler options");
-            WriteEnvironment();
+            TestUtils.WriteEnvironment();
 
             TestUtils.SetBrowserMode(BrowserMode.Never);
-            var stdout = Console.Out;
-#if MONO_SUPPORT
-            Console.SetOut(NullWriter.Instance); 
-#else
-            Console.SetOut(StreamWriter.Null);
-#endif
-            var failed = TestAllCompilerOptions(state =>
-            {
-                Stopwatch watch = Stopwatch.StartNew();
-                var list = RunAllTests(tests).Select(m => new Tuple<string, MethodInfo>(state, m)).ToList();
-                Trace.WriteLine($"{state} completed in {watch.Elapsed}");
-                return list;
-            });
-            Console.SetOut(stdout);
+            var failed = RunTests(tests,
+                loops: loops,
+                free: free,
+                copies: copies,
+                optimise: optimise);
 
             Console.WriteLine("Executed {0} tests", tests.Length);
             foreach (var g in failed.GroupBy(t => t.Item2))
@@ -263,20 +262,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             return failed.Count();
         }
 
-        private class TestRunner : MarshalByRefObject
+        public static MethodInfo[] FindTestMethods(
+            Assembly assembly,
+            string filter = null,
+            string path = null)
         {
-            public bool RunTest(MethodInfo mi)
-            {
-                Console.SetOut(StreamWriter.Null);
-                InferenceEngine.DefaultEngine.Compiler.GeneratedSourceFolder = "GeneratedSource" + AppDomain.CurrentDomain.Id;
-                InferenceEngine.DefaultEngine.Compiler.WriteSourceFiles = false;
-                return !RunAllTests(new[] { mi }).Any();
-            }
-        }
+            var methods = GetTests(assembly, path);
 
-        internal static MethodInfo[] FindTestMethods(Assembly assembly, string filter = null)
-        {
-            var methods = assembly.GetTypes().SelectMany(t => t.GetMethods()).ToArray();
             var excludeCategories = new[] { "BadTest", "OpenBug", "CompilerOptionsTest", "x86" };
             var testMethods = methods.Where(method =>
             {
@@ -290,43 +282,47 @@ namespace Microsoft.ML.Probabilistic.Tests
             return testMethods;
         }
 
-        public static void TestAllCompilerOptions(string path)
+        public static List<Tuple<string, MethodInfo>> RunTests(
+            MethodInfo[] tests,
+            bool loops,
+            bool free,
+            bool copies,
+            bool optimise)
         {
-            TestAllCompilerOptions<string>(state =>
-            {
-                Console.WriteLine(state);
-                RunAllTests(path);
-                return null;
-            });
-        }
+            InferenceEngine.DefaultEngine.Compiler.UseParallelForLoops = loops;
+            InferenceEngine.DefaultEngine.Compiler.FreeMemory = free;
+            InferenceEngine.DefaultEngine.Compiler.ReturnCopies = copies;
+            InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = optimise;
 
-        private static List<T> TestAllCompilerOptions<T>(Func<string, IEnumerable<T>> operation)
-        {
-            var output = new List<T>();
-            foreach (var loops in new[] { true, false })
+            var testsDone = 0;
+            var totalTests = tests.Length;
+
+            var startTime = DateTime.UtcNow;
+            var lastTime = DateTime.UtcNow;
+
+            var stdout = Console.Out;
+            try
             {
-                InferenceEngine.DefaultEngine.Compiler.UseParallelForLoops = loops;
-                foreach (var free in new[] { true, false })
+                Console.SetOut(StreamWriter.Null);
+
+                void TestFinished(string name, TimeSpan testDuration)
                 {
-                    InferenceEngine.DefaultEngine.Compiler.FreeMemory = free;
-                    foreach (var copies in new[] { true, false })
-                    {
-                        InferenceEngine.DefaultEngine.Compiler.ReturnCopies = copies;
-                        foreach (var optimise in new[] { true, false })
-                        {
-                            InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = optimise;
-                            var state = string.Format("UseParallelForLoops={0} FreeMemory={1} ReturnCopies={2} OptimiseInferenceCode={3}", loops, free, copies, optimise);
-                            output.AddRange(operation(state));
-                        }
-                    }
+                    Interlocked.Increment(ref testsDone);
+                    stdout.WriteLine($"{100.0 * testsDone / totalTests}% Elapsed: {DateTime.UtcNow.Subtract(startTime)} Name: {name} Duration: {DateTime.UtcNow.Subtract(lastTime)}");
+                    lastTime = DateTime.UtcNow;
                 }
+
+                return RunAllTests(TestFinished, tests, runInParallel: false).Select(m => new Tuple<string, MethodInfo>($"UseParallelForLoops={loops} FreeMemory={free} ReturnCopies={copies} OptimiseInferenceCode={optimise}: {m.error}", m.test)).ToList();
             }
-            return output;
+            finally
+            {
+                Console.SetOut(stdout);
+            }
         }
 
-        public static void RunAllTests(string path)
+        public static void RunAllTests(Action<string, TimeSpan> testFinished, string path)
         {
-            List<string> testNames = ReadTestNames(path);
+            List<string> testNames = TestUtils.ReadTestNames(path);
             var testMethods = testNames.Select(name =>
             {
                 int commaPos = name.IndexOf(',');
@@ -337,15 +333,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 MethodInfo method = type.GetMethod(methodName, Type.EmptyTypes);
                 return method;
             }).ToArray();
-            RunAllTests(testMethods);
+            RunAllTests(testFinished, testMethods, runInParallel: false);
         }
 
-        private static IEnumerable<MethodInfo> RunAllTests(MethodInfo[] tests)
+        private static IEnumerable<(MethodInfo test, Exception error)> RunAllTests(Action<string, TimeSpan> testFinished, MethodInfo[] tests, bool runInParallel)
         {
-            var failed = new ConcurrentQueue<MethodInfo>();
+            var failed = new ConcurrentQueue<(MethodInfo, Exception)>();
             var safeTests = new ConcurrentQueue<MethodInfo>();
             var unsafeTests = new ConcurrentQueue<MethodInfo>();
-            Parallel.ForEach(tests, test =>
+            ForEach(tests, test =>
             {
                 var testCategories = TraitHelper.GetTraits(test)
                     .Where(trait => trait.Key == "Category")
@@ -356,33 +352,59 @@ namespace Microsoft.ML.Probabilistic.Tests
                 else safeTests.Enqueue(test);
             });
             // unsafe tests must run sequentially.
-            Trace.WriteLine($"Running {unsafeTests.Count} tests sequentially");
+            Trace.WriteLine($"Running {unsafeTests.Count} unsafe tests sequentially");
             foreach (var test in unsafeTests)
             {
+                var sw = Stopwatch.StartNew();
                 RunTest(test, failed);
+                testFinished(test.Name, sw.Elapsed);
             }
             var safeTestsArray = safeTests.ToArray();
             Array.Sort(safeTestsArray, (a, b) => a.Name.CompareTo(b.Name));
-            Trace.WriteLine($"Running {safeTests.Count} tests in parallel");
-            try
+            if (runInParallel)
             {
-                Parallel.ForEach(safeTestsArray, test =>
+                Trace.WriteLine($"Running {safeTests.Count} safe tests in parallel");
+                try
                 {
-                    RunTest(test, failed);
-                });
+                    Parallel.ForEach(safeTestsArray, test =>
+                    {
+                        var sw = Stopwatch.StartNew();
+                        RunTest(test, failed);
+                        testFinished(test.Name, sw.Elapsed);
+                    });
+                }
+                catch (AggregateException ex)
+                {
+                    // To make the Visual Studio debugger stop at the inner exception, check "Enable Just My Code" in Debug->Options.
+                    // throw InnerException while preserving stack trace
+                    // https://stackoverflow.com/questions/57383/in-c-how-can-i-rethrow-innerexception-without-losing-stack-trace
+                    System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                    throw;
+                }
             }
-            catch (AggregateException ex)
+            else
             {
-                // To make the Visual Studio debugger stop at the inner exception, check "Enable Just My Code" in Debug->Options.
-                // throw InnerException while preserving stack trace
-                // https://stackoverflow.com/questions/57383/in-c-how-can-i-rethrow-innerexception-without-losing-stack-trace
-                System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
+                Trace.WriteLine($"Running {unsafeTests.Count} safe tests sequentially");
+                foreach (var test in safeTestsArray)
+                {
+                    var sw = Stopwatch.StartNew();
+                    RunTest(test, failed);
+                    testFinished(test.Name, sw.Elapsed);
+                }
             }
+
             return failed;
         }
 
-        private static void RunTest(MethodInfo test, ConcurrentQueue<MethodInfo> failed)
+        private static void ForEach<T>(IEnumerable<T> tests, Action<T> action)
+        {
+            foreach (var item in tests)
+            {
+                action(item);
+            }
+        }
+
+        private static void RunTest(MethodInfo test, ConcurrentQueue<(MethodInfo, Exception)> failed)
         {
             object obj = Activator.CreateInstance(test.DeclaringType);
             BindingFlags flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod;
@@ -392,10 +414,63 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(test);
-                Trace.WriteLine(ex);
-                failed.Enqueue(test);
+                failed.Enqueue((test, ex));
             }
+        }
+
+        private static MethodInfo[] GetTests(
+            Assembly assembly,
+            string path = null)
+        {
+            if (path == null)
+            {
+                return assembly.GetTypes().SelectMany(t => t.GetMethods()).ToArray();
+            }
+
+            List<string> testNames = ReadTestNames(path);
+            return testNames.Select(name =>
+            {
+                int commaPos = name.IndexOf(',');
+                string methodName = name.Substring(0, commaPos);
+                string className = name.Substring(commaPos + 1);
+                Console.WriteLine(name);
+                Type type = Type.GetType(className, true);
+                MethodInfo method = type.GetMethod(methodName, Type.EmptyTypes);
+                return method;
+            }).ToArray();
+        }
+
+        public static int TestAllCompilerOptions(string path = null)
+        {
+            var workingDirectory = Directory.GetCurrentDirectory();
+
+            var failures = 0;
+            var loadTestAssembly = true;
+            foreach (var loops in new[] { false, true })
+            {
+                foreach (var free in new[] { false, true })
+                {
+                    foreach (var copies in new[] { false, true })
+                    {
+                        foreach (var optimise in new[] { false, true })
+                        {
+                            failures += TestAllCompilerOptions(
+                                workingDirectory,
+                                loadTestAssembly: loadTestAssembly,
+                                loops: loops,
+                                free: free,
+                                copies: copies,
+                                optimise: optimise,
+                                path: path);
+
+                            // Only do this the first time.
+                            loadTestAssembly = false;
+                        }
+                    }
+                }
+            }
+
+            return failures;
         }
 
         public static void WriteCodeToRunAllTests(TextWriter writer, string path)

@@ -16,11 +16,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
 {
     public class MethodBodySynthesizer
     {
-        private static CodeBuilder Builder = CodeBuilder.Instance;
+        private static readonly CodeBuilder Builder = CodeBuilder.Instance;
 
-        private SemanticModel model;
-        private IType declaringType;
-        private Dictionary<string, ITypeDeclaration> typeDecls;
+        private readonly SemanticModel model;
+        private readonly IType declaringType;
+        private readonly Dictionary<string, ITypeDeclaration> typeDecls;
 
         private MethodBodySynthesizer(SemanticModel model, IType declaringType, Dictionary<string, ITypeDeclaration> typeDecls)
         {
@@ -72,9 +72,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IBlockStatement ConvertBlock(StatementSyntax statement)
         {
-            if (statement is BlockSyntax)
+            if (statement is BlockSyntax blockSyntax)
             {
-                return ConvertBlock((BlockSyntax)statement);
+                return ConvertBlock(blockSyntax);
             }
             var bs = Builder.BlockStmt();
             var st2 = ConvertStatement(statement);
@@ -84,29 +84,29 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IStatement ConvertStatement(StatementSyntax statement)
         {
-            if (statement is LocalDeclarationStatementSyntax)
+            if (statement is LocalDeclarationStatementSyntax ldss)
             {
-                return ConvertLocalDeclarationStatement((LocalDeclarationStatementSyntax)statement);
+                return ConvertLocalDeclarationStatement(ldss);
             }
-            if (statement is ExpressionStatementSyntax)
+            if (statement is ExpressionStatementSyntax ess)
             {
-                return ConvertExpressionStatement((ExpressionStatementSyntax)statement);
+                return ConvertExpressionStatement(ess);
             }
-            if (statement is IfStatementSyntax)
+            if (statement is IfStatementSyntax ifss)
             {
-                return ConvertIfStatement((IfStatementSyntax)statement);
+                return ConvertIfStatement(ifss);
             }
-            if (statement is ForStatementSyntax)
+            if (statement is ForStatementSyntax fss)
             {
-                return ConvertForStatement((ForStatementSyntax)statement);
+                return ConvertForStatement(fss);
             }
-            if (statement is BlockSyntax)
+            if (statement is BlockSyntax bs)
             {
-                return ConvertBlock((BlockSyntax)statement);
+                return ConvertBlock(bs);
             }
-            if (statement is UsingStatementSyntax)
+            if (statement is UsingStatementSyntax uss)
             {
-                return ConvertUsingStatement((UsingStatementSyntax)statement);
+                return ConvertUsingStatement(uss);
             }
             if (statement is EmptyStatementSyntax)
             {
@@ -116,14 +116,13 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 throw new NotSupportedException("Unsupported statement type: " + statement);
             }
-            if (statement is ThrowStatementSyntax)
+            if (statement is ThrowStatementSyntax tts)
             {
-                var tts = (ThrowStatementSyntax)statement;
                 return Builder.ThrowStmt(ConvertExpression(tts.Expression));
             }
-            if (statement is ReturnStatementSyntax)
+            if (statement is ReturnStatementSyntax rss)
             {
-                return ConvertReturnStatement((ReturnStatementSyntax)statement);
+                return ConvertReturnStatement(rss);
             }
             throw new NotSupportedException("Unsupported statement type: " + statement);
         }
@@ -137,26 +136,27 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IStatement ConvertUsingStatement(UsingStatementSyntax usingStatement)
         {
-            var ixst = new XUsingStatement();
-            ixst.Expression = usingStatement.Declaration != null ?
+            return new XUsingStatement
+            {
+                Expression = usingStatement.Declaration != null ?
                 ConvertVariableDeclaration(usingStatement.Declaration) :
-                ConvertExpression(usingStatement.Expression);
-            ixst.Body = ConvertBlock(usingStatement.Statement);
-            return ixst;
+                ConvertExpression(usingStatement.Expression),
+                Body = ConvertBlock(usingStatement.Statement)
+            };
         }
 
         private IStatement ConvertForStatement(ForStatementSyntax forStatement)
         {
             var variableDecl = ConvertVariableDeclaration(forStatement.Declaration);
-            var forStmt = new XForStatement();
-            forStmt.Body = ConvertBlock(forStatement.Statement);
-            forStmt.Condition = ConvertExpression(forStatement.Condition);
             var incrementors = forStatement.Incrementors.Select(i => ConvertExpression(i)).ToList();
             var initializers = forStatement.Initializers.Select(i => ConvertExpression(i)).ToList();
-            forStmt.Increment = new XExpressionStatement { Expression = incrementors.Single() };
-            forStmt.Initializer = new XExpressionStatement { Expression = variableDecl };
-            // TODO complete this
-            return forStmt;
+            return new XForStatement
+            {
+                Body = ConvertBlock(forStatement.Statement),
+                Condition = ConvertExpression(forStatement.Condition),
+                Increment = new XExpressionStatement { Expression = incrementors.Single() },
+                Initializer = new XExpressionStatement { Expression = variableDecl }
+            };
         }
 
         private IStatement ConvertIfStatement(IfStatementSyntax ifStatement)
@@ -202,102 +202,101 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IExpression ConvertExpression(ExpressionSyntax expression)
         {
-            if (expression is InvocationExpressionSyntax)
+            if (expression is InvocationExpressionSyntax ies)
             {
-                return ConvertInvocation((InvocationExpressionSyntax)expression);
+                return ConvertInvocation(ies);
             }
-            if (expression is LiteralExpressionSyntax)
+            if (expression is LiteralExpressionSyntax literalExpressionSyntax)
             {
-                return ConvertLiteral((LiteralExpressionSyntax)expression);
+                return ConvertLiteral(literalExpressionSyntax);
             }
-            if (expression is MemberAccessExpressionSyntax)
+            if (expression is MemberAccessExpressionSyntax maes)
             {
-                return ConvertMemberAccess((MemberAccessExpressionSyntax)expression);
+                return ConvertMemberAccess(maes);
             }
-            if (expression is IdentifierNameSyntax)
+            if (expression is IdentifierNameSyntax ins)
             {
-                return ConvertIdentifierName((IdentifierNameSyntax)expression);
+                return ConvertIdentifierName(ins);
             }
-            if (expression is BinaryExpressionSyntax)
+            if (expression is BinaryExpressionSyntax bes)
             {
-                return ConvertBinary((BinaryExpressionSyntax)expression);
+                return ConvertBinary(bes);
             }
-            if (expression is ObjectCreationExpressionSyntax)
+            if (expression is ObjectCreationExpressionSyntax oces)
             {
-                return ConvertCreation((ObjectCreationExpressionSyntax)expression);
+                return ConvertCreation(oces);
             }
-            if (expression is ElementAccessExpressionSyntax)
+            if (expression is ElementAccessExpressionSyntax eaes)
             {
-                return ConvertElementAccess((ElementAccessExpressionSyntax)expression);
+                return ConvertElementAccess(eaes);
             }
-            if (expression is ArrayCreationExpressionSyntax)
+            if (expression is ArrayCreationExpressionSyntax aces)
             {
-                return ConvertArrayCreation((ArrayCreationExpressionSyntax)expression);
+                return ConvertArrayCreation(aces);
             }
-            if (expression is ParenthesizedExpressionSyntax)
+            if (expression is ParenthesizedExpressionSyntax pes)
             {
-                var pes = (ParenthesizedExpressionSyntax)expression;
                 return ConvertExpression(pes.Expression);
             }
-            if (expression is GenericNameSyntax)
+            if (expression is GenericNameSyntax genericNameSyntax)
             {
-                var genericNameSyntax = (GenericNameSyntax)expression;
                 var typeSymbol = model.GetTypeInfo(genericNameSyntax).Type;
-                var typeReferenceExpression = new XTypeReferenceExpression();
-                // TODO why is the horrible cast required?
-                typeReferenceExpression.Type = (ITypeReference)ConvertTypeReference(typeSymbol);
-                return typeReferenceExpression;
+                return new XTypeReferenceExpression
+                {
+                    // TODO why is the horrible cast required?
+                    Type = (ITypeReference)ConvertTypeReference(typeSymbol)
+                };
             }
-            if (expression is ConditionalExpressionSyntax)
+            if (expression is ConditionalExpressionSyntax ces)
             {
-                return ConvertConditionalExpression((ConditionalExpressionSyntax)expression);
+                return ConvertConditionalExpression(ces);
             }
-            if (expression is CastExpressionSyntax)
+            if (expression is CastExpressionSyntax castExpressionSyntax)
             {
-                var castExpressionSyntax = (CastExpressionSyntax)expression;
                 var typeSymbol = model.GetTypeInfo(castExpressionSyntax).Type;
-                var castExpression = new XCastExpression();
-                castExpression.Expression = ConvertExpression(castExpressionSyntax.Expression);
-                castExpression.TargetType = ConvertTypeReference(typeSymbol);
-                return castExpression;
+                return new XCastExpression
+                {
+                    Expression = ConvertExpression(castExpressionSyntax.Expression),
+                    TargetType = ConvertTypeReference(typeSymbol)
+                };
             }
-            if (expression is PostfixUnaryExpressionSyntax)
+            if (expression is PostfixUnaryExpressionSyntax postfix)
             {
-                var syntax = (PostfixUnaryExpressionSyntax)expression;
-                var ixe = new XUnaryExpression();
-                ixe.Expression = ConvertExpression(syntax.Operand);
-                switch (syntax.Kind())
+                UnaryOperator op;
+                switch (postfix.Kind())
                 {
                     // TODO complete this list and factor out
                     case SyntaxKind.PostIncrementExpression:
-                        ixe.Operator = UnaryOperator.PostIncrement;
+                        op = UnaryOperator.PostIncrement;
                         break;
                     case SyntaxKind.PostDecrementExpression:
-                        ixe.Operator = UnaryOperator.PostDecrement;
+                        op = UnaryOperator.PostDecrement;
                         break;
                     default:
-                        throw new NotSupportedException("Operator " + syntax.OperatorToken.RawKind);
+                        throw new NotSupportedException("Operator " + postfix.OperatorToken.RawKind);
                 }
-                return ixe;
+                return new XUnaryExpression
+                {
+                    Expression = ConvertExpression(postfix.Operand),
+                    Operator = op
+                };
             }
-            if (expression is PrefixUnaryExpressionSyntax)
+            if (expression is PrefixUnaryExpressionSyntax prefix)
             {
-                var syntax = (PrefixUnaryExpressionSyntax)expression;
                 var ixe = new XUnaryExpression();
-                ixe.Expression = ConvertExpression(syntax.Operand);
-                switch (syntax.Kind())
+                ixe.Expression = ConvertExpression(prefix.Operand);
+                switch (prefix.Kind())
                 {
                     // TODO complete this list and factor out
                     case SyntaxKind.LogicalNotExpression:
                         ixe.Operator = UnaryOperator.BooleanNot;
                         break;
                     case SyntaxKind.UnaryMinusExpression:
-                        if (syntax.Operand is LiteralExpressionSyntax)
+                        if (prefix.Operand is LiteralExpressionSyntax les)
                         {
-                            var les = (LiteralExpressionSyntax)syntax.Operand;
                             if (les.Token.IsKind(SyntaxKind.NumericLiteralToken))
                             {
-                                var typeInfo = model.GetTypeInfo(syntax);
+                                var typeInfo = model.GetTypeInfo(prefix);
                                 var val = les.Token.Value;
                                 var newType = ConvertTypeReference(typeInfo.ConvertedType).DotNetType;
                                 val = Convert.ChangeType(val, newType);
@@ -307,23 +306,21 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         ixe.Operator = UnaryOperator.Negate;
                         break;
                     default:
-                        throw new NotSupportedException("Operator " + syntax.Kind());
+                        throw new NotSupportedException("Operator " + prefix.Kind());
                 }
                 return ixe;
             }
-            if (expression is InitializerExpressionSyntax)
+            if (expression is InitializerExpressionSyntax init)
             {
-                var syntax = (InitializerExpressionSyntax)expression;
-                var exprs = syntax.Expressions.Select(expr => ConvertExpression(expr)).ToList();
+                var exprs = init.Expressions.Select(expr => ConvertExpression(expr)).ToList();
                 var block = new XBlockExpression();
                 block.Expressions.AddRange(exprs);
                 return block;
             }
-            if (expression is TypeOfExpressionSyntax)
+            if (expression is TypeOfExpressionSyntax toes)
             {
-                var syntax = (TypeOfExpressionSyntax)expression;
                 var expr = Builder.TypeOfExpr();
-                var typeSymbol = model.GetTypeInfo(syntax.Type).Type;
+                var typeSymbol = model.GetTypeInfo(toes.Type).Type;
                 expr.Type = ConvertTypeReference(typeSymbol);
                 return expr;
             }
@@ -704,58 +701,51 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 return ConvertConstantExpr(invocationExpression);
             }
 
-            var imie = Builder.MethodInvkExpr();
             var methodExpression = invocationExpression.Expression;
             var argumentList = invocationExpression.ArgumentList.Arguments;
-            var convertedArgs = argumentList.Select(arg => ConvertExpression(arg.Expression)).ToArray();
+            var convertedArgs = argumentList.Select(arg => ConvertExpression(arg.Expression)).ToList();
 
             if (argumentList.Any(arg => arg.NameColon != null))
             {
                 throw new NotSupportedException("No support yet for named parameters");
             }
 
-            List<IExpression> paramsParameters = null;
-            IArrayTypeSymbol paramsType = null;
-            var methodSymbol = model.GetSymbolInfo(invocationExpression).Symbol as IMethodSymbol;
-            if (methodSymbol != null && methodSymbol.Parameters.Length > 0)
+            if (model.GetSymbolInfo(invocationExpression).Symbol is IMethodSymbol methodSymbol &&
+                methodSymbol.Parameters.Length > 0)
             {
                 var lastParam = methodSymbol.Parameters.Last();
-                paramsType = lastParam.Type as IArrayTypeSymbol;
-                if (lastParam.IsParams && paramsType != null)
+                if (lastParam.IsParams && lastParam.Type is IArrayTypeSymbol paramsType)
                 {
+                    IExpression[] paramsParameters = null;
                     if (argumentList.Count() == methodSymbol.Parameters.Count())
                     {
                         // one element or array supplied?
                         var ti = model.GetTypeInfo(argumentList.Last().Expression);
-                        if (ti.Type is IArrayTypeSymbol == false)
+                        if (!(ti.Type is IArrayTypeSymbol))
                         {
-                            paramsParameters = new List<IExpression>(new[] { convertedArgs.Last() });
+                            paramsParameters = new[] { convertedArgs.Last() };
                         }
                     }
                     else
                     {
-                        paramsParameters = convertedArgs.Skip(methodSymbol.Parameters.Length - 1).ToList();
+                        paramsParameters = convertedArgs.Skip(methodSymbol.Parameters.Length - 1).ToArray();
+                    }
+                    if (paramsParameters != null)
+                    {
+                        var ixe = new XArrayCreateExpression();
+                        ixe.Type = ConvertTypeReference(paramsType.ElementType);
+                        ixe.Dimensions.Add(new XLiteralExpression { Value = paramsParameters.Length });
+                        ixe.Initializer = new XBlockExpression();
+                        ixe.Initializer.Expressions.AddRange(paramsParameters);
+
+                        convertedArgs.RemoveRange(convertedArgs.Count - paramsParameters.Length, paramsParameters.Length);
+                        convertedArgs.Add(ixe);
                     }
                 }
             }
 
-            if (paramsParameters != null)
-            {
-                var ixe = new XArrayCreateExpression();
-                ixe.Type = ConvertTypeReference(paramsType.ElementType);
-                ixe.Dimensions.Add(new XLiteralExpression { Value = paramsParameters.Count });
-                ixe.Initializer = new XBlockExpression();
-                ixe.Initializer.Expressions.AddRange(paramsParameters);
-
-                var normalParameterCount = argumentList.Count - paramsParameters.Count;
-                imie.Arguments.AddRange(convertedArgs.Take(normalParameterCount));
-                imie.Arguments.Add(ixe);
-            }
-            else
-            {
-                imie.Arguments.AddRange(convertedArgs);
-            }
-
+            var imie = Builder.MethodInvkExpr();
+            imie.Arguments.AddRange(convertedArgs);
             imie.Method = (IMethodReferenceExpression)ConvertExpression(methodExpression);
             return imie;
         }

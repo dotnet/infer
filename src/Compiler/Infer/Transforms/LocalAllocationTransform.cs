@@ -11,7 +11,6 @@ using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
 using Microsoft.ML.Probabilistic.Compiler.Graphs;
 using Microsoft.ML.Probabilistic.Utilities;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using NodeIndex = System.Int32;
 using EdgeIndex = System.Int32;
@@ -38,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         internal static bool debug;
-        private ModelCompiler compiler;
+        private readonly ModelCompiler compiler;
         private LoopMergingInfo loopMergingInfo;
         private DependencyGraph2 g;
         private IndexedGraph dependencyGraph;

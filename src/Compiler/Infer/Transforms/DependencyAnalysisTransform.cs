@@ -865,15 +865,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (context.InputAttributes.Has<DeterministicConstraint>(imie))
                 dependencyInformation.IsOutput = true;
 
-            MethodBase method = null;
-            IMethodReferenceExpression imre = null;
-            if (imie.Method is IMethodReferenceExpression)
-            {
-                imre = (IMethodReferenceExpression)imie.Method;
-                IMethodReference imr = imre.Method;
-                method = Builder.ToMethod(imr) as MethodInfo;
-            }
-            if (method == null)
+            if (!(imie.Method is IMethodReferenceExpression imre) ||
+                !(Builder.ToMethod(imre.Method) is MethodInfo method))
             {
                 Error("Could not find method for : " + imie.Method);
                 return imie;
@@ -1109,7 +1102,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return iExpression;
         }
 
-        // Expression types on which a statement can have dependencies /////////////////////////////////////////////
+#region Expression types on which a statement can have dependencies 
 
         // Add dependencies on this property reference
         // We cannot use base.ConvertPropertyRefExpr because we want the dependency to be on the entire expression,
@@ -1169,7 +1162,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return iaie;
         }
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+#endregion
 
         /// <summary>
         /// Converts the indices in all brackets of expr, but not the innermost target.

@@ -36,13 +36,13 @@ namespace Microsoft.ML.Probabilistic.Algorithms
         {
             if (derived)
             {
-                if (initialised) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder>(Factor.DerivedVariableInitVmp);
-                else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Factor.DerivedVariableVmp);
+                if (initialised) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder>(Clone.DerivedVariableInitVmp);
+                else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Clone.DerivedVariableVmp);
             }
             else
             {
-                if (initialised) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder>(Factor.VariableInit);
-                else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Factor.Variable);
+                if (initialised) return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder, PlaceHolder>(Clone.VariableInit);
+                else return new FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Clone.Variable);
             }
         }
 
@@ -94,10 +94,11 @@ namespace Microsoft.ML.Probabilistic.Algorithms
         {
             if (alg2 is ExpectationPropagation)
             {
-                MethodReference mref = new MethodReference(typeof (ShiftAlpha), isFromFactor ? "FromFactor<>" : "ToFactor<>");
-                mref.TypeArguments = new Type[] {channelType};
                 args.Add(1.0);
-                return mref;
+                return new MethodReference(typeof(ShiftAlpha), isFromFactor ? "FromFactor<>" : "ToFactor<>")
+                {
+                    TypeArguments = new Type[] { channelType }
+                };
             }
             throw new InferCompilerException("Cannot convert from " + Name + " to " + alg2.Name);
         }

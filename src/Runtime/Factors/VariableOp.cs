@@ -10,8 +10,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariableOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "Variable<>", Default = true)]
-    [FactorMethod(typeof(Factor), "VariableInit<>", Default = true)]
+    [FactorMethod(typeof(Clone), "Variable<>", Default = true)]
+    [FactorMethod(typeof(Clone), "VariableInit<>", Default = true)]
     [Quality(QualityBand.Preview)]
     public static class VariableOp
     {
@@ -58,7 +58,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariableGibbsOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "VariableGibbs<>")]
+    [FactorMethod(typeof(Clone), "VariableGibbs<>")]
     [Quality(QualityBand.Preview)]
     public static class VariableGibbsOp
     {
@@ -174,7 +174,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariableMaxOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "VariableMax<>")]
+    [FactorMethod(typeof(Clone), "VariableMax<>")]
     [Quality(QualityBand.Preview)]
     public static class VariableMaxOp
     {
@@ -247,8 +247,8 @@ namespace Microsoft.ML.Probabilistic.Factors
 
 #if true
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariableVmpOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "Variable<>", Default = true)]
-    [FactorMethod(typeof(Factor), "VariableInit<>", Default = true)]
+    [FactorMethod(typeof(Clone), "Variable<>", Default = true)]
+    [FactorMethod(typeof(Clone), "VariableInit<>", Default = true)]
     [Quality(QualityBand.Preview)]
     public static class VariableVmpOp
     {
@@ -420,8 +420,8 @@ namespace Microsoft.ML.Probabilistic.Factors
 #endif
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "DerivedVariable<>", Default = true)]
-    [FactorMethod(typeof(Factor), "DerivedVariableInit<>", Default = true)]
+    [FactorMethod(typeof(Clone), "DerivedVariable<>", Default = true)]
+    [FactorMethod(typeof(Clone), "DerivedVariableInit<>", Default = true)]
     [Quality(QualityBand.Preview)]
     public static class DerivedVariableOp
     {
@@ -493,8 +493,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableGibbsOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "DerivedVariableGibbs<>")]
-    [FactorMethod(typeof(Factor), "DerivedVariableInitGibbs<>")]
+    [FactorMethod(typeof(Clone), "DerivedVariableGibbs<>")]
+    [FactorMethod(typeof(Clone), "DerivedVariableInitGibbs<>")]
     [Quality(QualityBand.Preview)]
     public static class DerivedVariableGibbsOp
     {
@@ -645,8 +645,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableVmpOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "DerivedVariableVmp<>", Default = true)]
-    [FactorMethod(typeof(Factor), "DerivedVariableInitVmp<>", Default = true)]
+    [FactorMethod(typeof(Clone), "DerivedVariableVmp<>", Default = true)]
+    [FactorMethod(typeof(Clone), "DerivedVariableInitVmp<>", Default = true)]
     [Quality(QualityBand.Preview)]
     public static class DerivedVariableVmpOp<T>
     {

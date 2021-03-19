@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Compiler.Graphs;
@@ -228,10 +227,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         // Create channel path attributes for a given variable to factor. These are all the
         // messages paths (if any) which are associated with a given channel, and whether
         // backwards or forwards
@@ -281,39 +276,24 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         }
                     }
                 }
-                if (false)
+                if (isOutput && fgn.isDeterministic && !hasStochasticSource)
                 {
-                    if (hasStochasticSource || (!fgn.isDeterministic && !(fgn.isGateExit && !isOutput)))
-                    {
-                        ChannelPathAttribute cpa = new ChannelPathAttribute("Distribution", isOutput ? MessageDirection.Forwards : MessageDirection.Backwards, false);
-                        if (!cpas.Contains(cpa))
-                        {
-                            cpas.Add(cpa);
-                            context.OutputAttributes.Add(vgn.variableDeclaration, cpa);
-                        }
-                    }
+                    // a deterministic factor with all deterministic inputs will send a sample to the output variable
+                }
+                else if ((fgn.isGateExit && fromName == "values" && !hasStochasticSource) ||
+                         (fgn.isCopy && fromName == "value" && !hasStochasticSource))
+                {
+                    // Gate.ExitRandom sends a sample to values
+                    // Factor.Copy sends a sample to value
                 }
                 else
                 {
-                    if (isOutput && fgn.isDeterministic && !hasStochasticSource)
+                    // all other factors will send a distribution to the variable
+                    ChannelPathAttribute cpa = new ChannelPathAttribute("Distribution", isOutput ? MessageDirection.Forwards : MessageDirection.Backwards, false);
+                    if (!cpas.Contains(cpa))
                     {
-                        // a deterministic factor with all deterministic inputs will send a sample to the output variable
-                    }
-                    else if ((fgn.isGateExit && fromName == "values" && !hasStochasticSource) ||
-                             (fgn.isCopy && fromName == "value" && !hasStochasticSource))
-                    {
-                        // Gate.ExitRandom sends a sample to values
-                        // Factor.Copy sends a sample to value
-                    }
-                    else
-                    {
-                        // all other factors will send a distribution to the variable
-                        ChannelPathAttribute cpa = new ChannelPathAttribute("Distribution", isOutput ? MessageDirection.Forwards : MessageDirection.Backwards, false);
-                        if (!cpas.Contains(cpa))
-                        {
-                            cpas.Add(cpa);
-                            context.OutputAttributes.Add(vgn.variableDeclaration, cpa);
-                        }
+                        cpas.Add(cpa);
+                        context.OutputAttributes.Add(vgn.variableDeclaration, cpa);
                     }
                 }
             }
@@ -324,10 +304,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 context.OutputAttributes.Add(vgn.variableDeclaration, cpa);
             }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         // Check if a node is in a group. If no, add it, and add it to the list of nodes
         // for that variable group
@@ -473,10 +449,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             Console.WriteLine();
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
 
         /// <summary>
         /// Post-process dependencies. Converts GroupMember attributes to MessagePath attributes
@@ -714,7 +686,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             //--------------------------------------------
             // Mark distances for each variable group
             //--------------------------------------------
-            if (true)
+            bool distanceMethod1 = true;
+            if (distanceMethod1)
             {
                 ICollection<GroupNode> nodes = null;
                 bfs = new BreadthFirstSearch<GroupNode>(gn => NeighborsInGroup(nodes, gn), factorGraph);
@@ -788,10 +761,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 CreateChannelPaths(gn);
             }
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
 
         // See if two variable declarations share a common group
         private VariableGroup findGroupMatch(IVariableDeclaration ivd1, IVariableDeclaration ivd2)

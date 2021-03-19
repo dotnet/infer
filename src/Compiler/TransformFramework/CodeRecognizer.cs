@@ -81,15 +81,13 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns></returns>
         public bool IsStaticGenericMethod(IExpression expr, Type type, string methodName)
         {
-            if (!(expr is IMethodInvokeExpression))
+            if (!(expr is IMethodInvokeExpression imie))
                 return false;
-            IMethodInvokeExpression imie = (IMethodInvokeExpression)expr;
-            if (!(imie.Method is IMethodReferenceExpression))
+            if (!(imie.Method is IMethodReferenceExpression imre))
                 return false;
-            IMethodReferenceExpression imre = (IMethodReferenceExpression)imie.Method;
-            if (!(imre.Target is ITypeReferenceExpression))
+            if (!(imre.Target is ITypeReferenceExpression itre))
                 return false;
-            ITypeReference itr = ((ITypeReferenceExpression)imre.Target).Type;
+            ITypeReference itr = itre.Type;
             if (itr.Namespace != type.Namespace)
                 return false;
             if (itr.GenericType is ITypeReference)
@@ -107,15 +105,12 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public string GetStaticMethodOfType(IExpression expr, Type type)
         {
-            if (!(expr is IMethodInvokeExpression))
+            if (!(expr is IMethodInvokeExpression imie))
                 return null;
-            IMethodInvokeExpression mie = (IMethodInvokeExpression)expr;
-            if (!(mie.Method is IMethodReferenceExpression))
+            if (!(imie.Method is IMethodReferenceExpression imre))
                 return null;
-            IMethodReferenceExpression imre = (IMethodReferenceExpression)mie.Method;
-            if (!(imre.Target is ITypeReferenceExpression))
+            if (!(imre.Target is ITypeReferenceExpression itre))
                 return null;
-            ITypeReferenceExpression itre = (ITypeReferenceExpression)imre.Target;
             if (!IsTypeReferenceTo(itre, type))
                 return null;
             return imre.Method.Name;
@@ -123,23 +118,20 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public ITypeReference GetStaticMethodType(IExpression expr)
         {
-            if (!(expr is IMethodInvokeExpression))
+            if (!(expr is IMethodInvokeExpression imie))
                 return null;
-            IMethodInvokeExpression mie = (IMethodInvokeExpression)expr;
-            if (!(mie.Method is IMethodReferenceExpression))
+            if (!(imie.Method is IMethodReferenceExpression imre))
                 return null;
-            IMethodReferenceExpression imre = (IMethodReferenceExpression)mie.Method;
-            if (!(imre.Target is ITypeReferenceExpression))
+            if (!(imre.Target is ITypeReferenceExpression itre))
                 return null;
-            ITypeReferenceExpression itre = (ITypeReferenceExpression)imre.Target;
             return itre.Type;
         }
 
         public IMethodReference GetMethodReference(IExpression expr)
         {
-            if (!(expr is IMethodInvokeExpression mie))
+            if (!(expr is IMethodInvokeExpression imie))
                 return null;
-            if (!(mie.Method is IMethodReferenceExpression imre))
+            if (!(imie.Method is IMethodReferenceExpression imre))
                 return null;
             return imre.Method;
         }
@@ -181,8 +173,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (expr is IVariableReferenceExpression && bounds != null)
             {
                 IVariableDeclaration ivd = GetVariableDeclaration(expr);
-                Bounds b;
-                if (bounds.TryGetValue(ivd, out b))
+                if (bounds.TryGetValue(ivd, out Bounds b))
                     return b;
             }
             else if (expr is IBinaryExpression ibe)
@@ -225,8 +216,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IVariableDeclaration GetOffsetVariable(IExpression expr)
         {
-            int offset;
-            return GetOffsetVariable(expr, out offset);
+            return GetOffsetVariable(expr, out int offset);
         }
 
         private IVariableDeclaration GetOffsetVariable(IExpression expr, out int offset)
@@ -238,8 +228,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
             else if (expr is IBinaryExpression indexBinaryExpr)
             {
-                ILiteralExpression offsetExpr = indexBinaryExpr.Right as ILiteralExpression;
-                if (indexBinaryExpr.Left is IVariableReferenceExpression ivre && offsetExpr != null && offsetExpr.Value is int)
+                if (indexBinaryExpr.Left is IVariableReferenceExpression ivre && 
+                    indexBinaryExpr.Right is ILiteralExpression offsetExpr && 
+                    offsetExpr.Value is int)
                 {
                     offset = (int)offsetExpr.Value;
                     if (indexBinaryExpr.Operator == BinaryOperator.Subtract)
@@ -291,7 +282,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 if (IsStaticMethod(affected_index, AnyIndexMethod))
                     continue;
-                if (affected_index is ILiteralExpression)
+                if (affected_index is ILiteralExpression affected_literal)
                 {
                     if (mutated_index is ILiteralExpression)
                     {
@@ -302,7 +293,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     {
                         if (mutatesWithinOnly)
                             return false; // mutated_index is more general
-                        int affected_value = (int)((ILiteralExpression)affected_index).Value;
+                        int affected_value = (int)affected_literal.Value;
                         Bounds mutatedBounds = GetBounds(mutated_index, boundsInMutated);
                         if (mutatedBounds != null)
                         {
@@ -320,7 +311,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                                 int minOffset = affected_value - affectedBounds.upperBound;
                                 int maxOffset = affected_value - affectedBounds.lowerBound;
                                 if (System.Math.Sign(minOffset) != System.Math.Sign(maxOffset))
-                                    throw new Exception("Inconsistent offset between array indexer expressions: " + mutated_index + " and " + affected_index);
+                                    throw new Exception($"Inconsistent offset between array indexer expressions: {mutated_index} and {affected_index}");
                                 int offset = (minOffset > 0) ? minOffset : maxOffset;
                                 if (offset != 0)
                                 {
@@ -339,9 +330,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 else if (mutatesWithinOnly)
                     return false;  // expressions are incomparable
-                else if (mutated_index is ILiteralExpression)
+                else if (mutated_index is ILiteralExpression mutated_literal)
                 {
-                    int mutated_value = (int)((ILiteralExpression)mutated_index).Value;
+                    int mutated_value = (int)mutated_literal.Value;
                     Bounds affectedBounds = GetBounds(affected_index, boundsInAffected);
                     if (affectedBounds != null)
                     {
@@ -373,9 +364,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 {
                     // neither affected nor mutated is literal
                     // check for offsetting
-                    int mutated_offset, affected_offset;
-                    IVariableDeclaration mutatedVar = GetOffsetVariable(mutated_index, out mutated_offset);
-                    IVariableDeclaration affectedVar = GetOffsetVariable(affected_index, out affected_offset);
+                    IVariableDeclaration mutatedVar = GetOffsetVariable(mutated_index, out int mutated_offset);
+                    IVariableDeclaration affectedVar = GetOffsetVariable(affected_index, out int affected_offset);
                     if (mutatedVar != null)
                     {
                         if (mutatedVar.Equals(affectedVar))
@@ -833,7 +823,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 {
                     if (!IsValid(binding))
                         return null;
-                    bool containsLhs = (predicate == null) ? true : predicate(binding.lhs);
+                    bool containsLhs = (predicate == null) || predicate(binding.lhs);
                     if (containsLhs)
                     {
                         int depthLhs = GetExpressionDepth(binding.lhs);
@@ -845,7 +835,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                             exprReplace = binding.rhs;
                         }
                     }
-                    bool containsRhs = (predicate == null) ? true : predicate(binding.rhs);
+                    bool containsRhs = (predicate == null) || predicate(binding.rhs);
                     if (containsRhs)
                     {
                         int depthRhs = GetExpressionDepth(binding.rhs);
@@ -961,8 +951,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private bool IsValid(ConditionBinding binding)
         {
-            object value;
-            if (TryEvaluate<object>(binding.GetExpression(), null, out value))
+            if (TryEvaluate<object>(binding.GetExpression(), null, out object value))
                 return (bool)value;
             else
                 return true;
@@ -1093,8 +1082,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         }
                     }
                 }
-                T left, right;
-                if (TryEvaluate(ibe.Left, bindings, out left) && TryEvaluate(ibe.Right, bindings, out right))
+                if (TryEvaluate(ibe.Left, bindings, out T left) && TryEvaluate(ibe.Right, bindings, out T right))
                 {
                     // must use runtime type here, not T
                     Type type = left.GetType();
@@ -1104,8 +1092,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
             else if (expr is IUnaryExpression iue)
             {
-                T target;
-                if (TryEvaluate(iue.Expression, bindings, out target))
+                if (TryEvaluate(iue.Expression, bindings, out T target))
                 {
                     // must use runtime type here, not T
                     Type type = target.GetType();
@@ -1133,13 +1120,13 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns></returns>
         public bool IsOnLHSOfAssignment(BasicTransformContext context, IExpression expr)
         {
-            int assignIndex = context.FindAncestorIndex<IAssignExpression>();
+            int assignIndex = context.FindAncestorNotSelfIndex<IAssignExpression>();
             if (assignIndex == -1)
                 return false;
-            IAssignExpression iae = context.GetAncestor(assignIndex) as IAssignExpression;
-            if (!(iae.Target == context.GetAncestor(assignIndex + 1)))
-                return false;
-            return IsPartOf(iae.Target, expr);
+            IAssignExpression iae = (IAssignExpression)context.GetAncestor(assignIndex);
+            if (iae.Target == context.GetAncestor(assignIndex + 1))
+                return IsPartOf(iae.Target, expr);
+            return false;
         }
 
         public int GetAncestorIndexOfLoopBeingInitialized(BasicTransformContext context)
@@ -1174,18 +1161,18 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public bool IsLiteral(IExpression expr, object val)
         {
-            if (expr is ILiteralExpression)
+            if (expr is ILiteralExpression ile)
             {
-                return ((ILiteralExpression)expr).Value.Equals(val);
+                return ile.Value.Equals(val);
             }
             return false;
         }
 
         public T GetLiteral<T>(IExpression expr)
         {
-            if (expr is ILiteralExpression)
+            if (expr is ILiteralExpression ile)
             {
-                return (T)((ILiteralExpression)expr).Value;
+                return (T)ile.Value;
             }
             return default(T);
         }
@@ -1193,11 +1180,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public IVariableDeclaration LoopVariable(IForStatement ifs)
         {
             IStatement ist = ifs.Initializer;
-            if (ist is IBlockStatement)
+            if (ist is IBlockStatement ibs)
             {
-                if (((IBlockStatement)ist).Statements.Count != 1)
+                if (ibs.Statements.Count != 1)
                     throw new NotSupportedException("For statement has multi-statement initializer:" + ifs);
-                ist = ((IBlockStatement)ist).Statements[0];
+                ist = ibs.Statements[0];
             }
             IExpressionStatement init = (IExpressionStatement)ist;
             IAssignExpression iae = (IAssignExpression)init.Expression;
@@ -1297,15 +1284,15 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     bounds[loopVar] = b;
                 }
                 IExpression start = LoopStartExpression(ifs);
-                if (start is ILiteralExpression)
+                if (start is ILiteralExpression startLiteral)
                 {
-                    int startValue = (int)((ILiteralExpression)start).Value;
+                    int startValue = (int)startLiteral.Value;
                     b.lowerBound = System.Math.Max(b.lowerBound, startValue);
                 }
                 IExpression size = LoopSizeExpression(ifs);
-                if (size is ILiteralExpression)
+                if (size is ILiteralExpression sizeLiteral)
                 {
-                    int endValue = (int)((ILiteralExpression)size).Value - 1;
+                    int endValue = (int)sizeLiteral.Value - 1;
                     b.upperBound = System.Math.Min(b.upperBound, endValue);
                 }
                 if (ifs.Body.Statements.Count == 1)
@@ -1325,9 +1312,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                             b = new Bounds();
                             bounds[loopVar] = b;
                         }
-                        if (ibe.Left.GetExpressionType().Equals(typeof(int)) && ibe.Right is ILiteralExpression)
+                        if (ibe.Left.GetExpressionType().Equals(typeof(int)) && ibe.Right is ILiteralExpression right)
                         {
-                            int value = (int)((ILiteralExpression)ibe.Right).Value;
+                            int value = (int)right.Value;
                             if (ibe.Operator == BinaryOperator.GreaterThan)
                             {
                                 b.lowerBound = System.Math.Max(b.lowerBound, value + 1);
@@ -1367,9 +1354,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                             b = new Bounds();
                             bounds[loopVar] = b;
                         }
-                        if (ibe.Right.GetExpressionType().Equals(typeof(int)) && ibe.Left is ILiteralExpression)
+                        if (ibe.Right.GetExpressionType().Equals(typeof(int)) && ibe.Left is ILiteralExpression left)
                         {
-                            int value = (int)((ILiteralExpression)ibe.Left).Value;
+                            int value = (int)left.Value;
                             if (ibe.Operator == BinaryOperator.GreaterThan)
                             {
                                 b.upperBound = System.Math.Min(b.upperBound, value - 1);
@@ -1910,10 +1897,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 return 0;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 429
-#endif
-
         /// <summary>
         /// Add the declarations of all loop variables in expr to indVars.
         /// </summary>
@@ -1943,10 +1926,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
             throw new NotImplementedException("Unsupported expression type in AddIndexers(): " + expr.GetType());
         }
-
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 429
-#endif
 
         private IEnumerable<IExpression> GetFlattenedIndices(IExpression expr)
         {
@@ -2064,16 +2043,16 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         {
                             if (ibe.Right is ILiteralExpression ile)
                             {
-                                if (ile.Value is int)
-                                    return ((int)ile.Value >= 0);
+                                if (ile.Value is int i)
+                                    return (i >= 0);
                             }
                         }
                         else if (ibe.Operator == BinaryOperator.Subtract)
                         {
                             if (ibe.Right is ILiteralExpression ile)
                             {
-                                if (ile.Value is int)
-                                    return ((int)ile.Value < 0);
+                                if (ile.Value is int i)
+                                    return (i < 0);
                             }
                         }
                     }
@@ -2301,8 +2280,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 return IsStochastic(context, iaie.Target) || IsAnyStochastic(context, iaie.Indices);
             }
-            if (expr is ICastExpression) return IsStochastic(context, ((ICastExpression)expr).Expression);
-            if (expr is ICheckedExpression) return IsStochastic(context, ((ICheckedExpression)expr).Expression);
+            if (expr is ICastExpression ice) return IsStochastic(context, ice.Expression);
+            if (expr is ICheckedExpression ichecked) return IsStochastic(context, ichecked.Expression);
             if (expr is IPropertyIndexerExpression ipie)
             {
                 return IsStochastic(context, ipie.Target) || IsAnyStochastic(context, ipie.Indices);
@@ -2330,9 +2309,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         internal static bool IsInfer(IExpression expr)
         {
-            return Instance.IsStaticMethod(expr, new Action<object>(InferNet.Infer)) ||
-                   Instance.IsStaticMethod(expr, new Action<object, string>(InferNet.Infer)) ||
-                   Instance.IsStaticMethod(expr, new Action<object, string, QueryType>(InferNet.Infer));
+            return Instance.IsStaticGenericMethod(expr, new Action<object>(InferNet.Infer)) ||
+                   Instance.IsStaticGenericMethod(expr, new Action<object, string>(InferNet.Infer)) ||
+                   Instance.IsStaticGenericMethod(expr, new Action<object, string, QueryType>(InferNet.Infer));
         }
 
         internal static bool IsIsIncreasing(IExpression expr)
