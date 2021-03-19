@@ -290,7 +290,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return FromDictionary(dictionary.NormalizeStructure());
                     }
                 case TAutomaton automaton:
-                    if (!automaton.UsesGroups && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false))
+                    if (!automaton.UsesGroups && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false, 4 * MaxDictionarySize))
                     {
                         // TODO: compute values along with support
                         var list = support.Select(seq => new KeyValuePair<TSequence, Weight>(seq, Weight.FromLogValue(automaton.GetLogValue(seq)))).ToList();

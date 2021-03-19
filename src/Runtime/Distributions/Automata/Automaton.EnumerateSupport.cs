@@ -55,6 +55,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
         /// <returns>True if successful, false otherwise</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
+            => TryEnumerateSupport(maxCount, out result, tryDeterminize, int.MaxValue);
+
+        /// <summary>
+        /// Tries to enumerate support of this automaton.
+        /// Element distributions must be either point mass or implement <see cref="CanEnumerateSupport{T}"/>.
+        /// </summary>
+        /// <param name="maxCount">The maximum support enumeration count.</param>
+        /// <param name="result">The sequences in the support of this automaton</param>
+        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
+        /// <param name="maxTraversedPaths">Maximum number of paths in the automaton this function
+        /// is allowed to traverse before stopping.
+        /// Can be used to limit the performance impact of this call in cases when
+        /// the support is useful only if it can be obtained quickly.</param>
+        /// <returns>True if successful, false otherwise</returns>
+        public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize, int maxTraversedPaths)
         {
             var limitedResult = new List<TSequence>();
             try
@@ -82,11 +97,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
         }
 
-        
+
         /// <summary>
         /// Enumerate support of this automaton
         /// </summary>
-        private IEnumerable<TSequence> EnumerateSupportInternal(bool tryDeterminize)
+        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
+        /// <param name="maxTraversedPaths">Maximum number of paths in the automaton this function
+        /// is allowed to traverse before stopping. Defaults to <see cref="int.MaxValue"/>.
+        /// Can be used to limit the performance impact of this call in cases when
+        /// the support is useful only if it can be obtained quickly.</param>
+        private IEnumerable<TSequence> EnumerateSupportInternal(bool tryDeterminize, int maxTraversedPaths = int.MaxValue)
         {
             var isEnumerable = this.Data.IsEnumerable;
             if (isEnumerable != null && isEnumerable.Value == false)
@@ -100,7 +120,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 this.TryDeterminize();
             }
 
-            var enumeration = this.EnumerateSupportInternalWithDuplicates();
+            var enumeration = this.EnumerateSupportInternalWithDuplicates(maxTraversedPaths);
             if (!tryDeterminize)
             {
                 enumeration = enumeration.Distinct(SequenceManipulator.SequenceEqualityComparer);
@@ -137,6 +157,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Enumerate support of this automaton without elimination of duplicate elements
         /// </summary>
+        /// <param name="maxTraversedPaths">Maximum number of paths in the automaton this function
+        /// is allowed to traverse before stopping. Defaults to <see cref="int.MaxValue"/>.
+        /// Can be used to limit the performance impact of this call in cases when
+        /// the support is useful only if it can be obtained quickly.</param>
         /// <returns>
         /// The sequences supporting this automaton. Sequences may be non-distinct if
         /// automaton is not determinized. A `null` value in enumeration means that
@@ -156,7 +180,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// - An fast-path for non-branchy automata is implemented. It makes traversing those 10x
         ///   faster by skipping some boilerplate for tracking traversal state in these cases.
         /// </remarks>
-        private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates()
+        private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates(int maxTraversedPaths = int.MaxValue)
         {
             // Sequence of elements on path to current state in automaton
             var sequence = new List<TElement>();
@@ -178,6 +202,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // before entering the state and when leaving it is easy to detect whether the state
             // is a dead end.
             var producedCount = 0;
+
+            // Number of paths traversed by this time. Used in early break condition.
+            var traversedPathsCount = 0;
 
             // Enumeration state for current state. A top of traversal stack, materialized in local
             // variable for convenience.
@@ -225,6 +252,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 if (flags[nextStateIndex] != 0)
                 {
+                    ++traversedPathsCount;
+                    if (traversedPathsCount > maxTraversedPaths)
+                    {
+                        // Hit the limit on the number of returned sequences.
+                        yield return null;
+                        yield break;
+                    }
+
                     // This states is either dead end or a loop. If this is a dead end, then it
                     // will not be traversed at all.
                     if (flags[nextStateIndex].HasFlag(StateEnumerationFlags.IsDeadEnd))
@@ -272,6 +307,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // we can assume that `e` is effectively not an end state because it does not
                     // produce any new sequences.
                     ++producedCount;
+                    ++traversedPathsCount;
+                    if (traversedPathsCount > maxTraversedPaths)
+                    {
+                        // Hit the limit on the number of returned sequences.
+                        yield return null;
+                        yield break;
+                    }
                     yield return SequenceManipulator.ToSequence(sequence);
                 }
 
