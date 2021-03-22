@@ -148,18 +148,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             return Repeat(minTimes, maxTimes.Value, 0);
         }
+
         public TThis Repeat(int minTimes, int maxTimes, int expectedResultSupportSize)
         {
             Argument.CheckIfInRange(minTimes >= 0, nameof(minTimes), "The minimum number of repetitions must be non-negative.");
             Argument.CheckIfValid(maxTimes >= minTimes, "The maximum number of repetitions must not be less than the minimum number.");
 
+            if (maxTimes == 0)
+                return FromPoint(SequenceManipulator.ToSequence(Enumerable.Empty<TElement>()));
+
+            var resultList = expectedResultSupportSize > 0 ? new List<KeyValuePair<TSequence, Weight>>(expectedResultSupportSize) : new List<KeyValuePair<TSequence, Weight>>();
+            int lastRepStart = 0;
+            if (minTimes == 0)
+            {
+                resultList.Add(new KeyValuePair<TSequence, Weight>(SequenceManipulator.ToSequence(Enumerable.Empty<TElement>()), Weight.One));
+                lastRepStart = 1;
+                minTimes = 1;
+            }
             var dictAsList = Dictionary.ToList();
             var currentRepsEnumerable = dictAsList.AsEnumerable();
             for (int i = 1; i < minTimes; ++i)
                 currentRepsEnumerable = currentRepsEnumerable.SelectMany(kvp => dictAsList.Select(skvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, skvp.Key), kvp.Value * skvp.Value)));
-            var resultList = expectedResultSupportSize > 0 ? new List<KeyValuePair<TSequence, Weight>>(expectedResultSupportSize) : new List<KeyValuePair<TSequence, Weight>>();
             resultList.AddRange(currentRepsEnumerable);
-            int lastRepStart = 0;
             for (int i = minTimes; i < maxTimes; ++i)
             {
                 int curRepStart = resultList.Count;
