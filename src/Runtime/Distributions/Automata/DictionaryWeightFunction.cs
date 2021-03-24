@@ -518,6 +518,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             var suffixInfo = new (int suffixLength, int prefixEndStateIndex, char suffixTransitionChar, Weight suffixTransitionWeight)[dict.Count];
 
+            var transitionsToMerge = new Dictionary<int, Dictionary<int, List<(char character, Weight weight)>>>();
+
             int processedEntriesCount = 0;
             do
             {
@@ -559,6 +561,37 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 firstSharedStateIdx = ProcessSuffix(curOriginalIdx, sharedPostfixWithPrevLen, firstSharedStateIdx, sharedPostfixWithNextLen);
             }
             ProcessSuffix(reversedStringSortIndex[dict.Count - 1], sharedPostfixWithNextLen, firstSharedStateIdx, 0);
+            
+            // Creating merged transitions
+            foreach (var sourceStateAndDict in transitionsToMerge)
+            {
+                var currentState = result[sourceStateAndDict.Key];
+                foreach (var destStateAndDistr in sourceStateAndDict.Value)
+                {
+                    var distr = destStateAndDistr.Value;
+                    distr.Sort(new Comparison<(char character, Weight weight)>((x, y) => x.character.CompareTo(y.character)));
+                    var ranges = new List<DiscreteChar.CharRange>(distr.Count);
+                    int currentStart = distr[0].character;
+                    int currentEnd = currentStart + 1;
+                    Weight currentWeight = distr[0].weight;
+                    for (int i = 1; i < distr.Count; ++i)
+                    {
+                        (char character, Weight weight) = distr[i];
+                        if (weight == currentWeight && character == currentEnd)
+                            ++currentEnd;
+                        else
+                        {
+                            ranges.Add(new DiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
+                            currentStart = character;
+                            currentEnd = currentStart + 1;
+                            currentWeight = weight;
+                        }
+                    }
+                    ranges.Add(new DiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
+                    var weightNormalizer = Weight.FromLogValue(MMath.LogSumExp(ranges.Select(r => r.Probability.LogValue + Math.Log(r.EndExclusive - r.StartInclusive))));
+                    currentState.AddTransition(new Collections.Option<DiscreteChar>(DiscreteChar.Create(ranges)), weightNormalizer, destStateAndDistr.Key);
+                }
+            }
 
             return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromData(result.GetData(true));
 
@@ -618,7 +651,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     else if (currentString.Length == currentSharedPrefixLength + 1)
                     {
                         // Just one more character, so the corresponding transition should lead to the end state.
-                        currentState.AddTransition(currentString[currentSharedPrefixLength], weight, end.Index);
+                        AddOrPrepareForMergeTransition(currentState, currentString[currentSharedPrefixLength], weight, end.Index);
                     }
                     else
                     {
@@ -666,7 +699,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (suffixLength == sharedSuffixWithPrevLength)
                     {
                         // The first transition leads to the shared part.
-                        currentState = currentState.AddTransition(suffixTransitionChar, suffixTransitionWeight, firstStateOfSuffixSharedWithPrevIdx);
+                        currentState = AddOrPrepareForMergeTransition(currentState, suffixTransitionChar, suffixTransitionWeight, firstStateOfSuffixSharedWithPrevIdx);
                     }
                     else
                     {
@@ -683,7 +716,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                         if (transitionsUntilSuffixSharedWithNext == 0)
                             firstStateOfSuffixSharedWithNextIdx = currentState.Index;
-                        currentState = currentState.AddTransition(currentString[currentString.Length - sharedSuffixWithPrevLength - 1], Weight.One, firstStateOfSuffixSharedWithPrevIdx);
+                        currentState = AddOrPrepareForMergeTransition(currentState, currentString[currentString.Length - sharedSuffixWithPrevLength - 1], Weight.One, firstStateOfSuffixSharedWithPrevIdx);
                         --transitionsUntilSuffixSharedWithNext;
                     }
                     if (transitionsUntilSuffixSharedWithNext >= 0)
@@ -698,6 +731,41 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 return firstStateOfSuffixSharedWithNextIdx;
+            }
+
+            Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder AddOrPrepareForMergeTransition(Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, char transitionChar, Weight weight, int destinationStateIndex)
+            {
+                if (transitionsToMerge.TryGetValue(currentState.Index, out var stateDict))
+                {
+                    if (stateDict.TryGetValue(destinationStateIndex, out var distr))
+                    {
+                        distr.Add((transitionChar, weight));
+                        return result[destinationStateIndex];
+                    }
+                }
+                if (currentState.HasTransitions)
+                {
+                    for (var iterator = currentState.TransitionIterator; iterator.Ok; iterator.Next())
+                    {
+                        var currentTransition = iterator.Value;
+                        if (currentTransition.DestinationStateIndex == destinationStateIndex)
+                        {
+                            if (stateDict == null)
+                            {
+                                stateDict = new Dictionary<int, List<(char character, Weight weight)>>();
+                                transitionsToMerge.Add(currentState.Index, stateDict);
+                            }
+                            var distr = new List<(char character, Weight weight)>();
+                            distr.Add((currentTransition.ElementDistribution.Value.Point, currentTransition.Weight));
+                            distr.Add((transitionChar, weight));
+                            stateDict.Add(destinationStateIndex, distr);
+                            iterator.Remove();
+                            return result[destinationStateIndex];
+                        }
+                    }
+                }
+
+                return currentState.AddTransition(transitionChar, weight, destinationStateIndex);
             }
         }
     }
