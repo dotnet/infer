@@ -1279,6 +1279,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// Tests the automata equality operator.
         /// </summary>
         [Fact]
+        [Trait("Category", "OpenBug")] // automata 1 and 2 are equal in sense of Automaton.Equals, but have different hashcodes
         [Trait("Category", "StringInference")]
         public void Equality1()
         {

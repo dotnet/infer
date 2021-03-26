@@ -642,15 +642,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public static TThis FromValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceToValue)
         {
-            Argument.CheckIfNotNull(sequenceToValue, "sequenceToValue");
+            Argument.CheckIfNotNull(sequenceToValue, nameof(sequenceToValue));
 
-            TThis result = Zero();
-            foreach (KeyValuePair<TSequence, double> sequenceWithValue in sequenceToValue)
-            {
-                result = Sum(result, ConstantOn(sequenceWithValue.Value, sequenceWithValue.Key));
-            }
-
-            return result;
+            return Sum(sequenceToValue.Select(kvp => ConstantOn(kvp.Value, kvp.Key)));
         }
 
         /// <summary>
@@ -664,16 +658,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public static TThis FromLogValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceToLogValue)
         {
-            Argument.CheckIfNotNull(sequenceToLogValue, "sequenceToValue");
+            Argument.CheckIfNotNull(sequenceToLogValue, nameof(sequenceToLogValue));
 
             return Sum(sequenceToLogValue.Select(kvp => ConstantOnLog(kvp.Value, kvp.Key)));
-            //TThis result = Zero();
-            //foreach (KeyValuePair<TSequence, double> sequenceWithValue in sequenceToLogValue)
-            //{
-            //    result = Sum(result, ConstantOnLog(sequenceWithValue.Value, sequenceWithValue.Key));
-            //}
-
-            //return result;
         }
 
         /// <summary>
@@ -2029,6 +2016,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public override int GetHashCode()
         {
             TThis thisAutomaton = (TThis)this;
+            // TODO: make consistent with Equals
+            // now the hashcode depends on the maximum sum of outgoing transitions over states
+            // (through GetConverger), which can differ for equal automata.
             TThis theConverger = GetConverger(thisAutomaton);
             thisAutomaton = thisAutomaton.Product(theConverger);
             double logNorm = thisAutomaton.Product(thisAutomaton).GetLogNormalizer();

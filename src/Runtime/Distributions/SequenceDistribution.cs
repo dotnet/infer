@@ -1524,12 +1524,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <remarks>This function will fail if the workspace of <paramref name="dist"/> cannot be determinized.</remarks>
         public void SetToPartialUniformOf(TThis dist)
         {
-            //if (dist.IsPointMass)
-            //{
-            //    this.Point = dist.Point;
-            //    return;
-            //}
-
             var resultWorkspace = WeightFunctionFactory.ConstantOnSupportOfLog(0.0, dist.GetWeightFunction());
             SetWorkspace(resultWorkspace, false);
         }
