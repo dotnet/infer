@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             foreach (var state in automaton.States)
             {
                 string shape = automaton.Start == state ? "doublecircle" : "circle";
-                graphVizCode.AppendFormat("  node [shape = {0}; label = \"{1}\\nE={2:G5}\"]; N{1}", shape, state.Index, state.EndWeight.Value);
+                graphVizCode.AppendFormat("  node [shape = {0}; label = \"{1}\\nE={2:G5}\"]; N{1}", shape, state.Index, state.EndWeight);
                 graphVizCode.AppendLine();
             }
 
@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         transitionLabel = EscapeLabel(transition.ElementDistribution.ToString());
                     }
 
-                    string label = string.Format("W={0:G5}\\n{1}", transition.Weight.Value, transitionLabel);
+                    string label = string.Format("W={0:G5}\\n{1}", transition.Weight, transitionLabel);
                     if (transition.Group != 0)
                     {
                         label = string.Format("{0}\\n#{1}", label, transition.Group);
