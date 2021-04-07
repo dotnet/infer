@@ -294,12 +294,33 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         if (automaton.LogValueOverride == null && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false, 4 * MaxDictionarySize, true))
                         {
-                            // TODO: compute values along with support
-                            var list = support.Select(seq => new KeyValuePair<TSequence, Weight>(seq, Weight.FromLogValue(automaton.GetLogValue(seq)))).ToList();
+                            var list = support.ToList();
                             if (list.Count == 1)
-                                return FromPoint(list.First().Key);
+                                return FromPoint(list[0]);
                             else
-                                return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(list));
+                            {
+                                // Create a dictionary only if we expect it to be smaller than the automaton.
+                                // Approximation uses sizes corresponding to a string automaton, which is the most used one.
+                                // We don't require this comparison to be always precise - most of the times is good enough.
+                                var dictSizeApprox = list.Sum(el => SequenceManipulator.GetLength(el)) * sizeof(char) + (24 + 8 + sizeof(double)) * list.Count;
+                                var automatonSizeAprox =
+                                    24 // header
+                                    + 16 + 2 * sizeof(double) // 2 double? fields
+                                                              // Data Container
+                                    + 2 * sizeof(int) // Flags and StartStateIndex
+                                    + 2 * 24 // Headers of the states and transitions arrays
+                                    + automaton.Data.States.Count * (2 * sizeof(int) + sizeof(double)) // states
+                                    + automaton.Data.Transitions.Count * 24 // 24 is the size of one transition w/o storage for discrete char
+                                    + automaton.Data.Transitions.Count(tr => !tr.IsEpsilon) * 80;
+                                    // 40 is the size of a DiscreteChar filled with nulls;
+                                    // another 40 is the size of an array with a single char range.
+                                    // Any specific DiscreteChar can be larger or can be cached.
+                                    // 40 seems an ok approximation for the average case.
+                                if (dictSizeApprox < automatonSizeAprox)
+                                    return FromDictionary(
+                                        DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(
+                                            list.Select(seq => new KeyValuePair<TSequence, Weight>(seq, Weight.FromLogValue(automaton.GetLogValue(seq))))));
+                            }
                         }
                         // TryEnumerateSupport(..., maxTraversedPaths, ...) is allowed to quit early
                         // on complex automata, so we need to explicitly check for point mass
