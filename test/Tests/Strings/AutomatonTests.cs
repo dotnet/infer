@@ -2080,6 +2080,27 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
 
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        [Trait("Category", "StringInference")]
+        public void Determinize12()
+        {
+            var builder = new StringAutomaton.Builder();
+            var a = builder.Start
+                .AddTransition(DiscreteChar.PointMass('A'), Weight.FromLogValue(1e-8));
+            a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(-1e-8))
+                .SetEndWeight(Weight.One);
+            a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(1e5))
+                .AddTransition(DiscreteChar.PointMass('C'), Weight.One)
+                .SetEndWeight(Weight.One);
+
+            var automaton = builder.GetAutomaton();
+
+            Assert.Equal(0, automaton.GetLogValue("AB"));
+            Assert.True(automaton.TryDeterminize());
+            Assert.Equal(0, automaton.GetLogValue("AB"));
+        }
+
         /// <summary>
         /// Tests whether the inability to determinize an automaton is handled correctly.
         /// </summary>
