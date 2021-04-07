@@ -23,9 +23,9 @@ and many others.
 
 |    | Release |
 |:---|------------------:|
-|**Windows**|[![Win Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20Windows%20Release)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=134)|
-|**Linux**|[![Linux Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20Linux%20Release)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=136)|
-|**macOS**|[![macOS Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20macOS%20Release)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=138)|
+|**Windows**|[![Win Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20Windows%20Release?branchName=master)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=134)|
+|**Linux**|[![Linux Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20Linux%20Release?branchName=master)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=136)|
+|**macOS**|[![macOS Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20macOS%20Release?branchName=master)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=138)|
 
 ## Installing pre-built binaries
 
