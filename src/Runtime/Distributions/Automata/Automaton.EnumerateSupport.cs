@@ -55,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
         /// <returns>True if successful, false otherwise</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
-            => TryEnumerateSupport(maxCount, out result, tryDeterminize, int.MaxValue);
+            => TryEnumerateSupport(maxCount, out result, tryDeterminize, int.MaxValue, false);
 
         /// <summary>
         /// Tries to enumerate support of this automaton.
@@ -64,17 +64,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="maxCount">The maximum support enumeration count.</param>
         /// <param name="result">The sequences in the support of this automaton</param>
         /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
-        /// <param name="maxTraversedPaths">Maximum number of paths in the automaton this function
+        /// <param name="maxTraversedPaths">
+        /// Maximum number of paths in the automaton this function
         /// is allowed to traverse before stopping.
         /// Can be used to limit the performance impact of this call in cases when
-        /// the support is useful only if it can be obtained quickly.</param>
+        /// the support is useful only if it can be obtained quickly.
+        /// </param>
+        /// <param name="stopOnNonPointMassElementDistribution">
+        /// When set to true, the enumeration is canceled upon encountering a non-point mass
+        /// element distribution on a transition.
+        /// </param>
         /// <returns>True if successful, false otherwise</returns>
-        public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize, int maxTraversedPaths)
+        public bool TryEnumerateSupport(
+            int maxCount,
+            out IEnumerable<TSequence> result,
+            bool tryDeterminize,
+            int maxTraversedPaths,
+            bool stopOnNonPointMassElementDistribution)
         {
             var limitedResult = new List<TSequence>();
             try
             {
-                foreach (var seq in this.EnumerateSupportInternal(tryDeterminize, maxTraversedPaths))
+                foreach (var seq in this.EnumerateSupportInternal(tryDeterminize, maxTraversedPaths, stopOnNonPointMassElementDistribution))
                 {
                     if (seq == null || limitedResult.Count >= maxCount)
                     {
@@ -106,7 +117,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// is allowed to traverse before stopping. Defaults to <see cref="int.MaxValue"/>.
         /// Can be used to limit the performance impact of this call in cases when
         /// the support is useful only if it can be obtained quickly.</param>
-        private IEnumerable<TSequence> EnumerateSupportInternal(bool tryDeterminize, int maxTraversedPaths = int.MaxValue)
+        /// <param name="stopOnNonPointMassElementDistribution">
+        /// When set to true, the enumeration is canceled upon encountering a non-point mass
+        /// element distribution on a transition and a <see langword="null"/> value is yielded.
+        /// </param>
+        private IEnumerable<TSequence> EnumerateSupportInternal(
+            bool tryDeterminize,
+            int maxTraversedPaths = int.MaxValue,
+            bool stopOnNonPointMassElementDistribution = false)
         {
             var isEnumerable = this.Data.IsEnumerable;
             if (isEnumerable != null && isEnumerable.Value == false)
@@ -120,7 +138,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 this.TryDeterminize();
             }
 
-            var enumeration = this.EnumerateSupportInternalWithDuplicates(maxTraversedPaths);
+            var enumeration = this.EnumerateSupportInternalWithDuplicates(maxTraversedPaths, stopOnNonPointMassElementDistribution);
             if (!tryDeterminize)
             {
                 enumeration = enumeration.Distinct(SequenceManipulator.SequenceEqualityComparer);
@@ -154,17 +172,31 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             DepthMask  = 0x7fffffff,
         }
 
+        private enum TransitionAdvancementResult
+        {
+            Success, NoMoreTransitions, ShouldStopEnumeration
+        }
+
         /// <summary>
         /// Enumerate support of this automaton without elimination of duplicate elements
         /// </summary>
-        /// <param name="maxTraversedPaths">Maximum number of paths in the automaton this function
+        /// <param name="maxTraversedPaths">
+        /// Maximum number of paths in the automaton this function
         /// is allowed to traverse before stopping. Defaults to <see cref="int.MaxValue"/>.
         /// Can be used to limit the performance impact of this call in cases when
-        /// the support is useful only if it can be obtained quickly.</param>
+        /// the support is useful only if it can be obtained quickly.
+        /// </param>
+        /// <param name="stopOnNonPointMassElementDistribution">
+        /// When set to true, the enumeration is canceled upon encountering a non-point mass
+        /// element distribution on a transition and a <see langword="null"/> value is yielded.
+        /// </param>
         /// <returns>
         /// The sequences supporting this automaton. Sequences may be non-distinct if
-        /// automaton is not determinized. A `null` value in enumeration means that
-        /// an infinite loop was reached. Public `EnumerateSupport()` / `TryEnumerateSupport()`
+        /// automaton is not determinized. A <see langword="null"/> value in enumeration means that
+        /// an infinite loop was reached or that the enumeration was stopped because
+        /// a condition set by one of this method's parameters was met.
+        /// Public <see cref="EnumerateSupport(int, bool)"/> /
+        /// <see cref="TryEnumerateSupport(int, out IEnumerable{TSequence}, bool, int, bool)"/>
         /// methods handle null value differently.
         /// </returns>
         /// <remarks>
@@ -180,7 +212,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// - An fast-path for non-branchy automata is implemented. It makes traversing those 10x
         ///   faster by skipping some boilerplate for tracking traversal state in these cases.
         /// </remarks>
-        private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates(int maxTraversedPaths = int.MaxValue)
+        private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates(
+            int maxTraversedPaths = int.MaxValue,
+            bool stopOnNonPointMassElementDistribution = false)
         {
             // Sequence of elements on path to current state in automaton
             var sequence = new List<TElement>();
@@ -236,10 +270,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // on each iteration, even if it is a noop.
                 sequence.RemoveRange(current.PathLength, sequence.Count - current.PathLength);
 
-                if (!AdvanceToNextTransition(out var nextStateIndex, out var nextElement))
+                var transitionAdvancementResult = AdvanceToNextTransition(out var nextStateIndex, out var nextElement);
+                if (transitionAdvancementResult == TransitionAdvancementResult.NoMoreTransitions)
                 {
                     // Failed to go to next transition: destination state is unreachable
                     continue;
+                }
+                if (transitionAdvancementResult == TransitionAdvancementResult.ShouldStopEnumeration)
+                {
+                    yield return null;
+                    yield break;
                 }
 
                 if (nextElement.HasValue)
@@ -391,7 +431,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // Updates `current` enumeration state by moving to next element/state index reachable
             // from current state.
-            bool AdvanceToNextTransition(out int nextStateIndex, out Option<TElement> nextElement)
+            TransitionAdvancementResult AdvanceToNextTransition(out int nextStateIndex, out Option<TElement> nextElement)
             {
                 Debug.Assert(
                     current.ElementEnumerator != null || current.RemainingTransitionsCount != 0,
@@ -417,7 +457,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             current.ElementEnumerator = null;
                         }
 
-                        return true;
+                        return TransitionAdvancementResult.Success;
                     }
                 }
 
@@ -450,6 +490,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                         else
                         {
+                            if (stopOnNonPointMassElementDistribution)
+                            {
+                                nextStateIndex = -1;
+                                nextElement = Option.None;
+                                return TransitionAdvancementResult.ShouldStopEnumeration;
+                            }
                             if (!(elementDistribution is CanEnumerateSupport<TElement> supportEnumerator))
                             {
                                 this.Data = this.Data.With(isEnumerable: false);
@@ -470,12 +516,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                     }
 
-                    return true;
+                    return TransitionAdvancementResult.Success;
                 }
 
                 nextStateIndex = -1;
                 nextElement = Option.None;
-                return false;
+                return TransitionAdvancementResult.NoMoreTransitions;
             }
             
             // Traverses all trivial states - non-terminal states with only one non-epsilon forward

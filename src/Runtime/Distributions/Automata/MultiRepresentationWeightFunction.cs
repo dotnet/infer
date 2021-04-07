@@ -292,7 +292,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 case TAutomaton automaton:
                     if (!automaton.UsesGroups)
                     {
-                        if (automaton.LogValueOverride == null && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false, 4 * MaxDictionarySize))
+                        if (automaton.LogValueOverride == null && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false, 4 * MaxDictionarySize, true))
                         {
                             // TODO: compute values along with support
                             var list = support.Select(seq => new KeyValuePair<TSequence, Weight>(seq, Weight.FromLogValue(automaton.GetLogValue(seq)))).ToList();
@@ -301,7 +301,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             else
                                 return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(list));
                         }
-                        // TryEnumerateSupport(..., maxTraversedPaths) is allowed to quit early
+                        // TryEnumerateSupport(..., maxTraversedPaths, ...) is allowed to quit early
                         // on complex automata, so we need to explicitly check for point mass
                         var point = automaton.TryComputePoint();
                         if (point != null)
