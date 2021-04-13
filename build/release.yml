@@ -45,7 +45,7 @@ jobs:
 
 # Assign assembly versions, build, and publish versioned assemblies
 
-- job: Windows # Hosted Windows agent, VS 2017
+- job: Windows # Hosted Windows agent
   pool:
     vmImage: windows-2019
 
@@ -104,7 +104,7 @@ jobs:
   - macOS
   - Windows
   pool:
-    name: MicroBuildV2Pool # For real signing
+    name: VSEngSS-MicroBuild2019 # For real signing
 
   steps:
   # Install MicroBuild plugin
