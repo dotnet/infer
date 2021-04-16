@@ -12,6 +12,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Text;
 
     [Serializable]
     [DataContract]
@@ -28,7 +29,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static TSequenceManipulator SequenceManipulator =>
                 Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.SequenceManipulator;
 
-        private const int MaxDictionarySize = 20;
+        private static readonly TAutomaton ZeroAutomaton =
+            Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.Zero();
+
+        private const int MaxDictionarySize = 128;
 
         /// <summary>
         /// A function mapping sequences to weights.
@@ -714,8 +718,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return Equals((MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>)obj);
         }
 
-        public override int GetHashCode() => AsAutomaton().GetHashCode();
+        public override int GetHashCode() => (weightFunction ?? ZeroAutomaton).GetHashCode();
 
-        public override string ToString() => weightFunction?.ToString() ?? "{null}";
+        public override string ToString() => (weightFunction ?? ZeroAutomaton).ToString();
+
+        public string ToString(Action<TElementDistribution, StringBuilder> appendElement) => (weightFunction ?? ZeroAutomaton).ToString(appendElement);
     }
 }

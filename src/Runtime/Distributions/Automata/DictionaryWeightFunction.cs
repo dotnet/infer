@@ -12,6 +12,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Text;
 
     [Serializable]
     [DataContract]
@@ -420,6 +421,31 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public override string ToString()
         {
             return $"[{string.Join("|", Dictionary.Keys)}]";
+        }
+
+        public string ToString(Action<TElementDistribution, StringBuilder> appendElement)
+        {
+            if (appendElement == null)
+                return ToString();
+
+            var sb = new StringBuilder();
+            if (Dictionary.Count > 1)
+                sb.Append('[');
+
+            string prefix = string.Empty;
+            foreach (var sequence in Dictionary.Keys)
+            {
+                sb.Append(prefix);
+                foreach (var element in sequence)
+                    appendElement(new TElementDistribution() { Point = element }, sb);
+
+                prefix = "|";
+            }
+
+            if (Dictionary.Count > 1)
+                sb.Append(']');
+
+            return sb.ToString();
         }
     }
 

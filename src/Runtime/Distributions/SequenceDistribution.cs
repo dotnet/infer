@@ -1058,17 +1058,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="appendRegex">Optional method for appending at the element distribution level.</param>
         /// <returns>A string that represents the automaton.</returns>
-        protected string ToString(Action<TElementDistribution, StringBuilder> appendRegex)
-        {
-            if (this.IsPointMass)
-            {
-                return this.Point.ToString();
-            }
-            else
-            {
-                return this.GetWorkspaceOrPoint().ToString(appendRegex);
-            }
-        }
+        protected string ToString(Action<TElementDistribution, StringBuilder> appendRegex) => sequenceToWeight.ToString(appendRegex);
 
         /// <summary>
         /// Returns a string that represents the distribution.

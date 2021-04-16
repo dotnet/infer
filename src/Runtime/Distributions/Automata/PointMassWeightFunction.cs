@@ -12,6 +12,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Text;
 
     [Serializable]
     [DataContract]
@@ -154,9 +155,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return Equals((TThis)obj);
         }
 
-        public override int GetHashCode() => SequenceManipulator.SequenceEqualityComparer.GetHashCode(point);
+        public override int GetHashCode() => 0; // Consistently with Automaton.GetHashCode()
 
-        public override string ToString() => point?.ToString() ?? "{null}";
+        public override string ToString() => point.ToString(); // Point can not be null
+
+        public string ToString(Action<TElementDistribution, StringBuilder> appendElement)
+        {
+            if (appendElement == null)
+                return ToString();
+
+            var sb = new StringBuilder();
+            foreach (var element in point)
+                appendElement(new TElementDistribution() { Point = element }, sb);
+
+            return sb.ToString();
+        }
     }
 
     [Serializable]

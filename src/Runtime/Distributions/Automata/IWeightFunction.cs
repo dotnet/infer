@@ -8,6 +8,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using Microsoft.ML.Probabilistic.Math;
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     [Quality(QualityBand.Experimental)]
     public interface IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>
@@ -100,6 +101,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="group">The specified group.</param>
         /// <returns>True if it the weight function has this group, false otherwise.</returns>
         bool HasGroup(int group);
+
+        /// <summary>
+        /// Returns a string that represents the weight function.
+        /// </summary>
+        /// <param name="appendElement">Optional method for appending at the element distribution level.</param>
+        /// <returns>A string that represents the weight function.</returns>
+        string ToString(Action<TElementDistribution, StringBuilder> appendElement);
     }
 
     [Quality(QualityBand.Experimental)]
