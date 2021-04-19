@@ -18,19 +18,13 @@ namespace Microsoft.ML.Probabilistic.Tests
 
     using Utilities;
 
-    using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
+    using Assert = AssertHelper;
     using GaussianArray = DistributionStructArray<Gaussian, double>;
     using GaussianArray2D = DistributionStructArray2D<Gaussian, double>;
 
 
     public class OperatorTests
     {
-        [Fact]
-        public void GammaPowerProductOp_LaplaceTest()
-        {
-            GammaPowerProductOp_Laplace.ProductAverageConditional(GammaPower.Uniform(-1), new GammaPower(22, 0.04762, -1), new GammaPower(4.984e+10, 9.32e-120, -1), new Gamma(4.984e+10, 9.32e-120), GammaPower.Uniform(-1));
-        }
-
         [Fact]
         public void GaussianPlusOpTest()
         {
@@ -228,1186 +222,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                     //Trace.WriteLine($"precision={precision} yv={yv}: {result0.Rate} {result.Rate}");
                 }
             }
-        }
-
-        // Test inference on a model where precision is scaled.
-        internal void GammaProductTest()
-        {
-            for (int i = 0; i <= 20; i++)
-            {
-                double minutesPlayed = System.Math.Pow(0.1, i);
-                if (i == 20) minutesPlayed = 0;
-                var EventCountMean_F = Gaussian.PointMass(0);
-                var EventCountPrecision_F = GammaRatioOp.RatioAverageConditional(Gamma.PointMass(1), minutesPlayed);
-                var realCount_F = GaussianOp_PointPrecision.SampleAverageConditional(EventCountMean_F, EventCountPrecision_F);
-                var realCount_use_B = MaxGaussianOp.BAverageConditional(0.0, 0.0, realCount_F);
-                var EventCountPrecision_B = GaussianOp_PointPrecision.PrecisionAverageConditional(realCount_use_B, EventCountMean_F, EventCountPrecision_F);
-                var EventsPerMinutePrecision_B = GammaRatioOp.AAverageConditional(EventCountPrecision_B, minutesPlayed);
-                Console.WriteLine($"realCount_use_B = {realCount_use_B}, EventCountPrecision_B = {EventCountPrecision_B},  EventsPerMinutePrecision_B = {EventsPerMinutePrecision_B}");
-            }
-        }
-
-        [Fact]
-        public void VariablePointOp_RpropGammaTest()
-        {
-            using (TestUtils.TemporarilyUseMeanPointGamma)
-            {
-                var buffer = VariablePointOp_RpropGamma.Buffer0Init();
-                Gamma g = Gamma.FromShapeAndRate(0.6, 1);
-                Gamma to_marginal = Gamma.PointMass(1);
-                for (int i = 0; i < 1000; i++)
-                {
-                    buffer = VariablePointOp_RpropGamma.Buffer0(g, g, to_marginal, buffer);
-                    //Console.WriteLine(buffer.nextPoint);
-                    to_marginal = Gamma.Uniform();
-                }
-            }
-        }
-
-        [Fact]
-        public void ArrayFromVectorOpTest()
-        {
-            bool verbose = false;
-            PositiveDefiniteMatrix A = new PositiveDefiniteMatrix(new double[,] {
-                { 4.008640513161180,  1.303104352135630, - 2.696380025254830, - 2.728465435435790 },
-                { 1.303104352135630,  4.024136989099960, - 2.681070246787840, - 2.713155656968810 },
-                { -2.696380025254830, - 2.681070246787840, 4.136120496920130,  1.403451295855420 },
-                { -2.728465435435790, - 2.713155656968810, 1.403451295855420,  4.063123100392480 }
-            });
-            Vector arrayVariance = Vector.FromArray(1, 0, 3, 4);
-            Vector arrayMean = Vector.FromArray(1, 2, 3, 4);
-
-            VectorGaussianMoments vg = new VectorGaussianMoments(Vector.FromArray(6, 5, 4, 3), A);
-            Gaussian[] array = Util.ArrayInit(arrayMean.Count, i => new Gaussian(arrayMean[i], arrayVariance[i]));
-            var result = ArrayFromVectorOp.ArrayAverageConditional(array, vg, new Gaussian[array.Length]);
-            Vector varianceExpected = Vector.FromArray(0.699231932932321, 0, 0.946948669226297, 0.926496676481940);
-            Vector varianceActual = Vector.FromArray(Util.ArrayInit(result.Length, i => (result[i] * array[i]).GetVariance()));
-            if (verbose) Console.WriteLine($"variance = {varianceActual} should be {varianceExpected}");
-            Assert.True(varianceExpected.MaxDiff(varianceActual) < 1e-4);
-            Vector meanExpected = Vector.FromArray(2.640276200841019, 2.000000014880260, 6.527941507328482, 6.908179339051594);
-            Vector meanActual = Vector.FromArray(Util.ArrayInit(result.Length, i => (result[i] * array[i]).GetMean()));
-            if (verbose) Console.WriteLine($"mean = {meanActual} should be {meanExpected}");
-            Assert.True(meanExpected.MaxDiff(meanActual) < 1e-4);
-
-            arrayVariance.SetTo(Vector.FromArray(1, double.PositiveInfinity, 3, 4));
-            array = Util.ArrayInit(arrayMean.Count, i => new Gaussian(arrayMean[i], arrayVariance[i]));
-            result = ArrayFromVectorOp.ArrayAverageConditional(array, vg, new Gaussian[array.Length]);
-            varianceExpected = Vector.FromArray(0.703202829692760, 2.371534574978036, 1.416576208767429, 1.566923316764467);
-            varianceActual = Vector.FromArray(Util.ArrayInit(result.Length, i => (result[i] * array[i]).GetVariance()));
-            if (verbose) Console.WriteLine($"variance = {varianceActual} should be {varianceExpected}");
-            Assert.True(varianceExpected.MaxDiff(varianceActual) < 1e-4);
-            meanExpected = Vector.FromArray(2.495869677904531, 5.528904975989440, 4.957577684071078, 5.074347889058121);
-            meanActual = Vector.FromArray(Util.ArrayInit(result.Length, i => (result[i] * array[i]).GetMean()));
-            if (verbose) Console.WriteLine($"mean = {meanActual} should be {meanExpected}");
-            Assert.True(meanExpected.MaxDiff(meanActual) < 1e-4);
-
-            bool testImproper = false;
-            if (testImproper)
-            {
-                array = new Gaussian[]
-                {
-                new Gaussian(0.5069, 27.43),
-                new Gaussian(0.649, 38.94),
-                Gaussian.FromNatural(-0.5753, 0),
-                new Gaussian(0.1064, 10.15)
-                };
-                PositiveDefiniteMatrix B = new PositiveDefiniteMatrix(new double[,]
-                {
-                { 0.7158,  -0.1356, -0.2979, -0.2993 },
-                { -0.1356, 0.7294,  -0.2975, -0.2989 },
-                { -0.2979, -0.2975, 0.7625,  -0.1337 },
-                { -0.2993, -0.2989, -0.1337, 0.7203 },
-                });
-                vg = new VectorGaussianMoments(Vector.FromArray(0.3042, 0.4795, -0.2114, -0.5748), B);
-                result = ArrayFromVectorOp.ArrayAverageConditional(array, vg, new Gaussian[array.Length]);
-                Gaussian[] resultExpected = new Gaussian[] {
-                    new Gaussian(0.4589, 0.707),
-                    new Gaussian(0.6338, 0.7204),
-                    new Gaussian(-0.2236, 0.7553),
-                    new Gaussian(-0.4982, 0.7148),
-                };
-                if (verbose) Console.WriteLine(StringUtil.ArrayToString(result));
-                for (int i = 0; i < result.Length; i++)
-                {
-                    Assert.True(resultExpected[i].MaxDiff(result[i]) < 1e-4);
-                }
-            }
-        }
-
-        internal void VectorFromArrayOp_SpeedTest()
-        {
-            int dim = 20;
-            int n = 100000;
-            VectorGaussian vector = new VectorGaussian(dim);
-            Matrix random = new Matrix(dim, dim);
-            for (int i = 0; i < dim; i++)
-            {
-                vector.MeanTimesPrecision[i] = Rand.Double();
-                for (int j = 0; j < dim; j++)
-                {
-                    random[i, j] = Rand.Double();
-                }
-            }
-            vector.Precision.SetToOuter(random);
-            Gaussian[] array = Util.ArrayInit(dim, i => Gaussian.FromMeanAndVariance(i, i));
-            Gaussian[] result = new Gaussian[dim];
-            for (int i = 0; i < n; i++)
-            {
-                VectorFromArrayOp.ArrayAverageConditional(vector, array, result);
-            }
-        }
-
-        [Fact]
-        public void VectorFromArrayOp_PointMassTest()
-        {
-            VectorFromArrayOp_HandlesPointMass(false);
-            VectorFromArrayOp_HandlesPointMass(true);
-        }
-
-        private void VectorFromArrayOp_HandlesPointMass(bool partial)
-        {
-            int dim = 2;
-            VectorGaussian to_vector = new VectorGaussian(dim);
-            VectorGaussian vector = VectorGaussian.FromNatural(Vector.FromArray(2.0, 3.0), new PositiveDefiniteMatrix(new double[,] { { 5.0, 1.0 }, { 1.0, 6.0 } }));
-            GaussianArray expected = null;
-            double lastError = double.PositiveInfinity;
-            for (int i = 0; i < 10; i++)
-            {
-                double variance = System.Math.Exp(-i);
-                if (i == 0)
-                    variance = 0;
-                Gaussian[] array = Util.ArrayInit(dim, j => new Gaussian(j, (j > 0 && partial) ? j : variance));
-                to_vector = VectorFromArrayOp.VectorAverageConditional(array, to_vector);
-                var to_array = new GaussianArray(dim);
-                to_array = VectorFromArrayOp.ArrayAverageConditional(vector, array, to_array);
-                if (i == 0)
-                    expected = to_array;
-                else
-                {
-                    double error = expected.MaxDiff(to_array);
-                    Assert.True(error < lastError);
-                    lastError = error;
-                }
-                ////Console.WriteLine(to_array);
-            }
-        }
-
-        [Fact]
-        public void GammaRatioOpTest()
-        {
-            Gamma ratio = new Gamma(2, 3);
-            double shape = 4;
-            Gamma A = new Gamma(shape, 1);
-            Gamma B = new Gamma(5, 6);
-            Gamma q = GammaFromShapeAndRateOp_Laplace.Q(ratio, shape, B);
-            Gamma bExpected = GammaFromShapeAndRateOp_Laplace.RateAverageConditional(ratio, shape, B, q);
-            Gamma rExpected = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(ratio, shape, B, q);
-            q = GammaRatioOp_Laplace.Q(ratio, A, B);
-            Gamma bActual = GammaRatioOp_Laplace.BAverageConditional(ratio, A, B, q);
-            Gamma rActual = GammaRatioOp_Laplace.RatioAverageConditional(ratio, A, B);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Console.WriteLine("ratio = {0} should be {1}", rActual, rExpected);
-            Assert.True(bExpected.MaxDiff(bActual) < 1e-4);
-            Assert.True(rExpected.MaxDiff(rActual) < 1e-4);
-        }
-
-        // Test that the operator behaves correctly for arguments with small variance
-        [Fact]
-        public void GammaFromShapeAndRateOpTest()
-        {
-            Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.SampleAverageConditional(Gamma.PointMass(0), 2.0, new Gamma(1, 1)).Rate));
-            Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.RateAverageConditional(new Gamma(1, 1), 2.0, Gamma.PointMass(0)).Rate));
-
-            Gamma sample, rate, result;
-            double prevDiff;
-            double shape = 3;
-            rate = Gamma.FromShapeAndRate(4, 5);
-            sample = Gamma.PointMass(2);
-            result = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-            Console.WriteLine("{0}: {1}", sample, result);
-            prevDiff = double.PositiveInfinity;
-            for (int i = 10; i < 50; i++)
-            {
-                double v = System.Math.Pow(0.1, i);
-                sample = Gamma.FromMeanAndVariance(2, v);
-                Gamma result2 = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-                double diff = result.MaxDiff(result2);
-                Console.WriteLine("{0}: {1} (diff={2})", sample, result2, diff.ToString("g4"));
-                Assert.True(diff <= prevDiff || diff < 1e-10);
-                prevDiff = diff;
-            }
-        }
-        [Fact]
-        public void GammaFromShapeAndRateOpTest2()
-        {
-            Gamma sample, rate, result;
-            double prevDiff;
-            double shape = 3;
-            sample = Gamma.FromShapeAndRate(4, 5);
-            shape = 0.1;
-            rate = Gamma.FromShapeAndRate(0.1, 0.1);
-            result = GammaFromShapeAndRateOp_Slow.RateAverageConditional(sample, shape, rate);
-            Console.WriteLine(result);
-
-            shape = 3;
-            rate = Gamma.PointMass(2);
-            result = GammaFromShapeAndRateOp_Slow.RateAverageConditional(sample, shape, rate);
-            Console.WriteLine("{0}: {1}", rate, result);
-            prevDiff = double.PositiveInfinity;
-            for (int i = 10; i < 50; i++)
-            {
-                double v = System.Math.Pow(0.1, i);
-                rate = Gamma.FromMeanAndVariance(2, v);
-                Gamma result2 = GammaFromShapeAndRateOp_Slow.RateAverageConditional(sample, shape, rate);
-                double diff = result.MaxDiff(result2);
-                Console.WriteLine("{0}: {1} (diff={2})", rate, result2, diff.ToString("g4"));
-                Assert.True(diff <= prevDiff || diff < 1e-10);
-                prevDiff = diff;
-            }
-        }
-        [Fact]
-        public void GammaFromShapeAndRateOpTest3()
-        {
-            Console.WriteLine(GammaFromShapeAndRateOp_Slow.RateAverageConditional(Gamma.FromShapeAndRate(2, 1), 1, Gamma.FromShapeAndRate(1.5, 0.5)));
-
-            Gamma sample = Gamma.FromShapeAndRate(2, 0);
-            Gamma rate = Gamma.FromShapeAndRate(4, 1);
-            double shape = 1;
-
-            Gamma to_sample2 = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-            double evExpected = GammaFromShapeAndRateOp_Slow.LogEvidenceRatio(sample, shape, rate, to_sample2);
-            Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample2, evExpected);
-            for (int i = 40; i < 41; i++)
-            {
-                sample.Rate = System.Math.Pow(0.1, i);
-                Gamma to_sample = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-                double evActual = GammaFromShapeAndRateOp_Slow.LogEvidenceRatio(sample, shape, rate, to_sample);
-                Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample, evActual);
-                Assert.True(to_sample2.MaxDiff(to_sample2) < 1e-4);
-                Assert.True(MMath.AbsDiff(evExpected, evActual) < 1e-4);
-            }
-        }
-        [Fact]
-        public void GammaFromShapeAndRateOpTest4()
-        {
-            Gamma sample = Gamma.FromShapeAndRate(2, 0);
-            Gamma rate = Gamma.FromShapeAndRate(4, 1);
-            double shape = 1;
-
-            Gamma rateExpected = GammaFromShapeAndRateOp_Slow.RateAverageConditional(sample, shape, rate);
-            Gamma q = GammaFromShapeAndRateOp_Laplace.Q(sample, shape, rate);
-            Gamma rateActual = GammaFromShapeAndRateOp_Laplace.RateAverageConditional(sample, shape, rate, q);
-            Assert.True(rateExpected.MaxDiff(rateActual) < 1e-4);
-
-            Gamma to_sample2 = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
-            double evExpected = GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(sample, shape, rate, to_sample2, q);
-            Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample2, evExpected);
-            for (int i = 40; i < 41; i++)
-            {
-                sample.Rate = System.Math.Pow(0.1, i);
-                q = GammaFromShapeAndRateOp_Laplace.Q(sample, shape, rate);
-                Gamma to_sample = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
-                double evActual = GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(sample, shape, rate, to_sample, q);
-                Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample, evActual);
-                Assert.True(to_sample2.MaxDiff(to_sample2) < 1e-4);
-                Assert.True(MMath.AbsDiff(evExpected, evActual) < 1e-4);
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "OpenBug")]
-        public void GammaFromShapeAndRateOpTest5()
-        {
-            Gamma sample;
-            Gamma rate;
-            double shape = 1;
-            Gamma q, sampleExpected, sampleActual;
-
-            sample = Gamma.FromShapeAndRate(101, 6.7234079315458819E-154);
-            rate = Gamma.FromShapeAndRate(1, 1);
-            q = GammaFromShapeAndRateOp_Laplace.Q(sample, shape, rate);
-            Console.WriteLine(q);
-            Assert.True(!double.IsNaN(q.Rate));
-            sampleExpected = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-            sampleActual = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
-            Console.WriteLine("sample = {0} should be {1}", sampleActual, sampleExpected);
-            Assert.True(sampleExpected.MaxDiff(sampleActual) < 1e-4);
-
-            sample = Gamma.FromShapeAndRate(1.4616957536444839, 6.2203585601953317E+36);
-            rate = Gamma.FromShapeAndRate(2.5, 0.99222007168007165);
-            sampleExpected = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-            q = Gamma.FromShapeAndRate(3.5, 0.99222007168007154);
-            sampleActual = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
-            Console.WriteLine("sample = {0} should be {1}", sampleActual, sampleExpected);
-            Assert.True(sampleExpected.MaxDiff(sampleActual) < 1e-4);
-
-            sample = Gamma.FromShapeAndRate(1.9692446124520258, 1.0717828357423075E+77);
-            rate = Gamma.FromShapeAndRate(101.0, 2.1709591889324445E-80);
-            sampleExpected = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-            q = GammaFromShapeAndRateOp_Laplace.Q(sample, shape, rate);
-            sampleActual = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
-            Console.WriteLine("sample = {0} should be {1}", sampleActual, sampleExpected);
-            Assert.True(sampleExpected.MaxDiff(sampleActual) < 1e-4);
-
-            Assert.Equal(0.0,
-                            GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(Gamma.Uniform(), 4.0, Gamma.PointMass(0.01), Gamma.FromShapeAndRate(4, 0.01),
-                                                                             Gamma.PointMass(0.01)));
-        }
-
-        [Fact]
-        public void MatrixTimesVectorOpTest()
-        {
-            Matrix[] ms = new Matrix[3];
-            ms[0] = new Matrix(new double[,] { { 0.036, -0.036, 0 }, { 0.036, 0, -0.036 } });
-            ms[1] = new Matrix(new double[,] { { -0.036, 0.036, 0 }, { 0, 0.036, -0.036 } });
-            ms[2] = new Matrix(new double[,] { { -0.036, 0, 0.036 }, { 0, -0.036, 0.036 } });
-            VectorGaussian product = new VectorGaussian(Vector.FromArray(new double[] { 1, 1 }), PositiveDefiniteMatrix.IdentityScaledBy(2, 0.01));
-            Matrix A = ms[0];
-            VectorGaussian result = MatrixVectorProductOp.BAverageConditional(product, A, new VectorGaussian(3));
-            Assert.False(result.Precision.IsPositiveDefinite());
-
-            Vector BMean = Vector.FromArray(1, 2, 3);
-            PositiveDefiniteMatrix BVariance = new PositiveDefiniteMatrix(new double[,]
-            {
-                { 3,2,1 },
-                { 2,3,2 },
-                { 1,2,3 }
-            });
-            GaussianArray2D to_A = new GaussianArray2D(A.Rows, A.Cols);
-            MatrixVectorProductOp.AAverageConditional(product, GaussianArray2D.PointMass(A.ToArray()), BMean, BVariance, to_A);
-            double[,] dExpected = new double[,]
-            {
-                { 542.014350893474, -34.0730521080406, -261.179402050882 },
-                { 449.735198014871, -31.4263853641523, -215.272881589687 },
-            };
-            for (int i = 0; i < to_A.GetLength(0); i++)
-            {
-                for (int j = 0; j < to_A.GetLength(1); j++)
-                {
-                    Gaussian dist = to_A[i, j];
-                    double dlogp, ddlogp;
-                    dist.GetDerivatives(A[i, j], out dlogp, out ddlogp);
-                    Assert.True(System.Math.Abs(dExpected[i, j] - dlogp) < 1e-8);
-                }
-            }
-        }
-
-        [Fact]
-        public void SumOpTest()
-        {
-            Gaussian sum_F = new Gaussian(0, 1);
-            Gaussian sum_B = Gaussian.FromMeanAndPrecision(0, 1e-310);
-            GaussianArray array = new GaussianArray(2, i => new Gaussian(0, 1));
-            var result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
-            Assert.True(!double.IsNaN(result[0].MeanTimesPrecision));
-
-            sum_B = new Gaussian(0, 1);
-            array[0] = Gaussian.FromMeanAndPrecision(0, 0);
-            sum_F = FastSumOp.SumAverageConditional(array);
-            result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
-            Assert.True(result[0].MaxDiff(new Gaussian(0, 2)) < 1e-10);
-            Assert.True(result[1].IsUniform());
-            for (int i = 0; i < 1030; i++)
-            {
-                array[0] = Gaussian.FromMeanAndPrecision(0, System.Math.Pow(2, -i));
-                sum_F = FastSumOp.SumAverageConditional(array);
-                result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
-                Assert.True(result[0].MaxDiff(new Gaussian(0, 2)) < 1e-10);
-            }
-        }
-
-        //[Fact]
-        //[Trait("Category", "ModifiesGlobals")]
-        internal void ExpOp_CompareToSampling()
-        {
-            int sampleCount = 1_000_000;
-            for (int i = 1; i < 10; i++)
-            {
-                double ve = System.Math.Pow(10, -i);
-                Gamma exp = Gamma.FromMeanAndVariance(1, ve);
-                Gaussian d = Gaussian.FromMeanAndVariance(0, 1);
-                Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
-                var importanceSampler = new ImportanceSampler(sampleCount, d.Sample, x => System.Math.Exp(exp.GetLogProb(System.Math.Exp(x))));
-                double mean = importanceSampler.GetExpectation(x => x);
-                double Ex2 = importanceSampler.GetExpectation(x => x * x);
-                Gaussian to_d_is = new Gaussian(mean, Ex2 - mean * mean) / d;
-                var exp2 = Gamma.FromShapeAndRate(exp.Shape - 1, exp.Rate);
-                importanceSampler = new ImportanceSampler(sampleCount, exp2.Sample, x => System.Math.Exp(d.GetLogProb(System.Math.Log(x))));
-                mean = importanceSampler.GetExpectation(x => System.Math.Log(x));
-                Ex2 = importanceSampler.GetExpectation(x => System.Math.Log(x) * System.Math.Log(x));
-                Gaussian to_d_is2 = new Gaussian(mean, Ex2 - mean * mean) / d;
-                Trace.WriteLine($"{ve}\t{to_d.GetMean()}\t{to_d_is.GetMean()}\t{to_d_is2.GetMean()}");
-
-                Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, Gaussian.Uniform());
-
-                importanceSampler = new ImportanceSampler(sampleCount, d.Sample, x => System.Math.Exp(exp.GetLogProb(System.Math.Exp(x))));
-                double Ey = importanceSampler.GetExpectation(x => System.Math.Exp(x));
-                double Elogy = importanceSampler.GetExpectation(x => x);
-                var to_exp_is1 = Gamma.FromMeanAndMeanLog(Ey, Elogy) / exp;
-                importanceSampler = new ImportanceSampler(sampleCount, exp2.Sample, x => System.Math.Exp(d.GetLogProb(System.Math.Log(x))));
-                Ey = importanceSampler.GetExpectation(x => x);
-                Elogy = importanceSampler.GetExpectation(x => System.Math.Log(x));
-                var to_exp_is2 = Gamma.FromMeanAndMeanLog(Ey, Elogy) / exp;
-                double is1_mean = to_exp_is1.IsProper() ? to_exp_is1.GetMean() : double.NaN;
-                double is2_mean = to_exp_is2.IsProper() ? to_exp_is2.GetMean() : double.NaN;
-                Trace.WriteLine($"to_exp: Quad {to_exp.GetMean()} IS1: {is1_mean} IS2: {is2_mean}");
-            }
-        }
-
-        [Fact]
-        public void ExpOpGammaPowerTest()
-        {
-            Assert.True(!double.IsNaN(ExpOp.ExpAverageConditional(GammaPower.Uniform(-1), Gaussian.FromNatural(0.046634157098979417, 0.00078302234897204242), Gaussian.Uniform()).Rate));
-            Assert.True(!double.IsNaN(ExpOp.ExpAverageConditional(GammaPower.Uniform(-1), Gaussian.FromNatural(0.36153121930654075, 0.0005524890062312658), Gaussian.Uniform()).Rate));
-            Assert.True(ExpOp.DAverageConditional(GammaPower.PointMass(0, -1), new Gaussian(0, 1), Gaussian.Uniform()).Point < double.MinValue);
-            ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 283.673, -1), Gaussian.FromNatural(0.004859823703146038, 6.6322755562737905E-06), Gaussian.FromNatural(0.00075506803981220758, 8.24487022054953E-07));
-            GammaPower exp = GammaPower.FromShapeAndRate(0, 0, -1);
-            Gaussian[] ds = new[]
-            {
-                Gaussian.FromNatural(-1.6171314269768655E+308, 4.8976001759138024),
-                Gaussian.FromNatural(-0.037020622891705768, 0.00034989765084474117),
-                Gaussian.PointMass(double.NegativeInfinity),
-            };
-            foreach (var d in ds)
-            {
-                Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
-                Gaussian to_d_slow = ExpOp_Slow.DAverageConditional(exp, d);
-                //Trace.WriteLine($"{to_d}");
-                //Trace.WriteLine($"{to_d_slow}");
-                Assert.True(to_d_slow.MaxDiff(to_d) < 1e-10);
-                to_d = Gaussian.FromNatural(1, 0);
-                GammaPower to_exp = ExpOp.ExpAverageConditional(exp, d, to_d);
-                //Trace.WriteLine($"{to_exp}");
-            }
-            ExpOp.ExpAverageConditional(GammaPower.FromShapeAndRate(-1, 883.22399999999993, -1), Gaussian.FromNatural(0.0072160312702854888, 8.1788482512051846E-06), Gaussian.FromNatural(0.00057861649495666474, 5.6316164560235272E-07));
-        }
-
-        [Fact]
-        [Trait("Category", "OpenBug")]
-        public void ExpOpTest()
-        {
-            Assert.True(ExpOp.ExpAverageConditional(Gamma.FromShapeAndRate(3.302758272196654, 0.00060601537137241492), Gaussian.FromNatural(55.350150233321628, 6.3510247863590683), Gaussian.FromNatural(27.960892513144643, 3.4099170930572216)).Rate > 0);
-            Gamma exp = new Gamma(1, 1);
-            Gaussian[] ds = new[]
-            {
-                Gaussian.FromNatural(-1.6171314269768655E+308, 4.8976001759138024),
-                Gaussian.PointMass(double.NegativeInfinity),
-            };
-            foreach (var d in ds)
-            {
-                Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, Gaussian.Uniform());
-                Gaussian to_d = ExpOp.DAverageConditional(exp, d, Gaussian.Uniform());
-                Gaussian to_d_slow = ExpOp_Slow.DAverageConditional(exp, d);
-                Trace.WriteLine($"{to_d}");
-                Trace.WriteLine($"{to_d_slow}");
-                Assert.True(to_d_slow.MaxDiff(to_d) < 1e-10);
-            }
-        }
-
-        // This test fails because of cancellation in logMeanMinusMd and Gamma.SetToRatio in ExpOp.ExpAverageConditional
-        [Fact]
-        [Trait("Category", "ModifiesGlobals")]
-        [Trait("Category", "OpenBug")]
-        public void ExpOp_PointExp()
-        {
-            using (TestUtils.TemporarilyChangeQuadratureNodeCount(21))
-            {
-                double vd = 1e-4;
-                vd = 1e-3;
-                Gaussian d = new Gaussian(0, vd);
-                double ve = 2e-3;
-                //ve = 1;
-                Gaussian uniform = Gaussian.Uniform();
-                Gamma expPoint = Gamma.PointMass(2);
-                Gamma to_exp_point = ExpOp.ExpAverageConditional(expPoint, d, uniform);
-                Gaussian to_d_point = ExpOp.DAverageConditional(expPoint, d, uniform);
-                double to_exp_oldError = double.PositiveInfinity;
-                double to_d_oldError = double.PositiveInfinity;
-                for (int i = 5; i < 100; i++)
-                {
-                    ve = System.Math.Pow(10, -i);
-                    Gamma exp = Gamma.FromMeanAndVariance(2, ve);
-                    Gamma to_exp = ExpOp.ExpAverageConditional(exp, d, uniform);
-                    Gaussian to_d = ExpOp.DAverageConditional(exp, d, uniform);
-                    double to_exp_error = to_exp.MaxDiff(to_exp_point);
-                    double to_d_error = System.Math.Abs(to_d.GetMean() - to_d_point.GetMean());
-                    Trace.WriteLine($"ve={ve}: to_exp={to_exp} error={to_exp_error} to_d={to_d} error={to_d_error}");
-                    Assert.True(to_exp_error <= to_exp_oldError);
-                    to_exp_oldError = to_exp_error;
-                    Assert.True(to_d_error <= to_d_oldError);
-                    to_d_oldError = to_d_error;
-                }
-                Trace.WriteLine(ExpOp.DAverageConditional(Gamma.FromMeanAndVariance(1, ve), d, uniform));
-                using (TestUtils.TemporarilyChangeQuadratureShift(true))
-                {
-                    Trace.WriteLine(ExpOp.DAverageConditional(Gamma.FromMeanAndVariance(1, ve), d, uniform));
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "OpenBug")]
-        public void ExpOpGammaPower_PointExp()
-        {
-            double power = -1;
-            double vd = 1e-4;
-            vd = 1e-3;
-            Gaussian d = new Gaussian(0, vd);
-            Gaussian uniform = Gaussian.Uniform();
-            GammaPower expPoint = GammaPower.PointMass(2, power);
-            GammaPower to_exp_point = ExpOp.ExpAverageConditional(expPoint, d, uniform);
-            Gaussian to_d_point = ExpOp.DAverageConditional(expPoint, d, uniform);
-            double to_exp_oldError = double.PositiveInfinity;
-            double to_d_oldError = double.PositiveInfinity;
-            for (int i = 0; i < 100; i++)
-            {
-                double ve = System.Math.Pow(10, -i);
-                GammaPower exp = GammaPower.FromMeanAndVariance(2, ve, power);
-                GammaPower to_exp = ExpOp.ExpAverageConditional(exp, d, uniform);
-                Gaussian to_d = ExpOp.DAverageConditional(exp, d, uniform);
-                double to_exp_error = to_exp.MaxDiff(to_exp_point);
-                double to_d_error = System.Math.Abs(to_d.GetMean() - to_d_point.GetMean());
-                Trace.WriteLine($"ve={ve}: to_exp={to_exp} error={to_exp_error} to_d={to_d} error={to_d_error}");
-                Assert.True(to_exp_error <= to_exp_oldError);
-                to_exp_oldError = to_exp_error;
-                Assert.True(to_d_error <= to_d_oldError);
-                to_d_oldError = to_d_error;
-            }
-        }
-
-        [Fact]
-        public void LogisticOpTest()
-        {
-            for (int trial = 0; trial < 2; trial++)
-            {
-                double xMean = (trial == 0) ? -1 : 1;
-                Gaussian x = Gaussian.FromMeanAndVariance(xMean, 0);
-                Gaussian result2 = BernoulliFromLogOddsOp.LogOddsAverageConditional(true, x);
-                Console.WriteLine("{0}: {1}", x, result2);
-                for (int i = 8; i < 30; i++)
-                {
-                    double v = System.Math.Pow(0.1, i);
-                    x = Gaussian.FromMeanAndVariance(xMean, v);
-                    Gaussian result = BernoulliFromLogOddsOp.LogOddsAverageConditional(true, x);
-                    Console.WriteLine("{0}: {1} maxDiff={2}", x, result, result2.MaxDiff(result));
-                    Assert.True(result2.MaxDiff(result) < 1e-6);
-                }
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                Gaussian falseMsg = LogisticOp.FalseMsg(new Beta(0.2, 1.8), new Gaussian(0, 97.0 * (i + 1)), new Gaussian());
-                Console.WriteLine(falseMsg);
-            }
-            Gaussian toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(-4662, 1314));
-            Console.WriteLine(toLogOdds);
-            toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(2249, 2.5));
-            Console.WriteLine(toLogOdds);
-            Gaussian logOdds = new Gaussian(100, 100);
-            toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, logOdds);
-            Console.WriteLine(toLogOdds * logOdds);
-            // test m =approx 1.5*v for increasing v
-            for (int i = 0; i < 10; i++)
-            {
-                double v = System.Math.Pow(2, i + 5);
-                Gaussian g = new Gaussian(37 + 1.5 * v, v);
-                toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, g);
-                Console.WriteLine("{0}: {1}", g, toLogOdds);
-                Gaussian actualPost = toLogOdds * g;
-                Gaussian expectedPost = new Gaussian(0, 1);
-                if (i == 0)
-                {
-                    // for Gaussian(85,32)
-                    expectedPost = new Gaussian(53, 32);
-                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
-                }
-                else if (i == 1)
-                {
-                    // for Gaussian(133,64)
-                    expectedPost = new Gaussian(69, 64);
-                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
-                }
-                else if (i == 4)
-                {
-                    // for Gaussian(805,512) the posterior should be (293, 511.81)
-                    expectedPost = new Gaussian(293, 511.81);
-                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
-                }
-                else if (i == 5)
-                {
-                    // for Gaussian(1573,1024)
-                    expectedPost = new Gaussian(549, 1023.9);
-                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
-                }
-            }
-            // test m =approx v for increasing v
-            for (int i = 0; i < 10; i++)
-            {
-                double v = System.Math.Pow(2, i + 5);
-                Gaussian g = new Gaussian(v - 1, v);
-                toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, g);
-                Console.WriteLine("{0}: {1}", g, toLogOdds);
-                Gaussian actualPost = toLogOdds * g;
-                Gaussian expectedPost = new Gaussian(0, 1);
-                if (i == 0)
-                {
-                    // for Gaussian(31,32)
-                    expectedPost = new Gaussian(3.8979, 12.4725);
-                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
-                }
-                else if (i == 6)
-                {
-                    // for Gaussian(2047,2048)
-                    expectedPost = new Gaussian(35.7156, 736.2395);
-                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
-                }
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(54.65 / 10 * (i + 1), 8.964));
-                Console.WriteLine(toLogOdds);
-            }
-            toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(9900, 10000) ^ 0.1);
-            Console.WriteLine(toLogOdds);
-            Gaussian falseMsg2 = LogisticOp.FalseMsg(new Beta(0.9, 0.1), Gaussian.FromNatural(-10.097766458353044, 0.000011644704327819733),
-              Gaussian.FromNatural(-0.0010832099815010626, 0.000010092906656322242));
-            Console.WriteLine(falseMsg2);
-        }
-
-        [Fact]
-        public void BernoulliFromLogOddsTest()
-        {
-            double tolerance = 1e-8;
-            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(0, 2)), System.Math.Log(0.5)) < tolerance);
-            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(2, 0)), MMath.LogisticLn(2)) < tolerance);
-            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(1, 1)), System.Math.Log(1 - 0.5 * System.Math.Exp(-0.5))) < tolerance);
-            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(10, 10)), System.Math.Log(1 - 0.5 * System.Math.Exp(-5))) < tolerance);
-            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(-1, 1)), System.Math.Log(0.303265329856008)) < tolerance);
-            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(-5, 3)), System.Math.Log(0.023962216989475)) < tolerance);
-            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(-5, 10)), System.Math.Log(0.084396512538678)) < tolerance);
-        }
-
-        [Fact]
-        public void MaxTest()
-        {
-            Gaussian actual, expected;
-            actual = MaxGaussianOp.MaxAverageConditional(Gaussian.FromNatural(6053.7946407740192, 2593.4559834344436), Gaussian.FromNatural(-1.57090676324773, 1.3751262174888785), Gaussian.FromNatural(214384.78500926663, 96523.508973471908));
-            Assert.False(actual.IsProper());
-            actual = MaxGaussianOp.MaxAverageConditional(Gaussian.FromNatural(146.31976467723146, 979.371757950659), Gaussian.FromNatural(0.075442729439046508, 0.086399540048904114), Gaussian.PointMass(0));
-            Assert.False(actual.IsProper());
-
-            actual = MaxGaussianOp.MaxAverageConditional(Gaussian.Uniform(), Gaussian.PointMass(0), new Gaussian(-7.357e+09, 9.75));
-            expected = Gaussian.PointMass(0);
-            Assert.True(expected.MaxDiff(actual) < 1e-4);
-
-            Gaussian max;
-            max = new Gaussian(4, 5);
-            actual = MaxGaussianOp.MaxAverageConditional(max, new Gaussian(0, 1), new Gaussian(2, 3));
-            actual *= max;
-            expected = new Gaussian(2.720481395499785, 1.781481142817509);
-            //expected = MaxPosterior(max, new Gaussian(0, 1), new Gaussian(2, 3));
-            Assert.True(expected.MaxDiff(actual) < 1e-4);
-
-            max = new Gaussian();
-            max.MeanTimesPrecision = 0.2;
-            max.Precision = 1e-10;
-            actual = MaxGaussianOp.MaxAverageConditional(max, new Gaussian(0, 1), new Gaussian(0, 1));
-            actual *= max;
-            expected = new Gaussian(0.702106815765215, 0.697676918460236);
-            Assert.True(expected.MaxDiff(actual) < 1e-4);
-        }
-
-        [Fact]
-        public void MaxTest2()
-        {
-            foreach (double max in new[] { 0.0, 2.0 })
-            {
-                double oldm = double.NaN;
-                double oldv = double.NaN;
-                for (int i = 0; i < 300; i++)
-                {
-                    Gaussian a = new Gaussian(System.Math.Pow(10, i), 177);
-                    Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, 0);
-                    Gaussian to_b = MaxGaussianOp.BAverageConditional(max, 0, a);
-                    Assert.Equal(to_a, to_b);
-                    if (max == 0)
-                    {
-                        Gaussian to_a2 = IsPositiveOp.XAverageConditional(false, a);
-                        double error = System.Math.Max(MMath.AbsDiff(to_a.MeanTimesPrecision, to_a2.MeanTimesPrecision, double.Epsilon),
-                            MMath.AbsDiff(to_a.Precision, to_a2.Precision, double.Epsilon));
-                        //Trace.WriteLine($"{a} {to_a} {to_a2} {error}");
-                        Assert.True(error < 1e-12);
-                    }
-                    //else Trace.WriteLine($"{a} {to_a}");
-                    double m, v;
-                    to_a.GetMeanAndVariance(out m, out v);
-                    if (!double.IsNaN(oldm))
-                    {
-                        Assert.True(v <= oldv);
-                        double olddiff = System.Math.Abs(max - oldm);
-                        double diff = System.Math.Abs(max - m);
-                        Assert.True(diff <= olddiff);
-                    }
-                    oldm = m;
-                    oldv = v;
-                }
-            }
-        }
-
-        [Fact]
-        public void Max_MaxPointMassTest()
-        {
-            Gaussian a = new Gaussian(1, 2);
-            Gaussian b = new Gaussian(4, 5);
-            Max_MaxPointMass(a, b);
-            Max_MaxPointMass(a, Gaussian.PointMass(2));
-            Max_MaxPointMass(a, Gaussian.PointMass(3));
-            Max_MaxPointMass(Gaussian.PointMass(2), b);
-            Max_MaxPointMass(Gaussian.PointMass(3), b);
-            Max_MaxPointMass(Gaussian.PointMass(3), Gaussian.PointMass(2));
-            Max_MaxPointMass(Gaussian.PointMass(2), Gaussian.PointMass(3));
-        }
-
-        private void Max_MaxPointMass(Gaussian a, Gaussian b)
-        {
-            double point = 3;
-            Gaussian toPoint = MaxGaussianOp.MaxAverageConditional(Gaussian.PointMass(point), a, b);
-            //Console.WriteLine($"{point} {toPoint} {toPoint.MeanTimesPrecision} {toPoint.Precision}");
-            double oldDiff = double.PositiveInfinity;
-            for (int i = 5; i < 100; i++)
-            {
-                Gaussian max = Gaussian.FromMeanAndPrecision(point, System.Math.Pow(10, i));
-                Gaussian to_max = MaxGaussianOp.MaxAverageConditional(max, a, b);
-                double diff = toPoint.MaxDiff(to_max);
-                //Console.WriteLine($"{max} {to_max} {to_max.MeanTimesPrecision} {to_max.Precision} {diff}");
-                if (diff < 1e-14) diff = 0;
-                Assert.True(diff <= oldDiff);
-                oldDiff = diff;
-            }
-        }
-
-        [Fact]
-        public void Max_APointMassTest()
-        {
-            //MaxGaussianOp.ForceProper = false;
-            Gaussian max = new Gaussian(4, 5);
-            Gaussian b = new Gaussian(1, 2);
-            Max_APointMass(new Gaussian(4, 1e-0), Gaussian.PointMass(0));
-            Max_APointMass(Gaussian.PointMass(11), Gaussian.PointMass(0));
-            Max_APointMass(max, b);
-            Max_APointMass(max, Gaussian.PointMass(2));
-            Max_APointMass(max, Gaussian.PointMass(3));
-            Max_APointMass(max, Gaussian.PointMass(4));
-            Max_APointMass(Gaussian.PointMass(3), b);
-            Max_APointMass(Gaussian.PointMass(4), b);
-            Max_APointMass(Gaussian.PointMass(3), Gaussian.PointMass(3));
-        }
-
-        private void Max_APointMass(Gaussian max, Gaussian b)
-        {
-            double point = 3;
-            Gaussian toPoint = MaxGaussianOp.AAverageConditional(max, Gaussian.PointMass(point), b);
-            //Console.WriteLine($"{point} {toPoint} {toPoint.MeanTimesPrecision:g17} {toPoint.Precision:g17}");
-            if (max.IsPointMass && b.IsPointMass)
-            {
-                Gaussian toUniform = MaxGaussianOp.AAverageConditional(max, Gaussian.Uniform(), b);
-                if (max.Point > b.Point)
-                {
-                    Assert.Equal(toUniform, max);
-                }
-                else
-                {
-                    Assert.Equal(toUniform, Gaussian.Uniform());
-                }
-            }
-            double oldDiff = double.PositiveInfinity;
-            for (int i = 3; i < 100; i++)
-            {
-                Gaussian a = Gaussian.FromMeanAndPrecision(point, System.Math.Pow(10, i));
-                Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, b);
-                double diff = toPoint.MaxDiff(to_a);
-                //Console.WriteLine($"{a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17} {diff:g17}");
-                if (diff < 1e-14) diff = 0;
-                Assert.True(diff <= oldDiff);
-                oldDiff = diff;
-            }
-        }
-
-        public static Gaussian MaxAPosterior(Gaussian max, Gaussian a, Gaussian b)
-        {
-            int n = 10000000;
-            GaussianEstimator est = new GaussianEstimator();
-            for (int i = 0; i < n; i++)
-            {
-                double aSample = a.Sample();
-                double bSample = b.Sample();
-                double logProb = max.GetLogProb(System.Math.Max(aSample, bSample));
-                double weight = System.Math.Exp(logProb);
-                est.Add(aSample, weight);
-            }
-            return est.GetDistribution(new Gaussian());
-        }
-
-        public static Gaussian MaxPosterior(Gaussian max, Gaussian a, Gaussian b)
-        {
-            int n = 10000000;
-            GaussianEstimator est = new GaussianEstimator();
-            for (int i = 0; i < n; i++)
-            {
-                double aSample = a.Sample();
-                double bSample = b.Sample();
-                double maxSample = System.Math.Max(aSample, bSample);
-                double logProb = max.GetLogProb(maxSample);
-                double weight = System.Math.Exp(logProb);
-                est.Add(maxSample, weight);
-            }
-            return est.GetDistribution(new Gaussian());
-        }
-
-        [Fact]
-        public void OrTest()
-        {
-            Assert.Equal(1.0, BooleanOrOp.AAverageConditional(true, false).GetProbTrue());
-            Assert.Equal(1.0, BooleanOrOp.OrAverageConditional(Bernoulli.PointMass(true), false).GetProbTrue());
-
-            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), Bernoulli.PointMass(false)).LogOdds);
-            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, Bernoulli.PointMass(false)).LogOdds);
-            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), false).LogOdds);
-            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, false).LogOdds);
-
-            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), Bernoulli.PointMass(true)).GetProbTrue());
-            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, Bernoulli.PointMass(true)).GetProbTrue());
-            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), true).GetProbTrue());
-            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, true).GetProbTrue());
-
-            Assert.Throws<AllZeroException>(() =>
-            {
-                BooleanAndOp.AAverageConditional(true, false);
-            });
-            Assert.Throws<AllZeroException>(() =>
-            {
-                BooleanAndOp.AAverageConditional(Bernoulli.PointMass(true), false);
-            });
-            Assert.Throws<AllZeroException>(() =>
-            {
-                BooleanAndOp.AAverageConditional(true, Bernoulli.PointMass(false));
-            });
-            Assert.Throws<AllZeroException>(() =>
-            {
-                BooleanAndOp.AAverageConditional(Bernoulli.PointMass(true), Bernoulli.PointMass(false));
-            });
-        }
-
-        [Fact]
-        public void BernoulliFromDiscreteTest()
-        {
-            double[] probTrue = { 0.4, 0.7 };
-            Discrete indexDist = new Discrete(0.8, 0.2);
-            Bernoulli sampleDist = new Bernoulli(0.8 * 0.4 + 0.2 * 0.7);
-            Assert.True(sampleDist.MaxDiff(BernoulliFromDiscreteOp.SampleAverageConditional(indexDist, probTrue)) < 1e-4);
-            sampleDist.SetProbTrue(0.2);
-            double p = (0.8 * 0.3 + 0.2 * 0.7) / (0.8 * 0.3 + 0.2 * 0.7 + 0.8 * 0.6 + 0.2 * 0.4);
-            Vector probs = indexDist.GetWorkspace();
-            probs[0] = 1 - p;
-            probs[1] = p;
-            indexDist.SetProbs(probs);
-            Assert.True(indexDist.MaxDiff(BernoulliFromDiscreteOp.IndexAverageConditional(sampleDist, probTrue, Discrete.Uniform(indexDist.Dimension))) < 1e-4);
-        }
-
-        [Fact]
-        public void BernoulliFromBooleanTest()
-        {
-            double[] probTrue = { 0.4, 0.7 };
-            Bernoulli choiceDist = new Bernoulli(0.2);
-            Bernoulli sampleDist = new Bernoulli(0.8 * 0.4 + 0.2 * 0.7);
-            Assert.True(sampleDist.MaxDiff(BernoulliFromBooleanArray.SampleAverageConditional(choiceDist, probTrue)) < 1e-4);
-            sampleDist.SetProbTrue(0.2);
-            choiceDist.SetProbTrue((0.8 * 0.3 + 0.2 * 0.7) / (0.8 * 0.3 + 0.2 * 0.7 + 0.8 * 0.6 + 0.2 * 0.4));
-            Assert.True(choiceDist.MaxDiff(BernoulliFromBooleanArray.ChoiceAverageConditional(sampleDist, probTrue)) < 1e-4);
-        }
-
-        [Fact]
-        [Trait("Category", "ModifiesGlobals")]
-        public void BernoulliFromBetaOpTest()
-        {
-            Assert.True(System.Math.Abs(BernoulliFromBetaOp.LogEvidenceRatio(new Bernoulli(3e-5), Beta.PointMass(1)) - 0) < 1e-10);
-
-            using (TestUtils.TemporarilyAllowBetaImproperSums)
-            {
-                Beta probTrueDist = new Beta(3, 2);
-                Bernoulli sampleDist = new Bernoulli();
-                Assert.True(new Beta(1, 1).MaxDiff(BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist)) < 1e-4);
-                sampleDist = Bernoulli.PointMass(true);
-                Assert.True(new Beta(2, 1).MaxDiff(BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist)) < 1e-4);
-                sampleDist = Bernoulli.PointMass(false);
-                Assert.True(new Beta(1, 2).MaxDiff(BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist)) < 1e-4);
-                sampleDist = new Bernoulli(0.9);
-                Assert.True(new Beta(1.724, 0.9598).MaxDiff(BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist)) < 1e-3);
-                Assert.Throws<ImproperMessageException>(() =>
-                {
-                    BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, new Beta(1, -2));
-                });
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "ModifiesGlobals")]
-        public void BernoulliFromBetaOpTest2()
-        {
-            Bernoulli sampleDist = new Bernoulli(2.0 / 3);
-            using (TestUtils.TemporarilyAllowBetaImproperSums)
-            {
-                for (int i = 10; i <= 10; i++)
-                {
-                    double s = System.Math.Exp(i);
-                    Beta probTrueDist = new Beta(s, 2 * s);
-                    Beta expected = BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist);
-                    if (i == 10)
-                        probTrueDist.Point = probTrueDist.GetMean();
-                    Beta actual = BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist);
-                    Console.WriteLine("{0} {1}", probTrueDist, actual);
-                    Assert.True(expected.MaxDiff(actual) < 1e-4);
-                }
-            }
-            for (int i = 10; i <= 10; i++)
-            {
-                Beta probTrueDist = new Beta(System.Math.Exp(i), 1);
-                Beta expected = BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist);
-                if (i == 10)
-                    probTrueDist.Point = 1;
-                Beta actual = BernoulliFromBetaOp.ProbTrueAverageConditional(sampleDist, probTrueDist);
-                Console.WriteLine("{0} {1}", probTrueDist, actual);
-                Assert.True(expected.MaxDiff(actual) < 1e-4);
-            }
-        }
-
-        [Trait("Category", "ModifiesGlobals")]
-        internal void DiscreteFromDirichletOpTest2()
-        {
-            Discrete sample = new Discrete(1.0 / 3, 2.0 / 3);
-            Vector sampleProbs = sample.GetProbs();
-            Dirichlet result = Dirichlet.Uniform(2);
-            using (TestUtils.TemporarilyAllowDirichletImproperSums)
-            {
-                for (int i = 1; i <= 10; i++)
-                {
-                    double s = System.Math.Exp(i);
-                    Dirichlet probsDist = new Dirichlet(s, 2 * s);
-                    if (i == 10)
-                        probsDist.Point = probsDist.GetMean();
-                    Console.WriteLine("{0} {1}", probsDist, DiscreteFromDirichletOp.ProbsAverageConditional(sample, probsDist, result));
-                    Dirichlet post = probsDist * result;
-                    Vector postMean = post.GetMean();
-                    Vector priorMean = probsDist.GetMean();
-                    Vector postMeanSquare = post.GetMeanSquare();
-                    DenseVector delta2 = DenseVector.Zero(postMean.Count);
-                    for (int j = 0; j < delta2.Count; j++)
-                    {
-                        delta2[j] = postMeanSquare[j] - (probsDist.PseudoCount[j] + 1) / (probsDist.TotalCount + 1) * postMean[j];
-                    }
-                    delta2.Scale(probsDist.TotalCount + 1);
-                    Vector delta1 = (postMean - priorMean) * probsDist.TotalCount;
-                    DenseVector delta1Approx = DenseVector.Zero(postMean.Count);
-                    //delta.SetToFunction(sampleProbs, priorMean, (sampleProb, prob) => (
-                    double Z = sampleProbs.Inner(priorMean);
-                    delta1Approx[0] = priorMean[0] * priorMean[1] * (sampleProbs[0] - sampleProbs[1]) / Z;
-                    DenseVector delta2Approx = DenseVector.Zero(postMean.Count);
-                    delta2Approx[0] = priorMean[0] * priorMean[0] * priorMean[1] * (sampleProbs[0] - sampleProbs[1]) / Z;
-                    //Console.WriteLine("delta = {0} {1} {2} {3}", delta1, delta1Approx, delta2, delta2Approx);
-                }
-            }
-            for (int i = 1; i <= 10; i++)
-            {
-                double s = System.Math.Exp(i);
-                Dirichlet probsDist = new Dirichlet(s * 4, s * 5);
-                if (i == 10)
-                    probsDist.Point = probsDist.GetMean();
-                Console.WriteLine("{0} {1}", probsDist, DiscreteFromDirichletOp.ProbsAverageConditional(sample, probsDist, result));
-            }
-        }
-
-        [Trait("Category", "ModifiesGlobals")]
-        internal void DiscreteFromDirichletOpTest3()
-        {
-            Discrete sample = new Discrete(3.0 / 6, 2.0 / 6, 1.0 / 6);
-            Vector sampleProbs = sample.GetProbs();
-            Dirichlet result = Dirichlet.Uniform(3);
-            using (TestUtils.TemporarilyAllowDirichletImproperSums)
-            {
-                for (int i = 1; i <= 10; i++)
-                {
-                    double s = System.Math.Exp(i);
-                    Dirichlet probsDist = new Dirichlet(s * 2, s * 1, s * 3);
-                    if (i == 10)
-                        probsDist.Point = probsDist.GetMean();
-                    Console.WriteLine("{0} {1}", probsDist, DiscreteFromDirichletOp.ProbsAverageConditional(sample, probsDist, result));
-                    Dirichlet post = probsDist * result;
-                    Vector postMean = post.GetMean();
-                    Vector postMeanSquare = post.GetMeanSquare();
-                    Vector priorMean = probsDist.GetMean();
-                    Vector delta1 = (postMean - priorMean) * probsDist.TotalCount;
-                    DenseVector delta2 = DenseVector.Zero(postMean.Count);
-                    for (int j = 0; j < delta2.Count; j++)
-                    {
-                        delta2[j] = postMeanSquare[j] - (probsDist.PseudoCount[j] + 1) / (probsDist.TotalCount + 1) * postMean[j];
-                    }
-                    delta2.Scale(probsDist.TotalCount + 1);
-                    double Z = sampleProbs.Inner(priorMean);
-                    DenseVector delta1Approx = DenseVector.Zero(postMean.Count);
-                    //delta.SetToFunction(sampleProbs, priorMean, (sampleProb, prob) => (
-                    //delta1Approx[0] = priorMean[0] * priorMean[2] * (sampleProbs[0] - sampleProbs[2])/Z;
-                    delta1Approx[0] = probsDist.PseudoCount[1] * postMean[0] - probsDist.PseudoCount[0] * postMean[1] + priorMean[0] * priorMean[2] * (sampleProbs[0] - sampleProbs[2]) / Z;
-                    delta1Approx[0] = (probsDist.PseudoCount[1] + probsDist.PseudoCount[2]) / probsDist.PseudoCount[2] * priorMean[0] * priorMean[2] * (sampleProbs[0] - sampleProbs[2]) / Z
-                        - probsDist.PseudoCount[0] / probsDist.PseudoCount[2] * priorMean[1] * priorMean[2] * (sampleProbs[1] - sampleProbs[2]) / Z;
-                    delta1Approx[1] = probsDist.PseudoCount[0] * postMean[1] - probsDist.PseudoCount[1] * postMean[0] + priorMean[1] * priorMean[2] * (sampleProbs[1] - sampleProbs[2]) / Z;
-                    delta1Approx[2] = -priorMean[0] * priorMean[2] * (sampleProbs[0] - sampleProbs[2]) / Z - priorMean[1] * priorMean[2] * (sampleProbs[1] - sampleProbs[2]) / Z;
-                    DenseVector delta2Approx = DenseVector.Zero(postMean.Count);
-                    delta2Approx[0] = priorMean[0] * priorMean[0] * priorMean[1] * (sampleProbs[0] - sampleProbs[1]) / Z;
-                    //Console.WriteLine("delta = {0} {1} {2} {3}", delta1, delta1Approx, delta2, delta2Approx);
-                }
-            }
-            for (int i = 1; i <= 10; i++)
-            {
-                double s = System.Math.Exp(i);
-                Dirichlet probsDist = new Dirichlet(s * 4, s * 5, s * 6);
-                if (i == 10)
-                    probsDist.Point = probsDist.GetMean();
-                Console.WriteLine("{0} {1}", probsDist, DiscreteFromDirichletOp.ProbsAverageConditional(sample, probsDist, result));
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "ModifiesGlobals")]
-        public void DiscreteFromDirichletOpMomentMatchTest()
-        {
-            using (TestUtils.TemporarilyAllowDirichletImproperSums)
-            {
-                Dirichlet probsDist = new Dirichlet(1, 2, 3, 4);
-                Discrete sampleDist = Discrete.Uniform(4);
-                Assert.True(Dirichlet.Uniform(4).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) < 1e-4);
-                sampleDist = Discrete.PointMass(1, 4);
-                Assert.True(new Dirichlet(1, 2, 1, 1).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) < 1e-4);
-                sampleDist = new Discrete(0, 1, 1, 0);
-                Assert.True(new Dirichlet(0.9364, 1.247, 1.371, 0.7456).MaxDiff(DiscreteFromDirichletOp.ProbsAverageConditional(sampleDist, probsDist, Dirichlet.Uniform(4))) <
-                              1e-3);
-            }
-        }
-
-        [Fact]
-        public void DiscreteFromDirichletOpTest()
-        {
-            Dirichlet probs4 = new Dirichlet(1.0, 2, 3, 4);
-            Discrete sample4 = new Discrete(0.4, 0.6, 0, 0);
-            Dirichlet result4 = DiscreteFromDirichletOp.ProbsAverageConditional(sample4, probs4, Dirichlet.Uniform(4));
-
-            Dirichlet probs3 = new Dirichlet(1.0, 2, 7);
-            Discrete sample3 = new Discrete(0.4, 0.6, 0);
-            Dirichlet result3 = DiscreteFromDirichletOp.ProbsAverageConditional(sample3, probs3, Dirichlet.Uniform(3));
-            for (int i = 0; i < 3; i++)
-            {
-                Assert.True(MMath.AbsDiff(result4.PseudoCount[i], result3.PseudoCount[i], 1e-6) < 1e-10);
-            }
-
-            Dirichlet probs2 = new Dirichlet(1.0, 2);
-            Discrete sample2 = new Discrete(0.4, 0.6);
-            Dirichlet result2 = DiscreteFromDirichletOp.ProbsAverageConditional(sample2, probs2, Dirichlet.Uniform(2));
-
-            Beta beta = new Beta(1.0, 2);
-            Bernoulli bernoulli = new Bernoulli(0.4);
-            Beta result1 = BernoulliFromBetaOp.ProbTrueAverageConditional(bernoulli, beta);
-            Assert.Equal(result2.PseudoCount[0], result1.TrueCount, 1e-10);
-            Assert.Equal(result2.PseudoCount[1], result1.FalseCount, 1e-10);
-
-            // test handling of small alphas
-            Discrete sample = DiscreteFromDirichletOp.SampleAverageLogarithm(Dirichlet.Symmetric(2, 1e-8), Discrete.Uniform(2));
-            Assert.True(sample.IsUniform());
-        }
-
-        // test the limit of an incoming message with small precision
-        [Fact]
-        public void GaussianIsPositiveTest2()
-        {
-            for (int trial = 0; trial < 2; trial++)
-            {
-                bool isPositive = (trial == 0);
-                Gaussian x = Gaussian.FromNatural(isPositive ? -2 : 2, 0);
-                Gaussian result = IsPositiveOp.XAverageConditional(isPositive, x);
-                for (int i = 10; i < 20; i++)
-                {
-                    x.Precision = System.Math.Pow(0.1, i);
-                    Gaussian result2 = IsPositiveOp.XAverageConditional(isPositive, x);
-                    //Console.WriteLine($"{x}: {result2} maxDiff={result.MaxDiff(result2)}");
-                    Assert.True(result.MaxDiff(result2) < 1e-6);
-                }
-            }
-        }
-
-        [Fact]
-        public void GaussianIsPositiveTest()
-        {
-            for (int trial = 0; trial < 2; trial++)
-            {
-                double xMean = (trial == 0) ? -1 : 1;
-                Gaussian x = Gaussian.FromMeanAndVariance(xMean, 0);
-                Gaussian result2 = IsPositiveOp.XAverageConditional(true, x);
-                //Console.WriteLine("{0}: {1}", x, result2);
-                if (trial == 0)
-                    Assert.True(result2.IsPointMass && result2.Point == 0.0);
-                else
-                    Assert.True(result2.IsUniform());
-                for (int i = 8; i < 30; i++)
-                {
-                    double v = System.Math.Pow(0.1, i);
-                    x = Gaussian.FromMeanAndVariance(xMean, v);
-                    Gaussian result = IsPositiveOp.XAverageConditional(true, x);
-                    //Console.WriteLine("{0}: {1} maxDiff={2}", x, result, result2.MaxDiff(result));
-                    if (trial == 0)
-                    {
-                        Assert.True(MMath.AbsDiff(result2.GetMean(), result.GetMean()) < 1e-6);
-                    }
-                    else
-                        Assert.True(result2.MaxDiff(result) < 1e-6);
-                }
-            }
-            for (int i = 0; i < 20; i++)
-            {
-                Assert.True(IsPositiveOp.XAverageConditional(true, Gaussian.FromNatural(-System.Math.Pow(10, i), 0.1)).IsProper());
-            }
-            Assert.True(IsPositiveOp.XAverageConditional(true, Gaussian.FromNatural(-2.3287253734154412E+107, 0.090258824802119691)).IsProper());
-            Assert.True(IsPositiveOp.XAverageConditional(false, Gaussian.FromNatural(2.3287253734154412E+107, 0.090258824802119691)).IsProper());
-            //Assert.True(IsPositiveOp.XAverageConditional(Bernoulli.FromLogOdds(-4e-16), new Gaussian(490, 1.488e+06)).IsProper());
-            Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(-2.03e+09, 5.348e+09)).IsProper());
-
-            Gaussian uniform = new Gaussian();
-            Assert.Equal(0.0, IsPositiveOp.IsPositiveAverageConditional(Gaussian.FromMeanAndVariance(0, 1)).LogOdds);
-            Assert.True(MMath.AbsDiff(MMath.NormalCdfLogit(2.0 / System.Math.Sqrt(3)), IsPositiveOp.IsPositiveAverageConditional(Gaussian.FromMeanAndVariance(2, 3)).LogOdds, 1e-10) <
-                          1e-10);
-            Assert.Equal(0.0, IsPositiveOp.IsPositiveAverageConditional(uniform).LogOdds);
-            Assert.Equal(0.0, IsPositiveOp.IsPositiveAverageConditional(Gaussian.PointMass(0.0)).GetProbTrue());
-
-            Bernoulli isPositiveDist = new Bernoulli();
-            Gaussian xDist = new Gaussian(0, 1);
-            Gaussian xMsg = new Gaussian();
-            Assert.True(IsPositiveOp.XAverageConditional(isPositiveDist, xDist).Equals(uniform));
-            isPositiveDist = new Bernoulli(0);
-            Gaussian xBelief = new Gaussian();
-            xMsg = IsPositiveOp.XAverageConditional(isPositiveDist, xDist);
-            xBelief.SetToProduct(xMsg, xDist);
-            Assert.True(xBelief.MaxDiff(Gaussian.FromMeanAndVariance(-0.7979, 0.3634)) < 1e-1);
-            isPositiveDist = new Bernoulli(1);
-            xMsg = IsPositiveOp.XAverageConditional(isPositiveDist, xDist);
-            xBelief.SetToProduct(xMsg, xDist);
-            Assert.True(xBelief.MaxDiff(Gaussian.FromMeanAndVariance(0.7979, 0.3634)) < 1e-1);
-            isPositiveDist = new Bernoulli(0.6);
-            xMsg = IsPositiveOp.XAverageConditional(isPositiveDist, xDist);
-            xBelief.SetToProduct(xMsg, xDist);
-            Assert.True(xBelief.MaxDiff(Gaussian.FromMeanAndVariance(0.15958, 0.97454)) < 1e-1);
-            Assert.True(IsPositiveOp.XAverageConditional(isPositiveDist, uniform).Equals(uniform));
-
-            Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(127, 11)).Equals(uniform));
-            Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(-127, 11)).Equals(uniform));
-            Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(-1e5, 10)).IsProper());
-            Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(1e5, 10)).IsProper());
         }
 
         [Fact]
@@ -1684,7 +498,7 @@ zL = (L - mx)*sqrt(prec)
                 {
                     //XAverageConditional_Debug(X, lowerBound, upperBound);
                     //X = Gaussian.FromMeanAndPrecision(mx, X.Precision + 1.0000000000000011E-19);
-                    Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
+                    Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Gaussian xPost = X * toX2;
                     Console.WriteLine($"mx = {X.GetMean():g17} mp = {xPost.GetMean():g17} vp = {xPost.GetVariance():g17} toX = {toX2}");
                     //X.Precision *= 100;
@@ -1703,7 +517,7 @@ zL = (L - mx)*sqrt(prec)
                     if (sample > lowerBound && sample < upperBound)
                         mva.Add(sample);
                 }
-                Gaussian toX = DoubleIsBetweenOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
+                Gaussian toX = IsBetweenGaussianOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                 Console.WriteLine($"expected mp = {mva.Mean}, vp = {mva.Variance}, {X * toX}");
                 XAverageConditional_Debug(X, lowerBound, upperBound);
             }
@@ -1715,7 +529,7 @@ zL = (L - mx)*sqrt(prec)
             double sqrtPrec = System.Math.Sqrt(X.Precision);
             double zL = (lowerBound - mx) * sqrtPrec;
             double zU = (upperBound - mx) * sqrtPrec;
-            double logZ = DoubleIsBetweenOp.LogProbBetween(X, lowerBound, upperBound);
+            double logZ = IsBetweenGaussianOp.LogProbBetween(X, lowerBound, upperBound);
             double logPhiL = X.GetLogProb(lowerBound);
             double ZR = System.Math.Exp(logZ - logPhiL);
             // Z/X.Prob(U)*sqrtPrec = NormalCdfRatio(zU) - NormalCdfRatio(zL)*X.Prob(L)/X.Prob(U) 
@@ -1996,7 +810,7 @@ zL = (L - mx)*sqrt(prec)
             // combine terms 1,2,3 and 8
             // zU = diffs/2 - delta/diffs
             // rU = r2U -r1U*zU = r2U - r1U*(diffs/2 - delta/diffs)
-            double drU2r1U = DoubleIsBetweenOp.NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U);
+            double drU2r1U = IsBetweenGaussianOp.NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U);
             double q16 =
                 delta * delta * (drU2r1U * expMinus1 * expMinus1RatioMinus1RatioMinusHalf + (r2U - r1U * diffs / 2) * expMinus1RatioMinus1 * diffs / 2)
                 + rU * expMinus1 * (-(rU / 2 + (r1L + drU2) * zL) * diffs * diffs / 2 * delta - diffs * diffs / 2 * r1L * diffs / 2 + diffs * diffs / 2 * drU2 * (-zL - zU) + diffs * diffs * drU3)
@@ -2100,62 +914,62 @@ zL = (L - mx)*sqrt(prec)
         [Fact]
         public void GaussianIsBetweenTest()
         {
-            Assert.True(DoubleIsBetweenOp.LogProbBetween(Gaussian.FromNatural(3172.868479466179, 1.5806459147637875E-06), -0.18914271233981969, 0.18914271233981969) < 0);
-            Assert.True(DoubleIsBetweenOp.LogProbBetween(new Gaussian(-49.13, 1.081), new Gaussian(47, 1.25), new Gaussian(48, 1.25)) < -10);
-            Assert.True(!double.IsNaN(DoubleIsBetweenOp.LogZ(Bernoulli.PointMass(true), new Gaussian(-49.13, 1.081), new Gaussian(47, 1.25), new Gaussian(48, 1.25))));
+            Assert.True(IsBetweenGaussianOp.LogProbBetween(Gaussian.FromNatural(3172.868479466179, 1.5806459147637875E-06), -0.18914271233981969, 0.18914271233981969) < 0);
+            Assert.True(IsBetweenGaussianOp.LogProbBetween(new Gaussian(-49.13, 1.081), new Gaussian(47, 1.25), new Gaussian(48, 1.25)) < -10);
+            Assert.True(!double.IsNaN(IsBetweenGaussianOp.LogZ(Bernoulli.PointMass(true), new Gaussian(-49.13, 1.081), new Gaussian(47, 1.25), new Gaussian(48, 1.25))));
 
-            DoubleIsBetweenOp.LogProbBetween(Gaussian.FromNatural(-1.9421168441678062E-32, 3.0824440518369444E-35),
+            IsBetweenGaussianOp.LogProbBetween(Gaussian.FromNatural(-1.9421168441678062E-32, 3.0824440518369444E-35),
                 Gaussian.FromNatural(-9.4928010569516363, 0.0084055128328109872),
                 Gaussian.FromNatural(0.67290512665940949, 0.0042043926136280212));
 
             double actual, expected;
             Gaussian x = new Gaussian(0, 1);
 
-            double lp = DoubleIsBetweenOp.LogProbBetween(x, 100, 100.1);
-            double lp2 = DoubleIsBetweenOp.LogProbBetween(x, -100.1, -100);
+            double lp = IsBetweenGaussianOp.LogProbBetween(x, 100, 100.1);
+            double lp2 = IsBetweenGaussianOp.LogProbBetween(x, -100.1, -100);
             Assert.True(MMath.AbsDiff(lp, lp2, 1e-8) < 1e-8);
             Console.WriteLine("{0} {1}", lp, lp2);
 
             Gaussian lowerBound = Gaussian.PointMass(0);
             Gaussian upperBound = Gaussian.PointMass(1);
-            Assert.True(System.Math.Abs(DoubleIsBetweenOp.LogProbBetween(new Gaussian(1, 3e-5), 0.5, 1.1)) < 1e-10);
+            Assert.True(System.Math.Abs(IsBetweenGaussianOp.LogProbBetween(new Gaussian(1, 3e-5), 0.5, 1.1)) < 1e-10);
             Assert.True(
-                System.Math.Abs(DoubleIsBetweenOp.LogProbBetween(new Gaussian(1, 1e-6), Gaussian.FromMeanAndVariance(0.5, 1e-10), Gaussian.FromMeanAndVariance(1.1, 1e-10))) < 1e-10);
+                System.Math.Abs(IsBetweenGaussianOp.LogProbBetween(new Gaussian(1, 1e-6), Gaussian.FromMeanAndVariance(0.5, 1e-10), Gaussian.FromMeanAndVariance(1.1, 1e-10))) < 1e-10);
             // test in matlab: x=randn(1e7,1); [mean(0<x & x<1) normcdf(1)-normcdf(0)]
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = MMath.NormalCdf(1) - MMath.NormalCdf(0);
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound.Point, upperBound.Point).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound.Point, upperBound.Point).GetProbTrue();
             expected = MMath.NormalCdf(1) - MMath.NormalCdf(0);
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
             Assert.Throws<AllZeroException>(() =>
             {
-                Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(0.5), 1, 0).GetProbTrue());
+                Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(0.5), 1, 0).GetProbTrue());
             });
             Assert.Throws<AllZeroException>(() =>
             {
-                Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), 1, 0).GetProbTrue());
+                Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), 1, 0).GetProbTrue());
                 Assert.True(false, "Did not throw exception");
             });
-            Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(0), 0, 1).GetProbTrue());
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(-1), Gaussian.PointMass(0), Gaussian.FromMeanAndVariance(1, 1)).GetProbTrue());
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(1), 0, 1).GetProbTrue());
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(1), Gaussian.FromMeanAndVariance(0, 1), Gaussian.PointMass(1)).GetProbTrue());
+            Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(0), 0, 1).GetProbTrue());
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(-1), Gaussian.PointMass(0), Gaussian.FromMeanAndVariance(1, 1)).GetProbTrue());
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(1), 0, 1).GetProbTrue());
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(1), Gaussian.FromMeanAndVariance(0, 1), Gaussian.PointMass(1)).GetProbTrue());
 
-            Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), Double.NegativeInfinity, Double.PositiveInfinity).GetProbTrue());
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), 0.0, Double.PositiveInfinity).LogOdds);
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), Double.NegativeInfinity, 0.0).LogOdds);
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), Gaussian.PointMass(Double.NegativeInfinity), new Gaussian()).LogOdds);
+            Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), Double.NegativeInfinity, Double.PositiveInfinity).GetProbTrue());
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), 0.0, Double.PositiveInfinity).LogOdds);
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), Double.NegativeInfinity, 0.0).LogOdds);
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), Gaussian.PointMass(Double.NegativeInfinity), new Gaussian()).LogOdds);
 
             lowerBound = new Gaussian();
             upperBound = Gaussian.PointMass(1);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = MMath.NormalCdf(1) * 0.5;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
 
             lowerBound = Gaussian.PointMass(0);
             upperBound = new Gaussian();
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = MMath.NormalCdf(0) * 0.5;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
 
@@ -2163,22 +977,22 @@ zL = (L - mx)*sqrt(prec)
             upperBound = new Gaussian(3, 3);
             // test in matlab: x=randn(1e7,1); mean(randnorm(1e7,1,[],8)'<x & x<randnorm(1e7,3,[],3)')
             // bvnl(-1/3,3/2,-1/2/3) = 0.33632
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = MMath.NormalCdf(-1.0 / 3, 3.0 / 2, -1.0 / 2 / 3);
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
 
             // uniform x
             x.SetToUniform();
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = 0;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, 0, 1).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, 0, 1).GetProbTrue();
             expected = 0;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, new Gaussian(), upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, new Gaussian(), upperBound).GetProbTrue();
             expected = 0.25;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, new Gaussian(), new Gaussian()).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, new Gaussian(), new Gaussian()).GetProbTrue();
             expected = 0.25;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
         }
@@ -2198,13 +1012,13 @@ zL = (L - mx)*sqrt(prec)
                     upperBound = new Gaussian(1, 1e-8);
                 Console.WriteLine($"upperBound = {upperBound}");
                 Gaussian lowerBound = Gaussian.PointMass(-1);
-                Gaussian result2 = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian result2 = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                 Console.WriteLine($"{lowerBound}: {result2}");
                 for (int i = 6; i < 30; i++)
                 {
                     double v = System.Math.Pow(0.1, i);
                     lowerBound = Gaussian.FromMeanAndVariance(-1, v);
-                    Gaussian result = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian result = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                     double error = result.MaxDiff(result2);
                     Console.WriteLine($"{lowerBound}: {result} {error}");
                     Assert.True(error < 1e-6);
@@ -2227,13 +1041,13 @@ zL = (L - mx)*sqrt(prec)
                     lowerBound = new Gaussian(-1, 1e-8);
                 Console.WriteLine($"lowerBound = {lowerBound}");
                 Gaussian upperBound = Gaussian.PointMass(1);
-                Gaussian result2 = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian result2 = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                 Console.WriteLine($"{upperBound}: {result2}");
                 for (int i = 6; i < 300; i++)
                 {
                     double v = System.Math.Pow(0.1, i);
                     upperBound = Gaussian.FromMeanAndVariance(1, v);
-                    Gaussian result = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian result = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                     double error = result.MaxDiff(result2);
                     Console.WriteLine($"{upperBound}: {result} {error}");
                     Assert.True(error < 1e-6);
@@ -2449,10 +1263,10 @@ zL = (L - mx)*sqrt(prec)
                         {
                             double mx = x.GetMean();
                             if (double.IsInfinity(mx)) continue;
-                            Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
+                            Gaussian toX = IsBetweenGaussianOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
                             //Gaussian x2 = Gaussian.FromMeanAndPrecision(2 * center - mx, x.Precision);
                             Gaussian x2 = Gaussian.FromNatural(-x.MeanTimesPrecision, x.Precision);
-                            Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
+                            Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
                             double precUlpDiff = UlpDiff(toX2.Precision, toX.Precision);
                             Assert.Equal(0, precUlpDiff);
                             if (precUlpDiff > precMaxUlpError)
@@ -2495,7 +1309,7 @@ zL = (L - mx)*sqrt(prec)
             Gaussian x = Gaussian.FromNatural(-1E+34, 1E+36);
             for (int i = 0; i < 1000; i++)
             {
-                double logProb = DoubleIsBetweenOp.LogProbBetween(x, lowerBound, upperBound);
+                double logProb = IsBetweenGaussianOp.LogProbBetween(x, lowerBound, upperBound);
                 Console.WriteLine($"{x.Precision:g17} {logProb:g17}");
                 x = Gaussian.FromMeanAndPrecision(x.GetMean(), x.Precision + 1000000000000 * MMath.Ulp(x.Precision));
             }
@@ -2527,13 +1341,13 @@ zL = (L - mx)*sqrt(prec)
                             else distance = System.Math.Abs(mx - upperBound);
                             if (distance < 1 / System.Math.Sqrt(x.Precision)) continue;
                         }
-                        double logProbBetween = DoubleIsBetweenOp.LogProbBetween(x, lowerBound, upperBound);
+                        double logProbBetween = IsBetweenGaussianOp.LogProbBetween(x, lowerBound, upperBound);
                         foreach (var precisionDelta in DoublesGreaterThanZero())
                         {
                             Gaussian x2 = Gaussian.FromMeanAndPrecision(mx, x.Precision + precisionDelta);
                             if (x2.Equals(x)) continue;
                             if (x2.GetMean() != mx) continue;
-                            double logProbBetween2 = DoubleIsBetweenOp.LogProbBetween(x2, lowerBound, upperBound);
+                            double logProbBetween2 = IsBetweenGaussianOp.LogProbBetween(x2, lowerBound, upperBound);
                             if ((isBetween && logProbBetween2 < logProbBetween) ||
                                 (!isBetween && logProbBetween2 > logProbBetween))
                             {
@@ -2573,7 +1387,7 @@ zL = (L - mx)*sqrt(prec)
                     Parallel.ForEach(Gaussians().Where(g => !g.IsPointMass).Take(100000), x =>
                     {
                         double mx = x.GetMean();
-                        Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
+                        Gaussian toX = IsBetweenGaussianOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
                         Gaussian xPost;
                         double meanError;
                         if (toX.IsPointMass)
@@ -2595,7 +1409,7 @@ zL = (L - mx)*sqrt(prec)
                             Gaussian x2 = Gaussian.FromMeanAndPrecision(mx, x.Precision + precisionDelta);
                             if (x2.Equals(x)) continue;
                             if (x2.GetMean() != mx) continue;
-                            Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
+                            Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
                             Gaussian xPost2;
                             double meanError2;
                             if (toX2.IsPointMass)
@@ -2685,7 +1499,7 @@ zL = (L - mx)*sqrt(prec)
                     Parallel.ForEach(Gaussians().Take(100000), x =>
                     {
                         double mx = x.GetMean();
-                        Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
+                        Gaussian toX = IsBetweenGaussianOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
                         Gaussian xPost;
                         double meanError;
                         if (toX.IsPointMass)
@@ -2705,7 +1519,7 @@ zL = (L - mx)*sqrt(prec)
                             if (double.IsPositiveInfinity(meanDelta)) mx2 = meanDelta;
                             if (mx2 == mx) continue;
                             Gaussian x2 = Gaussian.FromMeanAndPrecision(mx2, x.Precision);
-                            Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
+                            Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
                             Gaussian xPost2;
                             double meanError2;
                             if (toX2.IsPointMass)
@@ -2764,7 +1578,7 @@ zL = (L - mx)*sqrt(prec)
         public void GaussianIsBetweenCRCC_IsMonotonicInUpperBound()
         {
             // Test the symmetric version of a corner case that is tested below.
-            DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(-1.7976931348623157E+308, 4.94065645841247E-324), double.NegativeInfinity, 0);
+            IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(-1.7976931348623157E+308, 4.94065645841247E-324), double.NegativeInfinity, 0);
             double meanMaxUlpError = 0;
             double meanMaxUlpErrorLowerBound = 0;
             double meanMaxUlpErrorUpperBound = 0;
@@ -2779,7 +1593,7 @@ zL = (L - mx)*sqrt(prec)
                     if (trace) Console.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
                     Parallel.ForEach(Gaussians().Take(100000), x =>
                     {
-                        Gaussian toX = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound);
+                        Gaussian toX = IsBetweenGaussianOp.XAverageConditional(true, x, lowerBound, upperBound);
                         Gaussian xPost;
                         double meanError;
                         if (toX.IsPointMass)
@@ -2798,7 +1612,7 @@ zL = (L - mx)*sqrt(prec)
                             double upperBound2 = upperBound + delta;
                             if (delta > double.MaxValue) upperBound2 = delta;
                             if (upperBound2 == upperBound) continue;
-                            Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound2);
+                            Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(true, x, lowerBound, upperBound2);
                             Gaussian xPost2;
                             double meanError2;
                             if (toX2.IsPointMass)
@@ -2891,7 +1705,7 @@ zL = (L - mx)*sqrt(prec)
             double r = MMath.NormalCdfRatio(z);
             double r1 = MMath.NormalCdfMomentRatio(1, z);
             double r3 = MMath.NormalCdfMomentRatio(3, z) * 6;
-            double vp = DoubleIsBetweenOp.NormalCdfRatioSqrMinusDerivative(z, r, r1, r3);
+            double vp = IsBetweenGaussianOp.NormalCdfRatioSqrMinusDerivative(z, r, r1, r3);
             return vp;
         }
 
@@ -2943,7 +1757,7 @@ zL = (L - mx)*sqrt(prec)
             {
                 Gaussian X = Gaussian.FromNatural(2.2204460492503131E-16, System.Math.Pow(0.1, i));
                 X = Gaussian.FromMeanAndPrecision(-60, System.Math.Pow(0.1, i));
-                double logProb = DoubleIsBetweenOp.LogProbBetween(X, lowerBound, upperBound);
+                double logProb = IsBetweenGaussianOp.LogProbBetween(X, lowerBound, upperBound);
                 Trace.WriteLine($"X={X}: logProb={logProb}");
                 Assert.True(!double.IsNaN(logProb));
                 Assert.True(!double.IsInfinity(logProb));
@@ -2970,9 +1784,9 @@ zL = (L - mx)*sqrt(prec)
             Gaussian x = Gaussian.PointMass(-1000);
             Gaussian Xpost = new Gaussian();
             Bernoulli isBetween = Bernoulli.PointMass(true);
-            Gaussian toXExpected = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-            Gaussian toLowerExpected = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-            Gaussian toUpperExpected = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+            Gaussian toXExpected = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+            Gaussian toLowerExpected = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+            Gaussian toUpperExpected = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
             if (double.IsNaN(toXExpected.Precision)) throw new Exception();
             Console.WriteLine($"expected toX={toXExpected} toLower={toLowerExpected} toUpper={toUpperExpected}");
             Gaussian previousXpost = new Gaussian();
@@ -2981,9 +1795,9 @@ zL = (L - mx)*sqrt(prec)
             for (int i = -10; i < 30; i++)
             {
                 x.SetMeanAndVariance(1, System.Math.Pow(0.1, i));
-                Gaussian toX = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                Gaussian toLower = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                Gaussian toUpper = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian toX = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian toLower = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian toUpper = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                 Assert.True(toX.Precision >= 0);
                 Xpost.SetToProduct(x, toX);
                 Console.WriteLine($"{x}: {toX} {Xpost} toLower={toLower} toUpper={toUpper}");
@@ -3011,9 +1825,9 @@ zL = (L - mx)*sqrt(prec)
                 {
                     // check the flipped case
                     x.SetMeanAndVariance(-x.GetMean(), System.Math.Pow(0.1, i));
-                    Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                    Gaussian toLower2 = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                    Gaussian toUpper2 = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian toLower2 = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian toUpper2 = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                     Assert.True(toX.Precision == toX2.Precision);
                     Assert.True(toX.MeanTimesPrecision == -toX2.MeanTimesPrecision);
                     Assert.True(toLower2.Precision == toUpper.Precision);
@@ -3050,24 +1864,24 @@ weight * (tau + alphaX) + alphaX
             //Assert.Equal(DoubleIsBetweenOp.LogProbBetween(Gaussian.FromNatural(1.0000099999999998E+34, 1.00001E+36), 0.010000000000000002, 0.010000000000000004), -10.360132636204013435798441, 1e-3);
             Gaussian expected;
             Gaussian result2;
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(100, 0.6), -0.0025, 0.0025);
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(100, 0.6), -0.0025, 0.0025);
             expected = Gaussian.FromNatural(0.83382446386897639746, 486015.0838217901083);
             Assert.True(MaxUlpDiff(expected, result2) < 1e5);
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(1000, 0.6), -0.0025, 0.0025);
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(1000, 0.6), -0.0025, 0.0025);
             // exact posterior mean = 0.00153391785173542665
             // exact posterior variance = 0.0000008292583427621911323272374
             expected = Gaussian.FromNatural(849.7466623321181468, 1205896.221814396816657);
             Assert.True(MaxUlpDiff(expected, result2) < 1e6);
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(10000, 0.6), -0.0025, 0.0025);
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(10000, 0.6), -0.0025, 0.0025);
             expected = Gaussian.FromNatural(229999.9352600054688757876, 99999973.0000021996482);
             Assert.True(MaxUlpDiff(expected, result2) < 1e2);
-            Gaussian result = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(-48.26, 1.537), new Gaussian(-12.22, 0.4529), new Gaussian(-17.54, 0.3086));
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e-19), -10, 0);
+            Gaussian result = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(-48.26, 1.537), new Gaussian(-12.22, 0.4529), new Gaussian(-17.54, 0.3086));
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e-19), -10, 0);
             // exact posterior mean = -0.99954598008990312211948
             // exact posterior variance = 0.99545959476495245821845
             expected = Gaussian.FromNatural(-2.00410502379648622469036, 1.0045611145433980376101655346945);
             Assert.True(MaxUlpDiff(expected, result2) < 2);
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e19), -10, 0);
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e19), -10, 0);
             // exact posterior mean = -0.00000000025231325216567798206492
             // exact posterior variance = 0.00000000000000000003633802275634766987678763433333
             expected = Gaussian.FromNatural(-6943505261.522269414985891, 17519383944062174805.8794215);
@@ -3092,9 +1906,9 @@ weight * (tau + alphaX) + alphaX
             for (int i = 10; i < 3000; i++)
             {
                 Gaussian X = Gaussian.FromNatural(1.2, System.Math.Pow(10, -i * 0.1));
-                var toX = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
-                var toLowerBound = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
-                var toUpperBound = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toX = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toLowerBound = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toUpperBound = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
                 Trace.WriteLine($"{X}: {toX} {toLowerBound} {toUpperBound}");
                 if (!previousToX.IsUniform())
                 {
@@ -3145,7 +1959,7 @@ weight * (tau + alphaX) + alphaX
             Gaussian upperBound = Gaussian.FromNatural(200, 100);
             Gaussian lowerBound = Gaussian.FromNatural(-255, 147);
             Bernoulli isBetween = Bernoulli.PointMass(true);
-            DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(-1.2, 6.3095734448019427E-17), lowerBound, upperBound);
+            IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(-1.2, 6.3095734448019427E-17), lowerBound, upperBound);
             double xMeanMaxUlpError = 0;
             double xPrecisionMaxUlpError = 0;
             double lMeanMaxUlpError = 0;
@@ -3157,9 +1971,9 @@ weight * (tau + alphaX) + alphaX
                 //Gaussian toXExpected = new Gaussian(-0.3047, 0.5397);
                 //SolveAlphaBeta(X, toXExpected, out double alpha, out double beta);
                 //Trace.WriteLine($"expected alpha = {alpha}, beta = {beta}");
-                var toX = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
-                var toLowerBound = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
-                var toUpperBound = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toX = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toLowerBound = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toUpperBound = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
                 Trace.WriteLine($"{X}: {toX} {toLowerBound} {toUpperBound}");
                 if (!previousToX.IsUniform())
                 {
@@ -3231,7 +2045,7 @@ weight * (tau + alphaX) + alphaX
             {
                 // seems like answer should always be Gaussian(m/v=-814, 1/v=0)
                 Gaussian upperBound = Gaussian.FromNatural(-System.Math.Pow(10, i), 9);
-                Gaussian toX = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, Gaussian.PointMass(0), upperBound);
+                Gaussian toX = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, Gaussian.PointMass(0), upperBound);
                 Gaussian Xpost = X * toX;
                 Trace.WriteLine($"{upperBound}: {toX} {toX.MeanTimesPrecision} {Xpost}");
                 // lowerBound is point mass, so cannot be violated.
@@ -3255,7 +2069,7 @@ weight * (tau + alphaX) + alphaX
             for (int i = -10; i <= 0; i++)
             {
                 lowerBound = Gaussian.FromNatural(17028358.45574614 * System.Math.Pow(2, i), 9);
-                Gaussian toLowerBound = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
+                Gaussian toLowerBound = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                 Trace.WriteLine($"{lowerBound}: {toLowerBound.MeanTimesPrecision} {toLowerBound.Precision}");
                 Assert.False(toLowerBound.IsPointMass);
             }
@@ -3276,7 +2090,7 @@ weight * (tau + alphaX) + alphaX
                 for (int i = 0; i < 200; i++)
                 {
                     Gaussian X = Gaussian.FromMeanAndPrecision(mean, System.Math.Pow(2, -i * 1 - 20));
-                    Gaussian toX = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
+                    Gaussian toX = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Gaussian toLowerBound = toLowerBoundPrev;// DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Trace.WriteLine($"{i} {X}: {toX.MeanTimesPrecision:g17} {toX.Precision:g17} {toLowerBound.MeanTimesPrecision:g17} {toLowerBound.Precision:g17}");
                     Assert.False(toLowerBound.IsPointMass);
@@ -3302,23 +2116,37 @@ weight * (tau + alphaX) + alphaX
         }
 
         [Fact]
+        public void IsBetweenGaussian_WithImprobableInputs_Throws()
+        {
+            Bernoulli isBetween = new Bernoulli(1);
+            Gaussian X = Gaussian.FromMeanAndVariance(double.MinValue / 2, 1);
+            Gaussian lowerBound = Gaussian.FromMeanAndVariance(double.MaxValue / 2, 1);
+            Gaussian upperBound = Gaussian.FromNatural(0, 4);
+            Assert.Throws<AllZeroException>(() =>
+                IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound));
+            Assert.Throws<AllZeroException>(() =>
+                IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound));
+        }
+
+        [Fact]
         public void GaussianIsBetweenTest2()
         {
             Bernoulli isBetween = new Bernoulli(1);
-            Assert.False(DoubleIsBetweenOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), Gaussian.FromNatural(1253646736.336942, 0.193405698968261), Gaussian.PointMass(-1.0000002501122697E-08), Gaussian.PointMass(1.0000002501122697E-08), -4.0630398894972073E+18).IsPointMass);
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(0.9106071714590378, 5.9521837280027985E-11), Gaussian.FromNatural(-49.9894026120194, 107.30343404076896), Gaussian.FromNatural(49.051818445888259, 107.26846525506932)).MeanTimesPrecision));
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(2.2204460492503131E-16, 6.9388939039072284E-18), Gaussian.FromNatural(17.111433288915187, 0.66938434508155731), Gaussian.FromNatural(7.7694959349146462, 0.49485730932861044)).MeanTimesPrecision));
-            DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(0, 0.0038937777431664196), Gaussian.PointMass(double.NegativeInfinity), Gaussian.FromNatural(-1.6, 0.8));
-            DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, Gaussian.FromNatural(1.156293233217532E-25, 6.162975822039154E-33), Gaussian.FromNatural(-102.3311202057678, 91.572320438929935), Gaussian.FromNatural(102.27224205502382, 91.541070478258376));
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(980.18122429721575, 1.409544490082087), Gaussian.FromNatural(17028174.685026139, 837.26675043005957), Gaussian.FromNatural(412820.4122154137, 423722.54499249317)).MeanTimesPrecision));
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(-5.3548456213550253E-41, 4.61370960061741E-81), Gaussian.FromNatural(-15848812.635800883, 13451.362337266379), Gaussian.FromNatural(-22204349.280881952, 389690.00236138358)).MeanTimesPrecision));
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional(isBetween, new Gaussian(1, 2), double.PositiveInfinity, double.PositiveInfinity).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(83.257525699629014, 0.22985792223206492), Gaussian.PointMass(double.NegativeInfinity), Gaussian.FromNatural(0, 4)).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(0.9106071714590378, 5.9521837280027985E-11), Gaussian.FromNatural(-49.9894026120194, 107.30343404076896), Gaussian.FromNatural(49.051818445888259, 107.26846525506932)).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(2.2204460492503131E-16, 6.9388939039072284E-18), Gaussian.FromNatural(17.111433288915187, 0.66938434508155731), Gaussian.FromNatural(7.7694959349146462, 0.49485730932861044)).MeanTimesPrecision));
+            Assert.False(IsBetweenGaussianOp.LowerBoundAverageConditional(isBetween, Gaussian.FromNatural(1253646736.336942, 0.193405698968261), Gaussian.PointMass(-1.0000002501122697E-08), Gaussian.PointMass(1.0000002501122697E-08), -4.0630398894972073E+18).IsPointMass);
+            IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(0, 0.0038937777431664196), Gaussian.PointMass(double.NegativeInfinity), Gaussian.FromNatural(-1.6, 0.8));
+            IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, Gaussian.FromNatural(1.156293233217532E-25, 6.162975822039154E-33), Gaussian.FromNatural(-102.3311202057678, 91.572320438929935), Gaussian.FromNatural(102.27224205502382, 91.541070478258376));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(980.18122429721575, 1.409544490082087), Gaussian.FromNatural(17028174.685026139, 837.26675043005957), Gaussian.FromNatural(412820.4122154137, 423722.54499249317)).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(-5.3548456213550253E-41, 4.61370960061741E-81), Gaussian.FromNatural(-15848812.635800883, 13451.362337266379), Gaussian.FromNatural(-22204349.280881952, 389690.00236138358)).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional(isBetween, new Gaussian(1, 2), double.PositiveInfinity, double.PositiveInfinity).MeanTimesPrecision));
             Gaussian x = new Gaussian(0, 1);
             Gaussian lowerBound = new Gaussian(1, 8);
             Gaussian upperBound = new Gaussian(3, 3);
-            Assert.True(DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, Gaussian.PointMass(0), Gaussian.PointMass(-1), Gaussian.PointMass(1)).IsUniform());
-            Assert.True(DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, Gaussian.PointMass(double.NegativeInfinity), upperBound).IsUniform());
-            Assert.True(DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, Gaussian.PointMass(double.PositiveInfinity)).IsUniform());
+            Assert.True(IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, Gaussian.PointMass(0), Gaussian.PointMass(-1), Gaussian.PointMass(1)).IsUniform());
+            Assert.True(IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, Gaussian.PointMass(double.NegativeInfinity), upperBound).IsUniform());
+            Assert.True(IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, Gaussian.PointMass(double.PositiveInfinity)).IsUniform());
             // test in matlab: x=randn(1e7,1); l=randnorm(1e7,1,[],8)'; u=randnorm(1e7,3,[],3)';
             // ok=(l<x & x<u); [mean(l(ok)) var(l(ok)); mean(u(ok)) var(u(ok)); mean(x(ok)) var(x(ok))]
             Gaussian LpostTrue = new Gaussian(-1.7784, 2.934);
@@ -3327,44 +2155,44 @@ weight * (tau + alphaX) + alphaX
             Gaussian Lpost = new Gaussian();
             Gaussian Upost = new Gaussian();
             Gaussian Xpost = new Gaussian();
-            Lpost.SetToProduct(lowerBound, DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Lpost.SetToProduct(lowerBound, IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(LpostTrue.MaxDiff(Lpost) < 1e-4);
-            Upost.SetToProduct(upperBound, DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Upost.SetToProduct(upperBound, IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(UpostTrue.MaxDiff(Upost) < 1e-4);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(XpostTrue.MaxDiff(Xpost) < 1e-4);
             // special case for uniform X
             x = new Gaussian();
             LpostTrue.SetMeanAndVariance(-1.2741, 5.3392);
             UpostTrue.SetMeanAndVariance(3.8528, 2.6258);
             XpostTrue.SetMeanAndVariance(1.2894, 5.1780);
-            Lpost.SetToProduct(lowerBound, DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Lpost.SetToProduct(lowerBound, IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(LpostTrue.MaxDiff(Lpost) < 1e-4);
-            Upost.SetToProduct(upperBound, DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Upost.SetToProduct(upperBound, IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(UpostTrue.MaxDiff(Upost) < 1e-4);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(XpostTrue.MaxDiff(Xpost) < 1e-4);
 
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(new Bernoulli(0), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(new Bernoulli(0), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
             Assert.True(new Gaussian(0.5, 1.0 / 12).MaxDiff(Upost) < 1e-4);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(new Bernoulli(0), new Gaussian(1.0, 0.5), Gaussian.PointMass(0.0), new Gaussian());
-            UpostTrue = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(), Gaussian.PointMass(0.0), new Gaussian(1.0, 0.5));
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(new Bernoulli(0), new Gaussian(1.0, 0.5), Gaussian.PointMass(0.0), new Gaussian());
+            UpostTrue = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(), Gaussian.PointMass(0.0), new Gaussian(1.0, 0.5));
             Assert.True(UpostTrue.MaxDiff(Upost) < 1e-4);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(new Bernoulli(0.1), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(new Bernoulli(0.1), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
             Assert.True(new Gaussian().MaxDiff(Upost) < 1e-10);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(new Bernoulli(1), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(new Bernoulli(1), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
             Assert.True(new Gaussian().MaxDiff(Upost) < 1e-10);
 
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(new Bernoulli(0), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(new Bernoulli(0), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
             Assert.True(new Gaussian(0.5, 1.0 / 12).MaxDiff(Lpost) < 1e-4);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(new Bernoulli(0), new Gaussian(0.0, 0.5), new Gaussian(), Gaussian.PointMass(1.0));
-            LpostTrue = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(), new Gaussian(0.0, 0.5), Gaussian.PointMass(1.0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(new Bernoulli(0), new Gaussian(0.0, 0.5), new Gaussian(), Gaussian.PointMass(1.0));
+            LpostTrue = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(), new Gaussian(0.0, 0.5), Gaussian.PointMass(1.0));
             Assert.True(LpostTrue.MaxDiff(Lpost) < 1e-4);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(new Bernoulli(0.1), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(new Bernoulli(0.1), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
             Assert.True(new Gaussian().MaxDiff(Lpost) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(new Bernoulli(1), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(new Bernoulli(1), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
             Assert.True(new Gaussian().MaxDiff(Lpost) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), new Gaussian(-2.839e+10, 39.75), Gaussian.PointMass(0.05692), Gaussian.PointMass(double.PositiveInfinity), -1.0138308906207461E+19);
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), new Gaussian(-2.839e+10, 39.75), Gaussian.PointMass(0.05692), Gaussian.PointMass(double.PositiveInfinity), -1.0138308906207461E+19);
             Assert.True(!double.IsNaN(Lpost.MeanTimesPrecision));
 
             /* test in matlab: 
@@ -3377,16 +2205,16 @@ weight * (tau + alphaX) + alphaX
                m = s(2)/s(1); v = s(3)/s(1) - m*m; [m v]
              */
             x = new Gaussian(0, 1);
-            Assert.True(DoubleIsBetweenOp.XAverageConditional_Slow(new Bernoulli(0.5), x, Gaussian.PointMass(Double.NegativeInfinity), Gaussian.Uniform()).IsUniform());
-            Assert.True(DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), x, Gaussian.PointMass(Double.NegativeInfinity), Gaussian.Uniform()).IsUniform());
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, 1, 3));
+            Assert.True(IsBetweenGaussianOp.XAverageConditional_Slow(new Bernoulli(0.5), x, Gaussian.PointMass(Double.NegativeInfinity), Gaussian.Uniform()).IsUniform());
+            Assert.True(IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), x, Gaussian.PointMass(Double.NegativeInfinity), Gaussian.Uniform()).IsUniform());
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, 1, 3));
             Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(1.5101, 0.17345)) < 1e-3);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(false, x, 1, 3));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(false, x, 1, 3));
             Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(-0.28189, 0.64921)) < 1e-3);
             Assert.True(IsPositiveOp.XAverageConditional(true, x).MaxDiff(
-              DoubleIsBetweenOp.XAverageConditional(true, x, 0.0, Double.PositiveInfinity)) < 1e-8);
+              IsBetweenGaussianOp.XAverageConditional(true, x, 0.0, Double.PositiveInfinity)) < 1e-8);
             Assert.True(IsPositiveOp.XAverageConditional(false, x).MaxDiff(
-              DoubleIsBetweenOp.XAverageConditional(true, x, Double.NegativeInfinity, 0)) < 1e-8);
+              IsBetweenGaussianOp.XAverageConditional(true, x, Double.NegativeInfinity, 0)) < 1e-8);
             /* test in matlab:
                z=0;s1=0;s2=0;
                for iter = 1:100
@@ -3398,26 +2226,26 @@ weight * (tau + alphaX) + alphaX
                end
                m=s1/z; v=s2/z - m*m; [m v]
              */
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(new Bernoulli(0.6), x, 1, 3));
-            if (DoubleIsBetweenOp.ForceProper)
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(new Bernoulli(0.6), x, 1, 3));
+            if (IsBetweenGaussianOp.ForceProper)
                 Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(0.1101, 1.0)) < 1e-3);
             else
                 Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(0.11027, 1.0936)) < 1e-3);
             // special case for uniform X
             x = new Gaussian();
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, 1, 3));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, 1, 3));
             Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(2, 4.0 / 12)) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(false, x, 1, 3));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(false, x, 1, 3));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(new Bernoulli(0.6), x, 1, 3));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(new Bernoulli(0.6), x, 1, 3));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, 1, Double.PositiveInfinity));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, 1, Double.PositiveInfinity));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(false, x, 1, Double.PositiveInfinity));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(false, x, 1, Double.PositiveInfinity));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, Double.NegativeInfinity, 1));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, Double.NegativeInfinity, 1));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(false, x, Double.NegativeInfinity, 1));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(false, x, Double.NegativeInfinity, 1));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
 
             x = new Gaussian(0, 1);
@@ -3429,7 +2257,7 @@ weight * (tau + alphaX) + alphaX
                 Xpost.SetToProduct(x2, IsPositiveOp.XAverageConditional(true, x2));
                 //Console.WriteLine(Xpost);
                 Xpost.GetMeanAndVariance(out m, out v);
-                Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, lowerBounds[i], Double.PositiveInfinity));
+                Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, lowerBounds[i], Double.PositiveInfinity));
                 Assert.True(Xpost.MaxDiff(new Gaussian(m + lowerBounds[i], v)) < 1e-5 / v);
                 //Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, new Gaussian(lowerBounds[i], 1e-80), Double.PositiveInfinity));
                 //Assert.True(Xpost.MaxDiff(new Gaussian(m+lowerBounds[i], v)) < 1e-8);
@@ -3437,276 +2265,29 @@ weight * (tau + alphaX) + alphaX
 
 
             Gaussian Lexpected = IsPositiveOp.XAverageConditional(false, lowerBound);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.FromMeanAndVariance(0, 1e-10), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.FromMeanAndVariance(0, 1e-10), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(1), lowerBound, Gaussian.PointMass(0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(1), lowerBound, Gaussian.PointMass(0));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(0));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(1));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(1));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
             //Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional(true,Gaussian.Uniform(),lowerBound,0);
             //Assert.True(Lpost.MaxDiff(IsPositiveOp.XAverageConditional(false,lowerBound)) < 1e-3);
             Gaussian Uexpected = IsPositiveOp.XAverageConditional(true, upperBound);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(-1), Gaussian.PointMass(0), upperBound);
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(-1), Gaussian.PointMass(0), upperBound);
             Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(0), upperBound);
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(0), upperBound);
             Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(-1), upperBound);
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(-1), upperBound);
             Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
             //Upost = DoubleIsBetweenOp.UpperBoundAverageConditional(true,Gaussian.Uniform(),0,upperBound);
             //Assert.True(Upost.MaxDiff(IsPositiveOp.XAverageConditional(true,upperBound)) < 1e-3);
         }
 
-        internal void ProductGaussianGammaVmpOpTest()
-        {
-            double prec = 1;
-            double a = 2;
-            Gamma B = Gamma.FromShapeAndRate(1e-3, 1e-3);
-            //Gamma B = Gamma.FromShapeAndRate(1, 1);
-            for (int i = 0; i < 10; i++)
-            {
-                prec = (i + 1) * 4.0e-15;
-                Gamma result = ProductGaussianGammaVmpOp.BAverageLogarithm(Gaussian.FromNatural(0.5, prec), Gaussian.PointMass(a), B, Gamma.Uniform());
-                Gamma result2 = ProductGaussianGammaVmpOp.BAverageLogarithm(Gaussian.FromNatural(0.5, prec), Gaussian.PointMass(a), B, Gamma.Uniform());
-                Console.WriteLine("{0} {1}", result, result2);
-                //Console.WriteLine("rate = {0}", result.Rate);
-                // rate = -0.5*A
-            }
-        }
-
-        [Fact]
-        public void ProductOpTest()
-        {
-            Assert.True(GaussianProductVmpOp.ProductAverageLogarithm(
-              2.0,
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(
-              2.0,
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(new Gaussian(0, 1),
-              Gaussian.PointMass(2.0),
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5)) < 1e-8);
-            Assert.True(GaussianProductVmpOp.ProductAverageLogarithm(
-              0.0,
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.PointMass(0.0)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(
-              0.0,
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.PointMass(0.0)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(new Gaussian(0, 1),
-              Gaussian.PointMass(0.0),
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.PointMass(0.0)) < 1e-8);
-
-            Assert.True(GaussianProductVmpOp.ProductAverageLogarithm(
-              Gaussian.FromMeanAndVariance(2, 4),
-              Gaussian.FromMeanAndVariance(3, 5)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5 + 3 * 3 * 4 + 2 * 2 * 5)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(Gaussian.Uniform(),
-              Gaussian.FromMeanAndVariance(2, 4),
-                                                                            Gaussian.FromMeanAndVariance(3, 5)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5 + 3 * 3 * 4 + 2 * 2 * 5)) <
-                                1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(Gaussian.FromMeanAndVariance(0, 1e16),
-              Gaussian.FromMeanAndVariance(2, 4),
-                                                                            Gaussian.FromMeanAndVariance(3, 5)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5 + 3 * 3 * 4 + 2 * 2 * 5)) <
-                                1e-4);
-
-            Assert.True(GaussianProductOp.AAverageConditional(6.0, 2.0)
-              .MaxDiff(Gaussian.PointMass(6.0 / 2.0)) < 1e-8);
-            Assert.True(GaussianProductOp.AAverageConditional(6.0, new Gaussian(1, 3), Gaussian.PointMass(2.0))
-              .MaxDiff(Gaussian.PointMass(6.0 / 2.0)) < 1e-8);
-            Assert.True(GaussianProductOp.AAverageConditional(0.0, 0.0).IsUniform());
-            Assert.True(GaussianProductOp.AAverageConditional(Gaussian.Uniform(), 2.0).IsUniform());
-            Assert.True(GaussianProductOp.AAverageConditional(Gaussian.Uniform(), new Gaussian(1, 3), Gaussian.PointMass(2.0)).IsUniform());
-            Assert.True(GaussianProductOp.AAverageConditional(Gaussian.Uniform(), new Gaussian(1, 3), new Gaussian(2, 4)).IsUniform());
-
-            Gaussian aPrior = Gaussian.FromMeanAndVariance(0.0, 1000.0);
-            Assert.True((GaussianProductOp.AAverageConditional(
-              Gaussian.FromMeanAndVariance(10.0, 1.0),
-              aPrior,
-              Gaussian.FromMeanAndVariance(5.0, 1.0)) * aPrior).MaxDiff(
-              Gaussian.FromMeanAndVariance(2.208041421368822, 0.424566765678152)) < 1e-4);
-
-            Gaussian g = new Gaussian(0, 1);
-            Assert.True(GaussianProductOp.AAverageConditional(g, 0.0).IsUniform());
-            Assert.True(GaussianProductOp.AAverageConditional(0.0, 0.0).IsUniform());
-            Assert.True(GaussianProductVmpOp.AAverageLogarithm(g, 0.0).IsUniform());
-            Assert.True(Gaussian.PointMass(3.0).MaxDiff(GaussianProductVmpOp.AAverageLogarithm(6.0, 2.0)) < 1e-10);
-            Assert.True(GaussianProductVmpOp.AAverageLogarithm(0.0, 0.0).IsUniform());
-            try
-            {
-                Assert.True(GaussianProductVmpOp.AAverageLogarithm(6.0, g).IsUniform());
-                Assert.True(false, "Did not throw NotSupportedException");
-            }
-            catch (NotSupportedException)
-            {
-            }
-            try
-            {
-                g = GaussianProductOp.AAverageConditional(12.0, 0.0);
-                Assert.True(false, "Did not throw AllZeroException");
-            }
-            catch (AllZeroException)
-            {
-            }
-            try
-            {
-                g = GaussianProductVmpOp.AAverageLogarithm(12.0, 0.0);
-                Assert.True(false, "Did not throw AllZeroException");
-            }
-            catch (AllZeroException)
-            {
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "ModifiesGlobals")]
-        public void GaussianProductOp_APointMassTest()
-        {
-            using (TestUtils.TemporarilyAllowGaussianImproperMessages)
-            {
-                Gaussian Product = Gaussian.FromMeanAndVariance(1.3, 0.1);
-                Gaussian B = Gaussian.FromMeanAndVariance(1.24, 0.04);
-                GaussianProductOp_APointMass(1, Product, B);
-
-                Product = Gaussian.FromMeanAndVariance(10, 1);
-                B = Gaussian.FromMeanAndVariance(5, 1);
-                GaussianProductOp_APointMass(2, Product, B);
-
-                Product = Gaussian.FromNatural(1, 0);
-                GaussianProductOp_APointMass(2, Product, B);
-            }
-        }
-
-        private void GaussianProductOp_APointMass(double aMean, Gaussian Product, Gaussian B)
-        {
-            bool isProper = Product.IsProper();
-            Gaussian A = Gaussian.PointMass(aMean);
-            Gaussian result = GaussianProductOp.AAverageConditional(Product, A, B);
-            Console.WriteLine("{0}: {1}", A, result);
-            Gaussian result2 = isProper ? GaussianProductOp_Slow.AAverageConditional(Product, A, B) : result;
-            Console.WriteLine("{0}: {1}", A, result2);
-            Assert.True(result.MaxDiff(result2) < 1e-6);
-            var Amsg = InnerProductOp_PointB.BAverageConditional(Product, DenseVector.FromArray(B.GetMean()), new PositiveDefiniteMatrix(new double[,] { { B.GetVariance() } }), VectorGaussian.PointMass(aMean), VectorGaussian.Uniform(1));
-            //Console.WriteLine("{0}: {1}", A, Amsg);
-            Assert.True(result.MaxDiff(Amsg.GetMarginal(0)) < 1e-6);
-            double prevDiff = double.PositiveInfinity;
-            for (int i = 3; i < 40; i++)
-            {
-                double v = System.Math.Pow(0.1, i);
-                A = Gaussian.FromMeanAndVariance(aMean, v);
-                result2 = isProper ? GaussianProductOp.AAverageConditional(Product, A, B) : result;
-                double diff = result.MaxDiff(result2);
-                Console.WriteLine("{0}: {1} diff={2}", A, result2, diff.ToString("g4"));
-                //Assert.True(diff <= prevDiff || diff < 1e-6);
-                result2 = isProper ? GaussianProductOp_Slow.AAverageConditional(Product, A, B) : result;
-                diff = result.MaxDiff(result2);
-                Console.WriteLine("{0}: {1} diff={2}", A, result2, diff.ToString("g4"));
-                Assert.True(diff <= prevDiff || diff < 1e-6);
-                prevDiff = diff;
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "OpenBug")]
-        public void GaussianProductOp_ProductPointMassTest()
-        {
-            Gaussian A = new Gaussian(1, 2);
-            Gaussian B = new Gaussian(3, 4);
-            Gaussian pointMass = Gaussian.PointMass(4);
-            Gaussian to_pointMass = GaussianProductOp.ProductAverageConditional(pointMass, A, B);
-            double prevDiff = double.PositiveInfinity;
-            for (int i = 0; i < 100; i++)
-            {
-                Gaussian Product = Gaussian.FromMeanAndVariance(4, System.Math.Pow(10, -i));
-                Gaussian to_product = GaussianProductOp.ProductAverageConditional(Product, A, B);
-                double evidence = GaussianProductOp.LogEvidenceRatio(Product, A, B, to_product);
-                Console.WriteLine($"{Product} {to_product} {evidence}");
-                double diff = to_product.MaxDiff(to_pointMass);
-                Assert.True(diff <= prevDiff || diff < 1e-6);
-                prevDiff = diff;
-            }
-        }
-
-        [Fact]
-        public void ProductOpTest3()
-        {
-            Gaussian Product = new Gaussian(3.207, 2.222e-06);
-            Gaussian A = new Gaussian(2.854e-06, 1.879e-05);
-            Gaussian B = new Gaussian(0, 1);
-            Gaussian result = GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
-            Console.WriteLine(result);
-            Assert.False(double.IsNaN(result.Precision));
-
-            Product = Gaussian.FromNatural(2, 1);
-            A = Gaussian.FromNatural(0, 3);
-            B = Gaussian.FromNatural(0, 1);
-            result = GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
-            Console.WriteLine("{0}: {1}", Product, result);
-
-            Product = Gaussian.FromNatural(129146.60457039363, 320623.20967711863);
-            A = Gaussian.FromNatural(-0.900376203577801, 0.00000001);
-            B = Gaussian.FromNatural(0, 1);
-            result = GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
-            Console.WriteLine("{0}: {1}", Product, result);
-
-            Assert.True(GaussianProductOp_Slow.ProductAverageConditional(
-              Gaussian.FromMeanAndVariance(0.0, 1000.0),
-              Gaussian.FromMeanAndVariance(2.0, 3.0),
-              Gaussian.FromMeanAndVariance(5.0, 1.0)).MaxDiff(
-              Gaussian.FromMeanAndVariance(9.911, 79.2)
-              // Gaussian.FromMeanAndVariance(12.110396063215639,3.191559311624262e+002)
-              ) < 1e-4);
-
-            A = new Gaussian(2, 3);
-            B = new Gaussian(4, 5);
-            Product = Gaussian.PointMass(2);
-            result = GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
-            Console.WriteLine("{0}: {1}", Product, result);
-            double prevDiff = double.PositiveInfinity;
-            for (int i = 3; i < 40; i++)
-            {
-                double v = System.Math.Pow(0.1, i);
-                Product = Gaussian.FromMeanAndVariance(2, v);
-                Gaussian result2 = GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
-                double diff = result.MaxDiff(result2);
-                Console.WriteLine("{0}: {1} diff={2}", Product, result2, diff.ToString("g4"));
-                Assert.True(diff <= prevDiff || diff < 1e-6);
-                prevDiff = diff;
-            }
-
-            Product = Gaussian.Uniform();
-            result = GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
-            Console.WriteLine("{0}: {1}", Product, result);
-            prevDiff = double.PositiveInfinity;
-            for (int i = 3; i < 40; i++)
-            {
-                double v = System.Math.Pow(10, i);
-                Product = Gaussian.FromMeanAndVariance(2, v);
-                Gaussian result2 = GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
-                double diff = result.MaxDiff(result2);
-                Console.WriteLine("{0}: {1} diff={2}", Product, result2, diff.ToString("g4"));
-                Assert.True(diff <= prevDiff || diff < 1e-6);
-                prevDiff = diff;
-            }
-        }
-
-        [Fact]
-        public void LogisticProposalDistribution()
-        {
-            double[] TrueCounts = { 2, 20, 200, 2000, 20000, 2, 20, 200, 2000, 20000 };
-            double[] FalseCounts = { 2, 200, 20000, 200, 20, 200, 2000, 2, 2000, 20 };
-            double[] Means = { .5, 1, 2, 4, 8, 16, 32, 0, -2, -20 };
-            double[] Variances = { 1, 2, 4, 8, .1, .0001, .01, .000001, 0.000001, 0.001 };
-            for (int i = 0; i < 10; i++)
-            {
-                Beta b = new Beta();
-                b.TrueCount = TrueCounts[i];
-                b.FalseCount = FalseCounts[i];
-                Gaussian g = Gaussian.FromMeanAndVariance(Means[i], Variances[i]);
-                Gaussian gProposal = GaussianBetaProductOp.LogisticProposalDistribution(b, g);
-            }
-        }
 
         /// <summary>
         /// Tests for the message operators for <see cref="Factor.CountTrue"/>.
@@ -3776,30 +2357,477 @@ weight * (tau + alphaX) + alphaX
                 CountTrueOp.ArrayAverageConditional(array, new Discrete(1.0), forwardPassBuffer, resultArray);
             }
         }
-    }
 
-    public class ImportanceSampler
-    {
-        public delegate double Sampler();
-        private Vector samples, weights;
-        public ImportanceSampler(int N, Sampler sampler, Converter<double, double> weightFunction)
+        [Fact]
+        public void VariablePointOp_RpropGammaTest()
         {
-            samples = Vector.Zero(N);
-            weights = Vector.Zero(N);
-            for (int i = 0; i < N; i++)
+            using (TestUtils.TemporarilyUseMeanPointGamma)
             {
-                samples[i] = sampler();
-                weights[i] = weightFunction(samples[i]);
+                var buffer = VariablePointOp_RpropGamma.Buffer0Init();
+                Gamma g = Gamma.FromShapeAndRate(0.6, 1);
+                Gamma to_marginal = Gamma.PointMass(1);
+                for (int i = 0; i < 1000; i++)
+                {
+                    buffer = VariablePointOp_RpropGamma.Buffer0(g, g, to_marginal, buffer);
+                    //Console.WriteLine(buffer.nextPoint);
+                    to_marginal = Gamma.Uniform();
+                }
             }
         }
 
-        public double GetExpectation(Converter<double, double> h)
+        [Fact]
+        public void ArrayFromVectorOpTest()
         {
-            var temp = Vector.Zero(samples.Count);
-            temp.SetToFunction(samples, h);
-            temp.SetToProduct(temp, weights);
-            return temp.Sum() / weights.Sum();
+            bool verbose = false;
+            PositiveDefiniteMatrix A = new PositiveDefiniteMatrix(new double[,] {
+                { 4.008640513161180,  1.303104352135630, - 2.696380025254830, - 2.728465435435790 },
+                { 1.303104352135630,  4.024136989099960, - 2.681070246787840, - 2.713155656968810 },
+                { -2.696380025254830, - 2.681070246787840, 4.136120496920130,  1.403451295855420 },
+                { -2.728465435435790, - 2.713155656968810, 1.403451295855420,  4.063123100392480 }
+            });
+            Vector arrayVariance = Vector.FromArray(1, 0, 3, 4);
+            Vector arrayMean = Vector.FromArray(1, 2, 3, 4);
+
+            VectorGaussianMoments vg = new VectorGaussianMoments(Vector.FromArray(6, 5, 4, 3), A);
+            Gaussian[] array = Util.ArrayInit(arrayMean.Count, i => new Gaussian(arrayMean[i], arrayVariance[i]));
+            var result = ArrayFromVectorOp.ArrayAverageConditional(array, vg, new Gaussian[array.Length]);
+            Vector varianceExpected = Vector.FromArray(0.699231932932321, 0, 0.946948669226297, 0.926496676481940);
+            Vector varianceActual = Vector.FromArray(Util.ArrayInit(result.Length, i => (result[i] * array[i]).GetVariance()));
+            if (verbose) Console.WriteLine($"variance = {varianceActual} should be {varianceExpected}");
+            Assert.True(varianceExpected.MaxDiff(varianceActual) < 1e-4);
+            Vector meanExpected = Vector.FromArray(2.640276200841019, 2.000000014880260, 6.527941507328482, 6.908179339051594);
+            Vector meanActual = Vector.FromArray(Util.ArrayInit(result.Length, i => (result[i] * array[i]).GetMean()));
+            if (verbose) Console.WriteLine($"mean = {meanActual} should be {meanExpected}");
+            Assert.True(meanExpected.MaxDiff(meanActual) < 1e-4);
+
+            arrayVariance.SetTo(Vector.FromArray(1, double.PositiveInfinity, 3, 4));
+            array = Util.ArrayInit(arrayMean.Count, i => new Gaussian(arrayMean[i], arrayVariance[i]));
+            result = ArrayFromVectorOp.ArrayAverageConditional(array, vg, new Gaussian[array.Length]);
+            varianceExpected = Vector.FromArray(0.703202829692760, 2.371534574978036, 1.416576208767429, 1.566923316764467);
+            varianceActual = Vector.FromArray(Util.ArrayInit(result.Length, i => (result[i] * array[i]).GetVariance()));
+            if (verbose) Console.WriteLine($"variance = {varianceActual} should be {varianceExpected}");
+            Assert.True(varianceExpected.MaxDiff(varianceActual) < 1e-4);
+            meanExpected = Vector.FromArray(2.495869677904531, 5.528904975989440, 4.957577684071078, 5.074347889058121);
+            meanActual = Vector.FromArray(Util.ArrayInit(result.Length, i => (result[i] * array[i]).GetMean()));
+            if (verbose) Console.WriteLine($"mean = {meanActual} should be {meanExpected}");
+            Assert.True(meanExpected.MaxDiff(meanActual) < 1e-4);
+
+            bool testImproper = false;
+            if (testImproper)
+            {
+                array = new Gaussian[]
+                {
+                new Gaussian(0.5069, 27.43),
+                new Gaussian(0.649, 38.94),
+                Gaussian.FromNatural(-0.5753, 0),
+                new Gaussian(0.1064, 10.15)
+                };
+                PositiveDefiniteMatrix B = new PositiveDefiniteMatrix(new double[,]
+                {
+                { 0.7158,  -0.1356, -0.2979, -0.2993 },
+                { -0.1356, 0.7294,  -0.2975, -0.2989 },
+                { -0.2979, -0.2975, 0.7625,  -0.1337 },
+                { -0.2993, -0.2989, -0.1337, 0.7203 },
+                });
+                vg = new VectorGaussianMoments(Vector.FromArray(0.3042, 0.4795, -0.2114, -0.5748), B);
+                result = ArrayFromVectorOp.ArrayAverageConditional(array, vg, new Gaussian[array.Length]);
+                Gaussian[] resultExpected = new Gaussian[] {
+                    new Gaussian(0.4589, 0.707),
+                    new Gaussian(0.6338, 0.7204),
+                    new Gaussian(-0.2236, 0.7553),
+                    new Gaussian(-0.4982, 0.7148),
+                };
+                if (verbose) Console.WriteLine(StringUtil.ArrayToString(result));
+                for (int i = 0; i < result.Length; i++)
+                {
+                    Assert.True(resultExpected[i].MaxDiff(result[i]) < 1e-4);
+                }
+            }
         }
 
+        internal void VectorFromArrayOp_SpeedTest()
+        {
+            int dim = 20;
+            int n = 100000;
+            VectorGaussian vector = new VectorGaussian(dim);
+            Matrix random = new Matrix(dim, dim);
+            for (int i = 0; i < dim; i++)
+            {
+                vector.MeanTimesPrecision[i] = Rand.Double();
+                for (int j = 0; j < dim; j++)
+                {
+                    random[i, j] = Rand.Double();
+                }
+            }
+            vector.Precision.SetToOuter(random);
+            Gaussian[] array = Util.ArrayInit(dim, i => Gaussian.FromMeanAndVariance(i, i));
+            Gaussian[] result = new Gaussian[dim];
+            for (int i = 0; i < n; i++)
+            {
+                VectorFromArrayOp.ArrayAverageConditional(vector, array, result);
+            }
+        }
+
+        [Fact]
+        public void VectorFromArrayOp_PointMassTest()
+        {
+            VectorFromArrayOp_HandlesPointMass(false);
+            VectorFromArrayOp_HandlesPointMass(true);
+        }
+
+        private void VectorFromArrayOp_HandlesPointMass(bool partial)
+        {
+            int dim = 2;
+            VectorGaussian to_vector = new VectorGaussian(dim);
+            VectorGaussian vector = VectorGaussian.FromNatural(Vector.FromArray(2.0, 3.0), new PositiveDefiniteMatrix(new double[,] { { 5.0, 1.0 }, { 1.0, 6.0 } }));
+            GaussianArray expected = null;
+            double lastError = double.PositiveInfinity;
+            for (int i = 0; i < 10; i++)
+            {
+                double variance = System.Math.Exp(-i);
+                if (i == 0)
+                    variance = 0;
+                Gaussian[] array = Util.ArrayInit(dim, j => new Gaussian(j, (j > 0 && partial) ? j : variance));
+                to_vector = VectorFromArrayOp.VectorAverageConditional(array, to_vector);
+                var to_array = new GaussianArray(dim);
+                to_array = VectorFromArrayOp.ArrayAverageConditional(vector, array, to_array);
+                if (i == 0)
+                    expected = to_array;
+                else
+                {
+                    double error = expected.MaxDiff(to_array);
+                    Assert.True(error < lastError);
+                    lastError = error;
+                }
+                ////Console.WriteLine(to_array);
+            }
+        }
+
+
+        [Fact]
+        public void MatrixTimesVectorOpTest()
+        {
+            Matrix[] ms = new Matrix[3];
+            ms[0] = new Matrix(new double[,] { { 0.036, -0.036, 0 }, { 0.036, 0, -0.036 } });
+            ms[1] = new Matrix(new double[,] { { -0.036, 0.036, 0 }, { 0, 0.036, -0.036 } });
+            ms[2] = new Matrix(new double[,] { { -0.036, 0, 0.036 }, { 0, -0.036, 0.036 } });
+            VectorGaussian product = new VectorGaussian(Vector.FromArray(new double[] { 1, 1 }), PositiveDefiniteMatrix.IdentityScaledBy(2, 0.01));
+            Matrix A = ms[0];
+            VectorGaussian result = MatrixVectorProductOp.BAverageConditional(product, A, new VectorGaussian(3));
+            Assert.False(result.Precision.IsPositiveDefinite());
+
+            Vector BMean = Vector.FromArray(1, 2, 3);
+            PositiveDefiniteMatrix BVariance = new PositiveDefiniteMatrix(new double[,]
+            {
+                { 3,2,1 },
+                { 2,3,2 },
+                { 1,2,3 }
+            });
+            GaussianArray2D to_A = new GaussianArray2D(A.Rows, A.Cols);
+            MatrixVectorProductOp.AAverageConditional(product, GaussianArray2D.PointMass(A.ToArray()), BMean, BVariance, to_A);
+            double[,] dExpected = new double[,]
+            {
+                { 542.014350893474, -34.0730521080406, -261.179402050882 },
+                { 449.735198014871, -31.4263853641523, -215.272881589687 },
+            };
+            for (int i = 0; i < to_A.GetLength(0); i++)
+            {
+                for (int j = 0; j < to_A.GetLength(1); j++)
+                {
+                    Gaussian dist = to_A[i, j];
+                    double dlogp, ddlogp;
+                    dist.GetDerivatives(A[i, j], out dlogp, out ddlogp);
+                    Assert.True(System.Math.Abs(dExpected[i, j] - dlogp) < 1e-8);
+                }
+            }
+        }
+
+        [Fact]
+        public void SumOpTest()
+        {
+            Gaussian sum_F = new Gaussian(0, 1);
+            Gaussian sum_B = Gaussian.FromMeanAndPrecision(0, 1e-310);
+            GaussianArray array = new GaussianArray(2, i => new Gaussian(0, 1));
+            var result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
+            Assert.True(!double.IsNaN(result[0].MeanTimesPrecision));
+
+            sum_B = new Gaussian(0, 1);
+            array[0] = Gaussian.FromMeanAndPrecision(0, 0);
+            sum_F = FastSumOp.SumAverageConditional(array);
+            result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
+            Assert.True(result[0].MaxDiff(new Gaussian(0, 2)) < 1e-10);
+            Assert.True(result[1].IsUniform());
+            for (int i = 0; i < 1030; i++)
+            {
+                array[0] = Gaussian.FromMeanAndPrecision(0, System.Math.Pow(2, -i));
+                sum_F = FastSumOp.SumAverageConditional(array);
+                result = FastSumOp.ArrayAverageConditional(sum_B, sum_F, array, new GaussianArray(array.Count));
+                Assert.True(result[0].MaxDiff(new Gaussian(0, 2)) < 1e-10);
+            }
+        }
+
+
+        [Fact]
+        public void LogisticOpTest()
+        {
+            for (int trial = 0; trial < 2; trial++)
+            {
+                double xMean = (trial == 0) ? -1 : 1;
+                Gaussian x = Gaussian.FromMeanAndVariance(xMean, 0);
+                Gaussian result2 = BernoulliFromLogOddsOp.LogOddsAverageConditional(true, x);
+                Console.WriteLine("{0}: {1}", x, result2);
+                for (int i = 8; i < 30; i++)
+                {
+                    double v = System.Math.Pow(0.1, i);
+                    x = Gaussian.FromMeanAndVariance(xMean, v);
+                    Gaussian result = BernoulliFromLogOddsOp.LogOddsAverageConditional(true, x);
+                    Console.WriteLine("{0}: {1} maxDiff={2}", x, result, result2.MaxDiff(result));
+                    Assert.True(result2.MaxDiff(result) < 1e-6);
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                Gaussian falseMsg = LogisticOp.FalseMsg(new Beta(0.2, 1.8), new Gaussian(0, 97.0 * (i + 1)), new Gaussian());
+                Console.WriteLine(falseMsg);
+            }
+            Gaussian toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(-4662, 1314));
+            Console.WriteLine(toLogOdds);
+            toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(2249, 2.5));
+            Console.WriteLine(toLogOdds);
+            Gaussian logOdds = new Gaussian(100, 100);
+            toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, logOdds);
+            Console.WriteLine(toLogOdds * logOdds);
+            // test m =approx 1.5*v for increasing v
+            for (int i = 0; i < 10; i++)
+            {
+                double v = System.Math.Pow(2, i + 5);
+                Gaussian g = new Gaussian(37 + 1.5 * v, v);
+                toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, g);
+                Console.WriteLine("{0}: {1}", g, toLogOdds);
+                Gaussian actualPost = toLogOdds * g;
+                Gaussian expectedPost = new Gaussian(0, 1);
+                if (i == 0)
+                {
+                    // for Gaussian(85,32)
+                    expectedPost = new Gaussian(53, 32);
+                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
+                }
+                else if (i == 1)
+                {
+                    // for Gaussian(133,64)
+                    expectedPost = new Gaussian(69, 64);
+                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
+                }
+                else if (i == 4)
+                {
+                    // for Gaussian(805,512) the posterior should be (293, 511.81)
+                    expectedPost = new Gaussian(293, 511.81);
+                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
+                }
+                else if (i == 5)
+                {
+                    // for Gaussian(1573,1024)
+                    expectedPost = new Gaussian(549, 1023.9);
+                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
+                }
+            }
+            // test m =approx v for increasing v
+            for (int i = 0; i < 10; i++)
+            {
+                double v = System.Math.Pow(2, i + 5);
+                Gaussian g = new Gaussian(v - 1, v);
+                toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, g);
+                Console.WriteLine("{0}: {1}", g, toLogOdds);
+                Gaussian actualPost = toLogOdds * g;
+                Gaussian expectedPost = new Gaussian(0, 1);
+                if (i == 0)
+                {
+                    // for Gaussian(31,32)
+                    expectedPost = new Gaussian(3.8979, 12.4725);
+                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
+                }
+                else if (i == 6)
+                {
+                    // for Gaussian(2047,2048)
+                    expectedPost = new Gaussian(35.7156, 736.2395);
+                    Assert.True(expectedPost.MaxDiff(actualPost) < 1e-3);
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(54.65 / 10 * (i + 1), 8.964));
+                Console.WriteLine(toLogOdds);
+            }
+            toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(9900, 10000) ^ 0.1);
+            Console.WriteLine(toLogOdds);
+            Gaussian falseMsg2 = LogisticOp.FalseMsg(new Beta(0.9, 0.1), Gaussian.FromNatural(-10.097766458353044, 0.000011644704327819733),
+              Gaussian.FromNatural(-0.0010832099815010626, 0.000010092906656322242));
+            Console.WriteLine(falseMsg2);
+        }
+
+        [Fact]
+        public void BernoulliFromLogOddsTest()
+        {
+            double tolerance = 1e-8;
+            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(0, 2)), System.Math.Log(0.5)) < tolerance);
+            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(2, 0)), MMath.LogisticLn(2)) < tolerance);
+            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(1, 1)), System.Math.Log(1 - 0.5 * System.Math.Exp(-0.5))) < tolerance);
+            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(10, 10)), System.Math.Log(1 - 0.5 * System.Math.Exp(-5))) < tolerance);
+            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(-1, 1)), System.Math.Log(0.303265329856008)) < tolerance);
+            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(-5, 3)), System.Math.Log(0.023962216989475)) < tolerance);
+            Assert.True(MMath.AbsDiff(BernoulliFromLogOddsOp.LogAverageFactor(true, new Gaussian(-5, 10)), System.Math.Log(0.084396512538678)) < tolerance);
+        }
+
+
+        [Fact]
+        public void OrTest()
+        {
+            Assert.Equal(1.0, BooleanOrOp.AAverageConditional(true, false).GetProbTrue());
+            Assert.Equal(1.0, BooleanOrOp.OrAverageConditional(Bernoulli.PointMass(true), false).GetProbTrue());
+
+            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), Bernoulli.PointMass(false)).LogOdds);
+            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, Bernoulli.PointMass(false)).LogOdds);
+            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), false).LogOdds);
+            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, false).LogOdds);
+
+            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), Bernoulli.PointMass(true)).GetProbTrue());
+            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, Bernoulli.PointMass(true)).GetProbTrue());
+            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(Bernoulli.PointMass(false), true).GetProbTrue());
+            Assert.Equal(0.0, BooleanAndOp.AAverageConditional(false, true).GetProbTrue());
+
+            Assert.Throws<AllZeroException>(() =>
+            {
+                BooleanAndOp.AAverageConditional(true, false);
+            });
+            Assert.Throws<AllZeroException>(() =>
+            {
+                BooleanAndOp.AAverageConditional(Bernoulli.PointMass(true), false);
+            });
+            Assert.Throws<AllZeroException>(() =>
+            {
+                BooleanAndOp.AAverageConditional(true, Bernoulli.PointMass(false));
+            });
+            Assert.Throws<AllZeroException>(() =>
+            {
+                BooleanAndOp.AAverageConditional(Bernoulli.PointMass(true), Bernoulli.PointMass(false));
+            });
+        }
+
+        [Fact]
+        public void BernoulliFromDiscreteTest()
+        {
+            double[] probTrue = { 0.4, 0.7 };
+            Discrete indexDist = new Discrete(0.8, 0.2);
+            Bernoulli sampleDist = new Bernoulli(0.8 * 0.4 + 0.2 * 0.7);
+            Assert.True(sampleDist.MaxDiff(BernoulliFromDiscreteOp.SampleAverageConditional(indexDist, probTrue)) < 1e-4);
+            sampleDist.SetProbTrue(0.2);
+            double p = (0.8 * 0.3 + 0.2 * 0.7) / (0.8 * 0.3 + 0.2 * 0.7 + 0.8 * 0.6 + 0.2 * 0.4);
+            Vector probs = indexDist.GetWorkspace();
+            probs[0] = 1 - p;
+            probs[1] = p;
+            indexDist.SetProbs(probs);
+            Assert.True(indexDist.MaxDiff(BernoulliFromDiscreteOp.IndexAverageConditional(sampleDist, probTrue, Discrete.Uniform(indexDist.Dimension))) < 1e-4);
+        }
+
+        [Fact]
+        public void BernoulliFromBooleanTest()
+        {
+            double[] probTrue = { 0.4, 0.7 };
+            Bernoulli choiceDist = new Bernoulli(0.2);
+            Bernoulli sampleDist = new Bernoulli(0.8 * 0.4 + 0.2 * 0.7);
+            Assert.True(sampleDist.MaxDiff(BernoulliFromBooleanArray.SampleAverageConditional(choiceDist, probTrue)) < 1e-4);
+            sampleDist.SetProbTrue(0.2);
+            choiceDist.SetProbTrue((0.8 * 0.3 + 0.2 * 0.7) / (0.8 * 0.3 + 0.2 * 0.7 + 0.8 * 0.6 + 0.2 * 0.4));
+            Assert.True(choiceDist.MaxDiff(BernoulliFromBooleanArray.ChoiceAverageConditional(sampleDist, probTrue)) < 1e-4);
+        }
+
+
+        // test the limit of an incoming message with small precision
+        [Fact]
+        public void IsPositiveGaussianTest2()
+        {
+            for (int trial = 0; trial < 2; trial++)
+            {
+                bool isPositive = (trial == 0);
+                Gaussian x = Gaussian.FromNatural(isPositive ? -2 : 2, 0);
+                Gaussian result = IsPositiveOp.XAverageConditional(isPositive, x);
+                for (int i = 10; i < 20; i++)
+                {
+                    x.Precision = System.Math.Pow(0.1, i);
+                    Gaussian result2 = IsPositiveOp.XAverageConditional(isPositive, x);
+                    //Console.WriteLine($"{x}: {result2} maxDiff={result.MaxDiff(result2)}");
+                    Assert.True(result.MaxDiff(result2) < 1e-6);
+                }
+            }
+        }
+
+        [Fact]
+        public void IsPositiveGaussianTest()
+        {
+            for (int trial = 0; trial < 2; trial++)
+            {
+                double xMean = (trial == 0) ? -1 : 1;
+                Gaussian x = Gaussian.FromMeanAndVariance(xMean, 0);
+                Gaussian result2 = IsPositiveOp.XAverageConditional(true, x);
+                //Console.WriteLine("{0}: {1}", x, result2);
+                if (trial == 0)
+                    Assert.True(result2.IsPointMass && result2.Point == 0.0);
+                else
+                    Assert.True(result2.IsUniform());
+                for (int i = 8; i < 30; i++)
+                {
+                    double v = System.Math.Pow(0.1, i);
+                    x = Gaussian.FromMeanAndVariance(xMean, v);
+                    Gaussian result = IsPositiveOp.XAverageConditional(true, x);
+                    //Console.WriteLine("{0}: {1} maxDiff={2}", x, result, result2.MaxDiff(result));
+                    if (trial == 0)
+                    {
+                        Assert.True(MMath.AbsDiff(result2.GetMean(), result.GetMean()) < 1e-6);
+                    }
+                    else
+                        Assert.True(result2.MaxDiff(result) < 1e-6);
+                }
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                Assert.True(IsPositiveOp.XAverageConditional(true, Gaussian.FromNatural(-System.Math.Pow(10, i), 0.1)).IsProper());
+            }
+            Assert.True(IsPositiveOp.XAverageConditional(true, Gaussian.FromNatural(-2.3287253734154412E+107, 0.090258824802119691)).IsProper());
+            Assert.True(IsPositiveOp.XAverageConditional(false, Gaussian.FromNatural(2.3287253734154412E+107, 0.090258824802119691)).IsProper());
+            //Assert.True(IsPositiveOp.XAverageConditional(Bernoulli.FromLogOdds(-4e-16), new Gaussian(490, 1.488e+06)).IsProper());
+            Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(-2.03e+09, 5.348e+09)).IsProper());
+
+            Gaussian uniform = new Gaussian();
+            Assert.Equal(0.0, IsPositiveOp.IsPositiveAverageConditional(Gaussian.FromMeanAndVariance(0, 1)).LogOdds);
+            Assert.True(MMath.AbsDiff(MMath.NormalCdfLogit(2.0 / System.Math.Sqrt(3)), IsPositiveOp.IsPositiveAverageConditional(Gaussian.FromMeanAndVariance(2, 3)).LogOdds, 1e-10) <
+                          1e-10);
+            Assert.Equal(0.0, IsPositiveOp.IsPositiveAverageConditional(uniform).LogOdds);
+            Assert.Equal(0.0, IsPositiveOp.IsPositiveAverageConditional(Gaussian.PointMass(0.0)).GetProbTrue());
+
+            Bernoulli isPositiveDist = new Bernoulli();
+            Gaussian xDist = new Gaussian(0, 1);
+            Gaussian xMsg = new Gaussian();
+            Assert.True(IsPositiveOp.XAverageConditional(isPositiveDist, xDist).Equals(uniform));
+            isPositiveDist = new Bernoulli(0);
+            Gaussian xBelief = new Gaussian();
+            xMsg = IsPositiveOp.XAverageConditional(isPositiveDist, xDist);
+            xBelief.SetToProduct(xMsg, xDist);
+            Assert.True(xBelief.MaxDiff(Gaussian.FromMeanAndVariance(-0.7979, 0.3634)) < 1e-1);
+            isPositiveDist = new Bernoulli(1);
+            xMsg = IsPositiveOp.XAverageConditional(isPositiveDist, xDist);
+            xBelief.SetToProduct(xMsg, xDist);
+            Assert.True(xBelief.MaxDiff(Gaussian.FromMeanAndVariance(0.7979, 0.3634)) < 1e-1);
+            isPositiveDist = new Bernoulli(0.6);
+            xMsg = IsPositiveOp.XAverageConditional(isPositiveDist, xDist);
+            xBelief.SetToProduct(xMsg, xDist);
+            Assert.True(xBelief.MaxDiff(Gaussian.FromMeanAndVariance(0.15958, 0.97454)) < 1e-1);
+            Assert.True(IsPositiveOp.XAverageConditional(isPositiveDist, uniform).Equals(uniform));
+
+            Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(127, 11)).Equals(uniform));
+            Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(-127, 11)).Equals(uniform));
+            Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(-1e5, 10)).IsProper());
+            Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(1e5, 10)).IsProper());
+        }
     }
 }

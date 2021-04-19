@@ -1188,7 +1188,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 //lowerMsg = new Gaussian(0.6947, 0.2002+ (9-iter)*0.01);
                 //lowerMsg = new Gaussian(0.6947, (prior * upperMsg).GetVariance());
                 //lowerMsg = new Gaussian(0.3503, 1 + (9 - iter) * 1);
-                upperMsg = DoubleIsBetweenOp.XAverageConditional(isBetween, prior * lowerMsg, double.NegativeInfinity, upperBound);
+                upperMsg = IsBetweenGaussianOp.XAverageConditional(isBetween, prior * lowerMsg, double.NegativeInfinity, upperBound);
                 //upperMsg = new Gaussian(-0.3503, 1 + (9 - iter) * 1);
             }
         }
@@ -1196,15 +1196,15 @@ namespace Microsoft.ML.Probabilistic.Tests
         internal double IsBetweenErrorBound(Gaussian prior, double lowerBound, double upperBound, Gaussian lowerMsg, Gaussian upperMsg)
         {
             // msgs are scaled by normalizer
-            double Z = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(prior, lowerBound, upperBound));
+            double Z = System.Math.Exp(IsBetweenGaussianOp.LogProbBetween(prior, lowerBound, upperBound));
             double lowerLogNormalizer = lowerMsg.GetLogNormalizer();
             double lowerPriorLogScale = prior.GetLogAverageOf(lowerMsg) + lowerLogNormalizer;
             double upperLogNormalizer = upperMsg.GetLogNormalizer();
             double upperPriorLogScale = prior.GetLogAverageOf(upperMsg) + upperLogNormalizer;
             Gaussian upperPrior = prior * upperMsg;
-            double lowerLogZ = DoubleIsBetweenOp.LogProbBetween(upperPrior, lowerBound, double.PositiveInfinity) + upperPriorLogScale;
+            double lowerLogZ = IsBetweenGaussianOp.LogProbBetween(upperPrior, lowerBound, double.PositiveInfinity) + upperPriorLogScale;
             Gaussian lowerPrior = prior * lowerMsg;
-            double upperLogZ = DoubleIsBetweenOp.LogProbBetween(lowerPrior, double.NegativeInfinity, upperBound) + lowerPriorLogScale;
+            double upperLogZ = IsBetweenGaussianOp.LogProbBetween(lowerPrior, double.NegativeInfinity, upperBound) + lowerPriorLogScale;
             double qLogScale = lowerPriorLogScale + lowerPrior.GetLogAverageOf(upperMsg) + upperLogNormalizer;
             double qLogScale2 = upperPriorLogScale + upperPrior.GetLogAverageOf(lowerMsg) + lowerLogNormalizer;
             double Zt = System.Math.Exp(lowerLogZ + upperLogZ - qLogScale);
@@ -1214,14 +1214,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian lowerDenom = upperPrior / lowerMsg;
             double lowerZ2;
             if (lowerDenom.IsProper())
-                lowerZ2 = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(lowerDenom, lowerBound, double.PositiveInfinity) + lowerDenomLogScale);
+                lowerZ2 = System.Math.Exp(IsBetweenGaussianOp.LogProbBetween(lowerDenom, lowerBound, double.PositiveInfinity) + lowerDenomLogScale);
             else
                 lowerZ2 = double.PositiveInfinity;
             double upperDenomLogScale = lowerPrior.GetLogAverageOfPower(upperMsg, -1) - upperLogNormalizer + lowerPriorLogScale;
             Gaussian upperDenom = lowerPrior / upperMsg;
             double upperZ2;
             if (upperDenom.IsProper())
-                upperZ2 = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(upperDenom, double.NegativeInfinity, upperBound) + upperDenomLogScale);
+                upperZ2 = System.Math.Exp(IsBetweenGaussianOp.LogProbBetween(upperDenom, double.NegativeInfinity, upperBound) + upperDenomLogScale);
             else
                 upperZ2 = double.PositiveInfinity;
             Trace.WriteLine($"lowerDenom = {lowerDenom} upperDenom = {upperDenom}");

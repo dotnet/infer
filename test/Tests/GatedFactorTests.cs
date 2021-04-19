@@ -3639,19 +3639,19 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             double evExpected, evActual;
 
-            evExpected = DoubleIsBetweenOp.LogProbBetween(priorX, priorL, priorU);
+            evExpected = IsBetweenGaussianOp.LogProbBetween(priorX, priorL, priorU);
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
             Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
             Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-8);
 
             lowerBound.ObservedValue = priorL.GetMean();
-            evExpected = DoubleIsBetweenOp.LogProbBetween(priorX, Gaussian.PointMass(lowerBound.ObservedValue), priorU) + priorL.GetLogProb(lowerBound.ObservedValue);
+            evExpected = IsBetweenGaussianOp.LogProbBetween(priorX, Gaussian.PointMass(lowerBound.ObservedValue), priorU) + priorL.GetLogProb(lowerBound.ObservedValue);
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
             Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
             Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-8);
 
             upperBound.ObservedValue = priorU.GetMean();
-            evExpected = DoubleIsBetweenOp.LogProbBetween(priorX, lowerBound.ObservedValue, upperBound.ObservedValue) + priorL.GetLogProb(lowerBound.ObservedValue) +
+            evExpected = IsBetweenGaussianOp.LogProbBetween(priorX, lowerBound.ObservedValue, upperBound.ObservedValue) + priorL.GetLogProb(lowerBound.ObservedValue) +
                          priorU.GetLogProb(upperBound.ObservedValue);
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
             Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
@@ -3660,20 +3660,20 @@ namespace Microsoft.ML.Probabilistic.Tests
             lowerBound.ClearObservedValue();
             upperBound.ClearObservedValue();
             x.ObservedValue = priorX.GetMean();
-            evExpected = DoubleIsBetweenOp.LogProbBetween(Gaussian.PointMass(x.ObservedValue), priorL, priorU) + priorX.GetLogProb(x.ObservedValue);
+            evExpected = IsBetweenGaussianOp.LogProbBetween(Gaussian.PointMass(x.ObservedValue), priorL, priorU) + priorX.GetLogProb(x.ObservedValue);
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
             Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
             Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-8);
 
             lowerBound.ObservedValue = priorL.GetMean();
-            evExpected = DoubleIsBetweenOp.LogProbBetween(Gaussian.PointMass(x.ObservedValue), Gaussian.PointMass(lowerBound.ObservedValue), priorU) +
+            evExpected = IsBetweenGaussianOp.LogProbBetween(Gaussian.PointMass(x.ObservedValue), Gaussian.PointMass(lowerBound.ObservedValue), priorU) +
                          priorX.GetLogProb(x.ObservedValue) + priorL.GetLogProb(lowerBound.ObservedValue);
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
             Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
             Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-8);
 
             upperBound.ObservedValue = priorU.GetMean();
-            evExpected = DoubleIsBetweenOp.LogProbBetween(Gaussian.PointMass(x.ObservedValue), lowerBound.ObservedValue, upperBound.ObservedValue) +
+            evExpected = IsBetweenGaussianOp.LogProbBetween(Gaussian.PointMass(x.ObservedValue), lowerBound.ObservedValue, upperBound.ObservedValue) +
                          priorX.GetLogProb(x.ObservedValue) + priorL.GetLogProb(lowerBound.ObservedValue) + priorU.GetLogProb(upperBound.ObservedValue);
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
             Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
@@ -4166,7 +4166,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var ca = engine.Compiler.Compile(GatedIsBetweenRRRRModel, new Gaussian(meanX, varX), new Gaussian(meanL, varL), new Gaussian(meanU, varU));
             ca.Execute(20);
 
-            double pYCondT = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(new Gaussian(meanX, varX), new Gaussian(meanL, varL), new Gaussian(meanU, varU)));
+            double pYCondT = System.Math.Exp(IsBetweenGaussianOp.LogProbBetween(new Gaussian(meanX, varX), new Gaussian(meanL, varL), new Gaussian(meanU, varU)));
             // p(x,b) =propto (pb)^b (1-pb)^(1-b) G(x)
             //                [(pT)^y (1-pT)^(1-y) delta(y - step(x))]^b
             double sumCondT = priorY * pYCondT + (1 - priorY) * (1 - pYCondT);
@@ -4213,7 +4213,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var ca = engine.Compiler.Compile(GatedIsBetweenCRCCModel, y, new Gaussian(meanX, varX), L, U);
             ca.Execute(20);
 
-            double pYCondT = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(new Gaussian(meanX, varX), L, U));
+            double pYCondT = System.Math.Exp(IsBetweenGaussianOp.LogProbBetween(new Gaussian(meanX, varX), L, U));
             // p(x,b) =propto (pb)^b (1-pb)^(1-b) G(x)
             //                [(pT)^y (1-pT)^(1-y) delta(y - isbet(x,L,U))]^b
             double sumCondT = priorY * pYCondT + (1 - priorY) * (1 - pYCondT);
@@ -4255,7 +4255,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var ca = engine.Compiler.Compile(GatedIsBetweenRRCCModel, new Gaussian(meanX, varX), L, U);
             ca.Execute(20);
 
-            double pYCondT = System.Math.Exp(DoubleIsBetweenOp.LogProbBetween(new Gaussian(meanX, varX), L, U));
+            double pYCondT = System.Math.Exp(IsBetweenGaussianOp.LogProbBetween(new Gaussian(meanX, varX), L, U));
             // p(x,b) =propto (pb)^b (1-pb)^(1-b) G(x)
             //                [(pT)^y (1-pT)^(1-y) delta(y - isbet(x,L,U))]^b
             double sumCondT = priorY * pYCondT + (1 - priorY) * (1 - pYCondT);

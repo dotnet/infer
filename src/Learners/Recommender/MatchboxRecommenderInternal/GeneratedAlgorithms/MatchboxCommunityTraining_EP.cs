@@ -311,7 +311,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		private IReadOnlyList<int> ratings;
 		/// <summary>Field backing the TraitCount property</summary>
 		private int traitCount;
-		/// <summary>Buffer for DoubleIsBetweenOp.XAverageConditional</summary>
+		/// <summary>Buffer for IsBetweenGaussianOp.XAverageConditional</summary>
 		public double[] true_logZ;
 		public DistributionStructArray<Gaussian,double> UserBias_F;
 		public DistributionStructArray<Gaussian,double> UserBias_itemUserIds_observation__F;
@@ -2219,8 +2219,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.vdouble113_F[observation] = FastSumOp.SumAverageConditional(this.vdouble__51_F[observation]);
 				this.vdouble114_F[observation] = DoublePlusOp.SumAverageConditional(this.vdouble112_F[observation], this.vdouble113_F[observation]);
 				this.vdouble115_F[observation] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.vdouble114_F[observation], this.affinityNoiseVariance);
-				this.true_logZ[observation] = DoubleIsBetweenOp.LogZ(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]]);
-				this.vdouble115_use_B[observation] = DoubleIsBetweenOp.XAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
+				this.true_logZ[observation] = IsBetweenGaussianOp.LogZ(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]]);
+				this.vdouble115_use_B[observation] = IsBetweenGaussianOp.XAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
 				this.vdouble114_B[observation] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.vdouble115_use_B[observation], this.affinityNoiseVariance);
 				this.vdouble113_B[observation] = DoublePlusOp.BAverageConditional(this.vdouble114_B[observation], this.vdouble112_F[observation]);
 				this.vdouble__51_B[observation] = FastSumOp.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(this.vdouble113_B[observation], this.vdouble113_F[observation], this.vdouble__51_F[observation], this.vdouble__51_B[observation]);
@@ -2250,8 +2250,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				if (!this.useSharedUserThresholds) {
 					this.UserThresholds_depth0_uses_F_1__marginal = GetItemsOp<double[]>.MarginalIncrement<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,DistributionStructArray<Gaussian,double>>(this.UserThresholds_depth0_uses_F_1__marginal, this.UserThresholds_itemUserIds_observation__F[observation], this.UserThresholdsObs_B[observation], this.userIds, observation);
 				}
-				this.NoisyUserThresholds_use_B[observation][this.CurrentRating[observation]] = DoubleIsBetweenOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
-				this.NoisyUserThresholds_use_B[observation][this.NextRating[observation]] = DoubleIsBetweenOp.UpperBoundAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
+				this.NoisyUserThresholds_use_B[observation][this.CurrentRating[observation]] = IsBetweenGaussianOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
+				this.NoisyUserThresholds_use_B[observation][this.NextRating[observation]] = IsBetweenGaussianOp.UpperBoundAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
 				// FactorManager.Any(NoisyUserThresholds_use_B[observation][NextRating[observation]], NoisyUserThresholds_use_B[observation][CurrentRating[observation]]) is now updated in all contexts
 				for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 					this.vdouble__61_B[observation][userThreshold] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.NoisyUserThresholds_use_B[observation][userThreshold], this.userThresholdNoiseVariance);
@@ -2462,8 +2462,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.vdouble113_F[observation] = FastSumOp.SumAverageConditional(this.vdouble__51_F[observation]);
 					this.vdouble114_F[observation] = DoublePlusOp.SumAverageConditional(this.vdouble112_F[observation], this.vdouble113_F[observation]);
 					this.vdouble115_F[observation] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.vdouble114_F[observation], this.affinityNoiseVariance);
-					this.true_logZ[observation] = DoubleIsBetweenOp.LogZ(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]]);
-					this.vdouble115_use_B[observation] = DoubleIsBetweenOp.XAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
+					this.true_logZ[observation] = IsBetweenGaussianOp.LogZ(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]]);
+					this.vdouble115_use_B[observation] = IsBetweenGaussianOp.XAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
 					this.vdouble114_B[observation] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.vdouble115_use_B[observation], this.affinityNoiseVariance);
 					this.vdouble113_B[observation] = DoublePlusOp.BAverageConditional(this.vdouble114_B[observation], this.vdouble112_F[observation]);
 					this.vdouble__51_B[observation] = FastSumOp.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(this.vdouble113_B[observation], this.vdouble113_F[observation], this.vdouble__51_F[observation], this.vdouble__51_B[observation]);
@@ -2480,8 +2480,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.vdouble111_B[observation] = DoublePlusOp.BAverageConditional(this.vdouble112_B[observation], this.vdouble109_F[observation]);
 					this.itemBiasObs_B[observation] = GaussianProductOp_SHG09.AAverageConditional(this.vdouble111_B[observation], 1.0);
 					this.ItemBias_uses_F_1__marginal = GetItemsOp<double>.MarginalIncrement<DistributionStructArray<Gaussian,double>,Gaussian>(this.ItemBias_uses_F_1__marginal, this.ItemBias_itemItemIds_observation__F[observation], this.itemBiasObs_B[observation], this.itemIds, observation);
-					this.NoisyUserThresholds_use_B[observation][this.CurrentRating[observation]] = DoubleIsBetweenOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
-					this.NoisyUserThresholds_use_B[observation][this.NextRating[observation]] = DoubleIsBetweenOp.UpperBoundAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
+					this.NoisyUserThresholds_use_B[observation][this.CurrentRating[observation]] = IsBetweenGaussianOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
+					this.NoisyUserThresholds_use_B[observation][this.NextRating[observation]] = IsBetweenGaussianOp.UpperBoundAverageConditional(Bernoulli.PointMass(true), this.vdouble115_F[observation], this.NoisyUserThresholds_F[observation][this.CurrentRating[observation]], this.NoisyUserThresholds_F[observation][this.NextRating[observation]], this.true_logZ[observation]);
 					// FactorManager.Any(NoisyUserThresholds_use_B[observation][NextRating[observation]], NoisyUserThresholds_use_B[observation][CurrentRating[observation]]) is now updated in all contexts
 					for(int userThreshold = 0; userThreshold<this.userThresholdCount; userThreshold++) {
 						this.vdouble__61_B[observation][userThreshold] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.NoisyUserThresholds_use_B[observation][userThreshold], this.userThresholdNoiseVariance);
