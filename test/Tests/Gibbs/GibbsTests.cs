@@ -298,7 +298,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine(new GibbsSampling());
             TruncatedGaussian xActual = engine.Infer<TruncatedGaussian>(x);
             Gaussian xPrior = new Gaussian(0, 1);
-            Gaussian xExpected = xPrior*DoubleIsBetweenOp.XAverageConditional(true, xPrior, 2, 3);
+            Gaussian xExpected = xPrior*IsBetweenGaussianOp.XAverageConditional(true, xPrior, 2, 3);
             Console.WriteLine("x = {0} should be {1}", xActual, xExpected);
             Assert.True(xExpected.MaxDiff(xActual.ToGaussian()) < 1e-10);
         }

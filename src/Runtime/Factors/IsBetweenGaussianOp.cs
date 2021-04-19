@@ -14,7 +14,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [FactorMethod(typeof(Factor), "IsBetween", typeof(double), typeof(double), typeof(double), Default = true)]
     [Quality(QualityBand.Mature)]
     [Buffers("logZ")]
-    public static class DoubleIsBetweenOp
+    public static class IsBetweenGaussianOp
     {
         /// <summary>
         /// Static flag to force a proper distribution
@@ -767,8 +767,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             else
             {
                 // at this point, X is not uniform
-                double yl, yu, r, sqrtomr2, invSqrtVxl, invSqrtVxu;
-                GetDiffMeanAndVariance(X, L, U, out yl, out yu, out r, out sqrtomr2, out invSqrtVxl, out invSqrtVxu);
+                double yl, yu, r, sqrtomr2;
+                GetDiffMeanAndVariance(X, L, U, out yl, out yu, out r, out sqrtomr2, out _, out _);
                 //Trace.WriteLine($"yl={yl:r} yu={yu:r} r={r:r} sqrtomr2={sqrtomr2:r}");
                 var prob = MMath.NormalCdf(yl, yu, r, sqrtomr2);
                 double logProb = prob.Log();
@@ -976,11 +976,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                 GetDiffMeanAndVariance(X, lowerBound, upperBound, out yl, out yu, out r, out sqrtomr2, out invSqrtVxl, out invSqrtVxu);
                 bool useLogZRatio = (r > smallR) && (logZ < smallLogZ);
                 double logZRatio = useLogZRatio ? MMath.NormalCdfRatioLn(yl, yu, r, sqrtomr2) : 0;
+                GetAlpha(X, lowerBound, upperBound, logZ, logZRatio, d_p, yl, yu, r, sqrtomr2, invSqrtVxl, invSqrtVxu, true, out double alphaL, false, out double alphaU, out double alphaX, out double ylInvSqrtVxlPlusAlphaX, out double yuInvSqrtVxuMinusAlphaX);
                 // if we get here, we know that -1 < r <= 0 and invSqrtVxl is finite
                 // since lowerBound is not uniform and X is not uniform, invSqrtVxl > 0
                 // yl is always finite.  yu may be +/-infinity.
-                double alphaL, betaL;
-                GetAlpha(X, lowerBound, upperBound, logZ, logZRatio, d_p, yl, yu, r, sqrtomr2, invSqrtVxl, invSqrtVxu, true, out alphaL, false, out double alphaU, out double alphaX, out double ylInvSqrtVxlPlusAlphaX, out double yuInvSqrtVxuMinusAlphaX);
+                double betaL;
                 if (d_p == 1 && useLogZRatio && yl < 0 && yu < 0)
                 {
                     double invZRatio = Math.Exp(-logZRatio);
@@ -1091,7 +1091,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     (upperBound.IsPointMass && Double.IsInfinity(upperBound.Point)) ||
                     !Double.IsPositiveInfinity(isBetween.LogOdds))
                 {
-                    result.SetToUniform();
+                    return result;
                 }
                 else if (isBetween.IsPointMass && isBetween.Point)
                 {
@@ -1108,53 +1108,65 @@ namespace Microsoft.ML.Probabilistic.Factors
                     double vunew = vu - vu * vu * betaU;
                     double vlnew = vl - vl * vl * betaU;
                     double diff = dmul + vlu * alphaU; // munew - mlnew;
-                    result.SetMeanAndVariance((munew + mlnew) / 2, diff * diff / 12 + (vunew + vlnew + vu * vl * betaU) / 3);
+                    return Gaussian.FromMeanAndVariance((munew + mlnew) / 2, diff * diff / 12 + (vunew + vlnew + vu * vl * betaU) / 3);
                 }
                 else
                     throw new NotImplementedException();
             }
+            else try
+                {
+                    // X is not uniform
+                    bool precisionWasZero = AdjustXPrecision(isBetween, ref X, lowerBound, upperBound, ref logZ);
+                    if (Double.IsNegativeInfinity(logZ))
+                        throw new AllZeroException();
+                    double d_p = 2 * isBetween.GetProbTrue() - 1;
+                    double yl, yu, r, sqrtomr2, invSqrtVxl, invSqrtVxu;
+                    GetDiffMeanAndVariance(X, lowerBound, upperBound, out yl, out yu, out r, out sqrtomr2, out invSqrtVxl, out invSqrtVxu);
+                    bool useLogZRatio = (r > smallR) && (logZ < smallLogZ);
+                    double logZRatio = useLogZRatio ? MMath.NormalCdfRatioLn(yl, yu, r, sqrtomr2) : 0;
+                    GetAlpha(X, lowerBound, upperBound, logZ, logZRatio, d_p, yl, yu, r, sqrtomr2, invSqrtVxl, invSqrtVxu, true, out double alphaL, true, out double alphaU, out double alphaX, out double ylInvSqrtVxlPlusAlphaX, out double yuInvSqrtVxuMinusAlphaX);
+                    //alphaX = -alphaL - alphaU;
+                    // (mx - ml) / (vl + vx) = yl*invSqrtVxl
+                    // To improve accuracy here, could rewrite betaX to be relative to X.Precision, or solve for posterior on X directly as in uniform case.
+                    // betaX = alphaX * alphaX - alphaL * (yl * invSqrtVxl) + alphaU * (yu * invSqrtVxu)
+                    //       = (-alphaL - alphaU)*alphaX - alphaL * (yl * invSqrtVxl) + alphaU * (yu * invSqrtVxu)
+                    //       = - alphaL * (yl * invSqrtVxl + alphaX) + alphaU * (yu * invSqrtVxu - alphaX)
+                    double betaX = 0;
+                    if (!Double.IsInfinity(yl))
+                    {
+                        // if yl is infinity then alphaL == 0
+                        betaX -= alphaL * ylInvSqrtVxlPlusAlphaX;
+                    }
+                    if (!Double.IsInfinity(yu))
+                    {
+                        // if yu is infinity then alphaU == 0
+                        betaX += alphaU * yuInvSqrtVxuMinusAlphaX;
+                    }
+                    if (r > -1 && r != 0 && !Double.IsInfinity(yl) && !Double.IsInfinity(yu) && !precisionWasZero)
+                    {
+                        double omr2 = sqrtomr2 * sqrtomr2;
+                        double logPhiR = GetLogPhiR(X, lowerBound, upperBound, yl, yu, r, omr2, logZ, logZRatio);
+                        double c = d_p * r * Math.Exp(logPhiR);
+                        betaX += c * (-2 * X.Precision + invSqrtVxl * invSqrtVxl + invSqrtVxu * invSqrtVxu);
+                    }
+                    if (TraceAlpha)
+                        Trace.WriteLine($"yu = {yu} yl = {yl} r = {r} alphaX={alphaX}, alphaL={alphaL}, alphaU={alphaU}, betaX={betaX}, ylInvSqrtVxlPlusAlphaX = {ylInvSqrtVxlPlusAlphaX}, yuInvSqrtVxuMinusAlphaX = {yuInvSqrtVxuMinusAlphaX}");
+                    return GaussianOp.GaussianFromAlphaBeta(X, alphaX, betaX, ForceProper);
+                }
+                catch(OutOfMemoryException)
+                {
+                    Console.WriteLine($"To reproduce this exception:");
+                    Console.WriteLine($"{nameof(XAverageConditional)}(new Bernoulli({isBetween.GetProbTrue()}), {QuoteGaussian(X)}, {QuoteGaussian(lowerBound)}, {QuoteGaussian(upperBound)}, {logZ:g17})");
+                    throw;
+                }
+        }
+
+        private static string QuoteGaussian(Gaussian g)
+        {
+            if (g.IsPointMass)
+                return $"Gaussian.PointMass({g.Point:g17})";
             else
-            {
-                // X is not uniform
-                bool precisionWasZero = AdjustXPrecision(isBetween, ref X, lowerBound, upperBound, ref logZ);
-                if (Double.IsNegativeInfinity(logZ))
-                    throw new AllZeroException();
-                double d_p = 2 * isBetween.GetProbTrue() - 1;
-                double yl, yu, r, sqrtomr2, invSqrtVxl, invSqrtVxu;
-                GetDiffMeanAndVariance(X, lowerBound, upperBound, out yl, out yu, out r, out sqrtomr2, out invSqrtVxl, out invSqrtVxu);
-                bool useLogZRatio = (r > smallR) && (logZ < smallLogZ);
-                double logZRatio = useLogZRatio ? MMath.NormalCdfRatioLn(yl, yu, r, sqrtomr2) : 0;
-                double alphaL, alphaU, alphaX;
-                GetAlpha(X, lowerBound, upperBound, logZ, logZRatio, d_p, yl, yu, r, sqrtomr2, invSqrtVxl, invSqrtVxu, true, out alphaL, true, out alphaU, out alphaX, out double ylInvSqrtVxlPlusAlphaX, out double yuInvSqrtVxuMinusAlphaX);
-                //alphaX = -alphaL - alphaU;
-                // (mx - ml) / (vl + vx) = yl*invSqrtVxl
-                // To improve accuracy here, could rewrite betaX to be relative to X.Precision, or solve for posterior on X directly as in uniform case.
-                // betaX = alphaX * alphaX - alphaL * (yl * invSqrtVxl) + alphaU * (yu * invSqrtVxu)
-                //       = (-alphaL - alphaU)*alphaX - alphaL * (yl * invSqrtVxl) + alphaU * (yu * invSqrtVxu)
-                //       = - alphaL * (yl * invSqrtVxl + alphaX) + alphaU * (yu * invSqrtVxu - alphaX)
-                double betaX = 0;
-                if (!Double.IsInfinity(yl))
-                {
-                    // if yl is infinity then alphaL == 0
-                    betaX -= alphaL * ylInvSqrtVxlPlusAlphaX;
-                }
-                if (!Double.IsInfinity(yu))
-                {
-                    // if yu is infinity then alphaU == 0
-                    betaX += alphaU * yuInvSqrtVxuMinusAlphaX;
-                }
-                if (r > -1 && r != 0 && !Double.IsInfinity(yl) && !Double.IsInfinity(yu) && !precisionWasZero)
-                {
-                    double omr2 = sqrtomr2 * sqrtomr2;
-                    double logPhiR = GetLogPhiR(X, lowerBound, upperBound, yl, yu, r, omr2, logZ, logZRatio);
-                    double c = d_p * r * Math.Exp(logPhiR);
-                    betaX += c * (-2 * X.Precision + invSqrtVxl * invSqrtVxl + invSqrtVxu * invSqrtVxu);
-                }
-                if (TraceAlpha)
-                    Trace.WriteLine($"yu = {yu} yl = {yl} r = {r} alphaX={alphaX}, alphaL={alphaL}, alphaU={alphaU}, betaX={betaX}, ylInvSqrtVxlPlusAlphaX = {ylInvSqrtVxlPlusAlphaX}, yuInvSqrtVxuMinusAlphaX = {yuInvSqrtVxuMinusAlphaX}");
-                return GaussianOp.GaussianFromAlphaBeta(X, alphaX, betaX, ForceProper);
-            }
-            return result;
+                return $"Gaussian.FromNatural({g.MeanTimesPrecision:g17}, {g.Precision:g17})";
         }
 
         public static bool TraceAlpha;
@@ -1275,6 +1287,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                     if (useLogZRatio)
                     {
+                        // assumes Z = N(yl;0,1)*N(yuryl;0,1)
+                        // which happens when r is near -1 and NormalCdf(yl,yu,-1) == 0
                         logPhiL = MMath.NormalCdfRatioLn(yuryl);
                         r1yuryl = MMath.NormalCdfMomentRatio(1, yuryl);
                     }
@@ -1317,6 +1331,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                     if (useLogZRatio)
                     {
+                        // assumes Z = N(yu;0,1)*N(ylryu;0,1)  (times 0.5?)
+                        // which happens when r is near -1 and NormalCdf(yl,yu,-1) == 0
                         logPhiU = MMath.NormalCdfRatioLn(ylryu);
                         r1ylryu = MMath.NormalCdfMomentRatio(1, ylryu);
                     }
@@ -1936,31 +1952,31 @@ namespace Microsoft.ML.Probabilistic.Factors
 
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleIsBetweenOp"]/message_doc[@name="IsBetweenAverageLogarithm(Gaussian, Gaussian, Gaussian)"]/*'/>
-        [NotSupported(DoubleIsBetweenOp.NotSupportedMessage)]
+        [NotSupported(IsBetweenGaussianOp.NotSupportedMessage)]
         public static Bernoulli IsBetweenAverageLogarithm(Gaussian X, Gaussian lowerBound, Gaussian upperBound)
         {
-            throw new NotSupportedException(DoubleIsBetweenOp.NotSupportedMessage);
+            throw new NotSupportedException(IsBetweenGaussianOp.NotSupportedMessage);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleIsBetweenOp"]/message_doc[@name="XAverageLogarithm(Bernoulli, Gaussian, Gaussian, Gaussian)"]/*'/>
-        [NotSupported(DoubleIsBetweenOp.NotSupportedMessage)]
+        [NotSupported(IsBetweenGaussianOp.NotSupportedMessage)]
         public static Gaussian XAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)
         {
-            throw new NotSupportedException(DoubleIsBetweenOp.NotSupportedMessage);
+            throw new NotSupportedException(IsBetweenGaussianOp.NotSupportedMessage);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleIsBetweenOp"]/message_doc[@name="LowerBoundAverageLogarithm(Bernoulli, Gaussian, Gaussian, Gaussian)"]/*'/>
-        [NotSupported(DoubleIsBetweenOp.NotSupportedMessage)]
+        [NotSupported(IsBetweenGaussianOp.NotSupportedMessage)]
         public static Gaussian LowerBoundAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)
         {
-            throw new NotSupportedException(DoubleIsBetweenOp.NotSupportedMessage);
+            throw new NotSupportedException(IsBetweenGaussianOp.NotSupportedMessage);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleIsBetweenOp"]/message_doc[@name="UpperBoundAverageLogarithm(Bernoulli, Gaussian, Gaussian, Gaussian)"]/*'/>
-        [NotSupported(DoubleIsBetweenOp.NotSupportedMessage)]
+        [NotSupported(IsBetweenGaussianOp.NotSupportedMessage)]
         public static Gaussian UpperBoundAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)
         {
-            throw new NotSupportedException(DoubleIsBetweenOp.NotSupportedMessage);
+            throw new NotSupportedException(IsBetweenGaussianOp.NotSupportedMessage);
         }
 
         private const string RandomBoundsNotSupportedMessage = "VMP does not support truncation with stochastic bounds.";
@@ -2011,39 +2027,6 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Gaussian UpperBoundAverageLogarithm()
         {
             throw new NotSupportedException(RandomBoundsNotSupportedMessage);
-        }
-    }
-
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleIsBetweenOp"]/doc/*'/>
-    [FactorMethod(typeof(Factor), "IsBetween", typeof(double), typeof(double), typeof(double))]
-    [Quality(QualityBand.Mature)]
-    public static class TruncatedGaussianIsBetweenOp
-    {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="TruncatedGaussianIsBetweenOp"]/message_doc[@name="AverageLogFactor(TruncatedGaussian)"]/*'/>
-        [Skip]
-        public static double AverageLogFactor([IgnoreDependency] TruncatedGaussian X)
-        {
-            return 0;
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="TruncatedGaussianIsBetweenOp"]/message_doc[@name="LogEvidenceRatio(bool, TruncatedGaussian, double, double)"]/*'/>
-        public static double LogEvidenceRatio(bool isBetween, [SkipIfUniform] TruncatedGaussian x, double lowerBound, double upperBound)
-        {
-            return x.GetLogAverageOf(XAverageConditional(isBetween, lowerBound, upperBound));
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="TruncatedGaussianIsBetweenOp"]/message_doc[@name="XAverageConditional(bool, double, double)"]/*'/>
-        public static TruncatedGaussian XAverageConditional(bool isBetween, double lowerBound, double upperBound)
-        {
-            if (!isBetween)
-                throw new ArgumentException($"{nameof(TruncatedGaussian)} requires {nameof(isBetween)}=true", nameof(isBetween));
-            return new TruncatedGaussian(0, Double.PositiveInfinity, lowerBound, upperBound);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="TruncatedGaussianIsBetweenOp"]/message_doc[@name="XAverageLogarithm(bool, double, double)"]/*'/>
-        public static TruncatedGaussian XAverageLogarithm(bool isBetween, double lowerBound, double upperBound)
-        {
-            return XAverageConditional(isBetween, lowerBound, upperBound);
         }
     }
 }

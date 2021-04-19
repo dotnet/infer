@@ -92,10 +92,4 @@
     <None Remove="Vibes\*.m;Vibes\*.xml" />
     <Content Include="*Vibes\*.m;Vibes\*.xml" />
   </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="@(Compile)">
-      <Visible>false</Visible>
-    </EmbeddedResource>
-  </ItemGroup>
 </Project>

@@ -1684,7 +1684,7 @@ zL = (L - mx)*sqrt(prec)
                 {
                     //XAverageConditional_Debug(X, lowerBound, upperBound);
                     //X = Gaussian.FromMeanAndPrecision(mx, X.Precision + 1.0000000000000011E-19);
-                    Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
+                    Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Gaussian xPost = X * toX2;
                     Console.WriteLine($"mx = {X.GetMean():g17} mp = {xPost.GetMean():g17} vp = {xPost.GetVariance():g17} toX = {toX2}");
                     //X.Precision *= 100;
@@ -1703,7 +1703,7 @@ zL = (L - mx)*sqrt(prec)
                     if (sample > lowerBound && sample < upperBound)
                         mva.Add(sample);
                 }
-                Gaussian toX = DoubleIsBetweenOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
+                Gaussian toX = IsBetweenGaussianOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                 Console.WriteLine($"expected mp = {mva.Mean}, vp = {mva.Variance}, {X * toX}");
                 XAverageConditional_Debug(X, lowerBound, upperBound);
             }
@@ -1715,7 +1715,7 @@ zL = (L - mx)*sqrt(prec)
             double sqrtPrec = System.Math.Sqrt(X.Precision);
             double zL = (lowerBound - mx) * sqrtPrec;
             double zU = (upperBound - mx) * sqrtPrec;
-            double logZ = DoubleIsBetweenOp.LogProbBetween(X, lowerBound, upperBound);
+            double logZ = IsBetweenGaussianOp.LogProbBetween(X, lowerBound, upperBound);
             double logPhiL = X.GetLogProb(lowerBound);
             double ZR = System.Math.Exp(logZ - logPhiL);
             // Z/X.Prob(U)*sqrtPrec = NormalCdfRatio(zU) - NormalCdfRatio(zL)*X.Prob(L)/X.Prob(U) 
@@ -1996,7 +1996,7 @@ zL = (L - mx)*sqrt(prec)
             // combine terms 1,2,3 and 8
             // zU = diffs/2 - delta/diffs
             // rU = r2U -r1U*zU = r2U - r1U*(diffs/2 - delta/diffs)
-            double drU2r1U = DoubleIsBetweenOp.NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U);
+            double drU2r1U = IsBetweenGaussianOp.NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U);
             double q16 =
                 delta * delta * (drU2r1U * expMinus1 * expMinus1RatioMinus1RatioMinusHalf + (r2U - r1U * diffs / 2) * expMinus1RatioMinus1 * diffs / 2)
                 + rU * expMinus1 * (-(rU / 2 + (r1L + drU2) * zL) * diffs * diffs / 2 * delta - diffs * diffs / 2 * r1L * diffs / 2 + diffs * diffs / 2 * drU2 * (-zL - zU) + diffs * diffs * drU3)
@@ -2100,62 +2100,62 @@ zL = (L - mx)*sqrt(prec)
         [Fact]
         public void GaussianIsBetweenTest()
         {
-            Assert.True(DoubleIsBetweenOp.LogProbBetween(Gaussian.FromNatural(3172.868479466179, 1.5806459147637875E-06), -0.18914271233981969, 0.18914271233981969) < 0);
-            Assert.True(DoubleIsBetweenOp.LogProbBetween(new Gaussian(-49.13, 1.081), new Gaussian(47, 1.25), new Gaussian(48, 1.25)) < -10);
-            Assert.True(!double.IsNaN(DoubleIsBetweenOp.LogZ(Bernoulli.PointMass(true), new Gaussian(-49.13, 1.081), new Gaussian(47, 1.25), new Gaussian(48, 1.25))));
+            Assert.True(IsBetweenGaussianOp.LogProbBetween(Gaussian.FromNatural(3172.868479466179, 1.5806459147637875E-06), -0.18914271233981969, 0.18914271233981969) < 0);
+            Assert.True(IsBetweenGaussianOp.LogProbBetween(new Gaussian(-49.13, 1.081), new Gaussian(47, 1.25), new Gaussian(48, 1.25)) < -10);
+            Assert.True(!double.IsNaN(IsBetweenGaussianOp.LogZ(Bernoulli.PointMass(true), new Gaussian(-49.13, 1.081), new Gaussian(47, 1.25), new Gaussian(48, 1.25))));
 
-            DoubleIsBetweenOp.LogProbBetween(Gaussian.FromNatural(-1.9421168441678062E-32, 3.0824440518369444E-35),
+            IsBetweenGaussianOp.LogProbBetween(Gaussian.FromNatural(-1.9421168441678062E-32, 3.0824440518369444E-35),
                 Gaussian.FromNatural(-9.4928010569516363, 0.0084055128328109872),
                 Gaussian.FromNatural(0.67290512665940949, 0.0042043926136280212));
 
             double actual, expected;
             Gaussian x = new Gaussian(0, 1);
 
-            double lp = DoubleIsBetweenOp.LogProbBetween(x, 100, 100.1);
-            double lp2 = DoubleIsBetweenOp.LogProbBetween(x, -100.1, -100);
+            double lp = IsBetweenGaussianOp.LogProbBetween(x, 100, 100.1);
+            double lp2 = IsBetweenGaussianOp.LogProbBetween(x, -100.1, -100);
             Assert.True(MMath.AbsDiff(lp, lp2, 1e-8) < 1e-8);
             Console.WriteLine("{0} {1}", lp, lp2);
 
             Gaussian lowerBound = Gaussian.PointMass(0);
             Gaussian upperBound = Gaussian.PointMass(1);
-            Assert.True(System.Math.Abs(DoubleIsBetweenOp.LogProbBetween(new Gaussian(1, 3e-5), 0.5, 1.1)) < 1e-10);
+            Assert.True(System.Math.Abs(IsBetweenGaussianOp.LogProbBetween(new Gaussian(1, 3e-5), 0.5, 1.1)) < 1e-10);
             Assert.True(
-                System.Math.Abs(DoubleIsBetweenOp.LogProbBetween(new Gaussian(1, 1e-6), Gaussian.FromMeanAndVariance(0.5, 1e-10), Gaussian.FromMeanAndVariance(1.1, 1e-10))) < 1e-10);
+                System.Math.Abs(IsBetweenGaussianOp.LogProbBetween(new Gaussian(1, 1e-6), Gaussian.FromMeanAndVariance(0.5, 1e-10), Gaussian.FromMeanAndVariance(1.1, 1e-10))) < 1e-10);
             // test in matlab: x=randn(1e7,1); [mean(0<x & x<1) normcdf(1)-normcdf(0)]
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = MMath.NormalCdf(1) - MMath.NormalCdf(0);
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound.Point, upperBound.Point).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound.Point, upperBound.Point).GetProbTrue();
             expected = MMath.NormalCdf(1) - MMath.NormalCdf(0);
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
             Assert.Throws<AllZeroException>(() =>
             {
-                Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(0.5), 1, 0).GetProbTrue());
+                Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(0.5), 1, 0).GetProbTrue());
             });
             Assert.Throws<AllZeroException>(() =>
             {
-                Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), 1, 0).GetProbTrue());
+                Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), 1, 0).GetProbTrue());
                 Assert.True(false, "Did not throw exception");
             });
-            Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(0), 0, 1).GetProbTrue());
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(-1), Gaussian.PointMass(0), Gaussian.FromMeanAndVariance(1, 1)).GetProbTrue());
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(1), 0, 1).GetProbTrue());
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(Gaussian.PointMass(1), Gaussian.FromMeanAndVariance(0, 1), Gaussian.PointMass(1)).GetProbTrue());
+            Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(0), 0, 1).GetProbTrue());
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(-1), Gaussian.PointMass(0), Gaussian.FromMeanAndVariance(1, 1)).GetProbTrue());
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(1), 0, 1).GetProbTrue());
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(1), Gaussian.FromMeanAndVariance(0, 1), Gaussian.PointMass(1)).GetProbTrue());
 
-            Assert.Equal(1.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), Double.NegativeInfinity, Double.PositiveInfinity).GetProbTrue());
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), 0.0, Double.PositiveInfinity).LogOdds);
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), Double.NegativeInfinity, 0.0).LogOdds);
-            Assert.Equal(0.0, DoubleIsBetweenOp.IsBetweenAverageConditional(new Gaussian(0, 1), Gaussian.PointMass(Double.NegativeInfinity), new Gaussian()).LogOdds);
+            Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), Double.NegativeInfinity, Double.PositiveInfinity).GetProbTrue());
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), 0.0, Double.PositiveInfinity).LogOdds);
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), Double.NegativeInfinity, 0.0).LogOdds);
+            Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), Gaussian.PointMass(Double.NegativeInfinity), new Gaussian()).LogOdds);
 
             lowerBound = new Gaussian();
             upperBound = Gaussian.PointMass(1);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = MMath.NormalCdf(1) * 0.5;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
 
             lowerBound = Gaussian.PointMass(0);
             upperBound = new Gaussian();
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = MMath.NormalCdf(0) * 0.5;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
 
@@ -2163,22 +2163,22 @@ zL = (L - mx)*sqrt(prec)
             upperBound = new Gaussian(3, 3);
             // test in matlab: x=randn(1e7,1); mean(randnorm(1e7,1,[],8)'<x & x<randnorm(1e7,3,[],3)')
             // bvnl(-1/3,3/2,-1/2/3) = 0.33632
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = MMath.NormalCdf(-1.0 / 3, 3.0 / 2, -1.0 / 2 / 3);
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
 
             // uniform x
             x.SetToUniform();
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, lowerBound, upperBound).GetProbTrue();
             expected = 0;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, 0, 1).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, 0, 1).GetProbTrue();
             expected = 0;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, new Gaussian(), upperBound).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, new Gaussian(), upperBound).GetProbTrue();
             expected = 0.25;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
-            actual = DoubleIsBetweenOp.IsBetweenAverageConditional(x, new Gaussian(), new Gaussian()).GetProbTrue();
+            actual = IsBetweenGaussianOp.IsBetweenAverageConditional(x, new Gaussian(), new Gaussian()).GetProbTrue();
             expected = 0.25;
             Assert.True(System.Math.Abs(expected - actual) < 1e-10);
         }
@@ -2198,13 +2198,13 @@ zL = (L - mx)*sqrt(prec)
                     upperBound = new Gaussian(1, 1e-8);
                 Console.WriteLine($"upperBound = {upperBound}");
                 Gaussian lowerBound = Gaussian.PointMass(-1);
-                Gaussian result2 = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian result2 = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                 Console.WriteLine($"{lowerBound}: {result2}");
                 for (int i = 6; i < 30; i++)
                 {
                     double v = System.Math.Pow(0.1, i);
                     lowerBound = Gaussian.FromMeanAndVariance(-1, v);
-                    Gaussian result = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian result = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                     double error = result.MaxDiff(result2);
                     Console.WriteLine($"{lowerBound}: {result} {error}");
                     Assert.True(error < 1e-6);
@@ -2227,13 +2227,13 @@ zL = (L - mx)*sqrt(prec)
                     lowerBound = new Gaussian(-1, 1e-8);
                 Console.WriteLine($"lowerBound = {lowerBound}");
                 Gaussian upperBound = Gaussian.PointMass(1);
-                Gaussian result2 = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian result2 = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                 Console.WriteLine($"{upperBound}: {result2}");
                 for (int i = 6; i < 300; i++)
                 {
                     double v = System.Math.Pow(0.1, i);
                     upperBound = Gaussian.FromMeanAndVariance(1, v);
-                    Gaussian result = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian result = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                     double error = result.MaxDiff(result2);
                     Console.WriteLine($"{upperBound}: {result} {error}");
                     Assert.True(error < 1e-6);
@@ -2449,10 +2449,10 @@ zL = (L - mx)*sqrt(prec)
                         {
                             double mx = x.GetMean();
                             if (double.IsInfinity(mx)) continue;
-                            Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
+                            Gaussian toX = IsBetweenGaussianOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
                             //Gaussian x2 = Gaussian.FromMeanAndPrecision(2 * center - mx, x.Precision);
                             Gaussian x2 = Gaussian.FromNatural(-x.MeanTimesPrecision, x.Precision);
-                            Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
+                            Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
                             double precUlpDiff = UlpDiff(toX2.Precision, toX.Precision);
                             Assert.Equal(0, precUlpDiff);
                             if (precUlpDiff > precMaxUlpError)
@@ -2495,7 +2495,7 @@ zL = (L - mx)*sqrt(prec)
             Gaussian x = Gaussian.FromNatural(-1E+34, 1E+36);
             for (int i = 0; i < 1000; i++)
             {
-                double logProb = DoubleIsBetweenOp.LogProbBetween(x, lowerBound, upperBound);
+                double logProb = IsBetweenGaussianOp.LogProbBetween(x, lowerBound, upperBound);
                 Console.WriteLine($"{x.Precision:g17} {logProb:g17}");
                 x = Gaussian.FromMeanAndPrecision(x.GetMean(), x.Precision + 1000000000000 * MMath.Ulp(x.Precision));
             }
@@ -2527,13 +2527,13 @@ zL = (L - mx)*sqrt(prec)
                             else distance = System.Math.Abs(mx - upperBound);
                             if (distance < 1 / System.Math.Sqrt(x.Precision)) continue;
                         }
-                        double logProbBetween = DoubleIsBetweenOp.LogProbBetween(x, lowerBound, upperBound);
+                        double logProbBetween = IsBetweenGaussianOp.LogProbBetween(x, lowerBound, upperBound);
                         foreach (var precisionDelta in DoublesGreaterThanZero())
                         {
                             Gaussian x2 = Gaussian.FromMeanAndPrecision(mx, x.Precision + precisionDelta);
                             if (x2.Equals(x)) continue;
                             if (x2.GetMean() != mx) continue;
-                            double logProbBetween2 = DoubleIsBetweenOp.LogProbBetween(x2, lowerBound, upperBound);
+                            double logProbBetween2 = IsBetweenGaussianOp.LogProbBetween(x2, lowerBound, upperBound);
                             if ((isBetween && logProbBetween2 < logProbBetween) ||
                                 (!isBetween && logProbBetween2 > logProbBetween))
                             {
@@ -2573,7 +2573,7 @@ zL = (L - mx)*sqrt(prec)
                     Parallel.ForEach(Gaussians().Where(g => !g.IsPointMass).Take(100000), x =>
                     {
                         double mx = x.GetMean();
-                        Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
+                        Gaussian toX = IsBetweenGaussianOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
                         Gaussian xPost;
                         double meanError;
                         if (toX.IsPointMass)
@@ -2595,7 +2595,7 @@ zL = (L - mx)*sqrt(prec)
                             Gaussian x2 = Gaussian.FromMeanAndPrecision(mx, x.Precision + precisionDelta);
                             if (x2.Equals(x)) continue;
                             if (x2.GetMean() != mx) continue;
-                            Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
+                            Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
                             Gaussian xPost2;
                             double meanError2;
                             if (toX2.IsPointMass)
@@ -2685,7 +2685,7 @@ zL = (L - mx)*sqrt(prec)
                     Parallel.ForEach(Gaussians().Take(100000), x =>
                     {
                         double mx = x.GetMean();
-                        Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
+                        Gaussian toX = IsBetweenGaussianOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
                         Gaussian xPost;
                         double meanError;
                         if (toX.IsPointMass)
@@ -2705,7 +2705,7 @@ zL = (L - mx)*sqrt(prec)
                             if (double.IsPositiveInfinity(meanDelta)) mx2 = meanDelta;
                             if (mx2 == mx) continue;
                             Gaussian x2 = Gaussian.FromMeanAndPrecision(mx2, x.Precision);
-                            Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
+                            Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
                             Gaussian xPost2;
                             double meanError2;
                             if (toX2.IsPointMass)
@@ -2764,7 +2764,7 @@ zL = (L - mx)*sqrt(prec)
         public void GaussianIsBetweenCRCC_IsMonotonicInUpperBound()
         {
             // Test the symmetric version of a corner case that is tested below.
-            DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(-1.7976931348623157E+308, 4.94065645841247E-324), double.NegativeInfinity, 0);
+            IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(-1.7976931348623157E+308, 4.94065645841247E-324), double.NegativeInfinity, 0);
             double meanMaxUlpError = 0;
             double meanMaxUlpErrorLowerBound = 0;
             double meanMaxUlpErrorUpperBound = 0;
@@ -2779,7 +2779,7 @@ zL = (L - mx)*sqrt(prec)
                     if (trace) Console.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
                     Parallel.ForEach(Gaussians().Take(100000), x =>
                     {
-                        Gaussian toX = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound);
+                        Gaussian toX = IsBetweenGaussianOp.XAverageConditional(true, x, lowerBound, upperBound);
                         Gaussian xPost;
                         double meanError;
                         if (toX.IsPointMass)
@@ -2798,7 +2798,7 @@ zL = (L - mx)*sqrt(prec)
                             double upperBound2 = upperBound + delta;
                             if (delta > double.MaxValue) upperBound2 = delta;
                             if (upperBound2 == upperBound) continue;
-                            Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound2);
+                            Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(true, x, lowerBound, upperBound2);
                             Gaussian xPost2;
                             double meanError2;
                             if (toX2.IsPointMass)
@@ -2891,7 +2891,7 @@ zL = (L - mx)*sqrt(prec)
             double r = MMath.NormalCdfRatio(z);
             double r1 = MMath.NormalCdfMomentRatio(1, z);
             double r3 = MMath.NormalCdfMomentRatio(3, z) * 6;
-            double vp = DoubleIsBetweenOp.NormalCdfRatioSqrMinusDerivative(z, r, r1, r3);
+            double vp = IsBetweenGaussianOp.NormalCdfRatioSqrMinusDerivative(z, r, r1, r3);
             return vp;
         }
 
@@ -2943,7 +2943,7 @@ zL = (L - mx)*sqrt(prec)
             {
                 Gaussian X = Gaussian.FromNatural(2.2204460492503131E-16, System.Math.Pow(0.1, i));
                 X = Gaussian.FromMeanAndPrecision(-60, System.Math.Pow(0.1, i));
-                double logProb = DoubleIsBetweenOp.LogProbBetween(X, lowerBound, upperBound);
+                double logProb = IsBetweenGaussianOp.LogProbBetween(X, lowerBound, upperBound);
                 Trace.WriteLine($"X={X}: logProb={logProb}");
                 Assert.True(!double.IsNaN(logProb));
                 Assert.True(!double.IsInfinity(logProb));
@@ -2970,9 +2970,9 @@ zL = (L - mx)*sqrt(prec)
             Gaussian x = Gaussian.PointMass(-1000);
             Gaussian Xpost = new Gaussian();
             Bernoulli isBetween = Bernoulli.PointMass(true);
-            Gaussian toXExpected = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-            Gaussian toLowerExpected = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-            Gaussian toUpperExpected = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+            Gaussian toXExpected = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+            Gaussian toLowerExpected = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+            Gaussian toUpperExpected = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
             if (double.IsNaN(toXExpected.Precision)) throw new Exception();
             Console.WriteLine($"expected toX={toXExpected} toLower={toLowerExpected} toUpper={toUpperExpected}");
             Gaussian previousXpost = new Gaussian();
@@ -2981,9 +2981,9 @@ zL = (L - mx)*sqrt(prec)
             for (int i = -10; i < 30; i++)
             {
                 x.SetMeanAndVariance(1, System.Math.Pow(0.1, i));
-                Gaussian toX = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                Gaussian toLower = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                Gaussian toUpper = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian toX = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian toLower = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                Gaussian toUpper = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                 Assert.True(toX.Precision >= 0);
                 Xpost.SetToProduct(x, toX);
                 Console.WriteLine($"{x}: {toX} {Xpost} toLower={toLower} toUpper={toUpper}");
@@ -3011,9 +3011,9 @@ zL = (L - mx)*sqrt(prec)
                 {
                     // check the flipped case
                     x.SetMeanAndVariance(-x.GetMean(), System.Math.Pow(0.1, i));
-                    Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                    Gaussian toLower2 = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                    Gaussian toUpper2 = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian toLower2 = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
+                    Gaussian toUpper2 = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                     Assert.True(toX.Precision == toX2.Precision);
                     Assert.True(toX.MeanTimesPrecision == -toX2.MeanTimesPrecision);
                     Assert.True(toLower2.Precision == toUpper.Precision);
@@ -3050,24 +3050,24 @@ weight * (tau + alphaX) + alphaX
             //Assert.Equal(DoubleIsBetweenOp.LogProbBetween(Gaussian.FromNatural(1.0000099999999998E+34, 1.00001E+36), 0.010000000000000002, 0.010000000000000004), -10.360132636204013435798441, 1e-3);
             Gaussian expected;
             Gaussian result2;
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(100, 0.6), -0.0025, 0.0025);
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(100, 0.6), -0.0025, 0.0025);
             expected = Gaussian.FromNatural(0.83382446386897639746, 486015.0838217901083);
             Assert.True(MaxUlpDiff(expected, result2) < 1e5);
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(1000, 0.6), -0.0025, 0.0025);
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(1000, 0.6), -0.0025, 0.0025);
             // exact posterior mean = 0.00153391785173542665
             // exact posterior variance = 0.0000008292583427621911323272374
             expected = Gaussian.FromNatural(849.7466623321181468, 1205896.221814396816657);
             Assert.True(MaxUlpDiff(expected, result2) < 1e6);
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(10000, 0.6), -0.0025, 0.0025);
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(10000, 0.6), -0.0025, 0.0025);
             expected = Gaussian.FromNatural(229999.9352600054688757876, 99999973.0000021996482);
             Assert.True(MaxUlpDiff(expected, result2) < 1e2);
-            Gaussian result = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(-48.26, 1.537), new Gaussian(-12.22, 0.4529), new Gaussian(-17.54, 0.3086));
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e-19), -10, 0);
+            Gaussian result = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(-48.26, 1.537), new Gaussian(-12.22, 0.4529), new Gaussian(-17.54, 0.3086));
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e-19), -10, 0);
             // exact posterior mean = -0.99954598008990312211948
             // exact posterior variance = 0.99545959476495245821845
             expected = Gaussian.FromNatural(-2.00410502379648622469036, 1.0045611145433980376101655346945);
             Assert.True(MaxUlpDiff(expected, result2) < 2);
-            result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e19), -10, 0);
+            result2 = IsBetweenGaussianOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e19), -10, 0);
             // exact posterior mean = -0.00000000025231325216567798206492
             // exact posterior variance = 0.00000000000000000003633802275634766987678763433333
             expected = Gaussian.FromNatural(-6943505261.522269414985891, 17519383944062174805.8794215);
@@ -3092,9 +3092,9 @@ weight * (tau + alphaX) + alphaX
             for (int i = 10; i < 3000; i++)
             {
                 Gaussian X = Gaussian.FromNatural(1.2, System.Math.Pow(10, -i * 0.1));
-                var toX = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
-                var toLowerBound = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
-                var toUpperBound = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toX = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toLowerBound = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toUpperBound = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
                 Trace.WriteLine($"{X}: {toX} {toLowerBound} {toUpperBound}");
                 if (!previousToX.IsUniform())
                 {
@@ -3145,7 +3145,7 @@ weight * (tau + alphaX) + alphaX
             Gaussian upperBound = Gaussian.FromNatural(200, 100);
             Gaussian lowerBound = Gaussian.FromNatural(-255, 147);
             Bernoulli isBetween = Bernoulli.PointMass(true);
-            DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(-1.2, 6.3095734448019427E-17), lowerBound, upperBound);
+            IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(-1.2, 6.3095734448019427E-17), lowerBound, upperBound);
             double xMeanMaxUlpError = 0;
             double xPrecisionMaxUlpError = 0;
             double lMeanMaxUlpError = 0;
@@ -3157,9 +3157,9 @@ weight * (tau + alphaX) + alphaX
                 //Gaussian toXExpected = new Gaussian(-0.3047, 0.5397);
                 //SolveAlphaBeta(X, toXExpected, out double alpha, out double beta);
                 //Trace.WriteLine($"expected alpha = {alpha}, beta = {beta}");
-                var toX = DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
-                var toLowerBound = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
-                var toUpperBound = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toX = IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toLowerBound = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
+                var toUpperBound = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, X, lowerBound, upperBound);
                 Trace.WriteLine($"{X}: {toX} {toLowerBound} {toUpperBound}");
                 if (!previousToX.IsUniform())
                 {
@@ -3231,7 +3231,7 @@ weight * (tau + alphaX) + alphaX
             {
                 // seems like answer should always be Gaussian(m/v=-814, 1/v=0)
                 Gaussian upperBound = Gaussian.FromNatural(-System.Math.Pow(10, i), 9);
-                Gaussian toX = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, Gaussian.PointMass(0), upperBound);
+                Gaussian toX = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, Gaussian.PointMass(0), upperBound);
                 Gaussian Xpost = X * toX;
                 Trace.WriteLine($"{upperBound}: {toX} {toX.MeanTimesPrecision} {Xpost}");
                 // lowerBound is point mass, so cannot be violated.
@@ -3255,7 +3255,7 @@ weight * (tau + alphaX) + alphaX
             for (int i = -10; i <= 0; i++)
             {
                 lowerBound = Gaussian.FromNatural(17028358.45574614 * System.Math.Pow(2, i), 9);
-                Gaussian toLowerBound = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
+                Gaussian toLowerBound = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                 Trace.WriteLine($"{lowerBound}: {toLowerBound.MeanTimesPrecision} {toLowerBound.Precision}");
                 Assert.False(toLowerBound.IsPointMass);
             }
@@ -3276,7 +3276,7 @@ weight * (tau + alphaX) + alphaX
                 for (int i = 0; i < 200; i++)
                 {
                     Gaussian X = Gaussian.FromMeanAndPrecision(mean, System.Math.Pow(2, -i * 1 - 20));
-                    Gaussian toX = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
+                    Gaussian toX = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Gaussian toLowerBound = toLowerBoundPrev;// DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Trace.WriteLine($"{i} {X}: {toX.MeanTimesPrecision:g17} {toX.Precision:g17} {toLowerBound.MeanTimesPrecision:g17} {toLowerBound.Precision:g17}");
                     Assert.False(toLowerBound.IsPointMass);
@@ -3305,20 +3305,21 @@ weight * (tau + alphaX) + alphaX
         public void GaussianIsBetweenTest2()
         {
             Bernoulli isBetween = new Bernoulli(1);
-            Assert.False(DoubleIsBetweenOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), Gaussian.FromNatural(1253646736.336942, 0.193405698968261), Gaussian.PointMass(-1.0000002501122697E-08), Gaussian.PointMass(1.0000002501122697E-08), -4.0630398894972073E+18).IsPointMass);
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(0.9106071714590378, 5.9521837280027985E-11), Gaussian.FromNatural(-49.9894026120194, 107.30343404076896), Gaussian.FromNatural(49.051818445888259, 107.26846525506932)).MeanTimesPrecision));
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(2.2204460492503131E-16, 6.9388939039072284E-18), Gaussian.FromNatural(17.111433288915187, 0.66938434508155731), Gaussian.FromNatural(7.7694959349146462, 0.49485730932861044)).MeanTimesPrecision));
-            DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(0, 0.0038937777431664196), Gaussian.PointMass(double.NegativeInfinity), Gaussian.FromNatural(-1.6, 0.8));
-            DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, Gaussian.FromNatural(1.156293233217532E-25, 6.162975822039154E-33), Gaussian.FromNatural(-102.3311202057678, 91.572320438929935), Gaussian.FromNatural(102.27224205502382, 91.541070478258376));
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(980.18122429721575, 1.409544490082087), Gaussian.FromNatural(17028174.685026139, 837.26675043005957), Gaussian.FromNatural(412820.4122154137, 423722.54499249317)).MeanTimesPrecision));
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(-5.3548456213550253E-41, 4.61370960061741E-81), Gaussian.FromNatural(-15848812.635800883, 13451.362337266379), Gaussian.FromNatural(-22204349.280881952, 389690.00236138358)).MeanTimesPrecision));
-            Assert.False(double.IsNaN(DoubleIsBetweenOp.XAverageConditional(isBetween, new Gaussian(1, 2), double.PositiveInfinity, double.PositiveInfinity).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(83.257525699629014, 0.22985792223206492), Gaussian.PointMass(double.NegativeInfinity), Gaussian.FromNatural(0, 4)).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(0.9106071714590378, 5.9521837280027985E-11), Gaussian.FromNatural(-49.9894026120194, 107.30343404076896), Gaussian.FromNatural(49.051818445888259, 107.26846525506932)).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(2.2204460492503131E-16, 6.9388939039072284E-18), Gaussian.FromNatural(17.111433288915187, 0.66938434508155731), Gaussian.FromNatural(7.7694959349146462, 0.49485730932861044)).MeanTimesPrecision));
+            Assert.False(IsBetweenGaussianOp.LowerBoundAverageConditional(isBetween, Gaussian.FromNatural(1253646736.336942, 0.193405698968261), Gaussian.PointMass(-1.0000002501122697E-08), Gaussian.PointMass(1.0000002501122697E-08), -4.0630398894972073E+18).IsPointMass);
+            IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(0, 0.0038937777431664196), Gaussian.PointMass(double.NegativeInfinity), Gaussian.FromNatural(-1.6, 0.8));
+            IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, Gaussian.FromNatural(1.156293233217532E-25, 6.162975822039154E-33), Gaussian.FromNatural(-102.3311202057678, 91.572320438929935), Gaussian.FromNatural(102.27224205502382, 91.541070478258376));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(980.18122429721575, 1.409544490082087), Gaussian.FromNatural(17028174.685026139, 837.26675043005957), Gaussian.FromNatural(412820.4122154137, 423722.54499249317)).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, Gaussian.FromNatural(-5.3548456213550253E-41, 4.61370960061741E-81), Gaussian.FromNatural(-15848812.635800883, 13451.362337266379), Gaussian.FromNatural(-22204349.280881952, 389690.00236138358)).MeanTimesPrecision));
+            Assert.False(double.IsNaN(IsBetweenGaussianOp.XAverageConditional(isBetween, new Gaussian(1, 2), double.PositiveInfinity, double.PositiveInfinity).MeanTimesPrecision));
             Gaussian x = new Gaussian(0, 1);
             Gaussian lowerBound = new Gaussian(1, 8);
             Gaussian upperBound = new Gaussian(3, 3);
-            Assert.True(DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, Gaussian.PointMass(0), Gaussian.PointMass(-1), Gaussian.PointMass(1)).IsUniform());
-            Assert.True(DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, Gaussian.PointMass(double.NegativeInfinity), upperBound).IsUniform());
-            Assert.True(DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, Gaussian.PointMass(double.PositiveInfinity)).IsUniform());
+            Assert.True(IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, Gaussian.PointMass(0), Gaussian.PointMass(-1), Gaussian.PointMass(1)).IsUniform());
+            Assert.True(IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, Gaussian.PointMass(double.NegativeInfinity), upperBound).IsUniform());
+            Assert.True(IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, Gaussian.PointMass(double.PositiveInfinity)).IsUniform());
             // test in matlab: x=randn(1e7,1); l=randnorm(1e7,1,[],8)'; u=randnorm(1e7,3,[],3)';
             // ok=(l<x & x<u); [mean(l(ok)) var(l(ok)); mean(u(ok)) var(u(ok)); mean(x(ok)) var(x(ok))]
             Gaussian LpostTrue = new Gaussian(-1.7784, 2.934);
@@ -3327,44 +3328,44 @@ weight * (tau + alphaX) + alphaX
             Gaussian Lpost = new Gaussian();
             Gaussian Upost = new Gaussian();
             Gaussian Xpost = new Gaussian();
-            Lpost.SetToProduct(lowerBound, DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Lpost.SetToProduct(lowerBound, IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(LpostTrue.MaxDiff(Lpost) < 1e-4);
-            Upost.SetToProduct(upperBound, DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Upost.SetToProduct(upperBound, IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(UpostTrue.MaxDiff(Upost) < 1e-4);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(XpostTrue.MaxDiff(Xpost) < 1e-4);
             // special case for uniform X
             x = new Gaussian();
             LpostTrue.SetMeanAndVariance(-1.2741, 5.3392);
             UpostTrue.SetMeanAndVariance(3.8528, 2.6258);
             XpostTrue.SetMeanAndVariance(1.2894, 5.1780);
-            Lpost.SetToProduct(lowerBound, DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Lpost.SetToProduct(lowerBound, IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(LpostTrue.MaxDiff(Lpost) < 1e-4);
-            Upost.SetToProduct(upperBound, DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Upost.SetToProduct(upperBound, IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(UpostTrue.MaxDiff(Upost) < 1e-4);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional_Slow(isBetween, x, lowerBound, upperBound));
             Assert.True(XpostTrue.MaxDiff(Xpost) < 1e-4);
 
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(new Bernoulli(0), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(new Bernoulli(0), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
             Assert.True(new Gaussian(0.5, 1.0 / 12).MaxDiff(Upost) < 1e-4);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(new Bernoulli(0), new Gaussian(1.0, 0.5), Gaussian.PointMass(0.0), new Gaussian());
-            UpostTrue = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(), Gaussian.PointMass(0.0), new Gaussian(1.0, 0.5));
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(new Bernoulli(0), new Gaussian(1.0, 0.5), Gaussian.PointMass(0.0), new Gaussian());
+            UpostTrue = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(), Gaussian.PointMass(0.0), new Gaussian(1.0, 0.5));
             Assert.True(UpostTrue.MaxDiff(Upost) < 1e-4);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(new Bernoulli(0.1), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(new Bernoulli(0.1), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
             Assert.True(new Gaussian().MaxDiff(Upost) < 1e-10);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(new Bernoulli(1), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(new Bernoulli(1), Gaussian.PointMass(1.0), Gaussian.PointMass(0.0), new Gaussian());
             Assert.True(new Gaussian().MaxDiff(Upost) < 1e-10);
 
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(new Bernoulli(0), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(new Bernoulli(0), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
             Assert.True(new Gaussian(0.5, 1.0 / 12).MaxDiff(Lpost) < 1e-4);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(new Bernoulli(0), new Gaussian(0.0, 0.5), new Gaussian(), Gaussian.PointMass(1.0));
-            LpostTrue = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(), new Gaussian(0.0, 0.5), Gaussian.PointMass(1.0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(new Bernoulli(0), new Gaussian(0.0, 0.5), new Gaussian(), Gaussian.PointMass(1.0));
+            LpostTrue = IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(), new Gaussian(0.0, 0.5), Gaussian.PointMass(1.0));
             Assert.True(LpostTrue.MaxDiff(Lpost) < 1e-4);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(new Bernoulli(0.1), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(new Bernoulli(0.1), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
             Assert.True(new Gaussian().MaxDiff(Lpost) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(new Bernoulli(1), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(new Bernoulli(1), Gaussian.PointMass(0.0), new Gaussian(), Gaussian.PointMass(1.0));
             Assert.True(new Gaussian().MaxDiff(Lpost) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), new Gaussian(-2.839e+10, 39.75), Gaussian.PointMass(0.05692), Gaussian.PointMass(double.PositiveInfinity), -1.0138308906207461E+19);
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional(Bernoulli.PointMass(true), new Gaussian(-2.839e+10, 39.75), Gaussian.PointMass(0.05692), Gaussian.PointMass(double.PositiveInfinity), -1.0138308906207461E+19);
             Assert.True(!double.IsNaN(Lpost.MeanTimesPrecision));
 
             /* test in matlab: 
@@ -3377,16 +3378,16 @@ weight * (tau + alphaX) + alphaX
                m = s(2)/s(1); v = s(3)/s(1) - m*m; [m v]
              */
             x = new Gaussian(0, 1);
-            Assert.True(DoubleIsBetweenOp.XAverageConditional_Slow(new Bernoulli(0.5), x, Gaussian.PointMass(Double.NegativeInfinity), Gaussian.Uniform()).IsUniform());
-            Assert.True(DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), x, Gaussian.PointMass(Double.NegativeInfinity), Gaussian.Uniform()).IsUniform());
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, 1, 3));
+            Assert.True(IsBetweenGaussianOp.XAverageConditional_Slow(new Bernoulli(0.5), x, Gaussian.PointMass(Double.NegativeInfinity), Gaussian.Uniform()).IsUniform());
+            Assert.True(IsBetweenGaussianOp.XAverageConditional_Slow(Bernoulli.PointMass(true), x, Gaussian.PointMass(Double.NegativeInfinity), Gaussian.Uniform()).IsUniform());
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, 1, 3));
             Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(1.5101, 0.17345)) < 1e-3);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(false, x, 1, 3));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(false, x, 1, 3));
             Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(-0.28189, 0.64921)) < 1e-3);
             Assert.True(IsPositiveOp.XAverageConditional(true, x).MaxDiff(
-              DoubleIsBetweenOp.XAverageConditional(true, x, 0.0, Double.PositiveInfinity)) < 1e-8);
+              IsBetweenGaussianOp.XAverageConditional(true, x, 0.0, Double.PositiveInfinity)) < 1e-8);
             Assert.True(IsPositiveOp.XAverageConditional(false, x).MaxDiff(
-              DoubleIsBetweenOp.XAverageConditional(true, x, Double.NegativeInfinity, 0)) < 1e-8);
+              IsBetweenGaussianOp.XAverageConditional(true, x, Double.NegativeInfinity, 0)) < 1e-8);
             /* test in matlab:
                z=0;s1=0;s2=0;
                for iter = 1:100
@@ -3398,26 +3399,26 @@ weight * (tau + alphaX) + alphaX
                end
                m=s1/z; v=s2/z - m*m; [m v]
              */
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(new Bernoulli(0.6), x, 1, 3));
-            if (DoubleIsBetweenOp.ForceProper)
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(new Bernoulli(0.6), x, 1, 3));
+            if (IsBetweenGaussianOp.ForceProper)
                 Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(0.1101, 1.0)) < 1e-3);
             else
                 Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(0.11027, 1.0936)) < 1e-3);
             // special case for uniform X
             x = new Gaussian();
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, 1, 3));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, 1, 3));
             Assert.True(Xpost.MaxDiff(Gaussian.FromMeanAndVariance(2, 4.0 / 12)) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(false, x, 1, 3));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(false, x, 1, 3));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(new Bernoulli(0.6), x, 1, 3));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(new Bernoulli(0.6), x, 1, 3));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, 1, Double.PositiveInfinity));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, 1, Double.PositiveInfinity));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(false, x, 1, Double.PositiveInfinity));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(false, x, 1, Double.PositiveInfinity));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, Double.NegativeInfinity, 1));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, Double.NegativeInfinity, 1));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
-            Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(false, x, Double.NegativeInfinity, 1));
+            Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(false, x, Double.NegativeInfinity, 1));
             Assert.True(Xpost.MaxDiff(new Gaussian()) < 1e-10);
 
             x = new Gaussian(0, 1);
@@ -3429,7 +3430,7 @@ weight * (tau + alphaX) + alphaX
                 Xpost.SetToProduct(x2, IsPositiveOp.XAverageConditional(true, x2));
                 //Console.WriteLine(Xpost);
                 Xpost.GetMeanAndVariance(out m, out v);
-                Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, lowerBounds[i], Double.PositiveInfinity));
+                Xpost.SetToProduct(x, IsBetweenGaussianOp.XAverageConditional(true, x, lowerBounds[i], Double.PositiveInfinity));
                 Assert.True(Xpost.MaxDiff(new Gaussian(m + lowerBounds[i], v)) < 1e-5 / v);
                 //Xpost.SetToProduct(x, DoubleIsBetweenOp.XAverageConditional(true, x, new Gaussian(lowerBounds[i], 1e-80), Double.PositiveInfinity));
                 //Assert.True(Xpost.MaxDiff(new Gaussian(m+lowerBounds[i], v)) < 1e-8);
@@ -3437,24 +3438,24 @@ weight * (tau + alphaX) + alphaX
 
 
             Gaussian Lexpected = IsPositiveOp.XAverageConditional(false, lowerBound);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.FromMeanAndVariance(0, 1e-10), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.FromMeanAndVariance(0, 1e-10), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(1), lowerBound, Gaussian.PointMass(0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(1), lowerBound, Gaussian.PointMass(0));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(0));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(0));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(1));
+            Lpost = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(1));
             Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
             //Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional(true,Gaussian.Uniform(),lowerBound,0);
             //Assert.True(Lpost.MaxDiff(IsPositiveOp.XAverageConditional(false,lowerBound)) < 1e-3);
             Gaussian Uexpected = IsPositiveOp.XAverageConditional(true, upperBound);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(-1), Gaussian.PointMass(0), upperBound);
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(-1), Gaussian.PointMass(0), upperBound);
             Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(0), upperBound);
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(0), upperBound);
             Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(-1), upperBound);
+            Upost = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(-1), upperBound);
             Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
             //Upost = DoubleIsBetweenOp.UpperBoundAverageConditional(true,Gaussian.Uniform(),0,upperBound);
             //Assert.True(Upost.MaxDiff(IsPositiveOp.XAverageConditional(true,upperBound)) < 1e-3);

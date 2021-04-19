@@ -9,7 +9,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
     /// <summary>
     /// The program.
     /// </summary>
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         /// The entry point for the program.
