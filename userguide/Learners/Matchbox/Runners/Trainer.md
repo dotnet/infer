@@ -5,7 +5,7 @@ layout: default
 
 ## Trainer
 
-Training is performed using the Train argument to Learner Recommender. It takes as input a training dataset and outputs a serialized trained model, which can be loaded later for making predictions. Training takes in a number of arguments, explained in the [Setting up a recommender](../API/Setting up a recommender.md) section. There is more detail on the training procedure in the [Training](../API/Training.md) section. 
+Training is performed using the Train argument to Learner Recommender. It takes as input a training dataset and outputs a serialized trained model, which can be loaded later for making predictions. Training takes in a number of arguments, explained in the [Setting up a recommender](../API/Setting up a recommender.md) section. There is more detail on the training procedure in the [Training](../API/Training.md) section.  Features are not normalized by the algorithm.  You will need to do feature encoding and normalization beforehand.
 
 Required parameters
 
