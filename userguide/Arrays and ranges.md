@@ -193,12 +193,12 @@ arrayXY.ObservedValue = obs2DData;
 
 #### Other array types
 
-Observed variable arrays can have different type besides T\[\]. The options are:
+Observed variable arrays can have different type besides T\[\]. Some of the options are:
 
 ```csharp
+Variable.Observed<T>(IReadOnlyList<T>, Range r)
 Variable.IList<T>(Range r)   
 Variable.ISparseList<T>(Range r)  
 Variable.IArray<T>(Range r)
 ```
-
-​
+See the Variable class for the full list.

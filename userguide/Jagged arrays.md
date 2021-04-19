@@ -111,12 +111,12 @@ This can be continued to any depth. This code creates a jagged array of depth 4:
 
 ```csharp
 var a = Variable.Array<Vector>(new Range(1));  
-var b = Variable.Array<VariableArray<Vector>, Vector[][]>(a, new Range(2));  
-var c = Variable.Array<VariableArray<VariableArray<Vector>, Vector[][]>, Vector[][][]>(b, new Range(3));  
-var d = Variable.Array<VariableArray<VariableArray<VariableArray<Vector>, Vector[][]>, Vector[][][]>, Vector[][][][]>(c, new Range(4));
+var b = Variable.Array(a, new Range(2));  
+var c = Variable.Array(b, new Range(3));  
+var d = Variable.Array(c, new Range(4));
 ```
 
-Code like this can be simplified by using type aliases. For example:
+The type of a jagged variable array can be simplified by using type aliases. For example:
 
 ```csharp
 using VarVectArr2 = VariableArray<VariableArray<Vector>, Vector[][]>;

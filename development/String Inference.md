@@ -11,7 +11,7 @@ Infer.NET represents distributions on strings via probabilistic automata.  Opera
 
 You can create a GraphViz file from a SequenceDistribution by calling `ToString` on the distribution using the   `SequenceDistributionFormats.GraphViz` format and writing to file.
 
-You can use [http://dot-graphics1.appspot.com/](http://dot-graphics1.appspot.com/) to view small automata by copying and pasting the string from the file to the window.
+You can use [http://graphviz.it/](http://graphviz.it/) to view small automata by copying and pasting the string from the file to the window.
 
 To view large automata, install GraphViz, and run `dot.exe`. The following example creates a jpeg from the file containing the graph description:
 

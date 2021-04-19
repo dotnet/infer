@@ -18,10 +18,10 @@ Optional parameters
 *   **training-users** \- fraction of training-only users; defaults to 0.5
 *   **test-user-training-ratings** \- fraction of test user ratings for training; defaults to 0.25
 *   **cold-users** \- fraction of cold (test-only) users; defaults to 0
-*   **cold-items** \- fraction of cold (test-only) items; defaults to 0
-*   **ignored-users** \- fraction of ignored users; defaults to 0
-*   **ignored-items** \- fraction of ignored items; defaults to 0
-*   **remove-occasional-cold-items** \- remove occasionally produced cold items
+*   **cold-items** \- minimum fraction of cold (test-only) items; defaults to 0
+*   **ignored-users** \- fraction of users not included in either the training or the test set; defaults to 0
+*   **ignored-items** \- fraction of items not included in either the training or the test set; defaults to 0
+*   **remove-occasional-cold-items** \- remove occasionally produced cold items that would increase the fraction of cold items above the specified minimum
 
 Example
 

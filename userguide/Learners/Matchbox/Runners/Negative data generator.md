@@ -35,4 +35,4 @@ u3,i1,0
 u4,i4,1  
 u4,i1,0
 ```
-Data in this format can now be fed into the recommender for training.
+Data in this format can now be fed into the recommender for training.  If you are going to split the data into a train and test set, then you should generate negative data before splitting, so that the test data also has negative data.
