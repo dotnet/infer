@@ -334,7 +334,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 finish.SetEndWeight(Weight.FromLogValue(logValue));
             }
 
-            return result.GetAutomaton();
+            return new TThis() { Data = result.GetData(true) };
         }
 
         /// <summary>
@@ -379,16 +379,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Argument.CheckIfNotNull(sequences, "sequences");
 
             var result = new Builder();
+            int sequenceCount = 0;
             if (!double.IsNegativeInfinity(logValue))
             {
                 foreach (var sequence in sequences)
                 {
                     var sequenceEndState = result.Start.AddTransitionsForSequence(sequence);
                     sequenceEndState.SetEndWeight(Weight.FromLogValue(logValue));
+                    ++sequenceCount;
                 }
             }
 
-            return result.GetAutomaton();
+            return new TThis() { Data = result.GetData(sequenceCount <= 1 ? (bool?)true : null) };
         }
 
         /// <summary>
@@ -1238,7 +1240,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            this.Data = result.GetData();
+            this.Data = result.GetData(true);
             return true;
         }
 
@@ -1352,8 +1354,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var builder = Builder.FromAutomaton(this);
-            builder.Append(automaton, group);
-            this.Data = builder.GetData();
+            var appendResult = builder.Append(automaton, group);
+
+            var determinizationState =
+                appendResult.preservedDeterminizationState && group == 0 && this.Data.IsDeterminized == true && automaton.Data.IsDeterminized == true 
+                ? (bool?)true
+                : group != 0 || this.Data.IsDeterminized == false || automaton.Data.IsDeterminized == false ? (bool?)false : null;
+
+            this.Data = builder.GetData(determinizationState);
         }
 
         /// <summary>
@@ -1762,7 +1770,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 builder.Start.AddTransition(allowedElements, Weight.FromLogValue(-allowedElements.GetLogAverageOf(allowedElements)), builder.StartStateIndex);
             }
 
-            this.Data = builder.GetData();
+            this.Data = builder.GetData(true);
         }
 
         /// <summary>
@@ -2636,7 +2644,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 State.ReadTo(ref builder, readInt32, readDouble, readElementDistribution);
             }
 
-            return FromData(builder.GetData(hasIsDeterminizedValue ? (bool?)isDeterminized : null));
+            return new TThis() { Data = builder.GetData(hasIsDeterminizedValue ? (bool?)isDeterminized : null) };
         }
         #endregion
     }
