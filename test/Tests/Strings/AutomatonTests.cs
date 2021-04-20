@@ -2087,8 +2087,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var builder = new StringAutomaton.Builder();
             var a = builder.Start
-                .AddTransition(DiscreteChar.PointMass('A'), Weight.FromLogValue(1e-8));
-            a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(-1e-8))
+                .AddTransition(DiscreteChar.PointMass('A'), Weight.One);
+            a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(1e-8))
                 .SetEndWeight(Weight.One);
             a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(1e5))
                 .AddTransition(DiscreteChar.PointMass('C'), Weight.One)
@@ -2096,10 +2096,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var automaton = builder.GetAutomaton();
 
-            Assert.Equal(0, automaton.GetLogValue("AB"));
+            Assert.Equal(1e-8, automaton.GetLogValue("AB"));
             Assert.True(automaton.TryDeterminize());
             // Fails due to round-off errors introduced by determinization
-            Assert.Equal(0, automaton.GetLogValue("AB"));
+            Assert.Equal(1e-8, automaton.GetLogValue("AB"));
         }
 
         /// <summary>
