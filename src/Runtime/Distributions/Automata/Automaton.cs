@@ -1841,6 +1841,44 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public double GetLogValue(TSequence sequence)
         {
             Argument.CheckIfNotNull(sequence, "sequence");
+
+            if (Data.IsDeterminized == true)
+            {
+                Weight acc = Weight.One;
+                State currentState = Start;
+                foreach (TElement element in sequence)
+                {
+                    bool foundTransition = false;
+                    foreach (Transition transition in currentState.Transitions)
+                    {
+                        var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
+                        if (!distWeight.IsZero)
+                        {
+                            if (transition.Weight.IsZero)
+                                return double.NegativeInfinity;
+
+                            acc = Weight.Product(distWeight, transition.Weight, acc);
+                            currentState = States[transition.DestinationStateIndex];
+                            foundTransition = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundTransition)
+                        return double.NegativeInfinity;
+                }
+                if (currentState.CanEnd)
+                {
+                    acc *= currentState.EndWeight;
+                    return
+                        !acc.IsZero && this.LogValueOverride.HasValue
+                            ? this.LogValueOverride.Value
+                            : acc.LogValue;
+                }
+                else
+                    return double.NegativeInfinity;
+            }
+
             var sequenceLength = SequenceManipulator.GetLength(sequence);
 
             // This algorithm is unwinding of trivial recursion with cache. It encodes recursion through explicit
@@ -2524,6 +2562,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             propertyMask[1 << idx++] = this.LogValueOverride.HasValue;
             propertyMask[1 << idx++] = this.PruneStatesWithLogEndWeightLessThan.HasValue;
             propertyMask[1 << idx++] = true; // start state is always serialized
+            propertyMask[1 << idx++] = this.Data.IsDeterminized.HasValue;
+            propertyMask[1 << idx++] = this.Data.IsDeterminized.HasValue ? this.Data.IsDeterminized.Value : false;
 
             writeInt32(propertyMask.Data);
 
@@ -2565,6 +2605,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var hasLogValueOverride = propertyMask[1 << idx++];
             var hasPruneWeights = propertyMask[1 << idx++];
             var hasStartState = propertyMask[1 << idx++];
+            var hasIsDeterminizedValue = propertyMask[1 << idx++];
+            var isDeterminized = propertyMask[1 << idx++];
 
             if (hasLogValueOverride)
             {
@@ -2594,7 +2636,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 State.ReadTo(ref builder, readInt32, readDouble, readElementDistribution);
             }
 
-            return builder.GetAutomaton();
+            return FromData(builder.GetData(hasIsDeterminizedValue ? (bool?)isDeterminized : null));
         }
         #endregion
     }
