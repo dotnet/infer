@@ -536,9 +536,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian[] tExpected = new Gaussian[2];
             Gaussian xPrior = Gaussian.FromMeanAndVariance(0, 1);
             tExpected[0] = tPrior.ObservedValue[0] *
-                           DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), xPrior, tPrior.ObservedValue[0], tPrior.ObservedValue[1]);
+                           IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), xPrior, tPrior.ObservedValue[0], tPrior.ObservedValue[1]);
             tExpected[1] = tPrior.ObservedValue[1] *
-                           DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), xPrior, tPrior.ObservedValue[0], tPrior.ObservedValue[1]);
+                           IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), xPrior, tPrior.ObservedValue[0], tPrior.ObservedValue[1]);
             for (int i = 0; i < tExpected.Length; i++)
             {
                 Console.WriteLine("t[{0}] = {1} (should be {2})", i, tActual[i], tExpected[i]);

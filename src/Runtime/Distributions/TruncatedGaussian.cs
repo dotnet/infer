@@ -504,7 +504,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public void GetMeanAndVariance(out double mean, out double variance)
         {
             // Use the DoubleIsBetweenOp functionality
-            var result = DoubleIsBetweenOp.XAverageConditional(true, Gaussian, LowerBound, UpperBound);
+            var result = IsBetweenGaussianOp.XAverageConditional(true, Gaussian, LowerBound, UpperBound);
             result *= Gaussian;
             result.GetMeanAndVariance(out mean, out variance);
         }

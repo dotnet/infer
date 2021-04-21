@@ -113,7 +113,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public Discrete[] Ratings_observation__selector_uses_B_toDef;
 		/// <summary>Field backing the TraitCount property</summary>
 		private int traitCount;
-		/// <summary>Buffer for DoubleIsBetweenOp.LogEvidenceRatio</summary>
+		/// <summary>Buffer for IsBetweenGaussianOp.LogEvidenceRatio</summary>
 		public double[][] true_logZ;
 		public DistributionStructArray<Gaussian,double> UserBias_itemUserIds_observation__F;
 		/// <summary>Message from use of 'UserBias'</summary>
@@ -505,8 +505,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			for(int observation = 0; observation<this.observationCount; observation++) {
 				for(int ratingValue = 0; ratingValue<this.vint45; ratingValue++) {
-					this.true_logZ[observation][ratingValue] = DoubleIsBetweenOp.LogZ(Bernoulli.PointMass(true), this.vdouble169_F[observation], this.vdouble__89_F[observation][this.CurrentRating_reduced[ratingValue]], this.vdouble__89_F[observation][this.NextRating_reduced[ratingValue]]);
-					this.Ratings_observation__selector_cases_uses_B[observation][ratingValue][6] = Bernoulli.FromLogOdds(DoubleIsBetweenOp.LogEvidenceRatio(true, this.vdouble169_F[observation], this.vdouble__89_F[observation][this.CurrentRating_reduced[ratingValue]], this.vdouble__89_F[observation][this.NextRating_reduced[ratingValue]], this.true_logZ[observation][ratingValue]));
+					this.true_logZ[observation][ratingValue] = IsBetweenGaussianOp.LogZ(Bernoulli.PointMass(true), this.vdouble169_F[observation], this.vdouble__89_F[observation][this.CurrentRating_reduced[ratingValue]], this.vdouble__89_F[observation][this.NextRating_reduced[ratingValue]]);
+					this.Ratings_observation__selector_cases_uses_B[observation][ratingValue][6] = Bernoulli.FromLogOdds(IsBetweenGaussianOp.LogEvidenceRatio(true, this.vdouble169_F[observation], this.vdouble__89_F[observation][this.CurrentRating_reduced[ratingValue]], this.vdouble__89_F[observation][this.NextRating_reduced[ratingValue]], this.true_logZ[observation][ratingValue]));
 					this.Ratings_observation__selector_cases_B[observation][ratingValue] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.Ratings_observation__selector_cases_uses_B[observation][ratingValue], this.Ratings_observation__selector_cases_B[observation][ratingValue]);
 				}
 				this.Ratings_observation__selector_uses_B[observation][0] = IntCasesOp.IAverageConditional(this.Ratings_observation__selector_cases_B[observation], this.Ratings_observation__selector_uses_B[observation][0]);

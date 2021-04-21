@@ -2445,8 +2445,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// minus the log-density of the bivariate normal distribution at x and y,
         /// plus 0.5*log(1-r*r).
         /// </summary>
-        /// <param name="x">First upper limit.</param>
-        /// <param name="y">Second upper limit.</param>
+        /// <param name="x">First upper limit. Must be finite.</param>
+        /// <param name="y">Second upper limit. Must be finite.</param>
         /// <param name="r">Correlation coefficient.</param>
         /// <param name="sqrtomr2">sqrt(1-r*r)</param>
         /// <returns><c>ln(phi(x,y,r)/N([x;y],[0;0],[1 r; r 1])</c></returns>
@@ -2459,13 +2459,9 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 throw new NotImplementedException();
             }
-            else if (Double.IsPositiveInfinity(x))
+            else if (Double.IsPositiveInfinity(x) || Double.IsPositiveInfinity(y))
             {
-                return 0;
-            }
-            else if (Double.IsPositiveInfinity(y))
-            {
-                return 0;
+                return double.PositiveInfinity;
             }
             else if (r == 0)
             {
