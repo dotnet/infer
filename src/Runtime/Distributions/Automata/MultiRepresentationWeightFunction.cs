@@ -14,6 +14,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Runtime.Serialization;
     using System.Text;
 
+    /// <summary>
+    /// An implementation of <see cref="IWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// that automatically chooses between <see cref="PointMassWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>,
+    /// <see cref="DictionaryWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>, and
+    /// <see cref="Automaton{TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis}"/> representation.
+    /// </summary>
+    /// <typeparam name="TSequence">The type of a sequence.</typeparam>
+    /// <typeparam name="TElement">The type of a sequence element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+    /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
+    /// <typeparam name="TPointMass">The type used for representing point mass weight functions.</typeparam>
+    /// <typeparam name="TDictionary">The type used for weight functions represented as dictionaries.</typeparam>
+    /// <typeparam name="TAutomaton">The type of a weighted finite state automaton, that can be used to
+    /// represent all weight functions.</typeparam>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
@@ -42,6 +56,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         [DataMember]
         private IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> weightFunction;
 
+        /// <summary>
+        /// An <see cref="IWeightFunctionFactory{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction}"/>
+        /// implementation for <see cref="MultiRepresentationWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton}"/>.
+        /// </summary>
         public class Factory : IWeightFunctionFactory<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>>
         {
             public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> ConstantLog(double logValue, TElementDistribution allowedElements)
@@ -104,7 +122,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 bool resultFitsDictionary = true;
                 foreach (var weightFunction in weightFunctions)
                 {
-                    if (weightFunction.IsCanonicalZero())
+                    if (weightFunction.IsCanonicZero())
                         continue;
                     if (weightFunction.weightFunction is TPointMass pointMass)
                     {
@@ -165,30 +183,54 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #region Factory Methods
 
-        [Construction(UseWhen = nameof(IsCanonicalZero))]
+        /// <summary>
+        /// Creates a weight function which is zero everywhere.
+        /// </summary>
+        /// <returns>The created weight function</returns>
+        [Construction(UseWhen = nameof(IsCanonicZero))]
         public static MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Zero() =>
             new MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>();
 
+        /// <summary>
+        /// Creates a <see cref="MultiRepresentationWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton}"/>
+        /// represented as <see cref="PointMassWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>.
+        /// </summary>
+        /// <param name="pointMass">The point mass weight function.</param>
+        /// <returns>The created weight function.</returns>
         [Construction(nameof(AsPointMass), UseWhen = nameof(IsPointMass))]
         public static MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> FromPointMass(TPointMass pointMass) =>
             new MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>() { weightFunction = pointMass };
 
+        /// <summary>
+        /// Creates a <see cref="MultiRepresentationWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton}"/>
+        /// represented as <see cref="DictionaryWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>.
+        /// </summary>
+        /// <param name="dictionary">The dictionary weight function.</param>
+        /// <returns>The created weight function.</returns>
         [Construction(nameof(AsDictionary), UseWhen = nameof(IsDictionary))]
         public static MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> FromDictionary(TDictionary dictionary) =>
             new MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>() { weightFunction = dictionary };
 
+        /// <summary>
+        /// Creates a <see cref="MultiRepresentationWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton}"/>
+        /// represented as <see cref="Automaton{TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis}"/>.
+        /// </summary>
+        /// <param name="automaton">The automaton.</param>
+        /// <returns>The created weight function.</returns>
         [Construction(nameof(AsAutomaton), UseWhen = nameof(IsAutomaton))]
         public static MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> FromAutomaton(TAutomaton automaton) =>
             new MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>() { weightFunction = automaton };
 
+        /// <summary>
+        /// Creates a point mass weight function.
+        /// </summary>
+        /// <param name="point">The point.</param>
+        /// <returns>The created point mass weight function.</returns>
         public static MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> FromPoint(TSequence point) =>
             FromPointMass(PointMassWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TPointMass>.FromPoint(point));
 
         #endregion
 
-        /// <summary>
-        /// Gets or sets the point mass represented by the distribution.
-        /// </summary>
         public TSequence Point
         {
             get
@@ -202,9 +244,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the weight function uses a point mass internal representation.
-        /// </summary>
         public bool IsPointMass => weightFunction is TPointMass;
 
         /// <summary>
@@ -217,18 +256,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public bool IsAutomaton => weightFunction is TAutomaton;
 
+        /// <summary>
+        /// Returns a point mass representation of the current weight function, if it is being used,
+        /// or <see langword="null"/> otherwise.
+        /// </summary>
         public TPointMass AsPointMass() => weightFunction as TPointMass;
 
+        /// <summary>
+        /// Returns a dictionary representation of the current weight function, if it is being used,
+        /// or <see langword="null"/> otherwise.
+        /// </summary>
         public TDictionary AsDictionary() => weightFunction as TDictionary;
 
         public TAutomaton AsAutomaton() => weightFunction?.AsAutomaton() ?? new TAutomaton();
 
         public bool UsesAutomatonRepresentation => weightFunction is TAutomaton;
 
-        /// <summary>
-        /// Checks if the weight function uses groups.
-        /// </summary>
-        /// <returns><see langword="true"/> if the weight function uses groups, <see langword="false"/> otherwise.</returns>
         public bool UsesGroups => weightFunction.UsesGroups;
 
         public bool HasGroup(int group) => weightFunction.HasGroup(group);
@@ -245,25 +288,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 : new Dictionary<int, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>>(); // TODO: get rid of groups or do something about groups + point mass combo
         }
 
-        /// <summary>
-        /// Enumerates support of this distribution when possible.
-        /// Only point mass elements are supported.
-        /// </summary>
-        /// <param name="maxCount">The maximum support enumeration count.</param>
-        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
-        /// <exception cref="AutomatonException">Thrown if enumeration is too large.</exception>
-        /// <returns>The strings supporting this distribution</returns>
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true) => weightFunction?.EnumerateSupport(maxCount, tryDeterminize) ?? Enumerable.Empty<TSequence>();
 
-        /// <summary>
-        /// Enumerates support of this distribution when possible.
-        /// Only point mass elements are supported.
-        /// </summary>
-        /// <param name="maxCount">The maximum support enumeration count.</param>
-        /// <param name="result">The strings supporting this distribution.</param>
-        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
-        /// <exception cref="AutomatonException">Thrown if enumeration is too large.</exception>
-        /// <returns>True if successful, false otherwise.</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
         {
             if (weightFunction == null)
@@ -275,10 +301,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return weightFunction.TryEnumerateSupport(maxCount, out result, tryDeterminize);
         }
 
-        /// <summary>
-        /// Returns the weight function converted to the normalized form e.g. using special
-        /// case structures for point masses and functions with small support.
-        /// </summary>
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> NormalizeStructure()
         {
             switch (weightFunction)
@@ -436,13 +458,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool IsZero() => weightFunction?.IsZero() ?? true;
 
-        public bool IsCanonicalZero() => weightFunction == null;
+        /// <summary>
+        /// Checks whether the weight function is a canonic representation of zero,
+        /// as produced by <see cref="Zero"/>.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the weight function is a canonic representation of zero,
+        /// <see langword="false"/> otherwise.
+        /// </returns>
+        /// <remarks>
+        /// The time complexity of this function is O(1), so it can be used to treat zero specially in performance-critical code.
+        /// All the operations on automata resulting in zero produce the canonic representation.
+        /// </remarks>
+        public bool IsCanonicZero() => weightFunction == null;
 
         public double MaxDiff(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> that)
         {
-            if (IsCanonicalZero())
+            if (IsCanonicZero())
                 return that.IsZero() ? 0.0 : Math.E;
-            if (that.IsCanonicalZero())
+            if (that.IsCanonicZero())
                 return IsZero() ? 0.0 : Math.E;
 
             switch (weightFunction)
@@ -531,9 +565,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Sum(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
         {
-            if (weightFunction.IsCanonicalZero())
+            if (weightFunction.IsCanonicZero())
                 return Clone(); // TODO: return `this` when automata become immutable
-            if (IsCanonicalZero())
+            if (IsCanonicZero())
                 return weightFunction.Clone(); // TODO: return weightFunction when automata become immutable
 
             if (weightFunction.weightFunction is TAutomaton otherAutomaton)
@@ -563,9 +597,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> SumLog(double logWeight1, double logWeight2, MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
         {
-            if (weightFunction.IsCanonicalZero() || double.IsNegativeInfinity(logWeight2))
+            if (weightFunction.IsCanonicZero() || double.IsNegativeInfinity(logWeight2))
                 return ScaleLog(logWeight1);
-            if (IsCanonicalZero() || double.IsNegativeInfinity(logWeight1))
+            if (IsCanonicZero() || double.IsNegativeInfinity(logWeight1))
                 return weightFunction.ScaleLog(logWeight2);
 
             if (weightFunction.weightFunction is TAutomaton otherAutomaton)
@@ -587,7 +621,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> Product(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> weightFunction)
         {
-            if (IsCanonicalZero() || weightFunction.IsCanonicalZero())
+            if (IsCanonicZero() || weightFunction.IsCanonicZero())
                 return Zero();
 
             TPointMass pointMass = null;
@@ -664,9 +698,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public bool Equals(MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> other)
         {
-            if (IsCanonicalZero())
+            if (IsCanonicZero())
                 return other.IsZero();
-            if (other.IsCanonicalZero())
+            if (other.IsCanonicZero())
                 return IsZero();
 
             switch (weightFunction)

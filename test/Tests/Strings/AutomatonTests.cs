@@ -2098,6 +2098,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             Assert.Equal(0, automaton.GetLogValue("AB"));
             Assert.True(automaton.TryDeterminize());
+            // Fails due to round-off errors introduced by determinization
             Assert.Equal(0, automaton.GetLogValue("AB"));
         }
 

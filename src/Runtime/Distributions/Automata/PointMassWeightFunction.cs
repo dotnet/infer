@@ -14,6 +14,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Runtime.Serialization;
     using System.Text;
 
+    /// <summary>
+    /// An implementation of <see cref="IWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// that represents a point mass weight function, aka a weight function that maps one sequence to 1.0 and all other sequences to zero.
+    /// </summary>
+    /// <typeparam name="TSequence">The type of a sequence.</typeparam>
+    /// <typeparam name="TElement">The type of a sequence element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+    /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
+    /// <typeparam name="TAutomaton">The type of a weighted finite state automaton, that can be used to
+    /// represent all weight functions.</typeparam>
+    /// <typeparam name="TThis">The type of a concrete dictionary weight function class.</typeparam>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
@@ -34,6 +45,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #region Factory methods
 
+        /// <summary>
+        /// Creates a point mass weight function.
+        /// </summary>
+        /// <param name="point">The point.</param>
+        /// <returns>The created point mass weight function.</returns>
         [Construction(nameof(Point))]
         public static TThis FromPoint(TSequence point) => new TThis() { Point = point };
 
@@ -172,6 +188,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
     }
 
+    /// <summary>
+    /// A <see cref="PointMassWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// defined on strings.
+    /// </summary>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
@@ -179,6 +199,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     {
     }
 
+    /// <summary>
+    /// A <see cref="PointMassWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// defined on types implementing <see cref="IList{T}"/>.
+    /// </summary>
+    /// <typeparam name="TList">The type of a list the automaton is defined on.</typeparam>
+    /// <typeparam name="TElement">The type of a list element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over a list element.</typeparam>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
@@ -188,6 +215,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     {
     }
 
+    /// <summary>
+    /// A <see cref="PointMassWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// defined on generic lists.
+    /// </summary>
+    /// <typeparam name="TElement">The type of a list element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over a list element.</typeparam>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]

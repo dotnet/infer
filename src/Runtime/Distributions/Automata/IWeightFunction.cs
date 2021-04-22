@@ -10,6 +10,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Text;
 
+    /// <summary>
+    /// The part of <see cref="IWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/> API,
+    /// that is agnostic of the concrete weight function class. Implementations of closed constructed
+    /// <see cref="IWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// with the only differing type parameter being TThis, can all be upcasted to this type.
+    /// </summary>
+    /// <typeparam name="TSequence">The type of a sequence.</typeparam>
+    /// <typeparam name="TElement">The type of a sequence element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+    /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
+    /// <typeparam name="TAutomaton">The type of a weighted finite state automaton, that can be used to
+    /// represent all weight functions.</typeparam>
     [Quality(QualityBand.Experimental)]
     public interface IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>
         where TSequence : class, IEnumerable<TElement>
@@ -24,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         TAutomaton AsAutomaton();
 
         /// <summary>
-        /// Gets or sets the only point to which the current function assigns a non-zero weight.
+        /// Gets the only point to which the current function assigns a non-zero weight.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Thrown when an attempt is made to get the <see cref="Point"/>
         /// of a non-pointmass weight function.</exception>
@@ -110,6 +122,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         string ToString(Action<TElementDistribution, StringBuilder> appendElement);
     }
 
+    /// <summary>
+    /// Interface for a function that maps arbitrary sequences of elements to real values,
+    /// that can, but not necessarily has to be, represented as a weighted finite state automaton.
+    /// </summary>
+    /// <typeparam name="TSequence">The type of a sequence.</typeparam>
+    /// <typeparam name="TElement">The type of a sequence element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+    /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
+    /// <typeparam name="TAutomaton">The type of a weighted finite state automaton, that can be used to
+    /// represent all weight functions.</typeparam>
+    /// <typeparam name="TThis">The type of a concrete weight function class.</typeparam>
     [Quality(QualityBand.Experimental)]
     public interface IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis> :
         IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>,
@@ -186,6 +209,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The scaled weight function.</returns>
         TThis ScaleLog(double logScale);
 
+        /// <summary>
+        /// If the current weight function uses groups, returns a dictionary [group index] -> group.
+        /// Otherwise, returns an empty dictionary.
+        /// </summary>
+        /// <returns>A possibly empty dictionary [group index] -> group.</returns>
         Dictionary<int, TThis> GetGroups();
 
         /// <summary>
@@ -221,6 +249,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         TThis Clone(); // TODO: remove when automata become immutable
     }
 
+    /// <summary>
+    /// Interface for a factory of weight functions, that is reponsible for performing operations that result
+    /// in weight functions, but not necessarily accept them as arguments.
+    /// </summary>
+    /// <typeparam name="TSequence">The type of a sequence.</typeparam>
+    /// <typeparam name="TElement">The type of a sequence element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+    /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
+    /// <typeparam name="TAutomaton">The type of a weighted finite state automaton, that can be used to
+    /// represent all weight functions.</typeparam>
+    /// <typeparam name="TWeightFunction">The type of a concrete weight function class.</typeparam>
     [Quality(QualityBand.Experimental)]
     public interface IWeightFunctionFactory<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>
         where TSequence : class, IEnumerable<TElement>
@@ -282,6 +321,5 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="weightFunctions">The weight functions to sum.</param>
         /// <returns>The sum of the given weight functions</returns>
         TWeightFunction Sum(IEnumerable<TWeightFunction> weightFunctions);
-
     }
 }

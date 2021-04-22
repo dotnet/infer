@@ -14,6 +14,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Runtime.Serialization;
     using System.Text;
 
+    /// <summary>
+    /// An implementation of <see cref="IWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// that stores the entire support of the weight function along with the associated weights in a dictionary.
+    /// </summary>
+    /// <typeparam name="TSequence">The type of a sequence.</typeparam>
+    /// <typeparam name="TElement">The type of a sequence element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+    /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
+    /// <typeparam name="TAutomaton">The type of a weighted finite state automaton, that can be used to
+    /// represent all weight functions.</typeparam>
+    /// <typeparam name="TThis">The type of a concrete dictionary weight function class.</typeparam>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
@@ -88,6 +99,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public static TThis FromDistinctValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs) =>
             FromDistinctWeights(sequenceWeightPairs.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, Weight.FromValue(kvp.Value))));
 
+        /// <summary>
+        /// Creates a sequence to weight dictionary with <paramref name="point"/> being its only key which corresponds to a unit weight.
+        /// </summary>
+        /// <param name="point">The only sequence contained in the dictionary.</param>
         public static TThis FromPoint(TSequence point)
         {
             var result = new TThis();
@@ -97,6 +112,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #endregion
 
+        /// <summary>
+        /// A dictionary containing the entire support of the current weight function and the corresponding weights.
+        /// </summary>
         public IReadOnlyDictionary<TSequence, Weight> Dictionary => dictionary;
 
         public TSequence Point =>
@@ -150,6 +168,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return Repeat(minTimes, maxTimes.Value, 0);
         }
 
+        /// <summary>
+        /// Creates a weight function <c>g(s) = sum_{k=Kmin}^{Kmax} sum_{t1 t2 ... tk = s} f(t1)f(t2)...f(tk)</c>,
+        /// where <c>f(t)</c> is the current weight function, and <c>Kmin</c> and <c>Kmax</c> are the minimum
+        /// and the maximum number of factors in a sum term.
+        /// </summary>
+        /// <param name="minTimes">The minimum number of factors in a sum term. Defaults to 1.</param>
+        /// <param name="maxTimes">The maximum number of factors in a sum term.</param>
+        /// <param name="expectedResultSupportSize">Predicted size of the support of the resulting weight function.
+        /// Does not have to be correct, but when it is, the performance is slightly improved.</param>
+        /// <returns>The created weight function.</returns>
         public TThis Repeat(int minTimes, int maxTimes, int expectedResultSupportSize)
         {
             Argument.CheckIfInRange(minTimes >= 0, nameof(minTimes), "The minimum number of repetitions must be non-negative.");
@@ -193,8 +221,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public Dictionary<int, TThis> GetGroups() => new Dictionary<int, TThis>();
 
+        /// <summary>
+        /// Gets a value indicating how close this weight function is to a given one
+        /// in terms of weights they assign to sequences.
+        /// </summary>
+        /// <param name="that">The other weight function.</param>
+        /// <returns>The logarithm of a non-negative value, which is close to zero if the two automata assign similar values to all sequences.</returns>
         protected double GetLogSimilarity(TThis that)
         {
+            // Consistently with Automaton.GetLogSimilarity
             var thisIsZero = IsZero();
             var thatIsZero = that.IsZero();
             if (thisIsZero)
@@ -246,6 +281,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return MMath.LogSumExp(Dictionary.Values.Select(v => v.LogValue));
         }
 
+        /// <summary>
+        /// Computes the logarithm of the normalizer (sum of values of the weight function on all sequences)
+        /// of the square of the current weight function.
+        /// </summary>
+        /// <returns>The logarithm of the normalizer.</returns>
         protected double GetLogNormalizerOfSquare()
         {
             if (Dictionary == null || Dictionary.Count == 0)
@@ -254,6 +294,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return MMath.LogSumExp(Dictionary.Values.Select(v => 2 * v.LogValue));
         }
 
+        /// <summary>
+        /// Computes the logarithm of the normalizer (sum of values of the weight function on all sequences)
+        /// of the product of the current and the given weight functions.
+        /// </summary>
+        /// <param name="weightFunction">The given weight function.</param>
+        /// <returns>The logarithm of the normalizer.</returns>
         protected virtual double GetLogNormalizerOfProduct(TThis weightFunction)
         {
             IReadOnlyDictionary<TSequence, Weight> dict1, dict2;
@@ -449,6 +495,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
     }
 
+    /// <summary>
+    /// <see cref="DictionaryWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// specialized for strings.
+    /// </summary>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
@@ -459,7 +509,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         protected override void SetWeights(IEnumerable<KeyValuePair<string, Weight>> sequenceWeightPairs)
         {
-            var newDictionary = new SortedList<string, Weight>();
+            var newDictionary = new SortedList<string, Weight>(StringComparer.Ordinal);
             FillDictionary(newDictionary, sequenceWeightPairs);
             dictionary = newDictionary;
         }
@@ -467,7 +517,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         protected override void SetDistinctWeights(IEnumerable<KeyValuePair<string, Weight>> sequenceWeightPairs)
         {
             var dict = sequenceWeightPairs as IDictionary<string, Weight> ?? sequenceWeightPairs.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            dictionary = new SortedList<string, Weight>(dict);
+            dictionary = new SortedList<string, Weight>(dict, StringComparer.Ordinal);
         }
 
         public override StringDictionaryWeightFunction Product(StringDictionaryWeightFunction weightFunction)
@@ -478,7 +528,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             int idx1 = 0, idx2 = 0;
             while (idx1 < dict1.Count && idx2 < dict2.Count)
             {
-                int comparisonResult = dict1.Keys[idx1].CompareTo(dict2.Keys[idx2]);
+                int comparisonResult = string.CompareOrdinal(dict1.Keys[idx1], dict2.Keys[idx2]);
                 if (comparisonResult < 0)
                     ++idx1;
                 else if (comparisonResult > 0)
@@ -503,7 +553,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             int idx1 = 0, idx2 = 0;
             while (idx1 < dict1.Count && idx2 < dict2.Count)
             {
-                int comparisonResult = dict1.Keys[idx1].CompareTo(dict2.Keys[idx2]);
+                int comparisonResult = string.CompareOrdinal(dict1.Keys[idx1], dict2.Keys[idx2]);
                 if (comparisonResult < 0)
                     ++idx1;
                 else if (comparisonResult > 0)
@@ -554,7 +604,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             while (processedEntriesCount < dict.Count);
 
             var reversedStringSortIndex = Enumerable.Range(0, dict.Count).ToArray();
-            // Alphabetical sorting of reversed suffixes.
+            // Ordinal sorting of reversed suffixes.
             Array.Sort(reversedStringSortIndex, new Comparison<int>((x, y) =>
             {
                 int lenX = suffixInfo[x].suffixLength;
@@ -570,7 +620,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     ++idx;
                 if (idx > shorterLength)
                     return lenX - lenY;
-                return strX[strX.Length - idx] - strY[strY.Length - idx];
+                return strX[strX.Length - idx].CompareTo(strY[strY.Length - idx]);
             }));
 
             int curOriginalIdx = 0;
@@ -796,6 +846,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
     }
 
+    /// <summary>
+    /// A <see cref="DictionaryWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// defined on types implementing <see cref="IList{T}"/>.
+    /// </summary>
+    /// <typeparam name="TList">The type of a list the automaton is defined on.</typeparam>
+    /// <typeparam name="TElement">The type of a list element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over a list element.</typeparam>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
@@ -805,6 +862,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     {
     }
 
+    /// <summary>
+    /// A <see cref="DictionaryWeightFunction{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis}"/>
+    /// defined on generic lists.
+    /// </summary>
+    /// <typeparam name="TElement">The type of a list element.</typeparam>
+    /// <typeparam name="TElementDistribution">The type of a distribution over a list element.</typeparam>
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]

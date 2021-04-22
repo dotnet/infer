@@ -1169,17 +1169,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
         public double GetLogAverageOf(TThis that)
         {
-            Argument.CheckIfNotNull(that, "that");
-            
-            //if (that.IsPointMass)
-            //{
-            //    return this.GetLogProb(that.point);
-            //}
-
-            //if (this.IsPointMass)
-            //{
-            //    return that.GetLogProb(this.point);
-            //}
+            Argument.CheckIfNotNull(that, nameof(that));
 
             var temp = new TThis();
             return temp.SetToProductAndReturnLogNormalizer((TThis)this, that, false);
