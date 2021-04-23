@@ -64,16 +64,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> ConstantLog(double logValue, TElementDistribution allowedElements)
             {
-                if (allowedElements is CanEnumerateSupport<TElement> supportEnumerator)
-                {
-                    var possiblyTruncatedSupport = supportEnumerator.EnumerateSupport().Take(MaxDictionarySize + 1).ToList();
-                    if (possiblyTruncatedSupport.Count <= MaxDictionarySize)
-                    {
-                        var weight = Weight.FromLogValue(logValue);
-                        return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(
-                            possiblyTruncatedSupport.Select(elem => new KeyValuePair<TSequence, Weight>(SequenceManipulator.ToSequence(new[] { elem }), weight))));
-                    }
-                }
+                if (double.IsNegativeInfinity(allowedElements.GetLogAverageOf(allowedElements)))
+                    return Zero();
                 var automaton = new TAutomaton();
                 automaton.SetToConstantLog(logValue, allowedElements);
                 return FromAutomaton(automaton);
@@ -83,9 +75,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (weightFunction.TryEnumerateSupport(MaxDictionarySize, out var support, false))
                 {
+                    if (!support.Any())
+                        return Zero();
+
+                    if (logValue == 0 && !support.Skip(1).Any())
+                        return FromPoint(support.Single());
+
                     var weight = Weight.FromLogValue(logValue);
                     return FromDictionary(DictionaryWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TDictionary>.FromDistinctWeights(
-                        support.Select(sequence => new KeyValuePair<TSequence, Weight>(sequence, weight))));
+                            support.Select(sequence => new KeyValuePair<TSequence, Weight>(sequence, weight))));
                 }
                 var automaton = new TAutomaton();
                 automaton.SetToConstantOnSupportOfLog(logValue, weightFunction.AsAutomaton());
@@ -98,10 +96,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton> FromValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs)
             {
                 var collection = sequenceWeightPairs as ICollection<KeyValuePair<TSequence, double>> ?? sequenceWeightPairs.ToList();
+                if (collection.Count == 0)
+                    return Zero();
                 if (collection.Count == 1 && collection.Single().Value == 1.0)
-                {
                     return FromPoint(collection.Single().Key);
-                }
                 else
                 {
                     if (collection.Count <= MaxDictionarySize)
@@ -163,7 +161,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (resultFitsDictionary)
                 {
                     if (dictionary.Count == 0)
-                        return MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>.Zero();
+                        return Zero();
                     if (dictionary.Count == 1)
                     {
                         var singleKvp = dictionary.Single();
@@ -307,21 +305,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 case TDictionary dictionary:
                     var filteredTruncated = dictionary.Dictionary.Where(kvp => !kvp.Value.IsZero).Take(2).ToList();
-                    if (filteredTruncated.Count == 1)
-                    {
+                    if (filteredTruncated.Count == 0)
+                        return Zero();
+                    else if (filteredTruncated.Count == 1)
                         return FromPoint(filteredTruncated.Single().Key);
-                    }
                     else
-                    {
                         return FromDictionary(dictionary.NormalizeStructure());
-                    }
                 case TAutomaton automaton:
                     if (!automaton.UsesGroups)
                     {
                         if (automaton.LogValueOverride == null && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false, 4 * MaxDictionarySize, true))
                         {
                             var list = support.ToList();
-                            if (list.Count == 1)
+                            if (list.Count == 0)
+                                return Zero();
+                            else if (list.Count == 1)
                                 return FromPoint(list[0]);
                             else
                             {
@@ -367,8 +365,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Argument.CheckIfInRange(minTimes >= 0, nameof(minTimes), "The minimum number of repetitions must be non-negative.");
             Argument.CheckIfValid(!maxTimes.HasValue || maxTimes.Value >= minTimes, "The maximum number of repetitions must not be less than the minimum number.");
 
-            if (weightFunction == null)
-                return Zero();
             if (weightFunction is TPointMass pointMass && maxTimes.HasValue && maxTimes - minTimes < MaxDictionarySize)
             {
                 var newSequenceElements = new List<TElement>(SequenceManipulator.GetLength(pointMass.Point) * maxTimes.Value);
@@ -432,7 +428,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             switch (weightFunction)
             {
                 case null:
-                    normalizedFunction = new MultiRepresentationWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TPointMass, TDictionary, TAutomaton>();
+                    normalizedFunction = Zero();
                     logNormalizer = double.NegativeInfinity;
                     result = false;
                     break;
@@ -654,6 +650,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (weightFunction.weightFunction is TDictionary secondDictionary)
                     return FromDictionary(thisDictionary.Product(secondDictionary));
+
                 dictionary = thisDictionary;
                 other = weightFunction.weightFunction;
             }
