@@ -504,7 +504,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Quality(QualityBand.Experimental)]
     public class StringDictionaryWeightFunction : DictionaryWeightFunction<string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDictionaryWeightFunction>
     {
-        public StringDictionaryWeightFunction() : base(new SortedList<string, Weight>()) { }
+        public StringDictionaryWeightFunction() : base(new SortedList<string, Weight>(StringComparer.Ordinal)) { }
         private StringDictionaryWeightFunction(SortedList<string, Weight> sortedList) : base(sortedList) { }
 
         protected override void SetWeights(IEnumerable<KeyValuePair<string, Weight>> sequenceWeightPairs)
@@ -524,7 +524,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             var dict1 = (SortedList<string, Weight>)Dictionary;
             var dict2 = (SortedList<string, Weight>)weightFunction.Dictionary;
-            var resultList = new SortedList<string, Weight>(Math.Min(dict1.Count, dict2.Count));
+            var resultList = new SortedList<string, Weight>(Math.Min(dict1.Count, dict2.Count), StringComparer.Ordinal);
             int idx1 = 0, idx2 = 0;
             while (idx1 < dict1.Count && idx2 < dict2.Count)
             {
