@@ -210,7 +210,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
                 lastRepStart = curRepStart;
             }
-            return FromDistinctWeights(resultList);
+            return FromWeights(resultList);
         }
 
         public TThis ScaleLog(double logScale)

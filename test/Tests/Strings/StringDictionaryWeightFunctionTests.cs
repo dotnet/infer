@@ -11,6 +11,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Distributions.Automata;
 
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
+    using Microsoft.ML.Probabilistic.Math;
 
     /// <summary>
     /// Tests functionality specific to <see cref="StringDictionaryWeightFunction"/>.
@@ -85,6 +86,35 @@ namespace Microsoft.ML.Probabilistic.Tests
             var nonNormalizedAutomaton = StringDictionaryWeightFunction.FromValues(NonNormalizedComplexDistributionTable).AsAutomaton();
             Assert.True(nonNormalizedAutomaton.IsDeterministic());
             Assert.True(nonNormalizedAutomaton.States.Count <= 31);
+        }
+
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void RepeatCorrectness()
+        {
+            var sourceDict = new Dictionary<string, double>()
+            {
+                ["a"] = 0.5,
+                ["aa"] = 0.5
+            };
+            var wf = StringDictionaryWeightFunction.FromDistinctValues(sourceDict);
+            var repeatedWf = wf.Repeat(0, 3);
+            var expectedResultDict = new Dictionary<string, double>()
+            {
+                [string.Empty] = 1.0,
+                ["a"] = 0.5,
+                ["aa"] = 0.75, // aa, a+a
+                ["aaa"] = 0.625, // aa+a, a+aa, a+a+a
+                ["aaaa"] = 0.625, // aa+aa, aa+a+a, a+aa+a, a+a+aa
+                ["aaaaa"] = 0.375, // aa+aa+a, aa+a+aa, a+aa+aa
+                ["aaaaaa"] = 0.125 // aa+aa+aa
+            };
+            Assert.Equal(expectedResultDict.Count, repeatedWf.Dictionary.Count);
+            foreach (var kvp in expectedResultDict)
+            {
+                Assert.True(repeatedWf.Dictionary.TryGetValue(kvp.Key, out Weight weight));
+                Assert.Equal(kvp.Value, weight.Value, MMath.Ulp1);
+            }
         }
 
         static void AssertAutomatonEqualsTable(Dictionary<string, double> table, StringAutomaton automaton)
