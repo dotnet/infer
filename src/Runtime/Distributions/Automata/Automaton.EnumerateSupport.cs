@@ -174,7 +174,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         private enum TransitionAdvancementResult
         {
-            Success, NoMoreTransitions, ShouldStopEnumeration
+            Success,
+            NoMoreTransitions,
+            ShouldStopEnumeration
         }
 
         /// <summary>
