@@ -89,7 +89,7 @@ namespace CrowdsourcingWithWords
                 foreach (var vocab in vocabularyIDF)
                 {
                     // Term frequency = count how many times the term appears in this document.
-                    double tf = doc.Where(d => d == vocab.Key).Count();
+                    double tf = doc.Count(d => d == vocab.Key);
                     double tfidf = tf * vocab.Value;
 
                     vector.Add(tfidf);

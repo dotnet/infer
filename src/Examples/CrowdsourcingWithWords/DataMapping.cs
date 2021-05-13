@@ -213,7 +213,7 @@ namespace CrowdsourcingWithWords
                 datum.GoldLabel = entry.Value;
                 datum.WorkerLabel = (int)entry.Value;
                 datum.WorkerId = firstWorkerId;
-                datum.BodyText = OriginalData.Where(d => d.TaskId == entry.Key).First().BodyText;
+                datum.BodyText = OriginalData.First(d => d.TaskId == entry.Key).BodyText;
 
                 data.Add(datum);
             }
