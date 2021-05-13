@@ -33,8 +33,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
-            where TWeightFunction : IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, new()
-            where TWeightFunctionFactory : IWeightFunctionFactory<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction>, new()
+            where TWeightFunction : WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.IWeightFunction<TWeightFunction>, new()
+            where TWeightFunctionFactory : WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.IWeightFunctionFactory<TWeightFunction>, new()
             where TSequenceDistribution : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TSequenceDistribution>, new();
     }
 }

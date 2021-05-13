@@ -20,7 +20,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
     [DataContract]
     [Quality(QualityBand.Preview)]
     public class StringDistribution :
-        SequenceDistribution<string, char, DiscreteChar, StringManipulator, StringAutomaton, MultiRepresentationWeightFunction<string, char, DiscreteChar, StringManipulator, StringPointMassWeightFunction, StringDictionaryWeightFunction, StringAutomaton>, MultiRepresentationWeightFunction<string, char, DiscreteChar, StringManipulator, StringPointMassWeightFunction, StringDictionaryWeightFunction, StringAutomaton>.Factory, StringDistribution>
+        SequenceDistribution<
+            string,
+            char,
+            DiscreteChar,
+            StringManipulator,
+            StringAutomaton,
+            WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.MultiRepresentationWeightFunction<StringPointMassWeightFunction, StringDictionaryWeightFunction>,
+            WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.MultiRepresentationWeightFunction<StringPointMassWeightFunction, StringDictionaryWeightFunction>.Factory,
+            StringDistribution>
     {
         /// <summary>
         /// Concatenates the weighted regular languages defined by given distributions

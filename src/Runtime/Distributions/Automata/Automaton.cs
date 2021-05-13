@@ -55,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [DataContract]
     [Serializable]
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> :
-        IWeightFunction<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis, TThis>,
+        WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>.IWeightFunction<TThis>,
         SettableTo<TThis>
         where TSequence : class, IEnumerable<TElement>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
