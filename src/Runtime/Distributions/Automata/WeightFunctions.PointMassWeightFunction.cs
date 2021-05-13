@@ -20,12 +20,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// An implementation of <see cref="IWeightFunction{TThis}"/>
         /// that represents a point mass weight function, aka a weight function that maps one sequence to 1.0 and all other sequences to zero.
         /// </summary>
-        /// <typeparam name="TThis">The type of a concrete point mass weight function class.</typeparam>
         [Serializable]
         [DataContract]
         [Quality(QualityBand.Experimental)]
-        public class PointMassWeightFunction<TThis> : IWeightFunction<TThis>
-            where TThis : PointMassWeightFunction<TThis>, new()
+        public sealed class PointMassWeightFunction : IWeightFunction<PointMassWeightFunction>
         {
             private static TSequenceManipulator SequenceManipulator =>
                     Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.SequenceManipulator;
@@ -43,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="point">The point.</param>
             /// <returns>The created point mass weight function.</returns>
             [Construction(nameof(Point))]
-            public static TThis FromPoint(TSequence point) => new TThis() { Point = point };
+            public static PointMassWeightFunction FromPoint(TSequence point) => new PointMassWeightFunction() { Point = point };
 
             #endregion
 
@@ -80,23 +78,23 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public double GetLogValue(TSequence sequence) => SequenceManipulator.SequenceEqualityComparer.Equals(point, sequence) ? 0.0 : double.NegativeInfinity;
 
-            public TThis Repeat(int minTimes = 1, int? maxTimes = null)
+            public PointMassWeightFunction Repeat(int minTimes = 1, int? maxTimes = null)
             {
-                throw new NotSupportedException($"{nameof(PointMassWeightFunction<TThis>)} is not closed under repetition.");
+                throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under repetition.");
             }
 
-            public TThis ScaleLog(double logScale)
+            public PointMassWeightFunction ScaleLog(double logScale)
             {
-                throw new NotSupportedException($"{nameof(PointMassWeightFunction<TThis>)} is not closed under scaling.");
+                throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under scaling.");
             }
 
-            public Dictionary<int, TThis> GetGroups() => new Dictionary<int, TThis>();
+            public Dictionary<int, PointMassWeightFunction> GetGroups() => new Dictionary<int, PointMassWeightFunction>();
 
-            public double MaxDiff(TThis that) => SequenceManipulator.SequenceEqualityComparer.Equals(point, that.point) ? 0.0 : Math.E;
+            public double MaxDiff(PointMassWeightFunction that) => SequenceManipulator.SequenceEqualityComparer.Equals(point, that.point) ? 0.0 : Math.E;
 
-            public bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)
+            public bool TryNormalizeValues(out PointMassWeightFunction normalizedFunction, out double logNormalizer)
             {
-                normalizedFunction = (TThis)this;
+                normalizedFunction = this;
                 logNormalizer = 0.0;
                 return true;
             }
@@ -110,57 +108,57 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public bool HasGroup(int group) => false;
 
-            public TThis NormalizeStructure() => (TThis)this;
+            public PointMassWeightFunction NormalizeStructure() => this;
 
-            public TThis Append(TSequence sequence, int group = 0)
+            public PointMassWeightFunction Append(TSequence sequence, int group = 0)
             {
                 Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
 
                 return FromPoint(SequenceManipulator.Concat(point, sequence));
             }
 
-            public TThis Append(TThis weightFunction, int group = 0)
+            public PointMassWeightFunction Append(PointMassWeightFunction weightFunction, int group = 0)
             {
                 Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
 
                 return FromPoint(SequenceManipulator.Concat(point, weightFunction.Point));
             }
 
-            public TThis Sum(TThis weightFunction)
+            public PointMassWeightFunction Sum(PointMassWeightFunction weightFunction)
             {
-                throw new NotSupportedException($"{nameof(PointMassWeightFunction<TThis>)} is not closed under summation.");
+                throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
 
-            public TThis Sum(double weight1, double weight2, TThis weightFunction)
+            public PointMassWeightFunction Sum(double weight1, double weight2, PointMassWeightFunction weightFunction)
             {
-                throw new NotSupportedException($"{nameof(PointMassWeightFunction<TThis>)} is not closed under summation.");
+                throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
 
-            public TThis SumLog(double logWeight1, double logWeight2, TThis weightFunction)
+            public PointMassWeightFunction SumLog(double logWeight1, double logWeight2, PointMassWeightFunction weightFunction)
             {
-                throw new NotSupportedException($"{nameof(PointMassWeightFunction<TThis>)} is not closed under summation.");
+                throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
 
-            public TThis Product(TThis weightFunction)
+            public PointMassWeightFunction Product(PointMassWeightFunction weightFunction)
             {
                 if (point == weightFunction.point)
-                    return (TThis)this;
+                    return this;
                 else
-                    throw new NotSupportedException($"Can not create a zero {nameof(PointMassWeightFunction<TThis>)}.");
+                    throw new NotSupportedException($"Can not create a zero {nameof(PointMassWeightFunction)}.");
             }
 
-            public TThis Clone() => (TThis)this; // This type is immutable.
+            public PointMassWeightFunction Clone() => this; // This type is immutable.
 
-            public bool Equals(TThis other) => SequenceManipulator.SequenceEqualityComparer.Equals(point, other?.point);
+            public bool Equals(PointMassWeightFunction other) => SequenceManipulator.SequenceEqualityComparer.Equals(point, other?.point);
 
             public override bool Equals(object obj)
             {
-                if (obj == null || typeof(TThis) != obj.GetType())
+                if (obj == null || typeof(PointMassWeightFunction) != obj.GetType())
                 {
                     return false;
                 }
 
-                return Equals((TThis)obj);
+                return Equals((PointMassWeightFunction)obj);
             }
 
             public override int GetHashCode() => 0; // Consistently with Automaton.GetHashCode()
@@ -179,62 +177,5 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return sb.ToString();
             }
         }
-    }
-
-    /// <summary>
-    /// A <see cref="WeightFunctions{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton}.PointMassWeightFunction{TThis}"/>
-    /// defined on strings.
-    /// </summary>
-    [Serializable]
-    [DataContract]
-    [Quality(QualityBand.Experimental)]
-    public class StringPointMassWeightFunction :
-        WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>
-        .PointMassWeightFunction<StringPointMassWeightFunction>
-    {
-    }
-
-    /// <summary>
-    /// A <see cref="WeightFunctions{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton}.PointMassWeightFunction{TThis}"/>
-    /// defined on types implementing <see cref="IList{T}"/>.
-    /// </summary>
-    /// <typeparam name="TList">The type of a list the automaton is defined on.</typeparam>
-    /// <typeparam name="TElement">The type of a list element.</typeparam>
-    /// <typeparam name="TElementDistribution">The type of a distribution over a list element.</typeparam>
-    [Serializable]
-    [DataContract]
-    [Quality(QualityBand.Experimental)]
-    public class ListPointMassWeightFunction<TList, TElement, TElementDistribution> :
-        WeightFunctions<
-            TList,
-            TElement,
-            TElementDistribution,
-            ListManipulator<TList, TElement>,
-            ListAutomaton<TList, TElement, TElementDistribution>>
-        .PointMassWeightFunction<ListPointMassWeightFunction<TList, TElement, TElementDistribution>>
-        where TList : class, IList<TElement>, new()
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
-    {
-    }
-
-    /// <summary>
-    /// A <see cref="WeightFunctions{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton}.PointMassWeightFunction{TThis}"/>
-    /// defined on generic lists.
-    /// </summary>
-    /// <typeparam name="TElement">The type of a list element.</typeparam>
-    /// <typeparam name="TElementDistribution">The type of a distribution over a list element.</typeparam>
-    [Serializable]
-    [DataContract]
-    [Quality(QualityBand.Experimental)]
-    public class ListPointMassWeightFunction<TElement, TElementDistribution> :
-        WeightFunctions<
-            List<TElement>,
-            TElement,
-            TElementDistribution,
-            ListManipulator<List<TElement>, TElement>,
-            ListAutomaton<TElement, TElementDistribution>>
-        .PointMassWeightFunction<ListPointMassWeightFunction<TElement, TElementDistribution>>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
-    {
     }
 }

@@ -28,9 +28,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             ListManipulator<TList, TElement>,
             ListAutomaton<TList, TElement, TElementDistribution>,
             WeightFunctions<TList, TElement, TElementDistribution, ListManipulator<TList, TElement>, ListAutomaton<TList, TElement, TElementDistribution>>
-                .MultiRepresentationWeightFunction<ListPointMassWeightFunction<TList, TElement, TElementDistribution>, ListDictionaryWeightFunction<TList, TElement, TElementDistribution>>,
+                .MultiRepresentationWeightFunction<ListDictionaryWeightFunction<TList, TElement, TElementDistribution>>,
             WeightFunctions<TList, TElement, TElementDistribution, ListManipulator<TList, TElement>, ListAutomaton<TList, TElement, TElementDistribution>>
-                .MultiRepresentationWeightFunction<ListPointMassWeightFunction<TList, TElement, TElementDistribution>, ListDictionaryWeightFunction<TList, TElement, TElementDistribution>>.Factory,
+                .MultiRepresentationWeightFunction<ListDictionaryWeightFunction<TList, TElement, TElementDistribution>>.Factory,
             TThis>
         where TList : class, IList<TElement>, new()
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
@@ -68,9 +68,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             ListManipulator<List<TElement>, TElement>,
             ListAutomaton<TElement, TElementDistribution>,
             WeightFunctions<List<TElement>, TElement, TElementDistribution, ListManipulator<List<TElement>, TElement>, ListAutomaton<TElement, TElementDistribution>>
-                .MultiRepresentationWeightFunction<ListPointMassWeightFunction<TElement, TElementDistribution>, ListDictionaryWeightFunction<TElement, TElementDistribution>>,
+                .MultiRepresentationWeightFunction<ListDictionaryWeightFunction<TElement, TElementDistribution>>,
             WeightFunctions<List<TElement>, TElement, TElementDistribution, ListManipulator<List<TElement>, TElement>, ListAutomaton<TElement, TElementDistribution>>
-                .MultiRepresentationWeightFunction<ListPointMassWeightFunction<TElement, TElementDistribution>, ListDictionaryWeightFunction<TElement, TElementDistribution>>.Factory,
+                .MultiRepresentationWeightFunction<ListDictionaryWeightFunction<TElement, TElementDistribution>>.Factory,
             ListDistribution<TElement, TElementDistribution>>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
     {

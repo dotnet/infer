@@ -26,8 +26,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             DiscreteChar,
             StringManipulator,
             StringAutomaton,
-            WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.MultiRepresentationWeightFunction<StringPointMassWeightFunction, StringDictionaryWeightFunction>,
-            WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.MultiRepresentationWeightFunction<StringPointMassWeightFunction, StringDictionaryWeightFunction>.Factory,
+            WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.MultiRepresentationWeightFunction<StringDictionaryWeightFunction>,
+            WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.MultiRepresentationWeightFunction<StringDictionaryWeightFunction>.Factory,
             StringDistribution>
     {
         /// <summary>
