@@ -92,7 +92,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         // Following all need to be overridden
         protected abstract void AppendInterfaces(StringBuilder sb, List<ITypeReference> interfaces, bool hasBaseType);
         protected abstract void AppendAttribute(StringBuilder sb, ICustomAttribute attr);
-        protected abstract void AppendGenericArguments(StringBuilder sb, IGenericArgumentProvider igap);
+        protected abstract void AppendGenericArguments(StringBuilder sb, IEnumerable<IType> genericArguments);
         protected abstract void AppendArrayRank(StringBuilder sb, int ar);
         protected abstract void AppendVariableDeclaration(StringBuilder sb, IVariableDeclaration ivd);
         protected abstract void AppendAddressOutExpression(StringBuilder sb, IAddressOutExpression iae);
@@ -510,21 +510,19 @@ namespace Microsoft.ML.Probabilistic.Compiler
             string typName = itr.Name;
 
             Type typ = itr.DotNetType;
-            bool usedGenericParams = false;
+            int usedGenericParamsCount = 0;
             var originalType = typ;
             if (typ != null)
             {
                 StringBuilder sb2 = new StringBuilder();
-                // Assumes there are generic parameters on the outer class or the nested class but not both.
-                // todo: fix
-                while (typ.IsNested && !typ.IsGenericParameter)
+                if (typ.IsNested && !typ.IsGenericParameter)
                 {
                     typ = typ.DeclaringType;
                     // if typ contains generic parameters then we need to consume them from the original type
                     if (typ.ContainsGenericParameters)
                     {
-                        typ = typ.MakeGenericType(originalType.GetGenericArguments());
-                        usedGenericParams = true;
+                        usedGenericParamsCount = typ.GetGenericArguments().Length;
+                        typ = typ.MakeGenericType(originalType.GetGenericArguments().Take(usedGenericParamsCount).ToArray());
                     }
                     AppendType(sb2, typ);
                     sb2.Append(".");
@@ -557,8 +555,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             AddReferencedAssembly(itr);
             // TODO: if two namespaces have the same type name, we need to use the full name to make sure we refer to the right namespace.
             sb.Append(typName);
-            if (Builder.IsTypeInstRef(itr) && !usedGenericParams)
-                AppendGenericArguments(sb, itr);
+            if (Builder.IsTypeInstRef(itr))
+                AppendGenericArguments(sb, itr.GenericArguments.Skip(usedGenericParamsCount));
         }
 
         private HashSet<string> LoadedNamespaces;
