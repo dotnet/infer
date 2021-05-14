@@ -1851,6 +1851,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Argument.CheckIfNotNull(sequence, "sequence");
 
             if (Data.IsDeterminized == true)
+                return GetLogValueDeterministic();
+            else if (Data.IsEpsilonFree)
+                return GetLogValueEpsilonFree();
+            else
+                return GetLogValueGeneral();
+
+            double GetLogValueDeterministic()
             {
                 Weight acc = Weight.One;
                 State currentState = Start;
@@ -1887,7 +1894,77 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return double.NegativeInfinity;
             }
 
-            var sequenceLength = SequenceManipulator.GetLength(sequence);
+            double GetLogValueEpsilonFree()
+            {
+                var sequenceLength = SequenceManipulator.GetLength(sequence);
+                var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
+                var valuesStack = new Stack<Weight>();
+                var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+                operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
+
+                while (operationsStack.Count > 0)
+                {
+                    var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
+                    var statePosPair = (stateIndex, sequencePos);
+
+                    if (sumUntil < 0)
+                    {
+                        if (valueCache.TryGetValue(statePosPair, out var cachedValue))
+                        {
+                            valuesStack.Push(cachedValue * multiplier);
+                        }
+                        else
+                        {
+                            var state = this.States[stateIndex];
+
+                            if (sequencePos == sequenceLength)
+                            {
+                                // We are at the end of sequence. So put an answer on stack
+                                valuesStack.Push(state.EndWeight * multiplier);
+                                valueCache[statePosPair] = state.EndWeight;
+                            }
+                            else
+                            {
+                                // schedule second part of computation - sum values for all transitions
+                                // Note: it is put on stack before operations for any transitions, that
+                                // means that it will be executed after them
+                                operationsStack.Push((stateIndex, sequencePos, multiplier, valuesStack.Count));
+
+                                var element = SequenceManipulator.GetElement(sequence, sequencePos);
+                                foreach (var transition in state.Transitions)
+                                {
+                                    var destStateIndex = transition.DestinationStateIndex;
+                                    var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
+                                    if (!distWeight.IsZero && !transition.Weight.IsZero)
+                                    {
+                                        var weightMul = Weight.Product(transition.Weight, distWeight);
+                                        operationsStack.Push((destStateIndex, sequencePos + 1, weightMul, -1));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // All transitions value from this state are already calculated, sum them and store on stack and in cache
+                        var sum = Weight.Zero;
+                        while (valuesStack.Count > sumUntil)
+                        {
+                            sum += valuesStack.Pop();
+                        }
+
+                        valuesStack.Push(multiplier * sum);
+                        valueCache[statePosPair] = sum;
+                    }
+                }
+
+                Debug.Assert(valuesStack.Count == 1);
+                var result = valuesStack.Pop();
+                return
+                    !result.IsZero && this.LogValueOverride.HasValue
+                        ? this.LogValueOverride.Value
+                        : result.LogValue;
+            }
 
             // This algorithm is unwinding of trivial recursion with cache. It encodes recursion through explicit
             // stack to avoid stack-overflow. It makes calculation not straightforward. Recursive algorithm that
@@ -1909,83 +1986,87 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             //    sums values of transitions from this state. They will be on top of the stack
             // As an optimization, value calculated by (b) is cached, so if (a) notices that result for
             // (stateIndex, sequencePos) already calculated it doesn't schedule any extra work
-            var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
-            var valuesStack = new Stack<Weight>();
-            var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
-            operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
-
-            while (operationsStack.Count > 0)
+            double GetLogValueGeneral()
             {
-                var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
-                var statePosPair = (stateIndex, sequencePos);
+                var sequenceLength = SequenceManipulator.GetLength(sequence);
+                var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
+                var valuesStack = new Stack<Weight>();
+                var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+                operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
-                if (sumUntil < 0)
+                while (operationsStack.Count > 0)
                 {
-                    if (valueCache.TryGetValue(statePosPair, out var cachedValue))
-                    {
-                        valuesStack.Push(cachedValue * multiplier);
-                    }
-                    else
-                    {
-                        var closure = new EpsilonClosure(this, this.States[stateIndex]);
+                    var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
+                    var statePosPair = (stateIndex, sequencePos);
 
-                        if (sequencePos == sequenceLength)
+                    if (sumUntil < 0)
+                    {
+                        if (valueCache.TryGetValue(statePosPair, out var cachedValue))
                         {
-                            // We are at the end of sequence. So put an answer on stack
-                            valuesStack.Push(closure.EndWeight * multiplier);
-                            valueCache[statePosPair] = closure.EndWeight;
+                            valuesStack.Push(cachedValue * multiplier);
                         }
                         else
                         {
-                            // schedule second part of computation - sum values for all transitions
-                            // Note: it is put on stack before operations for any transitions, that
-                            // means that it will be executed after them
-                            operationsStack.Push((stateIndex, sequencePos, multiplier, valuesStack.Count));
+                            var closure = new EpsilonClosure(this, this.States[stateIndex]);
 
-                            var element = SequenceManipulator.GetElement(sequence, sequencePos);
-                            for (var closureStateIndex = 0; closureStateIndex < closure.Size; ++closureStateIndex)
+                            if (sequencePos == sequenceLength)
                             {
-                                var closureState = closure.GetStateByIndex(closureStateIndex);
-                                var closureStateWeight = closure.GetStateWeightByIndex(closureStateIndex);
-                                foreach (var transition in closureState.Transitions)
-                                {
-                                    if (transition.IsEpsilon)
-                                    {
-                                        continue; // The destination is a part of the closure anyway
-                                    }
+                                // We are at the end of sequence. So put an answer on stack
+                                valuesStack.Push(closure.EndWeight * multiplier);
+                                valueCache[statePosPair] = closure.EndWeight;
+                            }
+                            else
+                            {
+                                // schedule second part of computation - sum values for all transitions
+                                // Note: it is put on stack before operations for any transitions, that
+                                // means that it will be executed after them
+                                operationsStack.Push((stateIndex, sequencePos, multiplier, valuesStack.Count));
 
-                                    var destStateIndex = transition.DestinationStateIndex;
-                                    var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
-                                    if (!distWeight.IsZero && !transition.Weight.IsZero)
+                                var element = SequenceManipulator.GetElement(sequence, sequencePos);
+                                for (var closureStateIndex = 0; closureStateIndex < closure.Size; ++closureStateIndex)
+                                {
+                                    var closureState = closure.GetStateByIndex(closureStateIndex);
+                                    var closureStateWeight = closure.GetStateWeightByIndex(closureStateIndex);
+                                    foreach (var transition in closureState.Transitions)
                                     {
-                                        var weightMul = Weight.Product(closureStateWeight, transition.Weight, distWeight);
-                                        operationsStack.Push((destStateIndex, sequencePos + 1, weightMul, -1));
+                                        if (transition.IsEpsilon)
+                                        {
+                                            continue; // The destination is a part of the closure anyway
+                                        }
+
+                                        var destStateIndex = transition.DestinationStateIndex;
+                                        var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
+                                        if (!distWeight.IsZero && !transition.Weight.IsZero)
+                                        {
+                                            var weightMul = Weight.Product(closureStateWeight, transition.Weight, distWeight);
+                                            operationsStack.Push((destStateIndex, sequencePos + 1, weightMul, -1));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                else
-                {
-                    // All transitions value from this state are already calculated, sum them and store on stack and in cache
-                    var sum = Weight.Zero;
-                    while (valuesStack.Count > sumUntil)
+                    else
                     {
-                        sum += valuesStack.Pop();
+                        // All transitions value from this state are already calculated, sum them and store on stack and in cache
+                        var sum = Weight.Zero;
+                        while (valuesStack.Count > sumUntil)
+                        {
+                            sum += valuesStack.Pop();
+                        }
+
+                        valuesStack.Push(multiplier * sum);
+                        valueCache[statePosPair] = sum;
                     }
-
-                    valuesStack.Push(multiplier * sum);
-                    valueCache[statePosPair] = sum;
                 }
-            }
 
-            Debug.Assert(valuesStack.Count == 1);
-            var result = valuesStack.Pop();
-            return 
-                !result.IsZero && this.LogValueOverride.HasValue
-                    ? this.LogValueOverride.Value
-                    : result.LogValue;
+                Debug.Assert(valuesStack.Count == 1);
+                var result = valuesStack.Pop();
+                return
+                    !result.IsZero && this.LogValueOverride.HasValue
+                        ? this.LogValueOverride.Value
+                        : result.LogValue;
+            }
         }
 
         /// <summary>
