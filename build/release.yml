@@ -23,7 +23,6 @@ jobs:
     inputs:
       packageType: 'sdk' 
       version: '5.x'
-      includePreviewVersions: true
 
   - script: |
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
@@ -39,7 +38,6 @@ jobs:
     inputs:
       packageType: 'sdk' 
       version: '5.x'
-      includePreviewVersions: true
 
   - script: |
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
@@ -156,7 +154,6 @@ jobs:
     inputs:
       packageType: 'sdk'
       version: '5.x'
-      includePreviewVersions: true
 
   - task: DotNetCoreCLI@2
     displayName: Restore Infer.sln to enable packaging.

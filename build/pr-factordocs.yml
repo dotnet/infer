@@ -15,7 +15,6 @@ steps:
   inputs:
     packageType: 'sdk' 
     version: '5.x'
-    includePreviewVersions: true
 
 - script: |
     echo Checking $(Build.Repository.LocalPath)\src\Runtime\Factors\FactorDocs.xml...
