@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Math;
 
@@ -24,6 +25,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <remarks>When Infer.Net's target runtime is updated to one that supports interfaces with default method implementations,
     /// this class should be replaced with a collection of such interfaces, which would be possible to inherit.</remarks>
     [Quality(QualityBand.Experimental)]
+    [Serializable]
     internal abstract class MutableWrapper<TDomain, TWrapped> :
         IDistribution<TDomain>,
         SettableTo<TWrapped>, SettableTo<MutableWrapper<TDomain, TWrapped>>,
@@ -72,6 +74,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     {
         #region Data
 
+        [DataMember]
         protected TWrapped WrappedDistribution { get; set; }
 
         #endregion
