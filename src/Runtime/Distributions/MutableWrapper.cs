@@ -9,6 +9,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System.Runtime.Serialization;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     // TODO: switch to a collection of interfaces with default method implementations
     // after updating to netstandard2.1+ or net5+ and C# 8.0+
@@ -49,7 +50,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         SettableToRatio<TWrapped, MutableWrapper<TDomain, TWrapped>>, SettableToRatio<MutableWrapper<TDomain, TWrapped>, TWrapped>,
         SettableToPower<TWrapped>, SettableToPower<MutableWrapper<TDomain, TWrapped>>,
         SettableToWeightedSum<TWrapped>, SettableToWeightedSum<MutableWrapper<TDomain, TWrapped>>,
-        SettableToWeightedSumExact<TWrapped>, SettableToWeightedSumExact<MutableWrapper<TDomain, TWrapped>>
+        SettableToWeightedSumExact<TWrapped>, SettableToWeightedSumExact<MutableWrapper<TDomain, TWrapped>>,
+        Sampleable<TDomain>
         where TWrapped : 
         IImmutableDistribution<TDomain, TWrapped>,
         CanCreatePartialUniform<TWrapped>,
@@ -70,7 +72,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         CanComputeRatio<TWrapped>,
         CanComputePower<TWrapped>,
         CanComputeWeightedSum<TWrapped>,
-        CanComputeWeightedSumExact<TWrapped>
+        CanComputeWeightedSumExact<TWrapped>,
+        Sampleable<TDomain>
     {
         #region Data
 
@@ -93,7 +96,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region object overrides
 
-        public override bool Equals(object obj) => WrappedDistribution.Equals(obj);
+        public override bool Equals(object obj) => obj is MutableWrapper<TDomain, TWrapped> that && WrappedDistribution.Equals(that.WrappedDistribution);
 
         public override int GetHashCode() => WrappedDistribution.GetHashCode();
 
@@ -107,7 +110,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public bool IsUniform() => WrappedDistribution.IsUniform();
 
-        public double MaxDiff(object that) => WrappedDistribution.MaxDiff(that);
+        public double MaxDiff(object that)
+        {
+            Argument.CheckIfNotNull(that, nameof(that));
+            return that is MutableWrapper<TDomain, TWrapped> thatDist
+                ? WrappedDistribution.MaxDiff(thatDist.WrappedDistribution)
+                : double.PositiveInfinity;
+        }
 
         public void SetToUniform()
         {
@@ -336,6 +345,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             WrappedDistribution = value1.WrappedDistribution.Sum(weight1, value2.WrappedDistribution, weight2);
         }
+
+        #endregion
+
+        #region Sampleable implementation
+
+        public TDomain Sample() => WrappedDistribution.Sample();
+
+        public TDomain Sample(TDomain result) => WrappedDistribution.Sample(result);
 
         #endregion
     }

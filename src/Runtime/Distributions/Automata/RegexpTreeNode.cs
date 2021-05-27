@@ -324,7 +324,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="resultBuilder">The string builder.</param>
         /// <param name="range">The character range.</param>
-        private static void AppendCharacterRange(StringBuilder resultBuilder, DiscreteChar.CharRange range)
+        private static void AppendCharacterRange(StringBuilder resultBuilder, ImmutableDiscreteChar.CharRange range)
         {
             resultBuilder.Append(@"\u");
             resultBuilder.Append(range.StartInclusive.ToString("X4"));
