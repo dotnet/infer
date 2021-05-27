@@ -639,7 +639,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     var distr = destStateAndDistr.Value;
                     distr.Sort(new Comparison<(char character, Weight weight)>((x, y) => x.character.CompareTo(y.character)));
-                    var ranges = new List<DiscreteChar.CharRange>(distr.Count);
+                    var ranges = new List<ImmutableDiscreteChar.CharRange>(distr.Count);
                     int currentStart = distr[0].character;
                     int currentEnd = currentStart + 1;
                     Weight currentWeight = distr[0].weight;
@@ -650,13 +650,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             ++currentEnd;
                         else
                         {
-                            ranges.Add(new DiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
+                            ranges.Add(new ImmutableDiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
                             currentStart = character;
                             currentEnd = currentStart + 1;
                             currentWeight = weight;
                         }
                     }
-                    ranges.Add(new DiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
+                    ranges.Add(new ImmutableDiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
                     var weightNormalizer = Weight.FromLogValue(MMath.LogSumExp(ranges.Select(r => r.Probability.LogValue + Math.Log(r.EndExclusive - r.StartInclusive))));
                     currentState.AddTransition(new Collections.Option<DiscreteChar>(DiscreteChar.Create(ranges)), weightNormalizer, destStateAndDistr.Key);
                 }
