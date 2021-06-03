@@ -296,7 +296,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var entityValues = Variable.Array<string>(entity).Named("entityValues");
             entityValues[entity] = Variable.Random(StringDistribution.Lower()).ForEach(entity);
 
-            StringDistribution templatePriorMiddle = StringDistribution.ZeroOrMore(DiscreteChar.OneOf('{', '}').Complement());
+            StringDistribution templatePriorMiddle = StringDistribution.ZeroOrMore(ImmutableDiscreteChar.OneOf('{', '}').Complement());
             StringDistribution templatePrior =
                 StringDistribution.OneOf(
                     StringDistribution.String("{0} ") + templatePriorMiddle + StringDistribution.String(" {1}"),

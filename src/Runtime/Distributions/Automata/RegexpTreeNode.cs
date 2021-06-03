@@ -18,11 +18,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// Represents a node in the tree describing a regular expression.
     /// </summary>
     /// <typeparam name="TElement">The type of a character in a language word.</typeparam>
+    /// <typeparam name="TElementSet">The type of a sequence element set.</typeparam>
     /// <remarks>
     /// Although this class might look immutable, <see cref="Simplify"/>
     /// can change the tree rooted at the node by removing existing children and/or adding new.
     /// </remarks>
-    public class RegexpTreeNode<TElement>
+    public class RegexpTreeNode<TElement, TElementSet>
+            where TElementSet : CanCreatePartialUniform<TElementSet>, IImmutableDistribution<TElement, TElementSet>, new()
     {
         /// <summary>
         /// The most verbose formatting settings. Used for strong language equivalence check.
@@ -38,22 +40,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// A node instance representing an empty string language. Shared by all regular expression trees.
         /// </summary>
-        private static readonly RegexpTreeNode<TElement> CachedEmptyNode = new RegexpTreeNode<TElement> { Type = RegexpTreeNodeType.Empty };
+        private static readonly RegexpTreeNode<TElement, TElementSet> CachedEmptyNode = new RegexpTreeNode<TElement, TElementSet> { Type = RegexpTreeNodeType.Empty };
 
         /// <summary>
         /// A node instance representing an empty language. Shared by all regular expression trees.
         /// </summary>
-        private static readonly RegexpTreeNode<TElement> CachedNothingNode = new RegexpTreeNode<TElement> { Type = RegexpTreeNodeType.Nothing };
+        private static readonly RegexpTreeNode<TElement, TElementSet> CachedNothingNode = new RegexpTreeNode<TElement, TElementSet> { Type = RegexpTreeNodeType.Nothing };
 
         /// <summary>
         /// The children of the node.
         /// </summary>
-        private List<RegexpTreeNode<TElement>> children = new List<RegexpTreeNode<TElement>>();
+        private List<RegexpTreeNode<TElement, TElementSet>> children = new List<RegexpTreeNode<TElement, TElementSet>>();
 
         /// <summary>
         /// The character set associated with the node (if it is an element set node).
         /// </summary>
-        private IDistribution<TElement> elementSet;
+        private IImmutableDistribution<TElement, TElementSet> elementSet;
 
         /// <summary>
         /// Whether the node and its children have been simplified.
@@ -66,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private string toStringVerboseCached;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="RegexpTreeNode{TElement}"/> class from being created.
+        /// Prevents a default instance of the <see cref="RegexpTreeNode{TElement, TElementSet}"/> class from being created.
         /// </summary>
         private RegexpTreeNode()
         {
@@ -80,7 +82,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets the character set associated with the node.
         /// </summary>
-        public IDistribution<TElement> ElementSet
+        public IImmutableDistribution<TElement, TElementSet> ElementSet
         {
             get
             {
@@ -96,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets the children of the node.
         /// </summary>
-        public ReadOnlyCollection<RegexpTreeNode<TElement>> Children
+        public ReadOnlyCollection<RegexpTreeNode<TElement, TElementSet>> Children
         {
             get
             {
@@ -108,7 +110,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Creates a node representing language consisting of an empty string.
         /// </summary>
         /// <returns>The created node.</returns>
-        public static RegexpTreeNode<TElement> Empty()
+        public static RegexpTreeNode<TElement, TElementSet> Empty()
         {
             return CachedEmptyNode;
         }
@@ -117,7 +119,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Returns a node representing the empty language.
         /// </summary>
         /// <returns>A node representing the empty language.</returns>
-        public static RegexpTreeNode<TElement> Nothing()
+        public static RegexpTreeNode<TElement, TElementSet> Nothing()
         {
             return CachedNothingNode;
         }
@@ -125,18 +127,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Creates a terminal node representing a given set of sequence elements.
         /// </summary>
-        /// <typeparam name="TElementSet">The type of a sequence element set.</typeparam>
         /// <param name="elementSet">The distribution over sequence elements.</param>
         /// <returns>The created node.</returns>
-        public static RegexpTreeNode<TElement> FromElementSet<TElementSet>(Option<TElementSet> elementSet)
-            where TElementSet : SettableToPartialUniform<TElementSet>, IDistribution<TElement>, new()
+        public static RegexpTreeNode<TElement, TElementSet> FromElementSet(Option<TElementSet> elementSet)
         {
             Argument.CheckIfNotNull(elementSet, "elementSet");
 
-            return new RegexpTreeNode<TElement>
+            return new RegexpTreeNode<TElement, TElementSet>
             { 
                 Type = RegexpTreeNodeType.ElementSet, 
-                elementSet = elementSet.HasValue ? (IDistribution<TElement>)elementSet.Value : null /* Distribution.CreatePartialUniform(elementSet) */
+                elementSet = elementSet.HasValue ? (IImmutableDistribution<TElement, TElementSet>)elementSet.Value : null /* Distribution.CreatePartialUniform(elementSet) */
             };
         }
 
@@ -146,7 +146,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="node1">The first node.</param>
         /// <param name="node2">The second node.</param>
         /// <returns>The created node.</returns>
-        public static RegexpTreeNode<TElement> Or(RegexpTreeNode<TElement> node1, RegexpTreeNode<TElement> node2)
+        public static RegexpTreeNode<TElement, TElementSet> Or(RegexpTreeNode<TElement, TElementSet> node1, RegexpTreeNode<TElement, TElementSet> node2)
         {
             Argument.CheckIfNotNull(node1, "node1");
             Argument.CheckIfNotNull(node2, "node2");
@@ -169,7 +169,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return node1;
             }
 
-            var result = new RegexpTreeNode<TElement> { Type = RegexpTreeNodeType.Union };
+            var result = new RegexpTreeNode<TElement, TElementSet> { Type = RegexpTreeNodeType.Union };
             result.children.Capacity = 2;
             result.children.Add(node1);
             result.children.Add(node2);
@@ -183,7 +183,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="node1">The first node.</param>
         /// <param name="node2">The second node.</param>
         /// <returns>The created node.</returns>
-        public static RegexpTreeNode<TElement> Concat(RegexpTreeNode<TElement> node1, RegexpTreeNode<TElement> node2)
+        public static RegexpTreeNode<TElement, TElementSet> Concat(RegexpTreeNode<TElement, TElementSet> node1, RegexpTreeNode<TElement, TElementSet> node2)
         {
             Argument.CheckIfNotNull(node1, "node1");
             Argument.CheckIfNotNull(node2, "node2");
@@ -206,7 +206,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return node1;
             }
             
-            var result = new RegexpTreeNode<TElement> { Type = RegexpTreeNodeType.Concat };
+            var result = new RegexpTreeNode<TElement, TElementSet> { Type = RegexpTreeNodeType.Concat };
             result.children.Capacity = 2;
             result.children.Add(node1);
             result.children.Add(node2);
@@ -219,7 +219,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="node">The node.</param>
         /// <returns>The created node.</returns>
-        public static RegexpTreeNode<TElement> Star(RegexpTreeNode<TElement> node)
+        public static RegexpTreeNode<TElement, TElementSet> Star(RegexpTreeNode<TElement, TElementSet> node)
         {
             Argument.CheckIfNotNull(node, "node");
 
@@ -231,7 +231,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return node;
             }
 
-            var result = new RegexpTreeNode<TElement> { Type = RegexpTreeNodeType.Star };
+            var result = new RegexpTreeNode<TElement, TElementSet> { Type = RegexpTreeNodeType.Star };
             result.children.Capacity = 1;
             result.children.Add(node);
             
@@ -277,7 +277,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
             
             // Simplify children
-            foreach (RegexpTreeNode<TElement> child in this.children)
+            foreach (RegexpTreeNode<TElement, TElementSet> child in this.children)
             {
                 child.Simplify(collapseAlternatives);
             }
@@ -503,7 +503,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             //// The simplification can affect the node itself, but not its children
             //// since children are shared by multiple parents.
             
-            var newChildren = new List<RegexpTreeNode<TElement>>();
+            var newChildren = new List<RegexpTreeNode<TElement, TElementSet>>();
 
             for (int i = 0; i < this.children.Count; ++i)
             {
@@ -528,7 +528,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // Find alternatives with identical regexp representations
             if (this.children.Count > 1 && collapseAlternatives)
             {
-                var regexpToNode = new SmallStringKeyDictionary<RegexpTreeNode<TElement>>();
+                var regexpToNode = new SmallStringKeyDictionary<RegexpTreeNode<TElement, TElementSet>>();
                 var builder = new StringBuilder();
                 bool success = true;
                 for (int i = 0; i < this.children.Count; ++i)
@@ -570,7 +570,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             //// The simplification can affect the node itself, but not its children
             //// since children are shared by multiple parents.
             
-            var newChildren = new List<RegexpTreeNode<TElement>>();
+            var newChildren = new List<RegexpTreeNode<TElement, TElementSet>>();
 
             for (int i = 0; i < this.children.Count; ++i)
             {
@@ -605,7 +605,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             //// The simplification can affect the node itself, but not its children
             //// since children are shared by multiple parents.
 
-            RegexpTreeNode<TElement> child = this.children[0];
+            RegexpTreeNode<TElement, TElementSet> child = this.children[0];
             switch (child.Type)
             {
                 case RegexpTreeNodeType.Empty:
@@ -617,12 +617,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // 'Star' accepts the empty string anyway, no need to provide it as an alternative
                     if (child.children.Any(c => c.Type == RegexpTreeNodeType.Empty))
                     {
-                        List<RegexpTreeNode<TElement>> nonEmptyUnionChildren =
+                        List<RegexpTreeNode<TElement, TElementSet>> nonEmptyUnionChildren =
                             child.children.Where(c => c.Type != RegexpTreeNodeType.Empty).ToList();
                         if (nonEmptyUnionChildren.Count == 0)
                         {
                             // Empty only
-                            this.SetTo(RegexpTreeNode<TElement>.Empty());
+                            this.SetTo(RegexpTreeNode<TElement, TElementSet>.Empty());
                         }
                         else if (nonEmptyUnionChildren.Count == 1)
                         {
@@ -634,7 +634,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             // Can't modify child's children, so create a new node
                             this.children.Clear();
-                            var newUnionNode = new RegexpTreeNode<TElement> { Type = RegexpTreeNodeType.Union, children = nonEmptyUnionChildren, simplified = true };
+                            var newUnionNode = new RegexpTreeNode<TElement, TElementSet> { Type = RegexpTreeNodeType.Union, children = nonEmptyUnionChildren, simplified = true };
                             this.children.Add(newUnionNode);
                         }
                     }
@@ -647,7 +647,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Copies the state of this node from another node.
         /// </summary>
         /// <param name="other">The node to copy the state from.</param>
-        private void SetTo(RegexpTreeNode<TElement> other)
+        private void SetTo(RegexpTreeNode<TElement, TElementSet> other)
         {
             Debug.Assert(other != null, "A valid node must be provided.");
 

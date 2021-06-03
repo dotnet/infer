@@ -28,8 +28,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Repeat1()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "abc");
-            automaton.AppendInPlace(StringAutomaton.Constant(2.0, DiscreteChar.Upper()));
+            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "abc")
+                .Append(StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Upper()));
             StringInferenceTestUtilities.TestValue(automaton, 0.0, string.Empty, "ab", "abcab", "XYZ");
             StringInferenceTestUtilities.TestValue(automaton, 2.0, "abc", "abcX", "abcXXYZ");
 
@@ -47,7 +47,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Repeat2()
         {
-            StringAutomaton automaton = StringAutomaton.Constant(1.0, DiscreteChar.Lower());
+            StringAutomaton automaton = StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Lower());
             StringInferenceTestUtilities.TestValue(automaton, 1.0, string.Empty, "ab", "abcab");
 
             automaton = StringAutomaton.Repeat(automaton);
@@ -66,8 +66,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Repeat3()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "a");
-            automaton.AppendInPlace(StringAutomaton.ConstantOn(1.0, "a"));
+            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "a")
+                .Append(StringAutomaton.ConstantOn(1.0, "a"));
             automaton = StringAutomaton.Sum(automaton, StringAutomaton.ConstantOn(1.0, "a"));
             StringInferenceTestUtilities.TestValue(automaton, 0.0, string.Empty, "aaa", "ab", "X");
             StringInferenceTestUtilities.TestValue(automaton, 1.0, "a", "aa");
@@ -266,7 +266,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestValue(product, 16 * 36, "abab");
             StringInferenceTestUtilities.TestValue(product, 0.0, "aba", "bbb", "a", "b");
 
-            product.SetToProduct(product, product);
+            product = product.Product(product);
             StringInferenceTestUtilities.TestValue(product, 1.0, string.Empty);
             StringInferenceTestUtilities.TestValue(product, 4 * 4 * 6 * 6, "ab");
             StringInferenceTestUtilities.TestValue(product, 16 * 16 * 36 * 36, "abab");
@@ -406,8 +406,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var automaton = builder.GetAutomaton();
 
-            var normalizedAutomaton = automaton.Clone();
-            double logNormalizer = normalizedAutomaton.NormalizeValues();
+            double logNormalizer = automaton.NormalizeValues(out var normalizedAutomaton);
             
             Assert.Equal(Math.Log(50.0), logNormalizer, 1e-6);
             Assert.Equal(Math.Log(50.0), GetLogNormalizerByGetValue(automaton), 1e-6);
@@ -501,8 +500,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
-            Assert.Throws<InvalidOperationException>(() => copyOfAutomaton.NormalizeValues());
-            Assert.False(copyOfAutomaton.TryNormalizeValues());
+            Assert.Throws<InvalidOperationException>(() => copyOfAutomaton.NormalizeValues(out var _));
+            Assert.False(copyOfAutomaton.TryNormalizeValues(out var _));
             ////Assert.Equal(f, copyOfF); // TODO: fix equality first
         }
 
@@ -524,8 +523,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
-            Assert.Throws<InvalidOperationException>(() => copyOfAutomaton.NormalizeValues());
-            Assert.False(copyOfAutomaton.TryNormalizeValues());
+            Assert.Throws<InvalidOperationException>(() => copyOfAutomaton.NormalizeValues(out var _));
+            Assert.False(copyOfAutomaton.TryNormalizeValues(out var _));
             ////Assert.Equal(f, copyOfF); // TODO: fix equality first
         }
 
@@ -543,8 +542,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
-            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues());
-            Assert.False(copyOfAutomaton.TryNormalizeValues());
+            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues(out var _));
+            Assert.False(copyOfAutomaton.TryNormalizeValues(out var _));
             ////Assert.Equal(f, copyOfF); // TODO: fix equality first
         }
 
@@ -566,8 +565,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
-            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues());
-            Assert.False(copyOfAutomaton.TryNormalizeValues());
+            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues(out var _));
+            Assert.False(copyOfAutomaton.TryNormalizeValues(out var _));
             ////Assert.Equal(f, copyOfF); // TODO: fix equality first
         }
 
@@ -584,7 +583,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             // The automaton takes an infinite value on "a", and yet the normalization must work
-            Assert.True(automaton.TryNormalizeValues());
+            Assert.True(automaton.TryNormalizeValues(out automaton));
             StringInferenceTestUtilities.TestValue(automaton, 1, "a");
             StringInferenceTestUtilities.TestValue(automaton, 0, "b");
         }
@@ -603,7 +602,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             // "a" branch infinitely dominates over the "b" branch
-            Assert.True(automaton.TryNormalizeValues());
+            Assert.True(automaton.TryNormalizeValues(out automaton));
             StringInferenceTestUtilities.TestValue(automaton, 1, "a");
             Assert.True(automaton.GetValue("b") < 1e-50);
         }
@@ -629,7 +628,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             AssertStochastic(automaton);
 
-            StringAutomaton.EpsilonClosure startClosure = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(automaton, automaton.Start);
+            StringAutomaton.EpsilonClosure startClosure = new Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(automaton, automaton.Start);
             Assert.Equal(3, startClosure.Size);
             Assert.Equal(0.0, startClosure.EndWeight.LogValue, 1e-8);
 
@@ -769,7 +768,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         private static double GetLogNormalizerByGetValue(StringAutomaton automaton)
         {
             var epsilonAutomaton = new StringAutomaton();
-            epsilonAutomaton.SetToFunction(automaton, (dist, weight, group) => ValueTuple.Create<Option<DiscreteChar>, Weight>(Option.None, weight)); // Convert all the edges to epsilon edges
+            epsilonAutomaton = automaton.ApplyFunction<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>(
+                (dist, weight, group) => ValueTuple.Create<Option<ImmutableDiscreteChar>, Weight>(Option.None, weight)); // Convert all the edges to epsilon edges
             return epsilonAutomaton.GetLogValue(string.Empty); // Now this will be exactly the normalizer
         }
 

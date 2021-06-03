@@ -187,36 +187,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     if (transition1.IsEpsilon && transition2.IsEpsilon)
                     {
-                        transition1.Weight += transition2.Weight;
-                        return transition1;
+                        return transition1.With(weight: transition1.Weight + transition2.Weight);
                     }
                     
                     if (!transition1.IsEpsilon && !transition2.IsEpsilon)
                     {
-                        var newElementDistribution = new TElementDistribution();
+                        TElementDistribution newElementDistribution;
                         if (transition1.Weight.IsInfinity && transition2.Weight.IsInfinity)
                         {
-                            newElementDistribution.SetToSum(
-                                1.0,
-                                transition1.ElementDistribution.Value,
-                                1.0,
-                                transition2.ElementDistribution.Value);
+                            newElementDistribution = transition1.ElementDistribution.Value.Sum(1.0,
+                                transition2.ElementDistribution.Value,
+                                1.0);
                         }
                         else if (transition1.Weight > transition2.Weight)
                         {
-                            newElementDistribution.SetToSum(
-                                1,
-                                transition1.ElementDistribution.Value,
-                                (transition2.Weight / transition1.Weight).Value,
-                                transition2.ElementDistribution.Value);
+                            newElementDistribution = transition1.ElementDistribution.Value.Sum(1.0,
+                                transition2.ElementDistribution.Value,
+                                (transition2.Weight / transition1.Weight).Value);
                         }
                         else
                         {
-                            newElementDistribution.SetToSum(
-                                (transition1.Weight / transition2.Weight).Value,
-                                transition1.ElementDistribution.Value,
-                                1,
-                                transition2.ElementDistribution.Value);
+                            newElementDistribution = transition1.ElementDistribution.Value.Sum((transition1.Weight / transition2.Weight).Value,
+                                transition2.ElementDistribution.Value,
+                                1.0);
                         }
 
                         return new Transition(
@@ -411,7 +404,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             // Self-loop is not copied: it is already present in state1 and is absolutely
                             // compatible: it has the same distribution and weight
-                            transition.Weight *= state2WeightMultiplier;
+                            transition = transition.With(weight: transition.Weight * state2WeightMultiplier);
                             state1.AddTransition(transition);
                         }
                     }

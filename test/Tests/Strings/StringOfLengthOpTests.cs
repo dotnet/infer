@@ -24,7 +24,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             const double Eps = 1e-6;
             
             StringDistribution str1 = StringOfLengthOp.StrAverageConditional(DiscreteChar.Letter(), 10);
-            Assert.Equal(StringDistribution.Repeat(DiscreteChar.Letter(), 10, 10), str1);
+            Assert.Equal(StringDistribution.Repeat(ImmutableDiscreteChar.Letter(), 10, 10), str1);
 
             StringDistribution str2 = StringOfLengthOp.StrAverageConditional(
                 DiscreteChar.PointMass('a'), Discrete.UniformInRange(5, 2, 4));

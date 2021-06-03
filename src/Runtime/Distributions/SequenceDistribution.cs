@@ -46,7 +46,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         Sampleable<TSequence>
         where TSequence : class, IEnumerable<TElement>
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, Sampleable<TElement>, new()
         where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
         where TWeightFunction : WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.IWeightFunction<TWeightFunction>, new()
         where TWeightFunctionFactory : WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.IWeightFunctionFactory<TWeightFunction>, new()
@@ -89,6 +89,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         #endregion
 
         #region Properties
+
+        private static TElementDistribution ElementDistributionFactory =>
+                Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.ElementDistributionFactory;
 
         /// <summary>
         /// Gets or sets the point mass represented by the distribution.
@@ -392,7 +395,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static TThis Any(int minLength = 0, int? maxLength = null)
         {
-            return Repeat(Distribution.CreateUniform<TElementDistribution>(), minLength, maxLength);
+            return Repeat(ElementDistributionFactory.CreateUniform(), minLength, maxLength); ;
         }
 
         /// <summary>
@@ -411,7 +414,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static TThis Repeat(TElement element, int minTimes = 1, int? maxTimes = null, DistributionKind uniformity = DistributionKind.UniformOverValue)
         {
-            var elementDistribution = new TElementDistribution { Point = element };
+            var elementDistribution = ElementDistributionFactory.CreatePointMass(element);
             return Repeat(elementDistribution, minTimes, maxTimes, uniformity);
         }
 
@@ -470,7 +473,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
             }
 
-            allowedElements = Distribution.CreatePartialUniform(allowedElements);
+            allowedElements = allowedElements.CreatePartialUniform();
             double distLogNormalizer = -allowedElements.GetLogAverageOf(allowedElements);
             var weight = uniformity == DistributionKind.UniformOverLengthThenValue
                 ? Weight.One
@@ -880,7 +883,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(newSequenceToWeight, nameof(newSequenceToWeight));
 
-            this.SetWorkspace(newSequenceToWeight.Clone());
+            this.SetWorkspace(newSequenceToWeight);
         }
 
         /// <summary>
@@ -891,7 +894,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(newSequenceToWeight, nameof(newSequenceToWeight));
 
-            SetWorkspace(newSequenceToWeight.Clone());
+            SetWorkspace(newSequenceToWeight);
         }
 
         /// <summary>
@@ -990,14 +993,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The strings supporting this distribution</returns>
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
         {
-            if (tryDeterminize)
+            if (tryDeterminize
+                && sequenceToWeight.UsesAutomatonRepresentation
+                && sequenceToWeight.AsAutomaton() is StringAutomaton sa
+                && sa.Data.IsEnumerable != false)
             {
                 // Determinization of automaton may fail if distribution is not normalized.
-                // But if determinization was not requested, we don't want to pay price of normalization
                 this.EnsureNormalized();
+                if (sequenceToWeight.AsAutomaton().TryDeterminize(out var determinizedAutomaton))
+                    sequenceToWeight = WeightFunctionFactory.FromAutomaton(determinizedAutomaton);
             }
 
-            return this.sequenceToWeight.EnumerateSupport(maxCount, tryDeterminize);
+            return this.sequenceToWeight.EnumerateSupport(maxCount);
         }
 
         /// <summary>
@@ -1011,14 +1018,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>True if successful, false otherwise.</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
         {
-            if (tryDeterminize)
+            if (tryDeterminize
+                && sequenceToWeight.UsesAutomatonRepresentation 
+                && sequenceToWeight.AsAutomaton() is StringAutomaton sa
+                && sa.Data.IsEnumerable != false)
             {
                 // Determinization of automaton may fail if distribution is not normalized.
-                // But if determinization was not requested, we don't want to pay price of normalization
                 this.EnsureNormalized();
+                if (sequenceToWeight.AsAutomaton().TryDeterminize(out var determinizedAutomaton))
+                    sequenceToWeight = WeightFunctionFactory.FromAutomaton(determinizedAutomaton);
             }
 
-            return this.sequenceToWeight.TryEnumerateSupport(maxCount, out result, tryDeterminize);
+            return this.sequenceToWeight.TryEnumerateSupport(maxCount, out result);
         }
 
         /// <summary>
@@ -1284,7 +1295,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             dist1.EnsureNormalized();
             dist2.EnsureNormalized();
 
-            SetWorkspace(dist1.sequenceToWeight.SumLog(logWeight1, logWeight2, dist2.sequenceToWeight));
+            SetWorkspace(dist1.sequenceToWeight.SumLog(logWeight1, dist2.sequenceToWeight, logWeight2));
         }
 
         /// <summary>
@@ -1485,7 +1496,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetToUniform()
         {
-            this.SetToUniformOf(Distribution.CreateUniform<TElementDistribution>());
+            this.SetToUniformOf(ElementDistributionFactory.CreateUniform());
         }
 
         /// <summary>

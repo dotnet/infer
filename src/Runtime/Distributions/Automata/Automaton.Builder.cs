@@ -159,8 +159,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     stateBuilder.SetEndWeight(state.EndWeight);
                     foreach (var transition in state.Transitions)
                     {
-                        var updatedTransition = transition;
-                        updatedTransition.DestinationStateIndex += oldStateCount;
+                        var updatedTransition = transition.With(destinationStateIndex: transition.DestinationStateIndex + oldStateCount);
                         stateBuilder.AddTransition(updatedTransition);
                     }
                 }
@@ -190,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var transition = iterator.Value;
                         if (transition.DestinationStateIndex > stateIndex)
                         {
-                            transition.DestinationStateIndex -= 1;
+                            transition = transition.With(destinationStateIndex: transition.DestinationStateIndex - 1);
                             iterator.Value = transition;
                         }
                         else if (transition.DestinationStateIndex == stateIndex)
@@ -258,14 +257,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     for (var iterator = this[newId].TransitionIterator; iterator.Ok; iterator.Next())
                     {
                         var transition = iterator.Value;
-                        transition.DestinationStateIndex = oldToNewStateIdMapping[transition.DestinationStateIndex];
-                        if (transition.DestinationStateIndex == -1)
+                        var destinationStateIndex = oldToNewStateIdMapping[transition.DestinationStateIndex];
+                        if (destinationStateIndex == -1)
                         {
                             iterator.Remove();
                         }
                         else
                         {
-                            iterator.Value = transition;
+                            iterator.Value = transition.With(destinationStateIndex: destinationStateIndex);
                         }
                     }
                 }
@@ -309,11 +308,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     stateBuilder.SetEndWeight(state.EndWeight);
                     foreach (var transition in state.Transitions)
                     {
-                        var updatedTransition = transition;
-                        updatedTransition.DestinationStateIndex += oldStateCount;
+                        var updatedTransition = transition.With(destinationStateIndex: transition.DestinationStateIndex + oldStateCount);
                         if (group != 0)
                         {
-                            updatedTransition.Group = group;
+                            updatedTransition = updatedTransition.With(group: group);
                         }
 
                         stateBuilder.AddTransition(updatedTransition);
@@ -343,19 +341,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             var transition = iterator.Value;
 
-                            if (group != 0)
-                            {
-                                transition.Group = group;
-                            }
-
-                            if (transition.DestinationStateIndex == secondStartState.Index)
-                            {
-                                transition.DestinationStateIndex = endState.Index;
-                            }
-                            else
-                            {
-                                transition.Weight *= endState.EndWeight;
-                            }
+                            transition = transition.With(
+                                weight: transition.DestinationStateIndex == secondStartState.Index ? (Weight?)null : transition.Weight * endState.EndWeight,
+                                destinationStateIndex: transition.DestinationStateIndex == secondStartState.Index ? (int?)endState.Index : null,
+                                group: group != 0 ? (int?)group : null);
 
                             endState.AddTransition(transition);
                         }
@@ -646,7 +635,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     int group = 0)
                 {
                     return this.AddTransition(
-                        new TElementDistribution {Point = element}, weight, destinationStateIndex, group);
+                        ElementDistributionFactory.CreatePointMass(element), weight, destinationStateIndex, group);
                 }
 
                 /// <summary>

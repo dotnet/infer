@@ -8,7 +8,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// Represents a transducer defined on pairs of strings.
     /// </summary>
     public class StringTransducer :
-        Transducer<string, char, DiscreteChar, StringManipulator, StringAutomaton, StringTransducer>
+        Transducer<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, StringTransducer>
     {
     }
 }

@@ -19,6 +19,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         [Serializable]
         public struct DataContainer : ISerializable
         {
+            internal static readonly DataContainer ZeroData = new DataContainer(
+                0,
+                ReadOnlyArray.Create(new StateData(0, 0, Weight.Zero)),
+                ReadOnlyArray<Transition>.Empty,
+                isEpsilonFree: true,
+                usesGroups: false,
+                isDeterminized: true,
+                isZero: true,
+                isEnumerable: true);
+
             /// <summary>
             /// Stores
             /// </summary>

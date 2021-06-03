@@ -55,14 +55,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     if (double.IsNegativeInfinity(allowedElements.GetLogAverageOf(allowedElements)))
                         return Zero();
-                    var automaton = new TAutomaton();
-                    automaton.SetToConstantLog(logValue, allowedElements);
+                    var automaton = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.ConstantLog(logValue, allowedElements);
                     return FromAutomaton(automaton);
                 }
 
                 public MultiRepresentationWeightFunction<TDictionary> ConstantOnSupportOfLog(double logValue, MultiRepresentationWeightFunction<TDictionary> weightFunction)
                 {
-                    if (weightFunction.TryEnumerateSupport(MaxDictionarySize, out var support, false))
+                    if (weightFunction.TryEnumerateSupportInternal(MaxDictionarySize, out var support, false))
                     {
                         if (!support.Any())
                             return Zero();
@@ -74,8 +73,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return FromDictionary(DictionaryWeightFunction<TDictionary>.FromDistinctWeights(
                                 support.Select(sequence => new KeyValuePair<TSequence, Weight>(sequence, weight))));
                     }
-                    var automaton = new TAutomaton();
-                    automaton.SetToConstantOnSupportOfLog(logValue, weightFunction.AsAutomaton());
+                    var automaton = weightFunction.AsAutomaton().ConstantOnSupportLog(logValue);
                     return FromAutomaton(automaton);
                 }
 
@@ -160,8 +158,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return FromDictionary(DictionaryWeightFunction<TDictionary>.FromDistinctWeights(dictionary));
                     }
 
-                    var automaton = new TAutomaton();
-                    automaton.SetToSum(weightFunctions.Select(wf => wf.AsAutomaton()));
+                    var automaton = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.Sum(weightFunctions.Select(wf => wf.AsAutomaton()));
                     return FromAutomaton(automaton);
                 }
 
@@ -275,9 +272,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     : new Dictionary<int, MultiRepresentationWeightFunction<TDictionary>>(); // TODO: get rid of groups or do something about groups + point mass combo
             }
 
-            public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true) => weightFunction?.EnumerateSupport(maxCount, tryDeterminize) ?? Enumerable.Empty<TSequence>();
+            public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000)
+            {
+                if (weightFunction == null)
+                    return Enumerable.Empty<TSequence>();
 
-            public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
+                if (weightFunction is StringAutomaton && AsAutomaton().TryDeterminize(out var determinizedAutomaton))
+                    weightFunction = determinizedAutomaton;
+
+                return weightFunction.EnumerateSupport(maxCount);
+            }
+
+            public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result) => TryEnumerateSupportInternal(maxCount, out result);
+
+            private bool TryEnumerateSupportInternal(int maxCount, out IEnumerable<TSequence> result, bool determinizeStringAutomata = true)
             {
                 if (weightFunction == null)
                 {
@@ -285,7 +293,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return true;
                 }
                 else
-                    return weightFunction.TryEnumerateSupport(maxCount, out result, tryDeterminize);
+                {
+                    if (determinizeStringAutomata && weightFunction is StringAutomaton && AsAutomaton().TryDeterminize(out var determinizedAutomaton))
+                        weightFunction = determinizedAutomaton;
+
+                    return weightFunction.TryEnumerateSupport(maxCount, out result);
+                }
             }
 
             public MultiRepresentationWeightFunction<TDictionary> NormalizeStructure()
@@ -303,7 +316,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     case TAutomaton automaton:
                         if (!automaton.UsesGroups)
                         {
-                            if (automaton.LogValueOverride == null && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, false, 4 * MaxDictionarySize, true))
+                            if (automaton.LogValueOverride == null && automaton.TryEnumerateSupport(MaxDictionarySize, out var support, 4 * MaxDictionarySize, true))
                             {
                                 var list = support.ToList();
                                 if (list.Count == 0)
@@ -572,15 +585,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return FromAutomaton(resultDictionary.AsAutomaton());
             }
 
-            public MultiRepresentationWeightFunction<TDictionary> Sum(double weight1, double weight2, MultiRepresentationWeightFunction<TDictionary> weightFunction)
+            public MultiRepresentationWeightFunction<TDictionary> Sum(double weight1, MultiRepresentationWeightFunction<TDictionary> weightFunction, double weight2)
             {
                 Argument.CheckIfInRange(weight1 >= 0, nameof(weight1), "Negative weights are not supported.");
                 Argument.CheckIfInRange(weight2 >= 0, nameof(weight2), "Negative weights are not supported.");
 
-                return SumLog(Math.Log(weight1), Math.Log(weight2), weightFunction);
+                return SumLog(Math.Log(weight1), weightFunction, Math.Log(weight2));
             }
 
-            public MultiRepresentationWeightFunction<TDictionary> SumLog(double logWeight1, double logWeight2, MultiRepresentationWeightFunction<TDictionary> weightFunction)
+            public MultiRepresentationWeightFunction<TDictionary> SumLog(double logWeight1, MultiRepresentationWeightFunction<TDictionary> weightFunction, double logWeight2)
             {
                 if (weightFunction.IsCanonicZero() || double.IsNegativeInfinity(logWeight2))
                     return ScaleLog(logWeight1);
@@ -588,15 +601,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return weightFunction.ScaleLog(logWeight2);
 
                 if (weightFunction.weightFunction is TAutomaton otherAutomaton)
-                    return FromAutomaton(AsAutomaton().SumLog(logWeight1, logWeight2, otherAutomaton));
+                    return FromAutomaton(AsAutomaton().SumLog(logWeight1, otherAutomaton, logWeight2));
                 if (this.weightFunction is TAutomaton thisAutomaton)
-                    return FromAutomaton(thisAutomaton.SumLog(logWeight1, logWeight2, weightFunction.AsAutomaton()));
+                    return FromAutomaton(thisAutomaton.SumLog(logWeight1, weightFunction.AsAutomaton(), logWeight2));
 
                 // Now both weight functions are either point masses or dictionaries
                 var thisDictionary = this.weightFunction as TDictionary ?? DictionaryWeightFunction<TDictionary>.FromPoint(((PointMassWeightFunction)this.weightFunction).Point);
                 var otherDictionary = weightFunction.weightFunction as TDictionary ?? DictionaryWeightFunction<TDictionary>.FromPoint(((PointMassWeightFunction)weightFunction.weightFunction).Point);
 
-                var resultDictionary = thisDictionary.SumLog(logWeight1, logWeight2, otherDictionary);
+                var resultDictionary = thisDictionary.SumLog(logWeight1, otherDictionary, logWeight2);
 
                 if (resultDictionary.Dictionary.Count <= MaxDictionarySize)
                     return FromDictionary(resultDictionary);
