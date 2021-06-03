@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="StringOfMinMaxLengthOp"]/message_doc[@name="StrAverageConditional(DiscreteChar, int, int)"]/*'/>
         public static StringDistribution StrAverageConditional(DiscreteChar allowedChars, int minLength, int maxLength)
         {
-            return StringDistribution.Repeat(allowedChars, minLength, maxLength);
+            return StringDistribution.Repeat(allowedChars.WrappedDistribution, minLength, maxLength);
         }
 
         #endregion

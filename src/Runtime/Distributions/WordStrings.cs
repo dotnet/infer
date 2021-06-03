@@ -18,13 +18,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// A uniform distribution over all non-word characters.
         /// </summary>
-        private static readonly DiscreteChar NonWordCharacter = DiscreteChar.InRanges(DiscreteChar.LetterCharacterRanges + "09__{{}}''").Complement();
+        private static readonly ImmutableDiscreteChar NonWordCharacter = ImmutableDiscreteChar.InRanges(DiscreteChar.LetterCharacterRanges + "09__{{}}''").Complement();
 
         /// <summary>
         /// Creates a uniform distribution over either the empty string or any string ending with a non-word character.
         /// </summary>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution WordPrefix() => WordPrefix(DiscreteChar.Any());
+        public static StringDistribution WordPrefix() => WordPrefix(ImmutableDiscreteChar.Any());
 
         /// <summary>
         /// Creates a uniform distribution over either the empty string or any string ending with a non-word character.
@@ -32,9 +32,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="allowedChars">The distribution representing allowed characters.</param>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution WordPrefix(DiscreteChar allowedChars) => EmptyOrEndsWith(allowedChars, NonWordCharacter);
+        public static StringDistribution WordPrefix(ImmutableDiscreteChar allowedChars) => EmptyOrEndsWith(allowedChars, NonWordCharacter);
 
-        public static StringDistribution EmptyOrEndsWith(DiscreteChar charsInMainString, DiscreteChar endsWith)
+        public static StringDistribution EmptyOrEndsWith(ImmutableDiscreteChar charsInMainString, ImmutableDiscreteChar endsWith)
         {
             // TODO: fix equality and then use factory methods to create this
             var result = new StringAutomaton.Builder();
@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Creates a uniform distribution over either the empty string or any string starting with a non-word character.
         /// </summary>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution WordSuffix() => WordSuffix(DiscreteChar.Any());
+        public static StringDistribution WordSuffix() => WordSuffix(ImmutableDiscreteChar.Any());
 
         /// <summary>
         /// Creates a uniform distribution over either the empty string or any string starting with a non-word character.
@@ -59,9 +59,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="allowedChars">The distribution representing allowed characters.</param>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution WordSuffix(DiscreteChar allowedChars) => EmptyOrStartsWith(allowedChars, NonWordCharacter);
+        public static StringDistribution WordSuffix(ImmutableDiscreteChar allowedChars) => EmptyOrStartsWith(allowedChars, NonWordCharacter);
 
-        public static StringDistribution EmptyOrStartsWith(DiscreteChar charsInMainString, DiscreteChar startsWith)
+        public static StringDistribution EmptyOrStartsWith(ImmutableDiscreteChar charsInMainString, ImmutableDiscreteChar startsWith)
         {
             // TODO: fix equality and then use factory methods to create this
             var result = new StringAutomaton.Builder();
@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Creates a uniform distribution over any string starting and ending with a non-word character (possibly of length 1).
         /// </summary>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution WordMiddle() => WordMiddle(DiscreteChar.Any());
+        public static StringDistribution WordMiddle() => WordMiddle(ImmutableDiscreteChar.Any());
 
         /// <summary>
         /// Creates a uniform distribution over any string starting and ending with a non-word character.
@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="allowedChars">The distribution representing allowed characters.</param>
         /// <param name="nonWordCharacter">The word separating characters.</param>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution WordMiddle(DiscreteChar allowedChars, DiscreteChar? nonWordCharacter = null)
+        public static StringDistribution WordMiddle(ImmutableDiscreteChar allowedChars, ImmutableDiscreteChar? nonWordCharacter = null)
         {
             // TODO: fix equality and then use factory methods to create this
             nonWordCharacter = nonWordCharacter ?? NonWordCharacter;
@@ -112,7 +112,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="minLength">The minimum allowed string length.</param>
         /// <param name="maxLength">The maximum allowed string length.</param>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution WordMiddle(int minLength, int maxLength) => WordMiddle(minLength, maxLength, DiscreteChar.Any());
+        public static StringDistribution WordMiddle(int minLength, int maxLength) => WordMiddle(minLength, maxLength, ImmutableDiscreteChar.Any());
 
         /// <summary>
         /// Creates a uniform distribution over any string starting and ending with a non-word character,
@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="maxLength">The maximum allowed string length.</param>
         /// <param name="allowedChars">The distribution representing allowed characters.</param>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution WordMiddle(int minLength, int maxLength, DiscreteChar allowedChars)
+        public static StringDistribution WordMiddle(int minLength, int maxLength, ImmutableDiscreteChar allowedChars)
         {
             if (maxLength < minLength)
             {

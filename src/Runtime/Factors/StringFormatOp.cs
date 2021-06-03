@@ -58,7 +58,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             // More general behavior by default
             RequirePlaceholderForEveryArgument = false;
 
-            DiscreteChar noBraces = DiscreteChar.OneOf('{', '}').Complement();
+            var noBraces = ImmutableDiscreteChar.OneOf('{', '}').Complement();
             DisallowBracesAutomaton = StringAutomaton.Constant(1.0, noBraces);
             DisallowBracesTransducer = StringTransducer.Copy(noBraces);
 
@@ -148,7 +148,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             StringDistribution toStr = StrAverageConditionalImpl(format, allowedArgs, argNames, withGroups: true, noValidation: false);
             if (makeEpsilonFree)
             {
-                toStr.GetWorkspaceOrPoint().MakeEpsilonFree();
+                var weightFunction = toStr.GetWeightFunction();
+                if (weightFunction.UsesAutomatonRepresentation)
+                    toStr.SetWeightFunction(weightFunction.AsAutomaton().GetEpsilonClosure());
             }
             return toStr;
         }
@@ -205,8 +207,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                     else
                     {
-                        group.GetWorkspaceOrPoint().TryNormalizeValues();
+                        var weightFunction = group.GetWeightFunction();
+                        if (weightFunction.UsesAutomatonRepresentation && weightFunction.AsAutomaton().TryNormalizeValues(out var normalizedAutomaton, out var _))
+                            group.SetWeightFunction(normalizedAutomaton);
                     }
+
                     result[i] = group;
                 }
             }
@@ -303,22 +308,22 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
 
                 // Append the contents of 'str' preceeding the current argument
-                result.AppendInPlace(str.Point.Substring(prevArgumentPos + prevArgumentLength, curArgumentPos - prevArgumentPos - prevArgumentLength));
+                result = result.Append(str.Point.Substring(prevArgumentPos + prevArgumentLength, curArgumentPos - prevArgumentPos - prevArgumentLength));
 
                 // The format may have included either the text ot the placeholder
                 string argName = "{" + argNames[curArgumentIndex] + "}";
                 if (RequirePlaceholderForEveryArgument)
                 {
-                    result.AppendInPlace(StringAutomaton.ConstantOn(1.0, argName));
+                    result = result.Append(StringAutomaton.ConstantOn(1.0, argName));
                 }
                 else
                 {
-                    result.AppendInPlace(StringAutomaton.ConstantOn(1.0, argName, allowedArgPoints[curArgumentIndex]));
+                    result = result.Append(StringAutomaton.ConstantOn(1.0, argName, allowedArgPoints[curArgumentIndex]));
                 }   
             }
 
             // Append the rest of 'str'
-            result.AppendInPlace(str.Point.Substring(curArgumentPos + curArgumentLength, str.Point.Length - curArgumentPos - curArgumentLength));
+            result = result.Append(str.Point.Substring(curArgumentPos + curArgumentLength, str.Point.Length - curArgumentPos - curArgumentLength));
 
             resultDist = StringDistribution.FromWorkspace(result);
             return true;
@@ -496,9 +501,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             for (int i = 0; i < argNames.Count; ++i)
             {
                 StringAutomaton validatingAutomaton = GetArgumentValidatingAutomaton(i, argNames);
-                result.SetToProduct(i == 0 ? format : result, validatingAutomaton);
-                result.ClearGroups();
-                result.TrySetToConstantOnSupportOfLog(0.0, result);
+                result = (i == 0 ? format : result)
+                    .Product(validatingAutomaton)
+                    .WithGroupsClear();
+
+                result.TryGetConstantOnSupportLog(0.0, out result);
             }
 
             return result;
@@ -534,18 +541,17 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 // Skips placeholders for every argument except the current one
                 StringAutomaton skipOtherArgs = StringAutomaton.ConstantOnElement(1.0, '{');
-                skipOtherArgs.AppendInPlace(StringAutomaton.ConstantOn(1.0, argNames.Where((arg, index) => index != argToValidateIndex)));
-                skipOtherArgs.AppendInPlace(StringAutomaton.ConstantOnElement(1.0, '}'));
+                skipOtherArgs = skipOtherArgs.Append(StringAutomaton.ConstantOn(1.0, argNames.Where((arg, index) => index != argToValidateIndex)));
+                skipOtherArgs = skipOtherArgs.Append(StringAutomaton.ConstantOnElement(1.0, '}'));
 
                 // Accepts placeholders for arguments other than current, with arbitrary intermediate text
-                checkBracesForOtherArgs.AppendInPlace(skipOtherArgs);
+                checkBracesForOtherArgs = checkBracesForOtherArgs.Append(skipOtherArgs);
                 checkBracesForOtherArgs = StringAutomaton.Repeat(checkBracesForOtherArgs, minTimes: 0);
-                checkBracesForOtherArgs.AppendInPlace(DisallowBracesAutomaton);
+                checkBracesForOtherArgs = checkBracesForOtherArgs.Append(DisallowBracesAutomaton);
             }
 
             // Checks the placeholder for the current argument, then skips placeholders for other arguments
-            StringAutomaton validateArgumentThenOtherArguments = checkBracesForCurrentArg.Clone();
-            validateArgumentThenOtherArguments.AppendInPlace(checkBracesForOtherArgs);
+            StringAutomaton validateArgumentThenOtherArguments = checkBracesForCurrentArg.Append(checkBracesForOtherArgs);
             if (!RequirePlaceholderForEveryArgument)
             {
                 // Make this block optional
@@ -555,10 +561,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
 
             // Accepts placeholders for arguments other then current, then for the current argument, then again other placeholders
-            result = checkBracesForOtherArgs.Clone();
-            result.AppendInPlace(validateArgumentThenOtherArguments);
+            result = checkBracesForOtherArgs.Append(validateArgumentThenOtherArguments);
 
-            result.TryDeterminize();
+            result.TryDeterminize(out result);
             ArgsToValidatingAutomaton[argListKey] = result;
 
             return result;

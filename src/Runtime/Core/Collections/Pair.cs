@@ -31,12 +31,12 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <summary>
         /// Gets or sets the first element of the pair.
         /// </summary>
-        public T1 First { get; set; }
+        public T1 First { get; private set; }
 
         /// <summary>
         /// Gets or sets the second element of the pair.
         /// </summary>
-        public T2 Second { get; set; }
+        public T2 Second { get; private set; }
 
         /// <summary>
         /// Gets the string representation of this pair.

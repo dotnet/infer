@@ -469,7 +469,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private static StringDistribution NamePart() => StringDistribution.Char(DiscreteChar.Upper()) + StringDistribution.Lower(minLength: 0);
 
-        private static StringDistribution WordString() => StringDistribution.OneOrMore(DiscreteChar.InRanges("azAZ09  __''\t\r"));
+        private static StringDistribution WordString() => StringDistribution.OneOrMore(ImmutableDiscreteChar.InRanges("azAZ09  __''\t\r"));
 
         private static StringDistribution TemplateArgString() =>
             StringDistribution.Char('{') + StringDistribution.Char(DiscreteChar.Digit()) + StringDistribution.Char('}');

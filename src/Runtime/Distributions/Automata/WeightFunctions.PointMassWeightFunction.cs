@@ -28,6 +28,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             private static TSequenceManipulator SequenceManipulator =>
                     Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.SequenceManipulator;
 
+            private static TElementDistribution ElementDistributionFactory =>
+                    Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.ElementDistributionFactory;
+
             private static TSequence EmptySequence = SequenceManipulator.ToSequence(Enumerable.Empty<TElement>());
 
             [DataMember]
@@ -65,12 +68,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public TAutomaton AsAutomaton() => Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.ConstantOn(1.0, point);
 
-            public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
+            public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000)
             {
                 return new List<TSequence>(new[] { point });
             }
 
-            public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
+            public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result)
             {
                 result = new List<TSequence>(new[] { point });
                 return true;
@@ -102,7 +105,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public double GetLogNormalizer() => 0;
 
             public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() =>
-                new List<Tuple<List<TElementDistribution>, double>> { new Tuple<List<TElementDistribution>, double>(Point.Select(el => new TElementDistribution { Point = el }).ToList(), 0) };
+                new List<Tuple<List<TElementDistribution>, double>> { new Tuple<List<TElementDistribution>, double>(Point.Select(el => ElementDistributionFactory.CreatePointMass(el)).ToList(), 0) };
 
             public bool IsZero() => false;
 
@@ -129,12 +132,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
 
-            public PointMassWeightFunction Sum(double weight1, double weight2, PointMassWeightFunction weightFunction)
+            public PointMassWeightFunction Sum(double weight1, PointMassWeightFunction weightFunction, double weight2)
             {
                 throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
 
-            public PointMassWeightFunction SumLog(double logWeight1, double logWeight2, PointMassWeightFunction weightFunction)
+            public PointMassWeightFunction SumLog(double logWeight1, PointMassWeightFunction weightFunction, double logWeight2)
             {
                 throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
@@ -172,7 +175,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var sb = new StringBuilder();
                 foreach (var element in point)
-                    appendElement(new TElementDistribution() { Point = element }, sb);
+                    appendElement(ElementDistributionFactory.CreatePointMass(element), sb);
 
                 return sb.ToString();
             }

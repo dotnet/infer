@@ -31,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GetOutgoingTransitionsForDeterminization1()
         {
             var builder = new StringAutomaton.Builder();
-            builder.Start.AddTransition(DiscreteChar.Uniform(), Weight.FromValue(2));
+            builder.Start.AddTransition(ImmutableDiscreteChar.Uniform(), Weight.FromValue(2));
 
             var wrapper = new StringAutomatonWrapper(builder);
             
@@ -40,7 +40,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var expectedOutgoingTransitions = new[]
             {
                 ValueTuple.Create(
-                    DiscreteChar.Uniform(),
+                    ImmutableDiscreteChar.Uniform(),
                     Weight.FromValue(6),
                     new[] {(1, Weight.FromValue(1))})
             };
@@ -57,8 +57,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GetOutgoingTransitionsForDeterminization2()
         {
             var builder = new StringAutomaton.Builder();
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(2));
-            builder.Start.AddTransition(DiscreteChar.UniformInRanges('a', 'z', 'A', 'Z'), Weight.FromValue(3));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(2));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRanges('a', 'z', 'A', 'Z'), Weight.FromValue(3));
 
             var wrapper = new StringAutomatonWrapper(builder);
             
@@ -67,11 +67,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             var expectedOutgoingTransitions = new[]
             {
                 ValueTuple.Create(
-                    DiscreteChar.UniformInRange('A', 'Z'),
+                    ImmutableDiscreteChar.UniformInRange('A', 'Z'),
                     Weight.FromValue(7.5),
                     new[] {(2, Weight.FromValue(1))}),
                 ValueTuple.Create(
-                    DiscreteChar.UniformInRange('a', 'z'),
+                    ImmutableDiscreteChar.UniformInRange('a', 'z'),
                     Weight.FromValue(10),
                     new[] {(1, Weight.FromValue(1)), (2, Weight.FromValue(0.75))}),
             };
@@ -89,10 +89,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var builder = new StringAutomaton.Builder();
 
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'b'), Weight.FromValue(2));
-            builder.Start.AddTransition(DiscreteChar.UniformInRanges('b', 'd'), Weight.FromValue(3));
-            builder.Start.AddTransition(DiscreteChar.UniformInRanges('e', 'g'), Weight.FromValue(4));
-            builder.Start.AddTransition(DiscreteChar.UniformInRanges(char.MinValue, 'a'), Weight.FromValue(5));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('a', 'b'), Weight.FromValue(2));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRanges('b', 'd'), Weight.FromValue(3));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRanges('e', 'g'), Weight.FromValue(4));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRanges(char.MinValue, 'a'), Weight.FromValue(5));
 
             var wrapper = new StringAutomatonWrapper(builder);
 
@@ -101,11 +101,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             var expectedOutgoingTransitions = new[]
             {
                 ValueTuple.Create(
-                    DiscreteChar.UniformInRange(char.MinValue, (char) ('a' - 1)),
+                    ImmutableDiscreteChar.UniformInRange(char.MinValue, (char) ('a' - 1)),
                     Weight.FromValue(6 * 5.0 * 97.0 / 98.0),
                     new[] {(4, Weight.FromValue(1))}),
                 ValueTuple.Create(
-                    DiscreteChar.PointMass('a'),
+                    ImmutableDiscreteChar.PointMass('a'),
                     Weight.FromValue(6),
                     new[]
                     {
@@ -113,15 +113,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                         (4, Weight.FromValue(5.0 / 98.0))
                     }),
                 ValueTuple.Create(
-                    DiscreteChar.PointMass('b'),
+                    ImmutableDiscreteChar.PointMass('b'),
                     Weight.FromValue(6),
                     new[] {(1, Weight.FromValue(1)), (2, Weight.FromValue(1))}),
                 ValueTuple.Create(
-                    DiscreteChar.UniformInRange('c', 'd'),
+                    ImmutableDiscreteChar.UniformInRange('c', 'd'),
                     Weight.FromValue(6 * 3 *  (2.0 / 3)),
                     new[] {(2, Weight.FromValue(1))}),
                 ValueTuple.Create(
-                    DiscreteChar.UniformInRange('e', 'g'),
+                    ImmutableDiscreteChar.UniformInRange('e', 'g'),
                     Weight.FromValue(6 * 4),
                     new[] {(3, Weight.FromValue(1.0))}),
             };
@@ -138,9 +138,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GetOutgoingTransitionsForDeterminization4()
         {
             var builder = new StringAutomaton.Builder();
-            builder.Start.AddTransition(DiscreteChar.UniformInRange(char.MinValue, char.MaxValue), Weight.FromValue(2));
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('a', char.MaxValue), Weight.FromValue(3));
-            builder.Start.AddTransition(DiscreteChar.UniformInRanges('z', char.MaxValue), Weight.FromValue(4));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange(char.MinValue, char.MaxValue), Weight.FromValue(2));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('a', char.MaxValue), Weight.FromValue(3));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRanges('z', char.MaxValue), Weight.FromValue(4));
 
             var wrapper = new StringAutomatonWrapper(builder);
 
@@ -166,11 +166,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             var expectedOutgoingTransitions = new[]
             {
                 ValueTuple.Create(
-                    DiscreteChar.UniformInRange(char.MinValue, (char)('a' - 1)),
+                    ImmutableDiscreteChar.UniformInRange(char.MinValue, (char)('a' - 1)),
                     Weight.FromValue(transition1Segment1Weight),
                     new[] {(1, Weight.FromValue(1))}),
                 ValueTuple.Create(
-                    DiscreteChar.UniformInRange('a', (char)('z' - 1)),
+                    ImmutableDiscreteChar.UniformInRange('a', (char)('z' - 1)),
                     Weight.FromValue(maxSegment2Weight),
                     new[]
                     {
@@ -178,7 +178,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         (2, Weight.FromValue(transition2Segment2Weight / maxSegment2Weight)),
                     }),
                 ValueTuple.Create(
-                    DiscreteChar.UniformInRange('z', char.MaxValue),
+                    ImmutableDiscreteChar.UniformInRange('z', char.MaxValue),
                     Weight.FromValue(maxSegment3Weight),
                     new[]
                     {
@@ -318,7 +318,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// A comparer for transition information that allows for some tolerance when comparing weights.
         /// </summary>
         private class TransitionInfoEqualityComparer :
-            EqualityComparerBase<ValueTuple<DiscreteChar, Weight, (int, Weight)[]>, TransitionInfoEqualityComparer>
+            EqualityComparerBase<ValueTuple<ImmutableDiscreteChar, Weight, (int, Weight)[]>, TransitionInfoEqualityComparer>
         {
             /// <summary>
             /// Checks whether two objects are equal.
@@ -330,8 +330,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             /// <see langword="false"/> otherwise.
             /// </returns>
             public override bool Equals(
-                ValueTuple<DiscreteChar, Weight, (int, Weight)[]> x,
-                ValueTuple<DiscreteChar, Weight, (int, Weight)[]> y)
+                ValueTuple<ImmutableDiscreteChar, Weight, (int, Weight)[]> x,
+                ValueTuple<ImmutableDiscreteChar, Weight, (int, Weight)[]> y)
             {
                 return
                     object.Equals(x.Item1, y.Item1) &&
@@ -358,7 +358,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             /// <param name="sourceState">The source state.</param>
             /// <returns>The produced transitions.</returns>
             /// <remarks>See the doc of the original method.</remarks>
-            public IEnumerable<(DiscreteChar, Weight, (int, Weight)[])>
+            public IEnumerable<(ImmutableDiscreteChar, Weight, (int, Weight)[])>
                 GetOutgoingTransitionsForDeterminization(int sourceState, Weight sourceWeight)
             {
                 var weightedStateSetBuilder = Determinization.WeightedStateSetBuilder.Create();
