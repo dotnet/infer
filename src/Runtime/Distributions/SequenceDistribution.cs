@@ -180,7 +180,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(sequenceToWeight, nameof(sequenceToWeight));
 
-            return FromWorkspace(sequenceToWeight.Clone());
+            return FromWorkspace(sequenceToWeight);
         }
 
         /// <summary>
