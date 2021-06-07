@@ -45,10 +45,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// which can be used with no element only.
     /// </description></item>
     /// </list>
+    /// 
+    /// This class is immutable and all implementations must preserve this property - some algorithms used
+    /// to implement this class rely on it.
     /// </remarks>
     /// <typeparam name="TSequence">The type of a sequence.</typeparam>
-    /// <typeparam name="TElement">The type of a sequence element.</typeparam>
-    /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+    /// <typeparam name="TElement">The immutable type of a sequence element.</typeparam>
+    /// <typeparam name="TElementDistribution">The immutable type of a distribution over sequence elements.</typeparam>
     /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
     /// <typeparam name="TThis">The type of a concrete automaton class.</typeparam>
     [Quality(QualityBand.Experimental)]
@@ -1138,7 +1141,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <summary>
         /// Checks whether the automaton is a canonic representation of a constant,
-        /// as produced by <see cref="CreateConstantLog(double)"/>.
+        /// as produced by <see cref="ConstantLog(double)"/>.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if the automaton is a canonic representation of the constant,
@@ -1615,57 +1618,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public TThis ScaleLog(double logScale)
         {
             return SumLog(logScale, Zero(), double.NegativeInfinity);
-        }
-
-        /// <summary>
-        /// Creates an automaton which maps every sequence to a given value.
-        /// </summary>
-        /// <param name="value">The value to map every sequence to.</param>
-        /// <returns>The created automaton.</returns>
-        public TThis CreateConstant(double value)
-        {
-            return CreateConstant(value, ElementDistributionFactory.CreateUniform());
-        }
-
-        /// <summary>
-        /// Creates an automaton which maps every allowed sequence to
-        /// a given value and maps all other sequences to zero.
-        /// A sequence is allowed if all its elements have non-zero probability under a given distribution.
-        /// </summary>
-        /// <param name="value">The value to map every sequence to.</param>
-        /// <param name="allowedElements">The distribution representing allowed sequence elements.</param>
-        /// <returns>The created automaton.</returns>
-        public TThis CreateConstant(double value, TElementDistribution allowedElements)
-        {
-            if (value < 0)
-            {
-                throw new NotImplementedException("Negative values are not yet supported.");
-            }
-
-            return CreateConstantLog(Math.Log(value), allowedElements);
-        }
-
-        /// <summary>
-        /// Creates an automaton which maps every sequence to a given value.
-        /// </summary>
-        /// <param name="logValue">The logarithm of the value to map every sequence to.</param>
-        /// <returns>The created automaton.</returns>
-        public TThis CreateConstantLog(double logValue)
-        {
-            return CreateConstantLog(logValue, ElementDistributionFactory.CreateUniform());
-        }
-
-        /// <summary>
-        /// Creates an automaton which maps every allowed sequence to
-        /// a given value and maps all other sequences to zero.
-        /// A sequence is allowed if all its elements have non-zero probability under a given distribution.
-        /// </summary>
-        /// <param name="logValue">The logarithm of the value to map every sequence to.</param>
-        /// <param name="allowedElements">The distribution representing allowed sequence elements.</param>
-        /// <returns>The created automaton.</returns>
-        public TThis CreateConstantLog(double logValue, TElementDistribution allowedElements)
-        {
-            return ConstantLog(logValue, allowedElements);
         }
 
         /// <summary>

@@ -232,7 +232,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Creates a copy of the weight function.
             /// </summary>
             /// <returns>The created copy.</returns>
-            TThis Clone(); // TODO: remove when automata become immutable
+            TThis Clone();
         }
 
         /// <summary>

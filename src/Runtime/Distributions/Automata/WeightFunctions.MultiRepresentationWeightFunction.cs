@@ -359,7 +359,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         break;
                 }
 
-                return Clone(); // TODO: replace with `this` after making automata immutable
+                return this;
             }
 
             public MultiRepresentationWeightFunction<TDictionary> Repeat(int minTimes = 1, int? maxTimes = null)
@@ -564,9 +564,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public MultiRepresentationWeightFunction<TDictionary> Sum(MultiRepresentationWeightFunction<TDictionary> weightFunction)
             {
                 if (weightFunction.IsCanonicZero())
-                    return Clone(); // TODO: return `this` when automata become immutable
+                    return this;
                 if (IsCanonicZero())
-                    return weightFunction.Clone(); // TODO: return weightFunction when automata become immutable
+                    return weightFunction;
 
                 if (weightFunction.weightFunction is TAutomaton otherAutomaton)
                     return FromAutomaton(AsAutomaton().Sum(otherAutomaton));
@@ -686,14 +686,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromAutomaton(AsAutomaton().Product(weightFunction.AsAutomaton()));
             }
 
-            public MultiRepresentationWeightFunction<TDictionary> Clone()
-            {
-                // TODO: remove when automata become immutable
-                if (weightFunction is TAutomaton automaton)
-                    return FromAutomaton(automaton.Clone());
-
-                return this;
-            }
+            public MultiRepresentationWeightFunction<TDictionary> Clone() => this;
 
             public bool Equals(MultiRepresentationWeightFunction<TDictionary> other)
             {
