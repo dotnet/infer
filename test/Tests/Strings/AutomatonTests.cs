@@ -1427,7 +1427,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 3.0, "adc", "adddc", "ac");
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "adb", "ad", string.Empty);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1451,7 +1451,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 3.0, "adc", "adddc", "ac");
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "adb", "ad", string.Empty);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1474,7 +1474,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 5.0, "adc");
                 StringInferenceTestUtilities.TestValue(automaton, 3.0, "addc", "adddc", "ac");
             
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1501,7 +1501,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 5.0, "xxaa", "xa", "a");
                 StringInferenceTestUtilities.TestValue(automaton, 6.0, "xx", "x", string.Empty);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1536,7 +1536,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 StringInferenceTestUtilities.TestValue(automaton, (1 << AcceptedSequence.Length) + AdditionalSequenceCount, AcceptedSequence);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1566,7 +1566,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 528.0, "aaa");
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "a", "aa", "aaaa", string.Empty);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1599,7 +1599,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, (24.0 / (26.0 * 26.0)) + (1.0 / 8.0) + (7.0 / 192.0), "aB");
                 StringInferenceTestUtilities.TestValue(automaton, (120.0 / (26.0 * 26.0)) + (72.0 / (26.0 * 26.0 * 26.0)) + (5.0 / 144.0), "aBX");
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1645,7 +1645,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 0.2, "abb");
                 StringInferenceTestUtilities.TestValue(automaton, 0.4 + 0.4, "c");
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1670,7 +1670,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 2.0, "ab", "b", string.Empty);
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "a", "aabc", "aabd", "ba", "bc");
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1687,7 +1687,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder.Start.AddTransition(ImmutableDiscreteChar.Any(), Weight.FromLogValue(1e5));
             builder.Start.AddTransition(ImmutableDiscreteChar.Any(), Weight.FromLogValue(1e5), 1);
             var automaton = builder.GetAutomaton();
-            automaton.Simplify();
+            automaton.Simplify(out automaton);
         }
 
         #endregion

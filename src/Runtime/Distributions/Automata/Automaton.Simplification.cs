@@ -19,23 +19,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Attempts to simplify the structure of the automaton, reducing the number of states and transitions.
         /// </summary>
-        public bool Simplify()
+        /// <param name="result">Result automaton. Simplified automaton, if the operation was successful, current automaton otherwise.</param>
+        /// <returns><see langword="true"/> if the simplification was successful, <see langword="false"/> otherwise.</returns>
+        public bool Simplify(out TThis result)
         {
             var builder = Builder.FromAutomaton(this);
             var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             if (simplification.Simplify())
             {
-                this.Data = builder.GetData();
+                result = builder.GetAutomaton();
                 return true;
             }
 
+            result = (TThis)this;
             return false;
         }
 
         /// <summary>
         /// Optimizes the automaton by removing all states which can't reach end states.
         /// </summary>
-        public bool RemoveDeadStates()
+        /// <param name="result">Result automaton. Simplified automaton, if the operation was successful, current automaton otherwise.</param>
+        /// <returns><see langword="true"/> if the simplification was successful, <see langword="false"/> otherwise.</returns>
+        public bool RemoveDeadStates(out TThis result)
         {
             var builder = Builder.FromAutomaton(this);
             var initialStatesCount = builder.StatesCount;
@@ -43,10 +48,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             simplification.RemoveDeadStates();
             if (builder.StatesCount != initialStatesCount)
             {
-                this.Data = builder.GetData();
+                result = builder.GetAutomaton();
                 return true;
             }
 
+            result = (TThis)this;
             return false;
         }
 
