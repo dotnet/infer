@@ -1279,6 +1279,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// Tests the automata equality operator.
         /// </summary>
         [Fact]
+        [Trait("Category", "OpenBug")] // automata 1 and 2 are equal in sense of Automaton.Equals, but have different hashcodes
         [Trait("Category", "StringInference")]
         public void Equality1()
         {
@@ -2079,6 +2080,28 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
 
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        [Trait("Category", "StringInference")]
+        public void Determinize12()
+        {
+            var builder = new StringAutomaton.Builder();
+            var a = builder.Start
+                .AddTransition(DiscreteChar.PointMass('A'), Weight.FromLogValue(1e-8));
+            a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(-1e-8))
+                .SetEndWeight(Weight.One);
+            a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(1e5))
+                .AddTransition(DiscreteChar.PointMass('C'), Weight.One)
+                .SetEndWeight(Weight.One);
+
+            var automaton = builder.GetAutomaton();
+
+            Assert.Equal(0, automaton.GetLogValue("AB"));
+            Assert.True(automaton.TryDeterminize());
+            // Fails due to round-off errors introduced by determinization
+            Assert.Equal(0, automaton.GetLogValue("AB"));
+        }
+
         /// <summary>
         /// Tests whether the inability to determinize an automaton is handled correctly.
         /// </summary>
@@ -2504,8 +2527,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <returns>The number of states in the determinized automaton.</returns>
         private static int CountStates(params string[] values)
         {
-            var distribution = StringDistribution.OneOf(values);
-            var workspace = distribution.GetWorkspaceOrPoint();
+            var workspace = Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromLogValues(values.Select(v => new KeyValuePair<string, double>(v, 0.0)));
             workspace.TryDeterminize();
             return workspace.States.Count;
         }

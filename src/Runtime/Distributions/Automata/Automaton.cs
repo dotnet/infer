@@ -54,7 +54,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Quality(QualityBand.Experimental)]
     [DataContract]
     [Serializable]
-    public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
+    public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> :
+        WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>.IWeightFunction<TThis>,
+        SettableTo<TThis>
         where TSequence : class, IEnumerable<TElement>
         where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
@@ -640,15 +642,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public static TThis FromValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceToValue)
         {
-            Argument.CheckIfNotNull(sequenceToValue, "sequenceToValue");
+            Argument.CheckIfNotNull(sequenceToValue, nameof(sequenceToValue));
 
-            TThis result = Zero();
-            foreach (KeyValuePair<TSequence, double> sequenceWithValue in sequenceToValue)
-            {
-                result = Sum(result, ConstantOn(sequenceWithValue.Value, sequenceWithValue.Key));
-            }
+            return Sum(sequenceToValue.Select(kvp => ConstantOn(kvp.Value, kvp.Key)));
+        }
 
-            return result;
+        /// <summary>
+        /// Creates an automaton which has given values on given sequences and is zero everywhere else.
+        /// </summary>
+        /// <param name="sequenceToLogValue">The collection of pairs of a sequence and the logarithm of the automaton value on that sequence.</param>
+        /// <remarks>
+        /// If the same sequence is presented in the collection of pairs multiple times,
+        /// the value of the automaton on that sequence will be equal to the sum of the values in the collection.
+        /// </remarks>
+        /// <returns>The created automaton.</returns>
+        public static TThis FromLogValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceToLogValue)
+        {
+            Argument.CheckIfNotNull(sequenceToLogValue, nameof(sequenceToLogValue));
+
+            return Sum(sequenceToLogValue.Select(kvp => ConstantOnLog(kvp.Value, kvp.Key)));
         }
 
         /// <summary>
@@ -1348,9 +1360,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Computes the product of the current automaton and a given one.
         /// </summary>
         /// <param name="automaton">The automaton to compute the product with.</param>
+        /// <returns>The computed product.</returns>
+        public TThis Product(TThis automaton)
+        {
+            return this.Product(automaton, true);
+        }
+
+        /// <summary>
+        /// Computes the product of the current automaton and a given one.
+        /// </summary>
+        /// <param name="automaton">The automaton to compute the product with.</param>
         /// <param name="tryDeterminize">Whether to try to determinize the result.</param>
         /// <returns>The computed product.</returns>
-        public TThis Product(TThis automaton, bool tryDeterminize = true)
+        public TThis Product(TThis automaton, bool tryDeterminize)
         {
             Argument.CheckIfNotNull(automaton, "automaton");
 
@@ -1961,6 +1983,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         #region Equality
 
         /// <summary>
+        /// Checks if <paramref name="other"/> is an automaton that defines the same weighted regular language.
+        /// </summary>
+        /// <param name="other">The automaton to compare this automaton with.</param>
+        /// <returns><see langword="true"/> if this automaton is equal to <paramref name="other"/>, false otherwise.</returns>
+        public bool Equals(TThis other)
+        {
+            double logSimilarity = GetLogSimilarity((TThis)this, other);
+            const double LogSimilarityThreshold = -30; // Can't be -inf due to numerical instabilities in GetLogSimilarity()
+            return logSimilarity < LogSimilarityThreshold;
+        }
+
+        /// <summary>
         /// Checks if <paramref name="obj"/> is an automaton that defines the same weighted regular language.
         /// </summary>
         /// <param name="obj">The object to compare this automaton with.</param>
@@ -1972,9 +2006,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return false;
             }
 
-            double logSimilarity = GetLogSimilarity((TThis)this, (TThis)obj);
-            const double LogSimilarityThreshold = -30; // Can't be -inf due to numerical instabilities in GetLogSimilarity()
-            return logSimilarity < LogSimilarityThreshold;
+            return Equals((TThis)obj);
         }
 
         /// <summary>
@@ -1984,6 +2016,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public override int GetHashCode()
         {
             TThis thisAutomaton = (TThis)this;
+            // TODO: make consistent with Equals
+            // now the hashcode depends on the maximum sum of outgoing transitions over states
+            // (through GetConverger), which can differ for equal automata.
             TThis theConverger = GetConverger(thisAutomaton);
             thisAutomaton = thisAutomaton.Product(theConverger);
             double logNorm = thisAutomaton.Product(thisAutomaton).GetLogNormalizer();
@@ -2413,6 +2448,62 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 threadMaxStateCountOverride = this.originalThreadMaxStateCount;
             }
         }
+        #endregion
+
+
+        #region IWeightFunction implementation
+
+        public TThis AsAutomaton() => (TThis)this;
+
+        public TSequence Point
+        { 
+            get => TryComputePoint() ?? throw new InvalidOperationException("This automaton is zero everywhere or is non-zero on more than one sequence.");
+            set => SetTo(ConstantOn(1.0, value)); 
+        }
+
+        public bool IsPointMass => TryEnumerateSupport(2, out var support, tryDeterminize: false) && support.Count() == 1;
+
+        public bool UsesAutomatonRepresentation => true;
+
+        public void SetToSum(IEnumerable<TThis> weightFunctions) => SetTo(Sum(weightFunctions));
+
+        public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs) => SetTo(FromValues(sequenceWeightPairs));
+
+        public TThis Repeat(int minTimes = 1, int? maxTimes = null) => Repeat((TThis)this, minTimes, maxTimes);
+
+        public double MaxDiff(TThis that) => Math.Exp(GetLogSimilarity((TThis)this, that));
+
+        public TThis NormalizeStructure() => Clone(); // TODO: replace with `this` after making this type immutable
+
+        public TThis Sum(double weight1, double weight2, TThis automaton)
+        {
+            var result = new TThis();
+            result.SetToSum(weight1, (TThis)this, weight2, automaton);
+            return result;
+        }
+
+        public TThis SumLog(double logWeight1, double logWeight2, TThis automaton)
+        {
+            var result = new TThis();
+            result.SetToSumLog(logWeight1, (TThis)this, logWeight2, automaton);
+            return result;
+        }
+
+        /// <summary>
+        /// Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible)
+        /// and returns the result in an out parameter.
+        /// If successful, produces a stochastic automaton,
+        /// i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.
+        /// </summary>
+        /// <param name="normalizedAutomaton">Result of the normaliztion attempt.</param>
+        /// <param name="logNormalizer">When the function returns, contains the logarithm of the normalizer.</param>
+        /// <returns><see langword="true"/> if the automaton was successfully normalized, <see langword="false"/> otherwise.</returns>
+        public bool TryNormalizeValues(out TThis normalizedAutomaton, out double logNormalizer)
+        {
+            normalizedAutomaton = Clone();
+            return normalizedAutomaton.TryNormalizeValues(out logNormalizer);
+        }
+
         #endregion
 
         #region Serialization}

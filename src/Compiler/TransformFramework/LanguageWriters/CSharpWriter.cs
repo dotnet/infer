@@ -154,18 +154,22 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// Append generic arguments to a type or method name
         /// </summary>
         /// <param name="sb">string builder</param>
-        /// <param name="igap"></param>
-        protected override void AppendGenericArguments(StringBuilder sb, IGenericArgumentProvider igap)
+        /// <param name="genericArguments"></param>
+        protected override void AppendGenericArguments(StringBuilder sb, IEnumerable<IType> genericArguments)
         {
-            if (igap.GenericArguments.Count > 0)
+            using (var argEnumerator = genericArguments.GetEnumerator())
             {
-                sb.Append("<");
-                for (int i = 0; i < igap.GenericArguments.Count; i++)
+                if (argEnumerator.MoveNext())
                 {
-                    if (i != 0) sb.Append(","); // must be kept consistent with LanguageWriterTypeSourceTest
-                    AppendType(sb, igap.GenericArguments[i]);
+                    sb.Append("<");
+                    AppendType(sb, argEnumerator.Current);
+                    while (argEnumerator.MoveNext())
+                    {
+                        sb.Append(","); // must be kept consistent with LanguageWriterTypeSourceTest
+                        AppendType(sb, argEnumerator.Current);
+                    }
+                    sb.Append(">");
                 }
-                sb.Append(">");
             }
         }
 
@@ -823,7 +827,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             IMethodReference imr = imre.Method;
             sb.Append(ValidIdentifier(imre.Method.Name));
             // The generic argument types
-            AppendGenericArguments(sb, imr);
+            AppendGenericArguments(sb, imr.GenericArguments);
         }
 
         /// <summary>
@@ -2083,7 +2087,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
             // The generic argument types
             //if (Builder.IsMethodInstRef(imd))
-            AppendGenericArguments(sb, imd);
+            AppendGenericArguments(sb, imd.GenericArguments);
             sb.Append("(");
 
             // Append the parameters

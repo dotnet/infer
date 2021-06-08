@@ -480,6 +480,31 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests distribution repetition.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void Repeat3()
+        {
+            var dist = StringDistribution.Repeat(StringDistribution.OneOf("ab", "cd"), minTimes: 0, maxTimes: 3);
+            Assert.True(dist.IsProper());
+            StringInferenceTestUtilities.TestProbability(dist, StringInferenceTestUtilities.StringUniformProbability(0, 3, 2), "", "ab", "cd", "abab", "abcd", "cdabcd", "cdcdcd");
+        }
+
+        /// <summary>
+        /// Tests distribution repetition.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void Repeat4()
+        {
+            var dist = StringDistribution.Repeat(StringDistribution.OneOf("ab", "cd", "ef", "gh"), minTimes: 0, maxTimes: 3);
+            Assert.True(dist.IsProper());
+            StringInferenceTestUtilities.TestProbability(dist, StringInferenceTestUtilities.StringUniformProbability(0, 3, 4),
+                "", "ab", "cd", "ef", "gh", "abab", "abcd", "cdef", "cdgh", "ghef", "cdabcd", "cdcdcd", "abcdef", "ghefcd");
+        }
+
+        /// <summary>
         /// Tests converting a point mass distribution to a string.
         /// </summary>
         [Fact]
@@ -502,17 +527,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 @"}"                                                     + Environment.NewLine
 ,
                 point.ToString(SequenceDistributionFormats.GraphViz));
-        }
-
-        /// <summary>
-        /// Tests that converting a mixture to a string preserves the order of the mixture components.
-        /// </summary>
-        [Fact]
-        [Trait("Category", "StringInference")]
-        public void MixtureToStringPreservesOrder()
-        {
-            StringDistribution mixture = StringDistribution.OneOf("John", "Tom", "Sam");
-            Assert.Equal("[John|Tom|Sam]", mixture.ToString());
         }
 
         [Fact]

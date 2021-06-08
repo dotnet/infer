@@ -20,11 +20,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
     [DataContract]
     [Quality(QualityBand.Preview)]
     public class StringDistribution :
-        SequenceDistribution<string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution>
+        SequenceDistribution<
+            string,
+            char,
+            DiscreteChar,
+            StringManipulator,
+            StringAutomaton,
+            WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.MultiRepresentationWeightFunction<StringDictionaryWeightFunction>,
+            WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.MultiRepresentationWeightFunction<StringDictionaryWeightFunction>.Factory,
+            StringDistribution>
     {
         /// <summary>
         /// Concatenates the weighted regular languages defined by given distributions
-        /// (see <see cref="SequenceDistribution{TSequence,TElement,TElementDistribution,TSequenceManipulator,TWeightFunction,TThis}.Append(TThis, int)"/>).
+        /// (see <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TThis}.Append(TThis, int)"/>).
         /// </summary>
         /// <param name="first">The first distribution.</param>
         /// <param name="second">The second distribution.</param>
@@ -36,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         /// <summary>
         /// Creates a point mass distribution.
-        /// This method is an alias for <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis}.PointMass"/>.
+        /// This method is an alias for <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TThis}.PointMass"/>.
         /// </summary>
         /// <param name="str">The point.</param>
         /// <returns>The created point mass distribution.</returns>
@@ -44,10 +52,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             return StringDistribution.PointMass(str);
         }
-        
+
         /// <summary>
         /// Creates a distribution which puts all mass on a string containing only a given character.
-        /// This method is an alias for <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis}.SingleElement(TElement)"/>.
+        /// This method is an alias for <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TThis}.SingleElement(TElement)"/>.
         /// </summary>
         /// <param name="ch">The character.</param>
         /// <returns>The created distribution.</returns>
@@ -58,13 +66,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         /// <summary>
         /// Creates a distribution over strings of length 1 induced by a given distribution over characters.
-        /// This method is an alias for <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis}.SingleElement(TElementDistribution)"/>.
+        /// This method is an alias for <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TThis}.SingleElement(TElementDistribution)"/>.
         /// </summary>
         /// <param name="characterDist">The distribution over characters.</param>
         /// <returns>The created distribution.</returns>
         /// <remarks>
         /// The distribution created by this method can differ from the result of
-        /// <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis}.Repeat(TThis, int, int?)"/>
+        /// <see cref="SequenceDistribution{TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TThis}.Repeat(TThis, int, int?)"/>
         /// with both min and max length set to 1 since the latter always creates a partial uniform distribution.
         /// </remarks>
         public static StringDistribution Char(DiscreteChar characterDist)

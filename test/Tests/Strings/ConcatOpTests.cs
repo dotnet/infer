@@ -19,6 +19,11 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class ConcatOpTests
     {
         /// <summary>
+        /// The tolerance used when comparing probabilities.
+        /// </summary>
+        private const double ValueEps = 1e-14;
+
+        /// <summary>
         /// Tests message operators for the string concatenation factor directly.
         /// </summary>
         [Fact]
@@ -207,7 +212,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var engine = new InferenceEngine();
             var selectorPosterior = engine.Infer<Bernoulli>(selector);
 
-            Assert.Equal(0.6, selectorPosterior.GetProbTrue());
+            Assert.Equal(0.6, selectorPosterior.GetProbTrue(), ValueEps);
         }
 
         /// <summary>

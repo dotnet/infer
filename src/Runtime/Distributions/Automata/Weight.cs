@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </remarks>
     [Serializable]
     [DataContract]
-    public struct Weight : IComparable<Weight>
+    public struct Weight : IComparable<Weight>, IFormattable
     {
         /// <summary>
         /// The logarithm of the weight value.
@@ -344,7 +344,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>A string representation of this object.</returns>
         public override string ToString()
         {
-            return this.ToString(CultureInfo.CurrentCulture);
+            return this.ToString("G", CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -354,7 +354,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>A string representation of this object.</returns>
         public string ToString(IFormatProvider provider)
         {
-            return this.Value.ToString(provider);
+            return this.ToString("G", provider);
+        }
+
+        public string ToString(string format)
+        {
+            return this.ToString(format, CultureInfo.CurrentCulture);
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrEmpty(format)) format = "G";
+            if (formatProvider == null) formatProvider = CultureInfo.CurrentCulture;
+
+            var value = this.Value;
+            if (double.IsInfinity(value)
+                || (this.LogValue != 0 && (value == 1 || value.ToString(format) == "1"))
+                || (!double.IsNegativeInfinity(this.LogValue) && (value == 0 || value.ToString(format) == "0")))
+                return $"exp({this.LogValue.ToString(format, formatProvider)})";
+            return value.ToString(format, formatProvider);
         }
 
         /// <summary>
