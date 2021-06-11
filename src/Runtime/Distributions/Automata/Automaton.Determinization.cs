@@ -21,7 +21,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// i.e. modify it such that for every state and every element there is at most one transition that allows for that element,
         /// and there are no epsilon transitions.
         /// </summary>
-        /// <param name="result">Result automaton. Determinized automaton, if the operation was successful, current automaton otherwise.</param>
+        /// <param name="result">Result automaton. Determinized automaton, if the operation was successful, current automaton or
+        /// an equvalent automaton without epsilon transitions otherwise.</param>
         /// <returns>
         /// <see langword="true"/> if the determinization attempt was successful and the automaton is now deterministic,
         /// <see langword="false"/> otherwise.
@@ -87,7 +88,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (!EnqueueOutgoingTransitions(currentWeightedStateSet))
                     {
                         this.Data = this.Data.With(isDeterminized: false);
-                        result = (TThis)this;
+                        epsilonClosure.Data = epsilonClosure.Data.With(isDeterminized: false);
+                        epsilonClosure.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
+                        epsilonClosure.LogValueOverride = this.LogValueOverride;
+                        result = epsilonClosure;
                         return false;
                     }
                 }

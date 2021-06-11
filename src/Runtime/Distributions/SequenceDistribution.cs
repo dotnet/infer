@@ -1000,8 +1000,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 // Determinization of automaton may fail if distribution is not normalized.
                 this.EnsureNormalized();
-                if (sequenceToWeight.AsAutomaton().TryDeterminize(out var determinizedAutomaton))
-                    sequenceToWeight = WeightFunctionFactory.FromAutomaton(determinizedAutomaton);
+                sequenceToWeight.AsAutomaton().TryDeterminize(out var determinizedAutomaton);
+                // Sometimes automaton is not determinized, but is still made epsilon-free,
+                // which is a nice optimization to keep.
+                sequenceToWeight = WeightFunctionFactory.FromAutomaton(determinizedAutomaton);
             }
 
             return this.sequenceToWeight.EnumerateSupport(maxCount);
