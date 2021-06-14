@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000)
         {
             int idx = 0;
-            foreach (var seq in this.EnumerateSupportInternal())
+            foreach (var seq in this.EnumerateSupportInternal(maxCount))
             {
                 if (seq == null)
                 {
@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var limitedResult = new List<TSequence>();
             try
             {
-                foreach (var seq in this.EnumerateSupportInternal(maxTraversedPaths, stopOnNonPointMassElementDistribution))
+                foreach (var seq in this.EnumerateSupportInternal(maxCount, maxTraversedPaths, stopOnNonPointMassElementDistribution))
                 {
                     if (seq == null || limitedResult.Count >= maxCount)
                     {
@@ -108,6 +108,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Enumerate support of this automaton
         /// </summary>
+        /// <param name="maxCount">The maximum support enumeration count.</param>
         /// <param name="maxTraversedPaths">Maximum number of paths in the automaton this function
         /// is allowed to traverse before stopping. Defaults to <see cref="int.MaxValue"/>.
         /// Can be used to limit the performance impact of this call in cases when
@@ -117,6 +118,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// element distribution on a transition and a <see langword="null"/> value is yielded.
         /// </param>
         private IEnumerable<TSequence> EnumerateSupportInternal(
+            int maxCount,
             int maxTraversedPaths = int.MaxValue,
             bool stopOnNonPointMassElementDistribution = false)
         {
@@ -130,10 +132,37 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var enumeration = this.EnumerateSupportInternalWithDuplicates(maxTraversedPaths, stopOnNonPointMassElementDistribution);
             if (Data.IsDeterminized != true)
             {
-                enumeration = enumeration.Distinct(SequenceManipulator.SequenceEqualityComparer);
+                // Enumerable.Distinct() does not pre-allocate the set it uses to store enumerated elements
+                // That causes a lot of reallocations for large supports, hence the customized implementation.
+                enumeration = DistinctPrealloc(enumeration);
             }
 
             return enumeration;
+
+            IEnumerable<TSequence> DistinctPrealloc(IEnumerable<TSequence> source)
+            {
+                int initCapacity = Math.Min(maxCount, maxTraversedPaths);
+                if (initCapacity < int.MaxValue)
+                    ++initCapacity;
+
+                // Can not pre-allocate hashsets in netstandard2.0
+                // TODO: use HashSet<TSequence> after switching to BCL that allows preallocations for them, e.g. netstandard2.1
+                const int maxInitCapacity = 1024 * 1024 * 1024 / 16; // Allocate no more than 1 GB to avoid OOM
+                initCapacity = Math.Min(initCapacity, maxInitCapacity);
+                var set = new Set<TSequence>(initCapacity, SequenceManipulator.SequenceEqualityComparer);
+                foreach (var elem in source)
+                {
+                    if (elem == null)
+                    {
+                        yield return null;
+                    }
+                    else if (!set.Contains(elem))
+                    {
+                        set.Add(elem);
+                        yield return elem;
+                    }
+                }
+            }
         }
 
         /// <summary>

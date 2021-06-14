@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public class StringManipulator : ISequenceManipulator<string, char>
     {
         public IEqualityComparer<string> SequenceEqualityComparer { get; } =
-            EqualityComparer<string>.Default;
+            StringComparer.Ordinal;
 
         /// <summary>
         /// Converts a given sequence of characters to a string.
