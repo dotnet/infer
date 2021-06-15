@@ -38,15 +38,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             int maxStatesBeforeStop = Math.Min(this.States.Count * 3, MaxStateCount);
 
+            var epsilonClosure = GetEpsilonClosure(); // Deterministic automata cannot have epsilon-transitions
+
             if (this.UsesGroups)
             {
                 // Determinization will result in lost of group information, which we cannot allow
                 this.Data = this.Data.With(isDeterminized: false);
-                result = (TThis)this;
+                epsilonClosure.Data = epsilonClosure.Data.With(isDeterminized: false);
+                epsilonClosure.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
+                epsilonClosure.LogValueOverride = this.LogValueOverride;
+                result = epsilonClosure;
                 return false;
             }
-
-            var epsilonClosure = GetEpsilonClosure(); // Deterministic automata cannot have epsilon-transitions
 
             var builder = new Builder();
             builder.Start.SetEndWeight(epsilonClosure.Start.EndWeight);
