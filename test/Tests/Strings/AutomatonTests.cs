@@ -393,6 +393,37 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests that the output of Append has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the instance it was invoked on.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void AppendPreservesProperties()
+        {
+            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a", "ab", "c");
+            StringAutomaton automaton2 = StringAutomaton.ConstantOn(3.0, "b", string.Empty, "c");
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton1,
+                x => x.Append(automaton2));
+        }
+
+        /// <summary>
+        /// Tests appending to an automaton with a singleton support.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void AppendToPoint()
+        {
+            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a");
+            StringAutomaton automaton2 = StringAutomaton.ConstantOn(3.0, "b", string.Empty);
+            StringAutomaton concat = automaton1.Append(automaton2);
+            Assert.False(concat.IsZero());
+            StringInferenceTestUtilities.TestValue(concat, 6.0, "ab", "a");
+            StringInferenceTestUtilities.TestValue(concat, 0.0, "b", string.Empty);
+        }
+
+        /// <summary>
         /// Tests automaton appending, also known as the Cauchy product.
         /// </summary>
         [Fact]
@@ -412,21 +443,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestValue(concat, 72.0, "aba", "abc", "ababb", "acc");
             StringInferenceTestUtilities.TestValue(concat, 108.0, "abcc");
             StringInferenceTestUtilities.TestValue(concat, 36.0, "aa", "aac");
-            StringInferenceTestUtilities.TestValue(concat, 0.0, "b", string.Empty);
-        }
-
-        /// <summary>
-        /// Tests appending to an automaton with a singleton support.
-        /// </summary>
-        [Fact]
-        [Trait("Category", "StringInference")]
-        public void AppendToPoint()
-        {
-            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a");
-            StringAutomaton automaton2 = StringAutomaton.ConstantOn(3.0, "b", string.Empty);
-            StringAutomaton concat = automaton1.Append(automaton2);
-            Assert.False(concat.IsZero());
-            StringInferenceTestUtilities.TestValue(concat, 6.0, "ab", "a");
             StringInferenceTestUtilities.TestValue(concat, 0.0, "b", string.Empty);
         }
 
@@ -677,6 +693,36 @@ namespace Microsoft.ML.Probabilistic.Tests
             TestNonNormalizable(builder.GetAutomaton(), false);
         }
 
+
+
+        /// <summary>
+        /// Tests that the output of [Try]NormalizeValues has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void NormalizeClosurePreservesProperties()
+        {
+
+            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "a", "bc", "d");
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x =>
+                {
+                    x.TryNormalizeValues(out var normalized);
+                    return normalized;
+                });
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x =>
+                {
+                    x.NormalizeValues(out var normalized);
+                    return normalized;
+                });
+        }
+
         /// <summary>
         /// Tests that taking the epsilon closure of an automaton doesn't change its values.
         /// </summary>
@@ -730,6 +776,25 @@ namespace Microsoft.ML.Probabilistic.Tests
             
             Assert.Equal(ChainLength + 1, closure.Size);
             Assert.Equal(Math.Log(1 << ChainLength), closure.EndWeight.LogValue);
+        }
+
+        /// <summary>
+        /// Tests that the output of GetEpsilonClosure has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void EpsilonClosurePreservesProperties()
+        {
+            var automaton = StringAutomaton
+                .ConstantOn(1.0, "abc", "def")
+                .Scale(3.0)
+                .Sum(StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Lower()))
+                .Scale(0.5);
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x => x.GetEpsilonClosure());
         }
 
         /// <summary>
@@ -1002,6 +1067,35 @@ namespace Microsoft.ML.Probabilistic.Tests
                         isZero: null,
                         isEnumerable: null)));
         }
+
+
+
+        /// <summary>
+        /// Tests that the outputs of WithGroupSet and WithGroupsClear have the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SettingGroupPreservesProperties()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start.AddTransition('a', Weight.One).AddTransition('b', Weight.One).SetEndWeight(
+                Weight.FromValue(2.0));
+            builder.Start.AddTransition('a', Weight.One).AddSelfTransition('d', Weight.One).AddTransition('c', Weight.One).SetEndWeight(
+                Weight.FromValue(3.0));
+            var automaton = builder.GetAutomaton();
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x => x.WithGroupSet(3));
+
+            var automatonWithGroup = automaton.WithGroupSet(3);
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automatonWithGroup,
+                x => x.WithGroupsClear());
+        }
+
 
         #region ToString tests
 
@@ -1675,6 +1769,39 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests that the outputs of Simplify and RemoveDeadStates have the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SimplifyPreservesProperties()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start.AddTransition('a', Weight.One).AddTransition('b', Weight.One).SetEndWeight(
+                Weight.FromValue(2.0));
+            builder.Start.AddTransition('a', Weight.One).AddSelfTransition('d', Weight.One).AddTransition('c', Weight.One).SetEndWeight(
+                Weight.FromValue(3.0));
+            var automaton = builder.GetAutomaton();
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x =>
+                {
+                    x.Simplify(out var simplified);
+                    return simplified;
+                });
+
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x =>
+                {
+                    x.RemoveDeadStates(out var simplified);
+                    return simplified;
+                });
+        }
+
+        /// <summary>
         /// Tests that merging parallel transitions doesn't fail when transition weights are too large
         /// to fit in double in non-log space.
         /// </summary>
@@ -2123,6 +2250,44 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 Assert.False(automaton.IsDeterministic());
             }
+        }
+
+        /// <summary>
+        /// Tests that the output of TryDeterminize has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void DeterminizationPreservesProperties()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start.AddTransition('a', Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
+            builder.Start.AddTransition('a', Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
+            builder.Start.SetEndWeight(Weight.FromValue(17));
+
+            var determinizableAutomaton = builder.GetAutomaton();
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                determinizableAutomaton,
+                x =>
+                {
+                    x.TryDeterminize(out var determinized);
+                    return determinized;
+                });
+
+            builder = new StringAutomaton.Builder();
+            builder.Start.AddTransition('a', Weight.FromValue(2)).AddSelfTransition('b', Weight.FromValue(0.5)).AddTransition('c', Weight.FromValue(3.0)).SetEndWeight(Weight.FromValue(4));
+            builder.Start.AddTransition('a', Weight.FromValue(5)).AddSelfTransition('b', Weight.FromValue(0.1)).AddTransition('c', Weight.FromValue(6.0)).SetEndWeight(Weight.FromValue(7));
+
+            var nonDeterminizableAutomaton = builder.GetAutomaton();
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                nonDeterminizableAutomaton,
+                x =>
+                {
+                    x.TryDeterminize(out var notDeterminized);
+                    return notDeterminized;
+                });
         }
 
         /// <summary>

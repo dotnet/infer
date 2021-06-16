@@ -1005,7 +1005,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            return builder.GetAutomaton();
+            return WithData(builder.GetData());
         }
 
         #endregion
@@ -1329,7 +1329,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             if (automaton.IsCanonicZero())
             {
-                return Zero();
+                return WithData(DataContainer.ZeroData);
             }
 
             var builder = Builder.FromAutomaton(this);
@@ -1340,7 +1340,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 ? (bool?)true
                 : group != 0 || this.Data.IsDeterminized == false || automaton.Data.IsDeterminized == false ? (bool?)false : null;
 
-            return new TThis() { Data = builder.GetData(determinizationState) };
+            return WithData(builder.GetData(determinizationState));
         }
 
         /// <summary>
@@ -2120,10 +2120,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            var result = builder.GetAutomaton();
-
-            result.LogValueOverride = LogValueOverride;
-            result.PruneStatesWithLogEndWeightLessThan = PruneStatesWithLogEndWeightLessThan;
+            var result = WithData(builder.GetData());
 
             return result;
         }
@@ -2131,6 +2128,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         #endregion
 
         #region Helpers
+
+        protected TThis WithData(DataContainer data) => new TThis()
+        {
+            Data = data,
+            LogValueOverride = LogValueOverride,
+            PruneStatesWithLogEndWeightLessThan = PruneStatesWithLogEndWeightLessThan
+        };
 
         /// <summary>
         /// Creates a copy of the current automaton with a different value of <see cref="LogValueOverride"/>.
@@ -2277,7 +2281,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (!double.IsInfinity(logNormalizer))
                 {
-                    normalizedAutomaton = PushWeights();
+                    normalizedAutomaton = WithData(PushWeights());
                 }
             }
 
@@ -2285,7 +2289,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // Re-distributes weights of the states and transitions so that the underlying automaton becomes stochastic
             // (i.e. sum of weights of all the outgoing transitions and the ending weight is 1 for every node).
-            TThis PushWeights()
+            DataContainer PushWeights()
             {
                 var builder = Builder.FromAutomaton(noEpsilonTransitions);
                 for (int i = 0; i < builder.StatesCount; ++i)
@@ -2310,7 +2314,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     state.SetEndWeight(state.EndWeight * weightToEndInv);
                 }
 
-                return builder.GetAutomaton();
+                return builder.GetData();
             }
         }
 

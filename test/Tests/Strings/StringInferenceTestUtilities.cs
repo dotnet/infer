@@ -71,7 +71,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double logValue = automaton.GetLogValue(str);
                 Assert.Equal(trueLogValue, logValue, LogValueEps);
                 Assert.Equal(logValue, Clone(automaton).GetLogValue(str));
-            }            
+            }
         }
 
         ///// <summary>
@@ -132,7 +132,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double logProb1 = argument1.GetLogProb(str);
                     double logProb2 = argument2.GetLogProb(str);
                     double logProbProduct = trueProduct.GetLogProb(str);
-                    
+
                     if (double.IsNegativeInfinity(logProb1) || double.IsNegativeInfinity(logProb2))
                     {
                         Assert.True(double.IsNegativeInfinity(logProbProduct));
@@ -167,6 +167,27 @@ namespace Microsoft.ML.Probabilistic.Tests
         public static void TestIfIncludes<T>(IDistribution<T> distribution, params T[] values)
         {
             TestInclusionExclusion(distribution, values, true);
+        }
+
+        public static void TestAutomatonPropertyPreservation(StringAutomaton automaton, Func<StringAutomaton, StringAutomaton> testedOperation)
+        {
+            var automatonWithClearProperties = automaton
+                .WithLogValueOverride(null)
+                .WithPruneStatesWithLogEndWeightLessThan(null);
+
+            var outputForClearProperties = testedOperation(automatonWithClearProperties);
+
+            Assert.Null(outputForClearProperties.LogValueOverride);
+            Assert.Null(outputForClearProperties.PruneStatesWithLogEndWeightLessThan);
+
+            var automatonWithSetProperties = automaton
+                .WithLogValueOverride(-1)
+                .WithPruneStatesWithLogEndWeightLessThan(-128);
+
+            var outputForSetProperties = testedOperation(automatonWithSetProperties);
+
+            Assert.Equal(automatonWithSetProperties.LogValueOverride, outputForSetProperties.LogValueOverride);
+            Assert.Equal(automatonWithSetProperties.PruneStatesWithLogEndWeightLessThan, outputForSetProperties.PruneStatesWithLogEndWeightLessThan);
         }
 
         #endregion
@@ -235,7 +256,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var res = transducer.ProjectSource(StringAutomaton.ConstantOn(1.0, str));
                 Assert.True(res.IsZero());
                 var res2 = transducer.ProjectSource(str);
-                Assert.True(res2.IsZero());    
+                Assert.True(res2.IsZero());
             }
         }
 
@@ -303,13 +324,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="testInclusion">Specifies whether the inclusion test must be performed instead of the exclusion test.</param>
         private static void TestInclusionExclusion<T>(IDistribution<T> distribution, T[] values, bool testInclusion)
         {
-            Console.WriteLine("Testing distribution: "+distribution.ToString());
+            Console.WriteLine("Testing distribution: " + distribution.ToString());
             foreach (var val in values)
             {
                 var excluded = double.IsNegativeInfinity(distribution.GetLogProb(val));
-                var msg =  val + (excluded ? " was not in " : " was in ");
-                Assert.True( excluded != testInclusion, msg + " "+distribution.ToString());
-                Console.WriteLine(msg+"distribution");
+                var msg = val + (excluded ? " was not in " : " was in ");
+                Assert.True(excluded != testInclusion, msg + " " + distribution.ToString());
+                Console.WriteLine(msg + "distribution");
             }
         }
 

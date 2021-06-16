@@ -27,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             if (simplification.Simplify())
             {
-                result = builder.GetAutomaton();
+                result = WithData(builder.GetData());
                 return true;
             }
 
@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             simplification.RemoveDeadStates();
             if (builder.StatesCount != initialStatesCount)
             {
-                result = builder.GetAutomaton();
+                result = WithData(builder.GetData());
                 return true;
             }
 

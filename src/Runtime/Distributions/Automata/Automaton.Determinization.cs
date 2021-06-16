@@ -44,10 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 // Determinization will result in lost of group information, which we cannot allow
                 this.Data = this.Data.With(isDeterminized: false);
-                epsilonClosure.Data = epsilonClosure.Data.With(isDeterminized: false);
-                epsilonClosure.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
-                epsilonClosure.LogValueOverride = this.LogValueOverride;
-                result = epsilonClosure;
+                result = WithData(epsilonClosure.Data.With(isDeterminized: false));
                 return false;
             }
 
@@ -91,10 +88,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (!EnqueueOutgoingTransitions(currentWeightedStateSet))
                     {
                         this.Data = this.Data.With(isDeterminized: false);
-                        epsilonClosure.Data = epsilonClosure.Data.With(isDeterminized: false);
-                        epsilonClosure.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
-                        epsilonClosure.LogValueOverride = this.LogValueOverride;
-                        result = epsilonClosure;
+                        result = WithData(epsilonClosure.Data.With(isDeterminized: false));
                         return false;
                     }
                 }
@@ -107,11 +101,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var simplification = new Simplification(builder, epsilonClosure.PruneStatesWithLogEndWeightLessThan);
             simplification.MergeParallelTransitions(); // Determinization produces a separate transition for each segment
 
-            epsilonClosure.Data = builder.GetData().With(isDeterminized: true);
-            epsilonClosure.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
-            epsilonClosure.LogValueOverride = this.LogValueOverride;
-
-            result = epsilonClosure;
+            result = WithData(builder.GetData(true));
             return true;
 
             bool EnqueueOutgoingTransitions(Determinization.WeightedStateSet currentWeightedStateSet)
