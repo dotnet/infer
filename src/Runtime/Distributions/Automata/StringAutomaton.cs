@@ -217,46 +217,5 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public void Write(BinaryWriter writer) => 
             Write(writer.Write, writer.Write, c => c.Write(writer.Write, writer.Write));
-
-        /// <summary>
-        /// Determines whether this automaton has cycles or not.
-        /// </summary>
-        public bool HasCycles()
-        {
-            //TryDeterminize();
-            return HasCycles(this, new ArrayDictionary<bool>(), Start.Index);
-        }
-
-        /// <summary>
-        /// Recursively walk this automaton to check for cycles.
-        /// </summary>
-        /// <param name="automaton">This automaton.</param>
-        /// <param name="visitedStates">The states visited at this point</param>
-        /// <param name="stateIndex">The index of the next state to process</param>
-        private static bool HasCycles(StringAutomaton automaton, ArrayDictionary<bool> visitedStates, int stateIndex)
-        {
-            if (visitedStates.ContainsKey(stateIndex) && visitedStates[stateIndex])
-            {
-                return true;
-            }
-
-            var currentState = automaton.States[stateIndex];
-            visitedStates[stateIndex] = true;
-            foreach (var transition in currentState.Transitions)
-            {
-                if (transition.Weight.IsZero)
-                {
-                    continue;
-                }
-
-                if (HasCycles(automaton, visitedStates, transition.DestinationStateIndex))
-                {
-                    return true;
-                }
-            }
-
-            visitedStates[stateIndex] = false;
-            return false;
-        }
     }
 }
