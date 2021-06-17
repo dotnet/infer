@@ -46,8 +46,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </description></item>
     /// </list>
     /// 
-    /// This class is immutable and all implementations must preserve this property - some algorithms used
-    /// to implement this class rely on it.
+    /// This class is constant and thread-safe (though, not truly immutable, as some properties are evaluated lazily
+    /// and stored afterwards) and all implementations must preserve this property - some algorithms used
+    /// to implement this class rely on it. For the same reason, implementations are not allowed to add new data fields.
     /// </remarks>
     /// <typeparam name="TSequence">The type of a sequence.</typeparam>
     /// <typeparam name="TElement">The immutable type of a sequence element.</typeparam>
@@ -1258,7 +1259,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Creates a copy of the automaton.
         /// </summary>
         /// <returns>The created copy.</returns>
-        public TThis Clone() => (TThis)this; // Automata are immutable.
+        public TThis Clone() => (TThis)this; // Automata are constant.
 
         /// <summary>
         /// Creates an automaton <c>f'(s) = f(reverse(s))</c>, 
@@ -2425,7 +2426,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public double MaxDiff(TThis that) => Math.Exp(GetLogSimilarity((TThis)this, that));
 
-        public TThis NormalizeStructure() => (TThis)this; // TODO: replace with `this` after making this type immutable
+        public TThis NormalizeStructure() => (TThis)this;
 
         #endregion
 
