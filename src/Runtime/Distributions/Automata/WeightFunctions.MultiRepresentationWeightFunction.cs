@@ -61,7 +61,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 public MultiRepresentationWeightFunction<TDictionary> ConstantOnSupportOfLog(double logValue, MultiRepresentationWeightFunction<TDictionary> weightFunction)
                 {
-                    if (weightFunction.TryEnumerateSupportInternal(MaxDictionarySize, out var support, false))
+                    if (weightFunction.TryEnumerateSupportInternal(MaxDictionarySize, out var support))
                     {
                         if (!support.Any())
                             return Zero();
@@ -285,7 +285,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result) => TryEnumerateSupportInternal(maxCount, out result);
 
-            private bool TryEnumerateSupportInternal(int maxCount, out IEnumerable<TSequence> result, bool determinizeStringAutomata = true)
+            private bool TryEnumerateSupportInternal(int maxCount, out IEnumerable<TSequence> result)
             {
                 if (weightFunction == null)
                 {
@@ -294,9 +294,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
                 else
                 {
-                    if (determinizeStringAutomata && weightFunction is StringAutomaton && AsAutomaton().TryDeterminize(out var determinizedAutomaton))
-                        weightFunction = determinizedAutomaton;
-
                     return weightFunction.TryEnumerateSupport(maxCount, out result);
                 }
             }
