@@ -74,21 +74,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        ///// <summary>
-        ///// Tests whether the logarithm of the value of a given automaton on given strings equals to a specified value.
-        ///// </summary>
-        ///// <param name="automaton">The automaton.</param>
-        ///// <param name="trueLogValue">The expected logarithm of the function value.</param>
-        ///// <param name="strings">The strings to test.</param>
-        //public static void TestValue(ListAutomaton<string, StringDistribution> automaton, double trueValue, params List<string>[] strings)
-        //{
-        //    foreach (var str in strings)
-        //    {
-        //        double logValue = automaton.GetLogValue(str);
-        //        Assert.Equal(Math.Log(trueValue), logValue, LogValueEps);
-        //    }
-        //}
-
         /// <summary>
         /// Tests whether the product of given distributions is equal to another distribution on a specified strings.
         /// </summary>
