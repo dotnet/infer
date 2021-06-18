@@ -1726,6 +1726,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return double.NegativeInfinity;
             }
 
+            // A simplified version of the general algorithm below.
+            // Skips allocation and computation of epsilon closures, which is not needed
+            // in epsilon-free automaton case.
             double GetLogValueEpsilonFree()
             {
                 var sequenceLength = SequenceManipulator.GetLength(sequence);
