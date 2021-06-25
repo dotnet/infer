@@ -132,33 +132,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var enumeration = this.EnumerateSupportInternalWithDuplicates(maxTraversedPaths, stopOnNonPointMassElementDistribution);
             if (Data.IsDeterminized != true)
             {
-                // Enumerable.Distinct() does not pre-allocate the set it uses to store enumerated elements
-                // That causes a lot of reallocations for large supports, hence the customized implementation.
-                enumeration = DistinctPrealloc(enumeration);
+                // Enumerable.Distinct() uses some internal set implementation (different from HashSet) to store enumerated elements.
+                // Somehow, it causes unacceptable slowdowns for large supports, hence the customized implementation.
+                enumeration = HashSetBasedDistinct(enumeration);
             }
 
             return enumeration;
 
-            IEnumerable<TSequence> DistinctPrealloc(IEnumerable<TSequence> source)
+            IEnumerable<TSequence> HashSetBasedDistinct(IEnumerable<TSequence> source)
             {
-                int initCapacity = Math.Min(maxCount, maxTraversedPaths);
-                if (initCapacity < int.MaxValue)
-                    ++initCapacity;
-
                 // Can not pre-allocate hashsets in netstandard2.0
-                // TODO: use HashSet<TSequence> after switching to BCL that allows preallocations for them, e.g. netstandard2.1
-                const int maxInitCapacity = 1024 * 1024 * 1024 / 16; // Allocate no more than 1 GB to avoid OOM
-                initCapacity = Math.Min(initCapacity, maxInitCapacity);
-                var set = new Set<TSequence>(initCapacity, SequenceManipulator.SequenceEqualityComparer);
+                // TODO: start preallocatinng after switching to BCL that allows it, e.g. netstandard2.1
+                var supportDistinctionSet = new HashSet<TSequence>(SequenceManipulator.SequenceEqualityComparer);
+
                 foreach (var elem in source)
                 {
                     if (elem == null)
                     {
                         yield return null;
                     }
-                    else if (!set.Contains(elem))
+                    else if (!supportDistinctionSet.Contains(elem))
                     {
-                        set.Add(elem);
+                        supportDistinctionSet.Add(elem);
                         yield return elem;
                     }
                 }
