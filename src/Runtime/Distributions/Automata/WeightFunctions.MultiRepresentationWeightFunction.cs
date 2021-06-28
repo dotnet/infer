@@ -277,9 +277,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (weightFunction == null)
                     return Enumerable.Empty<TSequence>();
 
-                if (weightFunction is StringAutomaton && AsAutomaton().TryDeterminize(out var determinizedAutomaton))
-                    weightFunction = determinizedAutomaton;
-
                 return weightFunction.EnumerateSupport(maxCount);
             }
 

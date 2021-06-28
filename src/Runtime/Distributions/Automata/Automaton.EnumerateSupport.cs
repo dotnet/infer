@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000)
         {
             int idx = 0;
-            foreach (var seq in this.EnumerateSupportInternal(maxCount))
+            foreach (var seq in this.EnumerateSupportInternal())
             {
                 if (seq == null)
                 {
@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var limitedResult = new List<TSequence>();
             try
             {
-                foreach (var seq in this.EnumerateSupportInternal(maxCount, maxTraversedPaths, stopOnNonPointMassElementDistribution))
+                foreach (var seq in this.EnumerateSupportInternal(maxTraversedPaths, stopOnNonPointMassElementDistribution))
                 {
                     if (seq == null || limitedResult.Count >= maxCount)
                     {
@@ -108,7 +108,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Enumerate support of this automaton
         /// </summary>
-        /// <param name="maxCount">The maximum support enumeration count.</param>
         /// <param name="maxTraversedPaths">Maximum number of paths in the automaton this function
         /// is allowed to traverse before stopping. Defaults to <see cref="int.MaxValue"/>.
         /// Can be used to limit the performance impact of this call in cases when
@@ -118,7 +117,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// element distribution on a transition and a <see langword="null"/> value is yielded.
         /// </param>
         private IEnumerable<TSequence> EnumerateSupportInternal(
-            int maxCount,
             int maxTraversedPaths = int.MaxValue,
             bool stopOnNonPointMassElementDistribution = false)
         {

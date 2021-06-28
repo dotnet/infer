@@ -87,6 +87,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public int DestinationStateIndex
             {
                 get => this.destinationStateIndex;
+                // Setter should only ever be used in factory methods
                 private set => this.destinationStateIndex = value;
             }
 
@@ -96,6 +97,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public int Group
             {
                 get => this.group;
+                // Setter should only ever be used in factory methods
                 private set => this.group = (short)value;
             }
 
@@ -105,6 +107,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public Option<TElementDistribution> ElementDistribution
             {
                 get => this.hasElementDistribution == 0 ? Option.None : Option.Some(this.elementDistribution);
+                // Setter should only ever be used in factory methods
                 private set
                 {
                     this.hasElementDistribution = (short)(value.HasValue ? 1 : 0);
@@ -123,6 +126,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public Weight Weight
             {
                 get => this.weight;
+                // Setter should only ever be used in factory methods
                 private set => this.weight = value;
             }
 

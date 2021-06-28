@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// this property contains index of the head of the linked-list of transitions.
             /// </remarks>
             [DataMember]
-            public int FirstTransitionIndex { get; private set; }
+            public int FirstTransitionIndex { get; }
 
             /// <summary>
             /// Gets or sets count of transition in <see cref="DataContainer.Transitions"/> after
@@ -37,13 +37,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// the same state are stored as a contiguous block.
             /// </summary>
             [DataMember]
-            public int TransitionsCount { get; private set; }
+            public int TransitionsCount { get; }
 
             /// <summary>
             /// Gets or sets ending weight of the state.
             /// </summary>
             [DataMember]
-            public Weight EndWeight { get; private set; }
+            public Weight EndWeight { get; }
 
             /// <summary>
             /// Initializes a new instance of the <see cref="StateData"/> struct.

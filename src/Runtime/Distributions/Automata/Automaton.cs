@@ -139,24 +139,36 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         internal static TElementDistribution ElementDistributionFactory { get; } = new TElementDistribution();
 
         /// <summary>
-        /// Gets or sets a value that, if not null, will be returned when computing the log value of any sequence
+        /// Gets a value that, if not null, will be returned when computing the log value of any sequence
         /// which is in the support of this automaton (i.e. has non-zero value under the automaton).
         /// </summary>
         /// <remarks>
-        /// This should only be set non-null if this distribution is improper and there is 
+        /// This should only be non-null if the distribution this automaton represents is improper and there is 
         /// a need to override the actual automaton value. 
         /// </remarks>
-        public double? LogValueOverride { get; private set; }
+        public double? LogValueOverride 
+        {
+            get;
+            // Setter should only ever be used in factory methods
+            // TODO: replace with `init` after switching to C# 9.0+
+            private set;
+        }
 
         /// <summary>
-        /// Gets or sets a value for truncating small weights.
+        /// Gets a value for truncating small weights.
         /// If non-null, any transition whose weight falls below this value in a normalized
         /// automaton will be removed following a product operation.
         /// </summary>
         /// <remarks>
         /// TODO: We need to develop more elegant automaton approximation methods, this is a simple placeholder for those.
         /// </remarks>
-        public double? PruneStatesWithLogEndWeightLessThan { get; private set; }
+        public double? PruneStatesWithLogEndWeightLessThan
+        {
+            get;
+            // Setter should only ever be used in factory methods
+            // TODO: replace with `init` after switching to C# 9.0+
+            private set;
+        }
 
         /// <summary>
         /// Gets or sets the maximum number of states an automaton can have. This setting is shared

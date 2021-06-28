@@ -208,8 +208,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                     else
                     {
                         var weightFunction = group.GetWeightFunction();
-                        if (weightFunction.UsesAutomatonRepresentation && weightFunction.AsAutomaton().TryNormalizeValues(out var normalizedAutomaton, out var _))
-                            group.SetWeightFunction(normalizedAutomaton);
+                        if (weightFunction.TryNormalizeValues(out var normalizedWeightFunction, out var _))
+                            group.SetWeightFunction(normalizedWeightFunction);
                     }
 
                     result[i] = group;
@@ -540,14 +540,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (argNames.Count > 1)
             {
                 // Skips placeholders for every argument except the current one
-                StringAutomaton skipOtherArgs = StringAutomaton.ConstantOnElement(1.0, '{');
-                skipOtherArgs = skipOtherArgs.Append(StringAutomaton.ConstantOn(1.0, argNames.Where((arg, index) => index != argToValidateIndex)));
-                skipOtherArgs = skipOtherArgs.Append(StringAutomaton.ConstantOnElement(1.0, '}'));
+                StringAutomaton skipOtherArgs = StringAutomaton.ConstantOnElement(1.0, '{')
+                    .Append(StringAutomaton.ConstantOn(1.0, argNames.Where((arg, index) => index != argToValidateIndex)))
+                    .Append(StringAutomaton.ConstantOnElement(1.0, '}'));
 
                 // Accepts placeholders for arguments other than current, with arbitrary intermediate text
                 checkBracesForOtherArgs = checkBracesForOtherArgs.Append(skipOtherArgs);
-                checkBracesForOtherArgs = StringAutomaton.Repeat(checkBracesForOtherArgs, minTimes: 0);
-                checkBracesForOtherArgs = checkBracesForOtherArgs.Append(DisallowBracesAutomaton);
+                checkBracesForOtherArgs = StringAutomaton.Repeat(checkBracesForOtherArgs, minTimes: 0)
+                    .Append(DisallowBracesAutomaton);
             }
 
             // Checks the placeholder for the current argument, then skips placeholders for other arguments

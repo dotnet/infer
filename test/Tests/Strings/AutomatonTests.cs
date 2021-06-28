@@ -318,8 +318,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ProductWithConstant()
         {
-            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a", "abc", "d");
-            automaton1 = automaton1.Sum(StringAutomaton.ConstantOn(1.0, "a"));
+            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a", "abc", "d")
+                .Sum(StringAutomaton.ConstantOn(1.0, "a"));
             StringAutomaton automaton2 = StringAutomaton.Constant(3.0);
             StringAutomaton product = automaton1.Product(automaton2);
             Assert.False(product.IsZero());
@@ -393,37 +393,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests that the output of Append has the same LogValueOverride
-        /// and PruneStatesWithLogEndWeightLessThan values as the instance it was invoked on.
-        /// </summary>
-        [Fact]
-        [Trait("Category", "StringInference")]
-        public void AppendPreservesProperties()
-        {
-            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a", "ab", "c");
-            StringAutomaton automaton2 = StringAutomaton.ConstantOn(3.0, "b", string.Empty, "c");
-
-            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
-                automaton1,
-                x => x.Append(automaton2));
-        }
-
-        /// <summary>
-        /// Tests appending to an automaton with a singleton support.
-        /// </summary>
-        [Fact]
-        [Trait("Category", "StringInference")]
-        public void AppendToPoint()
-        {
-            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a");
-            StringAutomaton automaton2 = StringAutomaton.ConstantOn(3.0, "b", string.Empty);
-            StringAutomaton concat = automaton1.Append(automaton2);
-            Assert.False(concat.IsZero());
-            StringInferenceTestUtilities.TestValue(concat, 6.0, "ab", "a");
-            StringInferenceTestUtilities.TestValue(concat, 0.0, "b", string.Empty);
-        }
-
-        /// <summary>
         /// Tests automaton appending, also known as the Cauchy product.
         /// </summary>
         [Fact]
@@ -444,6 +413,37 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestValue(concat, 108.0, "abcc");
             StringInferenceTestUtilities.TestValue(concat, 36.0, "aa", "aac");
             StringInferenceTestUtilities.TestValue(concat, 0.0, "b", string.Empty);
+        }
+
+        /// <summary>
+        /// Tests appending to an automaton with a singleton support.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void AppendToPoint()
+        {
+            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a");
+            StringAutomaton automaton2 = StringAutomaton.ConstantOn(3.0, "b", string.Empty);
+            StringAutomaton concat = automaton1.Append(automaton2);
+            Assert.False(concat.IsZero());
+            StringInferenceTestUtilities.TestValue(concat, 6.0, "ab", "a");
+            StringInferenceTestUtilities.TestValue(concat, 0.0, "b", string.Empty);
+        }
+
+        /// <summary>
+        /// Tests that the output of Append has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the instance it was invoked on.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void AppendPreservesProperties()
+        {
+            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a", "ab", "c");
+            StringAutomaton automaton2 = StringAutomaton.ConstantOn(3.0, "b", string.Empty, "c");
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton1,
+                x => x.Append(automaton2));
         }
 
         /// <summary>
@@ -701,7 +701,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void NormalizeClosurePreservesProperties()
+        public void NormalizePreservesProperties()
         {
 
             StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "a", "bc", "d");
@@ -1182,8 +1182,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString6()
         {
-            StringAutomaton automaton = StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Lower());
-            automaton = automaton.Append(StringAutomaton.Constant(2.0));
+            StringAutomaton automaton = StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Lower())
+                .Append(StringAutomaton.Constant(2.0));
             Assert.Equal("?*", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("[a-z]*.*", automaton.ToString(AutomatonFormats.Regexp));
         }
@@ -1209,9 +1209,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString8()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOnElement(1.0, 'a');
-            automaton = automaton.Append(StringAutomaton.ConstantOnElement(2.0, ImmutableDiscreteChar.Upper()));
-            automaton = automaton.Append(StringAutomaton.ConstantOnElement(1.0, 'b'));
+            StringAutomaton automaton = StringAutomaton.ConstantOnElement(1.0, 'a')
+                .Append(StringAutomaton.ConstantOnElement(2.0, ImmutableDiscreteChar.Upper()))
+                .Append(StringAutomaton.ConstantOnElement(1.0, 'b'));
             Assert.Equal("a?b", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("a[A-Z]b", automaton.ToString(AutomatonFormats.Regexp));
         }
@@ -1224,11 +1224,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString9()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Digit());
-            automaton = automaton.Append(StringAutomaton.ConstantOnElement(2.0, ImmutableDiscreteChar.Upper()));
-            automaton = automaton.Append(StringAutomaton.Sum(
-                StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Lower()),
-                StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Digit())));
+            StringAutomaton automaton = StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Digit())
+                .Append(StringAutomaton.ConstantOnElement(2.0, ImmutableDiscreteChar.Upper()))
+                .Append(StringAutomaton.Sum(
+                    StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Lower()),
+                    StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Digit())));
             Assert.Equal("???", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("[0-9][A-Z]([a-z]|[0-9])", automaton.ToString(AutomatonFormats.Regexp));
         }
@@ -1240,11 +1240,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString10()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "ab");
-            automaton = automaton.Append(StringAutomaton.Sum(
-                StringAutomaton.ConstantOn(1.0, "cd"),
-                StringAutomaton.ConstantOn(1.0, "ef"),
-                StringAutomaton.ConstantOn(1.0, string.Empty)));
+            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "ab")
+                .Append(StringAutomaton.Sum(
+                    StringAutomaton.ConstantOn(1.0, "cd"),
+                    StringAutomaton.ConstantOn(1.0, "ef"),
+                    StringAutomaton.ConstantOn(1.0, string.Empty)));
             
             Assert.Equal("ab[ef|cd]", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("ab(|ef|cd)", automaton.ToString(AutomatonFormats.Regexp));
@@ -2461,14 +2461,14 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         #endregion
 
-        #region SetToConstantOnSupportOf
+        #region ConstantOnSupport
 
         /// <summary>
-        /// Tests setting an automaton to be constant on the support of another automaton.
+        /// Tests creating an automaton constant on the support of another automaton.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantOnSupportOf1()
+        public void ConstantOnSupport1()
         {
             StringAutomaton nonUniform = StringAutomaton.ConstantOn(1.0, "a", "a", "a", "b", "b", "c");
             StringAutomaton uniform = StringAutomaton.ConstantOn(1.0, "a", "b", "c");
@@ -2481,15 +2481,15 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests setting an automaton to be constant on the support of another automaton.
+        /// Tests creating an automaton constant on the support of another automaton.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantOnSupportOf2()
+        public void ConstantOnSupport2()
         {
-            StringAutomaton nonUniform = StringAutomaton.ConstantOn(2.0, string.Empty, "a", "aa");
-            nonUniform = nonUniform.Append(StringAutomaton.ConstantOn(3.0, string.Empty, "a", "aa"));
-            nonUniform = nonUniform.Sum(StringAutomaton.ConstantOn(5.0, string.Empty, "a", "aa"));
+            StringAutomaton nonUniform = StringAutomaton.ConstantOn(2.0, string.Empty, "a", "aa")
+                .Append(StringAutomaton.ConstantOn(3.0, string.Empty, "a", "aa"))
+                .Sum(StringAutomaton.ConstantOn(5.0, string.Empty, "a", "aa"));
 
             StringAutomaton uniform = StringAutomaton.ConstantOn(1.0, string.Empty, "a", "aa", "aaa", "aaaa");
 
@@ -2501,17 +2501,17 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests setting an automaton to be constant on the support of another automaton.
+        /// Tests creating an automaton constant on the support of another automaton.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantOnSupportOf3()
+        public void ConstantOnSupport3()
         {
             StringAutomaton constantOnChar = StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Lower());
             
-            StringAutomaton nonUniform = StringAutomaton.Repeat(constantOnChar, 1, 3);
-            nonUniform = nonUniform.Sum(StringAutomaton.Repeat(constantOnChar, 0, 2));
-            nonUniform = nonUniform.Sum(StringAutomaton.Repeat(StringAutomaton.ConstantOn(1.0, "a"), 0, 3));
+            StringAutomaton nonUniform = StringAutomaton.Repeat(constantOnChar, 1, 3)
+                .Sum(StringAutomaton.Repeat(constantOnChar, 0, 2))
+                .Sum(StringAutomaton.Repeat(StringAutomaton.ConstantOn(1.0, "a"), 0, 3));
             nonUniform = nonUniform.Product(nonUniform);
 
             StringAutomaton uniform = StringAutomaton.Repeat(constantOnChar, 0, 3);
@@ -2524,11 +2524,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests that SetToConstantSupportOf() Doesn't throw low probability transitions out.
+        /// Tests that ConstantSupport() Doesn't throw low probability transitions out.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantSupportOfWithLowProbabilityTransition1()
+        public void ConstantSupportWithLowProbabilityTransition1()
         {
             var builder = new StringAutomaton.Builder(1);
             builder.Start
@@ -2540,11 +2540,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests that SetToConstantSupportOf() Doesn't throw low probability transitions out.
+        /// Tests that ConstantSupport() Doesn't throw low probability transitions out.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantSupportOfWithMultipleLowProbabilityTransitions()
+        public void ConstantSupportWithMultipleLowProbabilityTransitions()
         {
             var builder = new StringAutomaton.Builder(1);
             builder.Start
