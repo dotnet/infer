@@ -175,21 +175,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="sequenceToWeight">The weight function specifying the distribution.</param>
         /// <returns>The created distribution.</returns>
-        [Construction(nameof(GetWorkspaceOrPoint), UseWhen = nameof(UsesAutomatonRepresentation))]
-        public static TThis FromWeightFunction(TAutomaton sequenceToWeight)
-        {
-            Argument.CheckIfNotNull(sequenceToWeight, nameof(sequenceToWeight));
-
-            return FromWorkspace(sequenceToWeight);
-        }
-
-        /// <summary>
-        /// Creates a distribution from a given weight (non-normalized probability) function.
-        /// </summary>
-        /// <param name="sequenceToWeight">The weight function specifying the distribution.</param>
-        /// <returns>The created distribution.</returns>
         [Construction(nameof(GetWeightFunction))]
-        public static TThis FromWeightFunction(TWeightFunction sequenceToWeight)
+        public static TThis FromWorkspace(TWeightFunction sequenceToWeight)
         {
             Argument.CheckIfNotNull(sequenceToWeight, nameof(sequenceToWeight));
 
@@ -199,15 +186,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Creates a distribution which will use a given weight function as a workspace.
-        /// Any modifications to the workspace after the distribution has been created
-        /// would put the distribution into an invalid state.
+        /// Creates a distribution from a given weight (non-normalized probability) function.
         /// </summary>
         /// <param name="workspace">The workspace to create the distribution from.</param>
         /// <returns>The created distribution.</returns>
+        [Construction(nameof(GetWorkspaceOrPoint), UseWhen = nameof(UsesAutomatonRepresentation))]
         public static TThis FromWorkspace(TAutomaton workspace)
         {
-            Argument.CheckIfNotNull(workspace, "workspace");
+            Argument.CheckIfNotNull(workspace, nameof(workspace));
 
             var result = new TThis();
             result.SetWorkspace(workspace);
@@ -530,7 +516,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             double logNormalizer = -dist.GetLogAverageOf(dist);
 
-            return FromWeightFunction(dist.sequenceToWeight.ScaleLog(logNormalizer).Repeat(minTimes, maxTimes));
+            return FromWorkspace(dist.sequenceToWeight.ScaleLog(logNormalizer).Repeat(minTimes, maxTimes));
         }
 
         /// <summary>
@@ -876,28 +862,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Replaces the current distribution by a distribution induced by a given automaton.
-        /// </summary>
-        /// <param name="newSequenceToWeight">The automaton mapping sequences to weights.</param>
-        public void SetWeightFunction(TAutomaton newSequenceToWeight)
-        {
-            Argument.CheckIfNotNull(newSequenceToWeight, nameof(newSequenceToWeight));
-
-            this.SetWorkspace(newSequenceToWeight);
-        }
-
-        /// <summary>
-        /// Replaces the current distribution by a distribution induced by a given weight function.
-        /// </summary>
-        /// <param name="newSequenceToWeight">The function mapping sequences to weights.</param>
-        public void SetWeightFunction(TWeightFunction newSequenceToWeight)
-        {
-            Argument.CheckIfNotNull(newSequenceToWeight, nameof(newSequenceToWeight));
-
-            SetWorkspace(newSequenceToWeight);
-        }
-
-        /// <summary>
         /// Replaces the workspace (weight function) of the current distribution with a given one.
         /// </summary>
         /// <param name="workspace">The workspace to replace the current one with.</param>
@@ -907,7 +871,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// and the workspace would be set to <see langword="null"/>.
         /// Any modifications of the workspace will put the distribution into an undefined state.
         /// </remarks>
-        public void SetWorkspace(TAutomaton workspace, bool normalizeStructure=true)
+        public void SetWorkspace(TAutomaton workspace, bool normalizeStructure = true)
         {
             Argument.CheckIfNotNull(workspace, nameof(workspace));
 
@@ -944,39 +908,53 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Returns the underlying weight function, or, if the distribution is a point mass,
-        /// a functional representation of the corresponding point.
-        /// Any modifications of the returned function will put the distribution into an undefined state.
+        /// Returns an automaton representing the underlying weight function.
         /// </summary>
         /// <remarks>
         /// The returned weight function might differ from the probability function by an arbitrary scale factor.
         /// To ensure that the workspace is normalized, use <see cref="GetNormalizedWorkspaceOrPoint"/>.
         /// </remarks>
-        /// <returns>The underlying weight function or a functional representation of the point.</returns>
+        /// <returns>An automaton representing the underlying weight function.</returns>
         public TAutomaton GetWorkspaceOrPoint()
         {
             return sequenceToWeight.AsAutomaton();
         }
 
         /// <summary>
-        /// Returns the underlying weight function, or, if the distribution is a point mass,
-        /// a functional representation of the corresponding point.
-        /// Any modifications of the returned function will put the distribution into an undefined state.
+        /// Returns an automaton representing the underlying weight function.
         /// </summary>
         /// <remarks>
         /// The returned weight function is guaranteed to be normalized.
         /// If you don't care about an arbitrary scale factor, 
         /// consider using <see cref="GetWorkspaceOrPoint"/> which has less overhead.
         /// </remarks>
-        /// <returns>The underlying weight function or a functional representation of the point.</returns>
+        /// <returns>An automaton representing the underlying weight function.</returns>
         public TAutomaton GetNormalizedWorkspaceOrPoint()
         {
             this.EnsureNormalized();
             return this.GetWorkspaceOrPoint();
         }
 
+        /// <summary>
+        /// Returns the underlying weight function.
+        /// </summary>
+        /// <remarks>
+        /// The returned weight function might differ from the probability function by an arbitrary scale factor.
+        /// To ensure that the workspace is normalized, use <see cref="GetNormalizedWeightFunction"/>.
+        /// </remarks>
+        /// <returns>The underlying weight function.</returns>
         public TWeightFunction GetWeightFunction() => sequenceToWeight;
 
+
+        /// <summary>
+        /// Returns the underlying weight function.
+        /// </summary>
+        /// <remarks>
+        /// The returned weight function is guaranteed to be normalized.
+        /// If you don't care about an arbitrary scale factor, 
+        /// consider using <see cref="GetWeightFunction"/> which has less overhead.
+        /// </remarks>
+        /// <returns>The underlying weight function.</returns>
         public TWeightFunction GetNormalizedWeightFunction()
         {
             EnsureNormalized();
@@ -1096,7 +1074,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public Dictionary<int, TThis> GetGroups()
         {
             // TODO: get rid of groups or do something about groups + point mass combo
-            return this.sequenceToWeight.GetGroups().ToDictionary(x => x.Key, x => FromWeightFunction(x.Value));
+            return this.sequenceToWeight.GetGroups().ToDictionary(x => x.Key, x => FromWorkspace(x.Value));
         }
 
         #endregion
@@ -1438,8 +1416,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 var theConverger =
                     Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.GetConverger(weightFunction);
                 var properWeightFunction = weightFunction.Product(theConverger);
-                properDist = this.Clone();
-                properDist.SetWeightFunction(properWeightFunction);
+                properDist = FromWorkspace(properWeightFunction);
             }
 
             return SampleFromProperDistribution(properDist);

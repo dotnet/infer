@@ -2196,7 +2196,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             // "cx" vanishes from automaton language with naive implementation of segments overlap
             // due to numerical errors
-            var dist = StringDistribution.FromWeightFunction(automaton);
+            var dist = StringDistribution.FromWorkspace(automaton);
             StringInferenceTestUtilities.TestIfIncludes(dist, "ax", "bx", "cx", "b");
         }
 

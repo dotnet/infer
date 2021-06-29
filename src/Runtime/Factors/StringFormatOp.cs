@@ -150,7 +150,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 var weightFunction = toStr.GetWeightFunction();
                 if (weightFunction.UsesAutomatonRepresentation)
-                    toStr.SetWeightFunction(weightFunction.AsAutomaton().GetEpsilonClosure());
+                    toStr.SetWorkspace(weightFunction.AsAutomaton().GetEpsilonClosure());
             }
             return toStr;
         }
@@ -209,7 +209,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     {
                         var weightFunction = group.GetWeightFunction();
                         if (weightFunction.TryNormalizeValues(out var normalizedWeightFunction, out var _))
-                            group.SetWeightFunction(normalizedWeightFunction);
+                            group.SetWorkspace(normalizedWeightFunction);
                     }
 
                     result[i] = group;

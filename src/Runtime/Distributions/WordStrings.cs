@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             var otherState2 = otherState1.AddTransition(endsWith, Weight.FromLogValue(-endsWith.GetLogAverageOf(endsWith)));
             otherState2.SetEndWeight(Weight.One);
 
-            return StringDistribution.FromWeightFunction(result.GetAutomaton());
+            return StringDistribution.FromWorkspace(result.GetAutomaton());
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             otherState.AddSelfTransition(charsInMainString, Weight.FromLogValue(-charsInMainString.GetLogAverageOf(charsInMainString)));
             otherState.SetEndWeight(Weight.One);
 
-            return StringDistribution.FromWeightFunction(result.GetAutomaton());
+            return StringDistribution.FromWorkspace(result.GetAutomaton());
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     Weight.FromLogValue(-nonWordCharacter.Value.GetLogAverageOf(nonWordCharacter.Value)));
             otherState2.SetEndWeight(Weight.One);
 
-            return StringDistribution.FromWeightFunction(result.GetAutomaton());
+            return StringDistribution.FromWorkspace(result.GetAutomaton());
         }
 
         /// <summary>

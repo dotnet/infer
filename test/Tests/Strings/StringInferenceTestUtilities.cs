@@ -338,7 +338,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             if (stringDistribution.IsPointMass) return StringDistribution.String(stringDistribution.Point);
             var clonedAutomaton = Clone(stringDistribution.GetWorkspaceOrPoint());
             var dist = new StringDistribution();
-            dist.SetWeightFunction(clonedAutomaton);
+            dist.SetWorkspace(clonedAutomaton);
             return dist;
         }
         #endregion
