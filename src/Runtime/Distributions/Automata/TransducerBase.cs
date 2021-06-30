@@ -420,12 +420,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
-                        // In the special case of a log probability override in a DiscreteChar element distribution,
+                        // In the special case of a log probability override in an ImmutableDiscreteChar element distribution,
                         // we need to compensate for the fact that the distribution is not normalized.
                         if (destElementDistribution.HasValue && sourceDistributionHasLogProbabilityOverrides)
                         {
                             var discreteChar =
-                                (DiscreteChar)(IDistribution<char>)srcTransition.ElementDistribution.Value;
+                                (ImmutableDiscreteChar)(IImmutableDistribution<char, ImmutableDiscreteChar>)srcTransition.ElementDistribution.Value;
                             if (discreteChar.HasLogProbabilityOverride)
                             {
                                 var totalMass = discreteChar.Ranges.EnumerableSum(rng =>
