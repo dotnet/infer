@@ -657,7 +657,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             double logNormalizer = automaton.GetLogNormalizer();
             Assert.Equal(Math.Log(EndWeight / (1 - TransitionProbability)), logNormalizer, 1e-8);
-            Assert.Equal(logNormalizer, automaton.NormalizeValues(out automaton));
+            Assert.True(automaton.TryNormalizeValues(out automaton, out var computedLogNormalizer));
+            Assert.Equal(logNormalizer, computedLogNormalizer);
             StringInferenceTestUtilities.TestValue(automaton, 1 - TransitionProbability, string.Empty);
             StringInferenceTestUtilities.TestValue(automaton, TransitionProbability * (1 - TransitionProbability), "a");
             StringInferenceTestUtilities.TestValue(automaton, TransitionProbability * TransitionProbability * (1 - TransitionProbability), "aa");
@@ -716,11 +717,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
                 automaton,
-                x =>
-                {
-                    x.NormalizeValues(out var normalized);
-                    return normalized;
-                });
+                x => x.NormalizeValues());
         }
 
         /// <summary>
@@ -2576,7 +2573,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automatonBefore = automaton.Clone();
             Assert.Equal(zeroNormalizer ? double.NegativeInfinity : double.PositiveInfinity, automaton.GetLogNormalizer());
             Assert.False(automaton.TryNormalizeValues(out automaton));
-            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues(out automaton));
+            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues());
             Assert.Equal(automaton, automatonBefore); // Failed normalization should not affect the automaton
         }
 

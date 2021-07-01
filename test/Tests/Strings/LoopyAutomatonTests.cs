@@ -406,7 +406,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var automaton = builder.GetAutomaton();
 
-            double logNormalizer = automaton.NormalizeValues(out var normalizedAutomaton);
+            Assert.True(automaton.TryNormalizeValues(out var normalizedAutomaton, out var logNormalizer));
             
             Assert.Equal(Math.Log(50.0), logNormalizer, 1e-6);
             Assert.Equal(Math.Log(50.0), GetLogNormalizerByGetValue(automaton), 1e-6);
@@ -500,7 +500,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
-            Assert.Throws<InvalidOperationException>(() => copyOfAutomaton.NormalizeValues(out var _));
+            Assert.Throws<InvalidOperationException>(() => copyOfAutomaton.NormalizeValues());
             Assert.False(copyOfAutomaton.TryNormalizeValues(out var _));
             ////Assert.Equal(f, copyOfF); // TODO: fix equality first
         }
@@ -523,7 +523,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
-            Assert.Throws<InvalidOperationException>(() => copyOfAutomaton.NormalizeValues(out var _));
+            Assert.Throws<InvalidOperationException>(() => copyOfAutomaton.NormalizeValues());
             Assert.False(copyOfAutomaton.TryNormalizeValues(out var _));
             ////Assert.Equal(f, copyOfF); // TODO: fix equality first
         }
@@ -542,7 +542,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
-            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues(out var _));
+            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues());
             Assert.False(copyOfAutomaton.TryNormalizeValues(out var _));
             ////Assert.Equal(f, copyOfF); // TODO: fix equality first
         }
@@ -565,7 +565,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
-            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues(out var _));
+            Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues());
             Assert.False(copyOfAutomaton.TryNormalizeValues(out var _));
             ////Assert.Equal(f, copyOfF); // TODO: fix equality first
         }

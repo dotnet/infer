@@ -1036,18 +1036,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Normalizes the automaton so that the sum of its values over all possible sequences equals to one
         /// and returns the logarithm of the normalizer.
         /// </summary>
-        /// <param name="result">Will be set to the normalized automaton if the normalization was successful, or to the current automaton otherwise.</param>
-        /// <returns>The logarithm of the normalizer.</returns>
+        /// <returns>Will be set to the normalized automaton if the normalization was successful, or to the current automaton otherwise.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the automaton cannot be normalized (i.e. if the normalizer is zero or positive infinity).</exception>
         /// <remarks>The only automaton which cannot be normalized, but has a finite normalizer, is zero.</remarks>
-        public double NormalizeValues(out TThis result)
+        public TThis NormalizeValues()
         {
-            if (!TryNormalizeValues(out result, out double logNormalizer))
+            if (!TryNormalizeValues(out var result))
             {
                 throw new InvalidOperationException("This automaton cannot be normalized.");
             }
 
-            return logNormalizer;
+            return result;
         }
 
         /// <summary>
