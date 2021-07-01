@@ -1794,11 +1794,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
                 automaton,
-                x =>
-                {
-                    x.RemoveDeadStates(out var simplified);
-                    return simplified;
-                });
+                x => x.RemoveDeadStates());
         }
 
         /// <summary>

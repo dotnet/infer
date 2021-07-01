@@ -792,7 +792,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="automaton">The automaton.</param>
         private static void AssertStochastic(StringAutomaton automaton)
         {
-            automaton.RemoveDeadStates(out var automatonClone);
+            var automatonClone = automaton.RemoveDeadStates();
 
             for (int i = 0; i < automatonClone.States.Count; ++i)
             {
