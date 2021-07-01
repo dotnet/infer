@@ -158,7 +158,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             if (group != 0)
             {
-                result.sequencePairToWeight = result.sequencePairToWeight.WithGroupSet(0);
+                result.sequencePairToWeight = result.sequencePairToWeight.WithGroup(0);
             }
 
             return result;

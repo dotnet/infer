@@ -996,13 +996,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Creates a copy of the current automaton with the group for all transitions cleared.
         /// </summary>
-        public TThis WithGroupsClear() => WithGroupSet(0);
+        public TThis WithGroupsClear() => WithGroup(0);
 
         /// <summary>
         /// Creates a copy of the current automaton with all transitions set to have the specified group.
         /// </summary>
         /// <param name="group">The specified group.</param>
-        public TThis WithGroupSet(int group)
+        public TThis WithGroup(int group)
         {
             if (group == 0 && !this.UsesGroups)
             {

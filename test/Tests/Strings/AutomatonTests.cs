@@ -1087,9 +1087,9 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
                 automaton,
-                x => x.WithGroupSet(3));
+                x => x.WithGroup(3));
 
-            var automatonWithGroup = automaton.WithGroupSet(3);
+            var automatonWithGroup = automaton.WithGroup(3);
 
             StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
                 automatonWithGroup,
