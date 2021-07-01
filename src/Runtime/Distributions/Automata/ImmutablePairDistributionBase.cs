@@ -50,9 +50,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public Option<TElementDistribution2> Second { get; protected set; }
 
-        /// <summary>
-        /// Gets a value indicating whether the current distribution represents a point mass.
-        /// </summary>
         public bool IsPointMass =>
             this.First.HasValue && this.First.Value.IsPointMass &&
             this.Second.HasValue && this.Second.Value.IsPointMass;
@@ -152,15 +149,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return logAverageOf;
         }
 
-        /// <summary>
-        /// Checks whether the current distribution is uniform.
-        /// </summary>
-        /// <returns><see langword="true"/> if the current distribution is uniform, <see langword="false"/> otherwise.</returns>
         public virtual bool IsUniform() => this.First.Value.IsUniform() && this.Second.Value.IsUniform();
 
-        /// <summary>
-        /// Replaces the current distribution with a uniform distribution.
-        /// </summary>
         public virtual TThis CreateUniform() => new TThis()
         {
             First = ElementDistribution1Factory.CreateUniform(),
@@ -194,28 +184,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created copy.</returns>
         public virtual object Clone() => this; // The type is immutable
 
-        /// <summary>
-        /// Gets the maximum difference between the parameters of this distribution and a given one.
-        /// </summary>
-        /// <param name="that">The other distribution.</param>
-        /// <returns>The maximum difference.</returns>
-        /// <remarks>Not currently implemented.</remarks>
         public abstract double MaxDiff(object that);
 
-        /// <summary>
-        /// Gets the logarithm of the probability of a given element pair under this distribution.
-        /// </summary>
-        /// <param name="pair">The pair to get the probability for.</param>
-        /// <returns>The logarithm of the probability of the pair.</returns>
-        /// <remarks>Not currently implemented.</remarks>
         public abstract double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair);
 
-        /// <summary>
-        /// Returns the logarithm of the probability that the current distribution would draw the same sample
-        /// as a given one.
-        /// </summary>
-        /// <param name="that">The given distribution.</param>
-        /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
         public virtual double GetLogAverageOf(TThis that)
         {
             Argument.CheckIfValid(
@@ -244,19 +216,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         public abstract TThis Sum(double weightThis, TThis other, double weightOther);
 
-        /// <summary>
-        /// Sets the distribution to be uniform over its support.
-        /// </summary>
         public virtual TThis CreatePartialUniform() => new TThis()
         {
             First = First.HasValue ? Option.Some(First.Value.CreatePartialUniform()) : Option.None,
             Second = Second.HasValue ? Option.Some(Second.Value.CreatePartialUniform()) : Option.None
         };
 
-        /// <summary>
-        /// Checks whether the distribution is uniform over its support.
-        /// </summary>
-        /// <returns><see langword="true"/> if the distribution is uniform over its support, <see langword="false"/> otherwise.</returns>
         public virtual bool IsPartialUniform()
         {
             return

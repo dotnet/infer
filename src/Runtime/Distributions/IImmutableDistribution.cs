@@ -56,9 +56,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         TDist CreateUniform();
 
         /// <summary>
-        /// Ask whether the distribution instance is uniform
+        /// Checks whether the current distribution is uniform.
         /// </summary>
-        /// <returns>True if uniform</returns>
+        /// <returns><see langword="true"/> if the current distribution is uniform, <see langword="false"/> otherwise.</returns>
         bool IsUniform();
     }
 
@@ -79,7 +79,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Checks whether the distribution is uniform over its support.
         /// </summary>
-        /// <returns>True if the distribution is uniform over its support, false otherwise.</returns>
+        /// <returns><see langword="true"/> if the distribution is uniform over its support, <see langword="false"/> otherwise.</returns>
         bool IsPartialUniform();
     }
 

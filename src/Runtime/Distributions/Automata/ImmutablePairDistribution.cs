@@ -34,21 +34,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return ImmutablePairDistribution<TElement2, TElementDistribution2, TElement1, TElementDistribution1>.FromFirstSecond(this.Second, this.First);
         }
 
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
         public override double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
         public override double MaxDiff(object that)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
         public override ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> Product(ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> other)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
         public override ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> Sum(double weightThis, ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> other, double weightOther)
         {
             throw new NotImplementedException();
@@ -204,10 +212,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return base.ProjectFirst(first, out result);
         }
 
-        /// <summary>
-        /// Checks whether the current distribution is uniform.
-        /// </summary>
-        /// <returns><see langword="true"/> if the current distribution is uniform, <see langword="false"/> otherwise.</returns>
         public override bool IsUniform()
         {
             return !this.HasEqualityConstraint && base.IsUniform();
@@ -236,12 +240,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return base.ToString();
         }
 
-        /// <summary>
-        /// Returns the logarithm of the probability that the current distribution would draw the same sample
-        /// as a given one.
-        /// </summary>
-        /// <param name="that">The given distribution.</param>
-        /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
         public override double GetLogAverageOf(ImmutablePairDistribution<TElement, TElementDistribution> that)
         {
             Argument.CheckIfNotNull(that, nameof(that));
@@ -293,21 +291,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             };
         }
 
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
         public override double MaxDiff(object that)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
         public override double GetLogProb(Pair<Option<TElement>, Option<TElement>> pair)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
         public override ImmutablePairDistribution<TElement, TElementDistribution> Product(ImmutablePairDistribution<TElement, TElementDistribution> other)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
         public override ImmutablePairDistribution<TElement, TElementDistribution> Sum(double weightThis, ImmutablePairDistribution<TElement, TElementDistribution> other, double weightOther)
         {
             throw new NotImplementedException();
