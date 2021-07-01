@@ -27,8 +27,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// <typeparam name="TThis">The type of a concrete transducer class.</typeparam>
     public abstract class Transducer<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, TThis> :
         TransducerBase<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, ImmutablePairDistribution<TSrcElement, TSrcElementDistribution, TDestElement, TDestElementDistribution>, TThis>
-        where TSrcElementDistribution : IImmutableDistribution<TSrcElement, TSrcElementDistribution>, CanGetLogAverageOf<TSrcElementDistribution>, CanComputeProduct<TSrcElementDistribution>, CanCreatePartialUniform<TSrcElementDistribution>, CanComputeWeightedSumExact<TSrcElementDistribution>, Sampleable<TSrcElement>, new()
-        where TDestElementDistribution : IImmutableDistribution<TDestElement, TDestElementDistribution>, CanGetLogAverageOf<TDestElementDistribution>, CanComputeProduct<TDestElementDistribution>, CanCreatePartialUniform<TDestElementDistribution>, CanComputeWeightedSumExact<TDestElementDistribution>, Sampleable<TDestElement>, new()
+        where TSrcElementDistribution : IImmutableDistribution<TSrcElement, TSrcElementDistribution>, CanGetLogAverageOf<TSrcElementDistribution>, CanComputeProduct<TSrcElementDistribution>, CanCreatePartialUniform<TSrcElementDistribution>, SummableExactly<TSrcElementDistribution>, Sampleable<TSrcElement>, new()
+        where TDestElementDistribution : IImmutableDistribution<TDestElement, TDestElementDistribution>, CanGetLogAverageOf<TDestElementDistribution>, CanComputeProduct<TDestElementDistribution>, CanCreatePartialUniform<TDestElementDistribution>, SummableExactly<TDestElementDistribution>, Sampleable<TDestElement>, new()
         where TSrcSequence : class, IEnumerable<TSrcElement>
         where TDestSequence : class, IEnumerable<TDestElement>
         where TSrcSequenceManipulator : ISequenceManipulator<TSrcSequence, TSrcElement>, new()
@@ -76,7 +76,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// <typeparam name="TThis">The type of a concrete transducer class.</typeparam>
     public abstract class Transducer<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis> :
         TransducerBase<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, ImmutablePairDistribution<TElement, TElementDistribution>, TThis>
-        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, Sampleable<TElement>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, Sampleable<TElement>, new()
         where TSequence : class, IEnumerable<TElement>
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()

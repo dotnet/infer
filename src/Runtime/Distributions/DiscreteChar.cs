@@ -505,22 +505,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public void SetToProduct(ImmutableDiscreteChar a, ImmutableDiscreteChar b)
         {
-            WrappedDistribution = a.Product(b);
+            WrappedDistribution = a.Multiply(b);
         }
 
         public void SetToProduct(DiscreteChar a, DiscreteChar b)
         {
-            WrappedDistribution = a.WrappedDistribution.Product(b.WrappedDistribution);
+            WrappedDistribution = a.WrappedDistribution.Multiply(b.WrappedDistribution);
         }
 
         public void SetToProduct(ImmutableDiscreteChar a, DiscreteChar b)
         {
-            WrappedDistribution = a.Product(b.WrappedDistribution);
+            WrappedDistribution = a.Multiply(b.WrappedDistribution);
         }
 
         public void SetToProduct(DiscreteChar a, ImmutableDiscreteChar b)
         {
-            WrappedDistribution = a.WrappedDistribution.Product(b);
+            WrappedDistribution = a.WrappedDistribution.Multiply(b);
         }
 
         #endregion
@@ -529,22 +529,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public void SetToRatio(ImmutableDiscreteChar a, ImmutableDiscreteChar b, bool forceProper = false)
         {
-            WrappedDistribution = a.Ratio(b, forceProper);
+            WrappedDistribution = a.Divide(b, forceProper);
         }
 
         public void SetToRatio(DiscreteChar a, DiscreteChar b, bool forceProper = false)
         {
-            WrappedDistribution = a.WrappedDistribution.Ratio(b.WrappedDistribution, forceProper);
+            WrappedDistribution = a.WrappedDistribution.Divide(b.WrappedDistribution, forceProper);
         }
 
         public void SetToRatio(ImmutableDiscreteChar a, DiscreteChar b, bool forceProper = false)
         {
-            WrappedDistribution = a.Ratio(b.WrappedDistribution, forceProper);
+            WrappedDistribution = a.Divide(b.WrappedDistribution, forceProper);
         }
 
         public void SetToRatio(DiscreteChar a, ImmutableDiscreteChar b, bool forceProper = false)
         {
-            WrappedDistribution = a.WrappedDistribution.Ratio(b, forceProper);
+            WrappedDistribution = a.WrappedDistribution.Divide(b, forceProper);
         }
 
         #endregion
@@ -553,12 +553,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public void SetToPower(ImmutableDiscreteChar value, double exponent)
         {
-            WrappedDistribution = value.Power(exponent);
+            WrappedDistribution = value.Pow(exponent);
         }
 
         public void SetToPower(DiscreteChar value, double exponent)
         {
-            WrappedDistribution = value.WrappedDistribution.Power(exponent);
+            WrappedDistribution = value.WrappedDistribution.Pow(exponent);
         }
 
         #endregion
@@ -666,7 +666,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         CanComputeProduct<ImmutableDiscreteChar>,
         CanComputeRatio<ImmutableDiscreteChar>,
         CanComputePower<ImmutableDiscreteChar>,
-        CanComputeWeightedSumExact<ImmutableDiscreteChar>,
+        SummableExactly<ImmutableDiscreteChar>,
         Sampleable<char>,
         ISerializable,
         IEquatable<ImmutableDiscreteChar>
@@ -1127,7 +1127,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </returns>
         public double GetLogProb(char value) => FindProb(value).LogValue;
 
-        public ImmutableDiscreteChar Product(ImmutableDiscreteChar other)
+        public ImmutableDiscreteChar Multiply(ImmutableDiscreteChar other)
         {
             if (IsPointMass && other.IsPointMass)
             {
@@ -1296,7 +1296,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return true;
         }
 
-        public ImmutableDiscreteChar Ratio(ImmutableDiscreteChar denominator, bool forceProper = false)
+        public ImmutableDiscreteChar Divide(ImmutableDiscreteChar denominator, bool forceProper = false)
         {
             var builder = StorageBuilder.Create();
 
@@ -1309,7 +1309,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return new ImmutableDiscreteChar(builder.GetResult());
         }
 
-        public ImmutableDiscreteChar Power(double power)
+        public ImmutableDiscreteChar Pow(double power)
         {
             if (power == 0)
             {

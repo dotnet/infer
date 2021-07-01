@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </p>
     /// </remarks>
     public abstract class ImmutablePairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis> :
-        IImmutableDistribution<Pair<Option<TElement1>, Option<TElement2>>, TThis>, CanGetLogAverageOf<TThis>, CanComputeProduct<TThis>, CanComputeWeightedSumExact<TThis>, CanCreatePartialUniform<TThis>
+        IImmutableDistribution<Pair<Option<TElement1>, Option<TElement2>>, TThis>, CanGetLogAverageOf<TThis>, CanComputeProduct<TThis>, SummableExactly<TThis>, CanCreatePartialUniform<TThis>
         where TElementDistribution1 : IImmutableDistribution<TElement1, TElementDistribution1>, CanGetLogAverageOf<TElementDistribution1>, CanComputeProduct<TElementDistribution1>, CanCreatePartialUniform<TElementDistribution1>, new()
         where TElementDistribution2 : IImmutableDistribution<TElement2, TElementDistribution2>, CanGetLogAverageOf<TElementDistribution2>, CanComputeProduct<TElementDistribution2>, CanCreatePartialUniform<TElementDistribution2>, new()
         where TThis : ImmutablePairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis>, new()
@@ -212,7 +212,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
-        public abstract TThis Product(TThis other);
+        public abstract TThis Multiply(TThis other);
 
         public abstract TThis Sum(double weightThis, TThis other, double weightOther);
 

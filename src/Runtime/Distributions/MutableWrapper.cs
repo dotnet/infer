@@ -71,8 +71,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         CanComputeProduct<TWrapped>,
         CanComputeRatio<TWrapped>,
         CanComputePower<TWrapped>,
-        CanComputeWeightedSum<TWrapped>,
-        CanComputeWeightedSumExact<TWrapped>,
+        Summable<TWrapped>,
+        SummableExactly<TWrapped>,
         Sampleable<TDomain>
     {
         #region Data
@@ -276,22 +276,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public void SetToProduct(TWrapped a, TWrapped b)
         {
-            WrappedDistribution = a.Product(b);
+            WrappedDistribution = a.Multiply(b);
         }
 
         public void SetToProduct(MutableWrapper<TDomain, TWrapped> a, MutableWrapper<TDomain, TWrapped> b)
         {
-            WrappedDistribution = a.WrappedDistribution.Product(b.WrappedDistribution);
+            WrappedDistribution = a.WrappedDistribution.Multiply(b.WrappedDistribution);
         }
 
         public void SetToProduct(TWrapped a, MutableWrapper<TDomain, TWrapped> b)
         {
-            WrappedDistribution = a.Product(b.WrappedDistribution);
+            WrappedDistribution = a.Multiply(b.WrappedDistribution);
         }
 
         public void SetToProduct(MutableWrapper<TDomain, TWrapped> a, TWrapped b)
         {
-            WrappedDistribution = a.WrappedDistribution.Product(b);
+            WrappedDistribution = a.WrappedDistribution.Multiply(b);
         }
 
         #endregion
@@ -300,22 +300,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public void SetToRatio(TWrapped a, TWrapped b, bool forceProper = false)
         {
-            WrappedDistribution = a.Ratio(b, forceProper);
+            WrappedDistribution = a.Divide(b, forceProper);
         }
 
         public void SetToRatio(MutableWrapper<TDomain, TWrapped> a, MutableWrapper<TDomain, TWrapped> b, bool forceProper = false)
         {
-            WrappedDistribution = a.WrappedDistribution.Ratio(b.WrappedDistribution, forceProper);
+            WrappedDistribution = a.WrappedDistribution.Divide(b.WrappedDistribution, forceProper);
         }
 
         public void SetToRatio(TWrapped a, MutableWrapper<TDomain, TWrapped> b, bool forceProper = false)
         {
-            WrappedDistribution = a.Ratio(b.WrappedDistribution, forceProper);
+            WrappedDistribution = a.Divide(b.WrappedDistribution, forceProper);
         }
 
         public void SetToRatio(MutableWrapper<TDomain, TWrapped> a, TWrapped b, bool forceProper = false)
         {
-            WrappedDistribution = a.WrappedDistribution.Ratio(b, forceProper);
+            WrappedDistribution = a.WrappedDistribution.Divide(b, forceProper);
         }
 
         #endregion
@@ -324,12 +324,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public void SetToPower(TWrapped value, double exponent)
         {
-            WrappedDistribution = value.Power(exponent);
+            WrappedDistribution = value.Pow(exponent);
         }
 
         public void SetToPower(MutableWrapper<TDomain, TWrapped> value, double exponent)
         {
-            WrappedDistribution = value.WrappedDistribution.Power(exponent);
+            WrappedDistribution = value.WrappedDistribution.Pow(exponent);
         }
 
         #endregion

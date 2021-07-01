@@ -50,7 +50,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <inheritdoc/>
         /// <remarks>Not currently implemented.</remarks>
-        public override ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> Product(ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> other)
+        public override ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> Multiply(ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> other)
         {
             throw new NotImplementedException();
         }
@@ -120,7 +120,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 HasEqualityConstraint = true,
             };
 
-            result.firstTimesSecond = result.First.Value.Product(result.Second.Value);
+            result.firstTimesSecond = result.First.Value.Multiply(result.Second.Value);
 
             return result;
         }
@@ -205,7 +205,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return double.NegativeInfinity;
                 }
                 
-                result = firstTimesSecond.Value.Product(first);
+                result = firstTimesSecond.Value.Multiply(first);
                 return logAverageOf;    
             }
 
@@ -254,7 +254,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 double result = 0;
                 var product = firstTimesSecond.Value;
                 result += product.GetLogAverageOf(that.First.Value);
-                product = product.Product(that.First.Value);
+                product = product.Multiply(that.First.Value);
                 result += product.GetLogAverageOf(that.Second.Value);
                 result -= that.First.Value.GetLogAverageOf(Second.Value);
 
@@ -270,7 +270,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             result.HasEqualityConstraint = HasEqualityConstraint;
             if (HasEqualityConstraint)
             {
-                result.firstTimesSecond = First.Value.Product(Second.Value);
+                result.firstTimesSecond = First.Value.Multiply(Second.Value);
             }
 
             return result;
@@ -307,7 +307,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <inheritdoc/>
         /// <remarks>Not currently implemented.</remarks>
-        public override ImmutablePairDistribution<TElement, TElementDistribution> Product(ImmutablePairDistribution<TElement, TElementDistribution> other)
+        public override ImmutablePairDistribution<TElement, TElementDistribution> Multiply(ImmutablePairDistribution<TElement, TElementDistribution> other)
         {
             throw new NotImplementedException();
         }

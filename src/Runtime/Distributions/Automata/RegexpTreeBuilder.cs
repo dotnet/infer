@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> automaton,
             bool collapseAlternatives = true)
             where TSequence : class, IEnumerable<TElement>
-            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, new()
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
         {
@@ -145,7 +145,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> automaton,
             bool collapseAlternatives = true)
             where TSequence : class, IEnumerable<TElement>
-            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, new()
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
         {
@@ -360,7 +360,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static RegexpTreeNode<TElement, TElementDistribution>[,] BuildStronglyConnectedComponentRegexp<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
             Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.StronglyConnectedComponent component)
             where TSequence : class, IEnumerable<TElement>
-            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, new()
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
         {

@@ -861,7 +861,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             ListAutomaton<TList, TElement, TElementDistribution>>
         .DictionaryWeightFunction<ListDictionaryWeightFunction<TList, TElement, TElementDistribution>>
         where TList : class, IList<TElement>, new()
-        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, Sampleable<TElement>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, Sampleable<TElement>, new()
     {
     }
 
@@ -882,7 +882,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             ListManipulator<List<TElement>, TElement>,
             ListAutomaton<TElement, TElementDistribution>>
         .DictionaryWeightFunction<ListDictionaryWeightFunction<TElement, TElementDistribution>>
-        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, Sampleable<TElement>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, Sampleable<TElement>, new()
     {
     }
 }

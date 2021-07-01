@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// floating point numbers would look like
     /// <code>public class A : IImmutableDistribution&lt;double, A&gt;</code></para></remarks>
     [Quality(QualityBand.Experimental)]
-    public interface IImmutableDistribution<T, TThis> : IImmutableDistribution, CanCreateUniform<TThis>, CanBePointMass<T, TThis>, CanGetLogProb<T>
+    public interface IImmutableDistribution<T, TThis> : IImmutableDistribution, CanCreateUniform<TThis>, CanCreatePointMass<T, TThis>, CanGetLogProb<T>
         where TThis : IImmutableDistribution<T, TThis>
     {
     }
@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <typeparam name="T">The type of objects in the domain, e.g. Vector or Matrix.</typeparam>
     /// <typeparam name="TDist">The type of the distribution.</typeparam>
     [Quality(QualityBand.Experimental)]
-    public interface CanBePointMass<T, out TDist>
+    public interface CanCreatePointMass<T, out TDist>
     {
         /// <summary>
         /// Access the location of a point mass.
@@ -188,7 +188,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="other">The second multiplier.</param>
         /// <returns>The product.</returns>
-        TResult Product(TOther other);
+        TResult Multiply(TOther other);
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="denominator">The denominator.</param>
         /// <param name="forceProper">If true, the result is modified to have parameters in a safe range</param>
-        TResult Ratio(TDenominator denominator, bool forceProper = false);
+        TResult Divide(TDenominator denominator, bool forceProper = false);
     }
 
     /// <summary>
@@ -241,7 +241,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Computes the value of the current instance raised to a power.
         /// </summary>
         /// <param name="exponent">The exponent.</param>
-        TDist Power(double exponent);
+        TDist Pow(double exponent);
     }
 
     /// <summary>
@@ -251,7 +251,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <typeparam name="TResult">The type of the result.</typeparam>
     /// <remarks>Typically the type of the result would be the same as the type of the current instance.</remarks>
     [Quality(QualityBand.Experimental)]
-    public interface CanComputeWeightedSum<in TOther, out TResult>
+    public interface Summable<in TOther, out TResult>
     {
         /// <summary>
         /// Computes a distribution with its parameters set to best match a mixture distribution.
@@ -270,7 +270,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <typeparam name="T">The type of the second summand and the result.</typeparam>
     /// <remarks>Typically the type of the second summand and the result would be the same as the type of the current instance.</remarks>
     [Quality(QualityBand.Experimental)]
-    public interface CanComputeWeightedSum<T> : CanComputeWeightedSum<T, T>
+    public interface Summable<T> : Summable<T, T>
     {
     }
 
@@ -281,7 +281,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <typeparam name="TResult">The type of the result.</typeparam>
     /// <remarks>Typically the type of the result would be the same as the type of the current instance.</remarks>
     [Quality(QualityBand.Experimental)]
-    public interface CanComputeWeightedSumExact<in TOther, out TResult> : CanComputeWeightedSum<TOther, TResult>
+    public interface SummableExactly<in TOther, out TResult> : Summable<TOther, TResult>
     {
     }
 
@@ -291,7 +291,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <typeparam name="T">The type of the second summand and the result.</typeparam>
     /// <remarks>Typically the type of the second summand and the result would be the same as the type of the current instance.</remarks>
     [Quality(QualityBand.Experimental)]
-    public interface CanComputeWeightedSumExact<T> : CanComputeWeightedSumExact<T, T>
+    public interface SummableExactly<T> : SummableExactly<T, T>
     {
     }
 }

@@ -61,7 +61,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> :
         WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>.IWeightFunction<TThis>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
@@ -1463,7 +1463,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
-                        var product = transition1.ElementDistribution.Value.Product(transition2.ElementDistribution.Value);
+                        var product = transition1.ElementDistribution.Value.Multiply(transition2.ElementDistribution.Value);
                         var productWeight = Weight.Product(
                             transition1.Weight, transition2.Weight, Weight.FromLogValue(productLogNormalizer));
                         var destProductStateIndex = CreateProductState(destState1, destState2);
@@ -1645,7 +1645,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="transitionTransform">The transition transformation.</param>
         public TDstAutomaton ApplyFunction<TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton>(
             Func<Option<TElementDistribution>, Weight, int, ValueTuple<Option<TDstElementDistribution>, Weight>> transitionTransform)
-            where TDstElementDistribution : IImmutableDistribution<TDstElement, TDstElementDistribution>, CanGetLogAverageOf<TDstElementDistribution>, CanComputeProduct<TDstElementDistribution>, CanCreatePartialUniform<TDstElementDistribution>, CanComputeWeightedSumExact<TDstElementDistribution>, new()
+            where TDstElementDistribution : IImmutableDistribution<TDstElement, TDstElementDistribution>, CanGetLogAverageOf<TDstElementDistribution>, CanComputeProduct<TDstElementDistribution>, CanCreatePartialUniform<TDstElementDistribution>, SummableExactly<TDstElementDistribution>, new()
             where TDstSequence : class, IEnumerable<TDstElement>
             where TDstSequenceManipulator : ISequenceManipulator<TDstSequence, TDstElement>, new()
             where TDstAutomaton : Automaton<TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton>, new()

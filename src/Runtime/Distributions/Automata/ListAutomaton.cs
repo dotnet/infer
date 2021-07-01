@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public abstract class ListAutomaton<TList, TElement, TElementDistribution, TThis>
         : Automaton<TList, TElement, TElementDistribution, ListManipulator<TList, TElement>, TThis>
         where TList : class, IList<TElement>, new()
-        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
         where TThis : ListAutomaton<TList, TElement, TElementDistribution, TThis>, new()
     {
         protected ListAutomaton()
@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public class ListAutomaton<TList, TElement, TElementDistribution>
         : ListAutomaton<TList, TElement, TElementDistribution, ListAutomaton<TList, TElement, TElementDistribution>>
         where TList : class, IList<TElement>, new()
-        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
     {
         public ListAutomaton()
         {
@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// <typeparam name="TElementDistribution">The type of a distribution over a list element.</typeparam>
     public class ListAutomaton<TElement, TElementDistribution>
         : ListAutomaton<List<TElement>, TElement, TElementDistribution, ListAutomaton<TElement, TElementDistribution>>
-        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, CanComputeWeightedSumExact<TElementDistribution>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
     {
         public ListAutomaton()
         {
