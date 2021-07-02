@@ -48,6 +48,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             #endregion
 
+            /// <summary>
+            /// Gets the only point to which the current function assigns a non-zero weight.
+            /// </summary>
             public TSequence Point
             {
                 get => point;
@@ -60,41 +63,55 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public bool IsPointMass => true;
 
+            /// <inheritdoc/>
             public bool UsesAutomatonRepresentation => false;
 
+            /// <inheritdoc/>
             public bool UsesGroups => false;
 
+            /// <inheritdoc/>
             public TAutomaton AsAutomaton() => Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.ConstantOn(1.0, point);
 
+            /// <inheritdoc/>
             public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000)
             {
                 return new List<TSequence>(new[] { point });
             }
 
+            /// <inheritdoc/>
             public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result)
             {
                 result = new List<TSequence>(new[] { point });
                 return true;
             }
 
+            /// <inheritdoc/>
             public double GetLogValue(TSequence sequence) => SequenceManipulator.SequenceEqualityComparer.Equals(point, sequence) ? 0.0 : double.NegativeInfinity;
 
+            /// <inheritdoc/>
+            /// <remarks>Not supported for <see cref="PointMassWeightFunction"/>.</remarks>
             public PointMassWeightFunction Repeat(int minTimes = 1, int? maxTimes = null)
             {
                 throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under repetition.");
             }
 
+            /// <inheritdoc/>
+            /// <remarks>Not supported for <see cref="PointMassWeightFunction"/>.</remarks>
             public PointMassWeightFunction ScaleLog(double logScale)
             {
                 throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under scaling.");
             }
 
+            /// <inheritdoc/>
             public Dictionary<int, PointMassWeightFunction> GetGroups() => new Dictionary<int, PointMassWeightFunction>();
 
+            /// <inheritdoc/>
             public double MaxDiff(PointMassWeightFunction that) => SequenceManipulator.SequenceEqualityComparer.Equals(point, that.point) ? 0.0 : Math.E;
 
+            /// <inheritdoc/>
             public bool TryNormalizeValues(out PointMassWeightFunction normalizedFunction, out double logNormalizer)
             {
                 normalizedFunction = this;
@@ -102,17 +119,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return true;
             }
 
+            /// <inheritdoc/>
             public double GetLogNormalizer() => 0;
 
+            /// <inheritdoc/>
             public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() =>
                 new List<Tuple<List<TElementDistribution>, double>> { new Tuple<List<TElementDistribution>, double>(Point.Select(el => ElementDistributionFactory.CreatePointMass(el)).ToList(), 0) };
 
+            /// <inheritdoc/>
             public bool IsZero() => false;
 
+            /// <inheritdoc/>
             public bool HasGroup(int group) => false;
 
+            /// <inheritdoc/>
             public PointMassWeightFunction NormalizeStructure() => this;
 
+            /// <inheritdoc/>
+            /// <remarks><see cref="PointMassWeightFunction"/> only supports case
+            /// <c><paramref name="group"/> == 0</c>.</remarks>
             public PointMassWeightFunction Append(TSequence sequence, int group = 0)
             {
                 Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
@@ -120,6 +145,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromPoint(SequenceManipulator.Concat(point, sequence));
             }
 
+            /// <inheritdoc/>
+            /// <remarks><see cref="PointMassWeightFunction"/> only supports case
+            /// <c><paramref name="group"/> == 0</c>.</remarks>
             public PointMassWeightFunction Append(PointMassWeightFunction weightFunction, int group = 0)
             {
                 Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
@@ -127,21 +155,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromPoint(SequenceManipulator.Concat(point, weightFunction.Point));
             }
 
+            /// <inheritdoc/>
+            /// <remarks>Not supported for <see cref="PointMassWeightFunction"/>.</remarks>
             public PointMassWeightFunction Sum(PointMassWeightFunction weightFunction)
             {
                 throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
 
+            /// <inheritdoc/>
+            /// <remarks>Not supported for <see cref="PointMassWeightFunction"/>.</remarks>
             public PointMassWeightFunction Sum(double weight1, PointMassWeightFunction weightFunction, double weight2)
             {
                 throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
 
+            /// <inheritdoc/>
+            /// <remarks>Not supported for <see cref="PointMassWeightFunction"/>.</remarks>
             public PointMassWeightFunction SumLog(double logWeight1, PointMassWeightFunction weightFunction, double logWeight2)
             {
                 throw new NotSupportedException($"{nameof(PointMassWeightFunction)} is not closed under summation.");
             }
 
+            /// <inheritdoc/>
+            /// <remarks><see cref="PointMassWeightFunction"/> only supports case
+            /// <c><paramref name="weightFunction"/> == <see langword="this"/></c>.</remarks>
             public PointMassWeightFunction Product(PointMassWeightFunction weightFunction)
             {
                 if (point == weightFunction.point)
@@ -150,8 +187,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     throw new NotSupportedException($"Can not create a zero {nameof(PointMassWeightFunction)}.");
             }
 
+            /// <inheritdoc/>
             public bool Equals(PointMassWeightFunction other) => SequenceManipulator.SequenceEqualityComparer.Equals(point, other?.point);
 
+            /// <inheritdoc/>
             public override bool Equals(object obj)
             {
                 if (obj == null || typeof(PointMassWeightFunction) != obj.GetType())
@@ -166,6 +205,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public override string ToString() => point.ToString(); // Point can not be null
 
+            /// <inheritdoc/>
             public string ToString(Action<TElementDistribution, StringBuilder> appendElement)
             {
                 if (appendElement == null)

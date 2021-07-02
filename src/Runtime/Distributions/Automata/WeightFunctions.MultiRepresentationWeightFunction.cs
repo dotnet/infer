@@ -51,6 +51,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public class Factory : IWeightFunctionFactory<MultiRepresentationWeightFunction<TDictionary>>
             {
+                /// <inheritdoc/>
                 public MultiRepresentationWeightFunction<TDictionary> ConstantLog(double logValue, TElementDistribution allowedElements)
                 {
                     if (double.IsNegativeInfinity(allowedElements.GetLogAverageOf(allowedElements)))
@@ -59,6 +60,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return FromAutomaton(automaton);
                 }
 
+                /// <inheritdoc/>
                 public MultiRepresentationWeightFunction<TDictionary> ConstantOnSupportOfLog(double logValue, MultiRepresentationWeightFunction<TDictionary> weightFunction)
                 {
                     if (weightFunction.TryEnumerateSupportInternal(MaxDictionarySize, out var support))
@@ -77,9 +79,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return FromAutomaton(automaton);
                 }
 
+                /// <inheritdoc/>
                 public MultiRepresentationWeightFunction<TDictionary> FromAutomaton(TAutomaton automaton) =>
                     MultiRepresentationWeightFunction<TDictionary>.FromAutomaton(automaton);
 
+                /// <inheritdoc/>
                 public MultiRepresentationWeightFunction<TDictionary> FromValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs)
                 {
                     var collection = sequenceWeightPairs as ICollection<KeyValuePair<TSequence, double>> ?? sequenceWeightPairs.ToList();
@@ -98,9 +102,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
+                /// <inheritdoc/>
                 public MultiRepresentationWeightFunction<TDictionary> PointMass(TSequence point) =>
                     FromPoint(point);
 
+                /// <inheritdoc/>
                 public MultiRepresentationWeightFunction<TDictionary> Sum(IEnumerable<MultiRepresentationWeightFunction<TDictionary>> weightFunctions)
                 {
                     var dictionary = new Dictionary<TSequence, Weight>(MaxDictionarySize, SequenceManipulator.SequenceEqualityComparer);
@@ -162,6 +168,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return FromAutomaton(automaton);
                 }
 
+                /// <inheritdoc/>
                 public MultiRepresentationWeightFunction<TDictionary> Zero() => MultiRepresentationWeightFunction<TDictionary>.Zero();
             }
 
@@ -215,6 +222,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             #endregion
 
+            /// <inheritdoc/>
             public TSequence Point
             {
                 get
@@ -228,6 +236,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public bool IsPointMass => weightFunction is PointMassWeightFunction;
 
             /// <summary>
@@ -252,14 +261,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public TDictionary AsDictionary() => weightFunction as TDictionary;
 
+            /// <inheritdoc/>
             public TAutomaton AsAutomaton() => weightFunction?.AsAutomaton() ?? new TAutomaton();
 
+            /// <inheritdoc/>
             public bool UsesAutomatonRepresentation => weightFunction is TAutomaton;
 
+            /// <inheritdoc/>
             public bool UsesGroups => weightFunction.UsesGroups;
 
+            /// <inheritdoc/>
             public bool HasGroup(int group) => weightFunction.HasGroup(group);
 
+            /// <inheritdoc/>
             public Dictionary<int, MultiRepresentationWeightFunction<TDictionary>> GetGroups()
             {
                 return weightFunction is TAutomaton automaton
@@ -272,6 +286,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     : new Dictionary<int, MultiRepresentationWeightFunction<TDictionary>>(); // TODO: get rid of groups or do something about groups + point mass combo
             }
 
+            /// <inheritdoc/>
             public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000)
             {
                 if (weightFunction == null)
@@ -280,6 +295,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return weightFunction.EnumerateSupport(maxCount);
             }
 
+            /// <inheritdoc/>
             public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result) => TryEnumerateSupportInternal(maxCount, out result);
 
             private bool TryEnumerateSupportInternal(int maxCount, out IEnumerable<TSequence> result)
@@ -295,6 +311,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> NormalizeStructure()
             {
                 switch (weightFunction)
@@ -356,6 +373,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return this;
             }
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> Repeat(int minTimes = 1, int? maxTimes = null)
             {
                 Argument.CheckIfInRange(minTimes >= 0, nameof(minTimes), "The minimum number of repetitions must be non-negative.");
@@ -400,6 +418,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> ScaleLog(double logScale)
             {
                 switch (weightFunction)
@@ -418,6 +437,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public bool TryNormalizeValues(out MultiRepresentationWeightFunction<TDictionary> normalizedFunction, out double logNormalizer)
             {
                 bool result;
@@ -446,8 +466,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return result;
             }
 
+            /// <inheritdoc/>
             public double GetLogValue(TSequence sequence) => weightFunction?.GetLogValue(sequence) ?? double.NegativeInfinity;
 
+            /// <inheritdoc/>
             public bool IsZero() => weightFunction?.IsZero() ?? true;
 
             /// <summary>
@@ -464,6 +486,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </remarks>
             public bool IsCanonicZero() => weightFunction == null;
 
+            /// <inheritdoc/>
             public double MaxDiff(MultiRepresentationWeightFunction<TDictionary> that)
             {
                 if (IsCanonicZero())
@@ -504,10 +527,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public double GetLogNormalizer() => weightFunction?.GetLogNormalizer() ?? double.NegativeInfinity;
 
+            /// <inheritdoc/>
             public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() => weightFunction?.EnumeratePaths() ?? Enumerable.Empty<Tuple<List<TElementDistribution>, double>>();
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> Append(TSequence sequence, int group = 0)
             {
                 switch (weightFunction)
@@ -525,6 +551,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> Append(MultiRepresentationWeightFunction<TDictionary> weightFunction, int group = 0)
             {
                 if (this.weightFunction == null || weightFunction.weightFunction == null)
@@ -555,6 +582,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromAutomaton(this.weightFunction.AsAutomaton().Append(weightFunction.weightFunction.AsAutomaton(), group));
             }
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> Sum(MultiRepresentationWeightFunction<TDictionary> weightFunction)
             {
                 if (weightFunction.IsCanonicZero())
@@ -579,6 +607,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return FromAutomaton(resultDictionary.AsAutomaton());
             }
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> Sum(double weight1, MultiRepresentationWeightFunction<TDictionary> weightFunction, double weight2)
             {
                 Argument.CheckIfInRange(weight1 >= 0, nameof(weight1), "Negative weights are not supported.");
@@ -587,6 +616,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return SumLog(Math.Log(weight1), weightFunction, Math.Log(weight2));
             }
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> SumLog(double logWeight1, MultiRepresentationWeightFunction<TDictionary> weightFunction, double logWeight2)
             {
                 if (weightFunction.IsCanonicZero() || double.IsNegativeInfinity(logWeight2))
@@ -611,6 +641,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return FromAutomaton(resultDictionary.AsAutomaton());
             }
 
+            /// <inheritdoc/>
             public MultiRepresentationWeightFunction<TDictionary> Product(MultiRepresentationWeightFunction<TDictionary> weightFunction)
             {
                 if (IsCanonicZero() || weightFunction.IsCanonicZero())
@@ -680,6 +711,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromAutomaton(AsAutomaton().Product(weightFunction.AsAutomaton()));
             }
 
+            /// <inheritdoc/>
             public bool Equals(MultiRepresentationWeightFunction<TDictionary> other)
             {
                 if (IsCanonicZero())
@@ -726,6 +758,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public override bool Equals(object obj)
             {
                 if (obj == null || typeof(MultiRepresentationWeightFunction<TDictionary>) != obj.GetType())
@@ -740,6 +773,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public override string ToString() => (weightFunction ?? ZeroAutomaton).ToString();
 
+            /// <inheritdoc/>
             public string ToString(Action<TElementDistribution, StringBuilder> appendElement) => (weightFunction ?? ZeroAutomaton).ToString(appendElement);
         }
     }

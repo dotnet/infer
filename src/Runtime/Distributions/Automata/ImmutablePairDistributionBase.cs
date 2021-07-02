@@ -50,6 +50,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public Option<TElementDistribution2> Second { get; protected set; }
 
+        /// <inheritdoc/>
         public bool IsPointMass =>
             this.First.HasValue && this.First.Value.IsPointMass &&
             this.Second.HasValue && this.Second.Value.IsPointMass;
@@ -70,6 +71,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
         }
 
+        /// <inheritdoc/>
         public virtual TThis CreatePointMass(Pair<Option<TElement1>, Option<TElement2>> point) => new TThis()
         {
             First = ElementDistribution1Factory.CreatePointMass(point.First.Value),
@@ -149,8 +151,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return logAverageOf;
         }
 
+        /// <inheritdoc/>
         public virtual bool IsUniform() => this.First.Value.IsUniform() && this.Second.Value.IsUniform();
 
+        /// <inheritdoc/>
         public virtual TThis CreateUniform() => new TThis()
         {
             First = ElementDistribution1Factory.CreateUniform(),
@@ -184,10 +188,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created copy.</returns>
         public virtual object Clone() => this; // The type is immutable
 
+        /// <inheritdoc/>
         public abstract double MaxDiff(object that);
 
+        /// <inheritdoc/>
         public abstract double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair);
 
+        /// <inheritdoc/>
         public virtual double GetLogAverageOf(TThis that)
         {
             Argument.CheckIfValid(
@@ -212,16 +219,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
+        /// <inheritdoc/>
         public abstract TThis Multiply(TThis other);
 
+        /// <inheritdoc/>
         public abstract TThis Sum(double weightThis, TThis other, double weightOther);
 
+        /// <inheritdoc/>
         public virtual TThis CreatePartialUniform() => new TThis()
         {
             First = First.HasValue ? Option.Some(First.Value.CreatePartialUniform()) : Option.None,
             Second = Second.HasValue ? Option.Some(Second.Value.CreatePartialUniform()) : Option.None
         };
 
+        /// <inheritdoc/>
         public virtual bool IsPartialUniform()
         {
             return

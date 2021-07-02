@@ -2425,21 +2425,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #region IWeightFunction implementation
 
+        /// <inheritdoc/>
         public TThis AsAutomaton() => (TThis)this;
 
+        /// <inheritdoc/>
         public TSequence Point
         { 
             get => TryComputePoint() ?? throw new InvalidOperationException("This automaton is zero everywhere or is non-zero on more than one sequence.");
         }
 
+        /// <inheritdoc/>
         public bool IsPointMass => TryEnumerateSupport(2, out var support) && support.Count() == 1;
 
+        /// <inheritdoc/>
         public bool UsesAutomatonRepresentation => true;
 
+        /// <inheritdoc/>
         public TThis Repeat(int minTimes = 1, int? maxTimes = null) => Repeat((TThis)this, minTimes, maxTimes);
 
+        /// <inheritdoc/>
         public double MaxDiff(TThis that) => Math.Exp(GetLogSimilarity((TThis)this, that));
 
+        /// <inheritdoc/>
         public TThis NormalizeStructure() => (TThis)this;
 
         #endregion

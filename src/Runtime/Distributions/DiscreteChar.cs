@@ -94,6 +94,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Data
 
+        /// <summary>
+        /// Immutable snapshot of the current distribution.
+        /// </summary>
         [DataMember]
         public ImmutableDiscreteChar WrappedDistribution { get; private set; }
 
@@ -144,19 +147,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public bool IsWordChar => WrappedDistribution.IsWordChar;
 
-        /// <summary>
-        /// Gets a value indicating whether this distribution is broad - i.e. a general class of values.
-        /// </summary>
+        /// <inheritdoc cref="ImmutableDiscreteChar.IsBroad"/>
         public bool IsBroad => WrappedDistribution.IsBroad;
 
-        /// <summary>
-        /// Gets a value indicating whether this distribution is partial uniform with a log probability override.
-        /// </summary>
+        /// <inheritdoc cref="ImmutableDiscreteChar.HasLogProbabilityOverride"/>
         public bool HasLogProbabilityOverride => WrappedDistribution.HasLogProbabilityOverride;
 
-        /// <summary>
-        /// Gets a value for the log probability override if it exists.
-        /// </summary>
+        /// <inheritdoc cref="ImmutableDiscreteChar.LogProbabilityOverride"/>
         public double? LogProbabilityOverride => WrappedDistribution.LogProbabilityOverride;
 
         #endregion
@@ -172,182 +169,85 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Factory methods
 
-        /// <summary>
-        /// Creates a distribution given a list of constant probability character ranges.
-        /// </summary>
-        /// <param name="ranges">The constant-probability character ranges.</param>
-        /// <remarks>The probabilities do not need to be normalized. The character ranges do not need to be sorted.</remarks>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Create(IEnumerable{ImmutableDiscreteChar.CharRange})"/>
         [Construction("Ranges")]
         public static DiscreteChar Create(IEnumerable<ImmutableDiscreteChar.CharRange> ranges) =>
             new DiscreteChar(ImmutableDiscreteChar.Create(ranges));
 
-        /// <summary>
-        /// Creates a uniform distribution over characters.
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Uniform"/>
         [Construction(UseWhen = "IsUniform")]
         public static DiscreteChar Uniform() => new DiscreteChar(ImmutableDiscreteChar.Uniform());
 
-        /// <summary>
-        /// Creates a uniform distribution over digits '0'..'9'.
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Digit"/>
         [Construction(UseWhen = "IsDigit")]
         public static DiscreteChar Digit() => new DiscreteChar(ImmutableDiscreteChar.Digit());
 
-        /// <summary>
-        /// Creates a uniform distribution over lowercase letters.
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Lower"/>
         [Construction(UseWhen = "IsLower")]
         public static DiscreteChar Lower() => new DiscreteChar(ImmutableDiscreteChar.Lower());
 
-        /// <summary>
-        /// Creates a uniform distribution over uppercase letters.
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Upper"/>
         [Construction(UseWhen = "IsUpper")]
         public static DiscreteChar Upper() => new DiscreteChar(ImmutableDiscreteChar.Upper());
 
-        /// <summary>
-        /// Creates a uniform distribution over letters.
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Letter"/>
         [Construction(UseWhen = "IsLetter")]
         public static DiscreteChar Letter() => new DiscreteChar(ImmutableDiscreteChar.Letter());
 
-        /// <summary>
-        /// Creates a uniform distribution over letters and '0'..'9'.
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.LetterOrDigit"/>
         [Construction(UseWhen = "IsLetterOrDigit")]
         public static DiscreteChar LetterOrDigit() => new DiscreteChar(ImmutableDiscreteChar.LetterOrDigit());
 
-        /// <summary>
-        /// Creates a uniform distribution over word characters (letter, digit and '_').
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.WordChar"/>
         [Construction(UseWhen = "IsWordChar")]
         public static DiscreteChar WordChar() => new DiscreteChar(ImmutableDiscreteChar.WordChar());
 
-        /// <summary>
-        /// Creates a uniform distribution over all characters except (letter, digit and '_').
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.NonWordChar"/>
         public static DiscreteChar NonWordChar() => new DiscreteChar(ImmutableDiscreteChar.NonWordChar());
 
-        /// <summary>
-        /// Creates a uniform distribution over whitespace characters ('\t'..'\r', ' ').
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Whitespace"/>
         public static DiscreteChar Whitespace() => new DiscreteChar(ImmutableDiscreteChar.Whitespace());
 
-        /// <summary>
-        /// Creates a uniform distribution over all characters.
-        /// </summary>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Any"/>
         public static DiscreteChar Any() => new DiscreteChar(ImmutableDiscreteChar.Any());
 
-        /// <summary>
-        /// Creates a uniform distribution over characters in a given range.
-        /// </summary>
-        /// <param name="start">The start of the range (inclusive).</param>
-        /// <param name="end">The end of the range (inclusive).</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.InRange(char, char)"/>
         public static DiscreteChar InRange(char start, char end) => new DiscreteChar(ImmutableDiscreteChar.InRange(start, end));
 
-        /// <summary>
-        /// Creates a distribution which is uniform over values in
-        /// multiple ranges specified by pairs of start and end values. These pairs
-        /// are specified as adjacent values in an array whose length must therefore be even.
-        /// </summary>
-        /// <param name="startEndPairs">The array of range starts and ends.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.InRanges(char[])"/>
         public static DiscreteChar InRanges(params char[] startEndPairs) => new DiscreteChar(ImmutableDiscreteChar.InRanges(startEndPairs));
 
-        /// <summary>
-        /// Creates a distribution which is uniform over values in
-        /// multiple ranges specified by pairs of start and end values. These pairs
-        /// are specified as adjacent values in a sequence whose length must therefore be even.
-        /// </summary>
-        /// <param name="startEndPairs">The sequence of range starts and ends.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.InRanges(IEnumerable{char})"/>
         public static DiscreteChar InRanges(IEnumerable<char> startEndPairs) => new DiscreteChar(ImmutableDiscreteChar.InRanges(startEndPairs));
 
-        /// <summary>
-        /// Creates a distribution which is uniform over the specified set of characters.
-        /// </summary>
-        /// <param name="chars">The characters.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.OneOf(char[])"/>
         public static DiscreteChar OneOf(params char[] chars) => new DiscreteChar(ImmutableDiscreteChar.OneOf(chars));
 
-        /// <summary>
-        /// Creates a distribution which is uniform over the specified set of characters.
-        /// </summary>
-        /// <param name="chars">The characters.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.OneOf(IEnumerable{char})"/>
         public static DiscreteChar OneOf(IEnumerable<char> chars) => new DiscreteChar(ImmutableDiscreteChar.OneOf(chars));
 
-        /// <summary>
-        /// Creates a distribution which is uniform over the specified set of characters.
-        /// </summary>
-        /// <param name="chars">The characters.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.UniformOver(char[])"/>
         public static DiscreteChar UniformOver(params char[] chars) => new DiscreteChar(ImmutableDiscreteChar.UniformOver(chars));
 
-        /// <summary>
-        /// Creates a distribution which is uniform over the specified set of characters.
-        /// </summary>
-        /// <param name="chars">The characters.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.UniformOver(IEnumerable{char})"/>
         public static DiscreteChar UniformOver(IEnumerable<char> chars) => new DiscreteChar(ImmutableDiscreteChar.UniformOver(chars));
 
-        /// <summary>
-        /// Creates a uniform distribution over characters in a given range.
-        /// </summary>
-        /// <param name="start">The start of the range (inclusive).</param>
-        /// <param name="end">The end of the range (inclusive).</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.UniformInRange(char, char)"/>
         public static DiscreteChar UniformInRange(char start, char end) => new DiscreteChar(ImmutableDiscreteChar.UniformInRanges(start, end));
 
-        /// <summary>
-        /// Creates a distribution which is uniform over values in
-        /// multiple ranges specified by pairs of start and end values. These pairs
-        /// are specified as adjacent values in an array whose length must therefore be even.
-        /// </summary>
-        /// <param name="startEndPairs">The array of range starts and ends.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.UniformInRanges(char[])"/>
         public static DiscreteChar UniformInRanges(params char[] startEndPairs) => new DiscreteChar(ImmutableDiscreteChar.UniformInRanges(startEndPairs));
 
-        /// <summary>
-        /// Creates a distribution which is uniform over values in
-        /// multiple ranges specified by pairs of start and end values. These pairs
-        /// are specified as adjacent values in a sequence whose length must therefore be even.
-        /// </summary>
-        /// <param name="startEndPairs">The sequence of range starts and ends.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.UniformInRanges(IEnumerable{char})"/>
         public static DiscreteChar UniformInRanges(IEnumerable<char> startEndPairs) => new DiscreteChar(ImmutableDiscreteChar.UniformInRanges(startEndPairs));
 
-        /// <summary>
-        /// Creates a point mass character distribution.
-        /// </summary>
-        /// <param name="point">The point.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.PointMass(char)"/>
         public static DiscreteChar PointMass(char point) => new DiscreteChar(ImmutableDiscreteChar.PointMass(point));
 
-        /// <summary>
-        /// Creates a point character from a vector of (unnormalized) character probabilities.
-        /// </summary>
-        /// <param name="vector">The vector of unnormalized probabilities.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.FromVector(Vector)"/>
         public static DiscreteChar FromVector(Vector vector) => new DiscreteChar(ImmutableDiscreteChar.FromVector(vector));
 
-        /// <summary>
-        /// Creates a point character from a vector of (unnormalized) character probabilities.
-        /// </summary>
-        /// <param name="vector">The vector of unnormalized probabilities.</param>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.FromVector(PiecewiseVector)"/>
         public static DiscreteChar FromVector(PiecewiseVector vector) => new DiscreteChar(ImmutableDiscreteChar.FromVector(vector));
 
         #endregion
@@ -369,11 +269,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public void AppendToString(StringBuilder stringBuilder) => WrappedDistribution.AppendToString(stringBuilder);
 
-        /// <summary>
-        /// Appends a regex expression that represents this character to the supplied string builder.
-        /// </summary>
-        /// <param name="stringBuilder">The string builder to append to</param>
-        /// <param name="useFriendlySymbols">Whether to use friendly symbols."</param>
+        /// <inheritdoc cref="ImmutableDiscreteChar.AppendRegex(StringBuilder, bool)"/>
         public void AppendRegex(StringBuilder stringBuilder, bool useFriendlySymbols = false) =>
             WrappedDistribution.AppendRegex(stringBuilder, useFriendlySymbols);
 
@@ -383,11 +279,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region IDistribution implementation
 
-
-        /// <summary>
-        /// Creates a copy of this distribution.
-        /// </summary>
-        /// <returns>The created copy.</returns>
+        /// <inheritdoc cref="Clone"/>
         object ICloneable.Clone() => Clone();
 
         /// <summary>
@@ -396,8 +288,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created copy.</returns>
         public DiscreteChar Clone() => new DiscreteChar(WrappedDistribution);
 
+        /// <inheritdoc/>
         public bool IsUniform() => WrappedDistribution.IsUniform();
 
+        /// <inheritdoc cref="ImmutableDiscreteChar.MaxDiff(object)"/>
         public double MaxDiff(object that)
         {
             Argument.CheckIfNotNull(that, nameof(that));
@@ -406,6 +300,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 : double.PositiveInfinity;
         }
 
+        /// <inheritdoc/>
         public void SetToUniform()
         {
             WrappedDistribution = WrappedDistribution.CreateUniform();
@@ -415,25 +310,32 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region IDistribution<T> implementation
 
+        /// <summary>
+        /// Gets or sets the point mass represented by the distribution.
+        /// </summary>
         public char Point
         {
             get => WrappedDistribution.Point;
             set => WrappedDistribution = WrappedDistribution.CreatePointMass(value);
         }
 
+        /// <inheritdoc/>
         public bool IsPointMass => WrappedDistribution.IsPointMass;
 
+        /// <inheritdoc/>
         public double GetLogProb(char value) => WrappedDistribution.GetLogProb(value);
 
         #endregion
 
         #region SettableTo implementation
 
+        /// <inheritdoc/>
         public void SetTo(ImmutableDiscreteChar value)
         {
             WrappedDistribution = value;
         }
 
+        /// <inheritdoc/>
         public void SetTo(DiscreteChar value)
         {
             WrappedDistribution = value.WrappedDistribution;
@@ -443,18 +345,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region SettableToPartialUniform implementation
 
+        /// <inheritdoc/>
         public void SetToPartialUniform()
         {
             WrappedDistribution = WrappedDistribution.CreatePartialUniform();
         }
 
+        /// <inheritdoc/>
         public void SetToPartialUniformOf(ImmutableDiscreteChar dist)
         {
             WrappedDistribution = dist.CreatePartialUniform();
         }
 
+        /// <inheritdoc/>
         public bool IsPartialUniform() => WrappedDistribution.IsPartialUniform();
 
+        /// <inheritdoc/>
         public void SetToPartialUniformOf(DiscreteChar dist)
         {
             WrappedDistribution = dist.WrappedDistribution.CreatePartialUniform();
@@ -464,14 +370,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region CanGetMode implementation
 
+        /// <inheritdoc cref="ImmutableDiscreteChar.GetMode"/>
         public char GetMode() => WrappedDistribution.GetMode();
 
         #endregion
 
         #region CanGetLogAverageOf implementation
 
+        /// <inheritdoc/>
         public double GetLogAverageOf(ImmutableDiscreteChar that) => WrappedDistribution.GetLogAverageOf(that);
 
+        /// <inheritdoc/>
         public double GetLogAverageOf(DiscreteChar that) =>
             WrappedDistribution.GetLogAverageOf(that.WrappedDistribution);
 
@@ -479,8 +388,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region CanGetLogAverageOfPower implementation
 
+        /// <inheritdoc/>
         public double GetLogAverageOfPower(ImmutableDiscreteChar that, double power) => WrappedDistribution.GetLogAverageOfPower(that, power);
 
+        /// <inheritdoc/>
         public double GetLogAverageOfPower(DiscreteChar that, double power) =>
             WrappedDistribution.GetLogAverageOfPower(that.WrappedDistribution, power);
 
@@ -488,8 +399,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region CanGetAverageLog implementation
 
+        /// <inheritdoc/>
         public double GetAverageLog(ImmutableDiscreteChar that) => WrappedDistribution.GetAverageLog(that);
 
+        /// <inheritdoc/>
         public double GetAverageLog(DiscreteChar that) =>
             WrappedDistribution.GetAverageLog(that.WrappedDistribution);
 
@@ -497,27 +410,32 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region CanEnumerateSupport implementation
 
+        /// <inheritdoc/>
         public IEnumerable<char> EnumerateSupport() => WrappedDistribution.EnumerateSupport();
 
         #endregion
 
         #region SettableToProduct implementation
 
+        /// <inheritdoc/>
         public void SetToProduct(ImmutableDiscreteChar a, ImmutableDiscreteChar b)
         {
             WrappedDistribution = a.Multiply(b);
         }
 
+        /// <inheritdoc/>
         public void SetToProduct(DiscreteChar a, DiscreteChar b)
         {
             WrappedDistribution = a.WrappedDistribution.Multiply(b.WrappedDistribution);
         }
 
+        /// <inheritdoc/>
         public void SetToProduct(ImmutableDiscreteChar a, DiscreteChar b)
         {
             WrappedDistribution = a.Multiply(b.WrappedDistribution);
         }
 
+        /// <inheritdoc/>
         public void SetToProduct(DiscreteChar a, ImmutableDiscreteChar b)
         {
             WrappedDistribution = a.WrappedDistribution.Multiply(b);
@@ -527,21 +445,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region SettableToRatio implementation
 
+        /// <inheritdoc/>
         public void SetToRatio(ImmutableDiscreteChar a, ImmutableDiscreteChar b, bool forceProper = false)
         {
             WrappedDistribution = a.Divide(b, forceProper);
         }
 
+        /// <inheritdoc/>
         public void SetToRatio(DiscreteChar a, DiscreteChar b, bool forceProper = false)
         {
             WrappedDistribution = a.WrappedDistribution.Divide(b.WrappedDistribution, forceProper);
         }
 
+        /// <inheritdoc/>
         public void SetToRatio(ImmutableDiscreteChar a, DiscreteChar b, bool forceProper = false)
         {
             WrappedDistribution = a.Divide(b.WrappedDistribution, forceProper);
         }
 
+        /// <inheritdoc/>
         public void SetToRatio(DiscreteChar a, ImmutableDiscreteChar b, bool forceProper = false)
         {
             WrappedDistribution = a.WrappedDistribution.Divide(b, forceProper);
@@ -551,11 +473,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region SettableToPower implementation
 
+        /// <inheritdoc/>
         public void SetToPower(ImmutableDiscreteChar value, double exponent)
         {
             WrappedDistribution = value.Pow(exponent);
         }
-
+        
+        /// <inheritdoc/>
         public void SetToPower(DiscreteChar value, double exponent)
         {
             WrappedDistribution = value.WrappedDistribution.Pow(exponent);
@@ -565,11 +489,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region SettableToWeightedSumExact implementation
 
+        /// <summary>
+        /// Replaces the current distribution with a mixture of a given pair of distributions.
+        /// </summary>
+        /// <param name="weight1">The weight of the first distribution.</param>
+        /// <param name="value1">The first distribution.</param>
+        /// <param name="weight2">The weight of the second distribution.</param>
+        /// <param name="value2">The second distribution.</param>
         public void SetToSum(double weight1, ImmutableDiscreteChar value1, double weight2, ImmutableDiscreteChar value2)
         {
             WrappedDistribution = value1.Sum(weight1, value2, weight2);
         }
 
+        /// <summary>
+        /// Replaces the current distribution with a mixture of a given pair of distributions.
+        /// </summary>
+        /// <param name="weight1">The weight of the first distribution.</param>
+        /// <param name="value1">The first distribution.</param>
+        /// <param name="weight2">The weight of the second distribution.</param>
+        /// <param name="value2">The second distribution.</param>
         public void SetToSum(double weight1, DiscreteChar value1, double weight2, DiscreteChar value2)
         {
             WrappedDistribution = value1.WrappedDistribution.Sum(weight1, value2.WrappedDistribution, weight2);
@@ -579,8 +517,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Sampleable implementation
 
+        /// <inheritdoc/>
         public char Sample() => WrappedDistribution.Sample();
 
+        /// <inheritdoc/>
         public char Sample(char result) => WrappedDistribution.Sample(result);
 
         #endregion
@@ -589,31 +529,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Character distribution specific interface
 
-        /// <summary>
-        /// Gets an array of character ranges with associated probabilities.
-        /// </summary>
-        /// <value>An array of character ranges with associated probabilities.</value>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Ranges"/>
         public ReadOnlyArray<ImmutableDiscreteChar.CharRange> Ranges => WrappedDistribution.Ranges;
 
-        /// <summary>
-        /// Creates a distribution which is uniform over all characters
-        /// that have zero probability under this distribution
-        /// i.e. that are not 'in' this distribution.
-        /// </summary>
-        /// <remarks>
-        /// This is useful for defining characters that are not in a particular distribution
-        /// e.g. not a letter or not a word character.
-        /// </remarks>
-        /// <returns>The created distribution.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.Complement"/>
         public DiscreteChar Complement() => new DiscreteChar(WrappedDistribution.Complement());
 
         public static DiscreteChar ToLower(DiscreteChar unnormalizedCharDist) =>
             new DiscreteChar(ImmutableDiscreteChar.ToLower(unnormalizedCharDist.WrappedDistribution));
 
-        /// <summary>
-        /// Gets a vector of character probabilities under this distribution.
-        /// </summary>
-        /// <returns>A vector of character probabilities.</returns>
+        /// <inheritdoc cref="ImmutableDiscreteChar.GetProbs"/>
         public PiecewiseVector GetProbs() => WrappedDistribution.GetProbs();
 
         /// <summary>
@@ -801,13 +726,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         #region Distribution properties
 
         /// <summary>
-        /// Gets or sets the point mass represented by the distribution.
+        /// Gets the point mass represented by the distribution.
         /// </summary>
         public char Point => this.Data.Point ?? throw new InvalidOperationException();
 
-        /// <summary>
-        /// Gets a value indicating whether this distribution represents a point mass.
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsPointMass => this.Data.Point.HasValue;
 
         /// <summary>
@@ -1060,10 +983,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Distribution interfaces implementation
 
-        /// <summary>
-        /// Creates a copy of this distribution.
-        /// </summary>
-        /// <returns>The created copy.</returns>
+        /// <inheritdoc cref="Clone"/>
         object ICloneable.Clone() => this;
 
         /// <summary>
@@ -1085,16 +1005,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 : double.PositiveInfinity;
         }
 
-        /// <summary>
-        /// Creates a uniform distribution over all characters.
-        /// </summary>
+
+        /// <inheritdoc/>
         public ImmutableDiscreteChar CreateUniform() => Uniform();
 
-        /// <summary>
-        /// Creates a point mass distribution.
-        /// </summary>
-        /// <param name="point">The location of the point mass.</param>
-        /// <returns>The created distribution.</returns>
+
+        /// <inheritdoc/>
         public ImmutableDiscreteChar CreatePointMass(char point) => PointMass(point);
 
         /// <summary>
@@ -1117,16 +1033,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return true;
         }
 
-        /// <summary>
-        /// Gets the logarithm of the probability of a given character under this distribution.
-        /// </summary>
-        /// <param name="value">The character.</param>
-        /// <returns>
-        /// <see langword="true"/> if this distribution is a uniform distribution over all possible characters,
-        /// <see langword="false"/> otherwise.
-        /// </returns>
+        /// <inheritdoc/>
         public double GetLogProb(char value) => FindProb(value).LogValue;
 
+        /// <inheritdoc/>
         public ImmutableDiscreteChar Multiply(ImmutableDiscreteChar other)
         {
             if (IsPointMass && other.IsPointMass)
@@ -1220,12 +1130,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return new ImmutableDiscreteChar(builder.GetResult());
             }
         }
-
-        /// <summary>
-        /// Returns the logarithm of the probability that the current distribution would draw the same sample as a given one.
-        /// </summary>
-        /// <param name="distribution">The given distribution.</param>
-        /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
+        
+        /// <inheritdoc/>
         public double GetLogAverageOf(ImmutableDiscreteChar distribution)
         {
             if (distribution.IsPointMass)
@@ -1250,11 +1156,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return result.LogValue;
         }
 
+        /// <inheritdoc/>
         public ImmutableDiscreteChar CreatePartialUniform() => CreatePartialUniform(null);
 
-        /// <summary>
-        /// Creates a distribution uniform over the support of the current distribution.
-        /// </summary>
+        /// <inheritdoc cref="CreatePartialUniform()"/>
         /// <param name="logProbabilityOverride">An optional value to override for the log probability calculation
         /// against this distribution. If this is set, then the distribution will not be normalize;
         /// i.e. the probabilities will not sum to 1 over the support.</param>
@@ -1276,10 +1181,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return new ImmutableDiscreteChar(builder.GetResult(logProbabilityOverride));
         }
 
-        /// <summary>
-        /// Checks whether the distribution is uniform over its support.
-        /// </summary>
-        /// <returns><see langword="true"/> if the distribution is uniform over its support, <see langword="false"/> otherwise.</returns>
+        /// <inheritdoc/>
         public bool IsPartialUniform()
         {
             Weight? commonProb = null;
@@ -1296,6 +1198,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return true;
         }
 
+        /// <inheritdoc/>
         public ImmutableDiscreteChar Divide(ImmutableDiscreteChar denominator, bool forceProper = false)
         {
             var builder = StorageBuilder.Create();
@@ -1309,6 +1212,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return new ImmutableDiscreteChar(builder.GetResult());
         }
 
+        /// <inheritdoc/>
         public ImmutableDiscreteChar Pow(double power)
         {
             if (power == 0)
@@ -1338,15 +1242,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return new ImmutableDiscreteChar(builder.GetResult());
         }
 
-        /// <summary>
-        /// Computes the log-integral of one distribution times another raised to a power.
-        /// </summary>
-        /// <param name="distribution">The other distribution</param>
-        /// <param name="power">The power.</param>
-        /// <returns><c>Math.Log(sum_x this.Evaluate(x) * Math.Pow(distribution.Evaluate(x), power))</c></returns>
-        /// <remarks>
-        /// This is not the same as <c>GetLogAverageOf(distribution^power)</c> because it includes the normalization constant of that.
-        /// </remarks>
+        /// <inheritdoc/>
         public double GetLogAverageOfPower(ImmutableDiscreteChar distribution, double power)
         {
             // Have to special-case powerof zero because otherwise due to summation in log space being
@@ -1373,12 +1269,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return result.LogValue;
         }
 
-        /// <summary>
-        /// Computes the expected logarithm of a given distribution under this distribution.
-        /// </summary>
-        /// <param name="distribution">The distribution to take the logarithm of.</param>
-        /// <returns><c>sum_x this.Evaluate(x)*Math.Log(distribution.Evaluate(x))</c></returns>
-        /// <remarks>This is also known as the cross entropy.</remarks>
+        /// <inheritdoc/>
         public double GetAverageLog(ImmutableDiscreteChar distribution)
         {
             double result = 0;
@@ -1411,10 +1302,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return mode;
         }
 
-        /// <summary>
-        /// Draws a sample from the distribution.
-        /// </summary>
-        /// <returns>The drawn sample.</returns>
+        /// <inheritdoc/>
         public char Sample()
         {
             var sampleProb = Rand.Double();

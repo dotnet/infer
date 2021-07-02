@@ -94,6 +94,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             get => base.Point;
         }
 
+        /// <inheritdoc/>
         public override ImmutablePairDistribution<TElement, TElementDistribution> CreatePointMass(Pair<Option<TElement>, Option<TElement>> point)
         {
             var result = base.CreatePointMass(point);
@@ -144,13 +145,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return Constrained(ElementDistribution1Factory.CreateUniform());
         }
 
-        /// <summary>
-        /// Computes <c>P(y) = R(x, y)</c>, where <c>R(x, y)</c> is the current pair distribution,
-        /// and <c>x</c> is a given element.
-        /// </summary>
-        /// <param name="first">The element to project.</param>
-        /// <param name="result">The normalized projection result.</param>
-        /// <returns>The logarithm of the scale for the projection result.</returns>
+        /// <inheritdoc/>
         public override double ProjectFirst(TElement first, out Option<TElementDistribution> result)
         {
             if (this.HasEqualityConstraint)
@@ -174,13 +169,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return base.ProjectFirst(first, out result);
         }
 
-        /// <summary>
-        /// Computes <c>P(y) = sum_x Q(x) R(x, y)</c>, where <c>R(x, y)</c> is the current pair distribution,
-        /// and <c>Q(x)</c> is a given element distribution.
-        /// </summary>
-        /// <param name="first">The element distribution to project.</param>
-        /// <param name="result">The normalized projection result.</param>
-        /// <returns>The logarithm of the scale for the projection result.</returns>
+        /// <inheritdoc/>
         public override double ProjectFirst(TElementDistribution first, out Option<TElementDistribution> result)
         {
             Argument.CheckIfNotNull(first, nameof(first));
@@ -212,11 +201,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return base.ProjectFirst(first, out result);
         }
 
+        /// <inheritdoc/>
         public override bool IsUniform()
         {
             return !this.HasEqualityConstraint && base.IsUniform();
         }
 
+        /// <inheritdoc/>
         public override ImmutablePairDistribution<TElement, TElementDistribution> CreateUniform()
         {
             var result = base.CreateUniform();
@@ -240,6 +231,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return base.ToString();
         }
 
+        /// <inheritdoc/>
         public override double GetLogAverageOf(ImmutablePairDistribution<TElement, TElementDistribution> that)
         {
             Argument.CheckIfNotNull(that, nameof(that));
@@ -264,6 +256,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return base.GetLogAverageOf(that);
         }
 
+        /// <inheritdoc/>
         public override ImmutablePairDistribution<TElement, TElementDistribution> CreatePartialUniform()
         {
             var result = base.CreatePartialUniform();
