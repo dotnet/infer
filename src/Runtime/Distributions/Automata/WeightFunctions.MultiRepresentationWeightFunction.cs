@@ -680,8 +680,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromAutomaton(AsAutomaton().Product(weightFunction.AsAutomaton()));
             }
 
-            public MultiRepresentationWeightFunction<TDictionary> Clone() => this;
-
             public bool Equals(MultiRepresentationWeightFunction<TDictionary> other)
             {
                 if (IsCanonicZero())

@@ -1094,7 +1094,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return;
             }
 
-            this.sequenceToWeight = that.sequenceToWeight.Clone();
+            this.sequenceToWeight = that.sequenceToWeight;
             this.isNormalized = that.isNormalized;
         }
 

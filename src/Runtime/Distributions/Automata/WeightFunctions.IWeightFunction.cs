@@ -28,6 +28,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// that is agnostic of the concrete weight function class. Implementations of closed constructed
         /// <see cref="IWeightFunction{TThis}"/> can all be upcasted to this type.
         /// </summary>
+        /// <remarks>Types implementing this interface must be constant and thread-safe.</remarks>
         [Quality(QualityBand.Experimental)]
         public interface IWeightFunction
         {
@@ -125,6 +126,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// that can, but not necessarily has to be, represented as a weighted finite state automaton.
         /// </summary>
         /// <typeparam name="TThis">The type of a concrete weight function class.</typeparam>
+        /// <remarks>Types implementing this interface must be constant and thread-safe.</remarks>
         [Quality(QualityBand.Experimental)]
         public interface IWeightFunction<TThis> : IWeightFunction, IEquatable<TThis>
             where TThis : IWeightFunction<TThis>, new()
@@ -227,12 +229,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// case structures for point masses and functions with small support.
             /// </summary>
             TThis NormalizeStructure();
-
-            /// <summary>
-            /// Creates a copy of the weight function.
-            /// </summary>
-            /// <returns>The created copy.</returns>
-            TThis Clone();
         }
 
         /// <summary>

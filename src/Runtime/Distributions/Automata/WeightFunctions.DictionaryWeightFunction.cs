@@ -430,8 +430,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromDistinctWeights(resultList);
             }
 
-            public TThis Clone() => (TThis)this; // This type is immutable.
-
             public bool Equals(TThis other)
             {
                 if (other == null || other.Dictionary.Count != Dictionary.Count)

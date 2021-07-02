@@ -150,8 +150,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     throw new NotSupportedException($"Can not create a zero {nameof(PointMassWeightFunction)}.");
             }
 
-            public PointMassWeightFunction Clone() => this; // This type is immutable.
-
             public bool Equals(PointMassWeightFunction other) => SequenceManipulator.SequenceEqualityComparer.Equals(point, other?.point);
 
             public override bool Equals(object obj)
