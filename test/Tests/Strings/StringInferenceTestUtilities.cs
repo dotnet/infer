@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="strings">The strings to test.</param>
         public static void TestLogProbability(StringDistribution distribution, double trueLogProbability, params string[] strings)
         {
-            TestLogValue(distribution.GetNormalizedWorkspaceOrPoint(), trueLogProbability, strings);
+            TestLogValue(distribution.ToNormalizedAutomaton(), trueLogProbability, strings);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public static void TestTransducerProjection(
             StringTransducer transducer, StringDistribution input, string str, double trueValue)
         {
-            TestTransducerProjection(transducer, input.GetNormalizedWorkspaceOrPoint(), str, trueValue);
+            TestTransducerProjection(transducer, input.ToNormalizedAutomaton(), str, trueValue);
         }
 
         /// <summary>
@@ -336,9 +336,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         private static StringDistribution Clone(StringDistribution stringDistribution)
         {
             if (stringDistribution.IsPointMass) return StringDistribution.String(stringDistribution.Point);
-            var clonedAutomaton = Clone(stringDistribution.GetWorkspaceOrPoint());
+            var clonedAutomaton = Clone(stringDistribution.ToAutomaton());
             var dist = new StringDistribution();
-            dist.SetWorkspace(clonedAutomaton);
+            dist.SetWeightFunction(clonedAutomaton);
             return dist;
         }
         #endregion

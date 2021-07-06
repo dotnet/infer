@@ -131,8 +131,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringAutomaton.ConstantOn(2.0, "a"),
                 StringAutomaton.ConstantOn(5.0, "b"),
                 StringAutomaton.ConstantOn(7.0, "c"));
-            StringDistribution dist1 = StringDistribution.FromWorkspace(weights1);
-            StringDistribution dist2 = StringDistribution.FromWorkspace(weights2);
+            StringDistribution dist1 = StringDistribution.FromWeightFunction(weights1);
+            StringDistribution dist2 = StringDistribution.FromWeightFunction(weights2);
             StringDistribution product = dist1.Product(dist2);
 
             StringInferenceTestUtilities.TestProbability(product, 2.0 / 40.0, "a");
@@ -182,18 +182,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringDistribution lhsWithoutGroup = StringDistribution.String("ab");
 
             // add a group to first transition of the start state
-            var weightFunctionBuilder = StringAutomaton.Builder.FromAutomaton(lhsWithoutGroup.GetWorkspaceOrPoint());
+            var weightFunctionBuilder = StringAutomaton.Builder.FromAutomaton(lhsWithoutGroup.ToAutomaton());
             var transitionIterator = weightFunctionBuilder.Start.TransitionIterator;
             var transitionWithGroup = transitionIterator.Value.With(group: 1);
             transitionIterator.Value = transitionWithGroup;
 
-            StringDistribution lhs = StringDistribution.FromWorkspace(weightFunctionBuilder.GetAutomaton());
+            StringDistribution lhs = StringDistribution.FromWeightFunction(weightFunctionBuilder.GetAutomaton());
             StringDistribution rhs = StringDistribution.OneOf("ab", "ac");
-            Assert.True(lhs.GetWorkspaceOrPoint().HasGroup(1));
-            Assert.False(rhs.GetWorkspaceOrPoint().UsesGroups);
+            Assert.True(lhs.ToAutomaton().HasGroup(1));
+            Assert.False(rhs.ToAutomaton().UsesGroups);
             var result = StringDistribution.Zero();
             result.SetToProduct(lhs, rhs);
-            Assert.True(result.GetWorkspaceOrPoint().HasGroup(1));
+            Assert.True(result.ToAutomaton().HasGroup(1));
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 point += PointElement;
             }
 
-            StringDistribution point8 = StringDistribution.FromWorkspace(point8Automaton);
+            StringDistribution point8 = StringDistribution.FromWeightFunction(point8Automaton);
             Assert.True(point8.IsPointMass);
             Assert.Equal(point, point8.Point);
         }
@@ -635,12 +635,12 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 var prod = StringDistribution.Zero();
                 prod.SetToProduct(broadDist, wordModel);
-                Xunit.Assert.True(prod.GetWorkspaceOrPoint().HasElementLogValueOverrides);
+                Xunit.Assert.True(prod.ToAutomaton().HasElementLogValueOverrides);
                 probCurrentWord = Math.Exp(prod.GetLogProb(currentWord));
                 Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
 
                 prod.SetToProduct(narrowDist, wordModel);
-                Xunit.Assert.False(prod.GetWorkspaceOrPoint().HasElementLogValueOverrides);
+                Xunit.Assert.False(prod.ToAutomaton().HasElementLogValueOverrides);
                 var probNarrowWord = Math.Exp(prod.GetLogProb(narrowWord));
                 Assert.Equal(expectedProbForNarrow, probNarrowWord, Eps);
 
@@ -651,7 +651,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             // Copied model
-            var copiedModel = StringDistribution.FromWorkspace(StringTransducer.Copy().ProjectSource(wordModel.GetWorkspaceOrPoint()));
+            var copiedModel = StringDistribution.FromWeightFunction(StringTransducer.Copy().ProjectSource(wordModel.ToAutomaton()));
             // Under transducer.
             for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
             {
@@ -665,9 +665,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             var newTargetProb1 = TargetProb1 * scale;
             var charDistUpperScaled1 = charDistUpper.CreatePartialUniform(Math.Log(newTargetProb1));
             var reWeightingTransducer =
-                StringTransducer.Replace(StringDistribution.Char(charDistUpper).GetWorkspaceOrPoint(), StringDistribution.Char(charDistUpperScaled1).GetWorkspaceOrPoint())
+                StringTransducer.Replace(StringDistribution.Char(charDistUpper).ToAutomaton(), StringDistribution.Char(charDistUpperScaled1).ToAutomaton())
                     .Append(StringTransducer.Copy());
-            var reWeightedWordModel = StringDistribution.FromWorkspace(reWeightingTransducer.ProjectSource(wordModel.GetWorkspaceOrPoint()));
+            var reWeightedWordModel = StringDistribution.FromWeightFunction(reWeightingTransducer.ProjectSource(wordModel.ToAutomaton()));
             for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
             {
                 var currentWord = Word.Substring(0, i + 1);
@@ -718,7 +718,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder.StartStateIndex = builder.AddState().Index;
             builder.Start.SetEndWeight(Weight.FromValue(StoppingProbability));
             builder.Start.AddTransition('a', Weight.FromValue(1 - StoppingProbability), builder.Start.Index);
-            StringDistribution dist = StringDistribution.FromWorkspace(builder.GetAutomaton());
+            StringDistribution dist = StringDistribution.FromWeightFunction(builder.GetAutomaton());
 
             var acc = new MeanVarianceAccumulator();
             const int SampleCount = 30000;

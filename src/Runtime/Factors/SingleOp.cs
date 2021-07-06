@@ -40,7 +40,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
 
             Vector resultLogProb = PiecewiseVector.Constant(char.MaxValue + 1, double.NegativeInfinity);
-            StringAutomaton probFunc = str.GetWorkspaceOrPoint();
+            StringAutomaton probFunc = str.ToAutomaton();
             StringAutomaton.EpsilonClosure startEpsilonClosure = new Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(probFunc, probFunc.Start);
             for (int stateIndex = 0; stateIndex < startEpsilonClosure.Size; ++stateIndex)
             {

@@ -94,7 +94,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             Argument.CheckIfNotNull(format, "format");
             ValidateArguments(args, argNames);
 
-            var allowedArgs = args.Select(arg => arg.GetWorkspaceOrPoint()).ToList();
+            var allowedArgs = args.Select(arg => arg.ToAutomaton()).ToList();
             return StrAverageConditionalImpl(format, allowedArgs, argNames, withGroups: false, noValidation: false);
         }
 
@@ -104,7 +104,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             Argument.CheckIfNotNull(format, "format");
             ValidateArguments(args, argNames);
 
-            var allowedArgs = args.Select(arg => arg.GetWorkspaceOrPoint()).ToList();
+            var allowedArgs = args.Select(arg => arg.ToAutomaton()).ToList();
             return StrAverageConditionalImpl(format, allowedArgs, argNames, withGroups: false, noValidation: true);
         }
 
@@ -120,7 +120,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             Argument.CheckIfNotNull(str, "str");
             ValidateArguments(args, argNames);
 
-            var allowedArgs = args.Select(arg => arg.GetWorkspaceOrPoint()).ToList();
+            var allowedArgs = args.Select(arg => arg.ToAutomaton()).ToList();
 
             // Try optimizations for special cases
             if (TryOptimizedFormatAverageConditionalImpl(str, allowedArgs, argNames, out StringDistribution resultDist))
@@ -132,9 +132,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             var placeholderReplacer = GetPlaceholderReplacingTransducer(allowedArgs, argNames, true, false);
             StringAutomaton format = str.IsPointMass
                 ? placeholderReplacer.ProjectSource(str.Point)
-                : placeholderReplacer.ProjectSource(str.GetWorkspaceOrPoint());
+                : placeholderReplacer.ProjectSource(str.ToAutomaton());
             StringAutomaton validatedFormat = GetValidatedFormatString(format, argNames);
-            return StringDistribution.FromWorkspace(validatedFormat);
+            return StringDistribution.FromWeightFunction(validatedFormat);
         }
 
         public static StringDistribution ToStrReverseMessage(StringDistribution format, IEnumerable<StringDistribution> args, IReadOnlyList<string> argNames)
@@ -144,13 +144,13 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         public static StringDistribution ComputeToStrReverseMessage(StringDistribution format, IEnumerable<StringDistribution> args, IReadOnlyList<string> argNames, bool makeEpsilonFree)
         {
-            var allowedArgs = args.Select(arg => arg.GetWorkspaceOrPoint()).ToList();
+            var allowedArgs = args.Select(arg => arg.ToAutomaton()).ToList();
             StringDistribution toStr = StrAverageConditionalImpl(format, allowedArgs, argNames, withGroups: true, noValidation: false);
             if (makeEpsilonFree)
             {
                 var weightFunction = toStr.GetWeightFunction();
                 if (weightFunction.UsesAutomatonRepresentation)
-                    toStr.SetWorkspace(weightFunction.AsAutomaton().GetEpsilonClosure());
+                    toStr.SetWeightFunction(weightFunction.AsAutomaton().GetEpsilonClosure());
             }
             return toStr;
         }
@@ -209,7 +209,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     {
                         var weightFunction = group.GetWeightFunction();
                         if (weightFunction.TryNormalizeValues(out var normalizedWeightFunction, out var _))
-                            group.SetWorkspace(normalizedWeightFunction);
+                            group.SetWeightFunction(normalizedWeightFunction);
                     }
 
                     result[i] = group;
@@ -325,7 +325,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             // Append the rest of 'str'
             result = result.Append(str.Point.Substring(curArgumentPos + curArgumentLength, str.Point.Length - curArgumentPos - curArgumentLength));
 
-            resultDist = StringDistribution.FromWorkspace(result);
+            resultDist = StringDistribution.FromWeightFunction(result);
             return true;
         }
 
@@ -348,17 +348,17 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             
             // Check braces for correctness.
-            StringAutomaton validatedFormat = format.GetWorkspaceOrPoint();
+            StringAutomaton validatedFormat = format.ToAutomaton();
             if (!noValidation)
             {
-                validatedFormat = GetValidatedFormatString(format.GetWorkspaceOrPoint(), argNames);
+                validatedFormat = GetValidatedFormatString(format.ToAutomaton(), argNames);
             }
 
             // Now replace placeholders with arguments
             var placeholderReplacer = GetPlaceholderReplacingTransducer(allowedArgs, argNames, false, withGroups);
             StringAutomaton str = placeholderReplacer.ProjectSource(validatedFormat);
 
-            return StringDistribution.FromWorkspace(str);
+            return StringDistribution.FromWeightFunction(str);
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             // Append the part of the format after the last placeholder
             result.Append(StringAutomaton.ConstantOn(1.0, format.Point.Substring(closingBraceIndex + 1, format.Point.Length - closingBraceIndex - 1)));
 
-            return StringDistribution.FromWorkspace(result.GetAutomaton());
+            return StringDistribution.FromWeightFunction(result.GetAutomaton());
         }
 
         /// <summary>

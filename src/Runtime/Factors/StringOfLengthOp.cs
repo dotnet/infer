@@ -35,7 +35,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double logNormalizer = allowedChars.GetLogAverageOf(allowedChars);
             var oneCharacter = StringAutomaton.ConstantOnElementLog(logNormalizer, allowedChars.WrappedDistribution);
             var manyCharacters = StringAutomaton.Repeat(oneCharacter, length.GetWorkspace());
-            return StringDistribution.FromWorkspace(manyCharacters);
+            return StringDistribution.FromWeightFunction(manyCharacters);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="StringOfLengthOp"]/message_doc[@name="LengthAverageConditional(StringDistribution, DiscreteChar, Discrete)"]/*'/>

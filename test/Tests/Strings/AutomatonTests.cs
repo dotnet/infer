@@ -1287,7 +1287,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var automaton = builder.GetAutomaton();
 
-            var distribution = StringDistribution.FromWorkspace(automaton);
+            var distribution = StringDistribution.FromWeightFunction(automaton);
             var regexPattern = distribution.ToRegex();
 
             var inputs = new string[]
@@ -1336,7 +1336,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var automaton = builder.GetAutomaton();
 
-            var distribution = StringDistribution.FromWorkspace(automaton);
+            var distribution = StringDistribution.FromWeightFunction(automaton);
             var regexPattern = distribution.ToRegex();
 
             var inputs = new string[]
@@ -2189,7 +2189,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             // "cx" vanishes from automaton language with naive implementation of segments overlap
             // due to numerical errors
-            var dist = StringDistribution.FromWorkspace(automaton);
+            var dist = StringDistribution.FromWeightFunction(automaton);
             StringInferenceTestUtilities.TestIfIncludes(dist, "ax", "bx", "cx", "b");
         }
 

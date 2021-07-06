@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             transducer.AppendInPlace(StringTransducer.Copy(StringAutomaton.Repeat(anyChar, minTimes: minLength, maxTimes: maxLength)));
             transducer.AppendInPlace(StringTransducer.Consume(StringAutomaton.Constant(1.0)));
 
-            return StringDistribution.FromWorkspace(transducer.ProjectSource(str.GetWorkspaceOrPoint()));
+            return StringDistribution.FromWeightFunction(transducer.ProjectSource(str.ToAutomaton()));
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="SubstringOp"]/message_doc[@name="SubAverageConditional(String, int, int)"]/*'/>
@@ -96,7 +96,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             transducer.AppendInPlace(StringTransducer.Copy(StringAutomaton.Repeat(anyChar, minTimes: length, maxTimes: length)));
             transducer.AppendInPlace(StringTransducer.Produce(StringAutomaton.Constant(1.0)));
 
-            return StringDistribution.FromWorkspace(transducer.ProjectSource(sub.GetWorkspaceOrPoint()));
+            return StringDistribution.FromWeightFunction(transducer.ProjectSource(sub.ToAutomaton()));
         }
 
         #endregion

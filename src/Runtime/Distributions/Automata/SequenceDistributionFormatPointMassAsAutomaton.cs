@@ -43,7 +43,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         protected override string ConvertPointMassToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TSequenceDistribution>(
             TSequenceDistribution sequenceDistribution)
         {
-            return this.AutomatonFormat.ConvertToString(sequenceDistribution.GetWorkspaceOrPoint());
+            return this.AutomatonFormat.ConvertToString(sequenceDistribution.ToAutomaton());
         }
     }
 }

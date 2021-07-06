@@ -260,9 +260,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // Concatenation with an improper distribution, need to adjust its scale so that the result is 1 on its support
                 double logNormalizer = result.GetLogAverageOf(result);
                 var lowercaseSuffixFunc = (allowUpperAfterFirst ? StringDistribution.Letters(minLength: minLength - 1) 
-                    : StringDistribution.Lower(minLength: minLength - 1)).GetNormalizedWorkspaceOrPoint();
+                    : StringDistribution.Lower(minLength: minLength - 1)).ToNormalizedAutomaton();
                 var lowercaseSuffixFuncScaled = lowercaseSuffixFunc.ScaleLog(-logNormalizer);
-                result.AppendInPlace(StringDistribution.FromWorkspace(lowercaseSuffixFuncScaled));    
+                result.AppendInPlace(StringDistribution.FromWeightFunction(lowercaseSuffixFuncScaled));    
             }
 
             return result;

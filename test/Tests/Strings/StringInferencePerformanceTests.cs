@@ -122,7 +122,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 Console.WriteLine(dist.ToString());
 
-                ProfileAction(() => RegexpTreeBuilder.BuildRegexp(dist.GetWorkspaceOrPoint()), 6000);
+                ProfileAction(() => RegexpTreeBuilder.BuildRegexp(dist.ToAutomaton()), 6000);
             }, 10000);
         }
 
@@ -144,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 Console.WriteLine(dist.ToString());
 
-                ProfileAction(() => RegexpTreeBuilder.BuildRegexp(dist.GetWorkspaceOrPoint()), 6000);
+                ProfileAction(() => RegexpTreeBuilder.BuildRegexp(dist.ToAutomaton()), 6000);
             }, 20000);
         }
 
@@ -164,7 +164,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 Console.WriteLine(dist.ToString());
 
-                ProfileAction(() => RegexpTreeBuilder.BuildRegexp(dist.GetWorkspaceOrPoint()), 1000);
+                ProfileAction(() => RegexpTreeBuilder.BuildRegexp(dist.ToAutomaton()), 1000);
             }, 20000);
         }
 
