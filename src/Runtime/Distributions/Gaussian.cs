@@ -998,7 +998,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 ddlogp = 0;
             }
             if (double.IsInfinity(dlogp)) return Gaussian.PointMass(dlogp); // to avoid NaN
-            return Gaussian.FromNatural(dlogp - ddlogp * x, -ddlogp);
+            double meanTimesPrecision = dlogp - ddlogp * x;
+            if (Math.Abs(meanTimesPrecision) > double.MaxValue)
+            {
+                meanTimesPrecision = ddlogp * (dlogp / ddlogp - x);
+            }
+            return Gaussian.FromNatural(meanTimesPrecision, -ddlogp);
         }
 
         /// <summary>
@@ -1022,6 +1027,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public void GetDerivatives(double x, out double dlogp, out double ddlogp)
         {
             dlogp = this.MeanTimesPrecision - this.Precision * x;
+            if (Math.Abs(dlogp) > double.MaxValue)
+            {
+                dlogp = this.Precision * (this.MeanTimesPrecision / this.Precision - x);
+            }
             ddlogp = -this.Precision;
         }
 

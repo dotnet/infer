@@ -51,29 +51,26 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (b.IsPointMass)
                 return SumAverageConditional(a, b.Point);
             if (a.IsUniform() || b.IsUniform()) return Gaussian.Uniform();
-            if (a.Precision == b.Precision)
-            {
-                // This formula works even when Precision == 0
-                return Gaussian.FromNatural(MMath.Average(a.MeanTimesPrecision, b.MeanTimesPrecision), a.Precision / 2);
-            }
-            double meanTimesPrec, prec;
-            if(a.Precision >= b.Precision)
+            double meanTimesPrec = MMath.WeightedAverage(b.Precision, a.MeanTimesPrecision, a.Precision, b.MeanTimesPrecision);
+            return Gaussian.FromNatural(meanTimesPrec, GetPrecisionOfSum(a, b));
+        }
+
+        private static double GetPrecisionOfSum(Gaussian a, Gaussian b)
+        {
+            if (a.Precision >= b.Precision)
             {
                 double precOverAPrec = 1 + b.Precision / a.Precision;
                 if (precOverAPrec == 0)
                     throw new ImproperDistributionException(a.IsProper() ? b : a);
-                meanTimesPrec = (a.MeanTimesPrecision / a.Precision * b.Precision + b.MeanTimesPrecision) / precOverAPrec;
-                prec = b.Precision / precOverAPrec;
+                return b.Precision / precOverAPrec;
             }
             else
             {
                 double precOverBPrec = a.Precision / b.Precision + 1;
                 if (precOverBPrec == 0)
                     throw new ImproperDistributionException(a.IsProper() ? b : a);
-                meanTimesPrec = (a.MeanTimesPrecision + b.MeanTimesPrecision / b.Precision * a.Precision) / precOverBPrec;
-                prec = a.Precision / precOverBPrec;
+                return a.Precision / precOverBPrec;
             }
-            return Gaussian.FromNatural(meanTimesPrec, prec);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="SumAverageConditional(double, Gaussian)"]/*'/>
@@ -83,7 +80,15 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return SumAverageConditional(a, b.Point);
             if (b.IsUniform())
                 return b;
-            return Gaussian.FromNatural(b.MeanTimesPrecision + a * b.Precision, b.Precision);
+            double meanTimesPrecision = b.MeanTimesPrecision + a * b.Precision;
+            if (Math.Abs(meanTimesPrecision) > double.MaxValue)
+            {
+                return Gaussian.FromMeanAndPrecision(b.GetMean() + a, b.Precision);
+            }
+            else
+            {
+                return Gaussian.FromNatural(meanTimesPrecision, b.Precision);
+            }
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="SumAverageConditional(Gaussian, double)"]/*'/>
@@ -101,52 +106,19 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian Sum, [SkipIfUniform] Gaussian b)
         {
-            if (Sum.IsPointMass)
-                return AAverageConditional(Sum.Point, b);
-            if (b.IsPointMass)
-                return AAverageConditional(Sum, b.Point);
-            if (Sum.IsUniform() || b.IsUniform()) return Gaussian.Uniform();
-            if (Sum.Precision == b.Precision)
-            {
-                // This formula works even when Precision == 0
-                return Gaussian.FromNatural(MMath.Average(Sum.MeanTimesPrecision, -b.MeanTimesPrecision), Sum.Precision / 2);
-            }
-            double meanTimesPrec, prec;
-            if (Sum.Precision >= b.Precision)
-            {
-                double precOverSumPrec = 1 + b.Precision / Sum.Precision; // can overflow if b.Precision > Sum.Precision
-                if (precOverSumPrec == 0)
-                    throw new ImproperDistributionException(Sum.IsProper() ? b : Sum);
-                meanTimesPrec = (Sum.MeanTimesPrecision / Sum.Precision * b.Precision - b.MeanTimesPrecision) / precOverSumPrec;
-                prec = b.Precision / precOverSumPrec;
-            }
-            else // Sum.Precision < b.Precision
-            {
-                double precOverbPrec = Sum.Precision / b.Precision + 1; // can overflow if Sum.Precision > b.Precision
-                if (precOverbPrec == 0)
-                    throw new ImproperDistributionException(Sum.IsProper() ? b : Sum);
-                meanTimesPrec = (Sum.MeanTimesPrecision  - b.MeanTimesPrecision / b.Precision * Sum.Precision) / precOverbPrec;
-                prec = Sum.Precision / precOverbPrec;
-            }
-            return Gaussian.FromNatural(meanTimesPrec, prec);
+            return SumAverageConditional(Sum, Gaussian.FromNatural(-b.MeanTimesPrecision, b.Precision));
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="AAverageConditional(double, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional(double Sum, [SkipIfUniform] Gaussian b)
         {
-            if (b.IsPointMass)
-                return AAverageConditional(Sum, b.Point);
-            if (b.IsUniform()) return b; // avoid 0*infinity
-            return Gaussian.FromNatural(Sum * b.Precision - b.MeanTimesPrecision, b.Precision);
+            return SumAverageConditional(Sum, Gaussian.FromNatural(-b.MeanTimesPrecision, b.Precision));
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="AAverageConditional(Gaussian, double)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian Sum, double b)
         {
-            if (Sum.IsPointMass)
-                return AAverageConditional(Sum.Point, b);
-            if (Sum.IsUniform()) return Sum; // avoid 0*infinity
-            return Gaussian.FromNatural(Sum.MeanTimesPrecision - b * Sum.Precision, Sum.Precision);
+            return SumAverageConditional(Sum, -b);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/message_doc[@name="AAverageConditional(double, double)"]/*'/>
