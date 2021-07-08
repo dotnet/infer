@@ -145,15 +145,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 foreach (var elem in source)
                 {
-                    if (elem == null)
-                    {
-                        yield return null;
-                    }
-                    else if (!supportDistinctionSet.Contains(elem))
-                    {
-                        supportDistinctionSet.Add(elem);
+                    if (supportDistinctionSet.Add(elem))
                         yield return elem;
-                    }
                 }
             }
         }
