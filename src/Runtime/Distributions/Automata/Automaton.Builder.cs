@@ -159,8 +159,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     stateBuilder.SetEndWeight(state.EndWeight);
                     foreach (var transition in state.Transitions)
                     {
-                        var updatedTransition = transition;
-                        updatedTransition.DestinationStateIndex += oldStateCount;
+                        var updatedTransition = transition.With(destinationStateIndex: transition.DestinationStateIndex + oldStateCount);
                         stateBuilder.AddTransition(updatedTransition);
                     }
                 }
@@ -190,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var transition = iterator.Value;
                         if (transition.DestinationStateIndex > stateIndex)
                         {
-                            transition.DestinationStateIndex -= 1;
+                            transition = transition.With(destinationStateIndex: transition.DestinationStateIndex - 1);
                             iterator.Value = transition;
                         }
                         else if (transition.DestinationStateIndex == stateIndex)
@@ -258,14 +257,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     for (var iterator = this[newId].TransitionIterator; iterator.Ok; iterator.Next())
                     {
                         var transition = iterator.Value;
-                        transition.DestinationStateIndex = oldToNewStateIdMapping[transition.DestinationStateIndex];
-                        if (transition.DestinationStateIndex == -1)
+                        var destinationStateIndex = oldToNewStateIdMapping[transition.DestinationStateIndex];
+                        if (destinationStateIndex == -1)
                         {
                             iterator.Remove();
                         }
                         else
                         {
-                            iterator.Value = transition;
+                            iterator.Value = transition.With(destinationStateIndex: destinationStateIndex);
                         }
                     }
                 }
@@ -275,13 +274,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return deadStateCount;
             }
 
-           
+
             /// <summary>
             /// Creates an automaton <c>f'(s) = sum_{tu=s} f(t)g(u)</c>, where <c>f(t)</c> is the current
             /// automaton (in builder) and <c>g(u)</c> is the given automaton.
             /// The resulting automaton is also known as the Cauchy product of two automata.
             /// </summary>
-            public void Append(
+            /// <param name="automaton">Given automaton.</param>
+            /// <param name="group">If non-zero, all transitions in the appended part will be put
+            /// into the specified group.</param>
+            /// <param name="avoidEpsilonTransitions">When set to <see langword="true"/> (default), and
+            /// at least one of the following
+            /// <list type="bullet">
+            /// <item>None of the end states of the current automaton have any outgoing transitions</item>
+            /// <item>The start state of the given <paramref name="automaton"/> has no incoming transitions</item>
+            /// </list>
+            /// is true, no epsilon transitions will be used to concatenate the automata. Otherwise,
+            /// epsilon transitions will be used</param>
+            /// <returns>A pair of boolean values. The first indicates whether adding new epsilon transitions was avoided.
+            /// The second indicates, whether the determinization state of the concatenated automata was preserved, i.e.
+            /// whether both the current and the given automata being determinized implies that the result automaton is
+            /// determinized as well.</returns>
+            public (bool avoidedEpsilonTransitions, bool preservedDeterminizationState) Append(
                 Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton,
                 int group = 0,
                 bool avoidEpsilonTransitions = true)
@@ -294,11 +308,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     stateBuilder.SetEndWeight(state.EndWeight);
                     foreach (var transition in state.Transitions)
                     {
-                        var updatedTransition = transition;
-                        updatedTransition.DestinationStateIndex += oldStateCount;
+                        var updatedTransition = transition.With(destinationStateIndex: transition.DestinationStateIndex + oldStateCount);
                         if (group != 0)
                         {
-                            updatedTransition.Group = group;
+                            updatedTransition = updatedTransition.With(group: group);
                         }
 
                         stateBuilder.AddTransition(updatedTransition);
@@ -307,7 +320,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var secondStartState = this[oldStateCount + automaton.Start.Index];
 
-                if (avoidEpsilonTransitions && CanMergeEndAndStart())
+
+                bool allOldEndStatesHaveNoOutgoingTransitions = AllOldEndStatesHaveNoOutgoingTransitions();
+                bool secondStartStateHasIncomingTransitions = SecondStartStateHasIncomingTransitions();
+                bool canMergeEndAndStart = allOldEndStatesHaveNoOutgoingTransitions || !secondStartStateHasIncomingTransitions;
+                bool willAvoidEpsilonTransitions = avoidEpsilonTransitions && canMergeEndAndStart;
+                bool preservedDeterminization = avoidEpsilonTransitions && allOldEndStatesHaveNoOutgoingTransitions && !secondStartStateHasIncomingTransitions;
+                if (willAvoidEpsilonTransitions)
                 {
                     // Remove start state of appended automaton and copy all its transitions to previous end states
                     for (var i = 0; i < oldStateCount; ++i)
@@ -322,19 +341,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             var transition = iterator.Value;
 
-                            if (group != 0)
-                            {
-                                transition.Group = group;
-                            }
-
-                            if (transition.DestinationStateIndex == secondStartState.Index)
-                            {
-                                transition.DestinationStateIndex = endState.Index;
-                            }
-                            else
-                            {
-                                transition.Weight *= endState.EndWeight;
-                            }
+                            transition = transition.With(
+                                weight: transition.DestinationStateIndex == secondStartState.Index ? (Weight?)null : transition.Weight * endState.EndWeight,
+                                destinationStateIndex: transition.DestinationStateIndex == secondStartState.Index ? (int?)endState.Index : null,
+                                group: group != 0 ? (int?)group : null);
 
                             endState.AddTransition(transition);
                         }
@@ -358,8 +368,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                bool CanMergeEndAndStart() =>
-                    AllOldEndStatesHaveNoOutgoingTransitions() || !SecondStartStateHasIncomingTransitions();
+                return (willAvoidEpsilonTransitions, preservedDeterminization);
 
                 bool AllOldEndStatesHaveNoOutgoingTransitions()
                 {
@@ -626,7 +635,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     int group = 0)
                 {
                     return this.AddTransition(
-                        new TElementDistribution {Point = element}, weight, destinationStateIndex, group);
+                        ElementDistributionFactory.CreatePointMass(element), weight, destinationStateIndex, group);
                 }
 
                 /// <summary>

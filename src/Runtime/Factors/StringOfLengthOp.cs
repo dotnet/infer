@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             Argument.CheckIfValid(allowedChars.IsPartialUniform(), "allowedChars", "The set of allowed characters must be passed as a partial uniform distribution.");
             
-            return StringDistribution.Repeat(allowedChars, length, length);
+            return StringDistribution.Repeat(allowedChars.WrappedDistribution, length, length);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="StringOfLengthOp"]/message_doc[@name="StrAverageConditional(DiscreteChar, Discrete)"]/*'/>
@@ -33,9 +33,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             Argument.CheckIfValid(allowedChars.IsPartialUniform(), "allowedChars", "The set of allowed characters must be passed as a partial uniform distribution.");
 
             double logNormalizer = allowedChars.GetLogAverageOf(allowedChars);
-            var oneCharacter = StringAutomaton.ConstantOnElementLog(logNormalizer, allowedChars);
+            var oneCharacter = StringAutomaton.ConstantOnElementLog(logNormalizer, allowedChars.WrappedDistribution);
             var manyCharacters = StringAutomaton.Repeat(oneCharacter, length.GetWorkspace());
-            return StringDistribution.FromWorkspace(manyCharacters);
+            return StringDistribution.FromWeightFunction(manyCharacters);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="StringOfLengthOp"]/message_doc[@name="LengthAverageConditional(StringDistribution, DiscreteChar, Discrete)"]/*'/>
@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             Vector resultProbabilities = result.GetWorkspace();
             for (int length = 0; length < result.Dimension; ++length)
             {
-                StringDistribution factor = StringDistribution.Repeat(allowedChars, length, length);
+                StringDistribution factor = StringDistribution.Repeat(allowedChars.WrappedDistribution, length, length);
                 resultProbabilities[length] = Math.Exp(factor.GetLogAverageOf(str));
             }
             

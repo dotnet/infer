@@ -355,7 +355,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             
             StringDistribution str = StringFormatOp_AllowMissingPlaceholders_NoArgumentNames.StrAverageConditional(formatPrior, args);
             
-            Console.WriteLine(str.GetWorkspaceOrPoint().States.Count);
+            Console.WriteLine(str.ToAutomaton().States.Count);
 
             StringInferenceTestUtilities.TestIfIncludes(str, "111 333 222", "111 222", "222 111", "111", "222", "333");
             StringInferenceTestUtilities.TestIfExcludes(str, string.Empty, "111 111", "222 222 111", "333 111 222 333", "112", "1");

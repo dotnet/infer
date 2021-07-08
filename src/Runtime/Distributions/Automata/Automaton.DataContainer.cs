@@ -17,8 +17,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Immutable container for automaton data - states and transitions.
         /// </summary>
         [Serializable]
-        public struct DataContainer : ISerializable
+        public readonly struct DataContainer : ISerializable
         {
+            internal static readonly DataContainer ZeroData = new DataContainer(
+                0,
+                ReadOnlyArray.Create(new StateData(0, 0, Weight.Zero)),
+                ReadOnlyArray<Transition>.Empty,
+                isEpsilonFree: true,
+                usesGroups: false,
+                isDeterminized: true,
+                isZero: true,
+                isEnumerable: true);
+
             /// <summary>
             /// Stores
             /// </summary>

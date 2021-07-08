@@ -63,12 +63,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Defaults to <see langword="true"/>.
         /// </param>
         /// <returns>The built regular expression tree.</returns>
-        public static RegexpTreeNode<TElement> BuildRegexp<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
+        public static RegexpTreeNode<TElement, TElementDistribution> BuildRegexp<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
             Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> automaton,
             bool collapseAlternatives = true)
             where TSequence : class, IEnumerable<TElement>
-            where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>,
-                SettableToPartialUniform<TElementDistribution>, new()
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
         {
@@ -83,10 +82,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             var condensation = automaton.ComputeCondensation(automaton.Start);
 
-            RegexpTreeNode<TElement>[][,] componentRegexps = Util.ArrayInit(
+            RegexpTreeNode<TElement, TElementDistribution>[][,] componentRegexps = Util.ArrayInit(
                 condensation.ComponentCount, i => BuildStronglyConnectedComponentRegexp(condensation.GetComponent(i)));
-            RegexpTreeNode<TElement>[] stateRegexps = Util.ArrayInit(
-                automaton.States.Count, i => RegexpTreeNode<TElement>.Nothing());
+            RegexpTreeNode<TElement, TElementDistribution>[] stateRegexps = Util.ArrayInit(
+                automaton.States.Count, i => RegexpTreeNode<TElement, TElementDistribution>.Nothing());
 
             // Dynamic programming in reverse topological order
             for (int componentIndex = 0; componentIndex < condensation.ComponentCount; ++componentIndex)
@@ -95,7 +94,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 for (int stateIndex = 0; stateIndex < currentComponent.Size; ++stateIndex)
                 {
                     var state = currentComponent.GetStateByIndex(stateIndex);
-                    RegexpTreeNode<TElement> stateDownwardRegexp = state.CanEnd ? RegexpTreeNode<TElement>.Empty() : RegexpTreeNode<TElement>.Nothing();
+                    RegexpTreeNode<TElement, TElementDistribution> stateDownwardRegexp = state.CanEnd ? RegexpTreeNode<TElement, TElementDistribution>.Empty() : RegexpTreeNode<TElement, TElementDistribution>.Nothing();
 
                     foreach (var transition in state.Transitions)
                     {
@@ -103,25 +102,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         if (!transition.Weight.IsZero && !currentComponent.HasState(destState))
                         {
                             var destStateRegexp = transition.IsEpsilon
-                                ? RegexpTreeNode<TElement>.Empty()
-                                : RegexpTreeNode<TElement>.FromElementSet(transition.ElementDistribution);
-                            stateDownwardRegexp = RegexpTreeNode<TElement>.Or(
+                                ? RegexpTreeNode<TElement, TElementDistribution>.Empty()
+                                : RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.ElementDistribution);
+                            stateDownwardRegexp = RegexpTreeNode<TElement, TElementDistribution>.Or(
                                 stateDownwardRegexp,
-                                RegexpTreeNode<TElement>.Concat(destStateRegexp, stateRegexps[transition.DestinationStateIndex]));
+                                RegexpTreeNode<TElement, TElementDistribution>.Concat(destStateRegexp, stateRegexps[transition.DestinationStateIndex]));
                         }
                     }
 
                     for (int updatedStateIndex = 0; updatedStateIndex < currentComponent.Size; ++updatedStateIndex)
                     {
                         var updatedState = currentComponent.GetStateByIndex(updatedStateIndex);
-                        stateRegexps[updatedState.Index] = RegexpTreeNode<TElement>.Or(
+                        stateRegexps[updatedState.Index] = RegexpTreeNode<TElement, TElementDistribution>.Or(
                             stateRegexps[updatedState.Index],
-                            RegexpTreeNode<TElement>.Concat(componentRegexps[componentIndex][updatedStateIndex, stateIndex], stateDownwardRegexp));
+                            RegexpTreeNode<TElement, TElementDistribution>.Concat(componentRegexps[componentIndex][updatedStateIndex, stateIndex], stateDownwardRegexp));
                     }
                 }
             }
 
-            RegexpTreeNode<TElement> result = stateRegexps[automaton.Start.Index];
+            RegexpTreeNode<TElement, TElementDistribution> result = stateRegexps[automaton.Start.Index];
             result.Simplify(collapseAlternatives);
 
             return result;
@@ -142,12 +141,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Defaults to <see langword="true"/>.
         /// </param>
         /// <returns>The built regular expression tree.</returns>
-        public static RegexpTreeNode<TElement> BuildCompactRegex<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
+        public static RegexpTreeNode<TElement, TElementDistribution> BuildCompactRegex<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
             Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> automaton,
             bool collapseAlternatives = true)
             where TSequence : class, IEnumerable<TElement>
-            where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>,
-                SettableToPartialUniform<TElementDistribution>, new()
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
         {
@@ -158,11 +156,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var condensation = automaton.ComputeCondensation(automaton.Start);
 
             // The extra node is the end node.
-            var graphNodes = new List<GraphNode<TElement>>();
+            var graphNodes = new List<GraphNode<TElement, TElementDistribution>>();
             var stateIndexToNodeIndex = new Dictionary<int, int>();
 
             int nodeIndex = 0;
-            graphNodes.Add(new GraphNode<TElement>(nodeIndex));
+            graphNodes.Add(new GraphNode<TElement, TElementDistribution>(nodeIndex));
 
             for (int componentIndex = 0; componentIndex < condensation.ComponentCount; ++componentIndex)
             {
@@ -222,19 +220,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 // If there is only one incoming node intersecting with outgoing nodes we can build edges internal to the component
                 bool buildInternalEdges = incomingAndOutgoingStateIndices.Count <= 1;
-                var allOutgoingRegexes = new Dictionary<int, Dictionary<int, RegexpTreeNode<TElement>>>();
-                GraphNode<TElement> currentNode = null;
+                var allOutgoingRegexes = new Dictionary<int, Dictionary<int, RegexpTreeNode<TElement, TElementDistribution>>>();
+                GraphNode<TElement, TElementDistribution> currentNode = null;
                 foreach (int stateIndex in stateIndicesWithOutgoingEdges)
                 {
                     var state = currentComponent.GetStateByIndex(stateIndex);
                     if (buildInternalEdges)
                     {
                         stateIndexToNodeIndex[state.Index] = ++nodeIndex;
-                        currentNode = new GraphNode<TElement>(nodeIndex);
+                        currentNode = new GraphNode<TElement, TElementDistribution>(nodeIndex);
                         currentNode.Regex = componentRegexps[stateIndex, stateIndex];
                     }
 
-                    var outgoingRegexes = new Dictionary<int, RegexpTreeNode<TElement>>();
+                    var outgoingRegexes = new Dictionary<int, RegexpTreeNode<TElement, TElementDistribution>>();
                     foreach (var transition in state.Transitions)
                     {
                         var destState = automaton.States[transition.DestinationStateIndex];
@@ -242,13 +240,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             var regex =
                                 transition.IsEpsilon ?
-                                RegexpTreeNode<TElement>.Empty() :
-                                RegexpTreeNode<TElement>.FromElementSet(transition.ElementDistribution);
+                                RegexpTreeNode<TElement, TElementDistribution>.Empty() :
+                                RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.ElementDistribution);
 
                             var destinationNodeIndex = stateIndexToNodeIndex[transition.DestinationStateIndex];
                             if (outgoingRegexes.ContainsKey(destinationNodeIndex))
                             {
-                                outgoingRegexes[destinationNodeIndex] = RegexpTreeNode<TElement>.Or(outgoingRegexes[destinationNodeIndex], regex);
+                                outgoingRegexes[destinationNodeIndex] = RegexpTreeNode<TElement, TElementDistribution>.Or(outgoingRegexes[destinationNodeIndex], regex);
                             }
                             else
                             {
@@ -259,7 +257,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     if (state.CanEnd)
                     {
-                        outgoingRegexes[EndNodeIndex] = RegexpTreeNode<TElement>.Empty();
+                        outgoingRegexes[EndNodeIndex] = RegexpTreeNode<TElement, TElementDistribution>.Empty();
                     }
 
                     allOutgoingRegexes[stateIndex] = outgoingRegexes;
@@ -268,7 +266,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         foreach (var kvp in outgoingRegexes)
                         {
-                            var edge = new Edge<TElement>(kvp.Key);
+                            var edge = new Edge<TElement, TElementDistribution>(kvp.Key);
                             edge.Regex = kvp.Value;
                             currentNode.OutgoingNodes.Add(edge);
                         }
@@ -283,7 +281,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (!stateIndexToNodeIndex.ContainsKey(state.Index))
                     {
                         stateIndexToNodeIndex[state.Index] = ++nodeIndex;
-                        graphNodes.Add(new GraphNode<TElement>(nodeIndex));
+                        graphNodes.Add(new GraphNode<TElement, TElementDistribution>(nodeIndex));
                     }
 
                     currentNode = graphNodes[stateIndexToNodeIndex[state.Index]];
@@ -299,40 +297,40 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             }
 
                             var state2 = currentComponent.GetStateByIndex(stateIndex2);
-                            var edge = new Edge<TElement>(stateIndexToNodeIndex[state2.Index]);
+                            var edge = new Edge<TElement, TElementDistribution>(stateIndexToNodeIndex[state2.Index]);
                             edge.Regex = componentRegexps[stateIndex, stateIndex2];
                             currentNode.OutgoingNodes.Add(edge);
                         }
                     }
                     else
                     {
-                        var outgoingRegexes = new Dictionary<int, RegexpTreeNode<TElement>>();
+                        var outgoingRegexes = new Dictionary<int, RegexpTreeNode<TElement, TElementDistribution>>();
                         foreach (int stateIndex2 in stateIndicesWithOutgoingEdges)
                         {
-                            var regex = RegexpTreeNode<TElement>.Empty();
+                            var regex = RegexpTreeNode<TElement, TElementDistribution>.Empty();
                             var state2 = currentComponent.GetStateByIndex(stateIndex2);
                             if (stateIndex != stateIndex2)
                             {
-                                regex = RegexpTreeNode<TElement>.Concat(componentRegexps[stateIndex, stateIndex2], componentRegexps[stateIndex, stateIndex2]);
+                                regex = RegexpTreeNode<TElement, TElementDistribution>.Concat(componentRegexps[stateIndex, stateIndex2], componentRegexps[stateIndex, stateIndex2]);
                             }
 
                             foreach (var outgoingRegex in allOutgoingRegexes[stateIndex2])
                             {
-                                var chainedRegex = RegexpTreeNode<TElement>.Concat(regex, outgoingRegex.Value);
+                                var chainedRegex = RegexpTreeNode<TElement, TElementDistribution>.Concat(regex, outgoingRegex.Value);
                                 if (!outgoingRegexes.ContainsKey(outgoingRegex.Key))
                                 {
                                     outgoingRegexes.Add(outgoingRegex.Key, chainedRegex);
                                 }
                                 else
                                 {
-                                    outgoingRegexes[outgoingRegex.Key] = RegexpTreeNode<TElement>.Or(outgoingRegexes[outgoingRegex.Key], chainedRegex);
+                                    outgoingRegexes[outgoingRegex.Key] = RegexpTreeNode<TElement, TElementDistribution>.Or(outgoingRegexes[outgoingRegex.Key], chainedRegex);
                                 }
                             }
                         }
 
                         foreach (var kvp in outgoingRegexes)
                         {
-                            var edge = new Edge<TElement>(kvp.Key);
+                            var edge = new Edge<TElement, TElementDistribution>(kvp.Key);
                             edge.Regex = kvp.Value;
                             currentNode.OutgoingNodes.Add(edge);
                         }
@@ -340,7 +338,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            var graph = new Graph<TElement>();
+            var graph = new Graph<TElement, TElementDistribution>();
             graph.Nodes = graphNodes.ToArray();
             var result = graph.BuildRegex(collapseAlternatives);
             return result;
@@ -359,19 +357,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <typeparam name="TAutomaton">The concrete type of an automaton.</typeparam>
         /// <param name="component">The strongly connected component to compute the regular expressions for.</param>
         /// <returns>A table containing the computed regular expressions.</returns>
-        private static RegexpTreeNode<TElement>[,] BuildStronglyConnectedComponentRegexp<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
+        private static RegexpTreeNode<TElement, TElementDistribution>[,] BuildStronglyConnectedComponentRegexp<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
             Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.StronglyConnectedComponent component)
             where TSequence : class, IEnumerable<TElement>
-            where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>,
-                SettableToPartialUniform<TElementDistribution>, new()
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
         {
-            var regexps = Util.ArrayInit(component.Size, component.Size, (i, j) => RegexpTreeNode<TElement>.Nothing());
+            var regexps = Util.ArrayInit(component.Size, component.Size, (i, j) => RegexpTreeNode<TElement, TElementDistribution>.Nothing());
             for (int stateIndex = 0; stateIndex < component.Size; ++stateIndex)
             {
                 var state = component.GetStateByIndex(stateIndex);
-                regexps[stateIndex, stateIndex] = RegexpTreeNode<TElement>.Empty();
+                regexps[stateIndex, stateIndex] = RegexpTreeNode<TElement, TElementDistribution>.Empty();
 
                 foreach (var transition in state.Transitions)
                 {
@@ -384,9 +381,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if ((destStateIndex = component.GetIndexByState(component.Automaton.States[transition.DestinationStateIndex])) != -1)
                     {
                         var destStateRegexp = transition.IsEpsilon
-                                ? RegexpTreeNode<TElement>.Empty()
-                                : RegexpTreeNode<TElement>.FromElementSet(transition.ElementDistribution);
-                        regexps[stateIndex, destStateIndex] = RegexpTreeNode<TElement>.Or(
+                                ? RegexpTreeNode<TElement, TElementDistribution>.Empty()
+                                : RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.ElementDistribution);
+                        regexps[stateIndex, destStateIndex] = RegexpTreeNode<TElement, TElementDistribution>.Or(
                             regexps[stateIndex, destStateIndex], destStateRegexp);
                     }
                 }
@@ -394,7 +391,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             for (int k = 0; k < component.Size; ++k)
             {
-                RegexpTreeNode<TElement> star = RegexpTreeNode<TElement>.Star(regexps[k, k]);
+                RegexpTreeNode<TElement, TElementDistribution> star = RegexpTreeNode<TElement, TElementDistribution>.Star(regexps[k, k]);
                 for (int i = 0; i < component.Size; ++i)
                 {
                     if (i == k || regexps[i, k].Type == RegexpTreeNodeType.Nothing)
@@ -409,15 +406,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
-                        RegexpTreeNode<TElement> option = RegexpTreeNode<TElement>.Concat(regexps[i, k], RegexpTreeNode<TElement>.Concat(star, regexps[k, j]));
-                        regexps[i, j] = RegexpTreeNode<TElement>.Or(regexps[i, j], option);
+                        RegexpTreeNode<TElement, TElementDistribution> option = RegexpTreeNode<TElement, TElementDistribution>.Concat(regexps[i, k], RegexpTreeNode<TElement, TElementDistribution>.Concat(star, regexps[k, j]));
+                        regexps[i, j] = RegexpTreeNode<TElement, TElementDistribution>.Or(regexps[i, j], option);
                     }
                 }
 
                 for (int i = 0; i < component.Size; ++i)
                 {
-                    regexps[i, k] = RegexpTreeNode<TElement>.Or(regexps[i, k], star);
-                    regexps[k, i] = RegexpTreeNode<TElement>.Or(regexps[k, i], star);
+                    regexps[i, k] = RegexpTreeNode<TElement, TElementDistribution>.Or(regexps[i, k], star);
+                    regexps[k, i] = RegexpTreeNode<TElement, TElementDistribution>.Or(regexps[k, i], star);
                 }
 
                 regexps[k, k] = star;
@@ -430,10 +427,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// An edge in the graph used for building regular expressions.
         /// </summary>
         /// <typeparam name="TElement">The type of the element.</typeparam>
-        private class Edge<TElement>
+        /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+        private class Edge<TElement, TElementDistribution>
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, new()
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="Edge{TElement}"/> class.
+            /// Initializes a new instance of the <see cref="Edge{TElement, TElementDistribution}"/> class.
             /// </summary>
             /// <param name="index">The index of the node at the other end of this edge (either incoming or outgoing).</param>
             public Edge(int index)
@@ -442,7 +441,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="Edge{TElement}"/> class.
+            /// Initializes a new instance of the <see cref="Edge{TElement, TElementDistribution}"/> class.
             /// </summary>
             /// <param name="index">The index of the node at the other end of this edge (either incoming or outgoing).</param>
             /// <param name="edgeType">The type of the edge.</param>
@@ -450,7 +449,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 this.Index = index;
                 this.EdgeType = edgeType;
-                this.Regex = RegexpTreeNode<TElement>.Empty();
+                this.Regex = RegexpTreeNode<TElement, TElementDistribution>.Empty();
             }
 
             /// <summary>
@@ -474,7 +473,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets or sets the regular expression fragment for the edge.
             /// </summary>
-            public RegexpTreeNode<TElement> Regex
+            public RegexpTreeNode<TElement, TElementDistribution> Regex
             {
                 get;
                 set;
@@ -494,7 +493,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// A node in the graph used for building regular expressions.
         /// </summary>
         /// <typeparam name="TElement">The type of the element.</typeparam>
-        private class GraphNode<TElement>
+        /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+        private class GraphNode<TElement, TElementDistribution>
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, new()
         {
             /// <summary>
             /// An instance of a comparer for comparing edges.
@@ -502,21 +503,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             private static GraphEdgeComparer edgeComparer = new GraphEdgeComparer();
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="GraphNode{TElement}"/> class.
+            /// Initializes a new instance of the <see cref="GraphNode{TElement, TElementDistribution}"/> class.
             /// </summary>
             /// <param name="index">The index of the node.</param>
             public GraphNode(int index)
             {
                 this.Index = index;
-                this.IncomingNodes = new HashSet<Edge<TElement>>(edgeComparer);
-                this.OutgoingNodes = new HashSet<Edge<TElement>>(edgeComparer);
-                this.Regex = RegexpTreeNode<TElement>.Empty();
+                this.IncomingNodes = new HashSet<Edge<TElement, TElementDistribution>>(edgeComparer);
+                this.OutgoingNodes = new HashSet<Edge<TElement, TElementDistribution>>(edgeComparer);
+                this.Regex = RegexpTreeNode<TElement, TElementDistribution>.Empty();
             }
 
             /// <summary>
             /// Gets or sets the set of incoming edges.
             /// </summary>
-            public HashSet<Edge<TElement>> IncomingNodes
+            public HashSet<Edge<TElement, TElementDistribution>> IncomingNodes
             {
                 get;
                 set;
@@ -525,7 +526,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets or sets the set of outgoing edges.
             /// </summary>
-            public HashSet<Edge<TElement>> OutgoingNodes
+            public HashSet<Edge<TElement, TElementDistribution>> OutgoingNodes
             {
                 get;
                 set;
@@ -543,7 +544,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets or sets the star expression for the node.
             /// </summary>
-            public RegexpTreeNode<TElement> Regex
+            public RegexpTreeNode<TElement, TElementDistribution> Regex
             {
                 get;
                 set;
@@ -554,9 +555,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             /// <param name="destinationIndex">The index of the destination node.</param>
             /// <returns>The edge instance or null if no such edge exists.</returns>
-            public Edge<TElement> GetOutgoingEdge(int destinationIndex)
+            public Edge<TElement, TElementDistribution> GetOutgoingEdge(int destinationIndex)
             {
-                var edge = new Edge<TElement>(destinationIndex);
+                var edge = new Edge<TElement, TElementDistribution>(destinationIndex);
                 if (this.OutgoingNodes.Contains(edge))
                 {
                     return this.OutgoingNodes.First(e => edgeComparer.Equals(e, edge));
@@ -570,9 +571,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             /// <param name="sourceIndex">The index of the source node.</param>
             /// <returns>The edge instance or null if no such edge exists.</returns>
-            public Edge<TElement> GetIncomingEdge(int sourceIndex)
+            public Edge<TElement, TElementDistribution> GetIncomingEdge(int sourceIndex)
             {
-                var edge = new Edge<TElement>(sourceIndex);
+                var edge = new Edge<TElement, TElementDistribution>(sourceIndex);
                 if (this.IncomingNodes.Contains(edge))
                 {
                     return this.IncomingNodes.First(e => edgeComparer.Equals(e, edge));
@@ -593,7 +594,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// A class that provides comparer functionality for comparing edges.
             /// </summary>
-            public class GraphEdgeComparer : IEqualityComparer<Edge<TElement>>
+            public class GraphEdgeComparer : IEqualityComparer<Edge<TElement, TElementDistribution>>
             {
                 /// <summary>
                 /// Determines whether two edges are the same edge.
@@ -601,7 +602,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <param name="x">The first edge.</param>
                 /// <param name="y">The second edge.</param>
                 /// <returns>True if the instances are equal, false otherwise.</returns>
-                public bool Equals(Edge<TElement> x, Edge<TElement> y)
+                public bool Equals(Edge<TElement, TElementDistribution> x, Edge<TElement, TElementDistribution> y)
                 {
                     return x.Index == y.Index;
                 }
@@ -611,7 +612,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// </summary>
                 /// <param name="obj">The edge instance.</param>
                 /// <returns>The hash code.</returns>
-                public int GetHashCode(Edge<TElement> obj)
+                public int GetHashCode(Edge<TElement, TElementDistribution> obj)
                 {
                     return obj.Index.GetHashCode();
                 }
@@ -622,17 +623,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Graph used for building regular expressions.
         /// </summary>
         /// <typeparam name="TElement">The type of the element.</typeparam>
-        private class Graph<TElement>
+        /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+        private class Graph<TElement, TElementDistribution>
+            where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, new()
         {
             /// <summary>
             /// Backing field for <see cref="Nodes"/>.
             /// </summary>
-            private GraphNode<TElement>[] nodes;
+            private GraphNode<TElement, TElementDistribution>[] nodes;
 
             /// <summary>
             /// Gets or sets the nodes in the graph.
             /// </summary>
-            public GraphNode<TElement>[] Nodes
+            public GraphNode<TElement, TElementDistribution>[] Nodes
             {
                 get
                 {
@@ -662,7 +665,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             /// <param name="collapseAlternatives">Whether to collapse alternatives or not.</param>
             /// <returns>A regex tree representing the graph.</returns>
-            public RegexpTreeNode<TElement> BuildRegex(bool collapseAlternatives)
+            public RegexpTreeNode<TElement, TElementDistribution> BuildRegex(bool collapseAlternatives)
             {
                 this.CollapseChainsAndParallels();
                 this.TCAlgorithm();
@@ -697,8 +700,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             var nodej = this.Nodes[j];
                             var edgeik = nodei.GetOutgoingEdge(k);
                             var edgekj = nodej.GetIncomingEdge(k);
-                            var regex = RegexpTreeNode<TElement>.Concat(edgeik.Regex, nodek.Regex);
-                            regex = RegexpTreeNode<TElement>.Concat(regex, edgekj.Regex);
+                            var regex = RegexpTreeNode<TElement, TElementDistribution>.Concat(edgeik.Regex, nodek.Regex);
+                            regex = RegexpTreeNode<TElement, TElementDistribution>.Concat(regex, edgekj.Regex);
                             nodei.OutgoingNodes.Remove(edgeik);
                             nodej.IncomingNodes.Remove(edgekj);
 
@@ -707,14 +710,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                             // Add the new edge between i and j, but if one already exists
                             // then update its regex
-                            var newIEdgeToJ = new Edge<TElement>(j, EdgeTypes.Chain);
-                            var newJEdgeFromI = new Edge<TElement>(i, EdgeTypes.Chain);
+                            var newIEdgeToJ = new Edge<TElement, TElementDistribution>(j, EdgeTypes.Chain);
+                            var newJEdgeFromI = new Edge<TElement, TElementDistribution>(i, EdgeTypes.Chain);
 
                             if (nodei.OutgoingNodes.Contains(newIEdgeToJ))
                             {
                                 var existingIEdgeToJ = nodei.GetOutgoingEdge(j);
                                 var existingJEdgeFromI = nodej.GetIncomingEdge(i);
-                                regex = RegexpTreeNode<TElement>.Or(regex, existingIEdgeToJ.Regex);
+                                regex = RegexpTreeNode<TElement, TElementDistribution>.Or(regex, existingIEdgeToJ.Regex);
                                 nodei.OutgoingNodes.Remove(existingIEdgeToJ);
                                 nodej.IncomingNodes.Remove(existingJEdgeFromI);
                             }
@@ -733,20 +736,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             private void TCAlgorithm()
             {
-                var comparer = new GraphNode<TElement>.GraphEdgeComparer();
+                var comparer = new GraphNode<TElement, TElementDistribution>.GraphEdgeComparer();
 
                 // In topological order (graph is in reverse topological order)
                 for (int k = this.NodeCount - 2; k >= 0; k--)
                 {
                     var nodek = this.Nodes[k];
-                    foreach (Edge<TElement> ej in nodek.OutgoingNodes)
+                    foreach (Edge<TElement, TElementDistribution> ej in nodek.OutgoingNodes)
                     {
                         var nodej = this.Nodes[ej.Index];
-                        foreach (Edge<TElement> ei in nodek.IncomingNodes)
+                        foreach (Edge<TElement, TElementDistribution> ei in nodek.IncomingNodes)
                         {
                             var nodei = this.Nodes[ei.Index];
-                            nodei.OutgoingNodes.Add(new Edge<TElement>(ej.Index, EdgeTypes.AddedByTC));
-                            nodej.IncomingNodes.Add(new Edge<TElement>(ei.Index, EdgeTypes.AddedByTC));
+                            nodei.OutgoingNodes.Add(new Edge<TElement, TElementDistribution>(ej.Index, EdgeTypes.AddedByTC));
+                            nodej.IncomingNodes.Add(new Edge<TElement, TElementDistribution>(ei.Index, EdgeTypes.AddedByTC));
                         }
                     }
                 }
@@ -757,7 +760,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             private void TRAlgorithm()
             {
-                var comparer = new GraphNode<TElement>.GraphEdgeComparer();
+                var comparer = new GraphNode<TElement, TElementDistribution>.GraphEdgeComparer();
 
                 // In reverse topological order
                 for (int k = 1; k < this.NodeCount - 1; k++)
@@ -769,13 +772,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         foreach (var ei in nodek.IncomingNodes)
                         {
                             var nodei = this.Nodes[ei.Index];
-                            if (nodei.OutgoingNodes.Contains(new Edge<TElement>(ej.Index)))
+                            if (nodei.OutgoingNodes.Contains(new Edge<TElement, TElementDistribution>(ej.Index)))
                             {
                                 var matchij = nodei.OutgoingNodes.First(e => e.Index == ej.Index);
                                 nodei.OutgoingNodes.Remove(matchij);
                                 if (matchij.EdgeType != EdgeTypes.AddedByTC)
                                 {
-                                    var newEdgeij = new Edge<TElement>(ej.Index, EdgeTypes.RemovedByTR);
+                                    var newEdgeij = new Edge<TElement, TElementDistribution>(ej.Index, EdgeTypes.RemovedByTR);
                                     newEdgeij.Regex = matchij.Regex;
                                     nodei.OutgoingNodes.Add(newEdgeij);
                                 }
@@ -784,7 +787,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 nodej.IncomingNodes.Remove(matchji);
                                 if (matchji.EdgeType != EdgeTypes.AddedByTC)
                                 {
-                                    var newEdgeji = new Edge<TElement>(ei.Index, EdgeTypes.RemovedByTR);
+                                    var newEdgeji = new Edge<TElement, TElementDistribution>(ei.Index, EdgeTypes.RemovedByTR);
                                     newEdgeji.Regex = matchji.Regex;
                                     nodej.IncomingNodes.Add(newEdgeji);
                                 }
@@ -798,7 +801,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Builds the regex tree from the transitively reduced graph.
             /// </summary>
             /// <returns>A regex tree.</returns>
-            private RegexpTreeNode<TElement> BuildRegexFromTRGraph()
+            private RegexpTreeNode<TElement, TElementDistribution> BuildRegexFromTRGraph()
             {
                 var transitivelyReducedEdges = this.Nodes.SelectMany(node => node.OutgoingNodes.Where(e => e.EdgeType == EdgeTypes.RemovedByTR).Select(e => Pair.Create(node.Index, e.Index))).ToList();
                 if (transitivelyReducedEdges.Count > 0)
@@ -830,14 +833,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             /// <param name="node">The interval tree node.</param>
             /// <returns>The regex tree.</returns>
-            private RegexpTreeNode<TElement> BuildRegexForIntervalNode(IntervalTreeNode node)
+            private RegexpTreeNode<TElement, TElementDistribution> BuildRegexForIntervalNode(IntervalTreeNode node)
             {
                 // Children should already be ordered.
                 var children = node.Children;
                 int intervalStart = node.Interval.First;
                 int intervalEnd = node.Interval.Second;
 
-                var result = RegexpTreeNode<TElement>.Empty();
+                var result = RegexpTreeNode<TElement, TElementDistribution>.Empty();
                 var endOfLast = node.Interval.First;
 
                 foreach (var child in children)
@@ -845,16 +848,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     int startOfCurrent = child.Interval.First;
                     if (endOfLast != startOfCurrent)
                     {
-                        result = RegexpTreeNode<TElement>.Concat(result, this.BuildRegexBetweenNodeIndices(endOfLast, startOfCurrent, true));
+                        result = RegexpTreeNode<TElement, TElementDistribution>.Concat(result, this.BuildRegexBetweenNodeIndices(endOfLast, startOfCurrent, true));
                     }
 
-                    result = RegexpTreeNode<TElement>.Concat(result, this.BuildRegexForIntervalNode(child));
+                    result = RegexpTreeNode<TElement, TElementDistribution>.Concat(result, this.BuildRegexForIntervalNode(child));
                     endOfLast = child.Interval.Second;
                 }
 
                 if (intervalEnd != endOfLast)
                 {
-                    result = RegexpTreeNode<TElement>.Concat(result, this.BuildRegexBetweenNodeIndices(endOfLast, intervalEnd, true));
+                    result = RegexpTreeNode<TElement, TElementDistribution>.Concat(result, this.BuildRegexBetweenNodeIndices(endOfLast, intervalEnd, true));
                 }
 
                 return result;
@@ -952,10 +955,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // Replace the edge between the interval start and end 
                     var startNode = this.Nodes[intervalStart];
                     var endNode = this.Nodes[intervalEnd];
-                    startNode.OutgoingNodes = new HashSet<Edge<TElement>>(startNode.OutgoingNodes.Where(e => e.Index < intervalEnd));
-                    endNode.IncomingNodes = new HashSet<Edge<TElement>>(endNode.IncomingNodes.Where(e => e.Index > intervalStart));
-                    var edgeToEnd = new Edge<TElement>(intervalEnd, EdgeTypes.CollapsedInterval);
-                    var edgeFromStart = new Edge<TElement>(intervalStart, EdgeTypes.CollapsedInterval);
+                    startNode.OutgoingNodes = new HashSet<Edge<TElement, TElementDistribution>>(startNode.OutgoingNodes.Where(e => e.Index < intervalEnd));
+                    endNode.IncomingNodes = new HashSet<Edge<TElement, TElementDistribution>>(endNode.IncomingNodes.Where(e => e.Index > intervalStart));
+                    var edgeToEnd = new Edge<TElement, TElementDistribution>(intervalEnd, EdgeTypes.CollapsedInterval);
+                    var edgeFromStart = new Edge<TElement, TElementDistribution>(intervalStart, EdgeTypes.CollapsedInterval);
                     edgeToEnd.Regex = collapsedRegex;
                     edgeFromStart.Regex = collapsedRegex;
                     startNode.OutgoingNodes.Add(edgeToEnd);
@@ -975,7 +978,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var node = this.Nodes[i];
                     foreach (var ej in node.OutgoingNodes)
                     {
-                        var ei = new Edge<TElement>(i);
+                        var ei = new Edge<TElement, TElementDistribution>(i);
                         ei.Regex = ej.Regex;
                         this.Nodes[ej.Index].IncomingNodes.Add(ei);
                     }
@@ -989,12 +992,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="endIndex">The index of the end node.</param>
             /// <param name="includeNodeRegex">Whether to include the regex at the node.</param>
             /// <returns>The recursively-built regex from the current node.</returns>
-            private RegexpTreeNode<TElement> BuildRegexBetweenNodeIndices(int currentIndex, int endIndex, bool includeNodeRegex = true)
+            private RegexpTreeNode<TElement, TElementDistribution> BuildRegexBetweenNodeIndices(int currentIndex, int endIndex, bool includeNodeRegex = true)
             {
                 if (currentIndex == endIndex)
                 {
                     // We've arrived! Don't include node regex for end index.
-                    return RegexpTreeNode<TElement>.Empty();
+                    return RegexpTreeNode<TElement, TElementDistribution>.Empty();
                 }
 
                 if (currentIndex < endIndex)
@@ -1003,17 +1006,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 var currentNode = this.Nodes[currentIndex];
-                var regex = RegexpTreeNode<TElement>.Nothing();
+                var regex = RegexpTreeNode<TElement, TElementDistribution>.Nothing();
 
                 foreach (var edge in currentNode.OutgoingNodes)
                 {
-                    var edgeRegex = RegexpTreeNode<TElement>.Concat(edge.Regex, this.BuildRegexBetweenNodeIndices(edge.Index, endIndex));
-                    regex = RegexpTreeNode<TElement>.Or(regex, edgeRegex);
+                    var edgeRegex = RegexpTreeNode<TElement, TElementDistribution>.Concat(edge.Regex, this.BuildRegexBetweenNodeIndices(edge.Index, endIndex));
+                    regex = RegexpTreeNode<TElement, TElementDistribution>.Or(regex, edgeRegex);
                 }
 
                 if (includeNodeRegex)
                 {
-                    regex = RegexpTreeNode<TElement>.Concat(currentNode.Regex, regex);
+                    regex = RegexpTreeNode<TElement, TElementDistribution>.Concat(currentNode.Regex, regex);
                 }
 
                 return regex;

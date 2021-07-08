@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="strings">The strings to test.</param>
         public static void TestLogProbability(StringDistribution distribution, double trueLogProbability, params string[] strings)
         {
-            TestLogValue(distribution.GetNormalizedWorkspaceOrPoint(), trueLogProbability, strings);
+            TestLogValue(distribution.ToNormalizedAutomaton(), trueLogProbability, strings);
         }
 
         /// <summary>
@@ -71,21 +71,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double logValue = automaton.GetLogValue(str);
                 Assert.Equal(trueLogValue, logValue, LogValueEps);
                 Assert.Equal(logValue, Clone(automaton).GetLogValue(str));
-            }            
-        }
-
-        /// <summary>
-        /// Tests whether the logarithm of the value of a given automaton on given strings equals to a specified value.
-        /// </summary>
-        /// <param name="automaton">The automaton.</param>
-        /// <param name="trueLogValue">The expected logarithm of the function value.</param>
-        /// <param name="strings">The strings to test.</param>
-        public static void TestValue(ListAutomaton<string, StringDistribution> automaton, double trueValue, params List<string>[] strings)
-        {
-            foreach (var str in strings)
-            {
-                double logValue = automaton.GetLogValue(str);
-                Assert.Equal(Math.Log(trueValue), logValue, LogValueEps);
             }
         }
 
@@ -132,7 +117,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double logProb1 = argument1.GetLogProb(str);
                     double logProb2 = argument2.GetLogProb(str);
                     double logProbProduct = trueProduct.GetLogProb(str);
-                    
+
                     if (double.IsNegativeInfinity(logProb1) || double.IsNegativeInfinity(logProb2))
                     {
                         Assert.True(double.IsNegativeInfinity(logProbProduct));
@@ -169,6 +154,27 @@ namespace Microsoft.ML.Probabilistic.Tests
             TestInclusionExclusion(distribution, values, true);
         }
 
+        public static void TestAutomatonPropertyPreservation(StringAutomaton automaton, Func<StringAutomaton, StringAutomaton> testedOperation)
+        {
+            var automatonWithClearProperties = automaton
+                .WithLogValueOverride(null)
+                .WithPruneStatesWithLogEndWeightLessThan(null);
+
+            var outputForClearProperties = testedOperation(automatonWithClearProperties);
+
+            Assert.Null(outputForClearProperties.LogValueOverride);
+            Assert.Null(outputForClearProperties.PruneStatesWithLogEndWeightLessThan);
+
+            var automatonWithSetProperties = automaton
+                .WithLogValueOverride(-1)
+                .WithPruneStatesWithLogEndWeightLessThan(-128);
+
+            var outputForSetProperties = testedOperation(automatonWithSetProperties);
+
+            Assert.Equal(automatonWithSetProperties.LogValueOverride, outputForSetProperties.LogValueOverride);
+            Assert.Equal(automatonWithSetProperties.PruneStatesWithLogEndWeightLessThan, outputForSetProperties.PruneStatesWithLogEndWeightLessThan);
+        }
+
         #endregion
 
         #region Utils for testing transducers
@@ -183,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public static void TestTransducerProjection(
             StringTransducer transducer, StringDistribution input, string str, double trueValue)
         {
-            TestTransducerProjection(transducer, input.GetNormalizedWorkspaceOrPoint(), str, trueValue);
+            TestTransducerProjection(transducer, input.ToNormalizedAutomaton(), str, trueValue);
         }
 
         /// <summary>
@@ -235,7 +241,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var res = transducer.ProjectSource(StringAutomaton.ConstantOn(1.0, str));
                 Assert.True(res.IsZero());
                 var res2 = transducer.ProjectSource(str);
-                Assert.True(res2.IsZero());    
+                Assert.True(res2.IsZero());
             }
         }
 
@@ -303,13 +309,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="testInclusion">Specifies whether the inclusion test must be performed instead of the exclusion test.</param>
         private static void TestInclusionExclusion<T>(IDistribution<T> distribution, T[] values, bool testInclusion)
         {
-            Console.WriteLine("Testing distribution: "+distribution.ToString());
+            Console.WriteLine("Testing distribution: " + distribution.ToString());
             foreach (var val in values)
             {
                 var excluded = double.IsNegativeInfinity(distribution.GetLogProb(val));
-                var msg =  val + (excluded ? " was not in " : " was in ");
-                Assert.True( excluded != testInclusion, msg + " "+distribution.ToString());
-                Console.WriteLine(msg+"distribution");
+                var msg = val + (excluded ? " was not in " : " was in ");
+                Assert.True(excluded != testInclusion, msg + " " + distribution.ToString());
+                Console.WriteLine(msg + "distribution");
             }
         }
 
@@ -330,7 +336,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         private static StringDistribution Clone(StringDistribution stringDistribution)
         {
             if (stringDistribution.IsPointMass) return StringDistribution.String(stringDistribution.Point);
-            var clonedAutomaton = Clone(stringDistribution.GetWorkspaceOrPoint());
+            var clonedAutomaton = Clone(stringDistribution.ToAutomaton());
             var dist = new StringDistribution();
             dist.SetWeightFunction(clonedAutomaton);
             return dist;

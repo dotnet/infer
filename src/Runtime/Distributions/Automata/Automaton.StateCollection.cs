@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>
         /// Is a thin wrapper around Automaton.data. Wraps each <see cref="StateData"/> into <see cref="State"/> on demand.
         /// </remarks>
-        public struct StateCollection : IReadOnlyList<State>
+        public readonly struct StateCollection : IReadOnlyList<State>
         {
             /// <summary>
             /// Cached value of this.owner.Data.states. Cached for performance.

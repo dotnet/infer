@@ -45,30 +45,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// which can be used with no element only.
     /// </description></item>
     /// </list>
+    /// 
+    /// This class is constant and thread-safe (though, not truly immutable, as some properties are evaluated lazily
+    /// and stored afterwards) and all implementations must preserve this property - some algorithms used
+    /// to implement this class rely on it. For the same reason, implementations are not allowed to add new data fields.
     /// </remarks>
     /// <typeparam name="TSequence">The type of a sequence.</typeparam>
-    /// <typeparam name="TElement">The type of a sequence element.</typeparam>
-    /// <typeparam name="TElementDistribution">The type of a distribution over sequence elements.</typeparam>
+    /// <typeparam name="TElement">The immutable type of a sequence element.</typeparam>
+    /// <typeparam name="TElementDistribution">The immutable type of a distribution over sequence elements.</typeparam>
     /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
     /// <typeparam name="TThis">The type of a concrete automaton class.</typeparam>
     [Quality(QualityBand.Experimental)]
     [DataContract]
     [Serializable]
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> :
-        WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>.IWeightFunction<TThis>,
-        SettableTo<TThis>
+        WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>.IWeightFunction<TThis>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
         #region Fields & constants
 
-        /// <summary>
-        /// Cached states representation of states for zero automaton.
-        /// </summary>
-        private static readonly ReadOnlyArray<StateData> SingleState =
-            ReadOnlyArray.Create(new StateData(0, 0, Weight.Zero));
+        private static readonly TThis ZeroAutomaton = new TThis() { Data = DataContainer.ZeroData };
 
         /// <summary>
         /// The maximum number of states an automaton can have.
@@ -114,7 +113,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         protected Automaton()
         {
             // Zero by default
-            this.SetToZero();
+            Data = DataContainer.ZeroData;
         }
 
         #endregion
@@ -134,24 +133,42 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             new TSequenceManipulator();
 
         /// <summary>
-        /// Gets or sets a value that, if not null, will be returned when computing the log value of any sequence
+        /// Gets an instance of <typeparamref name="TElementDistribution"/> that can be used as a factory
+        /// to create zero, uniform, and pointmass distributions.
+        /// </summary>
+        internal static TElementDistribution ElementDistributionFactory { get; } = new TElementDistribution();
+
+        /// <summary>
+        /// Gets a value that, if not null, will be returned when computing the log value of any sequence
         /// which is in the support of this automaton (i.e. has non-zero value under the automaton).
         /// </summary>
         /// <remarks>
-        /// This should only be set non-null if this distribution is improper and there is 
+        /// This should only be non-null if the distribution this automaton represents is improper and there is 
         /// a need to override the actual automaton value. 
         /// </remarks>
-        public double? LogValueOverride { get; set; }
+        public double? LogValueOverride 
+        {
+            get;
+            // Setter should only ever be used in factory methods
+            // TODO: replace with `init` after switching to C# 9.0+
+            private set;
+        }
 
         /// <summary>
-        /// Gets or sets a value for truncating small weights.
+        /// Gets a value for truncating small weights.
         /// If non-null, any transition whose weight falls below this value in a normalized
         /// automaton will be removed following a product operation.
         /// </summary>
         /// <remarks>
         /// TODO: We need to develop more elegant automaton approximation methods, this is a simple placeholder for those.
         /// </remarks>
-        public double? PruneStatesWithLogEndWeightLessThan { get; set; }
+        public double? PruneStatesWithLogEndWeightLessThan
+        {
+            get;
+            // Setter should only ever be used in factory methods
+            // TODO: replace with `init` after switching to C# 9.0+
+            private set;
+        }
 
         /// <summary>
         /// Gets or sets the maximum number of states an automaton can have. This setting is shared
@@ -246,7 +263,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Creates an automaton which maps every sequence to zero.
         /// </summary>
         /// <returns>The created automaton.</returns>
-        public static TThis Zero() => new TThis();
+        public static TThis Zero() => ZeroAutomaton;
 
         /// <summary>
         /// Creates an automaton which maps every sequence to a given value.
@@ -255,7 +272,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public static TThis Constant(double value)
         {
-            return Constant(value, Distribution.CreateUniform<TElementDistribution>());
+            return Constant(value, ElementDistributionFactory.CreateUniform());
         }
 
         /// <summary>
@@ -282,7 +299,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public static TThis ConstantLog(double logValue)
         {
-            return ConstantLog(logValue, Distribution.CreateUniform<TElementDistribution>());
+            return ConstantLog(logValue, ElementDistributionFactory.CreateUniform());
         }
 
         /// <summary>
@@ -294,9 +311,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public static TThis ConstantLog(double logValue, TElementDistribution allowedElements)
         {
-            TThis result = new TThis();
-            result.SetToConstantLog(logValue, allowedElements);
-            return result;
+            Argument.CheckIfNotNull(allowedElements, nameof(allowedElements));
+
+            allowedElements = allowedElements.CreatePartialUniform();
+            var builder = new Builder();
+            if (!double.IsNegativeInfinity(logValue))
+            {
+                builder.Start.SetEndWeight(Weight.FromLogValue(logValue));
+                builder.Start.AddTransition(allowedElements, Weight.FromLogValue(-allowedElements.GetLogAverageOf(allowedElements)), builder.StartStateIndex);
+            }
+
+            return new TThis() { Data = builder.GetData(true) };
         }
 
         /// <summary>
@@ -308,10 +333,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public static TThis ConstantOnElementLog(double logValue, TElement element)
         {
-            var allowedElements = new TElementDistribution
-            {
-                Point = element
-            };
+            var allowedElements = ElementDistributionFactory.CreatePointMass(element);
             return ConstantOnElementLog(logValue, allowedElements);
         }
 
@@ -329,12 +351,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var result = new Builder();
             if (!double.IsNegativeInfinity(logValue))
             {
-                allowedElements = Distribution.CreatePartialUniform(allowedElements);
+                allowedElements = allowedElements.CreatePartialUniform();
                 var finish = result.Start.AddTransition(allowedElements, Weight.FromLogValue(-allowedElements.GetLogAverageOf(allowedElements)));
                 finish.SetEndWeight(Weight.FromLogValue(logValue));
             }
 
-            return result.GetAutomaton();
+            return new TThis() { Data = result.GetData(true) };
         }
 
         /// <summary>
@@ -379,16 +401,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Argument.CheckIfNotNull(sequences, "sequences");
 
             var result = new Builder();
+            int sequenceCount = 0;
             if (!double.IsNegativeInfinity(logValue))
             {
                 foreach (var sequence in sequences)
                 {
                     var sequenceEndState = result.Start.AddTransitionsForSequence(sequence);
                     sequenceEndState.SetEndWeight(Weight.FromLogValue(logValue));
+                    ++sequenceCount;
                 }
             }
 
-            return result.GetAutomaton();
+            return new TThis() { Data = result.GetData(sequenceCount <= 1 ? (bool?)true : null) };
         }
 
         /// <summary>
@@ -526,9 +550,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public static TThis WeightedSumLog(double logWeight1, TThis automaton1, double logWeight2, TThis automaton2)
         {
-            var result = new TThis();
-            result.SetToSumLog(logWeight1, automaton1, logWeight2, automaton2);
-            return result;
+            Argument.CheckIfNotNull(automaton1, nameof(automaton1));
+            Argument.CheckIfNotNull(automaton2, nameof(automaton2));
+            return automaton1.SumLog(logWeight1, automaton2, logWeight2);
         }
 
         /// <summary>
@@ -591,11 +615,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (automaton.IsCanonicZero())
                 {
-                    result.SetToZero();
+                    result = Zero();
                     return result;
                 }
 
-                result.SetToProduct(result, automaton);
+                result = result.Product(automaton);
             }
 
             return result;
@@ -970,22 +994,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public Dictionary<int, TThis> GetGroups() => GroupExtractor.ExtractGroups(this);
 
         /// <summary>
-        /// Clears the group for all transitions.
+        /// Creates a copy of the current automaton with the group for all transitions cleared.
         /// </summary>
-        public void ClearGroups()
-        {
-            this.SetGroup(0);
-        }
+        public TThis WithGroupsClear() => WithGroup(0);
 
         /// <summary>
-        /// Sets all transitions to have the specified group.
+        /// Creates a copy of the current automaton with all transitions set to have the specified group.
         /// </summary>
         /// <param name="group">The specified group.</param>
-        public void SetGroup(int group)
+        public TThis WithGroup(int group)
         {
             if (group == 0 && !this.UsesGroups)
             {
-                return;
+                return (TThis)this;
             }
 
             var builder = Builder.FromAutomaton(this);
@@ -993,13 +1014,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 for (var iterator = builder[i].TransitionIterator; iterator.Ok; iterator.Next())
                 {
-                    var transition = iterator.Value;
-                    transition.Group = group;
-                    iterator.Value = transition;
+                    iterator.Value = iterator.Value.With(group: group);
                 }
             }
 
-            this.Data = builder.GetData();
+            return WithData(builder.GetData());
         }
 
         #endregion
@@ -1011,19 +1030,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <returns>The logarithm of the normalizer.</returns>
         /// <remarks>Returns <see cref="double.PositiveInfinity"/> if the sum diverges.</remarks>
-        public double GetLogNormalizer() => this.DoGetLogNormalizer(false);
+        public double GetLogNormalizer() => DoGetLogNormalizer(false, out var _);
 
         /// <summary>
         /// Normalizes the automaton so that the sum of its values over all possible sequences equals to one
         /// and returns the logarithm of the normalizer.
         /// </summary>
-        /// <returns>The logarithm of the normalizer.</returns>
+        /// <returns>Will be set to the normalized automaton if the normalization was successful, or to the current automaton otherwise.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the automaton cannot be normalized (i.e. if the normalizer is zero or positive infinity).</exception>
         /// <remarks>The only automaton which cannot be normalized, but has a finite normalizer, is zero.</remarks>
-        public double NormalizeValues()
+        public TThis NormalizeValues()
         {
-            double result;
-            if (!this.TryNormalizeValues(out result))
+            if (!TryNormalizeValues(out var result))
             {
                 throw new InvalidOperationException("This automaton cannot be normalized.");
             }
@@ -1032,24 +1050,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible).
+        /// Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible)
+        /// and returns the result in an out parameter.
+        /// If successful, produces a stochastic automaton,
+        /// i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.
         /// </summary>
+        /// <param name="normalizedAutomaton">Will be set to the normalized automaton if the normalization was successful, or to the current automaton otherwise.</param>
         /// <param name="logNormalizer">When the function returns, contains the logarithm of the normalizer.</param>
-        /// <returns><see langword="true"/> if the automaton was successfully normalized, <see langword="false"/> otherwise.</returns>
-        public bool TryNormalizeValues(out double logNormalizer)
+        /// <returns><see langword="true"/> if the normalization was successful, <see langword="false"/> otherwise.</returns>
+        public bool TryNormalizeValues(out TThis normalizedAutomaton, out double logNormalizer)
         {
-            logNormalizer = this.DoGetLogNormalizer(true);
+            logNormalizer = DoGetLogNormalizer(true, out normalizedAutomaton);
             return !double.IsInfinity(logNormalizer);
         }
 
         /// <summary>
         /// Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible).
         /// </summary>
+        /// <param name="result">Will be set to the normalized automaton if the normalization was successful, or to the current automaton otherwise.</param>
         /// <returns><see langword="true"/> if the automaton was successfully normalized, <see langword="false"/> otherwise.</returns>>
-        public bool TryNormalizeValues()
+        public bool TryNormalizeValues(out TThis result)
         {
-            double logNormalizer;
-            return this.TryNormalizeValues(out logNormalizer);
+            return TryNormalizeValues(out result, out var _);
         }
 
         #endregion
@@ -1114,7 +1136,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <summary>
         /// Checks whether the automaton is a canonic representation of zero,
-        /// as produced by <see cref="SetToZero"/> and <see cref="Zero"/>.
+        /// as produced by <see cref="Zero"/>.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if the automaton is a canonic representation of zero,
@@ -1131,7 +1153,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <summary>
         /// Checks whether the automaton is a canonic representation of a constant,
-        /// as produced by <see cref="SetToConstantLog(double)"/>.
+        /// as produced by <see cref="ConstantLog(double)"/>.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if the automaton is a canonic representation of the constant,
@@ -1152,58 +1174,59 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// Sets the automaton to be constant on the support of a given automaton.
+        /// Creates an automaton constant on the support of the current automaton.
         /// </summary>
-        /// <param name="value">The desired value on the support of <paramref name="automaton"/>.</param>
-        /// <param name="automaton">The automaton.</param>
-        /// <remarks>This function will fail if the <paramref name="automaton"/> cannot be determinized.</remarks>
-        public void SetToConstantOnSupportOf(double value, TThis automaton)
+        /// <param name="value">The desired value on the support of the current automaton.</param>
+        /// <returns>Resulting automaton.</returns>
+        /// <remarks>This function will fail if the current automaton cannot be determinized.</remarks>
+        public TThis ConstantOnSupport(double value)
         {
             if (value < 0)
             {
                 throw new NotSupportedException("Negative values are not yet supported.");
             }
 
-            this.SetToConstantOnSupportOfLog(Math.Log(value), automaton);
+            return ConstantOnSupportLog(Math.Log(value));
         }
 
         /// <summary>
-        /// Sets the automaton to be constant on the support of a given automaton.
+        /// Creates an automaton constant on the support of the current automaton.
         /// </summary>
-        /// <param name="logValue">The logarithm of the desired value on the support of <paramref name="automaton"/>.</param>
-        /// <param name="automaton">The automaton.</param>
-        ///<exception cref="NotImplementedException">Thrown if if the <paramref name="automaton"/> cannot be determinized.</exception>
-        public void SetToConstantOnSupportOfLog(double logValue, TThis automaton)
+        /// <param name="logValue">The logarithm of the desired value on the support of the current automaton.</param>
+        /// <returns>Resulting automaton.</returns>
+        /// <exception cref="NotImplementedException">Thrown if if the current automaton cannot be determinized.</exception>
+        public TThis ConstantOnSupportLog(double logValue)
         {
-            var success = TrySetToConstantOnSupportOfLog(logValue, automaton);
+            var success = TryGetConstantOnSupportLog(logValue, out var automaton);
             if (!success)
             {
                 throw new NotImplementedException("Not yet supported for non-determinizable automata.");
             }
+
+            return automaton;
         }
 
         /// <summary>
-        /// Tries to set the automaton to be constant on the support of a given automaton.
+        /// Tries to create an automaton constant on the support of the current automaton.
         /// </summary>
         /// <param name="logValue">The logarithm of the desired value on the support of <paramref name="automaton"/>.</param>
-        /// <param name="automaton">The automaton.</param>
+        /// <param name="automaton">The resulting automaton.</param>
         /// <returns>True if successful, false otherwise.</returns>
-        /// <remarks>This function will return false if the automaton cannot be determinized.</remarks>
-        public bool TrySetToConstantOnSupportOfLog(double logValue, TThis automaton)
+        /// <remarks>This function will return false if the current automaton cannot be determinized.</remarks>
+        public bool TryGetConstantOnSupportLog(double logValue, out TThis automaton)
         {
-            Argument.CheckIfNotNull(automaton, "automaton");
             Argument.CheckIfValid(!double.IsNaN(logValue), "logValue", "A valid value must be provided.");
 
             Weight value = Weight.FromLogValue(logValue);
             if (value.IsZero)
             {
-                this.SetToZero();
+                automaton = Zero();
                 return true;
             }
 
-            var determinizedAutomaton = automaton.Clone();
-            if (!determinizedAutomaton.TryDeterminize())
+            if (!TryDeterminize(out var determinizedAutomaton))
             {
+                automaton = determinizedAutomaton;
                 return false;
             }
 
@@ -1225,12 +1248,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         if (transition.IsEpsilon)
                         {
-                            transition.Weight = Weight.One;
+                            transition = transition.With(weight: Weight.One);
                         }
                         else
                         {
-                            transition.ElementDistribution = Distribution.CreatePartialUniform(transition.ElementDistribution.Value);
-                            transition.Weight = Weight.FromLogValue(-transition.ElementDistribution.Value.GetLogAverageOf(transition.ElementDistribution.Value));
+                            transition = transition.With(
+                                elementDistribution: transition.ElementDistribution.Value.CreatePartialUniform(),
+                                weight: Weight.FromLogValue(-transition.ElementDistribution.Value.GetLogAverageOf(transition.ElementDistribution.Value)));
                         }
 
                         transitionIterator.Value = transition;
@@ -1238,7 +1262,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            this.Data = result.GetData();
+            automaton = new TThis() { Data = result.GetData(true) };
             return true;
         }
 
@@ -1246,12 +1270,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Creates a copy of the automaton.
         /// </summary>
         /// <returns>The created copy.</returns>
-        public TThis Clone()
-        {
-            var result = new TThis();
-            result.SetTo((TThis)this);
-            return result;
-        }
+        public TThis Clone() => (TThis)this; // Automata are constant.
 
         /// <summary>
         /// Creates an automaton <c>f'(s) = f(reverse(s))</c>, 
@@ -1313,47 +1332,27 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public TThis Append(TThis automaton, int group = 0)
         {
-            TThis result = this.Clone();
-            result.AppendInPlace(automaton, group);
-            return result;
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with an automaton <c>f'(st) = f(s)</c>, where <c>f(s)</c> is the current automaton
-        /// and <c>t</c> is the given sequence.
-        /// </summary>
-        /// <param name="sequence">The sequence.</param>
-        /// <param name="group">The group.</param>
-        public void AppendInPlace(TSequence sequence, int group = 0)
-        {
-            this.AppendInPlace(ConstantOn(1.0, sequence), group);
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with an automaton <c>f'(s) = sum_{tu=s} f(t)g(u)</c>,
-        /// where <c>f(t)</c> is the current automaton and <c>g(u)</c> is the given automaton.
-        /// The resulting automaton is also known as the Cauchy product of two automata.
-        /// </summary>
-        /// <param name="automaton">The automaton to append.</param>
-        /// <param name="group">The group.</param>
-        public void AppendInPlace(TThis automaton, int group = 0)
-        {
-            Argument.CheckIfNotNull(automaton, "automaton");
+            Argument.CheckIfNotNull(automaton, nameof(automaton));
 
             if (this.IsCanonicZero())
             {
-                return;
+                return (TThis)this;
             }
 
             if (automaton.IsCanonicZero())
             {
-                this.SetToZero();
-                return;
+                return WithData(DataContainer.ZeroData);
             }
 
             var builder = Builder.FromAutomaton(this);
-            builder.Append(automaton, group);
-            this.Data = builder.GetData();
+            var appendResult = builder.Append(automaton, group);
+
+            var determinizationState =
+                appendResult.preservedDeterminizationState && group == 0 && this.Data.IsDeterminized == true && automaton.Data.IsDeterminized == true
+                ? (bool?)true
+                : group != 0 || this.Data.IsDeterminized == false || automaton.Data.IsDeterminized == false ? (bool?)false : null;
+
+            return WithData(builder.GetData(determinizationState));
         }
 
         /// <summary>
@@ -1363,7 +1362,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The computed product.</returns>
         public TThis Product(TThis automaton)
         {
-            return this.Product(automaton, true);
+            return Product(automaton, true);
         }
 
         /// <summary>
@@ -1374,38 +1373,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The computed product.</returns>
         public TThis Product(TThis automaton, bool tryDeterminize)
         {
-            Argument.CheckIfNotNull(automaton, "automaton");
+            Argument.CheckIfNotNull(automaton, nameof(automaton));
 
-            var result = new TThis();
-            result.SetToProduct((TThis)this, automaton, tryDeterminize);
-            return result;
-        }
-
-        /// <summary>
-        /// Replaces the current automaton by the product of a given pair of automata.
-        /// </summary>
-        /// <param name="automaton1">The first automaton.</param>
-        /// <param name="automaton2">The second automaton.</param>
-        public void SetToProduct(TThis automaton1, TThis automaton2)
-        {
-            this.SetToProduct(automaton1, automaton2, true);
-        }
-
-        /// <summary>
-        /// Replaces the current automaton by the product of a given pair of automata.
-        /// </summary>
-        /// <param name="automaton1">The first automaton.</param>
-        /// <param name="automaton2">The second automaton.</param>
-        /// <param name="tryDeterminize">When to try to dterminize the product.</param>
-        public void SetToProduct(TThis automaton1, TThis automaton2, bool tryDeterminize)
-        {
-            Argument.CheckIfNotNull(automaton1, "automaton1");
-            Argument.CheckIfNotNull(automaton2, "automaton2");
+            var automaton1 = (TThis)this;
+            var automaton2 = automaton;
 
             if (automaton1.IsCanonicZero() || automaton2.IsCanonicZero())
             {
-                this.SetToZero();
-                return;
+                return Zero();
             }
 
             if (automaton1.UsesGroups)
@@ -1413,7 +1388,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // We cannot swap automaton 1 and automaton 2 as groups from first are used.
                 if (!automaton2.IsEpsilonFree)
                 {
-                    automaton2.MakeEpsilonFree();
+                    automaton2 = automaton2.GetEpsilonClosure();
                 }
             }
             else
@@ -1421,7 +1396,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // The second argument of BuildProduct must be epsilon-free
                 if (!automaton1.IsEpsilonFree && !automaton2.IsEpsilonFree)
                 {
-                    automaton2.MakeEpsilonFree();
+                    automaton2 = automaton2.GetEpsilonClosure();
                 }
                 else if (automaton1.IsEpsilonFree && !automaton2.IsEpsilonFree)
                 {
@@ -1481,14 +1456,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             !transition2.IsEpsilon,
                             "The second argument of the product operation must be epsilon-free.");
                         var destState2 = automaton2.States[transition2.DestinationStateIndex];
-                        var productLogNormalizer = Distribution<TElement>.GetLogAverageOf(
-                            transition1.ElementDistribution.Value, transition2.ElementDistribution.Value,
-                            out var product);
+                        var productLogNormalizer = transition1.ElementDistribution.Value.GetLogAverageOf(transition2.ElementDistribution.Value);
                         if (double.IsNegativeInfinity(productLogNormalizer))
                         {
                             continue;
                         }
 
+                        var product = transition1.ElementDistribution.Value.Multiply(transition2.ElementDistribution.Value);
                         var productWeight = Weight.Product(
                             transition1.Weight, transition2.Weight, Weight.FromLogValue(productLogNormalizer));
                         var destProductStateIndex = CreateProductState(destState1, destState2);
@@ -1504,11 +1478,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var bothInputsDeterminized = automaton1.Data.IsDeterminized == true && automaton2.Data.IsDeterminized == true;
             var determinizationState = bothInputsDeterminized ? (bool?)true : null;
 
-            this.Data = builder.GetData(determinizationState);
-            if (this is StringAutomaton && tryDeterminize)
+            var result = new TThis() { Data = builder.GetData(determinizationState) };
+            if (determinizationState != true && result is StringAutomaton && tryDeterminize)
             {
-                this.TryDeterminize();
+                result.TryDeterminize(out result);
             }
+            return result;
         }
 
         /// <summary>
@@ -1574,69 +1549,62 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The computed sum.</returns>
         public TThis Sum(TThis automaton)
         {
-            Argument.CheckIfNotNull(automaton, "automaton");
-
-            var result = new TThis();
-            result.SetToSumLog(0.0, (TThis)this, 0.0, automaton);
-            return result;
+            return SumLog(0.0, automaton, 0.0);
         }
 
         /// <summary>
-        /// Replaces the current automaton by the weighted sum of a given pair of automata.
+        /// Computes the weighted sum of the current automaton and a given automaton.
         /// </summary>
-        /// <param name="weight1">The weight of the first automaton.</param>
-        /// <param name="automaton1">The first automaton.</param>
-        /// <param name="weight2">The weight of the second automaton.</param>
-        /// <param name="automaton2">The second automaton.</param>
-        public void SetToSum(double weight1, TThis automaton1, double weight2, TThis automaton2)
+        /// <param name="weightThis">The weight of the current automaton.</param>
+        /// <param name="other">The given automaton.</param>
+        /// <param name="weightOther">The weight of <paramref name="other"/>.</param>
+        public TThis Sum(double weightThis, TThis other, double weightOther)
         {
-            if (weight1 < 0 || weight2 < 0)
+            if (weightThis < 0 || weightOther < 0)
             {
                 throw new NotImplementedException("Negative weights are not yet supported.");
             }
 
-            this.SetToSumLog(Math.Log(weight1), automaton1, Math.Log(weight2), automaton2);
+            return SumLog(Math.Log(weightThis), other, Math.Log(weightOther));
         }
 
         /// <summary>
-        /// Replaces the current automaton by the weighted sum of a given pair of automata.
+        /// Computes the weighted sum of the current automaton and a given automaton.
         /// </summary>
-        /// <param name="logWeight1">The logarithm of the weight of the first automaton.</param>
-        /// <param name="automaton1">The first automaton.</param>
-        /// <param name="logWeight2">The logarithm of the weight of the second automaton.</param>
-        /// <param name="automaton2">The second automaton.</param>
-        public void SetToSumLog(double logWeight1, TThis automaton1, double logWeight2, TThis automaton2)
+        /// <param name="logWeightThis">The logarithm of the weight of the current automaton.</param>
+        /// <param name="other">The given automaton.</param>
+        /// <param name="logWeightOther">The logarithm of the weight of <paramref name="other"/>.</param>
+        public TThis SumLog(double logWeightThis, TThis other, double logWeightOther)
         {
-            Argument.CheckIfNotNull(automaton1, "automaton1");
-            Argument.CheckIfNotNull(automaton2, "automaton2");
+            Argument.CheckIfNotNull(other, nameof(other));
             Argument.CheckIfValid(
-                !double.IsPositiveInfinity(logWeight1) && !double.IsPositiveInfinity(logWeight2),
+                !double.IsPositiveInfinity(logWeightThis) && !double.IsPositiveInfinity(logWeightOther),
                 "Weights must not be infinite.");
 
             var result = new Builder();
 
-            bool hasFirstTerm = !automaton1.IsCanonicZero() && !double.IsNegativeInfinity(logWeight1);
-            bool hasSecondTerm = !automaton2.IsCanonicZero() && !double.IsNegativeInfinity(logWeight2);
+            bool hasFirstTerm = !IsCanonicZero() && !double.IsNegativeInfinity(logWeightThis);
+            bool hasSecondTerm = !other.IsCanonicZero() && !double.IsNegativeInfinity(logWeightOther);
             if (hasFirstTerm || hasSecondTerm)
             {
                 if (hasFirstTerm)
                 {
-                    result.AddStates(automaton1.States);
-                    result.Start.AddEpsilonTransition(Weight.FromLogValue(logWeight1), 1 + automaton1.Start.Index);
+                    result.AddStates(States);
+                    result.Start.AddEpsilonTransition(Weight.FromLogValue(logWeightThis), 1 + Start.Index);
                 }
 
                 if (hasSecondTerm)
                 {
                     int cnt = result.StatesCount;
-                    result.AddStates(automaton2.States);
-                    result.Start.AddEpsilonTransition(Weight.FromLogValue(logWeight2), cnt + automaton2.Start.Index);
+                    result.AddStates(other.States);
+                    result.Start.AddEpsilonTransition(Weight.FromLogValue(logWeightOther), cnt + other.Start.Index);
                 }
             }
 
             var simplification = new Simplification(result, this.PruneStatesWithLogEndWeightLessThan);
             simplification.SimplifyIfNeeded();
 
-            this.Data = result.GetData();
+            return result.GetAutomaton();
         }
 
         /// <summary>
@@ -1651,7 +1619,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 throw new NotImplementedException("Negative scale is not yet supported.");
             }
 
-            return this.ScaleLog(Math.Log(scale));
+            return ScaleLog(Math.Log(scale));
         }
 
         /// <summary>
@@ -1661,158 +1629,41 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The scaled automaton.</returns>
         public TThis ScaleLog(double logScale)
         {
-            var result = new TThis();
-            result.SetToScaleLog((TThis)this, logScale);
-            return result;
+            return SumLog(logScale, Zero(), double.NegativeInfinity);
         }
 
         /// <summary>
-        /// Replaces the current automaton with a given automaton scaled by a given value.
+        /// Creates an automaton obtained by performing a transition transformation
+        /// on the current automaton.
         /// </summary>
-        /// <param name="automaton">The automaton to scale.</param>
-        /// <param name="scale">The scale.</param>
-        public void SetToScale(TThis automaton, double scale)
-        {
-            if (scale < 0)
-            {
-                throw new NotImplementedException("Negative scale is not yet supported.");
-            }
-
-            this.SetToScaleLog(automaton, Math.Log(scale));
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with a given automaton scaled by a given value.
-        /// </summary>
-        /// <param name="automaton">The automaton to scale.</param>
-        /// <param name="logScale">The logarithm of the scale.</param>
-        public void SetToScaleLog(TThis automaton, double logScale)
-        {
-            Argument.CheckIfNotNull(automaton, "automaton");
-            this.SetToSumLog(logScale, automaton, double.NegativeInfinity, Zero());
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with an automaton which is zero everywhere.
-        /// </summary>
-        public void SetToZero()
-        {
-            this.Data = new DataContainer(
-                0,
-                SingleState,
-                ReadOnlyArray<Transition>.Empty,
-                isEpsilonFree: true,
-                usesGroups: false,
-                isDeterminized: true,
-                isZero: true,
-                isEnumerable: true);
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with an automaton which maps every sequence to a given value.
-        /// </summary>
-        /// <param name="value">The value to map every sequence to.</param>
-        public void SetToConstant(double value)
-        {
-            this.SetToConstant(value, Distribution.CreateUniform<TElementDistribution>());
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with an automaton which maps every allowed sequence to
-        /// a given value and maps all other sequences to zero.
-        /// A sequence is allowed if all its elements have non-zero probability under a given distribution.
-        /// </summary>
-        /// <param name="value">The value to map every sequence to.</param>
-        /// <param name="allowedElements">The distribution representing allowed sequence elements.</param>
-        public void SetToConstant(double value, TElementDistribution allowedElements)
-        {
-            if (value < 0)
-            {
-                throw new NotImplementedException("Negative values are not yet supported.");
-            }
-
-            this.SetToConstantLog(Math.Log(value), allowedElements);
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with an automaton which maps every sequence to a given value.
-        /// </summary>
-        /// <param name="logValue">The logarithm of the value to map every sequence to.</param>
-        public void SetToConstantLog(double logValue)
-        {
-            this.SetToConstantLog(logValue, Distribution.CreateUniform<TElementDistribution>());
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with an automaton which maps every allowed sequence to
-        /// a given value and maps all other sequences to zero.
-        /// A sequence is allowed if all its elements have non-zero probability under a given distribution.
-        /// </summary>
-        /// <param name="logValue">The logarithm of the value to map every sequence to.</param>
-        /// <param name="allowedElements">The distribution representing allowed sequence elements.</param>
-        public void SetToConstantLog(double logValue, TElementDistribution allowedElements)
-        {
-            Argument.CheckIfNotNull(allowedElements, "allowedElements");
-
-            allowedElements = Distribution.CreatePartialUniform(allowedElements);
-            var builder = new Builder();
-            if (!double.IsNegativeInfinity(logValue))
-            {
-                builder.Start.SetEndWeight(Weight.FromLogValue(logValue));
-                builder.Start.AddTransition(allowedElements, Weight.FromLogValue(-allowedElements.GetLogAverageOf(allowedElements)), builder.StartStateIndex);
-            }
-
-            this.Data = builder.GetData();
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with a copy of a given automaton.
-        /// </summary>
-        /// <param name="automaton">The automaton to replace the current automaton with.</param>
-        public void SetTo(TThis automaton)
-        {
-            Argument.CheckIfNotNull(automaton, "automaton");
-
-            this.Data = automaton.Data;
-            this.LogValueOverride = automaton.LogValueOverride;
-            this.PruneStatesWithLogEndWeightLessThan = automaton.PruneStatesWithLogEndWeightLessThan;
-        }
-
-        /// <summary>
-        /// Replaces the current automaton by an automaton obtained by performing a transition transformation
-        /// on a source automaton.
-        /// </summary>
-        /// <typeparam name="TSrcSequence">The type of a source automaton sequence.</typeparam>
-        /// <typeparam name="TSrcElement">The type of a source automaton sequence element.</typeparam>
-        /// <typeparam name="TSrcElementDistribution">The type of a distribution over source automaton sequence elements.</typeparam>
-        /// <typeparam name="TSrcSequenceManipulator">The type providing ways to manipulate source automaton sequences.</typeparam>
-        /// <typeparam name="TSrcAutomaton">The type of a source automaton.</typeparam>
-        /// <param name="sourceAutomaton">The source automaton.</param>
+        /// <typeparam name="TDstSequence">The type of a created automaton sequence.</typeparam>
+        /// <typeparam name="TDstElement">The type of a created automaton sequence element.</typeparam>
+        /// <typeparam name="TDstElementDistribution">The type of a distribution over created automaton sequence elements.</typeparam>
+        /// <typeparam name="TDstSequenceManipulator">The type providing ways to manipulate created automaton sequences.</typeparam>
+        /// <typeparam name="TDstAutomaton">The type of a created automaton.</typeparam>
         /// <param name="transitionTransform">The transition transformation.</param>
-        public void SetToFunction<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>(
-            Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton> sourceAutomaton,
-            Func<Option<TSrcElementDistribution>, Weight, int, ValueTuple<Option<TElementDistribution>, Weight>> transitionTransform)
-            where TSrcElementDistribution : IDistribution<TSrcElement>, CanGetLogAverageOf<TSrcElementDistribution>, SettableToProduct<TSrcElementDistribution>, SettableToWeightedSumExact<TSrcElementDistribution>, SettableToPartialUniform<TSrcElementDistribution>, new()
-            where TSrcSequence : class, IEnumerable<TSrcElement>
-            where TSrcSequenceManipulator : ISequenceManipulator<TSrcSequence, TSrcElement>, new()
-            where TSrcAutomaton : Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>, new()
+        public TDstAutomaton ApplyFunction<TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton>(
+            Func<Option<TElementDistribution>, Weight, int, ValueTuple<Option<TDstElementDistribution>, Weight>> transitionTransform)
+            where TDstElementDistribution : IImmutableDistribution<TDstElement, TDstElementDistribution>, CanGetLogAverageOf<TDstElementDistribution>, CanComputeProduct<TDstElementDistribution>, CanCreatePartialUniform<TDstElementDistribution>, SummableExactly<TDstElementDistribution>, new()
+            where TDstSequence : class, IEnumerable<TDstElement>
+            where TDstSequenceManipulator : ISequenceManipulator<TDstSequence, TDstElement>, new()
+            where TDstAutomaton : Automaton<TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton>, new()
         {
-            Argument.CheckIfNotNull(sourceAutomaton, "sourceAutomaton");
-            Argument.CheckIfNotNull(transitionTransform, "transitionTransform");
+            Argument.CheckIfNotNull(transitionTransform, nameof(transitionTransform));
 
-            var builder = new Builder();
+            var builder = new Automaton<TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton>.Builder();
 
             // Add states
-            builder.AddStates(sourceAutomaton.States.Count - 1);
+            builder.AddStates(States.Count - 1);
 
             // Copy state parameters and transitions
-            for (int stateIndex = 0; stateIndex < sourceAutomaton.States.Count; stateIndex++)
+            for (int stateIndex = 0; stateIndex < States.Count; stateIndex++)
             {
                 var thisState = builder[stateIndex];
-                var otherState = sourceAutomaton.States[stateIndex];
+                var otherState = States[stateIndex];
 
                 thisState.SetEndWeight(otherState.EndWeight);
-                if (otherState == sourceAutomaton.Start)
+                if (otherState == Start)
                 {
                     builder.StartStateIndex = thisState.Index;
                 }
@@ -1828,7 +1679,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            this.Data = builder.GetData();
+            return builder.GetAutomaton();
         }
 
         /// <summary>
@@ -1840,8 +1691,126 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automata</remarks>
         public double GetLogValue(TSequence sequence)
         {
-            Argument.CheckIfNotNull(sequence, "sequence");
-            var sequenceLength = SequenceManipulator.GetLength(sequence);
+            Argument.CheckIfNotNull(sequence, nameof(sequence));
+
+            if (Data.IsDeterminized == true)
+                return GetLogValueDeterministic();
+            else if (Data.IsEpsilonFree)
+                return GetLogValueEpsilonFree();
+            else
+                return GetLogValueGeneral();
+
+            double GetLogValueDeterministic()
+            {
+                Weight acc = Weight.One;
+                State currentState = Start;
+                foreach (TElement element in sequence)
+                {
+                    bool foundTransition = false;
+                    foreach (Transition transition in currentState.Transitions)
+                    {
+                        var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
+                        if (!distWeight.IsZero)
+                        {
+                            if (transition.Weight.IsZero)
+                                return double.NegativeInfinity;
+
+                            acc = Weight.Product(distWeight, transition.Weight, acc);
+                            currentState = States[transition.DestinationStateIndex];
+                            foundTransition = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundTransition)
+                        return double.NegativeInfinity;
+                }
+                if (currentState.CanEnd)
+                {
+                    acc *= currentState.EndWeight;
+                    return
+                        !acc.IsZero && this.LogValueOverride.HasValue
+                            ? this.LogValueOverride.Value
+                            : acc.LogValue;
+                }
+                else
+                    return double.NegativeInfinity;
+            }
+
+            // A simplified version of the general algorithm below.
+            // Skips allocation and computation of epsilon closures, which is not needed
+            // in epsilon-free automaton case.
+            double GetLogValueEpsilonFree()
+            {
+                var sequenceLength = SequenceManipulator.GetLength(sequence);
+                var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
+                var valuesStack = new Stack<Weight>();
+                var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+                operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
+
+                while (operationsStack.Count > 0)
+                {
+                    var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
+                    var statePosPair = (stateIndex, sequencePos);
+
+                    if (sumUntil < 0)
+                    {
+                        if (valueCache.TryGetValue(statePosPair, out var cachedValue))
+                        {
+                            valuesStack.Push(cachedValue * multiplier);
+                        }
+                        else
+                        {
+                            var state = this.States[stateIndex];
+
+                            if (sequencePos == sequenceLength)
+                            {
+                                // We are at the end of sequence. So put an answer on stack
+                                valuesStack.Push(state.EndWeight * multiplier);
+                                valueCache[statePosPair] = state.EndWeight;
+                            }
+                            else
+                            {
+                                // schedule second part of computation - sum values for all transitions
+                                // Note: it is put on stack before operations for any transitions, that
+                                // means that it will be executed after them
+                                operationsStack.Push((stateIndex, sequencePos, multiplier, valuesStack.Count));
+
+                                var element = SequenceManipulator.GetElement(sequence, sequencePos);
+                                foreach (var transition in state.Transitions)
+                                {
+                                    var destStateIndex = transition.DestinationStateIndex;
+                                    var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
+                                    if (!distWeight.IsZero && !transition.Weight.IsZero)
+                                    {
+                                        var weightMul = Weight.Product(transition.Weight, distWeight);
+                                        operationsStack.Push((destStateIndex, sequencePos + 1, weightMul, -1));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // All transitions value from this state are already calculated, sum them and store on stack and in cache
+                        var sum = Weight.Zero;
+                        while (valuesStack.Count > sumUntil)
+                        {
+                            sum += valuesStack.Pop();
+                        }
+
+                        valuesStack.Push(multiplier * sum);
+                        valueCache[statePosPair] = sum;
+                    }
+                }
+
+                Debug.Assert(valuesStack.Count == 1);
+                var result = valuesStack.Pop();
+                return
+                    !result.IsZero && this.LogValueOverride.HasValue
+                        ? this.LogValueOverride.Value
+                        : result.LogValue;
+            }
 
             // This algorithm is unwinding of trivial recursion with cache. It encodes recursion through explicit
             // stack to avoid stack-overflow. It makes calculation not straightforward. Recursive algorithm that
@@ -1863,83 +1832,87 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             //    sums values of transitions from this state. They will be on top of the stack
             // As an optimization, value calculated by (b) is cached, so if (a) notices that result for
             // (stateIndex, sequencePos) already calculated it doesn't schedule any extra work
-            var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
-            var valuesStack = new Stack<Weight>();
-            var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
-            operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
-
-            while (operationsStack.Count > 0)
+            double GetLogValueGeneral()
             {
-                var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
-                var statePosPair = (stateIndex, sequencePos);
+                var sequenceLength = SequenceManipulator.GetLength(sequence);
+                var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
+                var valuesStack = new Stack<Weight>();
+                var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+                operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
-                if (sumUntil < 0)
+                while (operationsStack.Count > 0)
                 {
-                    if (valueCache.TryGetValue(statePosPair, out var cachedValue))
-                    {
-                        valuesStack.Push(cachedValue * multiplier);
-                    }
-                    else
-                    {
-                        var closure = new EpsilonClosure(this, this.States[stateIndex]);
+                    var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
+                    var statePosPair = (stateIndex, sequencePos);
 
-                        if (sequencePos == sequenceLength)
+                    if (sumUntil < 0)
+                    {
+                        if (valueCache.TryGetValue(statePosPair, out var cachedValue))
                         {
-                            // We are at the end of sequence. So put an answer on stack
-                            valuesStack.Push(closure.EndWeight * multiplier);
-                            valueCache[statePosPair] = closure.EndWeight;
+                            valuesStack.Push(cachedValue * multiplier);
                         }
                         else
                         {
-                            // schedule second part of computation - sum values for all transitions
-                            // Note: it is put on stack before operations for any transitions, that
-                            // means that it will be executed after them
-                            operationsStack.Push((stateIndex, sequencePos, multiplier, valuesStack.Count));
+                            var closure = new EpsilonClosure(this, this.States[stateIndex]);
 
-                            var element = SequenceManipulator.GetElement(sequence, sequencePos);
-                            for (var closureStateIndex = 0; closureStateIndex < closure.Size; ++closureStateIndex)
+                            if (sequencePos == sequenceLength)
                             {
-                                var closureState = closure.GetStateByIndex(closureStateIndex);
-                                var closureStateWeight = closure.GetStateWeightByIndex(closureStateIndex);
-                                foreach (var transition in closureState.Transitions)
-                                {
-                                    if (transition.IsEpsilon)
-                                    {
-                                        continue; // The destination is a part of the closure anyway
-                                    }
+                                // We are at the end of sequence. So put an answer on stack
+                                valuesStack.Push(closure.EndWeight * multiplier);
+                                valueCache[statePosPair] = closure.EndWeight;
+                            }
+                            else
+                            {
+                                // schedule second part of computation - sum values for all transitions
+                                // Note: it is put on stack before operations for any transitions, that
+                                // means that it will be executed after them
+                                operationsStack.Push((stateIndex, sequencePos, multiplier, valuesStack.Count));
 
-                                    var destStateIndex = transition.DestinationStateIndex;
-                                    var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
-                                    if (!distWeight.IsZero && !transition.Weight.IsZero)
+                                var element = SequenceManipulator.GetElement(sequence, sequencePos);
+                                for (var closureStateIndex = 0; closureStateIndex < closure.Size; ++closureStateIndex)
+                                {
+                                    var closureState = closure.GetStateByIndex(closureStateIndex);
+                                    var closureStateWeight = closure.GetStateWeightByIndex(closureStateIndex);
+                                    foreach (var transition in closureState.Transitions)
                                     {
-                                        var weightMul = Weight.Product(closureStateWeight, transition.Weight, distWeight);
-                                        operationsStack.Push((destStateIndex, sequencePos + 1, weightMul, -1));
+                                        if (transition.IsEpsilon)
+                                        {
+                                            continue; // The destination is a part of the closure anyway
+                                        }
+
+                                        var destStateIndex = transition.DestinationStateIndex;
+                                        var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
+                                        if (!distWeight.IsZero && !transition.Weight.IsZero)
+                                        {
+                                            var weightMul = Weight.Product(closureStateWeight, transition.Weight, distWeight);
+                                            operationsStack.Push((destStateIndex, sequencePos + 1, weightMul, -1));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                else
-                {
-                    // All transitions value from this state are already calculated, sum them and store on stack and in cache
-                    var sum = Weight.Zero;
-                    while (valuesStack.Count > sumUntil)
+                    else
                     {
-                        sum += valuesStack.Pop();
+                        // All transitions value from this state are already calculated, sum them and store on stack and in cache
+                        var sum = Weight.Zero;
+                        while (valuesStack.Count > sumUntil)
+                        {
+                            sum += valuesStack.Pop();
+                        }
+
+                        valuesStack.Push(multiplier * sum);
+                        valueCache[statePosPair] = sum;
                     }
-
-                    valuesStack.Push(multiplier * sum);
-                    valueCache[statePosPair] = sum;
                 }
-            }
 
-            Debug.Assert(valuesStack.Count == 1);
-            var result = valuesStack.Pop();
-            return 
-                !result.IsZero && this.LogValueOverride.HasValue
-                    ? this.LogValueOverride.Value
-                    : result.LogValue;
+                Debug.Assert(valuesStack.Count == 1);
+                var result = valuesStack.Pop();
+                return
+                    !result.IsZero && this.LogValueOverride.HasValue
+                        ? this.LogValueOverride.Value
+                        : result.LogValue;
+            }
         }
 
         /// <summary>
@@ -1963,7 +1936,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public TSequence TryComputePoint()
         {
             // Need to get at least 2 support strings to be sure that this is not a point
-            var enumerated = this.TryEnumerateSupport(2, out var support, tryDeterminize: false);
+            var enumerated = this.TryEnumerateSupport(2, out var support);
             return enumerated && support.Count() == 1
                 ? support.Single()
                 : null;
@@ -2052,11 +2025,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </returns>
         public bool IsDeterministic()
         {
-            //// We can't track whether the automaton is deterministic while adding/updating transitions
-            //// because element distributions are not immutable.
+            if (Data.IsDeterminized.HasValue)
+            {
+                return Data.IsDeterminized.Value;
+            }
             
             if (!this.IsEpsilonFree)
             {
+                // Should not set isDeterminized to false here,
+                // only when we determine that the automaton is not determinizable
                 return false;
             }
             
@@ -2069,6 +2046,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     if (transition.IsEpsilon)
                     {
+                        // Should not set isDeterminized to false here,
+                        // only when we determine that the automaton is not determinizable
                         return false;
                     }
                 }
@@ -2084,47 +2063,33 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         double logProductNormalizer = transition1.ElementDistribution.Value.GetLogAverageOf(transition2.ElementDistribution.Value);
                         if (!double.IsNegativeInfinity(logProductNormalizer))
                         {
+                            // Should not set isDeterminized to false here,
+                            // only when we determine that the automaton is not determinizable
                             return false;
                         }
                     }
                 }
             }
 
+            Data = Data.With(isDeterminized: true);
             return true;
         }
 
         /// <summary>
-        /// Replaces the current automaton with an equal automaton that has no epsilon transitions.
-        /// </summary>
-        public void MakeEpsilonFree()
-        {
-            if (this.IsEpsilonFree)
-            {
-                return;
-            }
-
-            this.SetToEpsilonClosureOf((TThis)this);
-        }
-
-        /// <summary>
-        /// Replaces the current automaton with an epsilon closure of a given automaton.
+        /// Returns an epsilon closure of the current automaton.
         /// </summary>
         /// <remarks>
-        /// The resulting automaton will be equal to the given one, but may have a simpler structure.
+        /// The resulting automaton will be equal to the current one, but have no epsilon transitions.
         /// </remarks>
-        /// <param name="automaton">The automaton which epsilon closure will be used to replace the current automaton.</param>
-        public void SetToEpsilonClosureOf(TThis automaton)
+        public TThis GetEpsilonClosure()
         {
-            Argument.CheckIfNotNull(automaton, "automaton");
-
-            if (automaton.IsEpsilonFree)
+            if (IsEpsilonFree)
             {
-                this.SetTo(automaton);
-                return;
+                return (TThis)this;
             }
 
             var builder = new Builder(0);
-            var oldToNewState = new int?[automaton.States.Count];
+            var oldToNewState = new int?[States.Count];
             var stack = new Stack<int>();
 
             // Enqueues state for processing if necessary and returns its index in new automaton
@@ -2141,11 +2106,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return newStateIndex;
             }
 
-            builder.StartStateIndex = Enqueue(automaton.Start.Index);
+            builder.StartStateIndex = Enqueue(Start.Index);
             while (stack.Count > 0)
             {
                 var oldStateIndex = stack.Pop();
-                var closure = new EpsilonClosure(automaton, automaton.States[oldStateIndex]);
+                var closure = new EpsilonClosure(this, States[oldStateIndex]);
                 var resultState = builder[oldToNewState[oldStateIndex].Value];
 
                 resultState.SetEndWeight(closure.EndWeight);
@@ -2170,14 +2135,45 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            this.Data = builder.GetData();
-            this.LogValueOverride = automaton.LogValueOverride;
-            this.PruneStatesWithLogEndWeightLessThan = automaton.PruneStatesWithLogEndWeightLessThan;
+            var result = WithData(builder.GetData());
+
+            return result;
         }
 
         #endregion
 
         #region Helpers
+
+        protected TThis WithData(DataContainer data) => new TThis()
+        {
+            Data = data,
+            LogValueOverride = LogValueOverride,
+            PruneStatesWithLogEndWeightLessThan = PruneStatesWithLogEndWeightLessThan
+        };
+
+        /// <summary>
+        /// Creates a copy of the current automaton with a different value of <see cref="LogValueOverride"/>.
+        /// </summary>
+        /// <param name="logValueOverride">New <see cref="LogValueOverride"/>.</param>
+        /// <returns>The created automaton.</returns>
+        public TThis WithLogValueOverride(double? logValueOverride) => new TThis()
+        {
+            Data = Data,
+            LogValueOverride = logValueOverride,
+            PruneStatesWithLogEndWeightLessThan = PruneStatesWithLogEndWeightLessThan
+        };
+
+        /// <summary>
+        /// Creates a copy of the current automaton with a different value of <see cref="PruneStatesWithLogEndWeightLessThan"/>.
+        /// </summary>
+        /// <param name="pruneStatesWithLogEndWeightLessThan">New <see cref="PruneStatesWithLogEndWeightLessThan"/>.</param>
+        /// <returns>The created automaton.</returns>
+        public TThis WithPruneStatesWithLogEndWeightLessThan(double? pruneStatesWithLogEndWeightLessThan) => new TThis()
+        {
+            Data = Data,
+            LogValueOverride = LogValueOverride,
+            PruneStatesWithLogEndWeightLessThan = pruneStatesWithLogEndWeightLessThan
+        };
 
         /// <summary>
         /// Gets a value indicating how close two given automata are
@@ -2270,8 +2266,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             // An automaton, product with which will make every self-loop converging
-            var uniformDist = new TElementDistribution();
-            uniformDist.SetToUniform();
+            var uniformDist = ElementDistributionFactory.CreateUniform();
             var theConverger = new Builder();
             Weight transitionWeight = Weight.Product(
                 Weight.FromLogValue(-uniformDist.GetLogAverageOf(uniformDist)),
@@ -2286,22 +2281,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Computes the logarithm of the normalizer of the automaton, normalizing it afterwards if requested.
         /// </summary>
-        /// <param name="normalize">Specifies whether the automaton must be normalized after computing the normalizer.</param>
+        /// <param name="normalize">Specifies whether a normalized automaton must be computed after computing the normalizer.</param>
+        /// <param name="normalizedAutomaton">Will be set to normalized automaton if <paramref name="normalize"/> is <see langword="true"/>
+        /// and the normalizer has a finite non-zero value. ot to the current automaton otherwise.</param>
         /// <returns>The logarithm of the normalizer and condensation of automaton.</returns>
-        /// <remarks>The automaton is normalized only if the normalizer has a finite non-zero value.</remarks>
-        private double DoGetLogNormalizer(bool normalize)
+        private double DoGetLogNormalizer(bool normalize, out TThis normalizedAutomaton)
         {
-            // TODO: apply to 'this' instead?
-            TThis noEpsilonTransitions = Zero();
-            noEpsilonTransitions.SetToEpsilonClosureOf((TThis)this); // To get rid of infinite weight closures
+            TThis noEpsilonTransitions = GetEpsilonClosure();
 
             var condensation = noEpsilonTransitions.ComputeCondensation(noEpsilonTransitions.Start, tr => true, false);
             double logNormalizer = condensation.GetWeightToEnd(noEpsilonTransitions.Start.Index).LogValue;
+            normalizedAutomaton = (TThis)this;
             if (normalize)
             {
                 if (!double.IsInfinity(logNormalizer))
                 {
-                    this.Data = PushWeights();
+                    normalizedAutomaton = WithData(PushWeights());
                 }
             }
 
@@ -2325,11 +2320,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     for (var transitionIterator = state.TransitionIterator; transitionIterator.Ok; transitionIterator.Next())
                     {
                         var transition = transitionIterator.Value;
-                        transition.Weight = Weight.Product(
+                        transitionIterator.Value = transition.With(weight: Weight.Product(
                             transition.Weight,
                             condensation.GetWeightToEnd(transition.DestinationStateIndex),
-                            weightToEndInv);
-                        transitionIterator.Value = transition;
+                            weightToEndInv));
                     }
 
                     state.SetEndWeight(state.EndWeight * weightToEndInv);
@@ -2337,28 +2331,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 return builder.GetData();
             }
-        }
-
-        /// <summary>
-        /// Swaps the current automaton with a given one.
-        /// </summary>
-        /// <param name="automaton">The automaton to swap the current one with.</param>
-        private void SwapWith(TThis automaton)
-        {
-            Debug.Assert(automaton != null, "A valid automaton must be provided.");
-
-            // Swap contents
-            var dummyData = this.Data;
-            this.Data = automaton.Data;
-            automaton.Data = this.Data;
-
-            var dummy = this.LogValueOverride;
-            this.LogValueOverride = automaton.LogValueOverride;
-            automaton.LogValueOverride = dummy;
-
-            dummy = this.PruneStatesWithLogEndWeightLessThan;
-            this.PruneStatesWithLogEndWeightLessThan = automaton.PruneStatesWithLogEndWeightLessThan;
-            automaton.PruneStatesWithLogEndWeightLessThan = dummy;
         }
 
         /// <summary>
@@ -2453,60 +2425,33 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #region IWeightFunction implementation
 
+        /// <inheritdoc/>
         public TThis AsAutomaton() => (TThis)this;
 
+        /// <inheritdoc/>
         public TSequence Point
         { 
             get => TryComputePoint() ?? throw new InvalidOperationException("This automaton is zero everywhere or is non-zero on more than one sequence.");
-            set => SetTo(ConstantOn(1.0, value)); 
         }
 
-        public bool IsPointMass => TryEnumerateSupport(2, out var support, tryDeterminize: false) && support.Count() == 1;
+        /// <inheritdoc/>
+        public bool IsPointMass => TryEnumerateSupport(2, out var support) && support.Count() == 1;
 
+        /// <inheritdoc/>
         public bool UsesAutomatonRepresentation => true;
 
-        public void SetToSum(IEnumerable<TThis> weightFunctions) => SetTo(Sum(weightFunctions));
-
-        public void SetValues(IEnumerable<KeyValuePair<TSequence, double>> sequenceWeightPairs) => SetTo(FromValues(sequenceWeightPairs));
-
+        /// <inheritdoc/>
         public TThis Repeat(int minTimes = 1, int? maxTimes = null) => Repeat((TThis)this, minTimes, maxTimes);
 
+        /// <inheritdoc/>
         public double MaxDiff(TThis that) => Math.Exp(GetLogSimilarity((TThis)this, that));
 
-        public TThis NormalizeStructure() => Clone(); // TODO: replace with `this` after making this type immutable
-
-        public TThis Sum(double weight1, double weight2, TThis automaton)
-        {
-            var result = new TThis();
-            result.SetToSum(weight1, (TThis)this, weight2, automaton);
-            return result;
-        }
-
-        public TThis SumLog(double logWeight1, double logWeight2, TThis automaton)
-        {
-            var result = new TThis();
-            result.SetToSumLog(logWeight1, (TThis)this, logWeight2, automaton);
-            return result;
-        }
-
-        /// <summary>
-        /// Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible)
-        /// and returns the result in an out parameter.
-        /// If successful, produces a stochastic automaton,
-        /// i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.
-        /// </summary>
-        /// <param name="normalizedAutomaton">Result of the normaliztion attempt.</param>
-        /// <param name="logNormalizer">When the function returns, contains the logarithm of the normalizer.</param>
-        /// <returns><see langword="true"/> if the automaton was successfully normalized, <see langword="false"/> otherwise.</returns>
-        public bool TryNormalizeValues(out TThis normalizedAutomaton, out double logNormalizer)
-        {
-            normalizedAutomaton = Clone();
-            return normalizedAutomaton.TryNormalizeValues(out logNormalizer);
-        }
+        /// <inheritdoc/>
+        public TThis NormalizeStructure() => (TThis)this;
 
         #endregion
 
-        #region Serialization}
+        #region Serialization
 
         /// <summary>
         /// Writes the current automaton.
@@ -2524,6 +2469,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             propertyMask[1 << idx++] = this.LogValueOverride.HasValue;
             propertyMask[1 << idx++] = this.PruneStatesWithLogEndWeightLessThan.HasValue;
             propertyMask[1 << idx++] = true; // start state is always serialized
+            propertyMask[1 << idx++] = this.Data.IsDeterminized.HasValue;
+            propertyMask[1 << idx++] = this.Data.IsDeterminized.HasValue ? this.Data.IsDeterminized.Value : false;
 
             writeInt32(propertyMask.Data);
 
@@ -2565,6 +2512,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var hasLogValueOverride = propertyMask[1 << idx++];
             var hasPruneWeights = propertyMask[1 << idx++];
             var hasStartState = propertyMask[1 << idx++];
+            var hasIsDeterminizedValue = propertyMask[1 << idx++];
+            var isDeterminized = propertyMask[1 << idx++];
 
             if (hasLogValueOverride)
             {
@@ -2594,7 +2543,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 State.ReadTo(ref builder, readInt32, readDouble, readElementDistribution);
             }
 
-            return builder.GetAutomaton();
+            return new TThis() { Data = builder.GetData(hasIsDeterminizedValue ? (bool?)isDeterminized : null) };
         }
         #endregion
     }

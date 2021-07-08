@@ -16,7 +16,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// Represents a weighted finite state automaton defined on <see cref="string"/>.
     /// </summary>
     [Serializable]
-    public class StringAutomaton : Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>
+    public class StringAutomaton : Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>
     {
         public StringAutomaton()
         {
@@ -63,7 +63,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var (destinationStateSet, destinationStateSetWeight) = destinationStateSetBuilder.Get();
                     var segmentLength = segmentBound.Position - currentSegmentStart;
                     yield return new Determinization.OutgoingTransition(
-                        DiscreteChar.InRange((char)currentSegmentStart, (char)(segmentBound.Position - 1)),
+                        ImmutableDiscreteChar.InRange((char)currentSegmentStart, (char)(segmentBound.Position - 1)),
                         Weight.FromValue(segmentLength) * destinationStateSetWeight,
                         destinationStateSet);
 
@@ -210,53 +210,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Reads an automaton from.
         /// </summary>
         public static StringAutomaton Read(BinaryReader reader) => 
-            Read(reader.ReadDouble, reader.ReadInt32, () => DiscreteChar.Read(reader.ReadInt32, reader.ReadDouble));
+            Read(reader.ReadDouble, reader.ReadInt32, () => ImmutableDiscreteChar.Read(reader.ReadInt32, reader.ReadDouble));
 
         /// <summary>
         /// Writes the current automaton.
         /// </summary>
         public void Write(BinaryWriter writer) => 
             Write(writer.Write, writer.Write, c => c.Write(writer.Write, writer.Write));
-
-        /// <summary>
-        /// Determines whether this automaton has cycles or not.
-        /// </summary>
-        public bool HasCycles()
-        {
-            TryDeterminize();
-            return HasCycles(this, new ArrayDictionary<bool>(), Start.Index);
-        }
-
-        /// <summary>
-        /// Recursively walk this automaton to check for cycles.
-        /// </summary>
-        /// <param name="automaton">This automaton.</param>
-        /// <param name="visitedStates">The states visited at this point</param>
-        /// <param name="stateIndex">The index of the next state to process</param>
-        private static bool HasCycles(StringAutomaton automaton, ArrayDictionary<bool> visitedStates, int stateIndex)
-        {
-            if (visitedStates.ContainsKey(stateIndex) && visitedStates[stateIndex])
-            {
-                return true;
-            }
-
-            var currentState = automaton.States[stateIndex];
-            visitedStates[stateIndex] = true;
-            foreach (var transition in currentState.Transitions)
-            {
-                if (transition.Weight.IsZero)
-                {
-                    continue;
-                }
-
-                if (HasCycles(automaton, visitedStates, transition.DestinationStateIndex))
-                {
-                    return true;
-                }
-            }
-
-            visitedStates[stateIndex] = false;
-            return false;
-        }
     }
 }

@@ -4,11 +4,11 @@
 
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
+    using System;
     using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
-    using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
@@ -20,18 +20,46 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// <typeparam name="TElement2">The type of a second element of a pair.</typeparam>
     /// <typeparam name="TElementDistribution2">The type of a distribution over <typeparamref name="TElement2"/>.</typeparam>
     [Quality(QualityBand.Experimental)]
-    public class PairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> :
-        PairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2>>
-        where TElementDistribution1 : IDistribution<TElement1>, CanGetLogAverageOf<TElementDistribution1>, SettableToProduct<TElementDistribution1>, SettableToPartialUniform<TElementDistribution1>, new()
-        where TElementDistribution2 : IDistribution<TElement2>, CanGetLogAverageOf<TElementDistribution2>, SettableToProduct<TElementDistribution2>, SettableToPartialUniform<TElementDistribution2>, new()
+    public class ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> :
+        ImmutablePairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2>>
+        where TElementDistribution1 : IImmutableDistribution<TElement1, TElementDistribution1>, CanGetLogAverageOf<TElementDistribution1>, CanComputeProduct<TElementDistribution1>, CanCreatePartialUniform<TElementDistribution1>, new()
+        where TElementDistribution2 : IImmutableDistribution<TElement2, TElementDistribution2>, CanGetLogAverageOf<TElementDistribution2>, CanComputeProduct<TElementDistribution2>, CanCreatePartialUniform<TElementDistribution2>, new()
     {
         /// <summary>
         /// Creates a distribution <c>Q(y, x) = P(x, y)</c>, where <c>P(x, y)</c> is the current distribution.
         /// </summary>
         /// <returns>The created distribution.</returns>
-        public PairDistribution<TElement2, TElementDistribution2, TElement1, TElementDistribution1> Transpose()
+        public ImmutablePairDistribution<TElement2, TElementDistribution2, TElement1, TElementDistribution1> Transpose()
         {
-            return PairDistribution<TElement2, TElementDistribution2, TElement1, TElementDistribution1>.FromFirstSecond(this.Second, this.First);
+            return ImmutablePairDistribution<TElement2, TElementDistribution2, TElement1, TElementDistribution1>.FromFirstSecond(this.Second, this.First);
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
+        public override double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
+        public override double MaxDiff(object that)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
+        public override ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> Multiply(ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
+        public override ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> Sum(double weightThis, ImmutablePairDistribution<TElement1, TElementDistribution1, TElement2, TElementDistribution2> other, double weightOther)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -41,9 +69,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </summary>
     /// <typeparam name="TElement">The type of a pair element.</typeparam>
     /// <typeparam name="TElementDistribution">The type of a distribution over <typeparamref name="TElement"/>.</typeparam>
-    public class PairDistribution<TElement, TElementDistribution> :
-        PairDistributionBase<TElement, TElementDistribution, TElement, TElementDistribution, PairDistribution<TElement, TElementDistribution>>
-        where TElementDistribution : IDistribution<TElement>, CanGetLogAverageOf<TElementDistribution>, SettableToProduct<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+    public class ImmutablePairDistribution<TElement, TElementDistribution> :
+        ImmutablePairDistributionBase<TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution<TElement, TElementDistribution>>
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, new()
     {
         /// <summary>
         /// Stores the product of distributions over the first and the the second element
@@ -54,6 +82,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets a value indicating whether the equality constraint is set on the distribution.
         /// </summary>
+        // Should only ever be set in factory methods.
+        // TODO: replace with init-only property after switching to C# 9.0+
         public bool HasEqualityConstraint { get; private set; }
 
         /// <summary>
@@ -62,12 +92,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public override Pair<Option<TElement>, Option<TElement>> Point
         {
             get => base.Point;
+        }
 
-            set
-            {
-                base.Point = value;
-                this.HasEqualityConstraint = false;
-            }
+        /// <inheritdoc/>
+        public override ImmutablePairDistribution<TElement, TElementDistribution> CreatePointMass(Pair<Option<TElement>, Option<TElement>> point)
+        {
+            var result = base.CreatePointMass(point);
+            result.HasEqualityConstraint = false;
+            return result;
         }
 
         /// <summary>
@@ -76,21 +108,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="firstElementDistribution">The marginal distribution of the first element of a pair.</param>
         /// <param name="secondElementDistribution">The marginal distribution of the second element of a pair.</param>
         /// <returns>The created distribution.</returns>
-        public static PairDistribution<TElement, TElementDistribution> Constrained(
+        public static ImmutablePairDistribution<TElement, TElementDistribution> Constrained(
             TElementDistribution firstElementDistribution, TElementDistribution secondElementDistribution)
         {
             Argument.CheckIfValid(firstElementDistribution != null, nameof(firstElementDistribution));
             Argument.CheckIfValid(secondElementDistribution != null, nameof(secondElementDistribution));
             
-            var result = new PairDistribution<TElement, TElementDistribution>
+            var result = new ImmutablePairDistribution<TElement, TElementDistribution>
             {
                 First = firstElementDistribution,
                 Second = secondElementDistribution,
                 HasEqualityConstraint = true,
             };
 
-            result.firstTimesSecond = Distribution.Product<TElement, TElementDistribution>(
-                result.First.Value, result.Second.Value);
+            result.firstTimesSecond = result.First.Value.Multiply(result.Second.Value);
 
             return result;
         }
@@ -100,7 +131,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="elementDistribution">The marginal distribution over pair elements.</param>
         /// <returns>The created distribution.</returns>
-        public static PairDistribution<TElement, TElementDistribution> Constrained(TElementDistribution elementDistribution)
+        public static ImmutablePairDistribution<TElement, TElementDistribution> Constrained(TElementDistribution elementDistribution)
         {
             return Constrained(elementDistribution, elementDistribution);
         }
@@ -109,18 +140,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Creates a distribution <c>P(x, y) \propto I[x=y]</c>.
         /// </summary>
         /// <returns>The created distribution.</returns>
-        public static PairDistribution<TElement, TElementDistribution> UniformConstrained()
+        public static ImmutablePairDistribution<TElement, TElementDistribution> UniformConstrained()
         {
-            return Constrained(Distribution.CreateUniform<TElementDistribution>());
+            return Constrained(ElementDistribution1Factory.CreateUniform());
         }
 
-        /// <summary>
-        /// Computes <c>P(y) = R(x, y)</c>, where <c>R(x, y)</c> is the current pair distribution,
-        /// and <c>x</c> is a given element.
-        /// </summary>
-        /// <param name="first">The element to project.</param>
-        /// <param name="result">The normalized projection result.</param>
-        /// <returns>The logarithm of the scale for the projection result.</returns>
+        /// <inheritdoc/>
         public override double ProjectFirst(TElement first, out Option<TElementDistribution> result)
         {
             if (this.HasEqualityConstraint)
@@ -137,23 +162,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return double.NegativeInfinity;
                 }
 
-                result = new TElementDistribution { Point = first };
+                result = ElementDistribution1Factory.CreatePointMass(first);
                 return logAverageOf;
             }
 
             return base.ProjectFirst(first, out result);
         }
 
-        /// <summary>
-        /// Computes <c>P(y) = sum_x Q(x) R(x, y)</c>, where <c>R(x, y)</c> is the current pair distribution,
-        /// and <c>Q(x)</c> is a given element distribution.
-        /// </summary>
-        /// <param name="first">The element distribution to project.</param>
-        /// <param name="result">The normalized projection result.</param>
-        /// <returns>The logarithm of the scale for the projection result.</returns>
+        /// <inheritdoc/>
         public override double ProjectFirst(TElementDistribution first, out Option<TElementDistribution> result)
         {
-            Argument.CheckIfNotNull(first, "first");
+            Argument.CheckIfNotNull(first, nameof(first));
 
             if (first.IsPointMass)
             {
@@ -166,10 +185,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.First.HasValue && this.Second.HasValue,
                     "Cannot have a constrained pair distribution with a missing element distribution.");
                 Debug.Assert(this.firstTimesSecond.HasValue, "Must have been computed.");
-                
-                // TODO: can we introduce a single method that does both GetLogAverageOf and SetToProduct?
-                double logAverageOf = Distribution.GetLogAverageOf<TElement, TElementDistribution>(
-                    this.firstTimesSecond.Value, first, out var product);
+
+                double logAverageOf = firstTimesSecond.Value.GetLogAverageOf(first);
                 
                 if (double.IsNegativeInfinity(logAverageOf))
                 {
@@ -177,43 +194,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return double.NegativeInfinity;
                 }
                 
-                result = product;
+                result = firstTimesSecond.Value.Multiply(first);
                 return logAverageOf;    
             }
 
             return base.ProjectFirst(first, out result);
         }
 
-        /// <summary>
-        /// Checks whether the current distribution is uniform.
-        /// </summary>
-        /// <returns><see langword="true"/> if the current distribution is uniform, <see langword="false"/> otherwise.</returns>
+        /// <inheritdoc/>
         public override bool IsUniform()
         {
             return !this.HasEqualityConstraint && base.IsUniform();
         }
 
-        /// <summary>
-        /// Replaces the current distribution with a uniform distribution.
-        /// </summary>
-        public override void SetToUniform()
+        /// <inheritdoc/>
+        public override ImmutablePairDistribution<TElement, TElementDistribution> CreateUniform()
         {
-            base.SetToUniform();
-            this.HasEqualityConstraint = false;
-        }
-
-        /// <summary>
-        /// Creates a copy of the current distribution.
-        /// </summary>
-        /// <returns>The created copy.</returns>
-        public override object Clone()
-        {
-            var result = (PairDistribution<TElement, TElementDistribution>)base.Clone();
-            result.HasEqualityConstraint = this.HasEqualityConstraint;
-            result.firstTimesSecond =
-                this.firstTimesSecond.HasValue
-                    ? Option.Some((TElementDistribution)this.firstTimesSecond.Value.Clone())
-                    : Option.None;
+            var result = base.CreateUniform();
+            result.HasEqualityConstraint = false;
             return result;
         }
 
@@ -233,29 +231,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return base.ToString();
         }
 
-        /// <summary>
-        /// Returns the logarithm of the probability that the current distribution would draw the same sample
-        /// as a given one.
-        /// </summary>
-        /// <param name="that">The given distribution.</param>
-        /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
-        public override double GetLogAverageOf(PairDistribution<TElement, TElementDistribution> that)
+        /// <inheritdoc/>
+        public override double GetLogAverageOf(ImmutablePairDistribution<TElement, TElementDistribution> that)
         {
-            Argument.CheckIfNotNull(that, "that");
+            Argument.CheckIfNotNull(that, nameof(that));
             
             if (this.HasEqualityConstraint)
             {
                 Debug.Assert(
-                    this.First.HasValue &&!this.Second.HasValue &&
+                    First.HasValue &&!Second.HasValue &&
                     that.First.HasValue && that.Second.HasValue,
                     "Cannot have a constrained pair distribution with a missing element distribution.");
 
                 double result = 0;
-                var product = (TElementDistribution)this.firstTimesSecond.Value.Clone();
+                var product = firstTimesSecond.Value;
                 result += product.GetLogAverageOf(that.First.Value);
-                product.SetToProduct(product, that.First.Value);
+                product = product.Multiply(that.First.Value);
                 result += product.GetLogAverageOf(that.Second.Value);
-                result -= that.First.Value.GetLogAverageOf(this.Second.Value);
+                result -= that.First.Value.GetLogAverageOf(Second.Value);
 
                 return result;
             }
@@ -263,34 +256,60 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return base.GetLogAverageOf(that);
         }
 
-        /// <summary>
-        /// Sets the distribution to be uniform over the support of a given distribution.
-        /// </summary>
-        /// <param name="distribution">The distribution which support will be used to setup the current distribution.</param>
-        public override void SetToPartialUniformOf(PairDistribution<TElement, TElementDistribution> distribution)
+        /// <inheritdoc/>
+        public override ImmutablePairDistribution<TElement, TElementDistribution> CreatePartialUniform()
         {
-            base.SetToPartialUniformOf(distribution);
-            
-            this.HasEqualityConstraint = distribution.HasEqualityConstraint;
-            if (this.HasEqualityConstraint)
+            var result = base.CreatePartialUniform();
+            result.HasEqualityConstraint = HasEqualityConstraint;
+            if (HasEqualityConstraint)
             {
-                this.firstTimesSecond = Distribution.Product<TElement, TElementDistribution>(this.First.Value, this.Second.Value);
+                result.firstTimesSecond = First.Value.Multiply(Second.Value);
             }
+
+            return result;
         }
 
         /// <summary>
         /// Creates a distribution <c>Q(y, x) = P(x, y)</c>, where <c>P(x, y)</c> is the current distribution.
         /// </summary>
         /// <returns>The created distribution.</returns>
-        public PairDistribution<TElement, TElementDistribution> Transpose()
+        public ImmutablePairDistribution<TElement, TElementDistribution> Transpose()
         {
-            return new PairDistribution<TElement, TElementDistribution>
+            return new ImmutablePairDistribution<TElement, TElementDistribution>
             {
                 First = this.Second,
                 Second = this.First,
                 HasEqualityConstraint = this.HasEqualityConstraint,
                 firstTimesSecond = this.firstTimesSecond
             };
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
+        public override double MaxDiff(object that)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
+        public override double GetLogProb(Pair<Option<TElement>, Option<TElement>> pair)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
+        public override ImmutablePairDistribution<TElement, TElementDistribution> Multiply(ImmutablePairDistribution<TElement, TElementDistribution> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>Not currently implemented.</remarks>
+        public override ImmutablePairDistribution<TElement, TElementDistribution> Sum(double weightThis, ImmutablePairDistribution<TElement, TElementDistribution> other, double weightOther)
+        {
+            throw new NotImplementedException();
         }
     }
 }

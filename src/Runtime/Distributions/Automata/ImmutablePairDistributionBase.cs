@@ -29,15 +29,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// setting pair distributions to <see langword="null"/>.
     /// </p>
     /// </remarks>
-    public abstract class PairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis> :
-        IDistribution<Pair<Option<TElement1>, Option<TElement2>>>, CanGetLogAverageOf<TThis>, SettableToProduct<TThis>, SettableToWeightedSumExact<TThis>, SettableToPartialUniform<TThis>
-        where TElementDistribution1 : IDistribution<TElement1>, CanGetLogAverageOf<TElementDistribution1>, SettableToProduct<TElementDistribution1>, SettableToPartialUniform<TElementDistribution1>, new()
-        where TElementDistribution2 : IDistribution<TElement2>, CanGetLogAverageOf<TElementDistribution2>, SettableToProduct<TElementDistribution2>, SettableToPartialUniform<TElementDistribution2>, new()
-        where TThis : PairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis>, new()
+    public abstract class ImmutablePairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis> :
+        IImmutableDistribution<Pair<Option<TElement1>, Option<TElement2>>, TThis>, CanGetLogAverageOf<TThis>, CanComputeProduct<TThis>, SummableExactly<TThis>, CanCreatePartialUniform<TThis>
+        where TElementDistribution1 : IImmutableDistribution<TElement1, TElementDistribution1>, CanGetLogAverageOf<TElementDistribution1>, CanComputeProduct<TElementDistribution1>, CanCreatePartialUniform<TElementDistribution1>, new()
+        where TElementDistribution2 : IImmutableDistribution<TElement2, TElementDistribution2>, CanGetLogAverageOf<TElementDistribution2>, CanComputeProduct<TElementDistribution2>, CanCreatePartialUniform<TElementDistribution2>, new()
+        where TThis : ImmutablePairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis>, new()
     {
+        protected static readonly TElementDistribution1 ElementDistribution1Factory = new TElementDistribution1();
+        protected static readonly TElementDistribution2 ElementDistribution2Factory = new TElementDistribution2();
+
         /// <summary>
         /// Gets or sets the marginal distribution over the first element in a pair.
         /// </summary>
+        // Should only ever be set in factory methods.
+        // TODO: replace with init-only property after switching to C# 9.0+
         public Option<TElementDistribution1> First { get; protected set; }
 
         /// <summary>
@@ -45,15 +50,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public Option<TElementDistribution2> Second { get; protected set; }
 
-        /// <summary>
-        /// Gets a value indicating whether the current distribution represents a point mass.
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsPointMass =>
             this.First.HasValue && this.First.Value.IsPointMass &&
             this.Second.HasValue && this.Second.Value.IsPointMass;
 
         /// <summary>
-        /// Gets or sets the point mass represented by the distribution.
+        /// Gets the point mass represented by the distribution.
         /// </summary>
         public virtual Pair<Option<TElement1>, Option<TElement2>> Point
         {
@@ -66,13 +69,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 return new Pair<Option<TElement1>, Option<TElement2>>(this.First.Value.Point, this.Second.Value.Point);
             }
-
-            set
-            {
-                this.First = new TElementDistribution1 { Point = value.First.Value };
-                this.Second = new TElementDistribution2 { Point = value.Second.Value };
-            }
         }
+
+        /// <inheritdoc/>
+        public virtual TThis CreatePointMass(Pair<Option<TElement1>, Option<TElement2>> point) => new TThis()
+        {
+            First = ElementDistribution1Factory.CreatePointMass(point.First.Value),
+            Second = ElementDistribution2Factory.CreatePointMass(point.Second.Value)
+        };
 
         /// <summary>
         /// Creates a pair distribution for an epsilon output transducer transition.
@@ -147,20 +151,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return logAverageOf;
         }
 
-        /// <summary>
-        /// Checks whether the current distribution is uniform.
-        /// </summary>
-        /// <returns><see langword="true"/> if the current distribution is uniform, <see langword="false"/> otherwise.</returns>
+        /// <inheritdoc/>
         public virtual bool IsUniform() => this.First.Value.IsUniform() && this.Second.Value.IsUniform();
 
-        /// <summary>
-        /// Replaces the current distribution with a uniform distribution.
-        /// </summary>
-        public virtual void SetToUniform()
+        /// <inheritdoc/>
+        public virtual TThis CreateUniform() => new TThis()
         {
-            this.First = Distribution.CreateUniform<TElementDistribution1>();
-            this.Second = Distribution.CreateUniform<TElementDistribution2>();
-        }
+            First = ElementDistribution1Factory.CreateUniform(),
+            Second = ElementDistribution2Factory.CreateUniform()
+        };
 
         /// <summary>
         /// Returns a string that represents the distribution.
@@ -187,49 +186,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Creates a copy of the current distribution.
         /// </summary>
         /// <returns>The created copy.</returns>
-        public virtual object Clone()
-        {
-            return new TThis
-            {
-                First =
-                    this.First.HasValue
-                        ? Option.Some((TElementDistribution1)this.First.Value.Clone())
-                        : Option.None,
-                Second =
-                    this.Second.HasValue
-                        ? Option.Some((TElementDistribution2)this.Second.Value.Clone())
-                        : Option.None,
-            };
-        }
+        public virtual object Clone() => this; // The type is immutable
 
-        /// <summary>
-        /// Gets the maximum difference between the parameters of this distribution and a given one.
-        /// </summary>
-        /// <param name="that">The other distribution.</param>
-        /// <returns>The maximum difference.</returns>
-        /// <remarks>Not currently implemented.</remarks>
-        public virtual double MaxDiff(object that)
-        {
-            throw new NotImplementedException();
-        }
+        /// <inheritdoc/>
+        public abstract double MaxDiff(object that);
 
-        /// <summary>
-        /// Gets the logarithm of the probability of a given element pair under this distribution.
-        /// </summary>
-        /// <param name="pair">The pair to get the probability for.</param>
-        /// <returns>The logarithm of the probability of the pair.</returns>
-        /// <remarks>Not currently implemented.</remarks>
-        public virtual double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair)
-        {
-            throw new NotImplementedException();
-        }
+        /// <inheritdoc/>
+        public abstract double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair);
 
-        /// <summary>
-        /// Returns the logarithm of the probability that the current distribution would draw the same sample
-        /// as a given one.
-        /// </summary>
-        /// <param name="that">The given distribution.</param>
-        /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
+        /// <inheritdoc/>
         public virtual double GetLogAverageOf(TThis that)
         {
             Argument.CheckIfValid(
@@ -254,60 +219,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
-        /// <summary>
-        /// Replaces the current distribution with a product of a given pair of distributions.
-        /// </summary>
-        /// <param name="distribution1">The first distribution.</param>
-        /// <param name="distribution2">The second distribution.</param>
-        /// <remarks>Not currently implemented.</remarks>
-        public virtual void SetToProduct(TThis distribution1, TThis distribution2)
+        /// <inheritdoc/>
+        public abstract TThis Multiply(TThis other);
+
+        /// <inheritdoc/>
+        public abstract TThis Sum(double weightThis, TThis other, double weightOther);
+
+        /// <inheritdoc/>
+        public virtual TThis CreatePartialUniform() => new TThis()
         {
-            throw new NotImplementedException();
-        }
+            First = First.HasValue ? Option.Some(First.Value.CreatePartialUniform()) : Option.None,
+            Second = Second.HasValue ? Option.Some(Second.Value.CreatePartialUniform()) : Option.None
+        };
 
-        /// <summary>
-        /// Replaces the current distribution with a mixture of a given pair of distributions.
-        /// </summary>
-        /// <param name="weight1">The weight of the first distribution.</param>
-        /// <param name="distribution1">The first distribution.</param>
-        /// <param name="weight2">The weight of the second distribution.</param>
-        /// <param name="distribution2">The second distribution.</param>
-        /// <remarks>Not currently implemented.</remarks>
-        public virtual void SetToSum(double weight1, TThis distribution1, double weight2, TThis distribution2)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Sets the distribution to be uniform over its support.
-        /// </summary>
-        public virtual void SetToPartialUniform()
-        {
-            this.SetToPartialUniformOf((TThis)this);
-        }
-
-        /// <summary>
-        /// Sets the distribution to be uniform over the support of a given distribution.
-        /// </summary>
-        /// <param name="distribution">The distribution which support will be used to setup the current distribution.</param>
-        public virtual void SetToPartialUniformOf(TThis distribution)
-        {
-            Argument.CheckIfNotNull(distribution, "distribution");
-
-            this.First =
-                distribution.First.HasValue
-                    ? Option.Some(Distribution.CreatePartialUniform(distribution.First.Value))
-                    : Option.None;
-            this.Second =
-                distribution.Second.HasValue
-                    ? Option.Some(Distribution.CreatePartialUniform(distribution.Second.Value))
-                    : Option.None;
-        }
-
-        /// <summary>
-        /// Checks whether the distribution is uniform over its support.
-        /// </summary>
-        /// <returns><see langword="true"/> if the distribution is uniform over its support, <see langword="false"/> otherwise.</returns>
+        /// <inheritdoc/>
         public virtual bool IsPartialUniform()
         {
             return

@@ -40,8 +40,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
 
             Vector resultLogProb = PiecewiseVector.Constant(char.MaxValue + 1, double.NegativeInfinity);
-            StringAutomaton probFunc = str.GetWorkspaceOrPoint();
-            StringAutomaton.EpsilonClosure startEpsilonClosure = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(probFunc, probFunc.Start);
+            StringAutomaton probFunc = str.ToAutomaton();
+            StringAutomaton.EpsilonClosure startEpsilonClosure = new Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(probFunc, probFunc.Start);
             for (int stateIndex = 0; stateIndex < startEpsilonClosure.Size; ++stateIndex)
             {
                 StringAutomaton.State state = startEpsilonClosure.GetStateByIndex(stateIndex);
@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     if (!transition.IsEpsilon)
                     {
                         StringAutomaton.State destState = probFunc.States[transition.DestinationStateIndex];
-                        StringAutomaton.EpsilonClosure destStateClosure = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(probFunc, destState);
+                        StringAutomaton.EpsilonClosure destStateClosure = new Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(probFunc, destState);
                         if (!destStateClosure.EndWeight.IsZero)
                         {
                             Weight weight = Weight.Product(stateLogWeight, transition.Weight, destStateClosure.EndWeight);

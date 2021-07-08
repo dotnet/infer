@@ -21,31 +21,35 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// i.e. modify it such that for every state and every element there is at most one transition that allows for that element,
         /// and there are no epsilon transitions.
         /// </summary>
+        /// <param name="result">Result automaton. Determinized automaton, if the operation was successful, current automaton or
+        /// an equvalent automaton without epsilon transitions otherwise.</param>
         /// <returns>
         /// <see langword="true"/> if the determinization attempt was successful and the automaton is now deterministic,
         /// <see langword="false"/> otherwise.
         /// </returns>
         /// <remarks>See <a href="http://www.cs.nyu.edu/~mohri/pub/hwa.pdf"/> for algorithm details.</remarks>
-        public bool TryDeterminize()
+        public bool TryDeterminize(out TThis result)
         {
             if (this.Data.IsDeterminized != null)
             {
+                result = (TThis)this;
                 return this.Data.IsDeterminized == true;
             }
 
             int maxStatesBeforeStop = Math.Min(this.States.Count * 3, MaxStateCount);
 
-            this.MakeEpsilonFree(); // Deterministic automata cannot have epsilon-transitions
+            var epsilonClosure = GetEpsilonClosure(); // Deterministic automata cannot have epsilon-transitions
 
             if (this.UsesGroups)
             {
                 // Determinization will result in lost of group information, which we cannot allow
                 this.Data = this.Data.With(isDeterminized: false);
+                result = WithData(epsilonClosure.Data.With(isDeterminized: false));
                 return false;
             }
 
             var builder = new Builder();
-            builder.Start.SetEndWeight(this.Start.EndWeight);
+            builder.Start.SetEndWeight(epsilonClosure.Start.EndWeight);
 
             var weightedStateSetStack = new Stack<(bool enter, Determinization.WeightedStateSet set)>();
             var enqueuedWeightedStateSetStack = new Stack<(bool enter, Determinization.WeightedStateSet set)>();
@@ -58,7 +62,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var stateSetsInPath = new Dictionary<Determinization.WeightedStateSet, Determinization.WeightedStateSet>(
                 Determinization.WeightedStateSetOnlyStateComparer.Instance);
             
-            var startWeightedStateSet = new Determinization.WeightedStateSet(this.Start.Index);
+            var startWeightedStateSet = new Determinization.WeightedStateSet(epsilonClosure.Start.Index);
             weightedStateSetStack.Push((true, startWeightedStateSet));
             weightedStateSetToNewState.Add(startWeightedStateSet, builder.StartStateIndex);
 
@@ -84,6 +88,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (!EnqueueOutgoingTransitions(currentWeightedStateSet))
                     {
                         this.Data = this.Data.With(isDeterminized: false);
+                        result = WithData(epsilonClosure.Data.With(isDeterminized: false));
                         return false;
                     }
                 }
@@ -93,13 +98,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
+            var simplification = new Simplification(builder, epsilonClosure.PruneStatesWithLogEndWeightLessThan);
             simplification.MergeParallelTransitions(); // Determinization produces a separate transition for each segment
 
-            this.Data = builder.GetData().With(isDeterminized: true);
-            this.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
-            this.LogValueOverride = this.LogValueOverride;
-
+            result = WithData(builder.GetData(true));
             return true;
 
             bool EnqueueOutgoingTransitions(Determinization.WeightedStateSet currentWeightedStateSet)
@@ -114,7 +116,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     Debug.Assert(currentWeightedStateSet[0].Weight == Weight.One);
 
-                    var sourceState = this.States[currentWeightedStateSet[0].Index];
+                    var sourceState = epsilonClosure.States[currentWeightedStateSet[0].Index];
                     foreach (var transition in sourceState.Transitions)
                     {
                         var destinationStates = new Determinization.WeightedStateSet(transition.DestinationStateIndex);
@@ -130,7 +132,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     // Find out what transitions we should add for this state
                     var outgoingTransitions =
-                        this.GetOutgoingTransitionsForDeterminization(currentWeightedStateSet);
+                        epsilonClosure.GetOutgoingTransitionsForDeterminization(currentWeightedStateSet);
                     foreach (var outgoingTransition in outgoingTransitions)
                     {
                         if (!TryAddTransition(enqueuedWeightedStateSetStack, outgoingTransition, currentState))
@@ -154,7 +156,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // handled by slow path.
             bool AllDestinationsAreSame(int stateIndex)
             {
-                var transitions = this.States[stateIndex].Transitions;
+                var transitions = epsilonClosure.States[stateIndex].Transitions;
                 if (transitions.Count <= 1)
                 {
                     return true;
@@ -221,7 +223,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     for (var i = 0; i < destinations.Count; ++i)
                     {
                         var weightedState = destinations[i];
-                        var addedWeight = weightedState.Weight * this.States[weightedState.Index].EndWeight;
+                        var addedWeight = weightedState.Weight * epsilonClosure.States[weightedState.Index].EndWeight;
                         destinationState.SetEndWeight(destinationState.EndWeight + addedWeight);
                     }
 

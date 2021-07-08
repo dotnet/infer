@@ -109,7 +109,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Product2()
         {
-            var ab = StringDistribution.ZeroOrMore(DiscreteChar.OneOf('a', 'b'));
+            var ab = StringDistribution.ZeroOrMore(ImmutableDiscreteChar.OneOf('a', 'b'));
             var a = StringDistribution.ZeroOrMore('a');
             var prod = ab.Product(a);
             StringInferenceTestUtilities.TestProbability(prod, 1.0, string.Empty, "a", "aa", "aaa");
@@ -182,19 +182,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringDistribution lhsWithoutGroup = StringDistribution.String("ab");
 
             // add a group to first transition of the start state
-            var weightFunctionBuilder = StringAutomaton.Builder.FromAutomaton(lhsWithoutGroup.GetWorkspaceOrPoint());
+            var weightFunctionBuilder = StringAutomaton.Builder.FromAutomaton(lhsWithoutGroup.ToAutomaton());
             var transitionIterator = weightFunctionBuilder.Start.TransitionIterator;
-            var transitionWithGroup = transitionIterator.Value;
-            transitionWithGroup.Group = 1;
+            var transitionWithGroup = transitionIterator.Value.With(group: 1);
             transitionIterator.Value = transitionWithGroup;
 
             StringDistribution lhs = StringDistribution.FromWeightFunction(weightFunctionBuilder.GetAutomaton());
             StringDistribution rhs = StringDistribution.OneOf("ab", "ac");
-            Assert.True(lhs.GetWorkspaceOrPoint().HasGroup(1));
-            Assert.False(rhs.GetWorkspaceOrPoint().UsesGroups);
+            Assert.True(lhs.ToAutomaton().HasGroup(1));
+            Assert.False(rhs.ToAutomaton().UsesGroups);
             var result = StringDistribution.Zero();
             result.SetToProduct(lhs, rhs);
-            Assert.True(result.GetWorkspaceOrPoint().HasGroup(1));
+            Assert.True(result.ToAutomaton().HasGroup(1));
         }
 
         /// <summary>
@@ -239,7 +238,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             for (int i = 0; i < 22; ++i)
             {
                 const string PointElement = "a";
-                point8Automaton.AppendInPlace(StringAutomaton.ConstantOn(1.0, PointElement, PointElement));
+                point8Automaton = point8Automaton.Append(StringAutomaton.ConstantOn(1.0, PointElement, PointElement));
                 point += PointElement;
             }
 
@@ -475,7 +474,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var baseDist = StringDistribution.OneOf("a", "b");
             var dist1 = StringDistribution.Repeat(baseDist, minTimes: 1, maxTimes: 3);
-            var dist2 = StringDistribution.Repeat(DiscreteChar.OneOf('a', 'b'), minTimes: 1, maxTimes: 3);
+            var dist2 = StringDistribution.Repeat(ImmutableDiscreteChar.OneOf('a', 'b'), minTimes: 1, maxTimes: 3);
             Assert.Equal(dist2, dist1);
         }
 
@@ -591,24 +590,19 @@ namespace Microsoft.ML.Probabilistic.Tests
                 TargetProb1, TargetProb2, TargetProb3, TargetProb4, TargetProb5, TargetProb6, TargetProb7, TargetProb8, TargetProb9, TargetProb10
             };
 
-            var charDistUpper = DiscreteChar.Upper();
-            var charDistLower = DiscreteChar.Lower();
-            var charDistUpperNarrow = DiscreteChar.OneOf('A', 'B');
-            var charDistLowerNarrow = DiscreteChar.OneOf('a', 'b');
-            var charDistUpperScaled = DiscreteChar.Uniform();
-            var charDistLowerScaled1 = DiscreteChar.Uniform();
-            var charDistLowerScaled2 = DiscreteChar.Uniform();
-            var charDistLowerScaled3 = DiscreteChar.Uniform();
-            var charDistLowerScaledEnd = DiscreteChar.Uniform();
+            var charDistUpper = ImmutableDiscreteChar.Upper();
+            var charDistLower = ImmutableDiscreteChar.Lower();
+            var charDistUpperNarrow = ImmutableDiscreteChar.OneOf('A', 'B');
+            var charDistLowerNarrow = ImmutableDiscreteChar.OneOf('a', 'b');
 
-            charDistUpperScaled.SetToPartialUniformOf(charDistUpper, Math.Log(TargetProb1));
-            charDistLowerScaled1.SetToPartialUniformOf(charDistLower, Math.Log(Ratio1));
-            charDistLowerScaled2.SetToPartialUniformOf(charDistLower, Math.Log(Ratio2));
-            charDistLowerScaled3.SetToPartialUniformOf(charDistLower, Math.Log(Ratio3));
-            charDistLowerScaledEnd.SetToPartialUniformOf(charDistLower, Math.Log(Ratio4));
+            var charDistUpperScaled = charDistUpper.CreatePartialUniform(Math.Log(TargetProb1));
+            var charDistLowerScaled1 = charDistLower.CreatePartialUniform(Math.Log(Ratio1));
+            var charDistLowerScaled2 = charDistLower.CreatePartialUniform(Math.Log(Ratio2));
+            var charDistLowerScaled3 = charDistLower.CreatePartialUniform(Math.Log(Ratio3));
+            var charDistLowerScaledEnd = charDistLower.CreatePartialUniform(Math.Log(Ratio4));
 
             var wordModel = StringDistribution.Concatenate(
-                new List<DiscreteChar>
+                new List<ImmutableDiscreteChar>
                 {
                     charDistUpperScaled,
                     charDistLowerScaled1,
@@ -641,12 +635,12 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 var prod = StringDistribution.Zero();
                 prod.SetToProduct(broadDist, wordModel);
-                Xunit.Assert.True(prod.GetWorkspaceOrPoint().HasElementLogValueOverrides);
+                Xunit.Assert.True(prod.ToAutomaton().HasElementLogValueOverrides);
                 probCurrentWord = Math.Exp(prod.GetLogProb(currentWord));
                 Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
 
                 prod.SetToProduct(narrowDist, wordModel);
-                Xunit.Assert.False(prod.GetWorkspaceOrPoint().HasElementLogValueOverrides);
+                Xunit.Assert.False(prod.ToAutomaton().HasElementLogValueOverrides);
                 var probNarrowWord = Math.Exp(prod.GetLogProb(narrowWord));
                 Assert.Equal(expectedProbForNarrow, probNarrowWord, Eps);
 
@@ -657,7 +651,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             // Copied model
-            var copiedModel = StringDistribution.FromWorkspace(StringTransducer.Copy().ProjectSource(wordModel.GetWorkspaceOrPoint()));
+            var copiedModel = StringDistribution.FromWeightFunction(StringTransducer.Copy().ProjectSource(wordModel.ToAutomaton()));
             // Under transducer.
             for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
             {
@@ -669,12 +663,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             // Rescaled model
             var scale = 0.5;
             var newTargetProb1 = TargetProb1 * scale;
-            var charDistUpperScaled1 = DiscreteChar.Uniform();
-            charDistUpperScaled1.SetToPartialUniformOf(charDistUpper, Math.Log(newTargetProb1));
+            var charDistUpperScaled1 = charDistUpper.CreatePartialUniform(Math.Log(newTargetProb1));
             var reWeightingTransducer =
-                StringTransducer.Replace(StringDistribution.Char(charDistUpper).GetWorkspaceOrPoint(), StringDistribution.Char(charDistUpperScaled1).GetWorkspaceOrPoint())
+                StringTransducer.Replace(StringDistribution.Char(charDistUpper).ToAutomaton(), StringDistribution.Char(charDistUpperScaled1).ToAutomaton())
                     .Append(StringTransducer.Copy());
-            var reWeightedWordModel = StringDistribution.FromWorkspace(reWeightingTransducer.ProjectSource(wordModel.GetWorkspaceOrPoint()));
+            var reWeightedWordModel = StringDistribution.FromWeightFunction(reWeightingTransducer.ProjectSource(wordModel.ToAutomaton()));
             for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
             {
                 var currentWord = Word.Substring(0, i + 1);
@@ -816,7 +809,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void UniformOf()
         {
-            var unif1 = StringDistribution.ZeroOrMore(DiscreteChar.Lower());
+            var unif1 = StringDistribution.ZeroOrMore(ImmutableDiscreteChar.Lower());
             Assert.False(unif1.IsUniform());
             Assert.False(unif1.IsProper());
             StringInferenceTestUtilities.TestProbability(unif1, 1.0, "hello", "a", string.Empty);
@@ -827,7 +820,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             probs['1'] = 0;
             probs['2'] = 0.3;
             probs['3'] = 0.0001;
-            var unif2 = StringDistribution.ZeroOrMore(DiscreteChar.FromVector(probs));
+            var unif2 = StringDistribution.ZeroOrMore(ImmutableDiscreteChar.FromVector(probs));
             StringInferenceTestUtilities.TestProbability(unif2, 1.0, "0", "234", string.Empty);
             StringInferenceTestUtilities.TestProbability(unif2, 0.0, "1", "231", "!", "Abc");
         }
@@ -908,12 +901,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestProbability(lengthDist1, StringInferenceTestUtilities.StringUniformProbability(1, 3, 65536), "a", "aa", "aaa");
             StringInferenceTestUtilities.TestProbability(lengthDist1, 0.0, string.Empty, "aaaa");
 
-            var lengthDist2 = StringDistribution.Repeat(DiscreteChar.OneOf('a', 'b'), minTimes: 1, maxTimes: 3);
+            var lengthDist2 = StringDistribution.Repeat(ImmutableDiscreteChar.OneOf('a', 'b'), minTimes: 1, maxTimes: 3);
             Assert.True(lengthDist2.IsProper());
             StringInferenceTestUtilities.TestProbability(lengthDist2, StringInferenceTestUtilities.StringUniformProbability(1, 3, 2), "a", "ab", "aba");
             StringInferenceTestUtilities.TestProbability(lengthDist2, 0.0, string.Empty, "aaaa", "abab", "cc");
 
-            var lengthDist3 = StringDistribution.Repeat(DiscreteChar.OneOf('a', 'b'), minTimes: 2, maxTimes: 2);
+            var lengthDist3 = StringDistribution.Repeat(ImmutableDiscreteChar.OneOf('a', 'b'), minTimes: 2, maxTimes: 2);
             Assert.True(lengthDist3.IsProper());
             StringInferenceTestUtilities.TestProbability(lengthDist3, StringInferenceTestUtilities.StringUniformProbability(2, 2, 2), "aa", "ab", "ba", "bb");
             StringInferenceTestUtilities.TestProbability(lengthDist3, 0.0, string.Empty, "a", "abab", "cc");
@@ -923,7 +916,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestProbability(minLengthDist, 1.0, "aa", "123", "@*(@*&(@)");
             StringInferenceTestUtilities.TestProbability(minLengthDist, 0.0, string.Empty, "a", "!");
 
-            var maxLengthDist = StringDistribution.ZeroOrMore(DiscreteChar.Digit(), maxTimes: 3);
+            var maxLengthDist = StringDistribution.ZeroOrMore(ImmutableDiscreteChar.Digit(), maxTimes: 3);
             Assert.True(maxLengthDist.IsProper());
             StringInferenceTestUtilities.TestProbability(maxLengthDist, StringInferenceTestUtilities.StringUniformProbability(0, 3, 10), string.Empty, "1", "32", "432");
             StringInferenceTestUtilities.TestProbability(maxLengthDist, 0.0, "abc", "1234");
@@ -948,7 +941,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Vector charProbs3 = PiecewiseVector.Zero(char.MaxValue + 1);
             charProbs3['a'] = 0.1;
             charProbs3['b'] = 0.9;
-            var charDist3 = StringDistribution.SingleElement(DiscreteChar.FromVector(charProbs3));
+            var charDist3 = StringDistribution.SingleElement(ImmutableDiscreteChar.FromVector(charProbs3));
             StringInferenceTestUtilities.TestProbability(charDist3, 0.1, "a");
             StringInferenceTestUtilities.TestProbability(charDist3, 0.9, "b");
             StringInferenceTestUtilities.TestProbability(charDist3, 0.0, "c", "ab", string.Empty);

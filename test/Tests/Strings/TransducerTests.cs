@@ -31,11 +31,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 var bigAutomatonBuilder = new StringAutomaton.Builder();
                 bigAutomatonBuilder.AddStates(largeStatesCount - bigAutomatonBuilder.StatesCount);
-                Func<Option<DiscreteChar>, Weight, ValueTuple<Option<PairDistribution<char, DiscreteChar>>, Weight>>
+                Func<Option<ImmutableDiscreteChar>, Weight, ValueTuple<Option<ImmutablePairDistribution<char, ImmutableDiscreteChar>>, Weight>>
                     transitionConverter =
                         (dist, weight) =>
                             ValueTuple.Create(
-                                Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);
+                                Option.Some(ImmutablePairDistribution<char, ImmutableDiscreteChar>.FromFirstSecond(dist, dist)), weight);
 
                 var bigAutomaton = bigAutomatonBuilder.GetAutomaton();
 
@@ -57,7 +57,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConsumeAutomaton()
         {
-            StringAutomaton automaton = StringAutomaton.Constant(2.0, DiscreteChar.Lower());
+            StringAutomaton automaton = StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Lower());
             automaton = automaton.Sum(StringAutomaton.ConstantOnElement(3.0, 'a'));
             StringTransducer consume = StringTransducer.Consume(automaton);
             
@@ -110,7 +110,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ProduceAutomaton()
         {
-            StringAutomaton automaton = StringAutomaton.Constant(2.0, DiscreteChar.Lower());
+            StringAutomaton automaton = StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Lower());
             automaton = automaton.Sum(StringAutomaton.ConstantOnElement(3.0, 'a'));
             StringTransducer produce = StringTransducer.Produce(automaton);
             
@@ -163,10 +163,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ReplaceAutomaton()
         {
-            StringAutomaton automaton1 = StringAutomaton.Constant(2.0, DiscreteChar.Lower());
+            StringAutomaton automaton1 = StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Lower());
             automaton1 = automaton1.Sum(StringAutomaton.ConstantOnElement(3.0, 'a'));
-            StringAutomaton automaton2 = StringAutomaton.Constant(0.5, DiscreteChar.Digit());
-            automaton2 = automaton2.Sum(StringAutomaton.Constant(2.5, DiscreteChar.LetterOrDigit()));
+            StringAutomaton automaton2 = StringAutomaton.Constant(0.5, ImmutableDiscreteChar.Digit());
+            automaton2 = automaton2.Sum(StringAutomaton.Constant(2.5, ImmutableDiscreteChar.LetterOrDigit()));
             StringTransducer replace = StringTransducer.Replace(automaton1, automaton2);
 
             StringInferenceTestUtilities.TestTransducerValue(replace, string.Empty, "123", 6.0);
@@ -204,7 +204,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ReplaceElements()
         {
-            StringTransducer replace = StringTransducer.Replace(DiscreteChar.Lower(), DiscreteChar.Digit());
+            StringTransducer replace = StringTransducer.Replace(ImmutableDiscreteChar.Lower(), ImmutableDiscreteChar.Digit());
 
             StringInferenceTestUtilities.TestTransducerValue(replace, "hello", "123", 1.0);
             StringInferenceTestUtilities.TestTransducerValue(replace, "w", "1337", 1.0);
@@ -224,8 +224,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Sum()
         {
             StringTransducer replace = StringTransducer.Sum(
-                StringTransducer.Replace(DiscreteChar.Lower(), DiscreteChar.Digit()),
-                StringTransducer.Replace(DiscreteChar.Lower(), DiscreteChar.LetterOrDigit()));
+                StringTransducer.Replace(ImmutableDiscreteChar.Lower(), ImmutableDiscreteChar.Digit()),
+                StringTransducer.Replace(ImmutableDiscreteChar.Lower(), ImmutableDiscreteChar.LetterOrDigit()));
 
             StringInferenceTestUtilities.TestTransducerValue(replace, "hello", "123", 2.0);
             StringInferenceTestUtilities.TestTransducerValue(replace, "w", "1337", 2.0);
@@ -303,7 +303,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Optional()
         {
-            StringAutomaton automaton = StringAutomaton.Constant(1.0, DiscreteChar.Lower());
+            StringAutomaton automaton = StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Lower());
             StringTransducer copy = StringTransducer.Copy(automaton);
             StringTransducer copyOptional = StringTransducer.Optional(copy);
 
@@ -353,7 +353,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void CopyElements()
         {
-            StringTransducer copy = StringTransducer.Copy(DiscreteChar.OneOf('a', 'b'));
+            StringTransducer copy = StringTransducer.Copy(ImmutableDiscreteChar.OneOf('a', 'b'));
 
             StringInferenceTestUtilities.TestTransducerValue(copy, string.Empty, string.Empty, 1.0);
             StringInferenceTestUtilities.TestTransducerValue(copy, "a", "a", 1.0);
@@ -433,10 +433,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void CopyAutomaton()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "prefix1", "prefix2");
-            automaton.AppendInPlace(StringAutomaton.Constant(1.0, DiscreteChar.Lower()));
-            automaton.AppendInPlace(StringAutomaton.Constant(1.0, DiscreteChar.Upper()));
-            automaton.AppendInPlace("!");
+            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "prefix1", "prefix2")
+                .Append(StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Lower()))
+                .Append(StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Upper()))
+                .Append("!");
 
             StringTransducer copy = StringTransducer.Copy(automaton);
             StringInferenceTestUtilities.TestTransducerValue(copy, "prefix1!", "prefix1!", 1.0);
@@ -452,17 +452,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestTransducerProjection(copy, automaton, "prefix2UPPER!", 1.0);
             StringInferenceTestUtilities.TestTransducerProjection(copy, automaton, "prefix1lowerUPPER!", 1.0);
             
-            StringAutomaton subsetAutomaton = StringAutomaton.ConstantOn(2.0, "prefix1");
-            subsetAutomaton.AppendInPlace(StringAutomaton.ConstantOn(3.0, "lll", "mmm"));
-            subsetAutomaton.AppendInPlace(StringAutomaton.ConstantOn(1.5, "!", "U!"));
+            StringAutomaton subsetAutomaton = StringAutomaton.ConstantOn(2.0, "prefix1")
+                .Append(StringAutomaton.ConstantOn(3.0, "lll", "mmm"))
+                .Append(StringAutomaton.ConstantOn(1.5, "!", "U!"));
             StringInferenceTestUtilities.TestTransducerProjection(copy, subsetAutomaton, "prefix1lll!", 9.0);
             StringInferenceTestUtilities.TestTransducerProjection(copy, subsetAutomaton, "prefix1mmmU!", 9.0);
             StringInferenceTestUtilities.TestTransducerProjection(copy, subsetAutomaton, "prefix1!", 0.0);
             StringInferenceTestUtilities.TestTransducerProjection(copy, subsetAutomaton, "prefix2lower!", 0.0);
             StringInferenceTestUtilities.TestTransducerProjection(copy, subsetAutomaton, "prefix2U!", 0.0);
 
-            StringAutomaton supersetAutomaton = StringAutomaton.ConstantOn(1.5, "pr");
-            supersetAutomaton.AppendInPlace(StringAutomaton.Constant(2.0));
+            StringAutomaton supersetAutomaton = StringAutomaton.ConstantOn(1.5, "pr")
+                .Append(StringAutomaton.Constant(2.0));
             StringInferenceTestUtilities.TestTransducerProjection(copy, supersetAutomaton, "prefix1!", 3.0);
             StringInferenceTestUtilities.TestTransducerProjection(copy, supersetAutomaton, "prefix2!", 3.0);
             StringInferenceTestUtilities.TestTransducerProjection(copy, supersetAutomaton, "prefix1lower!", 3.0);
@@ -480,7 +480,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void CopyElement()
         {
-            StringTransducer copy = StringTransducer.CopyElement(DiscreteChar.OneOf('a', 'b'));
+            StringTransducer copy = StringTransducer.CopyElement(ImmutableDiscreteChar.OneOf('a', 'b'));
 
             StringInferenceTestUtilities.TestTransducerValue(copy, "a", "a", 1.0);
             StringInferenceTestUtilities.TestTransducerValue(copy, "b", "b", 1.0);

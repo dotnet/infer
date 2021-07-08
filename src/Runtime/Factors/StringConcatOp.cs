@@ -33,8 +33,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             Argument.CheckIfNotNull(str2, "str2");
             
             StringTransducer transducer = StringTransducer.Copy();
-            transducer.AppendInPlace(StringTransducer.Consume(str2.GetWorkspaceOrPoint()));
-            return StringDistribution.FromWorkspace(transducer.ProjectSource(concat.GetWorkspaceOrPoint()));
+            transducer.AppendInPlace(StringTransducer.Consume(str2.ToAutomaton()));
+            return StringDistribution.FromWeightFunction(transducer.ProjectSource(concat.ToAutomaton()));
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="StringConcatOp"]/message_doc[@name="Str2AverageConditional(StringDistribution, StringDistribution)"]/*'/>
@@ -43,9 +43,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             Argument.CheckIfNotNull(concat, "concat");
             Argument.CheckIfNotNull(str1, "str1");
 
-            StringTransducer transducer = StringTransducer.Consume(str1.GetWorkspaceOrPoint());
+            StringTransducer transducer = StringTransducer.Consume(str1.ToAutomaton());
             transducer.AppendInPlace(StringTransducer.Copy());
-            return StringDistribution.FromWorkspace(transducer.ProjectSource(concat.GetWorkspaceOrPoint()));
+            return StringDistribution.FromWeightFunction(transducer.ProjectSource(concat.ToAutomaton()));
         }
 
         #endregion

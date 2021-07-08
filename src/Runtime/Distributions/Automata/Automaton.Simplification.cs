@@ -19,35 +19,36 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Attempts to simplify the structure of the automaton, reducing the number of states and transitions.
         /// </summary>
-        public bool Simplify()
+        /// <param name="result">Result automaton. Simplified automaton, if the operation was successful, current automaton otherwise.</param>
+        /// <returns><see langword="true"/> if the simplification was successful, <see langword="false"/> otherwise.</returns>
+        public bool Simplify(out TThis result)
         {
             var builder = Builder.FromAutomaton(this);
             var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             if (simplification.Simplify())
             {
-                this.Data = builder.GetData();
+                result = WithData(builder.GetData());
                 return true;
             }
 
+            result = (TThis)this;
             return false;
         }
 
         /// <summary>
         /// Optimizes the automaton by removing all states which can't reach end states.
         /// </summary>
-        public bool RemoveDeadStates()
+        /// <returns>Result automaton. Simplified automaton, if there were states to be removed, current automaton otherwise.</returns>
+        public TThis RemoveDeadStates()
         {
             var builder = Builder.FromAutomaton(this);
             var initialStatesCount = builder.StatesCount;
             var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             simplification.RemoveDeadStates();
             if (builder.StatesCount != initialStatesCount)
-            {
-                this.Data = builder.GetData();
-                return true;
-            }
-
-            return false;
+                return WithData(builder.GetData());
+            else
+                return (TThis)this;
         }
 
         /// <summary>
@@ -187,36 +188,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     if (transition1.IsEpsilon && transition2.IsEpsilon)
                     {
-                        transition1.Weight += transition2.Weight;
-                        return transition1;
+                        return transition1.With(weight: transition1.Weight + transition2.Weight);
                     }
                     
                     if (!transition1.IsEpsilon && !transition2.IsEpsilon)
                     {
-                        var newElementDistribution = new TElementDistribution();
+                        TElementDistribution newElementDistribution;
                         if (transition1.Weight.IsInfinity && transition2.Weight.IsInfinity)
                         {
-                            newElementDistribution.SetToSum(
-                                1.0,
-                                transition1.ElementDistribution.Value,
-                                1.0,
-                                transition2.ElementDistribution.Value);
+                            newElementDistribution = transition1.ElementDistribution.Value.Sum(1.0,
+                                transition2.ElementDistribution.Value,
+                                1.0);
                         }
                         else if (transition1.Weight > transition2.Weight)
                         {
-                            newElementDistribution.SetToSum(
-                                1,
-                                transition1.ElementDistribution.Value,
-                                (transition2.Weight / transition1.Weight).Value,
-                                transition2.ElementDistribution.Value);
+                            newElementDistribution = transition1.ElementDistribution.Value.Sum(1.0,
+                                transition2.ElementDistribution.Value,
+                                (transition2.Weight / transition1.Weight).Value);
                         }
                         else
                         {
-                            newElementDistribution.SetToSum(
-                                (transition1.Weight / transition2.Weight).Value,
-                                transition1.ElementDistribution.Value,
-                                1,
-                                transition2.ElementDistribution.Value);
+                            newElementDistribution = transition1.ElementDistribution.Value.Sum((transition1.Weight / transition2.Weight).Value,
+                                transition2.ElementDistribution.Value,
+                                1.0);
                         }
 
                         return new Transition(
@@ -411,7 +405,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             // Self-loop is not copied: it is already present in state1 and is absolutely
                             // compatible: it has the same distribution and weight
-                            transition.Weight *= state2WeightMultiplier;
+                            transition = transition.With(weight: transition.Weight * state2WeightMultiplier);
                             state1.AddTransition(transition);
                         }
                     }

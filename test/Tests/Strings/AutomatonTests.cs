@@ -63,11 +63,11 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             StringAutomaton zero4 =
                 StringAutomaton
-                    .Constant(2.0, DiscreteChar.Lower())
+                    .Constant(2.0, ImmutableDiscreteChar.Lower())
                     .Product(
                         StringAutomaton
-                            .Constant(3.0, DiscreteChar.Upper())
-                            .Append(StringAutomaton.ConstantOnElement(1.5, DiscreteChar.Digit())));
+                            .Constant(3.0, ImmutableDiscreteChar.Upper())
+                            .Append(StringAutomaton.ConstantOnElement(1.5, ImmutableDiscreteChar.Digit())));
             Assert.True(zero4.IsZero());
             Assert.True(zero4.IsCanonicZero());
             StringInferenceTestUtilities.TestValue(zero4, 0.0, "abc", "ab", "a", string.Empty);
@@ -103,12 +103,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(zero9.IsZero());
             Assert.False(zero9.IsCanonicZero());
             StringInferenceTestUtilities.TestValue(zero9, 0.0, "abc", "ab", "a", string.Empty);
-
-            StringAutomaton zero10 = StringAutomaton.Constant(1.0);
-            zero10.SetToZero();
-            Assert.True(zero10.IsZero());
-            Assert.True(zero10.IsCanonicZero());
-            StringInferenceTestUtilities.TestValue(zero10, 0.0, "abc", "ab", "a", string.Empty);
         }
 
         /// <summary>
@@ -122,7 +116,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.False(constant1.IsZero());
             StringInferenceTestUtilities.TestValue(constant1, 2.0, string.Empty, "a", "aejdfiejmbcr");
 
-            StringAutomaton constant2 = StringAutomaton.Constant(3.0, DiscreteChar.Digit());
+            StringAutomaton constant2 = StringAutomaton.Constant(3.0, ImmutableDiscreteChar.Digit());
             Assert.False(constant2.IsZero());
             StringInferenceTestUtilities.TestValue(constant2, 3.0, string.Empty, "12", "999666999");
             StringInferenceTestUtilities.TestValue(constant2, 0.0, "a", "1a", "a23", "232c34fr4");
@@ -150,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestValue(constant3, 3.0, "a");
             StringInferenceTestUtilities.TestValue(constant3, 0.0, "abc", "ab", string.Empty);
 
-            StringAutomaton constant4 = StringAutomaton.ConstantOnElement(3.0, DiscreteChar.Digit());
+            StringAutomaton constant4 = StringAutomaton.ConstantOnElement(3.0, ImmutableDiscreteChar.Digit());
             Assert.False(constant4.IsZero());
             StringInferenceTestUtilities.TestValue(constant4, 3.0, "1", "2", "0", "9");
             StringInferenceTestUtilities.TestValue(constant4, 0.0, "11", "99", "abc", "ab", string.Empty);
@@ -181,8 +175,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void SumOfConstants()
         {
-            StringAutomaton automaton1 = StringAutomaton.Constant(1.0, DiscreteChar.Lower());
-            StringAutomaton automaton2 = StringAutomaton.Constant(1.0, DiscreteChar.Upper());
+            StringAutomaton automaton1 = StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Lower());
+            StringAutomaton automaton2 = StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Upper());
             StringAutomaton sum = automaton1.Sum(automaton2);
             Assert.False(sum.IsZero());
             StringInferenceTestUtilities.TestValue(sum, 1.0, "a", "abc");
@@ -207,7 +201,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestValue(weightedSum, 4.5, "bcd");
             StringInferenceTestUtilities.TestValue(weightedSum, 0.0, "ab", string.Empty);
 
-            weightedSum.SetToSum(1.0, weightedSum, 1.0, automaton2);
+            weightedSum = weightedSum.Sum(1.0, automaton2, 1.0);
             Assert.False(weightedSum.IsZero());
             StringInferenceTestUtilities.TestValue(weightedSum, 7.0, "a");
             StringInferenceTestUtilities.TestValue(weightedSum, 1.0, "abc");
@@ -296,7 +290,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestValue(product, 6.0, "abc");
             StringInferenceTestUtilities.TestValue(product, 0.0, "d", string.Empty);
 
-            product.SetToProduct(product, product);
+            product = product.Product(product);
             Assert.False(product.IsZero());
             StringInferenceTestUtilities.TestValue(product, 81.0, "a");
             StringInferenceTestUtilities.TestValue(product, 36.0, "abc");
@@ -311,7 +305,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Product2()
         {
             StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "a", "b").Scale(2.0);
-            automaton.SetToProduct(automaton, automaton);
+            automaton = automaton.Product(automaton);
             Assert.False(automaton.IsZero());
             StringInferenceTestUtilities.TestValue(automaton, 4.0, "a", "b");
             StringInferenceTestUtilities.TestValue(automaton, 0.0, "ab", "aa", "bb", string.Empty);
@@ -324,8 +318,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ProductWithConstant()
         {
-            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a", "abc", "d");
-            automaton1 = automaton1.Sum(StringAutomaton.ConstantOn(1.0, "a"));
+            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a", "abc", "d")
+                .Sum(StringAutomaton.ConstantOn(1.0, "a"));
             StringAutomaton automaton2 = StringAutomaton.Constant(3.0);
             StringAutomaton product = automaton1.Product(automaton2);
             Assert.False(product.IsZero());
@@ -413,7 +407,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestValue(concat, 6.0, "a", "ac", "abb", "abc", "cb", "c", "cc");
             StringInferenceTestUtilities.TestValue(concat, 0.0, "b", string.Empty);
 
-            concat.AppendInPlace(concat);
+            concat = concat.Append(concat);
             Assert.False(concat.IsZero());
             StringInferenceTestUtilities.TestValue(concat, 72.0, "aba", "abc", "ababb", "acc");
             StringInferenceTestUtilities.TestValue(concat, 108.0, "abcc");
@@ -437,6 +431,22 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests that the output of Append has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the instance it was invoked on.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void AppendPreservesProperties()
+        {
+            StringAutomaton automaton1 = StringAutomaton.ConstantOn(2.0, "a", "ab", "c");
+            StringAutomaton automaton2 = StringAutomaton.ConstantOn(3.0, "b", string.Empty, "c");
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton1,
+                x => x.Append(automaton2));
+        }
+
+        /// <summary>
         /// Tests automaton reversal on an automaton with finite support.
         /// </summary>
         [Fact]
@@ -449,7 +459,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton reverse1 = automaton.Reverse();
             Assert.Equal(expectedReverse, reverse1);
 
-            bool determinized = automaton.TryDeterminize();
+            bool determinized = automaton.TryDeterminize(out automaton);
             Assert.True(determinized);
             StringAutomaton reverse2 = automaton.Reverse();
             Assert.Equal(expectedReverse, reverse2);
@@ -530,7 +540,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Repeat4()
         {
-            StringAutomaton automaton = StringAutomaton.Constant(2.0, DiscreteChar.Digit());
+            StringAutomaton automaton = StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Digit());
             automaton = StringAutomaton.Repeat(automaton, 1, 3);
             StringInferenceTestUtilities.TestValue(automaton, 0.0, "a");
             StringInferenceTestUtilities.TestValue(automaton, 14.0, string.Empty); // 'eps', 'eps eps', 'eps eps eps'
@@ -545,7 +555,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Repeat5()
         {
-            StringAutomaton automaton = StringAutomaton.Constant(2.0, DiscreteChar.Digit());
+            StringAutomaton automaton = StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Digit());
             var repeatedAutomaton = StringAutomaton.Repeat(automaton, 1, 1);
             Assert.Equal(automaton, repeatedAutomaton);
         }
@@ -605,7 +615,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "a", "bc", "d");
             double logNormalizer;
             Assert.Equal(Math.Log(3.0), automaton.GetLogNormalizer(), 1e-8);
-            Assert.True(automaton.TryNormalizeValues(out logNormalizer));
+            Assert.True(automaton.TryNormalizeValues(out automaton, out logNormalizer));
             Assert.Equal(Math.Log(3.0), logNormalizer, 1e-8);
             StringInferenceTestUtilities.TestValue(automaton, 1.0 / 3.0, "a", "bc", "d");
         }
@@ -624,7 +634,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             double logNormalizer;
             Assert.Equal(Math.Log(4.0), automaton.GetLogNormalizer(), 1e-8);
-            Assert.True(automaton.TryNormalizeValues(out logNormalizer));
+            Assert.True(automaton.TryNormalizeValues(out automaton, out logNormalizer));
             Assert.Equal(Math.Log(4.0), logNormalizer, 1e-8);
             StringInferenceTestUtilities.TestValue(automaton, 1.0, "def");
             StringInferenceTestUtilities.TestValue(automaton, 0.0, "abc");
@@ -647,7 +657,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             double logNormalizer = automaton.GetLogNormalizer();
             Assert.Equal(Math.Log(EndWeight / (1 - TransitionProbability)), logNormalizer, 1e-8);
-            Assert.Equal(logNormalizer, automaton.NormalizeValues());
+            Assert.True(automaton.TryNormalizeValues(out automaton, out var computedLogNormalizer));
+            Assert.Equal(logNormalizer, computedLogNormalizer);
             StringInferenceTestUtilities.TestValue(automaton, 1 - TransitionProbability, string.Empty);
             StringInferenceTestUtilities.TestValue(automaton, TransitionProbability * (1 - TransitionProbability), "a");
             StringInferenceTestUtilities.TestValue(automaton, TransitionProbability * TransitionProbability * (1 - TransitionProbability), "aa");
@@ -661,7 +672,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void NormalizeValuesZero()
         {
             StringAutomaton automaton = StringAutomaton.Zero();
-            Assert.False(automaton.TryNormalizeValues());
+            Assert.False(automaton.TryNormalizeValues(out automaton));
             Assert.Equal(double.NegativeInfinity, automaton.GetLogNormalizer());
         }
 
@@ -675,12 +686,38 @@ namespace Microsoft.ML.Probabilistic.Tests
             TestNonNormalizable(StringAutomaton.Zero(), true);
             TestNonNormalizable(StringAutomaton.Constant(1.01), false);
             TestNonNormalizable(StringAutomaton.ConstantLog(Math.Log(0.87)), false);
-            TestNonNormalizable(StringAutomaton.ConstantLog(Math.Log(0.01), DiscreteChar.PointMass('a')), false);
+            TestNonNormalizable(StringAutomaton.ConstantLog(Math.Log(0.01), ImmutableDiscreteChar.PointMass('a')), false);
 
             var builder = new StringAutomaton.Builder();
             builder.Start.AddSelfTransition('a', Weight.FromValue(1.01));
             builder.Start.SetEndWeight(Weight.One);
             TestNonNormalizable(builder.GetAutomaton(), false);
+        }
+
+
+
+        /// <summary>
+        /// Tests that the output of [Try]NormalizeValues has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void NormalizePreservesProperties()
+        {
+
+            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "a", "bc", "d");
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x =>
+                {
+                    x.TryNormalizeValues(out var normalized);
+                    return normalized;
+                });
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x => x.NormalizeValues());
         }
 
         /// <summary>
@@ -693,7 +730,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = StringAutomaton
                 .ConstantOn(1.0, "abc", "def")
                 .Scale(3.0)
-                .Sum(StringAutomaton.Constant(2.0, DiscreteChar.Lower()))
+                .Sum(StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Lower()))
                 .Scale(0.5);
 
             // Make sure it contains epsilon transitions
@@ -705,7 +742,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 2.5, "abc", "def");
                 StringInferenceTestUtilities.TestValue(automaton, 1.0, "abcd", "ab", string.Empty);
 
-                automaton.MakeEpsilonFree();
+                automaton = automaton.GetEpsilonClosure();
 
                 // Make sure it doesn't contain epsilon transitions
                 Assert.True(automaton.States.All(s => s.Transitions.All(t => !t.IsEpsilon)));
@@ -732,10 +769,29 @@ namespace Microsoft.ML.Probabilistic.Tests
             state.SetEndWeight(Weight.One);
 
             var automaton = builder.GetAutomaton();
-            var closure = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(automaton, automaton.Start);
+            var closure = new Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.EpsilonClosure(automaton, automaton.Start);
             
             Assert.Equal(ChainLength + 1, closure.Size);
             Assert.Equal(Math.Log(1 << ChainLength), closure.EndWeight.LogValue);
+        }
+
+        /// <summary>
+        /// Tests that the output of GetEpsilonClosure has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void EpsilonClosurePreservesProperties()
+        {
+            var automaton = StringAutomaton
+                .ConstantOn(1.0, "abc", "def")
+                .Scale(3.0)
+                .Sum(StringAutomaton.Constant(2.0, ImmutableDiscreteChar.Lower()))
+                .Scale(0.5);
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x => x.GetEpsilonClosure());
         }
 
         /// <summary>
@@ -751,7 +807,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.Constant(1.0);
             for (int i = 0; i < UniformCount - 1; ++i)
             {
-                automaton.AppendInPlace(StringAutomaton.Constant(1.0));
+                automaton = automaton.Append(StringAutomaton.Constant(1.0));
             }
 
             var logValue = automaton.GetLogValue(new string(Enumerable.Repeat('a', LetterCount).ToArray()));
@@ -933,7 +989,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         new StringAutomaton.StateData(0, 1, Weight.One),
                         new StringAutomaton.StateData(1, 0, Weight.One)),
                     ReadOnlyArray.Create(
-                        new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1)),
+                        new StringAutomaton.Transition(ImmutableDiscreteChar.PointMass('a'), Weight.One, 1)),
                     isEpsilonFree: true,
                     usesGroups: false,
                     isDeterminized: null,
@@ -1008,6 +1064,35 @@ namespace Microsoft.ML.Probabilistic.Tests
                         isZero: null,
                         isEnumerable: null)));
         }
+
+
+
+        /// <summary>
+        /// Tests that the outputs of WithGroupSet and WithGroupsClear have the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SettingGroupPreservesProperties()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start.AddTransition('a', Weight.One).AddTransition('b', Weight.One).SetEndWeight(
+                Weight.FromValue(2.0));
+            builder.Start.AddTransition('a', Weight.One).AddSelfTransition('d', Weight.One).AddTransition('c', Weight.One).SetEndWeight(
+                Weight.FromValue(3.0));
+            var automaton = builder.GetAutomaton();
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x => x.WithGroup(3));
+
+            var automatonWithGroup = automaton.WithGroup(3);
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automatonWithGroup,
+                x => x.WithGroupsClear());
+        }
+
 
         #region ToString tests
 
@@ -1094,8 +1179,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString6()
         {
-            StringAutomaton automaton = StringAutomaton.Constant(1.0, DiscreteChar.Lower());
-            automaton.AppendInPlace(StringAutomaton.Constant(2.0));
+            StringAutomaton automaton = StringAutomaton.Constant(1.0, ImmutableDiscreteChar.Lower())
+                .Append(StringAutomaton.Constant(2.0));
             Assert.Equal("?*", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("[a-z]*.*", automaton.ToString(AutomatonFormats.Regexp));
         }
@@ -1108,7 +1193,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ConvertToString7()
         {
             StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "abc");
-            automaton.SetToSum(1.0, automaton, 1.0, automaton);
+            automaton = automaton.Sum(1.0, automaton, 1.0);
             Assert.Equal("abc", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("abc", automaton.ToString(AutomatonFormats.Regexp));
         }
@@ -1121,9 +1206,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString8()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOnElement(1.0, 'a');
-            automaton.AppendInPlace(StringAutomaton.ConstantOnElement(2.0, DiscreteChar.Upper()));
-            automaton.AppendInPlace(StringAutomaton.ConstantOnElement(1.0, 'b'));
+            StringAutomaton automaton = StringAutomaton.ConstantOnElement(1.0, 'a')
+                .Append(StringAutomaton.ConstantOnElement(2.0, ImmutableDiscreteChar.Upper()))
+                .Append(StringAutomaton.ConstantOnElement(1.0, 'b'));
             Assert.Equal("a?b", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("a[A-Z]b", automaton.ToString(AutomatonFormats.Regexp));
         }
@@ -1136,11 +1221,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString9()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOnElement(1.0, DiscreteChar.Digit());
-            automaton.AppendInPlace(StringAutomaton.ConstantOnElement(2.0, DiscreteChar.Upper()));
-            automaton.AppendInPlace(StringAutomaton.Sum(
-                StringAutomaton.ConstantOnElement(1.0, DiscreteChar.Lower()),
-                StringAutomaton.ConstantOnElement(1.0, DiscreteChar.Digit())));
+            StringAutomaton automaton = StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Digit())
+                .Append(StringAutomaton.ConstantOnElement(2.0, ImmutableDiscreteChar.Upper()))
+                .Append(StringAutomaton.Sum(
+                    StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Lower()),
+                    StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Digit())));
             Assert.Equal("???", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("[0-9][A-Z]([a-z]|[0-9])", automaton.ToString(AutomatonFormats.Regexp));
         }
@@ -1152,11 +1237,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString10()
         {
-            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "ab");
-            automaton.AppendInPlace(StringAutomaton.Sum(
-                StringAutomaton.ConstantOn(1.0, "cd"),
-                StringAutomaton.ConstantOn(1.0, "ef"),
-                StringAutomaton.ConstantOn(1.0, string.Empty)));
+            StringAutomaton automaton = StringAutomaton.ConstantOn(1.0, "ab")
+                .Append(StringAutomaton.Sum(
+                    StringAutomaton.ConstantOn(1.0, "cd"),
+                    StringAutomaton.ConstantOn(1.0, "ef"),
+                    StringAutomaton.ConstantOn(1.0, string.Empty)));
             
             Assert.Equal("ab[ef|cd]", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("ab(|ef|cd)", automaton.ToString(AutomatonFormats.Regexp));
@@ -1202,7 +1287,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var automaton = builder.GetAutomaton();
 
-            var distribution = StringDistribution.FromWorkspace(automaton);
+            var distribution = StringDistribution.FromWeightFunction(automaton);
             var regexPattern = distribution.ToRegex();
 
             var inputs = new string[]
@@ -1251,7 +1336,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var automaton = builder.GetAutomaton();
 
-            var distribution = StringDistribution.FromWorkspace(automaton);
+            var distribution = StringDistribution.FromWeightFunction(automaton);
             var regexPattern = distribution.ToRegex();
 
             var inputs = new string[]
@@ -1308,10 +1393,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Equality2()
         {
             StringAutomaton automaton1 =
-                StringAutomaton.Constant(1.5, DiscreteChar.Lower())
-                                       .Sum(StringAutomaton.Constant(0.5, DiscreteChar.Lower()))
+                StringAutomaton.Constant(1.5, ImmutableDiscreteChar.Lower())
+                                       .Sum(StringAutomaton.Constant(0.5, ImmutableDiscreteChar.Lower()))
                                        .Scale(0.75);
-            StringAutomaton automaton2 = StringAutomaton.Constant(1.5, DiscreteChar.Lower());
+            StringAutomaton automaton2 = StringAutomaton.Constant(1.5, ImmutableDiscreteChar.Lower());
             AssertEquals(automaton1, automaton1);
             AssertEquals(automaton2, automaton2);
             AssertEquals(automaton1, automaton2);
@@ -1320,7 +1405,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             AssertEquals(automaton1.Product(automaton2), automaton2.Product(automaton1));
             AssertEquals(automaton1.Sum(automaton2), automaton2.Sum(automaton1));
             AssertNotEquals(automaton1, automaton2.Scale(0.99));
-            AssertNotEquals(automaton1, automaton2.Sum(StringAutomaton.Constant(0.01, DiscreteChar.Lower())));
+            AssertNotEquals(automaton1, automaton2.Sum(StringAutomaton.Constant(0.01, ImmutableDiscreteChar.Lower())));
         }
 
         /// <summary>
@@ -1332,7 +1417,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var builder = new StringAutomaton.Builder();
             builder.Start.SetEndWeight(Weight.One);
-            builder.Start.AddSelfTransition(DiscreteChar.Lower(), Weight.FromLogValue(26 + 1e-3));
+            builder.Start.AddSelfTransition(ImmutableDiscreteChar.Lower(), Weight.FromLogValue(26 + 1e-3));
             var automaton = builder.GetAutomaton();
 
             AssertEquals(automaton, automaton);
@@ -1379,7 +1464,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Equality6()
         {
-            StringAutomaton func1 = StringAutomaton.Constant(1.0, DiscreteChar.OneOf('a', 'b'));
+            StringAutomaton func1 = StringAutomaton.Constant(1.0, ImmutableDiscreteChar.OneOf('a', 'b'));
 
             var func2Builder = new StringAutomaton.Builder();
             func2Builder.Start.AddSelfTransition('a', Weight.One).AddSelfTransition('b', Weight.One).SetEndWeight(Weight.One);
@@ -1396,13 +1481,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Equality7()
         {
             var func1Builder = new StringAutomaton.Builder();
-            func1Builder.Start.AddSelfTransition(DiscreteChar.PointMass('a'), Weight.One).SetEndWeight(Weight.One);
+            func1Builder.Start.AddSelfTransition(ImmutableDiscreteChar.PointMass('a'), Weight.One).SetEndWeight(Weight.One);
             var func1 = func1Builder.GetAutomaton();
 
             var func2Builder = new StringAutomaton.Builder();
             func2Builder.Start
                 .AddEpsilonTransition(Weight.One)
-                .AddTransition(DiscreteChar.PointMass('a'), Weight.One, func2Builder.StartStateIndex)
+                .AddTransition(ImmutableDiscreteChar.PointMass('a'), Weight.One, func2Builder.StartStateIndex)
                 .SetEndWeight(Weight.One);
             var func2 = func2Builder.GetAutomaton();
 
@@ -1433,7 +1518,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 3.0, "adc", "adddc", "ac");
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "adb", "ad", string.Empty);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1457,7 +1542,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 3.0, "adc", "adddc", "ac");
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "adb", "ad", string.Empty);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1480,7 +1565,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 5.0, "adc");
                 StringInferenceTestUtilities.TestValue(automaton, 3.0, "addc", "adddc", "ac");
             
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1507,7 +1592,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 5.0, "xxaa", "xa", "a");
                 StringInferenceTestUtilities.TestValue(automaton, 6.0, "xx", "x", string.Empty);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1542,7 +1627,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 StringInferenceTestUtilities.TestValue(automaton, (1 << AcceptedSequence.Length) + AdditionalSequenceCount, AcceptedSequence);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1572,7 +1657,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 528.0, "aaa");
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "a", "aa", "aaaa", string.Empty);
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1583,8 +1668,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Simplify7()
         {
-            DiscreteChar lowerEnglish = DiscreteChar.UniformInRange('a', 'z');
-            DiscreteChar upperEnglish = DiscreteChar.UniformInRange('A', 'Z');
+            ImmutableDiscreteChar lowerEnglish = ImmutableDiscreteChar.UniformInRange('a', 'z');
+            ImmutableDiscreteChar upperEnglish = ImmutableDiscreteChar.UniformInRange('A', 'Z');
 
             var builder = new StringAutomaton.Builder();
             var branch1 = builder.Start.AddEpsilonTransition(Weight.FromValue(0.5)).AddTransition('a', Weight.FromValue(1.0 / 3.0)).AddTransition('B', Weight.FromValue(1.0 / 4.0));
@@ -1605,7 +1690,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, (24.0 / (26.0 * 26.0)) + (1.0 / 8.0) + (7.0 / 192.0), "aB");
                 StringInferenceTestUtilities.TestValue(automaton, (120.0 / (26.0 * 26.0)) + (72.0 / (26.0 * 26.0 * 26.0)) + (5.0 / 144.0), "aBX");
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1651,7 +1736,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 0.2, "abb");
                 StringInferenceTestUtilities.TestValue(automaton, 0.4 + 0.4, "c");
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
         }
 
@@ -1663,9 +1748,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Simplify9()
         {
             StringAutomaton automaton = StringAutomaton.Sum(
-                StringAutomaton.Constant(1.0, DiscreteChar.PointMass('a')).Append("b"),
+                StringAutomaton.Constant(1.0, ImmutableDiscreteChar.PointMass('a')).Append("b"),
                 StringAutomaton.Empty(),
-                StringAutomaton.Constant(1.0, DiscreteChar.PointMass('b')),
+                StringAutomaton.Constant(1.0, ImmutableDiscreteChar.PointMass('b')),
                 StringAutomaton.ConstantOn(1.0, "abc"),
                 StringAutomaton.ConstantOn(1.0, "abd"),
                 StringAutomaton.ConstantOn(1.0, "ab"));
@@ -1676,8 +1761,37 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 2.0, "ab", "b", string.Empty);
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "a", "aabc", "aabd", "ba", "bc");
 
-                automaton.Simplify();
+                automaton.Simplify(out automaton);
             }
+        }
+
+        /// <summary>
+        /// Tests that the outputs of Simplify and RemoveDeadStates have the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SimplifyPreservesProperties()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start.AddTransition('a', Weight.One).AddTransition('b', Weight.One).SetEndWeight(
+                Weight.FromValue(2.0));
+            builder.Start.AddTransition('a', Weight.One).AddSelfTransition('d', Weight.One).AddTransition('c', Weight.One).SetEndWeight(
+                Weight.FromValue(3.0));
+            var automaton = builder.GetAutomaton();
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x =>
+                {
+                    x.Simplify(out var simplified);
+                    return simplified;
+                });
+
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x => x.RemoveDeadStates());
         }
 
         /// <summary>
@@ -1690,10 +1804,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var builder = new StringAutomaton.Builder();
             // Add 2 identical transitions from start state to second
-            builder.Start.AddTransition(DiscreteChar.Any(), Weight.FromLogValue(1e5));
-            builder.Start.AddTransition(DiscreteChar.Any(), Weight.FromLogValue(1e5), 1);
+            builder.Start.AddTransition(ImmutableDiscreteChar.Any(), Weight.FromLogValue(1e5));
+            builder.Start.AddTransition(ImmutableDiscreteChar.Any(), Weight.FromLogValue(1e5), 1);
             var automaton = builder.GetAutomaton();
-            automaton.Simplify();
+            automaton.Simplify(out automaton);
         }
 
         #endregion
@@ -1723,7 +1837,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 24, "ab");
                 StringInferenceTestUtilities.TestValue(automaton, 210, "ac");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -1738,8 +1852,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Determinize2()
         {
             var builder = new StringAutomaton.Builder();
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
             builder.Start.SetEndWeight(Weight.FromValue(17));
 
             var automaton = builder.GetAutomaton();
@@ -1753,7 +1867,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 24 / 26.0, "ab", "nb", "zb");
                 StringInferenceTestUtilities.TestValue(automaton, 210 / 26.0, "ac", "nc", "zc");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -1768,9 +1882,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Determinize3()
         {
             var builder = new StringAutomaton.Builder();
-            builder.Start.AddTransition(DiscreteChar.Uniform(), Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('x', 'z'), Weight.FromValue(8)).AddTransition('d', Weight.FromValue(9)).SetEndWeight(Weight.FromValue(10));
+            builder.Start.AddTransition(ImmutableDiscreteChar.Uniform(), Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('x', 'z'), Weight.FromValue(8)).AddTransition('d', Weight.FromValue(9)).SetEndWeight(Weight.FromValue(10));
             builder.Start.SetEndWeight(Weight.FromValue(17));
 
             var automaton = builder.GetAutomaton();
@@ -1788,7 +1902,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(
                     automaton, 0.0, (char)('a' - 1) + "c", (char)('z' + 1) + "c", "wd", (char)('z' + 1) + "d");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -1820,7 +1934,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 105, "abd");
                 StringInferenceTestUtilities.TestValue(automaton, 52.5, "abbd");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -1849,7 +1963,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 117, "abc");
                 StringInferenceTestUtilities.TestValue(automaton, 58.5, "abbc");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -1864,11 +1978,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Determinize6()
         {
             var builder = new StringAutomaton.Builder();
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'c'), Weight.FromValue(2)).SetEndWeight(Weight.FromValue(3.0));
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('b', 'c'), Weight.FromValue(4)).SetEndWeight(Weight.FromValue(5.0));
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('b', 'd'), Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7.0));
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('d', 'd'), Weight.FromValue(8)).SetEndWeight(Weight.FromValue(9.0));
-            builder.Start.AddTransition(DiscreteChar.UniformInRange('d', 'e'), Weight.FromValue(10)).SetEndWeight(Weight.FromValue(11.0));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('a', 'c'), Weight.FromValue(2)).SetEndWeight(Weight.FromValue(3.0));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('b', 'c'), Weight.FromValue(4)).SetEndWeight(Weight.FromValue(5.0));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('b', 'd'), Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7.0));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('d', 'd'), Weight.FromValue(8)).SetEndWeight(Weight.FromValue(9.0));
+            builder.Start.AddTransition(ImmutableDiscreteChar.UniformInRange('d', 'e'), Weight.FromValue(10)).SetEndWeight(Weight.FromValue(11.0));
 
             var automaton = builder.GetAutomaton();
 
@@ -1883,7 +1997,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 55, "e");
                 StringInferenceTestUtilities.TestValue(automaton, 0, ((char)('a' - 1)).ToString(), "f");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -1904,7 +2018,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder[0].AddTransition('a', Weight.FromValue(2), 2);
             builder[0].AddTransition('b', Weight.FromValue(1), 2);
             builder[1].AddTransition('b', Weight.FromValue(4), 3);
-            builder[2].AddTransition(DiscreteChar.UniformOver('b', 'c'), Weight.FromValue(10), 3);
+            builder[2].AddTransition(ImmutableDiscreteChar.UniformOver('b', 'c'), Weight.FromValue(10), 3);
             builder[2].AddTransition('b', Weight.FromValue(6), 4);
             builder[3].AddTransition('c', Weight.FromValue(7), 4);
 
@@ -1926,7 +2040,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 10, "ac");
                 StringInferenceTestUtilities.TestValue(automaton, 308, "abc");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -1946,8 +2060,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             const int AcceptedSequenceLength = 20;
             for (int i = 0; i < AcceptedSequenceLength; ++i)
             {
-                var nextState = state.AddTransition(DiscreteChar.Uniform(), Weight.One);
-                state.AddTransition(DiscreteChar.Uniform(), Weight.One, nextState.Index);
+                var nextState = state.AddTransition(ImmutableDiscreteChar.Uniform(), Weight.One);
+                state.AddTransition(ImmutableDiscreteChar.Uniform(), Weight.One, nextState.Index);
                 state = nextState;
             }
 
@@ -1964,7 +2078,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestLogValue(automaton, logValue, new string('a', AcceptedSequenceLength), new string('b', AcceptedSequenceLength));
                 StringInferenceTestUtilities.TestValue(automaton, 0, "a");
                 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -2000,7 +2114,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, TransitionsPerCharacter, "a", "b", "d", "e", "g");
                 StringInferenceTestUtilities.TestValue(automaton, 0, "c", "f", "h", "i");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
 
                 Assert.True(automaton.IsDeterministic());
@@ -2021,7 +2135,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder[0].AddTransition('a', Weight.Infinity, 2);
             builder[0].AddTransition('b', Weight.FromValue(1), 2);
             builder[1].AddTransition('b', Weight.FromValue(4), 3);
-            builder[2].AddTransition(DiscreteChar.UniformOver('b', 'c'), Weight.FromValue(10), 3);
+            builder[2].AddTransition(ImmutableDiscreteChar.UniformOver('b', 'c'), Weight.FromValue(10), 3);
             builder[2].AddTransition('b', Weight.FromValue(6), 4);
             builder[3].AddTransition('c', Weight.FromValue(7), 4);
 
@@ -2042,7 +2156,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 17, "bb");
                 Assert.True(double.IsInfinity(automaton.GetLogValue("ac")));
                 Assert.True(double.IsInfinity(automaton.GetLogValue("abc")));
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.True(determinized);
                 Assert.True(automaton.IsDeterministic());
             }
@@ -2058,17 +2172,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             var builder = new StringAutomaton.Builder();
 
             builder.Start
-                .AddTransition(DiscreteChar.InRange('a', 'c'), Weight.FromLogValue(-1000))
-                .AddTransition(DiscreteChar.PointMass('x'), Weight.One)
+                .AddTransition(ImmutableDiscreteChar.InRange('a', 'c'), Weight.FromLogValue(-1000))
+                .AddTransition(ImmutableDiscreteChar.PointMass('x'), Weight.One)
                 .SetEndWeight(Weight.One);
             builder.Start
-                .AddTransition(DiscreteChar.PointMass('b'), Weight.One)
+                .AddTransition(ImmutableDiscreteChar.PointMass('b'), Weight.One)
                 .SetEndWeight(Weight.One);
 
             var automaton = builder.GetAutomaton();
 
             Assert.False(automaton.IsDeterministic());
-            var determinized = automaton.TryDeterminize();
+            var determinized = automaton.TryDeterminize(out automaton);
 
             Assert.True(determinized);
             Assert.True(automaton.IsDeterministic());
@@ -2087,19 +2201,19 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var builder = new StringAutomaton.Builder();
             var a = builder.Start
-                .AddTransition(DiscreteChar.PointMass('A'), Weight.FromLogValue(1e-8));
-            a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(-1e-8))
+                .AddTransition(ImmutableDiscreteChar.PointMass('A'), Weight.One);
+            a.AddTransition(ImmutableDiscreteChar.PointMass('B'), Weight.FromLogValue(1e-8))
                 .SetEndWeight(Weight.One);
-            a.AddTransition(DiscreteChar.PointMass('B'), Weight.FromLogValue(1e5))
-                .AddTransition(DiscreteChar.PointMass('C'), Weight.One)
+            a.AddTransition(ImmutableDiscreteChar.PointMass('B'), Weight.FromLogValue(1e5))
+                .AddTransition(ImmutableDiscreteChar.PointMass('C'), Weight.One)
                 .SetEndWeight(Weight.One);
 
             var automaton = builder.GetAutomaton();
 
-            Assert.Equal(0, automaton.GetLogValue("AB"));
-            Assert.True(automaton.TryDeterminize());
+            Assert.Equal(1e-8, automaton.GetLogValue("AB"));
+            Assert.True(automaton.TryDeterminize(out automaton));
             // Fails due to round-off errors introduced by determinization
-            Assert.Equal(0, automaton.GetLogValue("AB"));
+            Assert.Equal(1e-8, automaton.GetLogValue("AB"));
         }
 
         /// <summary>
@@ -2124,11 +2238,49 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringInferenceTestUtilities.TestValue(automaton, 12 + 21, "abc");
                 StringInferenceTestUtilities.TestValue(automaton, 6 + 2.1, "abbc");
 
-                bool determinized = automaton.TryDeterminize();
+                bool determinized = automaton.TryDeterminize(out automaton);
                 Assert.False(determinized);
 
                 Assert.False(automaton.IsDeterministic());
             }
+        }
+
+        /// <summary>
+        /// Tests that the output of TryDeterminize has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as the input.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void DeterminizationPreservesProperties()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start.AddTransition('a', Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
+            builder.Start.AddTransition('a', Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
+            builder.Start.SetEndWeight(Weight.FromValue(17));
+
+            var determinizableAutomaton = builder.GetAutomaton();
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                determinizableAutomaton,
+                x =>
+                {
+                    x.TryDeterminize(out var determinized);
+                    return determinized;
+                });
+
+            builder = new StringAutomaton.Builder();
+            builder.Start.AddTransition('a', Weight.FromValue(2)).AddSelfTransition('b', Weight.FromValue(0.5)).AddTransition('c', Weight.FromValue(3.0)).SetEndWeight(Weight.FromValue(4));
+            builder.Start.AddTransition('a', Weight.FromValue(5)).AddSelfTransition('b', Weight.FromValue(0.1)).AddTransition('c', Weight.FromValue(6.0)).SetEndWeight(Weight.FromValue(7));
+
+            var nonDeterminizableAutomaton = builder.GetAutomaton();
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                nonDeterminizableAutomaton,
+                x =>
+                {
+                    x.TryDeterminize(out var notDeterminized);
+                    return notDeterminized;
+                });
         }
 
         /// <summary>
@@ -2144,79 +2296,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(6, CountStates("a", "ba", "bb", "d"));
         }
 
-        //[Fact]
-        [Trait("Category", "StringInference")]
-        internal void DeterminizeList()
-        {
-            var builder = new Automaton<List<string>, string, StringDistribution, ListManipulator<List<string>, string>, ListAutomaton<string, StringDistribution>>.Builder();
-
-            const int TransitionsPerCharacter = 3;
-            for (int i = 0; i < TransitionsPerCharacter; ++i)
-            {
-                builder.Start.AddTransition("a", Weight.One).SetEndWeight(Weight.One);
-                builder.Start.AddTransition("b", Weight.One).SetEndWeight(Weight.One);
-                builder.Start.AddTransition("d", Weight.One).SetEndWeight(Weight.One);
-                builder.Start.AddTransition("e", Weight.One).SetEndWeight(Weight.One);
-                builder.Start.AddTransition("g", Weight.One).SetEndWeight(Weight.One);
-            }
-
-            var automaton = builder.GetAutomaton();
-
-            Assert.False(automaton.IsDeterministic() || TransitionsPerCharacter <= 1);
-
-            // Test: original automaton, determinized automaton, determinization of the determinized automaton (shouldn't break anything)
-            for (int i = 0; i < 3; ++i)
-            {
-                StringInferenceTestUtilities.TestValue(automaton, TransitionsPerCharacter, new List<string>{"a"}, new List<string>{"b"});
-                StringInferenceTestUtilities.TestValue(automaton, 0, new List<string>{ "c"});
-
-                Console.WriteLine("automaton=" +automaton.ToString(AutomatonFormats.Regexp)+" "+automaton.States.Count);
-                bool determinized = automaton.TryDeterminize();
-                
-                Assert.True(determinized);
-
-                Assert.True(automaton.IsDeterministic());
-            }
-        }
-
-
-        //[Fact]
-        [Trait("Category", "StringInference")]
-        internal void DeterminizeList2()
-        {
-            var builder = new Automaton<List<string>, string, StringDistribution, ListManipulator<List<string>, string>, ListAutomaton<string, StringDistribution>>.Builder();
-            var unif = StringDistribution.Uniform();
-            var scaledUniform = StringDistribution.FromWorkspace(unif.GetWorkspaceOrPoint().Scale(1.0 / 1000));
-   
-            const int TransitionsPerCharacter = 3;
-            for (int i = 0; i < TransitionsPerCharacter; ++i)
-            {
-                builder.Start.AddTransition("a", Weight.One).SetEndWeight(Weight.One);
-                builder.Start.AddTransition("b", Weight.One).SetEndWeight(Weight.One);
-                builder.Start.AddTransition("d", Weight.One).SetEndWeight(Weight.One);
-                builder.Start.AddTransition("e", Weight.One).SetEndWeight(Weight.One);
-                builder.Start.AddTransition(scaledUniform, Weight.One).SetEndWeight(Weight.One);
-            }
-
-            var automaton = builder.GetAutomaton();
-
-            Assert.False(automaton.IsDeterministic() || TransitionsPerCharacter <= 1);
-
-            // Test: original automaton, determinized automaton, determinization of the determinized automaton (shouldn't break anything)
-            for (int i = 0; i < 3; ++i)
-            {
-               // StringInferenceTestUtilities.TestValue(automaton, TransitionsPerCharacter, new List<string> { "a" }, new List<string> { "b" });
-                //StringInferenceTestUtilities.TestValue(automaton, 0, new List<string> { "c" });
-
-                Console.WriteLine("automaton=" + automaton.ToString(AutomatonFormats.Regexp) + " " + automaton.States.Count);
-                bool determinized = automaton.TryDeterminize();
-
-                //Assert.True(determinized);
-
-                //Assert.True(automaton.IsDeterministic());
-            }
-        }
-
         /// <summary>
         /// Tests enumeration of support.
         /// </summary>
@@ -2227,17 +2306,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             var builder = new StringAutomaton.Builder();
             builder.AddStates(10);
 
-            builder[0].AddTransition(DiscreteChar.UniformOver('a', 'b'), Weight.FromValue(1), 1);
-            builder[0].AddTransition(DiscreteChar.UniformOver('c', 'd'), Weight.FromValue(1), 2);
+            builder[0].AddTransition(ImmutableDiscreteChar.UniformOver('a', 'b'), Weight.FromValue(1), 1);
+            builder[0].AddTransition(ImmutableDiscreteChar.UniformOver('c', 'd'), Weight.FromValue(1), 2);
             builder[0].AddEpsilonTransition(Weight.FromValue(1), 7);
-            builder[0].AddTransition(DiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 8);
+            builder[0].AddTransition(ImmutableDiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 8);
 
-            builder[2].AddTransition(DiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 3);
-            builder[2].AddTransition(DiscreteChar.UniformOver('g', 'h'), Weight.FromValue(1), 4);
+            builder[2].AddTransition(ImmutableDiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 3);
+            builder[2].AddTransition(ImmutableDiscreteChar.UniformOver('g', 'h'), Weight.FromValue(1), 4);
             builder[2].AddEpsilonTransition(Weight.FromValue(1), 4);
-            builder[4].AddTransition(DiscreteChar.UniformOver('i', 'j'), Weight.FromValue(1), 5);
-            builder[4].AddTransition(DiscreteChar.UniformOver('k', 'l'), Weight.FromValue(1), 5);
-            builder[8].AddTransition(DiscreteChar.UniformOver('g', 'h'), Weight.FromValue(0), 9);
+            builder[4].AddTransition(ImmutableDiscreteChar.UniformOver('i', 'j'), Weight.FromValue(1), 5);
+            builder[4].AddTransition(ImmutableDiscreteChar.UniformOver('k', 'l'), Weight.FromValue(1), 5);
+            builder[8].AddTransition(ImmutableDiscreteChar.UniformOver('g', 'h'), Weight.FromValue(0), 9);
             builder[8].AddEpsilonTransition(Weight.FromValue(1), 10);
 
             builder[1].SetEndWeight(Weight.FromValue(1));
@@ -2265,10 +2344,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 "e", "f",
             };
 
-            var calculatedSupport1 = new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: false));
+            var calculatedSupport1 = new HashSet<string>(automaton.EnumerateSupport());
             Assert.True(calculatedSupport1.SetEquals(expectedSupport));
 
-            var calculatedSupport2 = new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: true));
+            automaton.TryDeterminize(out automaton);
+            var calculatedSupport2 = new HashSet<string>(automaton.EnumerateSupport());
             Assert.True(calculatedSupport2.SetEquals(expectedSupport));
         }
 
@@ -2315,12 +2395,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             var builder = new StringAutomaton.Builder();
             builder.AddStates(6);
 
-            builder[0].AddTransition(DiscreteChar.UniformOver('a', 'b'), Weight.FromValue(1), 1);
-            builder[0].AddTransition(DiscreteChar.UniformOver('c', 'd'), Weight.FromValue(1), 2);
-            builder[2].AddTransition(DiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 3);
-            builder[2].AddTransition(DiscreteChar.UniformOver('g', 'h'), Weight.FromValue(1), 4);
-            builder[4].AddTransition(DiscreteChar.UniformOver('i', 'j'), Weight.FromValue(1), 5);
-            builder[4].AddTransition(DiscreteChar.UniformOver('k', 'l'), Weight.FromValue(1), 5);
+            builder[0].AddTransition(ImmutableDiscreteChar.UniformOver('a', 'b'), Weight.FromValue(1), 1);
+            builder[0].AddTransition(ImmutableDiscreteChar.UniformOver('c', 'd'), Weight.FromValue(1), 2);
+            builder[2].AddTransition(ImmutableDiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 3);
+            builder[2].AddTransition(ImmutableDiscreteChar.UniformOver('g', 'h'), Weight.FromValue(1), 4);
+            builder[4].AddTransition(ImmutableDiscreteChar.UniformOver('i', 'j'), Weight.FromValue(1), 5);
+            builder[4].AddTransition(ImmutableDiscreteChar.UniformOver('k', 'l'), Weight.FromValue(1), 5);
 
             builder[1].SetEndWeight(Weight.FromValue(1));
             builder[3].SetEndWeight(Weight.FromValue(1));
@@ -2374,97 +2454,97 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         #endregion
 
-        #region SetToConstantOnSupportOf
+        #region ConstantOnSupport
 
         /// <summary>
-        /// Tests setting an automaton to be constant on the support of another automaton.
+        /// Tests creating an automaton constant on the support of another automaton.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantOnSupportOf1()
+        public void ConstantOnSupport1()
         {
             StringAutomaton nonUniform = StringAutomaton.ConstantOn(1.0, "a", "a", "a", "b", "b", "c");
             StringAutomaton uniform = StringAutomaton.ConstantOn(1.0, "a", "b", "c");
 
             Assert.False(nonUniform.Equals(uniform));
 
-            nonUniform.SetToConstantOnSupportOf(1.0, nonUniform);
+            nonUniform = nonUniform.ConstantOnSupport(1.0);
 
             Assert.True(nonUniform.Equals(uniform));
         }
 
         /// <summary>
-        /// Tests setting an automaton to be constant on the support of another automaton.
+        /// Tests creating an automaton constant on the support of another automaton.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantOnSupportOf2()
+        public void ConstantOnSupport2()
         {
-            StringAutomaton nonUniform = StringAutomaton.ConstantOn(2.0, string.Empty, "a", "aa");
-            nonUniform.AppendInPlace(StringAutomaton.ConstantOn(3.0, string.Empty, "a", "aa"));
-            nonUniform = nonUniform.Sum(StringAutomaton.ConstantOn(5.0, string.Empty, "a", "aa"));
+            StringAutomaton nonUniform = StringAutomaton.ConstantOn(2.0, string.Empty, "a", "aa")
+                .Append(StringAutomaton.ConstantOn(3.0, string.Empty, "a", "aa"))
+                .Sum(StringAutomaton.ConstantOn(5.0, string.Empty, "a", "aa"));
 
             StringAutomaton uniform = StringAutomaton.ConstantOn(1.0, string.Empty, "a", "aa", "aaa", "aaaa");
 
             Assert.False(nonUniform.Equals(uniform));
 
-            nonUniform.SetToConstantOnSupportOf(1.0, nonUniform);
+            nonUniform = nonUniform.ConstantOnSupport(1.0);
 
             Assert.True(nonUniform.Equals(uniform));
         }
 
         /// <summary>
-        /// Tests setting an automaton to be constant on the support of another automaton.
+        /// Tests creating an automaton constant on the support of another automaton.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantOnSupportOf3()
+        public void ConstantOnSupport3()
         {
-            StringAutomaton constantOnChar = StringAutomaton.ConstantOnElement(1.0, DiscreteChar.Lower());
+            StringAutomaton constantOnChar = StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Lower());
             
-            StringAutomaton nonUniform = StringAutomaton.Repeat(constantOnChar, 1, 3);
-            nonUniform = nonUniform.Sum(StringAutomaton.Repeat(constantOnChar, 0, 2));
-            nonUniform = nonUniform.Sum(StringAutomaton.Repeat(StringAutomaton.ConstantOn(1.0, "a"), 0, 3));
+            StringAutomaton nonUniform = StringAutomaton.Repeat(constantOnChar, 1, 3)
+                .Sum(StringAutomaton.Repeat(constantOnChar, 0, 2))
+                .Sum(StringAutomaton.Repeat(StringAutomaton.ConstantOn(1.0, "a"), 0, 3));
             nonUniform = nonUniform.Product(nonUniform);
 
             StringAutomaton uniform = StringAutomaton.Repeat(constantOnChar, 0, 3);
 
             Assert.False(nonUniform.Equals(uniform));
 
-            nonUniform.SetToConstantOnSupportOf(1.0, nonUniform);
+            nonUniform = nonUniform.ConstantOnSupport(1.0);
 
             Assert.True(nonUniform.Equals(uniform));
         }
 
         /// <summary>
-        /// Tests that SetToConstantSupportOf() Doesn't throw low probability transitions out.
+        /// Tests that ConstantSupport() Doesn't throw low probability transitions out.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantSupportOfWithLowProbabilityTransition1()
+        public void ConstantSupportWithLowProbabilityTransition1()
         {
             var builder = new StringAutomaton.Builder(1);
             builder.Start
                 .AddTransition('a', Weight.FromValue(5e-40))
                 .SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
-            automaton.SetToConstantOnSupportOfLog(0.0, automaton);
+            automaton = automaton.ConstantOnSupportLog(0.0);
             Assert.Equal(new[] { "a" }, automaton.EnumerateSupport().ToArray());
         }
 
         /// <summary>
-        /// Tests that SetToConstantSupportOf() Doesn't throw low probability transitions out.
+        /// Tests that ConstantSupport() Doesn't throw low probability transitions out.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void SetToConstantSupportOfWithMultipleLowProbabilityTransitions()
+        public void ConstantSupportWithMultipleLowProbabilityTransitions()
         {
             var builder = new StringAutomaton.Builder(1);
             builder.Start
-                .AddTransition(DiscreteChar.OneOf('a', 'b'), Weight.One)
+                .AddTransition(ImmutableDiscreteChar.OneOf('a', 'b'), Weight.One)
                 .SetEndWeight(Weight.One);
             builder.Start
-                .AddTransition(DiscreteChar.OneOf('a', 'b'), Weight.FromLogValue(-1000))
+                .AddTransition(ImmutableDiscreteChar.OneOf('a', 'b'), Weight.FromLogValue(-1000))
                 .AddTransition('c', Weight.One)
                 .SetEndWeight(Weight.One);
             builder.Start
@@ -2472,8 +2552,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 .SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
             var tmp = automaton.Clone();
-            tmp.TryDeterminize();
-            automaton.SetToConstantOnSupportOfLog(0.0, automaton);
+            tmp.TryDeterminize(out tmp);
+            automaton = automaton.ConstantOnSupportLog(0.0);
             var support = automaton.EnumerateSupport().OrderBy(s => s).ToArray();
             Assert.Equal(new[] {"a", "ac", "b", "bc", "c"}, support);
         }
@@ -2492,7 +2572,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton automatonBefore = automaton.Clone();
             Assert.Equal(zeroNormalizer ? double.NegativeInfinity : double.PositiveInfinity, automaton.GetLogNormalizer());
-            Assert.False(automaton.TryNormalizeValues());
+            Assert.False(automaton.TryNormalizeValues(out automaton));
             Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues());
             Assert.Equal(automaton, automatonBefore); // Failed normalization should not affect the automaton
         }
@@ -2527,8 +2607,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <returns>The number of states in the determinized automaton.</returns>
         private static int CountStates(params string[] values)
         {
-            var workspace = Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromLogValues(values.Select(v => new KeyValuePair<string, double>(v, 0.0)));
-            workspace.TryDeterminize();
+            var workspace = Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.FromLogValues(values.Select(v => new KeyValuePair<string, double>(v, 0.0)));
+            workspace.TryDeterminize(out workspace);
             return workspace.States.Count;
         }
         

@@ -30,6 +30,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             protected static TSequenceManipulator SequenceManipulator =>
                     Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.SequenceManipulator;
 
+            protected static TElementDistribution ElementDistributionFactory =>
+                    Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.ElementDistributionFactory;
+
             [DataMember]
             // Should only ever be set in factory methods.
             // TODO: use truly immutable storage,
@@ -109,15 +112,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public IReadOnlyDictionary<TSequence, Weight> Dictionary => dictionary;
 
+            /// <inheritdoc/>
             public TSequence Point =>
                 Dictionary.Count == 1 ? Dictionary.Single().Key : throw new InvalidOperationException("This weight function is zero everywhere or is non-zero on more than one sequence.");
 
+            /// <inheritdoc/>
             public bool IsPointMass => Dictionary.Count == 1;
 
+            /// <inheritdoc/>
             public bool UsesAutomatonRepresentation => false;
 
+            /// <inheritdoc/>
             public bool UsesGroups => false;
 
+            /// <inheritdoc/>
             public virtual TAutomaton AsAutomaton()
             {
                 var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>.Builder();
@@ -135,14 +143,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return result.GetAutomaton();
             }
 
-            public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
+            /// <inheritdoc/>
+            public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000)
             {
                 if (maxCount < Dictionary.Count)
                     throw new AutomatonEnumerationCountException(maxCount);
                 return Dictionary.Keys;
             }
 
-            public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
+            /// <inheritdoc/>
+            public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result)
             {
                 if (maxCount < Dictionary.Count)
                 {
@@ -153,6 +163,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return true;
             }
 
+            /// <inheritdoc/>
             public TThis Repeat(int minTimes = 1, int? maxTimes = null)
             {
                 Argument.CheckIfNotNull(maxTimes, nameof(maxTimes), "Can not represent unlimited repetitions as a finite dictionary.");
@@ -205,12 +216,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromWeights(resultList);
             }
 
+            /// <inheritdoc/>
             public TThis ScaleLog(double logScale)
             {
                 var scale = Weight.FromLogValue(logScale);
                 return FromDistinctWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * scale)));
             }
 
+            /// <inheritdoc/>
             public Dictionary<int, TThis> GetGroups() => new Dictionary<int, TThis>();
 
             /// <summary>
@@ -245,8 +258,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return result;
             }
 
+            /// <inheritdoc/>
             public double MaxDiff(TThis that) => Math.Exp(GetLogSimilarity(that));
 
+            /// <inheritdoc/>
             public virtual bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)
             {
                 double logNormalizerLocal = GetLogNormalizer();
@@ -265,6 +280,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return true;
             }
 
+            /// <inheritdoc/>
             public double GetLogNormalizer()
             {
                 if (Dictionary == null || Dictionary.Count == 0)
@@ -314,7 +330,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             public IEnumerable<Tuple<List<TElementDistribution>, double>> EnumeratePaths() =>
-                Dictionary.Select(kvp => new Tuple<List<TElementDistribution>, double>(kvp.Key.Select(el => new TElementDistribution { Point = el }).ToList(), kvp.Value.LogValue));
+                Dictionary.Select(kvp => new Tuple<List<TElementDistribution>, double>(kvp.Key.Select(el => ElementDistributionFactory.CreatePointMass(el)).ToList(), kvp.Value.LogValue));
 
             /// <summary>
             /// Replaces the internal sequence to weight dictionary with a new one using the supplied <paramref name="sequenceWeightPairs"/>.
@@ -357,6 +373,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            /// <inheritdoc/>
             public double GetLogValue(TSequence sequence)
             {
                 if (Dictionary.TryGetValue(sequence, out Weight prob))
@@ -365,12 +382,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return double.NegativeInfinity;
             }
 
+            /// <inheritdoc/>
             public bool IsZero() => Dictionary.All(kvp => kvp.Value.IsZero);
 
+            /// <inheritdoc/>
             public bool HasGroup(int group) => false;
 
+            /// <inheritdoc/>
             public TThis NormalizeStructure() => Dictionary.Values.Any(val => val.IsZero) ? FromDistinctWeights(Dictionary.Where(kvp => !kvp.Value.IsZero)) : (TThis)this;
 
+            /// <inheritdoc/>
             public TThis Append(TSequence sequence, int group = 0)
             {
                 Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
@@ -378,6 +399,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromDistinctWeights(Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, sequence), kvp.Value)));
             }
 
+            /// <inheritdoc/>
             public TThis Append(TThis weightFunction, int group = 0)
             {
                 Argument.CheckIfValid(group == 0, nameof(group), "Groups are not supported.");
@@ -385,18 +407,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromWeights(Dictionary.SelectMany(kvp => weightFunction.Dictionary.Select(skvp => new KeyValuePair<TSequence, Weight>(SequenceManipulator.Concat(kvp.Key, skvp.Key), kvp.Value * skvp.Value))));
             }
 
+            /// <inheritdoc/>
             public TThis Sum(TThis weightFunction) =>
                 FromWeights(Dictionary.Concat(weightFunction.Dictionary));
 
-            public TThis Sum(double weight1, double weight2, TThis weightFunction)
+            /// <inheritdoc/>
+            public TThis Sum(double weight1, TThis weightFunction, double weight2)
             {
                 Argument.CheckIfInRange(weight1 >= 0, nameof(weight1), "Negative weights are not supported.");
                 Argument.CheckIfInRange(weight2 >= 0, nameof(weight2), "Negative weights are not supported.");
 
-                return SumLog(Math.Log(weight1), Math.Log(weight2), weightFunction);
+                return SumLog(Math.Log(weight1), weightFunction, Math.Log(weight2));
             }
 
-            public TThis SumLog(double logWeight1, double logWeight2, TThis weightFunction)
+            /// <inheritdoc/>
+            public TThis SumLog(double logWeight1, TThis weightFunction, double logWeight2)
             {
                 var scale1 = Weight.FromLogValue(logWeight1);
                 var scale2 = Weight.FromLogValue(logWeight2);
@@ -406,6 +431,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     .Concat(weightFunction.Dictionary.Select(kvp => new KeyValuePair<TSequence, Weight>(kvp.Key, kvp.Value * scale2))));
             }
 
+            /// <inheritdoc/>
             public virtual TThis Product(TThis weightFunction)
             {
                 IReadOnlyDictionary<TSequence, Weight> dict1, dict2;
@@ -427,8 +453,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return FromDistinctWeights(resultList);
             }
 
-            public TThis Clone() => (TThis)this; // This type is immutable.
-
+            /// <inheritdoc/>
             public bool Equals(TThis other)
             {
                 if (other == null || other.Dictionary.Count != Dictionary.Count)
@@ -440,6 +465,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return logSimilarity < LogSimilarityThreshold;
             }
 
+            /// <inheritdoc/>
             public override bool Equals(object obj)
             {
                 if (obj == null || typeof(TThis) != obj.GetType())
@@ -475,7 +501,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     sb.Append(prefix);
                     foreach (var element in sequence)
-                        appendElement(new TElementDistribution() { Point = element }, sb);
+                        appendElement(ElementDistributionFactory.CreatePointMass(element), sb);
 
                     prefix = "|";
                 }
@@ -495,11 +521,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Experimental)]
-    public class StringDictionaryWeightFunction : WeightFunctions<string, char, DiscreteChar, StringManipulator, StringAutomaton>.DictionaryWeightFunction<StringDictionaryWeightFunction>
+    public class StringDictionaryWeightFunction : WeightFunctions<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.DictionaryWeightFunction<StringDictionaryWeightFunction>
     {
         public StringDictionaryWeightFunction() : base(new SortedList<string, Weight>(StringComparer.Ordinal)) { }
         private StringDictionaryWeightFunction(SortedList<string, Weight> sortedList) : base(sortedList) { }
 
+        /// <inheritdoc/>
         protected override void SetWeights(IEnumerable<KeyValuePair<string, Weight>> sequenceWeightPairs)
         {
             var newDictionary = new SortedList<string, Weight>(StringComparer.Ordinal);
@@ -507,12 +534,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             dictionary = newDictionary;
         }
 
+        /// <inheritdoc/>
         protected override void SetDistinctWeights(IEnumerable<KeyValuePair<string, Weight>> sequenceWeightPairs)
         {
             var dict = sequenceWeightPairs as IDictionary<string, Weight> ?? sequenceWeightPairs.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             dictionary = new SortedList<string, Weight>(dict, StringComparer.Ordinal);
         }
 
+        /// <inheritdoc/>
         public override StringDictionaryWeightFunction Product(StringDictionaryWeightFunction weightFunction)
         {
             var dict1 = (SortedList<string, Weight>)Dictionary;
@@ -538,6 +567,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return new StringDictionaryWeightFunction(resultList);
         }
 
+        /// <inheritdoc/>
         protected override double GetLogNormalizerOfProduct(StringDictionaryWeightFunction weightFunction)
         {
             var dict1 = (SortedList<string, Weight>)Dictionary;
@@ -572,11 +602,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             var dict = (SortedList<string, Weight>)Dictionary;
             if (dict.Count == 0)
-                return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Zero();
+                return Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.Zero();
             if (dict.Count == 1)
-                return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.ConstantOnLog(dict.Values[0].LogValue, dict.Keys[0]);
+                return Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.ConstantOnLog(dict.Values[0].LogValue, dict.Keys[0]);
 
-            var result = new Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder();
+            var result = new Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.Builder();
             var end = result
                 .AddState()
                 .SetEndWeight(Weight.One);
@@ -639,7 +669,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     var distr = destStateAndDistr.Value;
                     distr.Sort(new Comparison<(char character, Weight weight)>((x, y) => x.character.CompareTo(y.character)));
-                    var ranges = new List<DiscreteChar.CharRange>(distr.Count);
+                    var ranges = new List<ImmutableDiscreteChar.CharRange>(distr.Count);
                     int currentStart = distr[0].character;
                     int currentEnd = currentStart + 1;
                     Weight currentWeight = distr[0].weight;
@@ -650,19 +680,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             ++currentEnd;
                         else
                         {
-                            ranges.Add(new DiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
+                            ranges.Add(new ImmutableDiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
                             currentStart = character;
                             currentEnd = currentStart + 1;
                             currentWeight = weight;
                         }
                     }
-                    ranges.Add(new DiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
+                    ranges.Add(new ImmutableDiscreteChar.CharRange(currentStart, currentEnd, currentWeight));
                     var weightNormalizer = Weight.FromLogValue(MMath.LogSumExp(ranges.Select(r => r.Probability.LogValue + Math.Log(r.EndExclusive - r.StartInclusive))));
-                    currentState.AddTransition(new Collections.Option<DiscreteChar>(DiscreteChar.Create(ranges)), weightNormalizer, destStateAndDistr.Key);
+                    currentState.AddTransition(new Collections.Option<ImmutableDiscreteChar>(ImmutableDiscreteChar.Create(ranges)), weightNormalizer, destStateAndDistr.Key);
                 }
             }
 
-            return Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.FromData(result.GetData(true));
+            return Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.FromData(result.GetData(true));
 
             int GetSharedPrefixLength(string x, string y)
             {
@@ -696,7 +726,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // Returns the index of the first string that doesn't share at least (currentSharedPrefixLength + 1) first chars with dict.Keys[startIdx].
             // If that index lies within the batch of strings being processed, i.e. sharing a prefix of length currentSharedPrefixLength,
             // this function should then be called again for that index.
-            int ProcessPrefixes(int startIdx, Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, int currentSharedPrefixLength, Weight weightNormalizer)
+            int ProcessPrefixes(int startIdx, Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, int currentSharedPrefixLength, Weight weightNormalizer)
             {
                 int nextStartIdx = startIdx + 1; // Starting index of the next batch
                 int nextSharedPrefixLength = int.MaxValue; // Length of the prefix shared by all string in the current batch
@@ -802,7 +832,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return firstStateOfSuffixSharedWithNextIdx;
             }
 
-            Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder AddOrPrepareForMergeTransition(Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, char transitionChar, Weight weight, int destinationStateIndex)
+            Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder AddOrPrepareForMergeTransition(Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.Builder.StateBuilder currentState, char transitionChar, Weight weight, int destinationStateIndex)
             {
                 if (transitionsToMerge.TryGetValue(currentState.Index, out var stateDict))
                 {
@@ -858,7 +888,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             ListAutomaton<TList, TElement, TElementDistribution>>
         .DictionaryWeightFunction<ListDictionaryWeightFunction<TList, TElement, TElementDistribution>>
         where TList : class, IList<TElement>, new()
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, Sampleable<TElement>, new()
     {
     }
 
@@ -879,7 +909,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             ListManipulator<List<TElement>, TElement>,
             ListAutomaton<TElement, TElementDistribution>>
         .DictionaryWeightFunction<ListDictionaryWeightFunction<TElement, TElementDistribution>>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, Sampleable<TElement>, new()
     {
     }
 }

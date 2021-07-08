@@ -12,9 +12,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public class ListTransducer<TList, TElement,TElementDist> :
         Transducer<TList, TElement, TElementDist, ListManipulator<TList,TElement>, 
         ListAutomaton<TList, TElement, TElementDist>, ListTransducer<TList, TElement, TElementDist>>
-               where TElementDist : class, IDistribution<TElement>, CanGetLogAverageOf<TElementDist>,
-        SettableToProduct<TElementDist>, SettableToWeightedSumExact<TElementDist>, 
-        SettableToPartialUniform<TElementDist>, Sampleable<TElement>, new()
+               where TElementDist : class, IImmutableDistribution<TElement, TElementDist>, CanGetLogAverageOf<TElementDist>, CanComputeProduct<TElementDist>, CanCreatePartialUniform<TElementDist>, SummableExactly<TElementDist>, Sampleable<TElement>, new()
         where TList: class, IList<TElement>, new()
 
 
@@ -27,9 +25,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public class ListTransducer<TElement, TElementDist> :
         Transducer<List<TElement>, TElement, TElementDist, ListManipulator<List<TElement>, TElement>,
         ListAutomaton<TElement, TElementDist>, ListTransducer<TElement, TElementDist>>
-               where TElementDist : class, IDistribution<TElement>, CanGetLogAverageOf<TElementDist>,
-        SettableToProduct<TElementDist>, SettableToWeightedSumExact<TElementDist>,
-        SettableToPartialUniform<TElementDist>, Sampleable<TElement>, new()
+               where TElementDist : class, IImmutableDistribution<TElement, TElementDist>, CanGetLogAverageOf<TElementDist>, CanComputeProduct<TElementDist>, CanCreatePartialUniform<TElementDist>, SummableExactly<TElementDist>, Sampleable<TElement>, new()
     {
     }
 }

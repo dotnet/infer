@@ -43,12 +43,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return StringDistribution.OneOf(alts);
             }
 
-            var anyChar = StringAutomaton.ConstantOnElement(1.0, DiscreteChar.Any());
+            var anyChar = StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Any());
             var transducer = StringTransducer.Consume(StringAutomaton.Repeat(anyChar, minTimes: start, maxTimes: start));
             transducer.AppendInPlace(StringTransducer.Copy(StringAutomaton.Repeat(anyChar, minTimes: minLength, maxTimes: maxLength)));
             transducer.AppendInPlace(StringTransducer.Consume(StringAutomaton.Constant(1.0)));
 
-            return StringDistribution.FromWorkspace(transducer.ProjectSource(str.GetWorkspaceOrPoint()));
+            return StringDistribution.FromWeightFunction(transducer.ProjectSource(str.ToAutomaton()));
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="SubstringOp"]/message_doc[@name="SubAverageConditional(String, int, int)"]/*'/>
@@ -91,12 +91,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             Argument.CheckIfInRange(start >= 0, "start", "Start index must be non-negative.");
             Argument.CheckIfInRange(length >= 0, "length", "Length must be non-negative.");
 
-            var anyChar = StringAutomaton.ConstantOnElement(1.0, DiscreteChar.Any());
+            var anyChar = StringAutomaton.ConstantOnElement(1.0, ImmutableDiscreteChar.Any());
             var transducer = StringTransducer.Produce(StringAutomaton.Repeat(anyChar, minTimes: start, maxTimes: start));
             transducer.AppendInPlace(StringTransducer.Copy(StringAutomaton.Repeat(anyChar, minTimes: length, maxTimes: length)));
             transducer.AppendInPlace(StringTransducer.Produce(StringAutomaton.Constant(1.0)));
 
-            return StringDistribution.FromWorkspace(transducer.ProjectSource(sub.GetWorkspaceOrPoint()));
+            return StringDistribution.FromWeightFunction(transducer.ProjectSource(sub.ToAutomaton()));
         }
 
         #endregion

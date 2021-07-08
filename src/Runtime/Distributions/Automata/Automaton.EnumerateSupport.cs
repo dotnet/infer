@@ -23,14 +23,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Element distributions must be either point mass or implement <see cref="CanEnumerateSupport{T}"/>.
         /// </summary>
         /// <param name="maxCount">The maximum support enumeration count.</param>
-        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
         /// <exception cref="AutomatonEnumerationCountException">Thrown if enumeration is too large.</exception>
         /// <exception cref="InvalidOperationException">Thrown if distribution on some transition is not enumerable.</exception>
         /// <returns>The sequences in the support of this automaton</returns>
-        public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
+        public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000)
         {
             int idx = 0;
-            foreach (var seq in this.EnumerateSupportInternal(tryDeterminize))
+            foreach (var seq in this.EnumerateSupportInternal())
             {
                 if (seq == null)
                 {
@@ -52,18 +51,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="maxCount">The maximum support enumeration count.</param>
         /// <param name="result">The sequences in the support of this automaton</param>
-        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
         /// <returns>True if successful, false otherwise</returns>
-        public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
-            => TryEnumerateSupport(maxCount, out result, tryDeterminize, int.MaxValue, false);
+        public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result)
+            => TryEnumerateSupport(maxCount, out result, int.MaxValue, false);
 
         /// <summary>
         /// Tries to enumerate support of this automaton.
         /// Element distributions must be either point mass or implement <see cref="CanEnumerateSupport{T}"/>.
         /// </summary>
         /// <param name="maxCount">The maximum support enumeration count.</param>
-        /// <param name="result">The sequences in the support of this automaton</param>
-        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
+        /// <param name="result">The sequences in the support of this automaton</param>\
         /// <param name="maxTraversedPaths">
         /// Maximum number of paths in the automaton this function
         /// is allowed to traverse before stopping.
@@ -78,14 +75,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public bool TryEnumerateSupport(
             int maxCount,
             out IEnumerable<TSequence> result,
-            bool tryDeterminize,
             int maxTraversedPaths,
             bool stopOnNonPointMassElementDistribution)
         {
             var limitedResult = new List<TSequence>();
             try
             {
-                foreach (var seq in this.EnumerateSupportInternal(tryDeterminize, maxTraversedPaths, stopOnNonPointMassElementDistribution))
+                foreach (var seq in this.EnumerateSupportInternal(maxTraversedPaths, stopOnNonPointMassElementDistribution))
                 {
                     if (seq == null || limitedResult.Count >= maxCount)
                     {
@@ -112,7 +108,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Enumerate support of this automaton
         /// </summary>
-        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
         /// <param name="maxTraversedPaths">Maximum number of paths in the automaton this function
         /// is allowed to traverse before stopping. Defaults to <see cref="int.MaxValue"/>.
         /// Can be used to limit the performance impact of this call in cases when
@@ -122,7 +117,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// element distribution on a transition and a <see langword="null"/> value is yielded.
         /// </param>
         private IEnumerable<TSequence> EnumerateSupportInternal(
-            bool tryDeterminize,
             int maxTraversedPaths = int.MaxValue,
             bool stopOnNonPointMassElementDistribution = false)
         {
@@ -133,18 +127,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return new TSequence[] { null };
             }
 
-            if (tryDeterminize && this is StringAutomaton)
-            {
-                this.TryDeterminize();
-            }
-
             var enumeration = this.EnumerateSupportInternalWithDuplicates(maxTraversedPaths, stopOnNonPointMassElementDistribution);
-            if (!tryDeterminize)
+            if (Data.IsDeterminized != true)
             {
-                enumeration = enumeration.Distinct(SequenceManipulator.SequenceEqualityComparer);
+                // Enumerable.Distinct() uses some internal set implementation (different from HashSet) to store enumerated elements.
+                // Somehow, it causes unacceptable slowdowns for large supports, hence the customized implementation.
+                enumeration = HashSetBasedDistinct(enumeration);
             }
 
             return enumeration;
+
+            IEnumerable<TSequence> HashSetBasedDistinct(IEnumerable<TSequence> source)
+            {
+                // Can not pre-allocate hashsets in netstandard2.0
+                // TODO: start preallocatinng after switching to BCL that allows it, e.g. netstandard2.1
+                var supportDistinctionSet = new HashSet<TSequence>(SequenceManipulator.SequenceEqualityComparer);
+
+                foreach (var elem in source)
+                {
+                    if (supportDistinctionSet.Add(elem))
+                        yield return elem;
+                }
+            }
         }
 
         /// <summary>
@@ -197,8 +201,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// automaton is not determinized. A <see langword="null"/> value in enumeration means that
         /// an infinite loop was reached or that the enumeration was stopped because
         /// a condition set by one of this method's parameters was met.
-        /// Public <see cref="EnumerateSupport(int, bool)"/> /
-        /// <see cref="TryEnumerateSupport(int, out IEnumerable{TSequence}, bool, int, bool)"/>
+        /// Public <see cref="EnumerateSupport(int)"/> /
+        /// <see cref="TryEnumerateSupport(int, out IEnumerable{TSequence}, int, bool)"/>
         /// methods handle null value differently.
         /// </returns>
         /// <remarks>

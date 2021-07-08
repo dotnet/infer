@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// represent all weight functions.</typeparam>
     public partial class WeightFunctions<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IImmutableDistribution<TElement, TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, CanComputeProduct<TElementDistribution>, CanCreatePartialUniform<TElementDistribution>, SummableExactly<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
     {
@@ -28,6 +28,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// that is agnostic of the concrete weight function class. Implementations of closed constructed
         /// <see cref="IWeightFunction{TThis}"/> can all be upcasted to this type.
         /// </summary>
+        /// <remarks>Types implementing this interface must be constant and thread-safe.</remarks>
         [Quality(QualityBand.Experimental)]
         public interface IWeightFunction
         {
@@ -65,21 +66,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Enumerates support of this weight function when possible.
             /// </summary>
             /// <param name="maxCount">The maximum support enumeration count.</param>
-            /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
             /// <exception cref="AutomatonEnumerationCountException">Thrown if enumeration is too large.</exception>
             /// <returns>The sequences in the support of this weight function</returns>
-            // TODO: get rid of tryDeterminize and potential mutations it involves
-            IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true);
+            IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000);
 
             /// <summary>
             /// Tries to enumerate support of this weight function.
             /// </summary>
             /// <param name="maxCount">The maximum support enumeration count.</param>
             /// <param name="result">The sequences in the support of this weight function</param>
-            /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
             /// <returns>True if successful, false otherwise</returns>
-            // TODO: get rid of tryDeterminize and potential mutations it involves
-            bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true);
+            bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result);
 
             /// <summary>
             /// Enumerates paths through this weight function.
@@ -129,6 +126,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// that can, but not necessarily has to be, represented as a weighted finite state automaton.
         /// </summary>
         /// <typeparam name="TThis">The type of a concrete weight function class.</typeparam>
+        /// <remarks>Types implementing this interface must be constant and thread-safe.</remarks>
         [Quality(QualityBand.Experimental)]
         public interface IWeightFunction<TThis> : IWeightFunction, IEquatable<TThis>
             where TThis : IWeightFunction<TThis>, new()
@@ -163,17 +161,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Computes the weighted sum of the current weight function and a given weight function.
             /// </summary>
             /// <param name="weight1">The weight of the current weight function.</param>
-            /// <param name="weight2">The weight of the <paramref name="weightFunction"/>.</param>
             /// <param name="weightFunction">The weight function to compute the sum with.</param>
-            TThis Sum(double weight1, double weight2, TThis weightFunction);
+            /// <param name="weight2">The weight of the <paramref name="weightFunction"/>.</param>
+            TThis Sum(double weight1, TThis weightFunction, double weight2);
 
             /// <summary>
             /// Computes the weighted sum of the current weight function and a given weight function.
             /// </summary>
             /// <param name="logWeight1">The logarithm of the weight of the current weight function.</param>
-            /// <param name="logWeight2">The logarithm of the weight of the <paramref name="weightFunction"/>.</param>
             /// <param name="weightFunction">The weight function to compute the sum with.</param>
-            TThis SumLog(double logWeight1, double logWeight2, TThis weightFunction);
+            /// <param name="logWeight2">The logarithm of the weight of the <paramref name="weightFunction"/>.</param>
+            TThis SumLog(double logWeight1, TThis weightFunction, double logWeight2);
 
             /// <summary>
             /// Computes the product of the current weight function and a given one.
@@ -231,12 +229,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// case structures for point masses and functions with small support.
             /// </summary>
             TThis NormalizeStructure();
-
-            /// <summary>
-            /// Creates a copy of the weight function.
-            /// </summary>
-            /// <returns>The created copy.</returns>
-            TThis Clone(); // TODO: remove when automata become immutable
         }
 
         /// <summary>
