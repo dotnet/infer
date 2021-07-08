@@ -22,7 +22,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// StateData it carries 2 additional properties for convenience: <see cref="Index"/>
         /// of the state and full <see cref="transitions"/> table.
         /// </remarks>
-        public struct State : IEquatable<State>
+        public readonly struct State : IEquatable<State>
         {
             private readonly ReadOnlyArray<StateData> states;
 

@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         [Serializable]
         [DataContract]
-        public struct StateData
+        public readonly struct StateData
         {
             /// <summary>
             /// Gets or sets index of the first transition from this state in <see cref="DataContainer.Transitions"/>

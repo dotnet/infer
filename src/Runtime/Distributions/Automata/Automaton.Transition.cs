@@ -27,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </remarks>
         [Serializable]
         [DataContract]
-        public struct Transition
+        public readonly struct Transition
         {
             //// This class has been made inner so that the user doesn't have to deal with a lot of generic parameters on it.
 
@@ -36,19 +36,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Think wisely before you decide to reorder fields or change their types.
 
             [DataMember]
-            private int destinationStateIndex;
+            private readonly int destinationStateIndex;
 
             [DataMember]
-            private short group;
+            private readonly short group;
 
             [DataMember]
-            private short hasElementDistribution;
+            private readonly short hasElementDistribution;
 
             [DataMember]
-            private TElementDistribution elementDistribution;
+            private readonly TElementDistribution elementDistribution;
 
             [DataMember]
-            private Weight weight;
+            private readonly Weight weight;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Transition"/> struct.
@@ -69,9 +69,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.elementDistribution = elementDistribution.Value;
                 }
 
-                this.DestinationStateIndex = destinationStateIndex;
-                this.Weight = weight;
-                this.Group = (short)group;
+                this.destinationStateIndex = destinationStateIndex;
+                this.weight = weight;
+                this.group = (short)group;
             }
 
             public Transition With(Option<TElementDistribution>? elementDistribution = null, Weight? weight = null, int? destinationStateIndex = null, int? group = null) =>
@@ -82,13 +82,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     group ?? this.Group);
 
             /// <summary>
-            /// Gets or sets the destination state index.
+            /// Gets the destination state index.
             /// </summary>
             public int DestinationStateIndex
             {
                 get => this.destinationStateIndex;
-                // Setter should only ever be used in factory methods
-                private set => this.destinationStateIndex = value;
             }
 
             /// <summary>
@@ -97,8 +95,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public int Group
             {
                 get => this.group;
-                // Setter should only ever be used in factory methods
-                private set => this.group = (short)value;
             }
 
             /// <summary>
@@ -107,12 +103,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public Option<TElementDistribution> ElementDistribution
             {
                 get => this.hasElementDistribution == 0 ? Option.None : Option.Some(this.elementDistribution);
-                // Setter should only ever be used in factory methods
-                private set
-                {
-                    this.hasElementDistribution = (short)(value.HasValue ? 1 : 0);
-                    this.elementDistribution = value.HasValue ? value.Value : default(TElementDistribution);
-                }
             }
 
             /// <summary>
@@ -126,8 +116,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public Weight Weight
             {
                 get => this.weight;
-                // Setter should only ever be used in factory methods
-                private set => this.weight = value;
             }
 
             /// <summary>
@@ -175,16 +163,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public static Transition Read(Func<int> readInt32, Func<double> readDouble, Func<TElementDistribution> readElementDistribution)
             {
-                var res = new Transition();
-                res.DestinationStateIndex = readInt32();
+                var destinationStateIndex = readInt32();
                 var groupAndHasElementDistribution = readInt32();
+                Option<TElementDistribution> elementDistribution = Option.None;
                 if ((groupAndHasElementDistribution & 0x1) == 0x1)
                 {
-                    res.ElementDistribution = readElementDistribution();
+                    elementDistribution = readElementDistribution();
                 }
-                res.Group = groupAndHasElementDistribution >> 1;
-                res.Weight = Weight.Read(readDouble);
-                return res;
+                var group = groupAndHasElementDistribution >> 1;
+                var weight = Weight.Read(readDouble);
+                return new Transition(elementDistribution, weight, destinationStateIndex, group);
             }
         }
     }

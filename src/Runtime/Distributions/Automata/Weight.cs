@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </remarks>
     [Serializable]
     [DataContract]
-    public struct Weight : IComparable<Weight>, IFormattable
+    public readonly struct Weight : IComparable<Weight>, IFormattable
     {
         /// <summary>
         /// The logarithm of the weight value.

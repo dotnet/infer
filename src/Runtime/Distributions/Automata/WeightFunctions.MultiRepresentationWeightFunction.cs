@@ -26,7 +26,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         [Serializable]
         [DataContract]
         [Quality(QualityBand.Experimental)]
-        public struct MultiRepresentationWeightFunction<TDictionary> : IWeightFunction<MultiRepresentationWeightFunction<TDictionary>>
+        public readonly struct MultiRepresentationWeightFunction<TDictionary> : IWeightFunction<MultiRepresentationWeightFunction<TDictionary>>
         where TDictionary : DictionaryWeightFunction<TDictionary>, new()
         {
             private static TSequenceManipulator SequenceManipulator =>
@@ -43,7 +43,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <see langword="null"/> should be interpreted as zero function.
             /// </summary>
             [DataMember]
-            private IWeightFunction weightFunction;
+            private readonly IWeightFunction weightFunction;
 
             /// <summary>
             /// An <see cref="IWeightFunctionFactory{TWeightFunction}"/>
@@ -172,6 +172,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 public MultiRepresentationWeightFunction<TDictionary> Zero() => MultiRepresentationWeightFunction<TDictionary>.Zero();
             }
 
+            private MultiRepresentationWeightFunction(IWeightFunction weightFunction)
+            {
+                this.weightFunction = weightFunction;
+            }
+
             #region Factory Methods
 
             /// <summary>
@@ -190,7 +195,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The created weight function.</returns>
             [Construction(nameof(AsPointMass), UseWhen = nameof(IsPointMass))]
             public static MultiRepresentationWeightFunction<TDictionary> FromPointMass(PointMassWeightFunction pointMass) =>
-                new MultiRepresentationWeightFunction<TDictionary>() { weightFunction = pointMass };
+                new MultiRepresentationWeightFunction<TDictionary>(pointMass);
 
             /// <summary>
             /// Creates a <see cref="MultiRepresentationWeightFunction{TDictionary}"/>
@@ -200,7 +205,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The created weight function.</returns>
             [Construction(nameof(AsDictionary), UseWhen = nameof(IsDictionary))]
             public static MultiRepresentationWeightFunction<TDictionary> FromDictionary(TDictionary dictionary) =>
-                new MultiRepresentationWeightFunction<TDictionary>() { weightFunction = dictionary };
+                new MultiRepresentationWeightFunction<TDictionary>(dictionary);
 
             /// <summary>
             /// Creates a <see cref="MultiRepresentationWeightFunction{TDictionary}"/>
@@ -210,7 +215,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The created weight function.</returns>
             [Construction(nameof(AsAutomaton), UseWhen = nameof(IsAutomaton))]
             public static MultiRepresentationWeightFunction<TDictionary> FromAutomaton(TAutomaton automaton) =>
-                new MultiRepresentationWeightFunction<TDictionary>() { weightFunction = automaton };
+                new MultiRepresentationWeightFunction<TDictionary>(automaton);
 
             /// <summary>
             /// Creates a point mass weight function.
@@ -279,10 +284,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return weightFunction is TAutomaton automaton
                     ? automaton.GetGroups().ToDictionary(
                         kvp => kvp.Key,
-                        kvp => new MultiRepresentationWeightFunction<TDictionary>()
-                        {
-                            weightFunction = kvp.Value
-                        })
+                        kvp => FromAutomaton(kvp.Value))
                     : new Dictionary<int, MultiRepresentationWeightFunction<TDictionary>>(); // TODO: get rid of groups or do something about groups + point mass combo
             }
 
