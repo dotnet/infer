@@ -536,25 +536,27 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double x = sample.Point;
                 double shape2 = shape + rate.Shape;
                 double xrr = x + rate.Rate;
+                double shape2OverXrr = shape2 / xrr;
                 if (x == 0)
                 {
                     if (shape == 1)
                     {
-                        double dlogf = -shape2 / xrr;
-                        double ddlogf = shape2 / (xrr * xrr);
+                        double dlogf = -shape2OverXrr;
+                        double ddlogf = shape2OverXrr / xrr;
                         return Gamma.FromDerivatives(x, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
                     }
                     else
                     {
                         // a = -x*x*ddLogP
                         // b = a / x - dLogP
-                        return Gamma.FromShapeAndRate(shape, shape2 / xrr);
+                        return Gamma.FromShapeAndRate(shape, shape2OverXrr);
                     }
                 }
                 else
                 {
-                    double dlogf = (shape - 1) / x - shape2 / xrr;
-                    double ddlogf = -(shape - 1) / (x * x) + shape2 / (xrr * xrr);
+                    double shapeMinus1OverX = (shape - 1) / x;
+                    double dlogf = shapeMinus1OverX - shape2OverXrr;
+                    double ddlogf = -shapeMinus1OverX / x + shape2OverXrr / xrr;
                     return Gamma.FromDerivatives(x, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
                 }
             }

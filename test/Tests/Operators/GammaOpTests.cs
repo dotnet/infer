@@ -36,6 +36,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaFromShapeAndRateOpTest()
         {
+            Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.SampleAverageConditional(Gamma.PointMass(double.Epsilon), 1.0, new Gamma(1, 1)).Rate));
             Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.SampleAverageConditional(Gamma.PointMass(0), 2.0, new Gamma(1, 1)).Rate));
             Assert.False(double.IsNaN(GammaFromShapeAndRateOp_Slow.RateAverageConditional(new Gamma(1, 1), 2.0, Gamma.PointMass(0)).Rate));
 
