@@ -26,8 +26,54 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class OperatorTests
     {
         [Fact]
+        public void GaussianGetDerivativesTest()
+        {
+            Gaussian g = Gaussian.FromNatural(double.MaxValue, double.MaxValue);
+            double x = 2;
+            // this.Precision * x overflows
+            g.GetDerivatives(x, out double dlogp, out double ddlogp);
+            Assert.Equal(-double.MaxValue, dlogp);
+        }
+
+        [Fact]
+        public void GaussianFromDerivativesTest()
+        {
+            double x = 2;
+            double dlogp = -double.MaxValue;
+            double ddlogp = -double.MaxValue;
+            Gaussian g = Gaussian.FromDerivatives(x, dlogp, ddlogp, false);
+            g.GetDerivatives(x, out double dlogp2, out double ddlogp2);
+            Assert.True(MMath.AbsDiff(dlogp, dlogp2) < 1e-10);
+            Assert.True(MMath.AbsDiff(ddlogp, ddlogp2) < 1e-10);
+        }
+
+        [Fact]
         public void GaussianPlusOpTest()
         {
+            var testCases = new[]
+            {
+                (2, 0, -1, 1/double.MaxValue),
+                (1e160, 0, 0, 1e-160),
+                (double.MaxValue*1e-160, 1e-160, double.MaxValue*1e-160, 1e-160),
+                (double.MaxValue*1e-159, 1e-159, double.MaxValue*1e-160, 1e-160),
+                (double.MaxValue*1e-160, 1e-160, double.MaxValue*1e-159, 1e-159),
+            };
+            foreach(var testCase in testCases)
+            {
+                double AMean = testCase.Item1;
+                double AVariance = testCase.Item2;
+                double BMean = testCase.Item3;
+                double BVariance = testCase.Item4;
+                Gaussian expected = new Gaussian(AMean + BMean, AVariance + BVariance);
+                if (AVariance == 0)
+                {
+                    Assert.True(DoublePlusOp.SumAverageConditional(AMean, new Gaussian(BMean, BVariance)).MaxDiff(expected) < 1e-14);
+                }
+                Assert.True(MaxUlpDiff(DoublePlusOp.SumAverageConditional(new Gaussian(AMean, AVariance), new Gaussian(BMean, BVariance)), expected) < 2);
+                Assert.True(MaxUlpDiff(DoublePlusOp.AAverageConditional(new Gaussian(AMean, AVariance), new Gaussian(-BMean, BVariance)), expected) < 2);
+                Assert.True(MaxUlpDiff(DoublePlusOp.BAverageConditional(new Gaussian(AMean, AVariance), new Gaussian(-BMean, BVariance)), expected) < 2);
+            }
+
             Assert.False(DoublePlusOp.BAverageConditional(Gaussian.FromNatural(-8.6696467442044984E+102, 0.43834920434350727), Gaussian.FromNatural(2.193337045017726E+205, 2.193337045017726E+205)).MeanTimesPrecision < double.MinValue);
             Gaussian Sum = Gaussian.FromNatural(1, 1);
             double tolerance = 1e-10;

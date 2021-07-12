@@ -2140,7 +2140,16 @@ namespace Microsoft.ML.Probabilistic.Factors
             // v = A*A*vb
             // 1/v = (1/vb)/(A*A)
             // m/v = (mb/vb)/A
-            return Gaussian.FromNatural(B.MeanTimesPrecision / A, B.Precision / A / A);
+            double meanTimesPrecision = B.MeanTimesPrecision / A;
+            double precision = B.Precision / A / A;
+            if (precision > double.MaxValue || Math.Abs(meanTimesPrecision) > double.MaxValue)
+            {
+                return Gaussian.FromMeanAndPrecision(A * B.GetMean(), precision);
+            }
+            else
+            {
+                return Gaussian.FromNatural(meanTimesPrecision, precision);
+            }
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductVmpOp"]/message_doc[@name="ProductAverageLogarithm(Gaussian, double)"]/*'/>

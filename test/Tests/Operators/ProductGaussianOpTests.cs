@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Math;
+
 using Xunit;
 
 namespace Microsoft.ML.Probabilistic.Tests
@@ -33,41 +34,54 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ProductOpTest()
         {
-            Assert.True(GaussianProductVmpOp.ProductAverageLogarithm(
-              2.0,
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(
-              2.0,
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(new Gaussian(0, 1),
-              Gaussian.PointMass(2.0),
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5)) < 1e-8);
-            Assert.True(GaussianProductVmpOp.ProductAverageLogarithm(
-              0.0,
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.PointMass(0.0)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(
-              0.0,
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.PointMass(0.0)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(new Gaussian(0, 1),
-              Gaussian.PointMass(0.0),
-              Gaussian.FromMeanAndVariance(3.0, 5.0)).MaxDiff(Gaussian.PointMass(0.0)) < 1e-8);
+            var testCases = new[]
+            {
+                (4.94065645841247E-324, 0, -1e-5, 29),
+                (4.94065645841247E-324, 1e-320, -1e-5, 29),
+                (4.94065645841247E-324, 1, -1e-5, 29),
+                (4.94065645841247E-324, 100, -1e-5, 29),
+                (2.0, 0.0, 3.0, 5.0),
+                (0.0, 0.0, 3.0, 5.0),
+                (2, 4, 3, 5),
+            };
+            double tolerance = 1e-14;
+            foreach (var testCase in testCases)
+            {
+                double AMean = testCase.Item1;
+                double AVariance = testCase.Item2;
+                double BMean = testCase.Item3;
+                double BVariance = testCase.Item4;
+                Gaussian expected = Gaussian.FromMeanAndVariance(AMean * BMean, AMean * AMean * BVariance + BMean * BMean * AVariance + AVariance * BVariance);
+                if (AVariance == 0)
+                {
+                    double A = AMean;
+                    expected = Gaussian.FromMeanAndVariance(A * BMean, A * A * BVariance);
+                    Assert.True(GaussianProductVmpOp.ProductAverageLogarithm(
+                        A,
+                        new Gaussian(BMean, BVariance)).MaxDiff(expected) < tolerance);
+                    Assert.True(GaussianProductOp.ProductAverageConditional(
+                        A,
+                        new Gaussian(BMean, BVariance)).MaxDiff(expected) < tolerance);
+                    Assert.True(GaussianProductOp.ProductAverageConditional(new Gaussian(0, 1),
+                      Gaussian.PointMass(A),
+                      Gaussian.FromMeanAndVariance(BMean, BVariance)).MaxDiff(expected) < tolerance);
+                }
+                Assert.True(GaussianProductVmpOp.ProductAverageLogarithm(
+                  Gaussian.FromMeanAndVariance(AMean, AVariance),
+                  Gaussian.FromMeanAndVariance(BMean, BVariance)).MaxDiff(expected) < tolerance);
+                Assert.True(GaussianProductOp.ProductAverageConditional(Gaussian.Uniform(),
+                  Gaussian.FromMeanAndVariance(AMean, AVariance),
+                  Gaussian.FromMeanAndVariance(BMean, BVariance)).MaxDiff(expected) < tolerance);
+                Assert.True(GaussianProductOp.ProductAverageConditional(Gaussian.FromMeanAndVariance(0, 1e16),
+                  Gaussian.FromMeanAndVariance(AMean, AVariance),
+                  Gaussian.FromMeanAndVariance(BMean, BVariance)).MaxDiff(expected) < 1e-5);
+            }
 
-            Assert.True(GaussianProductVmpOp.ProductAverageLogarithm(
-              Gaussian.FromMeanAndVariance(2, 4),
-              Gaussian.FromMeanAndVariance(3, 5)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5 + 3 * 3 * 4 + 2 * 2 * 5)) < 1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(Gaussian.Uniform(),
-              Gaussian.FromMeanAndVariance(2, 4),
-                                                                            Gaussian.FromMeanAndVariance(3, 5)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5 + 3 * 3 * 4 + 2 * 2 * 5)) <
-                                1e-8);
-            Assert.True(GaussianProductOp.ProductAverageConditional(Gaussian.FromMeanAndVariance(0, 1e16),
-              Gaussian.FromMeanAndVariance(2, 4),
-                                                                            Gaussian.FromMeanAndVariance(3, 5)).MaxDiff(Gaussian.FromMeanAndVariance(2 * 3, 4 * 5 + 3 * 3 * 4 + 2 * 2 * 5)) <
-                                1e-4);
 
             Assert.True(GaussianProductOp.AAverageConditional(6.0, 2.0)
-              .MaxDiff(Gaussian.PointMass(6.0 / 2.0)) < 1e-8);
+              .MaxDiff(Gaussian.PointMass(6.0 / 2.0)) < tolerance);
             Assert.True(GaussianProductOp.AAverageConditional(6.0, new Gaussian(1, 3), Gaussian.PointMass(2.0))
-              .MaxDiff(Gaussian.PointMass(6.0 / 2.0)) < 1e-8);
+              .MaxDiff(Gaussian.PointMass(6.0 / 2.0)) < tolerance);
             Assert.True(GaussianProductOp.AAverageConditional(0.0, 0.0).IsUniform());
             Assert.True(GaussianProductOp.AAverageConditional(Gaussian.Uniform(), 2.0).IsUniform());
             Assert.True(GaussianProductOp.AAverageConditional(Gaussian.Uniform(), new Gaussian(1, 3), Gaussian.PointMass(2.0)).IsUniform());
@@ -84,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(GaussianProductOp.AAverageConditional(g, 0.0).IsUniform());
             Assert.True(GaussianProductOp.AAverageConditional(0.0, 0.0).IsUniform());
             Assert.True(GaussianProductVmpOp.AAverageLogarithm(g, 0.0).IsUniform());
-            Assert.True(Gaussian.PointMass(3.0).MaxDiff(GaussianProductVmpOp.AAverageLogarithm(6.0, 2.0)) < 1e-10);
+            Assert.True(Gaussian.PointMass(3.0).MaxDiff(GaussianProductVmpOp.AAverageLogarithm(6.0, 2.0)) < tolerance);
             Assert.True(GaussianProductVmpOp.AAverageLogarithm(0.0, 0.0).IsUniform());
             try
             {
