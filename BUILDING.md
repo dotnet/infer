@@ -20,7 +20,7 @@ All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produ
 1. If you don't have Visual Studio 2019, you can install the free [Visual Studio 2019 Community](https://visualstudio.microsoft.com/vs/community/).
 1. Start Visual Studio.
 1. Select `File -> Open -> Project/Solution` and open the `Infer.sln` solution file located in your cloned repository.
-1. Select a build configuration using `Build -> Configuration Manager...`.  When switching between configurations that change the targeted frameworks, Visual Studio currently requires you to close and re-open the solution file using `File -> Close Solution` and `File -> Open`.
+1. Select a build configuration using `Build -> Configuration Manager...`.  After switching between configurations that change the targeted frameworks, Visual Studio currently requires you to close and re-open the solution file using `File -> Close Solution` and `File -> Open`.
 1. Compile using `Build -> Build Solution`.
 1. At this point, you can play with the [tutorials and examples](https://dotnet.github.io/infer/userguide/Infer.NET%20tutorials%20and%20examples.html), or run all tests to verify the installation.  Run the tutorials by setting the startup project to `Tutorials`.  If your configuration is `DebugFull` or `ReleaseFull`, you will get the [Examples Browser](https://dotnet.github.io/infer/userguide/The%20examples%20browser.html).  Otherwise, edit `src/Tutorials/RunMe.cs` to see different tutorials.  Run an example by setting the startup project to that example.
 1. To run all tests, open the test explorer using `Test -> Windows -> Test Explorer`.
