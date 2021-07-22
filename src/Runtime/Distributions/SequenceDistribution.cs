@@ -979,6 +979,43 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return this.sequenceToWeight.EnumeratePaths();
         }
 
+        /// <summary>
+        /// Tries to replace the internal representation of the current distribution with an equivalent
+        /// deterministic automaton, unless the current representation is guaranteed to produce
+        /// a deterministic automaton on conversion.
+        /// </summary>
+        /// <returns><see langword="true"/> if the internal representation of the current distribution
+        /// was successfully replaced with a deterministic automaton or is guaranteed to produce one
+        /// on direct conversion, <see langword="false"/> otherwise.</returns>
+        public bool TryDeterminize()
+        {
+            if (IsPointMass || (this is StringDistribution && !UsesAutomatonRepresentation))
+            {
+                return true;
+            }
+
+            var determinizationSuccess = ToNormalizedAutomaton().TryDeterminize(out var determinizationResult);
+            SetWeightFunction(determinizationResult, false);
+            return determinizationSuccess;
+        }
+
+        /// <summary>
+        /// Sets a value that, if not null, will be returned when computing the log probability of any sequence
+        /// which is in the support of this distribution.
+        /// </summary>
+        /// <param name="logValueOverride">A non-null value that should be returned when computing the log probability of any sequence
+        /// which is in the support of this distribution, or <see langword="null"/> to clear any existing override.</param>
+        public void SetLogValueOverride(double? logValueOverride)
+        {
+            // No need to clear logValueOverride fof non-automaton representations
+            if (logValueOverride.HasValue || UsesAutomatonRepresentation)
+            {
+                var workspace = ToAutomaton().WithLogValueOverride(logValueOverride);
+                // Normalizing structure can be useful only when logValueOverride == null
+                SetWeightFunction(workspace, !logValueOverride.HasValue);
+            }
+        }
+
         #endregion
 
         #region ToString
