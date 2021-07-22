@@ -1016,16 +1016,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
+        /// <summary>
+        /// Computes a distribution <c>g(b) = sum_a f(a) T(a, b)</c>, where <c>f(a)</c> is the current distribution and <c>T(a, b)</c> is a given transducer.
+        /// </summary>
+        /// <param name="transducer">The transducer to project on.</param>
+        /// <returns>The projection.</returns>
+        public TThis ProjectOnTransducer<TTransducer>(TTransducer transducer) where TTransducer : Transducer<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TTransducer>, new()
+            => FromWeightFunction(IsPointMass ? transducer.ProjectSource(Point) : transducer.ProjectSource(ToAutomaton()));
+
         #endregion
 
-        #region ToString
+            #region ToString
 
-        /// <summary>
-        /// Returns a string that represents the distribution.
-        /// </summary>
-        /// <returns>
-        /// A string that represents the distribution.
-        /// </returns>
+            /// <summary>
+            /// Returns a string that represents the distribution.
+            /// </summary>
+            /// <returns>
+            /// A string that represents the distribution.
+            /// </returns>
         public override string ToString()
         {
             return this.ToString((Action<TElementDistribution, StringBuilder>)null);
