@@ -763,14 +763,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringTransducer replace = StringTransducer.Replace("hello", "worlds");
 
-            var proj1 = StringDistribution.PointMass("hello").ProjectOnTransducer(replace);
+            var proj1 = StringDistribution.PointMass("hello").ApplyTransducer(replace);
             Assert.True(proj1.IsPointMass);
             Assert.Equal("worlds", proj1.Point);
 
-            var proj2 = StringDistribution.PointMass("worlds").ProjectOnTransducer(replace);
+            var proj2 = StringDistribution.PointMass("worlds").ApplyTransducer(replace);
             Assert.True(proj2.IsZero());
 
-            var proj3 = StringDistribution.OneOf("hello", "worlds").ProjectOnTransducer(replace);
+            var proj3 = StringDistribution.OneOf("hello", "worlds").ApplyTransducer(replace);
             Assert.True(proj3.IsPointMass);
             Assert.Equal("worlds", proj3.Point);
         }

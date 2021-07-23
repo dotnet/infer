@@ -1021,7 +1021,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="transducer">The transducer to project on.</param>
         /// <returns>The projection.</returns>
-        public TThis ProjectOnTransducer<TTransducer>(TTransducer transducer) where TTransducer : Transducer<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TTransducer>, new()
+        public TThis ApplyTransducer<TTransducer>(TTransducer transducer) where TTransducer : Transducer<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TTransducer>, new()
             => FromWeightFunction(IsPointMass ? transducer.ProjectSource(Point) : transducer.ProjectSource(ToAutomaton()));
 
         #endregion
