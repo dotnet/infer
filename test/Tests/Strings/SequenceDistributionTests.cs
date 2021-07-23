@@ -757,6 +757,24 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.False(automatonNonDeterminizable.ToAutomaton().IsDeterministic());
         }
 
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void ProjectOnTransducer()
+        {
+            StringTransducer replace = StringTransducer.Replace("hello", "worlds");
+
+            var proj1 = StringDistribution.PointMass("hello").ProjectOnTransducer(replace);
+            Assert.True(proj1.IsPointMass);
+            Assert.Equal("worlds", proj1.Point);
+
+            var proj2 = StringDistribution.PointMass("worlds").ProjectOnTransducer(replace);
+            Assert.True(proj2.IsZero());
+
+            var proj3 = StringDistribution.OneOf("hello", "worlds").ProjectOnTransducer(replace);
+            Assert.True(proj3.IsPointMass);
+            Assert.Equal("worlds", proj3.Point);
+        }
+
         #region Sampling tests
 
         /// <summary>
