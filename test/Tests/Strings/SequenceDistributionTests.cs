@@ -708,6 +708,55 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestLogProbability(automaton, double.NegativeInfinity, "ef", "gh");
         }
 
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void TryDeterminize()
+        {
+            StringDistribution point = StringDistribution.PointMass("ab");
+            Assert.True(point.TryDeterminize());
+            Assert.True(point.IsPointMass);
+            Assert.True(point.GetWeightFunction().IsPointMass);
+            Assert.True(point.ToAutomaton().IsDeterministic());
+
+            StringDistribution dict = StringDistribution.OneOf("ab", "cd");
+            Assert.True(dict.TryDeterminize());
+            Assert.False(dict.UsesAutomatonRepresentation);
+            Assert.True(dict.GetWeightFunction().IsDictionary);
+            Assert.True(dict.ToAutomaton().IsDeterministic());
+
+            var builder1 = new StringAutomaton.Builder();
+            builder1.Start
+                .AddEpsilonTransition(Weight.One)
+                .AddSelfTransition('a', Weight.One)
+                .SetEndWeight(Weight.One);
+            var determinizableAutomaton = builder1.GetAutomaton();
+            Assert.False(determinizableAutomaton.IsDeterministic());
+            StringDistribution automatonDeterminizable = StringDistribution.FromWeightFunction(determinizableAutomaton);
+            Assert.True(automatonDeterminizable.UsesAutomatonRepresentation);
+            Assert.True(automatonDeterminizable.TryDeterminize());
+            Assert.True(automatonDeterminizable.UsesAutomatonRepresentation);
+            Assert.True(automatonDeterminizable.ToAutomaton().IsDeterministic());
+
+            var builder2 = new StringAutomaton.Builder();
+            builder2.Start
+                .AddTransition('a', Weight.FromValue(2))
+                .AddSelfTransition('b', Weight.FromValue(0.5))
+                .AddTransition('c', Weight.FromValue(3.0))
+                .SetEndWeight(Weight.FromValue(4));
+            builder2.Start
+                .AddTransition('a', Weight.FromValue(5))
+                .AddSelfTransition('b', Weight.FromValue(0.1))
+                .AddTransition('c', Weight.FromValue(6.0))
+                .SetEndWeight(Weight.FromValue(7));
+            var nonDeterminizableAutomaton = builder2.GetAutomaton();
+            Assert.False(nonDeterminizableAutomaton.IsDeterministic());
+            StringDistribution automatonNonDeterminizable = StringDistribution.FromWeightFunction(nonDeterminizableAutomaton);
+            Assert.True(automatonNonDeterminizable.UsesAutomatonRepresentation);
+            Assert.False(automatonNonDeterminizable.TryDeterminize());
+            Assert.True(automatonNonDeterminizable.UsesAutomatonRepresentation);
+            Assert.False(automatonNonDeterminizable.ToAutomaton().IsDeterministic());
+        }
+
         #region Sampling tests
 
         /// <summary>
