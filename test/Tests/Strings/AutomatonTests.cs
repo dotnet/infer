@@ -2279,7 +2279,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 determinizableAutomaton,
                 x =>
                 {
-                    x.TryDeterminize(out var determinized);
+                    var determinized = x.TryDeterminize();
                     return determinized;
                 });
 
@@ -2293,7 +2293,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 nonDeterminizableAutomaton,
                 x =>
                 {
-                    x.TryDeterminize(out var notDeterminized);
+                    var notDeterminized = x.TryDeterminize();
                     return notDeterminized;
                 });
         }
@@ -2362,7 +2362,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var calculatedSupport1 = new HashSet<string>(automaton.EnumerateSupport());
             Assert.True(calculatedSupport1.SetEquals(expectedSupport));
 
-            automaton.TryDeterminize(out automaton);
+            automaton = automaton.TryDeterminize();
             var calculatedSupport2 = new HashSet<string>(automaton.EnumerateSupport());
             Assert.True(calculatedSupport2.SetEquals(expectedSupport));
         }
@@ -2566,8 +2566,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 .AddTransition('c', Weight.FromLogValue(-10000))
                 .SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
-            var tmp = automaton.Clone();
-            tmp.TryDeterminize(out tmp);
+            var tmp = automaton.Clone().TryDeterminize();
             automaton = automaton.ConstantOnSupportLog(0.0);
             var support = automaton.EnumerateSupport().OrderBy(s => s).ToArray();
             Assert.Equal(new[] {"a", "ac", "b", "bc", "c"}, support);
@@ -2622,8 +2621,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <returns>The number of states in the determinized automaton.</returns>
         private static int CountStates(params string[] values)
         {
-            var workspace = Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.FromLogValues(values.Select(v => new KeyValuePair<string, double>(v, 0.0)));
-            workspace.TryDeterminize(out workspace);
+            var workspace = Automaton<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.FromLogValues(values.Select(v => new KeyValuePair<string, double>(v, 0.0)))
+                .TryDeterminize();
             return workspace.States.Count;
         }
         

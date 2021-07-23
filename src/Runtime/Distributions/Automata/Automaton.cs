@@ -1481,7 +1481,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var result = new TThis() { Data = builder.GetData(determinizationState) };
             if (determinizationState != true && result is StringAutomaton && tryDeterminize)
             {
-                result.TryDeterminize(out result);
+                result = result.TryDeterminize();
             }
             return result;
         }
