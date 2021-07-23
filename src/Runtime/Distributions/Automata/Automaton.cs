@@ -2504,7 +2504,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public static TThis Read(Func<double> readDouble, Func<int> readInt32, Func<TElementDistribution> readElementDistribution)
         {
             var propertyMask = new BitVector32(readInt32());
-            var res = new TThis();
             var idx = 0;
             // Serialized "isEpsilonFree" is not used. Will be taken from builder anyway
             var hasEpsilonFreeIgnored = propertyMask[1 << idx++];
@@ -2514,15 +2513,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var hasStartState = propertyMask[1 << idx++];
             var hasIsDeterminizedValue = propertyMask[1 << idx++];
             var isDeterminized = propertyMask[1 << idx++];
+            double? logValueOverride = null, pruneStatesWithLogEndWeightLessThan = null;
 
             if (hasLogValueOverride)
             {
-                res.LogValueOverride = readDouble();
+                logValueOverride = readDouble();
             }
 
             if (hasPruneWeights)
             {
-                res.PruneStatesWithLogEndWeightLessThan = readDouble();
+                pruneStatesWithLogEndWeightLessThan = readDouble();
             }
 
             var builder = new Builder(0);
@@ -2543,7 +2543,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 State.ReadTo(ref builder, readInt32, readDouble, readElementDistribution);
             }
 
-            return new TThis() { Data = builder.GetData(hasIsDeterminizedValue ? (bool?)isDeterminized : null) };
+            return new TThis()
+            { 
+                Data = builder.GetData(hasIsDeterminizedValue ? (bool?)isDeterminized : null),
+                LogValueOverride = logValueOverride,
+                PruneStatesWithLogEndWeightLessThan = pruneStatesWithLogEndWeightLessThan
+            };
         }
         #endregion
     }

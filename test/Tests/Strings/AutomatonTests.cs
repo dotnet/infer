@@ -1093,6 +1093,21 @@ namespace Microsoft.ML.Probabilistic.Tests
                 x => x.WithGroupsClear());
         }
 
+        /// <summary>
+        /// Tests that the deserialized automaton has the same LogValueOverride
+        /// and PruneStatesWithLogEndWeightLessThan values as it had before serialization.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SerializationPreservesProperties()
+        {
+            StringAutomaton automaton = StringAutomaton.ConstantOn(2.0, "ab");
+
+            StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
+                automaton,
+                x => StringInferenceTestUtilities.Clone(x));
+        }
+
 
         #region ToString tests
 

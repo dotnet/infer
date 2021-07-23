@@ -319,7 +319,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        private static StringAutomaton Clone(StringAutomaton automaton)
+        /// <summary>
+        /// Clones an automaton by consecutively serializing and deserializing it.
+        /// </summary>
+        /// <param name="automaton">Automaton to clone.</param>
+        /// <returns>Cloned automaton.</returns>
+        public static StringAutomaton Clone(StringAutomaton automaton)
         {
             using (var ms = new MemoryStream())
             using (var writer = new BinaryWriter(ms))
@@ -333,7 +338,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        private static StringDistribution Clone(StringDistribution stringDistribution)
+        /// <summary>
+        /// Clones a string distribution by consecutively serializing and deserializing
+        /// its automaton representation.
+        /// </summary>
+        /// <param name="stringDistribution">Distribution to clone.</param>
+        /// <returns>Cloned distribution.</returns>
+        public static StringDistribution Clone(StringDistribution stringDistribution)
         {
             if (stringDistribution.IsPointMass) return StringDistribution.String(stringDistribution.Point);
             var clonedAutomaton = Clone(stringDistribution.ToAutomaton());

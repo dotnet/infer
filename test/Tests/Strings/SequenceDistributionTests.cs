@@ -676,6 +676,38 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SetLogValueOverride()
+        {
+            StringDistribution point = StringDistribution.PointMass("ab");
+            Assert.Equal(0.0, point.GetLogProb("ab"));
+            point.SetLogValueOverride(-1.0);
+            Assert.Equal(-1.0, point.GetLogProb("ab"));
+            Assert.Equal(double.NegativeInfinity, point.GetLogProb("cc"));
+            point.SetLogValueOverride(null);
+            Assert.Equal(0.0, point.GetLogProb("ab"));
+            Assert.Equal(double.NegativeInfinity, point.GetLogProb("cc"));
+
+            StringDistribution dict = StringDistribution.OneOf("ab", "cd");
+            StringInferenceTestUtilities.TestProbability(dict, 0.5, "ab", "cd");
+            dict.SetLogValueOverride(-1.0);
+            StringInferenceTestUtilities.TestLogProbability(dict, -1.0, "ab", "cd");
+            StringInferenceTestUtilities.TestLogProbability(dict, double.NegativeInfinity, "ef", "gh");
+            dict.SetLogValueOverride(null);
+            StringInferenceTestUtilities.TestProbability(dict, 0.5, "ab", "cd");
+            StringInferenceTestUtilities.TestLogProbability(dict, double.NegativeInfinity, "ef", "gh");
+
+            StringDistribution automaton = StringDistribution.Repeat("a");
+            StringInferenceTestUtilities.TestProbability(automaton, 1.0, "a", "aa");
+            automaton.SetLogValueOverride(-1.0);
+            StringInferenceTestUtilities.TestLogProbability(automaton, -1.0, "a", "aa");
+            StringInferenceTestUtilities.TestLogProbability(automaton, double.NegativeInfinity, "ef", "gh");
+            automaton.SetLogValueOverride(null);
+            StringInferenceTestUtilities.TestProbability(automaton, 1.0, "a", "aa");
+            StringInferenceTestUtilities.TestLogProbability(automaton, double.NegativeInfinity, "ef", "gh");
+        }
+
         #region Sampling tests
 
         /// <summary>
