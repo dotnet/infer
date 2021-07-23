@@ -2277,11 +2277,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
                 determinizableAutomaton,
-                x =>
-                {
-                    var determinized = x.TryDeterminize();
-                    return determinized;
-                });
+                x => x.TryDeterminize());
 
             builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.FromValue(2)).AddSelfTransition('b', Weight.FromValue(0.5)).AddTransition('c', Weight.FromValue(3.0)).SetEndWeight(Weight.FromValue(4));
@@ -2291,11 +2287,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             StringInferenceTestUtilities.TestAutomatonPropertyPreservation(
                 nonDeterminizableAutomaton,
-                x =>
-                {
-                    var notDeterminized = x.TryDeterminize();
-                    return notDeterminized;
-                });
+                x => x.TryDeterminize());
         }
 
         /// <summary>
