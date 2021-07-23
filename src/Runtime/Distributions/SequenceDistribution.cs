@@ -1026,14 +1026,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #endregion
 
-            #region ToString
+        #region ToString
 
-            /// <summary>
-            /// Returns a string that represents the distribution.
-            /// </summary>
-            /// <returns>
-            /// A string that represents the distribution.
-            /// </returns>
+        /// <summary>
+        /// Returns a string that represents the distribution.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the distribution.
+        /// </returns>
         public override string ToString()
         {
             return this.ToString((Action<TElementDistribution, StringBuilder>)null);
