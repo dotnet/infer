@@ -563,7 +563,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             // Accepts placeholders for arguments other then current, then for the current argument, then again other placeholders
             result = checkBracesForOtherArgs.Append(validateArgumentThenOtherArguments);
 
-            result.TryDeterminize(out result);
+            result = result.TryDeterminize();
             ArgsToValidatingAutomaton[argListKey] = result;
 
             return result;

@@ -188,13 +188,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <inheritdoc cref="FromWeightFunction(TWeightFunction)"/>
         [Construction(nameof(ToAutomaton), UseWhen = nameof(UsesAutomatonRepresentation))]
         public static TThis FromWeightFunction(TAutomaton weightFunction)
-        {
-            Argument.CheckIfNotNull(weightFunction, nameof(weightFunction));
-
-            var result = new TThis();
-            result.SetWeightFunction(weightFunction);
-            return result;
-        }
+            => FromWeightFunction(WeightFunctionFactory.FromAutomaton(weightFunction));
 
         /// <summary>
         /// Creates a distribution which puts all probability mass on the empty sequence.
@@ -859,17 +853,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         /// <inheritdoc cref="SetWeightFunction(TWeightFunction,bool)"/>
         public void SetWeightFunction(TAutomaton weightFunction, bool normalizeStructure = true)
-        {
-            Argument.CheckIfNotNull(weightFunction, nameof(weightFunction));
-
-            this.sequenceToWeight = WeightFunctionFactory.FromAutomaton(weightFunction);
-            this.isNormalized = false;
-
-            if (normalizeStructure)
-            {
-                this.NormalizeStructure();
-            }
-        }
+            => SetWeightFunction(WeightFunctionFactory.FromAutomaton(weightFunction), normalizeStructure);
 
         /// <summary>
         /// Replaces the weight function of the current distribution with a given one.
@@ -948,23 +932,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Only point mass elements are supported.
         /// </summary>
         /// <param name="maxCount">The maximum support enumeration count.</param>
-        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
+        /// <param name="tryDeterminize">Try to determinize if this distribution uses
+        /// a string automaton representation.</param>
         /// <exception cref="AutomatonException">Thrown if enumeration is too large.</exception>
         /// <returns>The strings supporting this distribution</returns>
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
         {
-            if (tryDeterminize
-                && sequenceToWeight.UsesAutomatonRepresentation
-                && sequenceToWeight.AsAutomaton() is StringAutomaton sa
-                && sa.Data.IsEnumerable != false)
-            {
-                // Determinization of automaton may fail if distribution is not normalized.
-                this.EnsureNormalized();
-                sequenceToWeight.AsAutomaton().TryDeterminize(out var determinizedAutomaton);
-                // Sometimes automaton is not determinized, but is still made epsilon-free,
-                // which is a nice optimization to keep.
-                sequenceToWeight = WeightFunctionFactory.FromAutomaton(determinizedAutomaton);
-            }
+            if (tryDeterminize)
+                TryDeterminizeBeforeSupportEnumeration();
 
             return this.sequenceToWeight.EnumerateSupport(maxCount);
         }
@@ -975,21 +950,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="maxCount">The maximum support enumeration count.</param>
         /// <param name="result">The strings supporting this distribution.</param>
-        /// <param name="tryDeterminize">Try to determinize if this is a string automaton</param>
+        /// <param name="tryDeterminize">Try to determinize if this distribution uses
+        /// a string automaton representation.</param>
         /// <exception cref="AutomatonException">Thrown if enumeration is too large.</exception>
         /// <returns>True if successful, false otherwise.</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
         {
-            if (tryDeterminize
-                && sequenceToWeight.UsesAutomatonRepresentation 
-                && sequenceToWeight.AsAutomaton() is StringAutomaton sa
-                && sa.Data.IsEnumerable != false)
-            {
-                // Determinization of automaton may fail if distribution is not normalized.
-                this.EnsureNormalized();
-                if (sequenceToWeight.AsAutomaton().TryDeterminize(out var determinizedAutomaton))
-                    sequenceToWeight = WeightFunctionFactory.FromAutomaton(determinizedAutomaton);
-            }
+            if (tryDeterminize)
+                TryDeterminizeBeforeSupportEnumeration();
 
             return this.sequenceToWeight.TryEnumerateSupport(maxCount, out result);
         }
@@ -1010,6 +978,51 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             return this.sequenceToWeight.EnumeratePaths();
         }
+
+        /// <summary>
+        /// Tries to replace the internal representation of the current distribution with an equivalent
+        /// deterministic automaton, unless the current representation is guaranteed to produce
+        /// a deterministic automaton on conversion.
+        /// </summary>
+        /// <returns><see langword="true"/> if the internal representation of the current distribution
+        /// was successfully replaced with a deterministic automaton or is guaranteed to produce one
+        /// on direct conversion, <see langword="false"/> otherwise.</returns>
+        public bool TryDeterminize()
+        {
+            if (IsPointMass || (this is StringDistribution && !UsesAutomatonRepresentation))
+            {
+                return true;
+            }
+
+            var determinizationSuccess = ToNormalizedAutomaton().TryDeterminize(out var determinizationResult);
+            SetWeightFunction(determinizationResult, false);
+            return determinizationSuccess;
+        }
+
+        /// <summary>
+        /// Sets a value that, if not null, will be returned when computing the log probability of any sequence
+        /// which is in the support of this distribution.
+        /// </summary>
+        /// <param name="logValueOverride">A non-null value that should be returned when computing the log probability of any sequence
+        /// which is in the support of this distribution, or <see langword="null"/> to clear any existing override.</param>
+        public void SetLogValueOverride(double? logValueOverride)
+        {
+            // No need to clear logValueOverride fof non-automaton representations
+            if (logValueOverride.HasValue || UsesAutomatonRepresentation)
+            {
+                var workspace = ToAutomaton().WithLogValueOverride(logValueOverride);
+                // Normalizing structure can be useful only when logValueOverride == null
+                SetWeightFunction(workspace, !logValueOverride.HasValue);
+            }
+        }
+
+        /// <summary>
+        /// Computes a distribution <c>g(b) = sum_a f(a) T(a, b)</c>, where <c>f(a)</c> is the current distribution and <c>T(a, b)</c> is a given transducer.
+        /// </summary>
+        /// <param name="transducer">The transducer to project on.</param>
+        /// <returns>The projection.</returns>
+        public TThis ApplyTransducer<TTransducer>(TTransducer transducer) where TTransducer : Transducer<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TTransducer>, new()
+            => FromWeightFunction(IsPointMass ? transducer.ProjectSource(Point) : transducer.ProjectSource(ToAutomaton()));
 
         #endregion
 
@@ -1725,6 +1738,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private void NormalizeStructure()
         {
             sequenceToWeight = sequenceToWeight.NormalizeStructure();
+        }
+
+        private void TryDeterminizeBeforeSupportEnumeration()
+        {
+            if (sequenceToWeight.UsesAutomatonRepresentation
+                    && sequenceToWeight.AsAutomaton() is StringAutomaton sa
+                    && sa.Data.IsEnumerable != false)
+            {
+                // Determinization of automaton may fail if distribution is not normalized.
+                this.EnsureNormalized();
+                var determinizedAutomaton = sequenceToWeight.AsAutomaton().TryDeterminize();
+                // Sometimes automaton is not determinized, but is still made epsilon-free,
+                // which is a nice optimization to keep.
+                sequenceToWeight = WeightFunctionFactory.FromAutomaton(determinizedAutomaton);
+            }
         }
 
         #endregion

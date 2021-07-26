@@ -16,6 +16,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
     {
+        /// <inheritdoc cref="TryDeterminize(out TThis)" path="/summary"/>
+        /// <returns>Result automaton. Determinized automaton, if the operation was successful, current automaton or
+        /// an equvalent automaton without epsilon transitions otherwise.</returns>
+        public TThis TryDeterminize()
+        {
+            TryDeterminize(out TThis result);
+            return result;
+        }
+
         /// <summary>
         /// Attempts to determinize the automaton,
         /// i.e. modify it such that for every state and every element there is at most one transition that allows for that element,

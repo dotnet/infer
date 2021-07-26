@@ -514,7 +514,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal("ab\"", point.ToString(SequenceDistributionFormats.Friendly));
             Assert.Equal("ab\"", point.ToString(SequenceDistributionFormats.Regexp));
             Assert.Equal(
-@"digraph finite_state_machine {"                        + Environment.NewLine +   
+@"digraph finite_state_machine {"                        + Environment.NewLine +
 @"  rankdir=LR;"                                         + Environment.NewLine +
 @"  node [shape = doublecircle; label = ""0\nE=0""]; N0" + Environment.NewLine +
 @"  node [shape = circle; label = ""1\nE=0""]; N1"       + Environment.NewLine +
@@ -674,6 +674,105 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var probCurrentWord = Math.Exp(reWeightedWordModel.GetLogProb(currentWord));
                 Assert.Equal(scale * targetProbabilitiesPerLength[i], probCurrentWord, Eps);
             }
+        }
+
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SetLogValueOverride()
+        {
+            StringDistribution point = StringDistribution.PointMass("ab");
+            Assert.Equal(0.0, point.GetLogProb("ab"));
+            point.SetLogValueOverride(-1.0);
+            Assert.Equal(-1.0, point.GetLogProb("ab"));
+            Assert.Equal(double.NegativeInfinity, point.GetLogProb("cc"));
+            point.SetLogValueOverride(null);
+            Assert.Equal(0.0, point.GetLogProb("ab"));
+            Assert.Equal(double.NegativeInfinity, point.GetLogProb("cc"));
+
+            StringDistribution dict = StringDistribution.OneOf("ab", "cd");
+            StringInferenceTestUtilities.TestProbability(dict, 0.5, "ab", "cd");
+            dict.SetLogValueOverride(-1.0);
+            StringInferenceTestUtilities.TestLogProbability(dict, -1.0, "ab", "cd");
+            StringInferenceTestUtilities.TestLogProbability(dict, double.NegativeInfinity, "ef", "gh");
+            dict.SetLogValueOverride(null);
+            StringInferenceTestUtilities.TestProbability(dict, 0.5, "ab", "cd");
+            StringInferenceTestUtilities.TestLogProbability(dict, double.NegativeInfinity, "ef", "gh");
+
+            StringDistribution automaton = StringDistribution.Repeat("a");
+            StringInferenceTestUtilities.TestProbability(automaton, 1.0, "a", "aa");
+            automaton.SetLogValueOverride(-1.0);
+            StringInferenceTestUtilities.TestLogProbability(automaton, -1.0, "a", "aa");
+            StringInferenceTestUtilities.TestLogProbability(automaton, double.NegativeInfinity, "ef", "gh");
+            automaton.SetLogValueOverride(null);
+            StringInferenceTestUtilities.TestProbability(automaton, 1.0, "a", "aa");
+            StringInferenceTestUtilities.TestLogProbability(automaton, double.NegativeInfinity, "ef", "gh");
+        }
+
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void TryDeterminize()
+        {
+            StringDistribution point = StringDistribution.PointMass("ab");
+            Assert.True(point.TryDeterminize());
+            Assert.True(point.IsPointMass);
+            Assert.True(point.GetWeightFunction().IsPointMass);
+            Assert.True(point.ToAutomaton().IsDeterministic());
+
+            StringDistribution dict = StringDistribution.OneOf("ab", "cd");
+            Assert.True(dict.TryDeterminize());
+            Assert.False(dict.UsesAutomatonRepresentation);
+            Assert.True(dict.GetWeightFunction().IsDictionary);
+            Assert.True(dict.ToAutomaton().IsDeterministic());
+
+            var builder1 = new StringAutomaton.Builder();
+            builder1.Start
+                .AddEpsilonTransition(Weight.One)
+                .AddSelfTransition('a', Weight.One)
+                .SetEndWeight(Weight.One);
+            var determinizableAutomaton = builder1.GetAutomaton();
+            Assert.False(determinizableAutomaton.IsDeterministic());
+            StringDistribution automatonDeterminizable = StringDistribution.FromWeightFunction(determinizableAutomaton);
+            Assert.True(automatonDeterminizable.UsesAutomatonRepresentation);
+            Assert.True(automatonDeterminizable.TryDeterminize());
+            Assert.True(automatonDeterminizable.UsesAutomatonRepresentation);
+            Assert.True(automatonDeterminizable.ToAutomaton().IsDeterministic());
+
+            var builder2 = new StringAutomaton.Builder();
+            builder2.Start
+                .AddTransition('a', Weight.FromValue(2))
+                .AddSelfTransition('b', Weight.FromValue(0.5))
+                .AddTransition('c', Weight.FromValue(3.0))
+                .SetEndWeight(Weight.FromValue(4));
+            builder2.Start
+                .AddTransition('a', Weight.FromValue(5))
+                .AddSelfTransition('b', Weight.FromValue(0.1))
+                .AddTransition('c', Weight.FromValue(6.0))
+                .SetEndWeight(Weight.FromValue(7));
+            var nonDeterminizableAutomaton = builder2.GetAutomaton();
+            Assert.False(nonDeterminizableAutomaton.IsDeterministic());
+            StringDistribution automatonNonDeterminizable = StringDistribution.FromWeightFunction(nonDeterminizableAutomaton);
+            Assert.True(automatonNonDeterminizable.UsesAutomatonRepresentation);
+            Assert.False(automatonNonDeterminizable.TryDeterminize());
+            Assert.True(automatonNonDeterminizable.UsesAutomatonRepresentation);
+            Assert.False(automatonNonDeterminizable.ToAutomaton().IsDeterministic());
+        }
+
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void ApplyTransducer()
+        {
+            StringTransducer replace = StringTransducer.Replace("hello", "worlds");
+
+            var proj1 = StringDistribution.PointMass("hello").ApplyTransducer(replace);
+            Assert.True(proj1.IsPointMass);
+            Assert.Equal("worlds", proj1.Point);
+
+            var proj2 = StringDistribution.PointMass("worlds").ApplyTransducer(replace);
+            Assert.True(proj2.IsZero());
+
+            var proj3 = StringDistribution.OneOf("hello", "worlds").ApplyTransducer(replace);
+            Assert.True(proj3.IsPointMass);
+            Assert.Equal("worlds", proj3.Point);
         }
 
         #region Sampling tests
