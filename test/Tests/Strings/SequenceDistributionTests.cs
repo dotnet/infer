@@ -514,7 +514,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal("ab\"", point.ToString(SequenceDistributionFormats.Friendly));
             Assert.Equal("ab\"", point.ToString(SequenceDistributionFormats.Regexp));
             Assert.Equal(
-@"digraph finite_state_machine {"                        + Environment.NewLine +   
+@"digraph finite_state_machine {"                        + Environment.NewLine +
 @"  rankdir=LR;"                                         + Environment.NewLine +
 @"  node [shape = doublecircle; label = ""0\nE=0""]; N0" + Environment.NewLine +
 @"  node [shape = circle; label = ""1\nE=0""]; N1"       + Environment.NewLine +
@@ -759,7 +759,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         [Fact]
         [Trait("Category", "StringInference")]
-        public void ProjectOnTransducer()
+        public void ApplyTransducer()
         {
             StringTransducer replace = StringTransducer.Replace("hello", "worlds");
 
