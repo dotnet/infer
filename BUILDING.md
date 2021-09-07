@@ -27,6 +27,14 @@ All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produ
 1. In the test explorer search bar, type `-Trait:"BadTest" -Trait:"OpenBug" -Trait:"CompilerOptionsTest" -Trait:"Performance" -Trait:"Platform"` to exclude long-running tests and tests that are not supposed to succeed.
 1. Click `Run All`.
 
+## Building with Visual Studio Code
+
+1. Launch [Visual Studio Code](https://code.visualstudio.com/). 
+1. Select the Extensions button on the left, then install C# and the NuGet Package Manager extensions. 
+1. Select File -> Open Folder.. and select the folder containing Infer.sln. 
+1. Press F5 or select Run -> Start Debugging.  When prompted, select .NET Core and then select the example that you want to run.
+1. For more details, see the [README for the C# extension](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger.md).
+
 ## Building from the command line
 
 The core components of Infer&#46;NET run on .NET Core 3.1.  Some optional code, such as the [Examples Browser](https://dotnet.github.io/infer/userguide/The%20examples%20browser.html), use [Windows Forms](https://docs.microsoft.com/en-us/dotnet/framework/winforms/) and therefore require .NET framework or Mono. 

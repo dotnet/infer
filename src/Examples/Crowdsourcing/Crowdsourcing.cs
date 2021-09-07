@@ -177,7 +177,6 @@ namespace Crowdsourcing
             // Reset the random seed so results can be duplicated for the paper
             Rand.Restart(12347);
             var data = Datum.LoadData(@".\Data\" + dataSet + ".csv");
-            int totalLabels = data.Count();
 
             string modelName = GetModelName(dataSet, runType, TaskSelectionMethod.EntropyTask, WorkerSelectionMethod.RandomWorker);
             Results results = new Results();
