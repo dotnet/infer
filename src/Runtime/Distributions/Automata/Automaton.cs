@@ -2300,47 +2300,50 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             TThis noEpsilonTransitions = GetEpsilonClosure();
 
-            var condensation = noEpsilonTransitions.ComputeCondensation(noEpsilonTransitions.Start, tr => true, false);
-            double logNormalizer = condensation.GetWeightToEnd(noEpsilonTransitions.Start.Index).LogValue;
-            normalizedAutomaton = (TThis)this;
-            if (normalize)
+            using (var condensation = noEpsilonTransitions.ComputeCondensation(noEpsilonTransitions.Start, tr => true, false))
             {
-                if (!double.IsInfinity(logNormalizer))
+                double logNormalizer = condensation.GetWeightToEnd(noEpsilonTransitions.Start.Index).LogValue;
+                normalizedAutomaton = (TThis)this;
+                if (normalize)
                 {
-                    normalizedAutomaton = WithData(PushWeights());
-                }
-            }
-
-            return logNormalizer;
-
-            // Re-distributes weights of the states and transitions so that the underlying automaton becomes stochastic
-            // (i.e. sum of weights of all the outgoing transitions and the ending weight is 1 for every node).
-            DataContainer PushWeights()
-            {
-                var builder = Builder.FromAutomaton(noEpsilonTransitions);
-                for (int i = 0; i < builder.StatesCount; ++i)
-                {
-                    var state = builder[i];
-                    var weightToEnd = condensation.GetWeightToEnd(i);
-                    if (weightToEnd.IsZero)
+                    if (!double.IsInfinity(logNormalizer))
                     {
-                        continue; // End states cannot be reached from this state, no point in normalization
+                        normalizedAutomaton = WithData(PushWeights());
                     }
-
-                    var weightToEndInv = Weight.Inverse(weightToEnd);
-                    for (var transitionIterator = state.TransitionIterator; transitionIterator.Ok; transitionIterator.Next())
-                    {
-                        var transition = transitionIterator.Value;
-                        transitionIterator.Value = transition.With(weight: Weight.Product(
-                            transition.Weight,
-                            condensation.GetWeightToEnd(transition.DestinationStateIndex),
-                            weightToEndInv));
-                    }
-
-                    state.SetEndWeight(state.EndWeight * weightToEndInv);
                 }
 
-                return builder.GetData();
+                return logNormalizer;
+
+                // Re-distributes weights of the states and transitions so that the underlying automaton becomes stochastic
+                // (i.e. sum of weights of all the outgoing transitions and the ending weight is 1 for every node).
+                DataContainer PushWeights()
+                {
+                    var builder = Builder.FromAutomaton(noEpsilonTransitions);
+                    for (int i = 0; i < builder.StatesCount; ++i)
+                    {
+                        var state = builder[i];
+                        var weightToEnd = condensation.GetWeightToEnd(i);
+                        if (weightToEnd.IsZero)
+                        {
+                            continue; // End states cannot be reached from this state, no point in normalization
+                        }
+
+                        var weightToEndInv = Weight.Inverse(weightToEnd);
+                        for (var transitionIterator = state.TransitionIterator; transitionIterator.Ok; transitionIterator.Next())
+                        {
+                            var transition = transitionIterator.Value;
+                            transitionIterator.Value = transition.With(
+                                weight: Weight.Product(
+                                    transition.Weight,
+                                    condensation.GetWeightToEnd(transition.DestinationStateIndex),
+                                    weightToEndInv));
+                        }
+
+                        state.SetEndWeight(state.EndWeight * weightToEndInv);
+                    }
+
+                    return builder.GetData();
+                }
             }
         }
 

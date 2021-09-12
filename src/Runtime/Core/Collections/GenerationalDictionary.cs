@@ -103,6 +103,29 @@ namespace Microsoft.ML.Probabilistic.Core.Collections
             } 
         }
 
+        public void Update(TKey key, TValue value)
+        {
+            var currentGeneration = this.generation;
+            var hash = key.GetHashCode() | OccupiedMask;
+            var index = hash & this.mask;
+            for (var probe = 1;; ++probe)
+            {
+                if (this.entries[index].Generation != currentGeneration)
+                {
+                    throw new ArgumentException("Element with given key already does not exist in the dictionary");
+                }
+
+                if (this.entries[index].Hash == hash &&
+                    this.entries[index].Key.Equals(key))
+                {
+                    this.entries[index].Value = value;
+                    return;
+                }
+
+                index = (index + probe) & this.mask;
+            } 
+        }
+
         public void Clear()
         {
             this.filledEntriesCount = 0;

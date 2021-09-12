@@ -16,6 +16,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         internal static (GenerationalDictionary<(int, int), int>, Stack<(int, int, int)>) ProductState;
 
         [ThreadStatic]
-        private static (Stack<int>, GenerationalDictionary<int, TarjanStateInfo>, Stack<(TarjanStateInfo, int, int)>) FindStronglyConnectedComponentsState;
+        internal static (Stack<int>, GenerationalDictionary<int, TarjanStateInfo>, Stack<(TarjanStateInfo, int, int)>) FindStronglyConnectedComponentsState;
+
+        [ThreadStatic]
+        internal static GenerationalDictionary<int, CondensationStateInfo> ComputeCondensationState;
     }
 }
