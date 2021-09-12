@@ -9,6 +9,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Diagnostics;
     using System.Linq;
     using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -354,8 +355,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             srcAutomaton = srcAutomaton.GetEpsilonClosure();
 
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
-            var destStateCache = new Dictionary<(int, int), int>();
-            var stack = new Stack<(int state1, int state2, int destStateIndex)>();
+
+            var prevState = PreallocatedAutomataObjects.ProductState;
+            var destStateCache = prevState.Item1.IsInitialized
+                ? prevState.Item1
+                : GenerationalDictionary<(int, int), int>.Create();
+            var stack = prevState.Item2 ?? new Stack<(int state1, int state2, int destStateIndex)>();
+
+            PreallocatedAutomataObjects.ProductState = default;
 
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -369,7 +376,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var destState = result.AddState();
                     destState.SetEndWeight(mappingState.EndWeight * srcState.EndWeight);
                     stack.Push((mappingState.Index, srcState.Index, destState.Index));
-                    destStateCache[destPair] = destState.Index;
+                    destStateCache.Add(destPair, destState.Index);
                     destStateIndex = destState.Index;
                 }
 
@@ -378,7 +385,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // Populate the stack with start destination state
             result.StartStateIndex = CreateDestState(mappingAutomaton.Start, srcAutomaton.Start);
-            var stringAutomaton = srcAutomaton as StringAutomaton;
             var sourceDistributionHasLogProbabilityOverrides = stringAutomaton?.HasElementLogValueOverrides ?? false;
 
             while (stack.Count > 0)
@@ -452,6 +458,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
+            destStateCache.Clear();
+            PreallocatedAutomataObjects.ProductState = (destStateCache, stack);
+
             var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
             simplification.RemoveDeadStates();
             simplification.SimplifyIfNeeded();
@@ -487,8 +496,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var srcSequenceLength = sourceSequenceManipulator.GetLength(srcSequence);
             
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
-            var destStateCache = new Dictionary<(int, int), int>();
-            var stack = new Stack<(int state1, int state2, int destStateIndex)>();
+            var prevState = PreallocatedAutomataObjects.ProductState;
+            var destStateCache = prevState.Item1.IsInitialized
+                ? prevState.Item1
+                : GenerationalDictionary<(int, int), int>.Create();
+            var stack = prevState.Item2 ?? new Stack<(int state1, int state2, int destStateIndex)>();
+
+            PreallocatedAutomataObjects.ProductState = default;
 
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -503,7 +517,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             ? mappingState.EndWeight
                             : Weight.Zero);
                     stack.Push((mappingState.Index, srcSequenceIndex, destState.Index));
-                    destStateCache[destPair] = destState.Index;
+                    destStateCache.Add(destPair, destState.Index);
                     destStateIndex = destState.Index;
                 }
 
@@ -555,6 +569,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
             }
+
+            destStateCache.Clear();
+            PreallocatedAutomataObjects.ProductState = (destStateCache, stack);
 
             var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
             simplification.RemoveDeadStates();

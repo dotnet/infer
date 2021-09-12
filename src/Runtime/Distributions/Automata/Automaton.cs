@@ -15,6 +15,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
     using Microsoft.ML.Probabilistic.Serialization;
@@ -1405,8 +1406,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var builder = new Builder(0);
-            var productStateCache = new Dictionary<(int, int), int>(automaton1.States.Count + automaton2.States.Count);
-            var stack = new Stack<(int state1, int state2, int productStateIndex)>();
+
+            var prevState = PreallocatedAutomataObjects.ProductState;
+            var productStateCache = prevState.Item1.IsInitialized
+                ? prevState.Item1
+                : GenerationalDictionary<(int, int), int>.Create();
+            var stack = prevState.Item2 ?? new Stack<(int state1, int state2, int productStateIndex)>();
+
+            PreallocatedAutomataObjects.ProductState = default;
 
             // Creates product state and schedules product computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -1418,7 +1425,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var productState = builder.AddState();
                     productState.SetEndWeight(state1.EndWeight * state2.EndWeight);
                     stack.Push((state1.Index, state2.Index, productState.Index));
-                    productStateCache[destPair] = productState.Index;
+                    productStateCache.Add(destPair, productState.Index);
                     productStateIndex = productState.Index;
                 }
 
@@ -1478,11 +1485,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var bothInputsDeterminized = automaton1.Data.IsDeterminized == true && automaton2.Data.IsDeterminized == true;
             var determinizationState = bothInputsDeterminized ? (bool?)true : null;
 
+            productStateCache.Clear();
+            PreallocatedAutomataObjects.ProductState = (productStateCache, stack);
+
             var result = new TThis() { Data = builder.GetData(determinizationState) };
             if (determinizationState != true && result is StringAutomaton && tryDeterminize)
             {
                 result = result.TryDeterminize();
             }
+
             return result;
         }
 
@@ -1831,7 +1842,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // b) (stateIndex, sequencePos, mul, sumUntil) -
             //    sums values of transitions from this state. They will be on top of the stack
             // As an optimization, value calculated by (b) is cached, so if (a) notices that result for
-            // (stateIndex, sequencePos) already calculated it doesn't schedule any extra work
+            // (stateIndex, sequencePos) is already calculated it doesn't schedule any extra work
             double GetLogValueGeneral()
             {
                 var sequenceLength = SequenceManipulator.GetLength(sequence);

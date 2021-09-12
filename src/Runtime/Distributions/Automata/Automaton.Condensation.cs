@@ -8,6 +8,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Diagnostics;
 
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
@@ -49,7 +50,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Represents the <a href="http://en.wikipedia.org/wiki/Condensation_(graph_theory)">condensation</a>
         /// of an automaton graph.
         /// </summary>
-        public class Condensation
+        public class Condensation : IDisposable
         {
             /// <summary>
             /// Automaton to which <see cref="Root"/> belongs.
@@ -201,11 +202,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var components = new List<StronglyConnectedComponent>();
 
                 var states = this.automaton.States;
-                var stateIdStack = new Stack<int>();
-                var stateIdToStateInfo = new Dictionary<int, TarjanStateInfo>();
                 int traversalIndex = 0;
 
-                var traversalStack = new Stack<(TarjanStateInfo, int stateIndex, int currentTransitionIndex)>();
+                var prevState = PreallocatedAutomataObjects.FindStronglyConnectedComponentsState;
+
+                var stateIdStack =  prevState.Item1 ?? new Stack<int>();
+                var stateIdToStateInfo = prevState.Item2.IsInitialized
+                    ? prevState.Item2
+                    : GenerationalDictionary<int, TarjanStateInfo>.Create();
+                var traversalStack = prevState.Item3 ?? new Stack<(TarjanStateInfo, int stateIndex, int currentTransitionIndex)>();
 
                 traversalStack.Push((null, this.Root.Index, 0));
                 while (traversalStack.Count > 0)
@@ -282,6 +287,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         this.TotalStatesCount += statesInComponent.Count;
                     }
                 }
+
+                stateIdToStateInfo.Clear();
+                stateIdStack.Clear();
+                PreallocatedAutomataObjects.FindStronglyConnectedComponentsState = (stateIdStack, stateIdToStateInfo, traversalStack);
 
                 return components;
             }
@@ -429,37 +438,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// Ending weights are not taken into account.
                 /// </summary>
                 public Weight UpwardWeightFromRoot { get; set; }
-            }
-
-            /// <summary>
-            /// Stores the information maintained by the Tarjan's algorithm.
-            /// </summary>
-            private class TarjanStateInfo
-            {
-                /// <summary>
-                /// Initializes a new instance of the <see cref="TarjanStateInfo"/> class.
-                /// </summary>
-                /// <param name="traversalIndex">The current traversal index.</param>
-                public TarjanStateInfo(int traversalIndex)
-                {
-                    this.TraversalIndex = traversalIndex;
-                    this.Lowlink = traversalIndex;
-                }
-
-                /// <summary>
-                /// Gets or sets a value indicating whether the state is currently in stack.
-                /// </summary>
-                public bool InStack { get; set; }
-
-                /// <summary>
-                /// Gets the traversal index of the state.
-                /// </summary>
-                public int TraversalIndex { get; }
-
-                /// <summary>
-                /// Gets or sets the lowlink of the state.
-                /// </summary>
-                public int Lowlink { get; set; }
             }
         }
     }
