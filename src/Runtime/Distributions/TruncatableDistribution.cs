@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <inheritdoc/>
         public override string ToString()
         {
-            return CanGetProbLessThan.ToString();
+            return $"TruncatableDistribution({CanGetProbLessThan})";
         }
     }
 }
