@@ -1744,9 +1744,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             double GetLogValueEpsilonFree()
             {
                 var sequenceLength = SequenceManipulator.GetLength(sequence);
-                var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
-                var valuesStack = new Stack<Weight>();
-                var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+                var (operationsStack, valuesStack, valueCache) = PreallocatedAutomataObjects.GetLogValueState;
                 operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
                 while (operationsStack.Count > 0)
@@ -1768,7 +1766,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             {
                                 // We are at the end of sequence. So put an answer on stack
                                 valuesStack.Push(state.EndWeight * multiplier);
-                                valueCache[statePosPair] = state.EndWeight;
+                                valueCache.Add(statePosPair, state.EndWeight);
                             }
                             else
                             {
@@ -1801,7 +1799,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         valuesStack.Push(multiplier * sum);
-                        valueCache[statePosPair] = sum;
+                        valueCache.Add(statePosPair, sum);
                     }
                 }
 
@@ -1836,9 +1834,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             double GetLogValueGeneral()
             {
                 var sequenceLength = SequenceManipulator.GetLength(sequence);
-                var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
-                var valuesStack = new Stack<Weight>();
-                var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+                var (operationsStack, valuesStack, valueCache) = PreallocatedAutomataObjects.GetLogValueState;
                 operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
                 while (operationsStack.Count > 0)
@@ -1860,7 +1856,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             {
                                 // We are at the end of sequence. So put an answer on stack
                                 valuesStack.Push(closure.EndWeight * multiplier);
-                                valueCache[statePosPair] = closure.EndWeight;
+                                valueCache.Add(statePosPair, closure.EndWeight);
                             }
                             else
                             {
@@ -1903,7 +1899,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         valuesStack.Push(multiplier * sum);
-                        valueCache[statePosPair] = sum;
+                        valueCache.Add(statePosPair, sum);
                     }
                 }
 

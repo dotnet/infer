@@ -9,7 +9,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
     using Microsoft.ML.Probabilistic.Core.Collections;
 
-    // TODO: document
+    /// <summary>
+    /// A cache for preallocated temporary data to reduce GC pressure.
+    /// </summary>
+    /// <remarks>
+    /// A lot of automata operations need large short-lived single-function scope temporary data
+    /// structures. Allocating them using regular `new` keyword puts a lot op strain on GC.
+    /// To avoid that a set of thread-local preallocated objects is kept around.
+    ///
+    /// These objects are put into a single static class for 3 reasons:
+    /// 1. It is easier to see where these optimizations are used.
+    /// 2. This class can be non-generic. Accessing non-generic static methods and fields is
+    ///    slightly faster.
+    /// 3. This also allows to reuse datastructures between methods of different instantiations
+    ///    of automata and even between classes (Like `ProductState` which is used by `Automaton`
+    ///    and `Transducer` classes).
+    /// </remarks>
     internal static class PreallocatedAutomataObjects
     {
         [ThreadStatic]
@@ -20,6 +35,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         [ThreadStatic]
         private static GenerationalDictionary<int, CondensationStateInfo> computeCondensationState;
+
+        [ThreadStatic]
+        private static (Stack<(int, int, Weight, int)>, Stack<Weight>, GenerationalDictionary<(int, int), Weight>) getLogValueState;
 
         [ThreadStatic]
         private static (int[], int[]) buildReversedGraphState;
@@ -94,6 +112,31 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
         }
 
+        internal static (Stack<(int, int, Weight, int)>, Stack<Weight>, GenerationalDictionary<(int, int), Weight>) GetLogValueState
+        {
+            get
+            {
+                var result = getLogValueState;
+
+                if (result.Item1 == null)
+                {
+                    result = ValueTuple.Create(
+                        new Stack<(int, int, Weight, int)>(),
+                        new Stack<Weight>(),
+                        new GenerationalDictionary<(int, int), Weight>());
+                    getLogValueState = result;
+                }
+
+                result.Item1.Clear();
+                result.Item2.Clear();
+                result.Item3.Clear();
+
+                return result;
+            }
+        }
+
+        // Note: second array is returned without being cleared. This is intentional - it
+        // would be fully overwritten by caller.
         internal static (int[], int[]) GetBuildReversedGraphState(int statesCount, int edgesCount)
         {
             var result = buildReversedGraphState;
@@ -140,6 +183,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
+        // Note: array is returned without being cleared. This is intentional - it
+        // would be fully overwritten by caller.
         internal static int[] GetRemoveStatesState(int statesCount)
         {
             var result = removeStatesState;
