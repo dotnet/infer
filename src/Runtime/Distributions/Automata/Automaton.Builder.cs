@@ -23,6 +23,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <remarks>
             /// StringDistribution operations create enormous amounts of automata objects.
             /// Reusing containers allows to avoid a lot of intermediate allocations.
+            ///
+            /// See also <see cref="PreallocatedAutomataObjects"/> class and comments on it.
+            /// This field can't go into that class because it depends on generic parameters.
             /// </remarks>
             [ThreadStatic]
             private static (List<LinkedStateData>, List<LinkedTransitionNode>) preallocatedContainers;
@@ -66,13 +69,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 this.states = preallocated.Item1 ?? new List<LinkedStateData>();
                 this.transitions = preallocated.Item2 ?? new List<LinkedTransitionNode>();
 
-                if (preallocated != default)
-                {
-                    // Generally only one builder is used at once.
-                    // In case two builders are created, ensure that another builder won't use
-                    // the same containers.
-                    preallocatedContainers = default;
-                }
+
+                // Generally only one builder is used at once.
+                // In case two builders are created, ensure that another builder won't use
+                // the same containers.
+                preallocatedContainers = default;
 
                 this.maxStateCount = MaxStateCount;
                 this.AddStates(startStateCount);
@@ -494,7 +495,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // Detect two very common automata shapes
                 var isEnumerable = hasOnlyForwardTransitions ? true : (bool?)null;
 
-                // Return lists into the preallocated cache
+                // Return lists into the preallocated cache. This will make this object unusable
+                // from now on.
                 this.states.Clear();
                 this.transitions.Clear();
                 preallocatedContainers = (this.states, this.transitions);
