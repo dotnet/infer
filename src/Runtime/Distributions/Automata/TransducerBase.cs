@@ -356,13 +356,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
 
-            var prevState = PreallocatedAutomataObjects.ProductState;
-            var destStateCache = prevState.Item1.IsInitialized
-                ? prevState.Item1
-                : GenerationalDictionary<(int, int), int>.Create();
-            var stack = prevState.Item2 ?? new Stack<(int state1, int state2, int destStateIndex)>();
-
-            PreallocatedAutomataObjects.ProductState = default;
+            var (destStateCache, stack) = PreallocatedAutomataObjects.ProductState;
 
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -458,9 +452,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            destStateCache.Clear();
-            PreallocatedAutomataObjects.ProductState = (destStateCache, stack);
-
             var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
             simplification.RemoveDeadStates();
             simplification.SimplifyIfNeeded();
@@ -496,13 +487,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var srcSequenceLength = sourceSequenceManipulator.GetLength(srcSequence);
             
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
-            var prevState = PreallocatedAutomataObjects.ProductState;
-            var destStateCache = prevState.Item1.IsInitialized
-                ? prevState.Item1
-                : GenerationalDictionary<(int, int), int>.Create();
-            var stack = prevState.Item2 ?? new Stack<(int state1, int state2, int destStateIndex)>();
-
-            PreallocatedAutomataObjects.ProductState = default;
+            var (destStateCache, stack) = PreallocatedAutomataObjects.ProductState;
 
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -569,9 +554,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
             }
-
-            destStateCache.Clear();
-            PreallocatedAutomataObjects.ProductState = (destStateCache, stack);
 
             var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
             simplification.RemoveDeadStates();

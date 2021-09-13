@@ -1406,14 +1406,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var builder = new Builder(0);
-
-            var prevState = PreallocatedAutomataObjects.ProductState;
-            var productStateCache = prevState.Item1.IsInitialized
-                ? prevState.Item1
-                : GenerationalDictionary<(int, int), int>.Create();
-            var stack = prevState.Item2 ?? new Stack<(int state1, int state2, int productStateIndex)>();
-
-            PreallocatedAutomataObjects.ProductState = default;
+            var (productStateCache, stack) = PreallocatedAutomataObjects.ProductState;
 
             // Creates product state and schedules product computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -1484,9 +1477,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             var bothInputsDeterminized = automaton1.Data.IsDeterminized == true && automaton2.Data.IsDeterminized == true;
             var determinizationState = bothInputsDeterminized ? (bool?)true : null;
-
-            productStateCache.Clear();
-            PreallocatedAutomataObjects.ProductState = (productStateCache, stack);
 
             var result = new TThis() { Data = builder.GetData(determinizationState) };
             if (determinizationState != true && result is StringAutomaton && tryDeterminize)

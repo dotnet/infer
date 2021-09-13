@@ -229,7 +229,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="removeLabel">Label which marks states which should be deleted</param>
             public int RemoveStates(bool[] labels, bool removeLabel)
             {
-                var oldToNewStateIdMapping = new int[this.states.Count];
+                var oldToNewStateIdMapping = PreallocatedAutomataObjects.GetRemoveStatesState(this.states.Count);
+
                 var newStateId = 0;
                 var deadStateCount = 0;
                 for (var stateId = 0; stateId < this.states.Count; ++stateId)

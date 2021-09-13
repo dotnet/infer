@@ -120,12 +120,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 this.components = this.FindStronglyConnectedComponents();
 
                 this.stateInfo = PreallocatedAutomataObjects.ComputeCondensationState;
-                PreallocatedAutomataObjects.ComputeCondensationState = default;
-
-                if (!this.stateInfo.IsInitialized)
-                {
-                    this.stateInfo = GenerationalDictionary<int, CondensationStateInfo>.Create();
-                }
 
                 for (int i = 0; i < this.components.Count; ++i)
                 {
@@ -151,7 +145,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public void Dispose()
             {
-                this.stateInfo.Clear();
                 PreallocatedAutomataObjects.ComputeCondensationState = this.stateInfo;
             }
 
@@ -214,13 +207,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var states = this.automaton.States;
                 int traversalIndex = 0;
 
-                var prevState = PreallocatedAutomataObjects.FindStronglyConnectedComponentsState;
-
-                var stateIdStack =  prevState.Item1 ?? new Stack<int>();
-                var stateIdToStateInfo = prevState.Item2.IsInitialized
-                    ? prevState.Item2
-                    : GenerationalDictionary<int, TarjanStateInfo>.Create();
-                var traversalStack = prevState.Item3 ?? new Stack<(TarjanStateInfo, int stateIndex, int currentTransitionIndex)>();
+                var (stateIdStack, stateIdToStateInfo, traversalStack) =
+                    PreallocatedAutomataObjects.FindStronglyConnectedComponentsState;
 
                 traversalStack.Push((null, this.Root.Index, 0));
                 while (traversalStack.Count > 0)
@@ -297,10 +285,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         this.TotalStatesCount += statesInComponent.Count;
                     }
                 }
-
-                stateIdToStateInfo.Clear();
-                stateIdStack.Clear();
-                PreallocatedAutomataObjects.FindStronglyConnectedComponentsState = (stateIdStack, stateIdToStateInfo, traversalStack);
 
                 return components;
             }

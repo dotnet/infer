@@ -11,7 +11,7 @@ namespace Microsoft.ML.Probabilistic.Core.Collections
     /// Caveat is that it does not set values to `default` values, so it should not be used
     /// with reference types.
     /// </summary>
-    public struct GenerationalDictionary<TKey, TValue>
+    public class GenerationalDictionary<TKey, TValue>
         where TKey : IEquatable<TKey>
     {
         private const int OccupiedMask = 1 << 31;
@@ -30,15 +30,13 @@ namespace Microsoft.ML.Probabilistic.Core.Collections
         private int mask;
         private int filledEntriesCount;
 
-        public static GenerationalDictionary<TKey, TValue> Create()
+        public GenerationalDictionary()
         {
-            var result = new GenerationalDictionary<TKey, TValue>();
-            result.Initialize();
-            return result;
+            this.Initialize();
         }
 
-        public bool IsInitialized => this.entries != null;
-        
+        public int Count => this.filledEntriesCount;
+
         public TValue this[TKey key] =>
             this.TryGetValue(key, out var value) ? value : throw new Exception("Value not found");
 
