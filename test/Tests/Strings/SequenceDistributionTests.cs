@@ -559,6 +559,91 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void WordModel()
+        {
+            // We want to build a word model as a reasonably simple StringDistribution. It
+            // should satisfy the following:
+            // (1) The probability of a word of moderate length should not be
+            //     significantly less than the probability of a shorter word.
+            // (2) The probability of a specific word conditioned on its length matches that of
+            //     words in the target language.
+            // We achieve this by putting non-normalized character distributions on the edges. The
+            // StringDistribution is unaware that these are non-normalized.
+            // The StringDistribution itself is non-normalizable.
+            const double TargetProb1 = 0.05;
+            const double Ratio1 = 0.4;
+            const double TargetProb2 = TargetProb1 * Ratio1;
+            const double Ratio2 = 0.2;
+            const double TargetProb3 = TargetProb2 * Ratio2;
+            const double TargetProb4 = TargetProb3 * Ratio2;
+            const double TargetProb5 = TargetProb4 * Ratio2;
+            const double Ratio3 = 0.999;
+            const double TargetProb6 = TargetProb5 * Ratio3;
+            const double TargetProb7 = TargetProb6 * Ratio3;
+            const double TargetProb8 = TargetProb7 * Ratio3;
+            const double Ratio4 = 0.9;
+            const double TargetProb9 = TargetProb8 * Ratio4;
+            const double TargetProb10 = TargetProb9 * Ratio4;
+
+            var targetProbabilitiesPerLength = new double[]
+            {
+                TargetProb1, TargetProb2, TargetProb3, TargetProb4, TargetProb5, TargetProb6, TargetProb7, TargetProb8, TargetProb9, TargetProb10
+            };
+
+            var charDistUpper = ImmutableDiscreteChar.Upper();
+            var charDistLower = ImmutableDiscreteChar.Lower();
+            var charDistUpperNarrow = ImmutableDiscreteChar.OneOf('A', 'B');
+            var charDistLowerNarrow = ImmutableDiscreteChar.OneOf('a', 'b');
+
+            var workspace = new StringAutomaton.Builder();
+            var state = workspace.Start;
+
+            void AddCharToModel(ImmutableDiscreteChar c, double ratio)
+            {
+                var realCharProb = c.Ranges.First().Probability;
+                var weight = Weight.FromValue(ratio) * Weight.Inverse(realCharProb);
+                state = state.AddTransition(c, weight);
+                state.SetEndWeight(Weight.One);
+            }
+
+            AddCharToModel(charDistUpper, TargetProb1);
+            AddCharToModel(charDistLower, Ratio1);
+            AddCharToModel(charDistLower, Ratio2);
+            AddCharToModel(charDistLower, Ratio2);
+            AddCharToModel(charDistLower, Ratio2);
+            AddCharToModel(charDistLower, Ratio3);
+            AddCharToModel(charDistLower, Ratio3);
+            AddCharToModel(charDistLower, Ratio3);
+            AddCharToModel(charDistLower, Ratio4);
+            AddCharToModel(charDistLower, Ratio4);
+
+            state.AddTransition(charDistLower, Weight.One, state.Index);
+
+            var wordModel = new StringDistribution();
+            wordModel.SetWeightFunction(workspace.GetAutomaton());
+
+            const string Word = "Abcdefghij";
+
+            const double Eps = 1e-5;
+            for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
+            {
+                var currentWord = Word.Substring(0, i + 1);
+                var probCurrentWord = Math.Exp(wordModel.GetLogProb(currentWord));
+                Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
+            }
+
+            // Copied model
+            var copiedModel = StringDistribution.FromWeightFunction(StringTransducer.Copy().ProjectSource(wordModel.ToAutomaton()));
+            // Under transducer.
+            for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
+            {
+                var currentWord = Word.Substring(0, i + 1);
+                var probCurrentWord = Math.Exp(copiedModel.GetLogProb(currentWord));
+                Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
+            }
+        }
+
+        [Fact]
         [Trait("Category", "StringInference")]
         public void SetLogValueOverride()
         {
