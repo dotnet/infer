@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Utilities
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.Serialization;
 
@@ -117,7 +118,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
         /// </summary>
         /// <param name="condition">Condition that must be true</param>
         /// <param name="message">Message to be output by the exception</param>
-        [ConditionalAttribute("DEBUG")]
+        [Conditional("DEBUG")]
         public static void IsTrue(bool condition, string message)
         {
             if (!condition)
@@ -130,12 +131,27 @@ namespace Microsoft.ML.Probabilistic.Utilities
         /// Checks if a condition is true; if not, an exception  without error message is thrown.
         /// </summary>
         /// <param name="condition">Condition that must be true</param>
-        [ConditionalAttribute("DEBUG")]
+        [Conditional("DEBUG")]
         public static void IsTrue(bool condition)
         {
             if (!condition)
             {
                 throw new AssertFailedException();
+            }
+        }
+
+        /// <summary>
+        /// Throws an exception if the collection has duplicate elements.
+        /// </summary>
+        /// <param name="collection">Any collection</param>
+        [Conditional("DEBUG")]
+        public static void Distinct(IEnumerable<int> collection)
+        {
+            HashSet<int> set = new HashSet<int>();
+            foreach (var item in collection)
+            {
+                if (set.Contains(item)) throw new AssertFailedException($"duplicate array element: {item}");
+                set.Add(item);
             }
         }
     }

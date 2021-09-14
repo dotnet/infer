@@ -66,8 +66,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 if (largerIndex == 0) return 0;
                 if (largerIndex == quantiles.Length) return 1;
                 int smallerIndex = largerIndex - 1;
-                double slope = (quantiles[largerIndex] - quantiles[smallerIndex]) / (probabilities[largerIndex] - probabilities[smallerIndex]);
-                return probabilities[smallerIndex] + (x - quantiles[smallerIndex]) / slope;
+                double upperItem = quantiles[largerIndex];
+                double lowerItem = quantiles[smallerIndex];
+                double diff = upperItem - lowerItem;
+                double frac;
+                if (diff > double.MaxValue)
+                {
+                    double scale = System.Math.Max(System.Math.Abs(upperItem), System.Math.Abs(lowerItem));
+                    double lowerItemOverScale = lowerItem / scale;
+                    diff = upperItem / scale - lowerItemOverScale;
+                    double slope = diff / (probabilities[largerIndex] - probabilities[smallerIndex]);
+                    frac = (x / scale - lowerItemOverScale) / slope;
+                }
+                else
+                {
+                    double slope = diff / (probabilities[largerIndex] - probabilities[smallerIndex]);
+                    frac = (x - lowerItem) / slope;
+                }
+                return probabilities[smallerIndex] + frac;
             }
         }
 
@@ -101,11 +117,27 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 if (largerIndex == 0) return quantiles[largerIndex];
                 int smallerIndex = largerIndex - 1;
                 if (largerIndex == probabilities.Length) return quantiles[smallerIndex];
-                double slope = (quantiles[largerIndex] - quantiles[smallerIndex]) / (probabilities[largerIndex] - probabilities[smallerIndex]);
-                // Solve for the largest x such that probabilities[smallerIndex] + (x - quantiles[smallerIndex]) / slope <= probability.
-                double frac = MMath.LargestDoubleSum(-probabilities[smallerIndex], probability);
-                double offset = MMath.LargestDoubleProduct(frac, slope);
-                return MMath.LargestDoubleSum(quantiles[smallerIndex], offset);
+                double upperItem = quantiles[largerIndex];
+                double lowerItem = quantiles[smallerIndex];
+                double diff = upperItem - lowerItem;
+                if (diff > double.MaxValue)
+                {
+                    double scale = System.Math.Max(System.Math.Abs(upperItem), System.Math.Abs(lowerItem));
+                    double lowerItemOverScale = lowerItem / scale;
+                    diff = upperItem / scale - lowerItemOverScale;
+                    double slope = diff / (probabilities[largerIndex] - probabilities[smallerIndex]);
+                    double frac = MMath.LargestDoubleSum(-probabilities[smallerIndex], probability);
+                    double offset = MMath.LargestDoubleProduct(frac, slope);
+                    return MMath.LargestDoubleSum(lowerItemOverScale, offset) * scale;
+                }
+                else
+                {
+                    double slope = diff / (probabilities[largerIndex] - probabilities[smallerIndex]);
+                    // Solve for the largest x such that probabilities[smallerIndex] + (x - quantiles[smallerIndex]) / slope <= probability.
+                    double frac = MMath.LargestDoubleSum(-probabilities[smallerIndex], probability);
+                    double offset = MMath.LargestDoubleProduct(frac, slope);
+                    return MMath.LargestDoubleSum(lowerItem, offset);
+                }
             }
         }
     }

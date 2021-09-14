@@ -706,23 +706,29 @@ namespace Crowdsourcing
                 logProb += nlp;
             }
 
+            if (goldX == 0) Console.WriteLine($"Accuracy and recall are NaN because no gold labels were provided.");
             Accuracy = correct / (double)goldX;
-            NegativeLogProb = logProb / (double)goldX;
+            NegativeLogProb = logProb / goldX;
             ModelConfusionMatrix = confusionMatrix;
 
             // Compute average recall
             double sumRec = 0;
-            for (int i = 0; i < labelCount; i++)
+            int actualLabelCount = 0;
+            for (int goldLabel = 0; goldLabel < labelCount; goldLabel++)
             {
-                double classSum = 0;
-                for (int j = 0; j < labelCount; j++)
+                double goldLabelCount = 0;
+                for (int predictedLabel = 0; predictedLabel < labelCount; predictedLabel++)
                 {
-                    classSum += confusionMatrix[i, j];
+                    goldLabelCount += confusionMatrix[goldLabel, predictedLabel];
                 }
 
-                sumRec += confusionMatrix[i, i] / classSum;
+                if (goldLabelCount > 0)
+                {
+                    actualLabelCount++;
+                    sumRec += confusionMatrix[goldLabel, goldLabel] / goldLabelCount;
+                }
             }
-            AvgRecall = sumRec / labelCount;
+            AvgRecall = sumRec / actualLabelCount;
         }
 
         /// <summary>

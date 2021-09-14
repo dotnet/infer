@@ -14,9 +14,9 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Models;
 
     /// <summary>
-    /// Tests for <see cref="ConcatOp"/>.
+    /// Tests for <see cref="StringConcatOp"/>.
     /// </summary>
-    public class ConcatOpTests
+    public class StringConcatOpTests
     {
         /// <summary>
         /// The tolerance used when comparing probabilities.
