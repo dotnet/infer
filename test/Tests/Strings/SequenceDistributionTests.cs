@@ -567,8 +567,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             //     significantly less than the probability of a shorter word.
             // (2) The probability of a specific word conditioned on its length matches that of
             //     words in the target language.
-            // We achieve this by putting non-normalized character distributions on the edges. The
-            // StringDistribution is unaware that these are non-normalized.
+            // We achieve this by putting weights which do not sum to 1 on transitions.
             // The StringDistribution itself is non-normalizable.
             const double TargetProb1 = 0.05;
             const double Ratio1 = 0.4;
@@ -592,8 +591,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var charDistUpper = ImmutableDiscreteChar.Upper();
             var charDistLower = ImmutableDiscreteChar.Lower();
-            var charDistUpperNarrow = ImmutableDiscreteChar.OneOf('A', 'B');
-            var charDistLowerNarrow = ImmutableDiscreteChar.OneOf('a', 'b');
 
             var workspace = new StringAutomaton.Builder();
             var state = workspace.Start;
