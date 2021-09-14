@@ -134,7 +134,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             index = ~index;
             // quantiles[index-1] < x < quantiles[index]
-            double frac = (x - quantiles[index - 1]) / (quantiles[index] - quantiles[index - 1]);
+            double diff = quantiles[index] - quantiles[index - 1];
+            double frac;
+            if (diff > double.MaxValue)
+            {
+                double scale = Math.Max(Math.Abs(quantiles[index]), Math.Abs(quantiles[index - 1]));
+                double q = quantiles[index - 1] / scale;
+                frac = (x / scale - q) / (quantiles[index] / scale - q);
+            }
+            else
+            {
+                frac = (x - quantiles[index - 1]) / diff;
+            }
             return (index + frac) / (n + 1);
         }
 
@@ -242,7 +253,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 index++;
             }
             // quantiles[index-1] < x <= quantiles[index]
-            double frac = (x - quantiles[index - 1]) / (quantiles[index] - quantiles[index - 1]);
+            double diff = quantiles[index] - quantiles[index - 1];
+            double frac;
+            if (diff > double.MaxValue)
+            {
+                double scale = Math.Max(Math.Abs(quantiles[index]), Math.Abs(quantiles[index - 1]));
+                double q = quantiles[index - 1] / scale;
+                frac = (x / scale - q) / (quantiles[index] / scale - q);
+            }
+            else
+            {
+                frac = (x - quantiles[index - 1]) / diff;
+            }
             return (index + frac) / (n + 1);
         }
 
