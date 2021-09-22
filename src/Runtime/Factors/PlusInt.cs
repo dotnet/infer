@@ -113,17 +113,22 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (a.IsPointMass)
                 return SumAverageConditional(a.Point, b, result);
+            if (b.IsPointMass)
+                return SumAverageConditional(a, b.Point, result);
             Vector probs = result.GetWorkspace();
-            probs.SetAllElementsTo(0.0);
-            for (int i = 0; i < a.Dimension; i++)
+            // Iterating in reverse order ensures that a[i] and b[i] are never read after probs[i] is written, so they can share the same array.
+            for (int sum = probs.Count - 1; sum >= 0; sum--)
             {
-                double pa = a[i];
-                if (pa == 0.0) continue;
-                for (int j = 0; j < b.Dimension; j++)
+                double p = 0;
+                for (int i = Math.Max(0, sum - b.Dimension + 1); i < a.Dimension; i++)
                 {
-                    if(i+j < probs.Count)
-                        probs[i + j] += (pa * b[j]);
+                    if (i > sum) break;
+                    int j = sum - i;
+                    // j >= 0 implies sum >= i
+                    // j < b.Dimension implies sum < i + b.Dimension
+                    p += a[i] * b[j];
                 }
+                probs[sum] = p;
             }
             result.SetProbs(probs);
             return result;
@@ -133,12 +138,38 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Discrete SumAverageConditional(int a, Discrete b, Discrete result)
         {
             Vector probs = result.GetWorkspace();
-            probs.SetAllElementsTo(0.0);
             int minSum = Math.Max(0, a);
-            int maxSum = Math.Min(probs.Count - 1, b.Dimension - 1 + a);
-            for (int sum = minSum; sum <= maxSum; sum++)
+            int maxSumPlus1 = Math.Min(probs.Count, b.Dimension + a);
+            bool sameObject = ReferenceEquals(b, result);
+            if (!sameObject)
             {
-                probs[sum] = b[sum-a];
+                probs.SetAllElementsTo(0.0);
+            }
+            if (a <= 0)
+            {
+                for (int sum = minSum; sum < maxSumPlus1; sum++)
+                {
+                    probs[sum] = b[sum - a];
+                }
+            }
+            else
+            {
+                // Iterating in reverse order ensures that b[i] is never read after probs[i] is written, so they can share the same array.
+                for (int sum = maxSumPlus1 - 1; sum >= minSum; sum--)
+                {
+                    probs[sum] = b[sum - a];
+                }
+            }
+            if (sameObject)
+            {
+                for (int sum = 0; sum < minSum; sum++)
+                {
+                    probs[sum] = 0;
+                }
+                for (int sum = maxSumPlus1; sum < probs.Count; sum++)
+                {
+                    probs[sum] = 0;
+                }
             }
             result.SetProbs(probs);
             return result;
@@ -174,6 +205,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntegerPlusOp"]/message_doc[@name="AAverageConditional(Discrete, Discrete, Discrete)"]/*'/>
         public static Discrete AAverageConditional(Discrete sum, Discrete b, Discrete result)
         {
+            if (ReferenceEquals(sum, result)) throw new ArgumentException("result and sum are the same object", nameof(result));
+            if (ReferenceEquals(b, result)) throw new ArgumentException("result and b are the same object", nameof(result));
             // message to a = sum_b p(sum = a+b) p(b)
             Vector probs = result.GetWorkspace();
             for (int i = 0; i < result.Dimension; i++)
@@ -193,24 +226,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntegerPlusOp"]/message_doc[@name="AAverageConditional(Discrete, int, Discrete)"]/*'/>
         public static Discrete AAverageConditional(Discrete sum, int b, Discrete result)
         {
-            // message to a = p(sum = a+b)
-            Vector probs = result.GetWorkspace();
-            int maxPlus1 = sum.Dimension - b;
-            for (int i = Math.Max(0,-b); (i < result.Dimension) && (i < maxPlus1); i++)
-            {
-                probs[i] = sum[i + b];
-            }
-            for (int i = maxPlus1; i < result.Dimension; i++)
-            {
-                probs[i] = 0.0;
-            }
-            result.SetProbs(probs);
-            return result;
+            return SumAverageConditional(sum, -b, result);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntegerPlusOp"]/message_doc[@name="AAverageConditional(int, Discrete, Discrete)"]/*'/>
         public static Discrete AAverageConditional(int sum, Discrete b, Discrete result)
         {
+            if (ReferenceEquals(b, result)) throw new ArgumentException("result and b are the same object", nameof(result));
             // message to a = p(b = sum-a)
             Vector probs = result.GetWorkspace();
             int min = sum - (b.Dimension - 1);

@@ -779,8 +779,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 double sum = prob.Sum();
                 if (double.IsInfinity(sum) || double.IsNaN(sum)) throw new DivideByZeroException();
-                if (sum == 0) throw new AllZeroException();
-                prob.Scale(1.0 / sum);
+                if (sum > 0) prob.Scale(1.0 / sum);
                 return sum;
             }
         }
@@ -967,6 +966,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return new Discrete(probs);
         }
 
+        public static Discrete Zero(int numValues)
+        {
+            return new Discrete()
+            {
+                prob = Vector.Zero(numValues)
+            };
+        }
+
+        public bool IsZero()
+        {
+            return prob.EqualsAll(0);
+        }
 
         /// <summary>
         /// Override of ToString method
