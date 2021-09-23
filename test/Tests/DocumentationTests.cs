@@ -137,7 +137,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void MissingOperatorExample()
         {
-            try
+            Assert.Throws<CompilationFailedException>(() =>
             {
                 // WARNING: If you change anything here, you must update the documentation            
                 Variable<double> meanA = Variable.GaussianFromMeanAndVariance(0, 100);
@@ -164,15 +164,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Console.WriteLine("prec A = " + marginalPrecisionA);
                 Console.WriteLine("mean B = " + marginalMeanB);
                 Console.WriteLine("prec B = " + marginalPrecisionB);
-            }
-            catch (NotSupportedException ex)
-            {
-                Console.WriteLine(ex);
-            }
-            catch (CompilationFailedException ex)
-            {
-                Console.WriteLine(ex);
-            }
+            });
         }
 
         /// <summary>
@@ -181,7 +173,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void MissingOperatorTest2()
         {
-            try
+            Assert.Throws<CompilationFailedException>(() =>
             {
                 InferenceEngine engine = new InferenceEngine();
                 Variable<double> V = Variable.GaussianFromMeanAndVariance(0, 1);
@@ -189,15 +181,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Gaussian marginalX = engine.Infer<Gaussian>(X); // fails
                 Console.WriteLine("Posterior X = " + marginalX);
                 Assert.True(false, "Missing operator exception not thrown");
-            }
-            catch (NotSupportedException ex)
-            {
-                Console.WriteLine(ex);
-            }
-            catch (CompilationFailedException ex)
-            {
-                Console.WriteLine(ex);
-            }
+            });
         }
 
         [Fact]

@@ -1028,7 +1028,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void MissingSwitchInGateError()
         {
-            try
+            Assert.Throws<CompilationFailedException>(() =>
             {
                 Range item = new Range(2);
                 VariableArray<bool> x = Variable.Array<bool>(item).Named("x");
@@ -1043,14 +1043,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine();
                 Console.WriteLine(engine.Infer(index));
                 Assert.True(false, "Did not throw exception");
-            }
-            catch (CompilationFailedException ex)
-            {
-                if (ex.Message.StartsWith("Indexing"))
-                    Console.WriteLine("Correctly threw " + ex);
-                else
-                    Assert.True(false, "Wrong exception");
-            }
+            });
         }
 
         [Fact]

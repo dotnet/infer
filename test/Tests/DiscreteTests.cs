@@ -20,6 +20,23 @@ namespace Microsoft.ML.Probabilistic.Tests
     
     public class DiscreteTests
     {
+        [Fact]
+        public void PlusIntTest()
+        {
+            double p = 0.25;
+            Discrete d = new Discrete(p, 1-p);
+            d = IntegerPlusOp.SumAverageConditional(d, d, d);
+            double Z = p * p + 2 * p * (1 - p);
+            Assert.Equal(new Discrete(p*p/Z, 2*p*(1-p)/Z), d);
+
+            d = new Discrete(p, 1 - p);
+            d = IntegerPlusOp.SumAverageConditional(1, d, d);
+            Assert.Equal(new Discrete(0.0, 1.0), d);
+
+            d = IntegerPlusOp.SumAverageConditional(1, d, d);
+            Assert.True(d.IsZero());
+        }
+
         internal void UniqueVisitorCountingInt()
         {
             //  http://en.wikipedia.org/wiki/Unique_visitors
