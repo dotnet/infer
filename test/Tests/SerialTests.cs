@@ -595,16 +595,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             var engine = new InferenceEngine();
             engine.Compiler.UseSerialSchedules = false;
             engine.Compiler.TreatWarningsAsErrors = true;
-            try
+            Assert.Throws<CompilationFailedException>(() =>
             {
-                var dists = engine.Infer(latentWords);
-                Console.WriteLine(dists);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (CompilationFailedException ex)
-            {
-                Console.WriteLine("Correctly threw " + ex);
-            }
+                engine.Infer(latentWords);
+            });
         }
 
         [Fact]

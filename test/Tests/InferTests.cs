@@ -4323,8 +4323,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             Discrete bExpected = Discrete.PointMass(b.ObservedValue, 4);
             Discrete marginalDividedByPriorExpected = Discrete.Uniform(4);
-            Console.WriteLine($"b = {bActual} should be {bExpected}");
-            Console.WriteLine($"marginalDividedByPrior = {marginalDividedByPrior} should be {marginalDividedByPriorExpected}");
+            //Console.WriteLine($"b = {bActual} should be {bExpected}");
+            //Console.WriteLine($"marginalDividedByPrior = {marginalDividedByPrior} should be {marginalDividedByPriorExpected}");
             Assert.Equal(bExpected, bActual);
             if (!readOnly)
                 Assert.Equal(marginalDividedByPriorExpected, marginalDividedByPrior);
@@ -4338,7 +4338,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             Bernoulli bActual = engine.Infer<Bernoulli>(b);
             Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+            //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
             Assert.Equal(bActual, bExpected);
         }
 
@@ -4358,7 +4358,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine(algorithm);
                 Bernoulli bActual = engine.Infer<Bernoulli>(b);
                 Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
                 Assert.Equal(bExpected, bActual);
             }
         }
@@ -4374,7 +4374,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine(algorithm);
                 Discrete bActual = engine.Infer<Discrete>(b);
                 Discrete bExpected = Discrete.PointMass(b.ObservedValue, 6);
-                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
                 Assert.Equal(bExpected, bActual);
             }
         }
@@ -4388,7 +4388,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             Discrete bActual = engine.Infer<Discrete>(b);
             Discrete bExpected = Discrete.PointMass(b.ObservedValue, 6);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+            //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
             Assert.Equal(bActual, bExpected);
         }
 
@@ -4403,7 +4403,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine(algorithm);
                 Bernoulli bActual = engine.Infer<Bernoulli>(b);
                 Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
                 Assert.Equal(bActual, bExpected);
             }
         }
@@ -4420,7 +4420,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine(algorithm);
                 Bernoulli bActual = engine.Infer<Bernoulli>(b);
                 Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
                 Assert.Equal(bActual, bExpected);
             }
         }
@@ -4438,7 +4438,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 gen.Execute(10);
                 Bernoulli bActual = gen.Marginal<Bernoulli>(b.NameInGeneratedCode);
                 Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
                 Assert.Equal(bActual, bExpected);
             }
         }
@@ -4456,7 +4456,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             gen.Execute(10);
             Bernoulli bActual = gen.Marginal<Bernoulli>(b.NameInGeneratedCode);
             Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+            //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
             Assert.Equal(bActual, bExpected);
         }
 
@@ -4474,7 +4474,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             gen.Execute(10);
             Bernoulli bActual = gen.Marginal<Bernoulli>(b.NameInGeneratedCode);
             Bernoulli bExpected = Bernoulli.PointMass(b.ObservedValue);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+            //Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
             Assert.Equal(bActual, bExpected);
         }
 
@@ -4502,7 +4502,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                             bActual = gen.Marginal<Bernoulli[]>(b.NameInGeneratedCode);
                         }
                         else bActual = engine.Infer<Bernoulli[]>(b);
-                        Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
+                        //Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
                         for (int i = 0; i < bActual.Length; i++)
                         {
                             Assert.Equal(b.ObservedValue[i], bActual[i].Point);
@@ -4538,7 +4538,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                             bActual = gen.Marginal<Bernoulli[]>(b.NameInGeneratedCode);
                         }
                         else bActual = engine.Infer<Bernoulli[]>(b);
-                        Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
+                        //Console.WriteLine("b = {0}", StringUtil.ToString(bActual));
                         for (int i = 0; i < bActual.Length; i++)
                         {
                             Assert.Equal(b.ObservedValue[i], bActual[i].Point);
@@ -4603,7 +4603,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     return d;
                 });
             var phiActual = engine.Infer<IDistribution<Vector[]>>(phi);
-            Console.WriteLine(StringUtil.JoinColumns("phi = ", phiActual, " should be ", phiExpected));
+            //Console.WriteLine(StringUtil.JoinColumns("phi = ", phiActual, " should be ", phiExpected));
             Assert.True(phiExpected.MaxDiff(phiActual) < 1e-8);
         }
 
@@ -4871,8 +4871,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             expected[0] = Gaussian.FromMeanAndPrecision(0, 0.5);
             expected[1] = Gaussian.Uniform();
             IList<Gaussian> actual = engine.Infer<IList<Gaussian>>(x);
-            Console.WriteLine(actual);
-            Assert.Equal(actual, expected);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -4895,8 +4894,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             expected[0] = Gaussian.FromMeanAndPrecision(0, 0.5);
             expected[1] = Gaussian.Uniform();
             IList<Gaussian> actual = engine.Infer<IList<Gaussian>>(sums);
-            Console.WriteLine(actual);
-            Assert.Equal(actual, expected);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]

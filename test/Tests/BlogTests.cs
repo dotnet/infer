@@ -342,7 +342,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         // Tests StringDistribution as a replacement for Discrete in GuejonPuzzle
-        // Fails with AllZeroException or wrong answers
+        // Fails because the output StringDistribution is not normalized.
         [Trait("Category", "OpenBug")]
         [Fact]
         public void GuejonPuzzleStrings()
@@ -353,12 +353,12 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             int numPeople = names.Length;
             Range person = new Range(numPeople).Named("person");
-            VariableArray<string> addressOfPerson = Variable.Array<string>(person).Named("addressStringOfPerson");
+            VariableArray<string> addressOfPerson = Variable.Array<string>(person).Named("addressOfPerson");
             addressOfPerson[person] = Variable.StringUniform().ForEach(person);
             Range day = new Range(personData.Length).Named("day");
-            VariableArray<int> instanceCount = Variable.Array<int>(day);
+            VariableArray<int> instanceCount = Variable.Array<int>(day).Named("instanceCount");
             instanceCount.ObservedValue = Util.ArrayInit(personData.Length, d => personData[d].Length);
-            Range instance = new Range(instanceCount[day]);
+            Range instance = new Range(instanceCount[day]).Named("instance");
             VariableArray<Vector> personDistribution = Variable.Array<Vector>(day).Named("personDistribution");
             personDistribution.SetValueRange(person);
             personDistribution.ObservedValue = Util.ArrayInit(personData.Length, d => 
@@ -400,6 +400,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             var inferredAddressOfPerson = engine.Infer<IList<StringDistribution>>(addressOfPerson);
             Assert.True(inferredAddressOfPerson[0].GetLogProb("25") > -0.5);
+            Assert.True(inferredAddressOfPerson[1].GetLogProb("30") > -0.5);
+            Assert.True(inferredAddressOfPerson[2].GetLogProb("12") > -0.5);
+            Assert.True(inferredAddressOfPerson[3].GetLogProb("7") > -0.5);
+            Assert.True(inferredAddressOfPerson[4].GetLogProb("9") > -1);
+            Assert.True(inferredAddressOfPerson[4].GetLogProb("40") > -1);
+            Assert.True(inferredAddressOfPerson[5].GetLogProb("9") > -1);
+            Assert.True(inferredAddressOfPerson[5].GetLogProb("40") > -1);
         }
 
         // Loss of sparsity
@@ -416,20 +423,20 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<int> addressOfPerson = Variable.Array<int>(person).Named("addressOfPerson");
             addressOfPerson[person] = Variable.DiscreteUniform(maxAddress).ForEach(person);
             Range day = new Range(personData.Length).Named("day");
-            VariableArray<int> instanceCount = Variable.Array<int>(day);
+            VariableArray<int> instanceCount = Variable.Array<int>(day).Named("instanceCount");
             instanceCount.ObservedValue = Util.ArrayInit(personData.Length, d => personData[d].Length);
-            Range instance = new Range(instanceCount[day]);
-            VariableArray<Vector> personDistribution = Variable.Array<Vector>(day);
+            Range instance = new Range(instanceCount[day]).Named("instance");
+            VariableArray<Vector> personDistribution = Variable.Array<Vector>(day).Named("personDistribution");
             personDistribution.SetValueRange(person);
             personDistribution.ObservedValue = Util.ArrayInit(personData.Length, d =>
                 Vector.FromArray(Util.ArrayInit(numPeople, i => personData[d].Contains(names[i]) ? 1.0 : 0.0), Sparsity.Sparse));
-            var observedAddress = Variable.Array(Variable.Array<int>(instance), day);
+            var observedAddress = Variable.Array(Variable.Array<int>(instance), day).Named("observedAddress");
             observedAddress.ObservedValue = addressData;
             using (Variable.ForEach(day))
             {
                 using (Variable.ForEach(instance))
                 {
-                    var selectedPerson = Variable.Discrete(personDistribution[day]);
+                    var selectedPerson = Variable.Discrete(personDistribution[day]).Named("selectedPerson");
                     using (Variable.Switch(selectedPerson))
                         observedAddress[day][instance] = Variable.Copy(addressOfPerson[selectedPerson]);
                 }
@@ -449,6 +456,13 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Console.WriteLine();
             }
             Assert.True(inferredAddressOfPerson[0].GetLogProb(25) > -0.5);
+            Assert.True(inferredAddressOfPerson[1].GetLogProb(30) > -0.5);
+            Assert.True(inferredAddressOfPerson[2].GetLogProb(12) > -0.5);
+            Assert.True(inferredAddressOfPerson[3].GetLogProb(7) > -0.5);
+            Assert.True(inferredAddressOfPerson[4].GetLogProb(9) > -1);
+            Assert.True(inferredAddressOfPerson[4].GetLogProb(40) > -1);
+            Assert.True(inferredAddressOfPerson[5].GetLogProb(9) > -1);
+            Assert.True(inferredAddressOfPerson[5].GetLogProb(40) > -1);
         }
 
         [Fact]

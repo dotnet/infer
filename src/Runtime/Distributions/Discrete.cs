@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         SettableTo<Discrete>, SettableToProduct<Discrete>, Diffable, SettableToUniform, SettableToPartialUniform<Discrete>,
         SettableToRatio<Discrete>, SettableToPower<Discrete>, SettableToWeightedSumExact<Discrete>,
         CanGetLogAverageOf<Discrete>, CanGetLogAverageOfPower<Discrete>, CanGetAverageLog<Discrete>, CanGetLogNormalizer,
-        Sampleable<int>, CanGetMean<double>, CanGetVariance<double>, CanGetMode<int>, IReadOnlyList<double>
+        Sampleable<int>, CanGetMean<double>, CanGetVariance<double>, CanGetMode<int>
     {
         private const double UniformEps = 1e-5;
 
@@ -125,18 +125,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     return !prob.Any(e => e < 1 && e > 0);
                 }
             }
-        }
-
-        int IReadOnlyCollection<double>.Count => prob.Count;
-
-        IEnumerator<double> IEnumerable<double>.GetEnumerator()
-        {
-            return prob.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return prob.GetEnumerator();
         }
 
         /// <summary>
