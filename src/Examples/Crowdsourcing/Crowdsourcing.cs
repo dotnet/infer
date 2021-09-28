@@ -193,7 +193,7 @@ namespace Crowdsourcing
                     results.RunDawidSkene(data, true);
                     break;
                 default:
-                    results.RunBCC(ResultsDir + modelName, data, data, model, Results.RunMode.ClearResults, false, communityCount, true, false);
+                    results.RunBCC(ResultsDir + modelName, data, data, model, Results.RunMode.ClearResults, false, communityCount, false, false);
                     break;
             }
 
