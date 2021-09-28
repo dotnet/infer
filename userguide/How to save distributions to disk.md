@@ -29,19 +29,18 @@ using (FileStream stream = new FileStream("temp.bin", FileMode.Open)) {
 Another option is to save in XML format, using the class [System.Runtime.Serialization.DataContractSerializer](https://docs.microsoft.com/ru-ru/dotnet/api/system.runtime.serialization.datacontractserializer?view=netframework-4.7.2). Because some distributions require custom XML serialization, you need to pass in an Infer.NET DataContractSurrogate when creating the serializer. Here is an example:  
 
 ```csharp
-Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);  
+Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);
+string fileName = "temp.xml";
 DataContractSerializer serializer = new DataContractSerializer(typeof (Dirichlet), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });  
 // write to disk  
-using (FileStream stream = new FileStream("temp.xml", FileMode.Create))  
-{  
-    XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(stream);  
-    serializer.WriteObject(writer, d);  
-}  
-// read from disk  
-using (FileStream stream = new FileStream("temp.xml", FileMode.Open))  
-{  
-    XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas());  
-    Dirichlet d2 = (Dirichlet) serializer.ReadObject(reader);  
+using (XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(new FileStream(fileName, FileMode.Create)))
+{
+    serializer.WriteObject(writer, d);
+}
+// read from disk
+using (XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new FileStream(fileName, FileMode.Open), new XmlDictionaryReaderQuotas()))
+{
+    Dirichlet d2 = (Dirichlet)serializer.ReadObject(reader);
     Console.WriteLine(d2);
 }
 ```

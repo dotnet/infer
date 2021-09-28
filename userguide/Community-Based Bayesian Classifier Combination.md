@@ -15,7 +15,7 @@ This models is designed to work in a typical crowdsourcing scenario where we wis
 ![BadWorker.png](BadWorker.png)
 ![GoodWorker.png](GoodWorker.png)
 
-A standard framework to learn the latent worker’s confusion matrix is the Bayesian Classifier Combination model (_H.C. Kim and Z. Ghahramani. Bayesian classier combination. International Conference on Articial Intelligence and Statistics, pages 619-627, 2012_). This model assumes that there are _K_ workers classifying _N_ objects (or tasks) among _C_ possible labels. These counts are shown in the corresponding plates (the rectangles) of the factor graph illustrated below; arrows are included to show the generative flow.
+A standard framework to learn the latent worker’s confusion matrix is the Bayesian Classifier Combination model (_H.C. Kim and Z. Ghahramani. Bayesian classifier combination. International Conference on Articial Intelligence and Statistics, pages 619-627, 2012_). This model assumes that there are _K_ workers classifying _N_ objects (or tasks) among _C_ possible labels. These counts are shown in the corresponding plates (the rectangles) of the factor graph illustrated below; arrows are included to show the generative flow.
 
 ![BCC.png](BCC.png)
 

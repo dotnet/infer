@@ -13,12 +13,21 @@ There are often multiple ways of using Infer.NET to solve a particular problem. 
 *   _Use variable arrays and ranges rather than .NET arrays._  
     Where possible, use variable arrays made with `Variable.Array()` instead of arrays of Variable instances (see [Learning a Gaussian tutorial](Learning a Gaussian tutorial.md)). 
 
+*   _Use variable arrays rather than vectors._
+    When you don't need to represent correlations in the posterior distribution, use variable arrays instead of vectors.
+
+*   _Use Subarray instead of array indexing or GetItems._
+    The model compiler can optimise certain uses of Subarray better than it can for GetItems.
+
 *   _Use sparse messages when using large Discrete or Dirichlet distributions._  
     The messages needed to perform inference in models with large Discrete or Dirichlet distributions often have sparse structure. This can be exploited by [using sparse messages](using sparse messages.md) to significantly reduce memory consumption and increase speed. 
 
 *   _Specify the exact set of variables to be inferred_
 
     Use the **OptimiseForVariables** property on the inference engine to specify exactly which variables you want to infer. This is more efficient than the **Infer()** method which always computes all variable marginals.
+
+*   _Check for warnings from the model compiler_
+    If the model compiler warns about excessive memory consumption, change the offending parts of the model.
 
 *   _Reuse memory for the marginals_  
     Set **Compiler.ReturnCopies** to false on the inference engine. This causes the engine to modify the previous marginal distributions in place. However, be warned that you need to copy the marginal distributions yourself if you want to save them. 
