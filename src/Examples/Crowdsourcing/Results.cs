@@ -6,8 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Xml;
+
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
+using Microsoft.ML.Probabilistic.Serialization;
 using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Crowdsourcing
@@ -354,6 +358,7 @@ namespace Crowdsourcing
         {
             CommunityModel communityModel = model as CommunityModel;
             IsCommunityModel = communityModel != null;
+            string communityPriorsFileName = modelName + "CommunityPriors.xml";
 
             if (this.Mapping == null)
             {
@@ -398,7 +403,7 @@ namespace Crowdsourcing
                     ClearResults();
                     if (mode == RunMode.LoadAndUseCommunityPriors && IsCommunityModel)
                     {
-                        priors = DeserializeCommunityPosteriors(modelName, numCommunities);
+                        priors = DeserializeCommunityPosteriors(communityPriorsFileName, numCommunities);
                     }
                     break;
             }
@@ -426,49 +431,51 @@ namespace Crowdsourcing
             /// Serialize parameters
             if (serialize)
             {
-                using (FileStream stream = new FileStream(modelName + ".xml", FileMode.Create))
+                var type = IsCommunityModel ? typeof(CommunityModel.Posteriors) : typeof(BCC.Posteriors);
+                DataContractSerializer serializer = new DataContractSerializer(type, new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+                string posteriorsFileName = modelName + ".xml";
+                using (XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(new FileStream(posteriorsFileName, FileMode.Create)))
                 {
-                    var serializer = new System.Xml.Serialization.XmlSerializer(IsCommunityModel ? typeof(CommunityModel.Posteriors) : typeof(BCC.Posteriors));
-                    serializer.Serialize(stream, posteriors);
+                    serializer.WriteObject(writer, posteriors);
                 }
             }
 
             if (serializeCommunityPosteriors && IsCommunityModel)
             {
-                SerializeCommunityPosteriors(modelName);
+                SerializeCommunityPosteriors(communityPriorsFileName);
             }
         }
 
         /// <summary>
         /// Serializes the posteriors on an xml file.
         /// </summary>
-        /// <param name="modelName">The model name.</param>
-        void SerializeCommunityPosteriors(string modelName)
+        /// <param name="fileName">The file name.</param>
+        void SerializeCommunityPosteriors(string fileName)
         {
             NonTaskWorkerParameters ntwp = new NonTaskWorkerParameters();
             ntwp.BackgroundLabelProb = BackgroundLabelProb;
             ntwp.CommunityProb = CommunityProb;
             ntwp.CommunityScoreMatrix = CommunityScoreMatrix;
-            using (FileStream stream = new FileStream(modelName + "CommunityPriors.xml", FileMode.Create))
+            DataContractSerializer serializer = new DataContractSerializer(typeof(NonTaskWorkerParameters), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+            using (XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(new FileStream(fileName, FileMode.Create)))
             {
-                var serializer = new System.Xml.Serialization.XmlSerializer(typeof(NonTaskWorkerParameters));
-                serializer.Serialize(stream, ntwp);
+                serializer.WriteObject(writer, ntwp);
             }
         }
 
         /// <summary>
         /// Deserializes the parameters of CBCC from an xml file (used in the LoadAndUseCommunityPriors mode).
         /// </summary>
-        /// <param name="modelName">The model name.</param>
+        /// <param name="fileName">The file name.</param>
         /// <param name="numCommunities">The number of communities.</param>
         /// <returns></returns>
-        CommunityModel.Posteriors DeserializeCommunityPosteriors(string modelName, int numCommunities)
+        CommunityModel.Posteriors DeserializeCommunityPosteriors(string fileName, int numCommunities)
         {
             CommunityModel.Posteriors cbccPriors = new CommunityModel.Posteriors();
-            using (FileStream stream = new FileStream(modelName + "CommunityPriors.xml", FileMode.Open))
+            DataContractSerializer serializer = new DataContractSerializer(typeof(NonTaskWorkerParameters), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+            using (XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new FileStream(fileName, FileMode.Open), new XmlDictionaryReaderQuotas()))
             {
-                var serializer = new System.Xml.Serialization.XmlSerializer(typeof(NonTaskWorkerParameters));
-                var ntwp = (NonTaskWorkerParameters)serializer.Deserialize(stream);
+                var ntwp = (NonTaskWorkerParameters)serializer.ReadObject(reader);
 
                 if (ntwp.BackgroundLabelProb.Dimension != Mapping.LabelCount)
                 {
@@ -524,7 +531,7 @@ namespace Crowdsourcing
         }
 
         /// <summary>
-        /// Updates the results of with the new posteriors.
+        /// Updates the results with the new posteriors.
         /// </summary>
         /// <param name="posteriors">The posteriors.</param>
         /// <param name="mode">The mode (for example training, prediction, etc.).</param>

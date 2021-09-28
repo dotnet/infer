@@ -1490,17 +1490,16 @@ namespace Microsoft.ML.Probabilistic.Tests
         internal void XmlSerializationExample()
         {
             Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);
+            string fileName = "temp.xml";
             DataContractSerializer serializer = new DataContractSerializer(typeof(Dirichlet), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
             // write to disk
-            using (FileStream stream = new FileStream("temp.xml", FileMode.Create))
+            using (XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(new FileStream(fileName, FileMode.Create)))
             {
-                XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(stream);
                 serializer.WriteObject(writer, d);
             }
             // read from disk
-            using (FileStream stream = new FileStream("temp.xml", FileMode.Open))
+            using (XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new FileStream(fileName, FileMode.Open), new XmlDictionaryReaderQuotas()))
             {
-                XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas());
                 Dirichlet d2 = (Dirichlet)serializer.ReadObject(reader);
                 Console.WriteLine(d2);
             }

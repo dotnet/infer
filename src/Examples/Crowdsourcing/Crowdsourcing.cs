@@ -193,14 +193,14 @@ namespace Crowdsourcing
                     results.RunDawidSkene(data, true);
                     break;
                 default:
-                    results.RunBCC(modelName, data, data, model, Results.RunMode.ClearResults, false, communityCount, false, false);
+                    results.RunBCC(ResultsDir + modelName, data, data, model, Results.RunMode.ClearResults, false, communityCount, true, false);
                     break;
             }
 
             // Write the inference results on a csv file
             using (StreamWriter writer = new StreamWriter(ResultsDir + "endpoints.csv", true))
             {
-                writer.WriteLine("{0}:,{1:0.000},{2:0.0000}", modelName, results.Accuracy, results.NegativeLogProb);
+                writer.WriteLine("{0},{1:0.000},{2:0.0000}", modelName, results.Accuracy, results.NegativeLogProb);
             }
             return results;
         }
