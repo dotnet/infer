@@ -34,6 +34,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double LogAverageFactor<DistributionType>(IReadOnlyList<T> items, IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices)
             where DistributionType : CanGetLogProb<T>
         {
+            AssertWhenDebugging.Distinct(indices);
             double z = 0.0;
             for (int i = 0; i < indices.Count; i++)
             {
@@ -47,6 +48,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double LogAverageFactor<DistributionType>(IReadOnlyList<DistributionType> items, IReadOnlyList<DistributionType> array, IReadOnlyList<int> indices)
             where DistributionType : CanGetLogAverageOf<DistributionType>
         {
+            AssertWhenDebugging.Distinct(indices);
             double z = 0.0;
             for (int i = 0; i < indices.Count; i++)
             {
@@ -60,12 +62,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double LogAverageFactor<DistributionType>(IReadOnlyList<DistributionType> items, IReadOnlyList<T> array, IReadOnlyList<int> indices)
             where DistributionType : CanGetLogProb<T>
         {
-            double z = 0.0;
-            for (int i = 0; i < indices.Count; i++)
-            {
-                z += items[i].GetLogProb(array[indices[i]]);
-            }
-            return z;
+            return GetItemsOp<T>.LogAverageFactor(items, array, indices);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="SubarrayOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IReadOnlyList{DistributionType})"]/*'/>
@@ -147,6 +144,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableTo<DistributionType>
         {
             Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            AssertWhenDebugging.Distinct(indices);
             result.SetToUniform();
             for (int i = 0; i < indices.Count; i++)
             {
@@ -166,6 +164,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (items.Count != indices.Count)
                 throw new ArgumentException(indices.Count + " indices were given to Subarray but the output array has length " + items.Count);
+            AssertWhenDebugging.Distinct(indices);
             result.SetToUniform();
             for (int i = 0; i < indices.Count; i++)
             {

@@ -3745,7 +3745,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ClickChainTest()
         {
-            try
+            Assert.Throws<CompilationFailedException>(() =>
             {
                 // observation[rank][user] 
                 //bool[][] observation = { new bool[] { false }, new bool[] { false }, new bool[] { true } };
@@ -3803,11 +3803,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     //  Console.WriteLine("Relevance of document " +i +": "+ ie.Infer(rel));
                     Console.WriteLine("Relevance of document {0}: {1}", i, ie.Infer(rel[i]));
                 }
-            }
-            catch (CompilationFailedException ex)
-            {
-                Console.WriteLine("Correctly threw " + ex);
-            }
+            });
         }
 
         /// <summary>

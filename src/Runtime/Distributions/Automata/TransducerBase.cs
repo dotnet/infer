@@ -380,7 +380,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // Populate the stack with start destination state
             result.StartStateIndex = CreateDestState(mappingAutomaton.Start, srcAutomaton.Start);
             var stringAutomaton = srcAutomaton as StringAutomaton;
-            var sourceDistributionHasLogProbabilityOverrides = stringAutomaton?.HasElementLogValueOverrides ?? false;
 
             while (stack.Count > 0)
             {
@@ -421,25 +420,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
-                        // In the special case of a log probability override in an ImmutableDiscreteChar element distribution,
-                        // we need to compensate for the fact that the distribution is not normalized.
-                        if (destElementDistribution.HasValue && sourceDistributionHasLogProbabilityOverrides)
-                        {
-                            var discreteChar =
-                                (ImmutableDiscreteChar)(IImmutableDistribution<char, ImmutableDiscreteChar>)srcTransition.ElementDistribution.Value;
-                            if (discreteChar.HasLogProbabilityOverride)
-                            {
-                                var totalMass = discreteChar.Ranges.EnumerableSum(rng =>
-                                    rng.Probability.Value * (rng.EndExclusive - rng.StartInclusive));
-                                projectionLogScale -= System.Math.Log(totalMass);
-                            }
-                        }
-
-                        var destWeight =
-                            sourceDistributionHasLogProbabilityOverrides && destElementDistribution.HasNoValue
-                                ? Weight.One
-                                : Weight.Product(mappingTransition.Weight, srcTransition.Weight,
-                                    Weight.FromLogValue(projectionLogScale));
+                        var destWeight = Weight.Product(
+                            mappingTransition.Weight,
+                            srcTransition.Weight,
+                            Weight.FromLogValue(projectionLogScale));
 
                         // We don't want an unnormalizable distribution to become normalizable due to a rounding error.
                         if (Math.Abs(destWeight.LogValue) < 1e-12)

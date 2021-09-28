@@ -1250,30 +1250,15 @@ namespace Microsoft.ML.Probabilistic.Tests
             Discrete d1 = new Discrete(0.1, 0.9, 0, 0);
             Discrete d2 = new Discrete(0, 0, 0.3, 0.7);
             Assert.True(MMath.AbsDiff(d2.GetAverageLog(d2), 0.3 * System.Math.Log(0.3) + 0.7 * System.Math.Log(0.7), 1 - 6) < 1e-10);
-            try
-            {
-                Discrete d3 = d1 * d2;
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException)
-            {
-            }
-            try
-            {
-                Discrete d3 = new Discrete(0, 0, 0);
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException)
-            {
-            }
-            try
-            {
-                d.SetProbs(Vector.FromArray(0.0, 0.0));
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (AllZeroException)
-            {
-            }
+            Discrete d3 = d1 * d2;
+            Assert.True(d3.IsZero());
+            Discrete zero = new Discrete(0, 0, 0);
+            Assert.True(zero.IsZero());
+            zero = Discrete.Zero(3);
+            Assert.True(zero.IsZero());
+            d.SetProbs(Vector.FromArray(0.0, 0.0));
+            Assert.True(d.IsZero());
+            Assert.Equal(double.NegativeInfinity, d.GetLogAverageOf(d));
 
             d = new Discrete(1.0);
             Assert.Equal(0, d.Sample());

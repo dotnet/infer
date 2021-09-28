@@ -21,19 +21,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public StringAutomaton()
         {
         }
-        
-        /// <summary>
-        /// Whether there are log value overrides at the element level.
-        /// </summary>
-        public bool HasElementLogValueOverrides
-        {
-            get
-            {
-                return this.States.transitions.Any(
-                    trans => trans.ElementDistribution.HasValue &&
-                             trans.ElementDistribution.Value.HasLogProbabilityOverride);
-            }
-        }
 
         /// <summary>
         /// Computes a set of outgoing transitions from a given state of the determinization result.
