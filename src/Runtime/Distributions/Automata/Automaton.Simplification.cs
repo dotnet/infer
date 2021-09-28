@@ -435,7 +435,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var (edgesStart, edges) = BuildReversedGraph();
 
                 //// Now run a depth-first search to label all reachable nodes
-                var (stack, visited) = PreallocatedAutomataObjects.GetRemoveDeadStatesState(builder.StatesCount);
+                var (stack, visited) = PreallocatedAutomataObjects.LeaseRemoveDeadStatesState(builder.StatesCount);
 
                 for (var i = 0; i < builder.StatesCount; ++i)
                 {
@@ -472,7 +472,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     // [edgesStart[i]; edgesStart[i+1]) is a range `edges` array which corresponds to incoming edges for state `i`
                     // edges1 is incoming edges for state. Represented as index of source state
-                    var (edgesStart1, edges1) = PreallocatedAutomataObjects.GetBuildReversedGraphState(
+                    var (edgesStart1, edges1) = PreallocatedAutomataObjects.LeaseBuildReversedGraphState(
                         builder.StatesCount + 1, builder.TransitionsCount);
 
                     // first populate edges

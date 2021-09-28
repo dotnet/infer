@@ -13,6 +13,7 @@ namespace Microsoft.ML.Probabilistic.Core.Collections
     /// </summary>
     public class GenerationalDictionary<TKey, TValue>
         where TKey : IEquatable<TKey>
+        where TValue : unmanaged
     {
         private const int OccupiedMask = 1 << 31;
 

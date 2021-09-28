@@ -119,7 +119,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 this.components = this.FindStronglyConnectedComponents();
 
-                this.stateInfo = PreallocatedAutomataObjects.ComputeCondensationState;
+                this.stateInfo = PreallocatedAutomataObjects.LeaseComputeCondensationState();
 
                 for (int i = 0; i < this.components.Count; ++i)
                 {
@@ -145,7 +145,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public void Dispose()
             {
-                PreallocatedAutomataObjects.ComputeCondensationState = this.stateInfo;
+                PreallocatedAutomataObjects.ReleaseComputeCondensationState(this.stateInfo);
             }
 
             /// <summary>
@@ -207,32 +207,32 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var states = this.automaton.States;
                 int traversalIndex = 0;
 
-                var (stateIdStack, stateIdToStateInfo, traversalStack) =
-                    PreallocatedAutomataObjects.FindStronglyConnectedComponentsState;
+                var (stateIdStack, stateInfo, traversalStack) =
+                    PreallocatedAutomataObjects.LeaseFindStronglyConnectedComponentsState(states.Count);
 
-                traversalStack.Push((null, this.Root.Index, 0));
+                traversalStack.Push((this.Root.Index, 0));
                 while (traversalStack.Count > 0)
                 {
-                    var (stateInfo, currentStateIndex, currentTransitionIndex) = traversalStack.Pop();
+                    var (currentStateIndex, currentTransitionIndex) = traversalStack.Pop();
                     var currentState = states[currentStateIndex];
                     var transitions = currentState.Transitions;
 
-                    if (stateInfo == null)
+                    if (stateInfo[currentStateIndex].TraversalIndex == 0)
                     {
+                        ++traversalIndex;
                         // Entered into processing of this state for the first time: create Tarjan info for it
                         // and push the state onto Tarjan stack.
-                        stateInfo = new TarjanStateInfo(traversalIndex);
-                        stateIdToStateInfo.Add(currentStateIndex, stateInfo);
-                        ++traversalIndex;
+                        stateInfo[currentStateIndex] = new TarjanStateInfo(traversalIndex);
                         stateIdStack.Push(currentStateIndex);
-                        stateInfo.InStack = true;
                     }
                     else
                     {
                         // Just returned from recursion into 'currentTransitionIndex': update Lowlink
                         // and advance to next transition.
                         var lastDestination = transitions[currentTransitionIndex].DestinationStateIndex;
-                        stateInfo.Lowlink = Math.Min(stateInfo.Lowlink, stateIdToStateInfo[lastDestination].Lowlink);
+                        stateInfo[currentStateIndex].Lowlink = Math.Min(
+                            stateInfo[currentStateIndex].Lowlink,
+                            stateInfo[lastDestination].Lowlink);
                         ++currentTransitionIndex;
                     }
 
@@ -245,20 +245,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         var destinationStateIndex = transition.DestinationStateIndex;
-                        if (!stateIdToStateInfo.TryGetValue(destinationStateIndex, out var destinationStateInfo))
+                        if (stateInfo[destinationStateIndex].TraversalIndex == 0)
                         {
                             // Return to this (state/transition) after destinationState is processed.
                             // Processing will resume from currentTransitionIndex.
-                            traversalStack.Push((stateInfo, currentStateIndex, currentTransitionIndex));
+                            traversalStack.Push((currentStateIndex, currentTransitionIndex));
                             // Process destination state.
-                            traversalStack.Push((null, destinationStateIndex, 0));
+                            traversalStack.Push((destinationStateIndex, 0));
                             // Do not process other transitions until destination state is processed.
                             break;
                         }
                         
-                        if (destinationStateInfo.InStack)
+                        if (stateInfo[destinationStateIndex].InStack)
                         {
-                            stateInfo.Lowlink = Math.Min(stateInfo.Lowlink, destinationStateInfo.TraversalIndex);
+                            stateInfo[currentStateIndex].Lowlink = Math.Min(
+                                stateInfo[currentStateIndex].Lowlink,
+                                stateInfo[destinationStateIndex].TraversalIndex);
                         }
                     }
 
@@ -269,16 +271,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         continue;
                     }
 
-                    if (stateInfo.Lowlink == stateInfo.TraversalIndex)
+                    if (stateInfo[currentStateIndex].Lowlink == stateInfo[currentStateIndex].TraversalIndex)
                     {
                         var statesInComponent = new List<State>();
-                        int stateIndex;
-                        do
+                        while (true)
                         {
-                            stateIndex = stateIdStack.Pop();
-                            stateIdToStateInfo[stateIndex].InStack = false;
+                            var stateIndex = stateIdStack.Pop();
+                            stateInfo[stateIndex].InStack = false;
                             statesInComponent.Add(states[stateIndex]);
-                        } while (stateIndex != currentStateIndex);
+                            if (stateIndex == currentStateIndex)
+                            {
+                                break;
+                            }
+                        }
 
                         components.Add(new StronglyConnectedComponent(
                             this.automaton, this.transitionFilter, statesInComponent, this.useApproximateClosure));

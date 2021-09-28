@@ -356,7 +356,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
 
-            var (destStateCache, stack) = PreallocatedAutomataObjects.ProductState;
+            var (destStateCache, stack) = PreallocatedAutomataObjects.LeaseProductState();
 
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -488,7 +488,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var srcSequenceLength = sourceSequenceManipulator.GetLength(srcSequence);
             
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
-            var (destStateCache, stack) = PreallocatedAutomataObjects.ProductState;
+            var (destStateCache, stack) = PreallocatedAutomataObjects.LeaseProductState();
 
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache

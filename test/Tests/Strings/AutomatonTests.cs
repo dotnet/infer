@@ -869,7 +869,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 state.SetEndWeight(Weight.One);
 
                 var automaton1 = builder.GetAutomaton();
-                var automaton2 = builder.GetAutomaton();
+                var automaton2 = (StringAutomaton)automaton1.Clone();
                 var point = new string('a', StateCount - 1);
 
                 var productAutomaton = StringAutomaton.Product(automaton1, automaton2);

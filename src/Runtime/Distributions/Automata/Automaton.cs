@@ -1406,7 +1406,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var builder = new Builder(0);
-            var (productStateCache, stack) = PreallocatedAutomataObjects.ProductState;
+            var (productStateCache, stack) = PreallocatedAutomataObjects.LeaseProductState();
 
             // Creates product state and schedules product computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -1744,7 +1744,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             double GetLogValueEpsilonFree()
             {
                 var sequenceLength = SequenceManipulator.GetLength(sequence);
-                var (operationsStack, valuesStack, valueCache) = PreallocatedAutomataObjects.GetLogValueState;
+                var (operationsStack, valuesStack, valueCache) = PreallocatedAutomataObjects.LeaseGetLogValueState();
                 operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
                 while (operationsStack.Count > 0)
@@ -1834,7 +1834,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             double GetLogValueGeneral()
             {
                 var sequenceLength = SequenceManipulator.GetLength(sequence);
-                var (operationsStack, valuesStack, valueCache) = PreallocatedAutomataObjects.GetLogValueState;
+                var (operationsStack, valuesStack, valueCache) =
+                    PreallocatedAutomataObjects.LeaseGetLogValueState();
                 operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
                 while (operationsStack.Count > 0)

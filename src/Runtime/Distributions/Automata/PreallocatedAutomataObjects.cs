@@ -31,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static (GenerationalDictionary<(int, int), int>, Stack<(int, int, int)>) productState;
 
         [ThreadStatic]
-        private static (Stack<int>, GenerationalDictionary<int, TarjanStateInfo>, Stack<(TarjanStateInfo, int, int)>) findStronglyConnectedComponentsState;
+        private static (Stack<int>, TarjanStateInfo[], Stack<(int, int)>) findStronglyConnectedComponentsState;
 
         [ThreadStatic]
         private static GenerationalDictionary<int, CondensationStateInfo> computeCondensationState;
@@ -48,96 +48,93 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         [ThreadStatic]
         private static int[] removeStatesState;
 
-        internal static (GenerationalDictionary<(int, int), int>, Stack<(int, int, int)>) ProductState
+        internal static (GenerationalDictionary<(int, int), int>, Stack<(int, int, int)>) LeaseProductState()
         {
-            get
+            var result = productState;
+            if (result.Item1 == null)
             {
-                var result = productState;
-                if (result.Item1 == null)
-                {
-                    result = (new GenerationalDictionary<(int, int), int>(), new Stack<(int, int, int)>());
-                    productState = result;
-                }
-
-                result.Item1.Clear();
-                result.Item2.Clear();
-
-                return result;
+                result = (new GenerationalDictionary<(int, int), int>(), new Stack<(int, int, int)>());
+                productState = result;
             }
+
+            result.Item1.Clear();
+            result.Item2.Clear();
+
+            return result;
         }
 
-        internal static (Stack<int>, GenerationalDictionary<int, TarjanStateInfo>, Stack<(TarjanStateInfo, int, int)>) FindStronglyConnectedComponentsState
+        internal static (Stack<int>, TarjanStateInfo[], Stack<(int, int)>) LeaseFindStronglyConnectedComponentsState(int stateCount)
         {
-            get
+            var result = findStronglyConnectedComponentsState;
+            if (result.Item1 == null)
             {
-                var result = findStronglyConnectedComponentsState;
-                if (result.Item1 == null)
-                {
-                    result = ValueTuple.Create(
-                        new Stack<int>(),
-                        new GenerationalDictionary<int, TarjanStateInfo>(),
-                        new Stack<(TarjanStateInfo, int, int)>());
-                    findStronglyConnectedComponentsState = result;
-                }
-
-                result.Item1.Clear();
-                result.Item2.Clear();
-                result.Item3.Clear();
-
-                return result;
+                result = ValueTuple.Create(
+                    new Stack<int>(),
+                    new TarjanStateInfo[stateCount],
+                    new Stack<(int, int)>());
+                findStronglyConnectedComponentsState = result;
             }
+
+            if (result.Item2.Length < stateCount)
+            {
+                var newLength = Math.Max(stateCount, result.Item2.Length * 2);
+                result = (result.Item1, new TarjanStateInfo[newLength], result.Item3);
+            }
+
+            result.Item1.Clear();
+            Array.Clear(result.Item2, 0, stateCount);
+            result.Item3.Clear();
+
+            return result;
         }
 
-        internal static GenerationalDictionary<int, CondensationStateInfo> ComputeCondensationState
+        internal static GenerationalDictionary<int, CondensationStateInfo> LeaseComputeCondensationState()
         {
-            set => computeCondensationState = value;
-            get
+            var result = computeCondensationState;
+            if (result == null)
             {
-                var result = computeCondensationState;
-                if (result == null)
-                {
-                    result = new GenerationalDictionary<int, CondensationStateInfo>();
-                    computeCondensationState = result;
-                }
-
-                result.Clear();
-
-                // In case some other Condensation object is created at the same time, it
-                // should not reuse the same state. In practice (in single therad) 2 Condensation
-                // objects never coexist. But there is no guarantee that it won't happen at some point.
-                // So each time a state is used, let's reset cache to null. By the time condensation
-                // is computed again, this value should be returned into cache
-                computeCondensationState = null;
-                return result;
+                result = new GenerationalDictionary<int, CondensationStateInfo>();
+                computeCondensationState = result;
             }
+
+            // In case some other Condensation object is created at the same time, it
+            // should not reuse the same state. In practice (in single therad) 2 Condensation
+            // objects never coexist. But there is no guarantee that it won't happen at some point.
+            // So each time a state is used, let's reset cache to null. By the time condensation
+            // is computed again, this value should be returned into cache
+            computeCondensationState = null;
+            return result;
         }
 
-        internal static (Stack<(int, int, Weight, int)>, Stack<Weight>, GenerationalDictionary<(int, int), Weight>) GetLogValueState
+        internal static void ReleaseComputeCondensationState(GenerationalDictionary<int, CondensationStateInfo> state)
         {
-            get
+            state.Clear();
+            computeCondensationState = state;
+        }
+
+        internal static (Stack<(int, int, Weight, int)>, Stack<Weight>, GenerationalDictionary<(int, int), Weight>) LeaseGetLogValueState()
+        {
+            var result = getLogValueState;
+
+            if (result.Item1 == null)
             {
-                var result = getLogValueState;
-
-                if (result.Item1 == null)
-                {
-                    result = ValueTuple.Create(
-                        new Stack<(int, int, Weight, int)>(),
-                        new Stack<Weight>(),
-                        new GenerationalDictionary<(int, int), Weight>());
-                    getLogValueState = result;
-                }
-
-                result.Item1.Clear();
-                result.Item2.Clear();
-                result.Item3.Clear();
-
-                return result;
+                result = ValueTuple.Create(
+                    new Stack<(int, int, Weight, int)>(),
+                    new Stack<Weight>(),
+                    new GenerationalDictionary<(int, int), Weight>());
+                getLogValueState = result;
             }
+
+            result.Item1.Clear();
+            result.Item2.Clear();
+            result.Item3.Clear();
+
+            return result;
         }
 
         // Note: second array is returned without being cleared. This is intentional - it
         // would be fully overwritten by caller.
-        internal static (int[], int[]) GetBuildReversedGraphState(int statesCount, int edgesCount)
+        internal static (int[], int[]) LeaseBuildReversedGraphState(int statesCount, int edgesCount)
         {
             var result = buildReversedGraphState;
 
@@ -160,7 +157,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
-        internal static (Stack<int>, bool[]) GetRemoveDeadStatesState(int statesCount)
+        internal static (Stack<int>, bool[]) LeaseRemoveDeadStatesState(int statesCount)
         {
             var result = removeDeadStatesState;
 
@@ -185,7 +182,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         // Note: array is returned without being cleared. This is intentional - it
         // would be fully overwritten by caller.
-        internal static int[] GetRemoveStatesState(int statesCount)
+        internal static int[] LeaseRemoveStatesState(int statesCount)
         {
             var result = removeStatesState;
 
