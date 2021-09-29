@@ -48,6 +48,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         [ThreadStatic]
         private static int[] removeStatesState;
 
+        /// <summary>
+        /// Releases all pre-allocated objects in current thread.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="Automaton{TSequence,TElement,TElementDistribution,TSequenceManipulator,TThis}.UnlimitedStatesComputation"/>
+        /// may create huge automata which will cause creation of large pre-allocated objects.
+        /// These objects will be kept in memory even if no huge automata are created again and
+        /// such large caches are not needed again. To avoid this we free all cached memory
+        /// in `UnlimitedStatesComputation.Dispose()`.
+        ///
+        /// Freeing memory makes caching slightly less efficient. But UnlimitedStatesComputation is
+        /// used very rarely so it is ok to just drop caches to avoid wasting too much memory.
+        /// </remarks>
+        internal static void FreeAllObjects()
+        {
+            productState = default;
+            findStronglyConnectedComponentsState = default;
+            computeCondensationState = default;
+            getLogValueState = default;
+            buildReversedGraphState = default;
+            removeDeadStatesState = default;
+            removeStatesState = default;
+        }
+
         internal static (GenerationalDictionary<(int, int), int>, Stack<(int, int, int)>) LeaseProductState()
         {
             var result = productState;

@@ -2419,6 +2419,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public void Dispose()
             {
                 threadMaxStateCountOverride = this.originalThreadMaxStateCount;
+                PreallocatedAutomataObjects.FreeAllObjects();
             }
         }
         #endregion
