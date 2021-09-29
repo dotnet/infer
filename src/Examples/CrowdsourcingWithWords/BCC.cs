@@ -65,7 +65,7 @@ namespace CrowdsourcingWithWords
             var confusionMatrixPrior = new Dirichlet[LabelCount];
             for (int d = 0; d < LabelCount; d++)
             {
-                confusionMatrixPrior[d] = new Dirichlet(Util.ArrayInit(LabelCount, i => i == d ? (InitialWorkerBelief / (1 - InitialWorkerBelief)) * (LabelCount - 1) : 1.0));
+                confusionMatrixPrior[d] = new Dirichlet(Util.ArrayInit(LabelCount, i => i == d ? (InitialWorkerBelief / (1 - InitialWorkerBelief)) * LabelCount : 1.0));
             }
 
             return confusionMatrixPrior;
