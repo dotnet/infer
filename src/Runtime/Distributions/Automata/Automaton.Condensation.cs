@@ -78,7 +78,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// The dictionary containing information associated with every state of the condensation.
             /// </summary>
-            private GenerationalDictionary<int, CondensationStateInfo> stateInfo;
+            private readonly GenerationalDictionary<int, CondensationStateInfo> stateInfo;
 
             /// <summary>
             /// Specifies whether the total weights of all paths starting from the states of the component

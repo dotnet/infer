@@ -2,14 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Generic;
+
 namespace Microsoft.ML.Probabilistic.Core.Collections
 {
     using System;
 
     /// <summary>
     /// Hash table implementation that has a constant-time Clear() operation.
-    /// Caveat is that it does not set values to `default` values, so it should not be used
-    /// with reference types.
     /// </summary>
     public class GenerationalDictionary<TKey, TValue>
         where TKey : IEquatable<TKey>
@@ -39,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Core.Collections
         public int Count => this.filledEntriesCount;
 
         public TValue this[TKey key] =>
-            this.TryGetValue(key, out var value) ? value : throw new Exception("Value not found");
+            this.TryGetValue(key, out var value) ? value : throw new KeyNotFoundException("Value not found");
 
         public bool TryGetValue(TKey key, out TValue value)
         {
