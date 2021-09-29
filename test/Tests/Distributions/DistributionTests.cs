@@ -1252,12 +1252,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(MMath.AbsDiff(d2.GetAverageLog(d2), 0.3 * System.Math.Log(0.3) + 0.7 * System.Math.Log(0.7), 1 - 6) < 1e-10);
             Discrete d3 = d1 * d2;
             Assert.True(d3.IsZero());
+            Assert.False(d3.IsPointMass);
             Discrete zero = new Discrete(0, 0, 0);
             Assert.True(zero.IsZero());
+            Assert.False(zero.IsPointMass);
             zero = Discrete.Zero(3);
             Assert.True(zero.IsZero());
+            Assert.False(zero.IsPointMass);
             d.SetProbs(Vector.FromArray(0.0, 0.0));
             Assert.True(d.IsZero());
+            Assert.False(d.IsPointMass);
             Assert.Equal(double.NegativeInfinity, d.GetLogAverageOf(d));
 
             d = new Discrete(1.0);

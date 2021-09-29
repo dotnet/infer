@@ -5,7 +5,6 @@
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.Serialization;
@@ -20,7 +19,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// </summary>
     /// <remarks>
     /// The distribution is represented by a normalized Vector of length D.
-    /// In the case of a point mass, the first element is infinity and the second element holds the point location.
+    /// The Vector may be all zero to indicate an empty distribution such as the product of conflicting point masses.
     /// The probability of value x is available as this[x] or GetLogProb(x).
     /// </remarks>
     [Serializable]
@@ -120,9 +119,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
-                    // If any element is not equal to 0 or 1 then this is not a point mass
-                    // as probs are always normalized.
-                    return !prob.Any(e => e < 1 && e > 0);
+                    // If exactly one element is not equal to 0 then this is a point mass.
+                    int nonzeroCount = prob.CountAll(e => e != 0);
+                    return nonzeroCount == 1;
                 }
             }
         }

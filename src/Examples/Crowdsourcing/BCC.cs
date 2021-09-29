@@ -18,8 +18,13 @@ using Range = Microsoft.ML.Probabilistic.Models.Range;
 namespace Crowdsourcing
 {
     /// <summary>
-    /// The BCC model class.
+    /// Implements statistical inference for (community-based and non-community-based) Bayesian classifier combination.
     /// </summary>
+    /// <remarks>
+    /// References:
+    /// Matteo Venanzi, John Guiver, Gabriella Kazai, Pushmeet Kohli, and Milad Shokouhi. Community-Based Bayesian Aggregation Models for Crowdsourcing. In Proceedings of the 23rd International World Wide Web Conference, WWW2014, ACM, April 2014.
+    /// H.C. Kim and Z. Ghahramani. Bayesian classifier combination. International Conference on Articial Intelligence and Statistics, pages 619-627, 2012.
+    /// </remarks>
     public class BCC
     {
         /// <summary>
@@ -188,14 +193,13 @@ namespace Crowdsourcing
         /// <param name="priors">The priors.</param>
         protected virtual void SetPriors(int workerCount, Posteriors priors)
         {
-            int numClasses = c.SizeAsInt;
             WorkerCount.ObservedValue = workerCount;
             if (priors == null)
             {
-                BackgroundLabelProbPrior.ObservedValue = Dirichlet.Uniform(numClasses);
+                BackgroundLabelProbPrior.ObservedValue = Dirichlet.Uniform(LabelCount);
                 var confusionMatrixPrior = GetConfusionMatrixPrior();
-                ConfusionMatrixPrior.ObservedValue = Util.ArrayInit(workerCount, worker => Util.ArrayInit(numClasses, lab => confusionMatrixPrior[lab]));
-                TrueLabelConstraint.ObservedValue = Util.ArrayInit(TaskCount, t => Discrete.Uniform(numClasses));
+                ConfusionMatrixPrior.ObservedValue = Util.ArrayInit(workerCount, worker => Util.ArrayInit(LabelCount, lab => confusionMatrixPrior[lab]));
+                TrueLabelConstraint.ObservedValue = Util.ArrayInit(TaskCount, t => Discrete.Uniform(LabelCount));
             }
             else
             {
@@ -283,7 +287,10 @@ namespace Crowdsourcing
             var confusionMatrixPrior = new Dirichlet[LabelCount];
             for (int d = 0; d < LabelCount; d++)
             {
-                confusionMatrixPrior[d] = new Dirichlet(Util.ArrayInit(LabelCount, i => i == d ? (InitialWorkerBelief / (1 - InitialWorkerBelief)) * (LabelCount - 1) : 1.0));
+                // The prior prefers diagonal confusion matrices.
+                // The paper says "Each row of π(k)_c has a Dirichlet prior with pseudo counts 1 expect for the diagonal count set to C − 1." but that does not work for C=2.
+                // Instead of following the paper, this code sets the diagonal to C.
+                confusionMatrixPrior[d] = new Dirichlet(Util.ArrayInit(LabelCount, i => (i == d) ? (InitialWorkerBelief / (1 - InitialWorkerBelief)) * LabelCount : 1.0));
             }
 
             return confusionMatrixPrior;

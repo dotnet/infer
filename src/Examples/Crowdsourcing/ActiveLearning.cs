@@ -199,7 +199,7 @@ namespace Crowdsourcing
                             results.RunDawidSkene(subData, calculateAccuracy);
                             break;
                         default: // Run BCC models
-                            results.RunBCC(modelName, subData, data, model, Results.RunMode.ClearResults, calculateAccuracy, communityCount, false);
+                            results.RunBCC(resultsDir + modelName, subData, data, model, Results.RunMode.ClearResults, calculateAccuracy, communityCount, false);
                             break;
                     }
                 }
