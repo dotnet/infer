@@ -308,7 +308,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     // This states is either dead end or a loop. If this is a dead end, then it
                     // will not be traversed at all.
-                    if (flags[nextStateIndex].HasFlag(StateEnumerationFlags.IsDeadEnd))
+                    if ((flags[nextStateIndex] & StateEnumerationFlags.IsDeadEnd) != 0)
                     {
                         continue;
                     }
@@ -322,7 +322,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         endStateReachabilityComputed = true;
                     }
 
-                    if (flags[nextStateIndex].HasFlag(StateEnumerationFlags.IsDeadEnd) ||
+                    if ((flags[nextStateIndex] & StateEnumerationFlags.IsDeadEnd) != 0 ||
                         sequence.Count + 1 == (int)(flags[nextStateIndex] & StateEnumerationFlags.DepthMask))
                     {
                         // Just skip this loop
@@ -447,7 +447,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     // Advance to next element in current transition
                     nextStateIndex = this.Data.Transitions[current.TransitionIndex].DestinationStateIndex;
-                    if (flags[nextStateIndex].HasFlag(StateEnumerationFlags.IsDeadEnd))
+                    if ((flags[nextStateIndex] & StateEnumerationFlags.IsDeadEnd) != 0)
                     {
                         // While enumerating current transition we learned that it leads to a
                         // dead end. Stop enumerating elements on this transition, because will
@@ -477,7 +477,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     nextStateIndex = transition.DestinationStateIndex;
 
                     if (transition.Weight.IsZero ||
-                        flags[nextStateIndex].HasFlag(StateEnumerationFlags.IsDeadEnd))
+                        (flags[nextStateIndex] & StateEnumerationFlags.IsDeadEnd) != 0)
                     {
                         // Do not follow paths which produce nothing and try next transition
                         continue;
@@ -644,7 +644,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 for (var i = edgeArrayStarts[stateIndex]; i < edgeArrayStarts[stateIndex + 1]; ++i)
                 {
                     var destinationIndex = edgeDestinationIndices[i];
-                    if (flags[destinationIndex].HasFlag(StateEnumerationFlags.IsDeadEnd))
+                    if ((flags[destinationIndex] & StateEnumerationFlags.IsDeadEnd) != 0)
                     {
                         flags[destinationIndex] &= ~StateEnumerationFlags.IsDeadEnd;
                         stack.Push(destinationIndex);

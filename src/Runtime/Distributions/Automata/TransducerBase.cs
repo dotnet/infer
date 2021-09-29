@@ -9,6 +9,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Diagnostics;
     using System.Linq;
     using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -354,8 +355,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             srcAutomaton = srcAutomaton.GetEpsilonClosure();
 
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
-            var destStateCache = new Dictionary<(int, int), int>();
-            var stack = new Stack<(int state1, int state2, int destStateIndex)>();
+
+            var (destStateCache, stack) = PreallocatedAutomataObjects.LeaseProductState();
 
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -369,7 +370,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var destState = result.AddState();
                     destState.SetEndWeight(mappingState.EndWeight * srcState.EndWeight);
                     stack.Push((mappingState.Index, srcState.Index, destState.Index));
-                    destStateCache[destPair] = destState.Index;
+                    destStateCache.Add(destPair, destState.Index);
                     destStateIndex = destState.Index;
                 }
 
@@ -471,8 +472,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var srcSequenceLength = sourceSequenceManipulator.GetLength(srcSequence);
             
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
-            var destStateCache = new Dictionary<(int, int), int>();
-            var stack = new Stack<(int state1, int state2, int destStateIndex)>();
+            var (destStateCache, stack) = PreallocatedAutomataObjects.LeaseProductState();
 
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -487,7 +487,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             ? mappingState.EndWeight
                             : Weight.Zero);
                     stack.Push((mappingState.Index, srcSequenceIndex, destState.Index));
-                    destStateCache[destPair] = destState.Index;
+                    destStateCache.Add(destPair, destState.Index);
                     destStateIndex = destState.Index;
                 }
 

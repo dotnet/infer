@@ -8,6 +8,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Diagnostics;
 
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
@@ -49,7 +50,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Represents the <a href="http://en.wikipedia.org/wiki/Condensation_(graph_theory)">condensation</a>
         /// of an automaton graph.
         /// </summary>
-        public class Condensation
+        public class Condensation : IDisposable
         {
             /// <summary>
             /// Automaton to which <see cref="Root"/> belongs.
@@ -77,7 +78,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// The dictionary containing information associated with every state of the condensation.
             /// </summary>
-            private readonly Dictionary<int, CondensationStateInfo> stateIdToInfo;
+            private readonly GenerationalDictionary<int, CondensationStateInfo> stateInfo;
 
             /// <summary>
             /// Specifies whether the total weights of all paths starting from the states of the component
@@ -118,13 +119,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 this.components = this.FindStronglyConnectedComponents();
 
-                this.stateIdToInfo = new Dictionary<int, CondensationStateInfo>();
+                this.stateInfo = PreallocatedAutomataObjects.LeaseComputeCondensationState();
+
                 for (int i = 0; i < this.components.Count; ++i)
                 {
                     StronglyConnectedComponent component = this.components[i];
                     for (int j = 0; j < component.Size; ++j)
                     {
-                        this.stateIdToInfo.Add(component.GetStateByIndex(j).Index, CondensationStateInfo.Default);
+                        this.stateInfo.Add(component.GetStateByIndex(j).Index, CondensationStateInfo.Default);
                     }
                 }
             }
@@ -140,6 +142,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public int ComponentCount => this.components.Count;
 
             public int TotalStatesCount { get; private set; }
+
+            public void Dispose()
+            {
+                PreallocatedAutomataObjects.ReleaseComputeCondensationState(this.stateInfo);
+            }
 
             /// <summary>
             /// Gets the strongly connected component by its index.
@@ -166,7 +173,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 return
-                    this.stateIdToInfo.TryGetValue(stateIndex, out var info)
+                    this.stateInfo.TryGetValue(stateIndex, out var info)
                         ? info.WeightToEnd
                         : Weight.Zero;
             }
@@ -175,21 +182,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Gets the total weight of all paths starting at the root of the condensation
             /// and ending in a given state. Ending weights are not taken into account.
             /// </summary>
-            /// <param name="state">The state.</param>
             /// <returns>The computed total weight.</returns>
-            public Weight GetWeightFromRoot(State state)
+            public Weight GetWeightFromRoot(int stateIndex)
             {
                 if (!this.weightsFromRootComputed)
                 {
                     this.ComputeWeightsFromRoot();
                 }
 
-                if (!this.stateIdToInfo.TryGetValue(state.Index, out CondensationStateInfo info))
-                {
-                    return Weight.Zero;
-                }
-
-                return info.WeightFromRoot;
+                return
+                    this.stateInfo.TryGetValue(stateIndex, out var info)
+                        ? info.WeightFromRoot
+                        : Weight.Zero;
             }
 
             /// <summary>
@@ -201,35 +205,34 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var components = new List<StronglyConnectedComponent>();
 
                 var states = this.automaton.States;
-                var stateIdStack = new Stack<int>();
-                var stateIdToStateInfo = new Dictionary<int, TarjanStateInfo>();
                 int traversalIndex = 0;
 
-                var traversalStack = new Stack<(TarjanStateInfo, int stateIndex, int currentTransitionIndex)>();
+                var (stateIdStack, stateInfo, traversalStack) =
+                    PreallocatedAutomataObjects.LeaseFindStronglyConnectedComponentsState(states.Count);
 
-                traversalStack.Push((null, this.Root.Index, 0));
+                traversalStack.Push((this.Root.Index, 0));
                 while (traversalStack.Count > 0)
                 {
-                    var (stateInfo, currentStateIndex, currentTransitionIndex) = traversalStack.Pop();
+                    var (currentStateIndex, currentTransitionIndex) = traversalStack.Pop();
                     var currentState = states[currentStateIndex];
                     var transitions = currentState.Transitions;
 
-                    if (stateInfo == null)
+                    if (stateInfo[currentStateIndex].TraversalIndex == 0)
                     {
+                        ++traversalIndex;
                         // Entered into processing of this state for the first time: create Tarjan info for it
                         // and push the state onto Tarjan stack.
-                        stateInfo = new TarjanStateInfo(traversalIndex);
-                        stateIdToStateInfo.Add(currentStateIndex, stateInfo);
-                        ++traversalIndex;
+                        stateInfo[currentStateIndex] = new TarjanStateInfo(traversalIndex);
                         stateIdStack.Push(currentStateIndex);
-                        stateInfo.InStack = true;
                     }
                     else
                     {
                         // Just returned from recursion into 'currentTransitionIndex': update Lowlink
                         // and advance to next transition.
                         var lastDestination = transitions[currentTransitionIndex].DestinationStateIndex;
-                        stateInfo.Lowlink = Math.Min(stateInfo.Lowlink, stateIdToStateInfo[lastDestination].Lowlink);
+                        stateInfo[currentStateIndex].Lowlink = Math.Min(
+                            stateInfo[currentStateIndex].Lowlink,
+                            stateInfo[lastDestination].Lowlink);
                         ++currentTransitionIndex;
                     }
 
@@ -242,20 +245,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         var destinationStateIndex = transition.DestinationStateIndex;
-                        if (!stateIdToStateInfo.TryGetValue(destinationStateIndex, out var destinationStateInfo))
+                        if (stateInfo[destinationStateIndex].TraversalIndex == 0)
                         {
                             // Return to this (state/transition) after destinationState is processed.
                             // Processing will resume from currentTransitionIndex.
-                            traversalStack.Push((stateInfo, currentStateIndex, currentTransitionIndex));
+                            traversalStack.Push((currentStateIndex, currentTransitionIndex));
                             // Process destination state.
-                            traversalStack.Push((null, destinationStateIndex, 0));
+                            traversalStack.Push((destinationStateIndex, 0));
                             // Do not process other transitions until destination state is processed.
                             break;
                         }
                         
-                        if (destinationStateInfo.InStack)
+                        if (stateInfo[destinationStateIndex].InStack)
                         {
-                            stateInfo.Lowlink = Math.Min(stateInfo.Lowlink, destinationStateInfo.TraversalIndex);
+                            stateInfo[currentStateIndex].Lowlink = Math.Min(
+                                stateInfo[currentStateIndex].Lowlink,
+                                stateInfo[destinationStateIndex].TraversalIndex);
                         }
                     }
 
@@ -266,16 +271,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         continue;
                     }
 
-                    if (stateInfo.Lowlink == stateInfo.TraversalIndex)
+                    if (stateInfo[currentStateIndex].Lowlink == stateInfo[currentStateIndex].TraversalIndex)
                     {
                         var statesInComponent = new List<State>();
-                        int stateIndex;
-                        do
+                        while (true)
                         {
-                            stateIndex = stateIdStack.Pop();
-                            stateIdToStateInfo[stateIndex].InStack = false;
+                            var stateIndex = stateIdStack.Pop();
+                            stateInfo[stateIndex].InStack = false;
                             statesInComponent.Add(states[stateIndex]);
-                        } while (stateIndex != currentStateIndex);
+                            if (stateIndex == currentStateIndex)
+                            {
+                                break;
+                            }
+                        }
 
                         components.Add(new StronglyConnectedComponent(
                             this.automaton, this.transitionFilter, statesInComponent, this.useApproximateClosure));
@@ -310,7 +318,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             State destState = this.automaton.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
-                                weightToAdd += transition.Weight * this.stateIdToInfo[transition.DestinationStateIndex].WeightToEnd;
+                                weightToAdd += transition.Weight * this.stateInfo[transition.DestinationStateIndex].WeightToEnd;
                             }
                         }
 
@@ -320,10 +328,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             for (int updatedStateIndex = 0; updatedStateIndex < currentComponent.Size; ++updatedStateIndex)
                             {
                                 State updatedState = currentComponent.GetStateByIndex(updatedStateIndex);
-                                CondensationStateInfo updatedStateInfo = this.stateIdToInfo[updatedState.Index];
+                                CondensationStateInfo updatedStateInfo = this.stateInfo[updatedState.Index];
                                 updatedStateInfo.WeightToEnd +=
                                     currentComponent.GetWeight(updatedStateIndex, stateIndex) * weightToAdd;
-                                this.stateIdToInfo[updatedState.Index] = updatedStateInfo;
+                                this.stateInfo.Update(updatedState.Index, updatedStateInfo);
                             }
                         }
                     }
@@ -339,9 +347,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <remarks>The weights are computed using dynamic programming, going down from the root to leafs.</remarks>
             private void ComputeWeightsFromRoot()
             {
-                CondensationStateInfo rootInfo = this.stateIdToInfo[this.Root.Index];
+                CondensationStateInfo rootInfo = this.stateInfo[this.Root.Index];
                 rootInfo.UpwardWeightFromRoot = Weight.One;
-                this.stateIdToInfo[this.Root.Index] = rootInfo;
+                this.stateInfo.Update(this.Root.Index, rootInfo);
 
                 // Iterate in the topological order
                 for (int currentComponentIndex = this.components.Count - 1; currentComponentIndex >= 0; --currentComponentIndex)
@@ -352,7 +360,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     for (int srcStateIndex = 0; srcStateIndex < currentComponent.Size; ++srcStateIndex)
                     {
                         State srcState = currentComponent.GetStateByIndex(srcStateIndex);
-                        CondensationStateInfo srcStateInfo = this.stateIdToInfo[srcState.Index];
+                        CondensationStateInfo srcStateInfo = this.stateInfo[srcState.Index];
                         if (srcStateInfo.UpwardWeightFromRoot.IsZero)
                         {
                             continue;
@@ -361,10 +369,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         for (int destStateIndex = 0; destStateIndex < currentComponent.Size; ++destStateIndex)
                         {
                             State destState = currentComponent.GetStateByIndex(destStateIndex);
-                            CondensationStateInfo destStateInfo = this.stateIdToInfo[destState.Index];
+                            CondensationStateInfo destStateInfo = this.stateInfo[destState.Index];
                             destStateInfo.WeightFromRoot +=
                                 srcStateInfo.UpwardWeightFromRoot * currentComponent.GetWeight(srcStateIndex, destStateIndex);
-                            this.stateIdToInfo[destState.Index] = destStateInfo;
+                            this.stateInfo.Update(destState.Index, destStateInfo);
                         }
                     }
 
@@ -372,7 +380,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     for (int srcStateIndex = 0; srcStateIndex < currentComponent.Size; ++srcStateIndex)
                     {
                         State srcState = currentComponent.GetStateByIndex(srcStateIndex);
-                        CondensationStateInfo srcStateInfo = this.stateIdToInfo[srcState.Index];
+                        CondensationStateInfo srcStateInfo = this.stateInfo[srcState.Index];
                         if (srcStateInfo.WeightFromRoot.IsZero)
                         {
                             continue;
@@ -384,82 +392,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             State destState = this.automaton.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
-                                CondensationStateInfo destStateInfo = this.stateIdToInfo[destState.Index];
+                                CondensationStateInfo destStateInfo = this.stateInfo[destState.Index];
                                 destStateInfo.UpwardWeightFromRoot += srcStateInfo.WeightFromRoot * transition.Weight;
-                                this.stateIdToInfo[transition.DestinationStateIndex] = destStateInfo;
+                                this.stateInfo.Update(transition.DestinationStateIndex, destStateInfo);
                             }
                         }
                     }
                 }
 
                 this.weightsFromRootComputed = true;
-            }
-
-            /// <summary>
-            /// Stores the information associated with a state of the condensation.
-            /// </summary>
-            private struct CondensationStateInfo
-            {
-                /// <summary>
-                /// Gets the default state info with all the weights set to 0.
-                /// </summary>
-                public static CondensationStateInfo Default =>
-                    new CondensationStateInfo
-                    {
-                        WeightToEnd = Weight.Zero,
-                        WeightFromRoot = Weight.Zero,
-                        UpwardWeightFromRoot = Weight.Zero
-                    };
-
-                /// <summary>
-                /// Gets or sets the total weight of all paths starting at the state.
-                /// Ending weights are taken into account.
-                /// </summary>
-                public Weight WeightToEnd { get; set; }
-
-                /// <summary>
-                /// Gets or sets the total weight of all paths from the root of the condensation
-                /// to the state. Ending weights are not taken into account.
-                /// </summary>
-                public Weight WeightFromRoot { get; set; }
-
-                /// <summary>
-                /// Gets or sets the total weight of all paths from the root of the condensation
-                /// to the state that don't go through any other states of the same strongly connected component.
-                /// Ending weights are not taken into account.
-                /// </summary>
-                public Weight UpwardWeightFromRoot { get; set; }
-            }
-
-            /// <summary>
-            /// Stores the information maintained by the Tarjan's algorithm.
-            /// </summary>
-            private class TarjanStateInfo
-            {
-                /// <summary>
-                /// Initializes a new instance of the <see cref="TarjanStateInfo"/> class.
-                /// </summary>
-                /// <param name="traversalIndex">The current traversal index.</param>
-                public TarjanStateInfo(int traversalIndex)
-                {
-                    this.TraversalIndex = traversalIndex;
-                    this.Lowlink = traversalIndex;
-                }
-
-                /// <summary>
-                /// Gets or sets a value indicating whether the state is currently in stack.
-                /// </summary>
-                public bool InStack { get; set; }
-
-                /// <summary>
-                /// Gets the traversal index of the state.
-                /// </summary>
-                public int TraversalIndex { get; }
-
-                /// <summary>
-                /// Gets or sets the lowlink of the state.
-                /// </summary>
-                public int Lowlink { get; set; }
             }
         }
     }

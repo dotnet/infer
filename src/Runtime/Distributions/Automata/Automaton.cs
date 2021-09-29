@@ -15,6 +15,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
     using Microsoft.ML.Probabilistic.Serialization;
@@ -1405,8 +1406,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var builder = new Builder(0);
-            var productStateCache = new Dictionary<(int, int), int>(automaton1.States.Count + automaton2.States.Count);
-            var stack = new Stack<(int state1, int state2, int productStateIndex)>();
+            var (productStateCache, stack) = PreallocatedAutomataObjects.LeaseProductState();
 
             // Creates product state and schedules product computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
@@ -1418,7 +1418,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var productState = builder.AddState();
                     productState.SetEndWeight(state1.EndWeight * state2.EndWeight);
                     stack.Push((state1.Index, state2.Index, productState.Index));
-                    productStateCache[destPair] = productState.Index;
+                    productStateCache.Add(destPair, productState.Index);
                     productStateIndex = productState.Index;
                 }
 
@@ -1483,6 +1483,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 result = result.TryDeterminize();
             }
+
             return result;
         }
 
@@ -1743,9 +1744,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             double GetLogValueEpsilonFree()
             {
                 var sequenceLength = SequenceManipulator.GetLength(sequence);
-                var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
-                var valuesStack = new Stack<Weight>();
-                var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+                var (operationsStack, valuesStack, valueCache) = PreallocatedAutomataObjects.LeaseGetLogValueState();
                 operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
                 while (operationsStack.Count > 0)
@@ -1767,7 +1766,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             {
                                 // We are at the end of sequence. So put an answer on stack
                                 valuesStack.Push(state.EndWeight * multiplier);
-                                valueCache[statePosPair] = state.EndWeight;
+                                valueCache.Add(statePosPair, state.EndWeight);
                             }
                             else
                             {
@@ -1800,7 +1799,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         valuesStack.Push(multiplier * sum);
-                        valueCache[statePosPair] = sum;
+                        valueCache.Add(statePosPair, sum);
                     }
                 }
 
@@ -1831,13 +1830,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // b) (stateIndex, sequencePos, mul, sumUntil) -
             //    sums values of transitions from this state. They will be on top of the stack
             // As an optimization, value calculated by (b) is cached, so if (a) notices that result for
-            // (stateIndex, sequencePos) already calculated it doesn't schedule any extra work
+            // (stateIndex, sequencePos) is already calculated it doesn't schedule any extra work
             double GetLogValueGeneral()
             {
                 var sequenceLength = SequenceManipulator.GetLength(sequence);
-                var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
-                var valuesStack = new Stack<Weight>();
-                var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+                var (operationsStack, valuesStack, valueCache) =
+                    PreallocatedAutomataObjects.LeaseGetLogValueState();
                 operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
                 while (operationsStack.Count > 0)
@@ -1859,7 +1857,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             {
                                 // We are at the end of sequence. So put an answer on stack
                                 valuesStack.Push(closure.EndWeight * multiplier);
-                                valueCache[statePosPair] = closure.EndWeight;
+                                valueCache.Add(statePosPair, closure.EndWeight);
                             }
                             else
                             {
@@ -1902,7 +1900,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         valuesStack.Push(multiplier * sum);
-                        valueCache[statePosPair] = sum;
+                        valueCache.Add(statePosPair, sum);
                     }
                 }
 
@@ -2289,47 +2287,50 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             TThis noEpsilonTransitions = GetEpsilonClosure();
 
-            var condensation = noEpsilonTransitions.ComputeCondensation(noEpsilonTransitions.Start, tr => true, false);
-            double logNormalizer = condensation.GetWeightToEnd(noEpsilonTransitions.Start.Index).LogValue;
-            normalizedAutomaton = (TThis)this;
-            if (normalize)
+            using (var condensation = noEpsilonTransitions.ComputeCondensation(noEpsilonTransitions.Start, tr => true, false))
             {
-                if (!double.IsInfinity(logNormalizer))
+                double logNormalizer = condensation.GetWeightToEnd(noEpsilonTransitions.Start.Index).LogValue;
+                normalizedAutomaton = (TThis)this;
+                if (normalize)
                 {
-                    normalizedAutomaton = WithData(PushWeights());
-                }
-            }
-
-            return logNormalizer;
-
-            // Re-distributes weights of the states and transitions so that the underlying automaton becomes stochastic
-            // (i.e. sum of weights of all the outgoing transitions and the ending weight is 1 for every node).
-            DataContainer PushWeights()
-            {
-                var builder = Builder.FromAutomaton(noEpsilonTransitions);
-                for (int i = 0; i < builder.StatesCount; ++i)
-                {
-                    var state = builder[i];
-                    var weightToEnd = condensation.GetWeightToEnd(i);
-                    if (weightToEnd.IsZero)
+                    if (!double.IsInfinity(logNormalizer))
                     {
-                        continue; // End states cannot be reached from this state, no point in normalization
+                        normalizedAutomaton = WithData(PushWeights());
                     }
-
-                    var weightToEndInv = Weight.Inverse(weightToEnd);
-                    for (var transitionIterator = state.TransitionIterator; transitionIterator.Ok; transitionIterator.Next())
-                    {
-                        var transition = transitionIterator.Value;
-                        transitionIterator.Value = transition.With(weight: Weight.Product(
-                            transition.Weight,
-                            condensation.GetWeightToEnd(transition.DestinationStateIndex),
-                            weightToEndInv));
-                    }
-
-                    state.SetEndWeight(state.EndWeight * weightToEndInv);
                 }
 
-                return builder.GetData();
+                return logNormalizer;
+
+                // Re-distributes weights of the states and transitions so that the underlying automaton becomes stochastic
+                // (i.e. sum of weights of all the outgoing transitions and the ending weight is 1 for every node).
+                DataContainer PushWeights()
+                {
+                    var builder = Builder.FromAutomaton(noEpsilonTransitions);
+                    for (int i = 0; i < builder.StatesCount; ++i)
+                    {
+                        var state = builder[i];
+                        var weightToEnd = condensation.GetWeightToEnd(i);
+                        if (weightToEnd.IsZero)
+                        {
+                            continue; // End states cannot be reached from this state, no point in normalization
+                        }
+
+                        var weightToEndInv = Weight.Inverse(weightToEnd);
+                        for (var transitionIterator = state.TransitionIterator; transitionIterator.Ok; transitionIterator.Next())
+                        {
+                            var transition = transitionIterator.Value;
+                            transitionIterator.Value = transition.With(
+                                weight: Weight.Product(
+                                    transition.Weight,
+                                    condensation.GetWeightToEnd(transition.DestinationStateIndex),
+                                    weightToEndInv));
+                        }
+
+                        state.SetEndWeight(state.EndWeight * weightToEndInv);
+                    }
+
+                    return builder.GetData();
+                }
             }
         }
 
@@ -2418,6 +2419,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public void Dispose()
             {
                 threadMaxStateCountOverride = this.originalThreadMaxStateCount;
+                PreallocatedAutomataObjects.FreeAllObjects();
             }
         }
         #endregion

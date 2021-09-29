@@ -869,7 +869,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 state.SetEndWeight(Weight.One);
 
                 var automaton1 = builder.GetAutomaton();
-                var automaton2 = builder.GetAutomaton();
+                var automaton2 = (StringAutomaton)automaton1.Clone();
                 var point = new string('a', StateCount - 1);
 
                 var productAutomaton = StringAutomaton.Product(automaton1, automaton2);
@@ -962,7 +962,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 // Fine, because 200k < default limit
                 unlimited.CheckStateCount(automaton);
 
-                for (var i = 1; i < 200000; ++i)
+                builder = new StringAutomaton.Builder();
+                state = builder.Start;
+                for (var i = 1; i < 400000; ++i)
                 {
                     state = state.AddTransition('a', Weight.One);
                 }

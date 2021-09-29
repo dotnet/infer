@@ -18,9 +18,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public class Builder
         {
             /// <summary>
+            /// Containers which are reused between builders
+            /// </summary>
+            /// <remarks>
+            /// StringDistribution operations create enormous amounts of automata objects.
+            /// Reusing containers allows to avoid a lot of intermediate allocations.
+            ///
+            /// See also <see cref="PreallocatedAutomataObjects"/> class and comments on it.
+            /// This field can't go into that class because it depends on generic parameters.
+            /// </remarks>
+            [ThreadStatic]
+            private static (List<LinkedStateData>, List<LinkedTransitionNode>) preallocatedContainers;
+
+            /// <summary>
             /// States created so far.
             /// </summary>
-            private readonly List<LinkedStateData> states;
+            private List<LinkedStateData> states;
 
             /// <summary>
             /// Transitions created so far.
@@ -31,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// list. It is done this way, because transitions can be added at any moment and inserting
             /// transition into a middle of array is not feasible.
             /// </remarks>
-            private readonly List<LinkedTransitionNode> transitions;
+            private List<LinkedTransitionNode> transitions;
 
             /// <summary>
             /// Number of transitions marked as removed. We maintain this count to calculate finaly transitions
@@ -51,8 +64,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public Builder(int startStateCount = 1)
             {
-                this.states = new List<LinkedStateData>();
-                this.transitions = new List<LinkedTransitionNode>();
+                var preallocated = preallocatedContainers;
+
+                this.states = preallocated.Item1 ?? new List<LinkedStateData>();
+                this.transitions = preallocated.Item2 ?? new List<LinkedTransitionNode>();
+
+
+                // Generally only one builder is used at once.
+                // In case two builders are created, ensure that another builder won't use
+                // the same containers.
+                preallocatedContainers = default;
+
                 this.maxStateCount = MaxStateCount;
                 this.AddStates(startStateCount);
             }
@@ -143,7 +165,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 for (var i = 0; i < count; ++i)
                 {
-                    AddState();
+                    this.AddState();
                 }
             }
 
@@ -172,7 +194,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 // Caller must ensure that it doesn't try to delete start state. Because it will lead to
                 // invalid automaton.
-                Debug.Assert(stateIndex != StartStateIndex);
+                Debug.Assert(stateIndex != this.StartStateIndex);
 
                 // After state is removed, all its transitions will be dead
                 for (var iterator = this[stateIndex].TransitionIterator; iterator.Ok; iterator.Next())
@@ -208,7 +230,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="removeLabel">Label which marks states which should be deleted</param>
             public int RemoveStates(bool[] labels, bool removeLabel)
             {
-                var oldToNewStateIdMapping = new int[this.states.Count];
+                var oldToNewStateIdMapping = PreallocatedAutomataObjects.LeaseRemoveStatesState(this.states.Count);
+
                 var newStateId = 0;
                 var deadStateCount = 0;
                 for (var stateId = 0; stateId < this.states.Count; ++stateId)
@@ -233,7 +256,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 // Caller must ensure that it doesn't try to delete start state. Because it will lead to
                 // invalid automaton.
-                Debug.Assert(StartStateIndex != -1);
+                Debug.Assert(this.StartStateIndex != -1);
 
                 for (var i = 0; i < this.states.Count; ++i)
                 {
@@ -403,13 +426,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             #region Result getters
 
             /// <summary>
-            /// Builds new automaton object.
+            /// Builds new automaton object. Builder must not be used after this method is called
             /// </summary>
             public TThis GetAutomaton() => new TThis() { Data = this.GetData() };
 
             /// <summary>
             /// Stores built automaton in pre-allocated <see cref="Automaton{TSequence,TElement,TElementDistribution,TSequenceManipulator,TThis}"/> object.
             /// </summary>
+            /// <remarks>
+            /// Builder must not be used after this method is called.
+            /// </remarks>
             public DataContainer GetData(bool? isDeterminized = null)
             {
                 if (this.StartStateIndex < 0 || this.StartStateIndex >= this.states.Count)
@@ -417,6 +443,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     throw new InvalidOperationException(
                         $"Built automaton must have a valid start state. " +
                         $"StartStateIndex = {this.StartStateIndex}, states.Count = {this.states.Count}");
+                }
+
+                if (this.states == null)
+                {
+                    throw new InvalidOperationException("GetData() can be called only once");
                 }
 
                 var hasEpsilonTransitions = false;
@@ -463,6 +494,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 // Detect two very common automata shapes
                 var isEnumerable = hasOnlyForwardTransitions ? true : (bool?)null;
+
+                // Return lists into the preallocated cache. This will make this object unusable
+                // from now on.
+                this.states.Clear();
+                this.transitions.Clear();
+                preallocatedContainers = (this.states, this.transitions);
+                this.states = null;
+                this.transitions = null;
 
                 return new DataContainer(
                     this.StartStateIndex,
@@ -788,17 +827,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // unlink from previous node
                     if (node.Prev != -1)
                     {
-                        var prevNode = builder.transitions[node.Prev];
+                        var prevNode = this.builder.transitions[node.Prev];
                         prevNode.Next = node.Next;
-                        builder.transitions[node.Prev] = prevNode;
+                        this.builder.transitions[node.Prev] = prevNode;
                     }
 
                     // unlink from next node
                     if (node.Next != -1)
                     {
-                        var nextNode = builder.transitions[node.Next];
+                        var nextNode = this.builder.transitions[node.Next];
                         nextNode.Prev = node.Prev;
-                        builder.transitions[node.Next] = nextNode;
+                        this.builder.transitions[node.Next] = nextNode;
                     }
 
                     // update references in state

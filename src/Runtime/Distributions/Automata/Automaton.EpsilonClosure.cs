@@ -57,21 +57,23 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
                 else
                 {
-                    var condensation = automaton.ComputeCondensation(state, tr => tr.IsEpsilon, true);
-                    this.weightedStates = new (State, Weight)[condensation.TotalStatesCount];
-                    var statesAdded = 0;
-                    for (int i = 0; i < condensation.ComponentCount; ++i)
+                    using (var condensation = automaton.ComputeCondensation(state, tr => tr.IsEpsilon, true))
                     {
-                        StronglyConnectedComponent component = condensation.GetComponent(i);
-                        for (int j = 0; j < component.Size; ++j)
+                        this.weightedStates = new (State, Weight)[condensation.TotalStatesCount];
+                        var statesAdded = 0;
+                        for (int i = 0; i < condensation.ComponentCount; ++i)
                         {
-                            State componentState = component.GetStateByIndex(j);
-                            this.weightedStates[statesAdded++] =
-                                (componentState, condensation.GetWeightFromRoot(componentState));
+                            StronglyConnectedComponent component = condensation.GetComponent(i);
+                            for (int j = 0; j < component.Size; ++j)
+                            {
+                                State componentState = component.GetStateByIndex(j);
+                                this.weightedStates[statesAdded++] =
+                                    (componentState, condensation.GetWeightFromRoot(componentState.Index));
+                            }
                         }
-                    }
 
-                    this.EndWeight = condensation.GetWeightToEnd(state.Index);
+                        this.EndWeight = condensation.GetWeightToEnd(state.Index);
+                    }
                 }
             }
 
