@@ -12,12 +12,13 @@ namespace Microsoft.ML.Probabilistic.Collections
     /// </summary>
     /// <remarks>
     /// <see cref="ValueTuple{T1,T2}.Equals(ValueTuple{T1,T2})"/> uses
-    /// <see cref="EqualityComparer{T}.Default"/> to implement he comparison. This actually involves
-    /// a lookup in a hash-table each time it is used due to the way static fields in generic
-    /// classes are implemented. It appears to be measurably slower when int pair is used as
-    /// a key in a dictionary.
+    /// <see cref="EqualityComparer{T}.Default"/> to implement he comparison. Accessing this
+    /// static property involves a lookup in a hash-table each time it is used due to the way
+    /// static fields in generic classes are implemented in CLR. It appears to be measurably
+    /// slower when `(int, int)` is used as a key in a dictionary. To avoid this, this class
+    /// specializes `Equals()` to integers and thus avoids lookup for comparer.
     /// </remarks>
-    public struct IntPair : IEquatable<IntPair>
+    public readonly struct IntPair : IEquatable<IntPair>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IntPair"/> struct.
