@@ -58,10 +58,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return new TThis
             {
                 sequencePairToWeight = srcAutomaton.ApplyFunction<
-                    List<Pair<Option<TSrcElement>, Option<TDestElement>>>,
-                    Pair<Option<TSrcElement>, Option<TDestElement>>,
+                    List<(Option<TSrcElement>, Option<TDestElement>)>,
+                    (Option<TSrcElement>, Option<TDestElement>),
                     TPairDistribution,
-                    ListManipulator<List<Pair<Option<TSrcElement>, Option<TDestElement>>>, Pair<Option<TSrcElement>, Option<TDestElement>>>,
+                    ListManipulator<List<(Option<TSrcElement>, Option<TDestElement>)>, (Option<TSrcElement>, Option<TDestElement>)>,
                     PairListAutomaton>(
                 (dist, weight, group) => ValueTuple.Create(
                     dist.HasValue
@@ -103,10 +103,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return new TThis
             {
                 sequencePairToWeight = destAutomaton.ApplyFunction<
-                    List<Pair<Option<TSrcElement>, Option<TDestElement>>>,
-                    Pair<Option<TSrcElement>, Option<TDestElement>>,
+                    List<(Option<TSrcElement>, Option<TDestElement>)>,
+                    (Option<TSrcElement>, Option<TDestElement>),
                     TPairDistribution,
-                    ListManipulator<List<Pair<Option<TSrcElement>, Option<TDestElement>>>, Pair<Option<TSrcElement>, Option<TDestElement>>>,
+                    ListManipulator<List<(Option<TSrcElement>, Option<TDestElement>)>, (Option<TSrcElement>, Option<TDestElement>)>,
                     PairListAutomaton>(
                 (dist, weight, group) => ValueTuple.Create(
                     dist.HasValue
@@ -268,7 +268,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(transducer, "transducer");
 
-            var emptySequence = new List<Pair<Option<TSrcElement>, Option<TDestElement>>>();
+            var emptySequence = new List<(Option<TSrcElement>, Option<TDestElement>)>();
             return Sum(
                 transducer,
                 new TThis { sequencePairToWeight = PairListAutomaton.ConstantOnLog(0.0, emptySequence) });
@@ -599,7 +599,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Represents an automaton that maps lists of element pairs to real values. Such automata are used to represent transducers internally.
         /// </summary>
         protected class PairListAutomaton :
-            ListAutomaton<List<Pair<Option<TSrcElement>, Option<TDestElement>>>, Pair<Option<TSrcElement>, Option<TDestElement>>, TPairDistribution, PairListAutomaton>
+            ListAutomaton<List<(Option<TSrcElement>, Option<TDestElement>)>, (Option<TSrcElement>, Option<TDestElement>), TPairDistribution, PairListAutomaton>
         {
             /// <summary>
             /// Computes a set of outgoing transitions from a given state of the determinization result.

@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Collections
     public struct IntPair : IEquatable<IntPair>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Pair{T1,T2}"/> struct.
+        /// Initializes a new instance of the <see cref="IntPair"/> struct.
         /// </summary>
         /// <param name="first">The first element of the pair.</param>
         /// <param name="second">The second element of the pair.</param>

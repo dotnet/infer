@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <inheritdoc/>
         /// <remarks>Not currently implemented.</remarks>
-        public override double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair)
+        public override double GetLogProb((Option<TElement1>, Option<TElement2>) pair)
         {
             throw new NotImplementedException();
         }
@@ -86,16 +86,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         // TODO: replace with init-only property after switching to C# 9.0+
         public bool HasEqualityConstraint { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the point mass represented by the distribution.
-        /// </summary>
-        public override Pair<Option<TElement>, Option<TElement>> Point
-        {
-            get => base.Point;
-        }
-
         /// <inheritdoc/>
-        public override ImmutablePairDistribution<TElement, TElementDistribution> CreatePointMass(Pair<Option<TElement>, Option<TElement>> point)
+        public override ImmutablePairDistribution<TElement, TElementDistribution> CreatePointMass(
+            (Option<TElement>, Option<TElement>) point)
         {
             var result = base.CreatePointMass(point);
             result.HasEqualityConstraint = false;
@@ -293,7 +286,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         /// <inheritdoc/>
         /// <remarks>Not currently implemented.</remarks>
-        public override double GetLogProb(Pair<Option<TElement>, Option<TElement>> pair)
+        public override double GetLogProb((Option<TElement>, Option<TElement>) pair)
         {
             throw new NotImplementedException();
         }

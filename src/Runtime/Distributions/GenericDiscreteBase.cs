@@ -476,23 +476,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Returns the domain values corresponding to the first and last indices of non-zero probabilities.
         /// </summary>
-        public Pair<T, T> ValueRange
+        public (T, T) ValueRange
         {
             get
             {
                 var probs = disc.GetWorkspace();
                 int firstIndex = probs.FindFirstIndex(p => p > 0.0);
                 int lastIndex = probs.FindLastIndex(p => p > 0.0);
-                return Pair.Create(ConvertFromInt(firstIndex), ConvertFromInt(lastIndex));
+                return (ConvertFromInt(firstIndex), ConvertFromInt(lastIndex));
             }
         }
 
-        public Pair<int, int> IndexRange
+        public (int, int) IndexRange
         {
             get
             {
                 var probs = disc.GetWorkspace();
-                return Pair.Create(probs.FindFirstIndex(p => p > 0.0), probs.FindLastIndex(p => p > 0.0));
+                return (probs.FindFirstIndex(p => p > 0.0), probs.FindLastIndex(p => p > 0.0));
             }
         }
 
