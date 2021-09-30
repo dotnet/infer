@@ -487,12 +487,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
-        public (int, int) IndexRange
+        public IntPair IndexRange
         {
             get
             {
                 var probs = disc.GetWorkspace();
-                return (probs.FindFirstIndex(p => p > 0.0), probs.FindLastIndex(p => p > 0.0));
+                return new IntPair(probs.FindFirstIndex(p => p > 0.0), probs.FindLastIndex(p => p > 0.0));
             }
         }
 
