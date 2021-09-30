@@ -8,7 +8,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    using Microsoft.ML.Probabilistic.Core.Collections;
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
@@ -210,7 +210,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var (stateIdStack, stateInfo, traversalStack) =
                     PreallocatedAutomataObjects.LeaseFindStronglyConnectedComponentsState(states.Count);
 
-                traversalStack.Push((this.Root.Index, 0));
+                traversalStack.Push(new IntPair(this.Root.Index, 0));
                 while (traversalStack.Count > 0)
                 {
                     var (currentStateIndex, currentTransitionIndex) = traversalStack.Pop();
@@ -249,9 +249,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             // Return to this (state/transition) after destinationState is processed.
                             // Processing will resume from currentTransitionIndex.
-                            traversalStack.Push((currentStateIndex, currentTransitionIndex));
+                            traversalStack.Push(new IntPair(currentStateIndex, currentTransitionIndex));
                             // Process destination state.
-                            traversalStack.Push((destinationStateIndex, 0));
+                            traversalStack.Push(new IntPair(destinationStateIndex, 0));
                             // Do not process other transitions until destination state is processed.
                             break;
                         }

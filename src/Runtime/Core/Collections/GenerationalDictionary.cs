@@ -2,12 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 
-namespace Microsoft.ML.Probabilistic.Core.Collections
+namespace Microsoft.ML.Probabilistic.Collections
 {
-    using System;
-
     /// <summary>
     /// Hash table implementation that has a constant-time Clear() operation.
     /// </summary>

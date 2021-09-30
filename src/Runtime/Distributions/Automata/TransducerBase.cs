@@ -9,7 +9,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Diagnostics;
     using System.Linq;
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -364,7 +363,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 PairListAutomaton.State mappingState,
                 Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.State srcState)
             {
-                var destPair = (mappingState.Index, srcState.Index);
+                var destPair = new IntPair(mappingState.Index, srcState.Index);
                 if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
                 {
                     var destState = result.AddState();
@@ -478,7 +477,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // If computation is already scheduled or done the state index is simply taken from cache
             int CreateDestState(PairListAutomaton.State mappingState, int srcSequenceIndex)
             {
-                var destPair = (mappingState.Index, srcSequenceIndex);
+                var destPair = new IntPair(mappingState.Index, srcSequenceIndex);
                 if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
                 {
                     var destState = result.AddState();

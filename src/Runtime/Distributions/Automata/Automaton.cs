@@ -15,7 +15,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
     using Microsoft.ML.Probabilistic.Serialization;
@@ -1412,7 +1411,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // If computation is already scheduled or done the state index is simply taken from cache
             int CreateProductState(State state1, State state2)
             {
-                var destPair = (state1.Index, state2.Index);
+                var destPair = new IntPair(state1.Index, state2.Index);
                 if (!productStateCache.TryGetValue(destPair, out var productStateIndex))
                 {
                     var productState = builder.AddState();
@@ -1750,7 +1749,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 while (operationsStack.Count > 0)
                 {
                     var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
-                    var statePosPair = (stateIndex, sequencePos);
+                    var statePosPair = new IntPair(stateIndex, sequencePos);
 
                     if (sumUntil < 0)
                     {
@@ -1841,7 +1840,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 while (operationsStack.Count > 0)
                 {
                     var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
-                    var statePosPair = (stateIndex, sequencePos);
+                    var statePosPair = new IntPair(stateIndex, sequencePos);
 
                     if (sumUntil < 0)
                     {
