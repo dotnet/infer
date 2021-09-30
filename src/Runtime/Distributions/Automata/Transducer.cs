@@ -51,10 +51,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return new TThat
             {
                 sequencePairToWeight = transducer.sequencePairToWeight.ApplyFunction<
-                    List<Pair<Option<TDestElement>, Option<TSrcElement>>>,
-                    Pair<Option<TDestElement>, Option<TSrcElement>>,
+                    List<(Option<TDestElement>, Option<TSrcElement>)>,
+                    (Option<TDestElement>, Option<TSrcElement>),
                     ImmutablePairDistribution<TDestElement, TDestElementDistribution, TSrcElement, TSrcElementDistribution>,
-                    ListManipulator<List<Pair<Option<TDestElement>, Option<TSrcElement>>>, Pair<Option<TDestElement>, Option<TSrcElement>>>,
+                    ListManipulator<List<(Option<TDestElement>, Option<TSrcElement>)>, (Option<TDestElement>, Option<TSrcElement>)>,
                     TransducerBase<
                         TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton,
                         TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton,
@@ -125,10 +125,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var result = new TThis
             {
                 sequencePairToWeight = automaton.ApplyFunction<
-                    List<Pair<Option<TElement>, Option<TElement>>>,
-                    Pair<Option<TElement>, Option<TElement>>,
+                    List<(Option<TElement>, Option<TElement>)>,
+                    (Option<TElement>, Option<TElement>),
                     ImmutablePairDistribution<TElement, TElementDistribution>,
-                    ListManipulator<List<Pair<Option<TElement>, Option<TElement>>>, Pair<Option<TElement>, Option<TElement>>>,
+                    ListManipulator<List<(Option<TElement>, Option<TElement>)>, (Option<TElement>, Option<TElement>)>,
                     PairListAutomaton>(
                 (transitionElementDistribution, transitionWeight, transitionGroup) =>
                     {
@@ -231,10 +231,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var result = new TThis()
             {
                 sequencePairToWeight = automaton.ApplyFunction<
-                    List<Pair<Option<TElement>, Option<TElement>>>,
-                    Pair<Option<TElement>, Option<TElement>>,
+                    List<(Option<TElement>, Option<TElement>)>,
+                    (Option<TElement>, Option<TElement>),
                     ImmutablePairDistribution<TElement, TElementDistribution>,
-                    ListManipulator<List<Pair<Option<TElement>, Option<TElement>>>, Pair<Option<TElement>, Option<TElement>>>,
+                    ListManipulator<List<(Option<TElement>, Option<TElement>)>, (Option<TElement>, Option<TElement>)>,
                     PairListAutomaton>(
                     (elementDist, weight, group) => transitionTransform(elementDist, weight))
             };

@@ -818,14 +818,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>A regex tree.</returns>
             private RegexpTreeNode<TElement, TElementDistribution> BuildRegexFromTRGraph()
             {
-                var transitivelyReducedEdges = this.Nodes.SelectMany(node => node.OutgoingNodes.Where(e => e.EdgeType == EdgeTypes.RemovedByTR).Select(e => Pair.Create(node.Index, e.Index))).ToList();
+                var transitivelyReducedEdges = this.Nodes
+                    .SelectMany(node => node.OutgoingNodes.Where(e => e.EdgeType == EdgeTypes.RemovedByTR)
+                    .Select(e => new IntPair(node.Index, e.Index)))
+                    .ToList();
                 if (transitivelyReducedEdges.Count > 0)
                 {
                     // Build an interval tree based on containment.
                     transitivelyReducedEdges.Sort(new ContainmentIntervalComparer());
                     var root = new IntervalTreeNode()
                     {
-                        Interval = Pair.Create(this.NodeCount - 1, 0)
+                        Interval = new IntPair(this.NodeCount - 1, 0)
                     };
 
                     var currNode = root;
@@ -836,7 +839,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     root.SortAndMergeChildren();
 
-                    Pair<int, int> enclosingInterval;
+                    IntPair enclosingInterval;
                     this.TryCollapsingIntervalNode(root, out enclosingInterval);
                 }
 
@@ -884,7 +887,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="node">The interval tree node.</param>
             /// <param name="enclosingInterval">The enclosing interval (output).</param>
             /// <returns>True if successful, false otherwise.</returns>
-            private bool TryCollapsingIntervalNode(IntervalTreeNode node, out Pair<int, int> enclosingInterval)
+            private bool TryCollapsingIntervalNode(IntervalTreeNode node, out IntPair enclosingInterval)
             {
                 // Children should already be ordered.
                 var children = node.Children;
@@ -915,7 +918,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                     }
 
-                    Pair<int, int> childEnclosingInterval;
+                    IntPair childEnclosingInterval;
                     bool success = this.TryCollapsingIntervalNode(child, out childEnclosingInterval);
                     if (!success)
                     {
@@ -949,7 +952,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                enclosingInterval = Pair.Create(incomingExtreme, outgoingExtreme);
+                enclosingInterval = new IntPair(incomingExtreme, outgoingExtreme);
 
                 if (incomingExtreme > intervalStart || outgoingExtreme < intervalEnd)
                 {
@@ -1078,7 +1081,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Comparer for comparing two intervals that orders by containment.
             /// </summary>
-            private class ContainmentIntervalComparer : IComparer<Pair<int, int>>
+            private class ContainmentIntervalComparer : IComparer<IntPair>
             {
                 /// <summary>
                 /// Compares two intervals.
@@ -1086,7 +1089,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <param name="x">The first interval.</param>
                 /// <param name="y">The second interval.</param>
                 /// <returns>-1, 1, or 0 depending on containment, or, if no containment, by left-hand bound.</returns>
-                public int Compare(Pair<int, int> x, Pair<int, int> y)
+                public int Compare(IntPair x, IntPair y)
                 {
                     if (x.First < y.First)
                     {
@@ -1152,7 +1155,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets or sets the interval for this node.
                 /// </summary>
-                public Pair<int, int> Interval
+                public IntPair Interval
                 {
                     get;
                     set;
@@ -1205,7 +1208,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                         else
                         {
-                            newNode.Interval = Pair.Create(lhs, rhs);
+                            newNode.Interval = new IntPair(lhs, rhs);
                             mergedList.Add(newNode);
                             newNode = new IntervalTreeNode();
                             newNode.children.AddRange(child.children);
@@ -1214,7 +1217,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                     }
 
-                    newNode.Interval = Pair.Create(lhs, rhs);
+                    newNode.Interval = new IntPair(lhs, rhs);
                     mergedList.Add(newNode);
 
                     this.children = mergedList;
@@ -1230,7 +1233,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// </summary>
                 /// <param name="interval">A pair representing the interval.</param>
                 /// <returns>The enclosing node, or null.</returns>
-                public IntervalTreeNode FindEnclosingNode(Pair<int, int> interval)
+                public IntervalTreeNode FindEnclosingNode(IntPair interval)
                 {
                     if (this.Contains(interval))
                     {
@@ -1255,7 +1258,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// </summary>
                 /// <param name="interval">The interval.</param>
                 /// <returns>True of successful, false otherwise.</returns>
-                public bool TryAddInterval(Pair<int, int> interval)
+                public bool TryAddInterval(IntPair interval)
                 {
                     var parent = this.FindEnclosingNode(interval);
                     if (parent != null)
@@ -1289,7 +1292,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// </summary>
                 /// <param name="interval">A pair representing the other interval.</param>
                 /// <returns>True if this interval contains the specified one, false otherwise.</returns>
-                private bool Contains(Pair<int, int> interval)
+                private bool Contains(IntPair interval)
                 {
                     return this.Interval.First >= interval.First && this.Interval.Second <= interval.Second;
                 }

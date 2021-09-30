@@ -7,7 +7,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System;
     using System.Collections.Generic;
 
-    using Microsoft.ML.Probabilistic.Core.Collections;
+    using Microsoft.ML.Probabilistic.Collections;
 
     /// <summary>
     /// A cache for preallocated temporary data to reduce GC pressure.
@@ -28,16 +28,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     internal static class PreallocatedAutomataObjects
     {
         [ThreadStatic]
-        private static (GenerationalDictionary<(int, int), int>, Stack<(int, int, int)>) productState;
+        private static (GenerationalDictionary<IntPair, int>, Stack<(int, int, int)>) productState;
 
         [ThreadStatic]
-        private static (Stack<int>, TarjanStateInfo[], Stack<(int, int)>) findStronglyConnectedComponentsState;
+        private static (Stack<int>, TarjanStateInfo[], Stack<IntPair>) findStronglyConnectedComponentsState;
 
         [ThreadStatic]
         private static GenerationalDictionary<int, CondensationStateInfo> computeCondensationState;
 
         [ThreadStatic]
-        private static (Stack<(int, int, Weight, int)>, Stack<Weight>, GenerationalDictionary<(int, int), Weight>) getLogValueState;
+        private static (Stack<(int, int, Weight, int)>, Stack<Weight>, GenerationalDictionary<IntPair, Weight>) getLogValueState;
 
         [ThreadStatic]
         private static (int[], int[]) buildReversedGraphState;
@@ -72,12 +72,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             removeStatesState = default;
         }
 
-        internal static (GenerationalDictionary<(int, int), int>, Stack<(int, int, int)>) LeaseProductState()
+        internal static (GenerationalDictionary<IntPair, int>, Stack<(int, int, int)>) LeaseProductState()
         {
             var result = productState;
             if (result.Item1 == null)
             {
-                result = (new GenerationalDictionary<(int, int), int>(), new Stack<(int, int, int)>());
+                result = (new GenerationalDictionary<IntPair, int>(), new Stack<(int, int, int)>());
                 productState = result;
             }
 
@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
-        internal static (Stack<int>, TarjanStateInfo[], Stack<(int, int)>) LeaseFindStronglyConnectedComponentsState(int stateCount)
+        internal static (Stack<int>, TarjanStateInfo[], Stack<IntPair>) LeaseFindStronglyConnectedComponentsState(int stateCount)
         {
             var result = findStronglyConnectedComponentsState;
             if (result.Item1 == null)
@@ -95,7 +95,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 result = ValueTuple.Create(
                     new Stack<int>(),
                     new TarjanStateInfo[stateCount],
-                    new Stack<(int, int)>());
+                    new Stack<IntPair>());
                 findStronglyConnectedComponentsState = result;
             }
 
@@ -136,7 +136,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             computeCondensationState = state;
         }
 
-        internal static (Stack<(int, int, Weight, int)>, Stack<Weight>, GenerationalDictionary<(int, int), Weight>) LeaseGetLogValueState()
+        internal static (Stack<(int, int, Weight, int)>, Stack<Weight>, GenerationalDictionary<IntPair, Weight>) LeaseGetLogValueState()
         {
             var result = getLogValueState;
 
@@ -145,7 +145,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 result = ValueTuple.Create(
                     new Stack<(int, int, Weight, int)>(),
                     new Stack<Weight>(),
-                    new GenerationalDictionary<(int, int), Weight>());
+                    new GenerationalDictionary<IntPair, Weight>());
                 getLogValueState = result;
             }
 

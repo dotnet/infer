@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </p>
     /// </remarks>
     public abstract class ImmutablePairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis> :
-        IImmutableDistribution<Pair<Option<TElement1>, Option<TElement2>>, TThis>, CanGetLogAverageOf<TThis>, CanComputeProduct<TThis>, SummableExactly<TThis>, CanCreatePartialUniform<TThis>
+        IImmutableDistribution<(Option<TElement1>, Option<TElement2>), TThis>, CanGetLogAverageOf<TThis>, CanComputeProduct<TThis>, SummableExactly<TThis>, CanCreatePartialUniform<TThis>
         where TElementDistribution1 : IImmutableDistribution<TElement1, TElementDistribution1>, CanGetLogAverageOf<TElementDistribution1>, CanComputeProduct<TElementDistribution1>, CanCreatePartialUniform<TElementDistribution1>, new()
         where TElementDistribution2 : IImmutableDistribution<TElement2, TElementDistribution2>, CanGetLogAverageOf<TElementDistribution2>, CanComputeProduct<TElementDistribution2>, CanCreatePartialUniform<TElementDistribution2>, new()
         where TThis : ImmutablePairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis>, new()
@@ -58,7 +58,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets the point mass represented by the distribution.
         /// </summary>
-        public virtual Pair<Option<TElement1>, Option<TElement2>> Point
+        public virtual (Option<TElement1>, Option<TElement2>) Point
         {
             get
             {
@@ -67,15 +67,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     throw new InvalidOperationException("This distribution is not a point mass.");
                 }
 
-                return new Pair<Option<TElement1>, Option<TElement2>>(this.First.Value.Point, this.Second.Value.Point);
+                return (this.First.Value.Point, this.Second.Value.Point);
             }
         }
 
         /// <inheritdoc/>
-        public virtual TThis CreatePointMass(Pair<Option<TElement1>, Option<TElement2>> point) => new TThis()
+        public virtual TThis CreatePointMass((Option<TElement1>, Option<TElement2>) point) => new TThis()
         {
-            First = ElementDistribution1Factory.CreatePointMass(point.First.Value),
-            Second = ElementDistribution2Factory.CreatePointMass(point.Second.Value)
+            First = ElementDistribution1Factory.CreatePointMass(point.Item1.Value),
+            Second = ElementDistribution2Factory.CreatePointMass(point.Item2.Value)
         };
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public abstract double MaxDiff(object that);
 
         /// <inheritdoc/>
-        public abstract double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair);
+        public abstract double GetLogProb((Option<TElement1>, Option<TElement2>) pair);
 
         /// <inheritdoc/>
         public virtual double GetLogAverageOf(TThis that)
