@@ -47,6 +47,94 @@ namespace Microsoft.ML.Probabilistic.Tests
     /// </summary>
     public class BlogTests
     {
+        internal static void TrueSkill2Test()
+        {
+            TrueSkillV2Batch model = new TrueSkillV2Batch(1, 1, 1, 1);
+            model.NGames.ObservedValue = 1;
+            model.PlayersInGames.ObservedValue = new[] { 2 };
+            model.PrevGameIndices.ObservedValue = new int[][] { new[] { -1, -1 } };
+            model.PrevGamePlayerIndices.ObservedValue = new int[][] { new[] { 0, 0 } };
+            model.Scores.ObservedValue = new double[][] { new double[] { 1, 0 } };
+            InferenceEngine engine = new InferenceEngine();
+            Console.WriteLine(engine.Infer(model.BiasCoefficient));
+        }
+
+        class TrueSkillV2Batch
+        {
+            public Variable<int> NGames { get; }
+            public VariableArray<int> PlayersInGames { get; }
+            public VariableArray<VariableArray<int>, int[][]> PrevGameIndices { get; }
+            public VariableArray<VariableArray<int>, int[][]> PrevGamePlayerIndices { get; }
+            public VariableArray<VariableArray<double>, double[][]> Skills { get; }
+            public VariableArray<VariableArray<double>, double[][]> Performances { get; }
+            public VariableArray<VariableArray<double>, double[][]> Scores { get; }
+
+            public VariableArray<VariableArray<double>, double[][]> Biases { get; }
+            public Variable<double> BiasCoefficient { get; }
+            private readonly double InitialSigma;
+
+            public TrueSkillV2Batch(double dynamicsVariance, double performanceVariance, double drawMargin, double initialSigma)
+            {
+                InitialSigma = initialSigma;
+                NGames = Variable.New<int>();
+                Range game = new Range(NGames);
+                PlayersInGames = Variable.Array<int>(game);
+
+                Range gamePlayer = new Range(PlayersInGames[game]);
+
+                PrevGameIndices = Variable.Array(Variable.Array<int>(gamePlayer), game).Named("Previous Game Indices").Attrib(new DoNotInfer());
+                PrevGamePlayerIndices = Variable.Array(Variable.Array<int>(gamePlayer), game).Named("Previous Game Player Indices").Attrib(new DoNotInfer());
+                Skills = Variable.Array(Variable.Array<double>(gamePlayer), game).Named("Skills").Attrib(new DoNotInfer());
+
+                Performances = Variable.Array(Variable.Array<double>(gamePlayer), game).Named("Performances").Attrib(new DoNotInfer());
+                Scores = Variable.Array(Variable.Array<double>(gamePlayer), game).Named("Scores").Attrib(new DoNotInfer());
+
+                Biases = Variable.Array(Variable.Array<double>(gamePlayer), game).Named("Biases").Attrib(new DoNotInfer());
+                Biases[game][gamePlayer] = Variable.GaussianFromMeanAndVariance(0, 1).ForEach(game, gamePlayer);
+
+                BiasCoefficient = Variable.GaussianFromMeanAndVariance(0, 1).Named("Bias Coefficient").Attrib(new PointEstimate());
+
+                using (Variable.ForEach(game))
+                {
+                    using (var p = Variable.ForEach(gamePlayer))
+                    {
+                        var playersFirstGame = PrevGameIndices[game][gamePlayer] < 0;
+                        using (Variable.If(playersFirstGame))
+                        {
+                            Skills[game][gamePlayer] = Variable.GaussianFromMeanAndVariance(0, InitialSigma);
+                        }
+
+                        using (Variable.IfNot(playersFirstGame))
+                        {
+                            var prevGame = Variable.Min(PrevGameIndices[game][gamePlayer], 0);
+                            var prevGamePlayerIndex = Variable.Min(PrevGamePlayerIndices[game][gamePlayer], 0);
+                            Skills[game][gamePlayer] = Variable.GaussianFromMeanAndVariance(
+                                Skills[prevGame][prevGamePlayerIndex],
+                                dynamicsVariance
+                            );
+                        }
+
+                        Performances[game][gamePlayer] = Variable.GaussianFromMeanAndVariance(Skills[game][gamePlayer] + BiasCoefficient * Biases[game][gamePlayer], performanceVariance);
+
+                        using (Variable.If(p.Index > 0))
+                        {
+                            var diff = (Performances[game][p.Index - 1] - Performances[game][p.Index]).Named("diff");
+
+                            using (Variable.If(Scores[game][p.Index - 1] == Scores[game][p.Index]))
+                            {
+                                Variable.ConstrainBetween(diff, -drawMargin, drawMargin);
+                            }
+
+                            using (Variable.IfNot(Scores[game][p.Index - 1] == Scores[game][p.Index]))
+                            {
+                                Variable.ConstrainTrue(diff > drawMargin);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Test of GaussianFromMeanAndVariance.
         /// </summary>
