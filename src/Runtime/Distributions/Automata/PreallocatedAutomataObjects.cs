@@ -31,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static (GenerationalDictionary<IntPair, int>, Stack<(int, int, int)>) productState;
 
         [ThreadStatic]
-        private static (Stack<int>, TarjanStateInfo[], Stack<(int, int)>, int NextGeneration) findStronglyConnectedComponentsState;
+        private static (Stack<int>, TarjanStateInfo[], Stack<IntPair>, int NextGeneration) findStronglyConnectedComponentsState;
 
         [ThreadStatic]
         private static GenerationalDictionary<int, CondensationStateInfo> computeCondensationState;
@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
-        internal static (Stack<int>, TarjanStateInfo[], Stack<(int, int)>, int) LeaseFindStronglyConnectedComponentsState(int stateCount)
+        internal static (Stack<int>, TarjanStateInfo[], Stack<IntPair>, int) LeaseFindStronglyConnectedComponentsState(int stateCount)
         {
             var (stack, stateInfo, traversalStack, nextGeneration) = findStronglyConnectedComponentsState;
 
@@ -97,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 stack = new Stack<int>();
                 stateInfo = new TarjanStateInfo[stateCount];
-                traversalStack = new Stack<(int, int)>();
+                traversalStack = new Stack<IntPair>();
             }
 
             if (stateInfo.Length < stateCount)
