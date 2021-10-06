@@ -9,12 +9,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </summary>
     internal struct TarjanStateInfo
     {
-        public TarjanStateInfo(int index)
+        public TarjanStateInfo(int generation, int index)
         {
+            this.Generation = generation;
             this.TraversalIndex = index;
             this.Lowlink = index;
             this.InStack = true;
         }
+
+        /// <summary>
+        /// Generation of the data.
+        /// </summary>
+        /// <remarks>
+        /// An array of `TarjanStateInfo` is cached in
+        /// <see cref="PreallocatedAutomataObjects.findStronglyConnectedComponentsState"/>.
+        /// To avoid (costly) clear operations on this array, a generational scheme is used.
+        /// Each time array must be logically cleared, it's generation is bumped.
+        /// At the places where states array used, entries with non-matching generation
+        /// must be treated as empty.
+        /// </remarks>
+        public int Generation { get; set;}
 
         /// <summary>
         /// Gets or sets the traversal index of the state. Zero value indicates that
