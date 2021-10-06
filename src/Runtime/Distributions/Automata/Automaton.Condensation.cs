@@ -207,7 +207,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var states = this.automaton.States;
                 int traversalIndex = 0;
 
-                var (stateIdStack, stateInfo, traversalStack) =
+                var (stateIdStack, stateInfo, traversalStack, generation) =
                     PreallocatedAutomataObjects.LeaseFindStronglyConnectedComponentsState(states.Count);
 
                 traversalStack.Push(new IntPair(this.Root.Index, 0));
@@ -217,12 +217,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var currentState = states[currentStateIndex];
                     var transitions = currentState.Transitions;
 
-                    if (stateInfo[currentStateIndex].TraversalIndex == 0)
+                    if (stateInfo[currentStateIndex].Generation != generation)
                     {
                         ++traversalIndex;
                         // Entered into processing of this state for the first time: create Tarjan info for it
                         // and push the state onto Tarjan stack.
-                        stateInfo[currentStateIndex] = new TarjanStateInfo(traversalIndex);
+                        stateInfo[currentStateIndex] = new TarjanStateInfo(generation, traversalIndex);
                         stateIdStack.Push(currentStateIndex);
                     }
                     else
@@ -245,7 +245,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         var destinationStateIndex = transition.DestinationStateIndex;
-                        if (stateInfo[destinationStateIndex].TraversalIndex == 0)
+                        if (stateInfo[destinationStateIndex].Generation != generation)
                         {
                             // Return to this (state/transition) after destinationState is processed.
                             // Processing will resume from currentTransitionIndex.

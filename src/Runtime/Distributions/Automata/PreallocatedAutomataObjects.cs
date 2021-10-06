@@ -31,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static (GenerationalDictionary<IntPair, int>, Stack<(int, int, int)>) productState;
 
         [ThreadStatic]
-        private static (Stack<int>, TarjanStateInfo[], Stack<IntPair>) findStronglyConnectedComponentsState;
+        private static (Stack<int>, TarjanStateInfo[], Stack<IntPair>, int) findStronglyConnectedComponentsState;
 
         [ThreadStatic]
         private static GenerationalDictionary<int, CondensationStateInfo> computeCondensationState;
@@ -87,27 +87,35 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return result;
         }
 
-        internal static (Stack<int>, TarjanStateInfo[], Stack<IntPair>) LeaseFindStronglyConnectedComponentsState(int stateCount)
+        internal static (Stack<int>, TarjanStateInfo[], Stack<IntPair>, int) LeaseFindStronglyConnectedComponentsState(int stateCount)
         {
-            var result = findStronglyConnectedComponentsState;
-            if (result.Item1 == null)
+            var (stack, stateInfo, traversalStack, nextGeneration) = findStronglyConnectedComponentsState;
+
+            // This check will work in both cases: when state was not initialized and when
+            // generation has overflown over 0.
+            if (nextGeneration == 0)
             {
-                result = ValueTuple.Create(
-                    new Stack<int>(),
-                    new TarjanStateInfo[stateCount],
-                    new Stack<IntPair>());
-                findStronglyConnectedComponentsState = result;
+                stack = new Stack<int>();
+                stateInfo = new TarjanStateInfo[stateCount];
+                traversalStack = new Stack<IntPair>();
             }
 
-            if (result.Item2.Length < stateCount)
+            if (stateInfo.Length < stateCount)
             {
-                var newLength = Math.Max(stateCount, result.Item2.Length * 2);
-                result = (result.Item1, new TarjanStateInfo[newLength], result.Item3);
+                var newLength = Math.Max(stateCount, stateInfo.Length * 2);
+                stateInfo = new TarjanStateInfo[newLength];
             }
 
-            result.Item1.Clear();
-            Array.Clear(result.Item2, 0, stateCount);
-            result.Item3.Clear();
+            stack.Clear();
+            traversalStack.Clear();
+            ++nextGeneration;
+
+            var result = (stack, stateInfo, traversalStack, nextGeneration);
+
+            // We need to always update the currently stored state, because at the very least
+            // current generation was bumped and we need to preserve this for next time
+            // this method is called.
+            findStronglyConnectedComponentsState = result;
 
             return result;
         }
