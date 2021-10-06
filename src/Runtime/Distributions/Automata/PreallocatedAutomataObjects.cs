@@ -31,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static (GenerationalDictionary<IntPair, int>, Stack<(int, int, int)>) productState;
 
         [ThreadStatic]
-        private static (Stack<int>, TarjanStateInfo[], Stack<IntPair>, int NextGeneration) findStronglyConnectedComponentsState;
+        private static (Stack<int>, TarjanStateInfo[], Stack<IntPair>, int) findStronglyConnectedComponentsState;
 
         [ThreadStatic]
         private static GenerationalDictionary<int, CondensationStateInfo> computeCondensationState;
