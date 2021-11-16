@@ -154,8 +154,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
 
             bool isStochastic = CodeRecognizer.IsStochastic(context, binding.lhs);
-            IExpression caseNumber = null;
-            bool isBinaryCondition = false;
+            IExpression caseNumber;
+            bool isBinaryCondition;
             if (caseValue.GetExpressionType().Equals(typeof(bool)))
             {
                 isBinaryCondition = true;
@@ -169,6 +169,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             else
             {
+                isBinaryCondition = false;
                 caseNumber = caseValue;
             }
 

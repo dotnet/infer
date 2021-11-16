@@ -343,13 +343,14 @@ namespace Microsoft.ML.Probabilistic.Tests
                 return serializer.Deserialize<T>(jsonReader);
             }
         }
+    }
 
-        /// <summary>
-        /// Treats as objects distribution member types which implement <see cref="IList{T}"/>.
-        /// </summary>
-        private class CollectionAsObjectResolver : DefaultContractResolver
-        {
-            private static readonly HashSet<Type> SerializeAsObjectTypes = new HashSet<Type>
+    /// <summary>
+    /// Treats as objects distribution member types which implement <see cref="IList{T}"/>.
+    /// </summary>
+    public class CollectionAsObjectResolver : DefaultContractResolver
+    {
+        private static readonly HashSet<Type> SerializeAsObjectTypes = new HashSet<Type>
             {
                 typeof(Vector),
                 typeof(Matrix),
@@ -357,21 +358,20 @@ namespace Microsoft.ML.Probabilistic.Tests
                 typeof(ISparseList<>)
             };
 
-            private static readonly ConcurrentDictionary<Type, JsonContract> ResolvedContracts = new ConcurrentDictionary<Type, JsonContract>();
+        private static readonly ConcurrentDictionary<Type, JsonContract> ResolvedContracts = new ConcurrentDictionary<Type, JsonContract>();
 
-            public override JsonContract ResolveContract(Type type) => ResolvedContracts.GetOrAdd(type, this.ResolveContractInternal);
+        public override JsonContract ResolveContract(Type type) => ResolvedContracts.GetOrAdd(type, this.ResolveContractInternal);
 
-            private JsonContract ResolveContractInternal(Type type) => IsExcludedType(type)
-                ? this.CreateObjectContract(type)
-                : this.CreateContract(type);
+        private JsonContract ResolveContractInternal(Type type) => IsExcludedType(type)
+            ? this.CreateObjectContract(type)
+            : this.CreateContract(type);
 
-            private static bool IsExcludedType(Type type)
-            {
-                if (type == null) return false;
-                if (SerializeAsObjectTypes.Contains(type)) return true;
-                if (type.IsGenericType && SerializeAsObjectTypes.Contains(type.GetGenericTypeDefinition())) return true;
-                return IsExcludedType(type.BaseType) || type.GetInterfaces().Any(IsExcludedType);
-            }
+        private static bool IsExcludedType(Type type)
+        {
+            if (type == null) return false;
+            if (SerializeAsObjectTypes.Contains(type)) return true;
+            if (type.IsGenericType && SerializeAsObjectTypes.Contains(type.GetGenericTypeDefinition())) return true;
+            return IsExcludedType(type.BaseType) || type.GetInterfaces().Any(IsExcludedType);
         }
     }
 }

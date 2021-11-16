@@ -76,11 +76,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             public TrueSkillV2Batch(double dynamicsVariance, double performanceVariance, double drawMargin, double initialSigma)
             {
                 InitialSigma = initialSigma;
-                NGames = Variable.New<int>();
-                Range game = new Range(NGames);
-                PlayersInGames = Variable.Array<int>(game);
+                NGames = Variable.New<int>().Named("NGames");
+                Range game = new Range(NGames).Named("game");
+                PlayersInGames = Variable.Array<int>(game).Named("PlayersInGames");
 
-                Range gamePlayer = new Range(PlayersInGames[game]);
+                Range gamePlayer = new Range(PlayersInGames[game]).Named("gamePlayer");
 
                 PrevGameIndices = Variable.Array(Variable.Array<int>(gamePlayer), game).Named("Previous Game Indices").Attrib(new DoNotInfer());
                 PrevGamePlayerIndices = Variable.Array(Variable.Array<int>(gamePlayer), game).Named("Previous Game Player Indices").Attrib(new DoNotInfer());
@@ -106,8 +106,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                         using (Variable.IfNot(playersFirstGame))
                         {
-                            var prevGame = Variable.Min(PrevGameIndices[game][gamePlayer], 0);
-                            var prevGamePlayerIndex = Variable.Min(PrevGamePlayerIndices[game][gamePlayer], 0);
+                            var prevGame = PrevGameIndices[game][gamePlayer];//, 0).Named("prevGame");
+                            var prevGamePlayerIndex = PrevGamePlayerIndices[game][gamePlayer];//, 0).Named("prevGamePlayerIndex");
                             Skills[game][gamePlayer] = Variable.GaussianFromMeanAndVariance(
                                 Skills[prevGame][prevGamePlayerIndex],
                                 dynamicsVariance
