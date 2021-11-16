@@ -7,7 +7,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -16,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
     {
-        /// <inheritdoc cref="TryDeterminize(out TThis)" path="/summary"/>
+        /// <inheritdoc cref="TryDeterminize(out TThis, int?)" path="/summary"/>
         /// <returns>Result automaton. Determinized automaton, if the operation was successful, current automaton or
         /// an equvalent automaton without epsilon transitions otherwise.</returns>
         public TThis TryDeterminize()
@@ -32,12 +31,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="result">Result automaton. Determinized automaton, if the operation was successful, current automaton or
         /// an equvalent automaton without epsilon transitions otherwise.</param>
+        /// <param name="maxStateCount">Maximum states count in determinized automaton. If null
+        /// than this.States.Count * 3 is set as the maximum.
+        /// </param>
         /// <returns>
         /// <see langword="true"/> if the determinization attempt was successful and the automaton is now deterministic,
         /// <see langword="false"/> otherwise.
         /// </returns>
         /// <remarks>See <a href="http://www.cs.nyu.edu/~mohri/pub/hwa.pdf"/> for algorithm details.</remarks>
-        public bool TryDeterminize(out TThis result)
+        public bool TryDeterminize(out TThis result, int? maxStateCount = null)
         {
             if (this.Data.IsDeterminized != null)
             {
@@ -45,7 +47,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return this.Data.IsDeterminized == true;
             }
 
-            int maxStatesBeforeStop = Math.Min(this.States.Count * 3, MaxStateCount);
+            int maxStatesBeforeStop = maxStateCount ?? Math.Min(this.States.Count * 3, MaxStateCount);
 
             var epsilonClosure = GetEpsilonClosure(); // Deterministic automata cannot have epsilon-transitions
 
@@ -60,25 +62,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var builder = new Builder();
             builder.Start.SetEndWeight(epsilonClosure.Start.EndWeight);
 
-            var weightedStateSetStack = new Stack<(bool enter, Determinization.WeightedStateSet set)>();
-            var enqueuedWeightedStateSetStack = new Stack<(bool enter, Determinization.WeightedStateSet set)>();
+            var weightedStateSetStack = new Stack<(bool enter, int index, Determinization.WeightedStateSet stateSet)>();
+            var enqueuedWeightedStateSetStack = new Stack<(bool enter, int index, Determinization.WeightedStateSet stateSet)>();
             var weightedStateSetToNewState = new Dictionary<Determinization.WeightedStateSet, int>();
-            // This hash set is used to track sets currently in path from root. If we've found a set of states
+            // This dictionary is used to track sets currently in path from root. If we've found a set of states
             // that we have already seen during current path from root, but weights are different, that means
             // we've found a non-converging loop - infinite number of weighed sets will be generated if
             // we continue traversal and determinization will fail. For performance reasons we want to fail
             // fast if such loop is found.
-            var stateSetsInPath = new Dictionary<Determinization.WeightedStateSet, Determinization.WeightedStateSet>(
+            var stateSetsInPath = new Dictionary<Determinization.WeightedStateSet, (Determinization.WeightedStateSet stateSet, int index)>(
                 Determinization.WeightedStateSetOnlyStateComparer.Instance);
             
             var startWeightedStateSet = new Determinization.WeightedStateSet(epsilonClosure.Start.Index);
-            weightedStateSetStack.Push((true, startWeightedStateSet));
+            weightedStateSetStack.Push((true, epsilonClosure.Start.Index, startWeightedStateSet));
             weightedStateSetToNewState.Add(startWeightedStateSet, builder.StartStateIndex);
 
             while (weightedStateSetStack.Count > 0)
             {
                 // Take one unprocessed state of the resulting automaton
-                var (enter, currentWeightedStateSet) = weightedStateSetStack.Pop();
+                var (enter, currentIndex, currentWeightedStateSet) = weightedStateSetStack.Pop();
 
                 if (enter)
                 {
@@ -88,13 +90,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         // Because if there's only 1 state, than it's weight is always Weight.One.
                         if (!stateSetsInPath.ContainsKey(currentWeightedStateSet))
                         {
-                            stateSetsInPath.Add(currentWeightedStateSet, currentWeightedStateSet);
+                            stateSetsInPath.Add(currentWeightedStateSet, (currentWeightedStateSet, currentIndex));
                         }
 
-                        weightedStateSetStack.Push((false, currentWeightedStateSet));
+                        weightedStateSetStack.Push((false, currentIndex, currentWeightedStateSet));
                     }
 
-                    if (!EnqueueOutgoingTransitions(currentWeightedStateSet))
+                    if (!EnqueueOutgoingTransitions(currentWeightedStateSet, currentIndex))
                     {
                         this.Data = this.Data.With(isDeterminized: false);
                         result = WithData(epsilonClosure.Data.With(isDeterminized: false));
@@ -113,9 +115,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             result = WithData(builder.GetData(true));
             return true;
 
-            bool EnqueueOutgoingTransitions(Determinization.WeightedStateSet currentWeightedStateSet)
+            bool EnqueueOutgoingTransitions(
+                Determinization.WeightedStateSet currentWeightedStateSet, int currentStateIndex)
             {
-                var currentStateIndex = weightedStateSetToNewState[currentWeightedStateSet];
                 var currentState = builder[currentStateIndex];
 
                 // Common special-case: definitely deterministic transitions from single state.
@@ -192,7 +194,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // - An infinite loop with not converging weights was found. It leads to infinite number of states.
             //   So determinization is aborted early.
             bool TryAddTransition(
-                Stack<(bool enter, Determinization.WeightedStateSet set)> destinationStack,
+                Stack<(bool enter, int index, Determinization.WeightedStateSet set)> destinationStack,
                 Determinization.OutgoingTransition transition,
                 Builder.StateBuilder currentState)
             {
@@ -205,38 +207,43 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return false;
                     }
 
-                    var visitedWeightedStateSet = default(Determinization.WeightedStateSet);
+                    var visited = default((Determinization.WeightedStateSet stateSet, int index));
                     var sameSetVisited =
                         destinations.Count > 1 &&
-                        stateSetsInPath.TryGetValue(destinations, out visitedWeightedStateSet);
+                        stateSetsInPath.TryGetValue(destinations, out visited);
 
-                    if (sameSetVisited && !destinations.Equals(visitedWeightedStateSet))
+                    if (sameSetVisited)
                     {
-                        // We arrived into the same state set as before, but with different weights.
-                        // This is an infinite non-converging loop. Determinization has failed
-                        return false;
+                        if (!destinations.EqualsWithPrecision(visited.stateSet, 1e-5))
+                        {
+                            // We arrived into the same state set as before, but with different weights.
+                            // This is an infinite non-converging loop. Determinization has failed
+                            return false;
+                        }
+
+                        destinationStateIndex = visited.index;
                     }
-
-                    // Add new state to the result
-                    var destinationState = builder.AddState();
-                    weightedStateSetToNewState.Add(destinations, destinationState.Index);
-                    destinationStack.Push((true, destinations));
-
-                    if (destinations.Count > 1 && !sameSetVisited)
+                    else
                     {
-                        destinationStack.Push((false, destinations));
-                    }
+                        var destinationState = builder.AddState();
+                        destinationStateIndex = destinationState.Index;
+                        weightedStateSetToNewState.Add(destinations, destinationState.Index);
+                        destinationStack.Push((true, destinationStateIndex, destinations));
 
-                    // Compute its ending weight
-                    destinationState.SetEndWeight(Weight.Zero);
-                    for (var i = 0; i < destinations.Count; ++i)
-                    {
-                        var weightedState = destinations[i];
-                        var addedWeight = weightedState.Weight * epsilonClosure.States[weightedState.Index].EndWeight;
-                        destinationState.SetEndWeight(destinationState.EndWeight + addedWeight);
-                    }
+                        if (destinations.Count > 1)
+                        {
+                            destinationStack.Push((false, destinationStateIndex, destinations));
+                        }
 
-                    destinationStateIndex = destinationState.Index;
+                        // Compute its ending weight
+                        destinationState.SetEndWeight(Weight.Zero);
+                        for (var i = 0; i < destinations.Count; ++i)
+                        {
+                            var weightedState = destinations[i];
+                            var addedWeight = weightedState.Weight * epsilonClosure.States[weightedState.Index].EndWeight;
+                            destinationState.SetEndWeight(destinationState.EndWeight + addedWeight);
+                        }
+                    }                   
                 }
 
                 // Add transition to the destination state
@@ -335,7 +342,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// It is essentially a set of (stateId, weight) pairs of the source automaton, where each state id is unique.
             /// Supports a quick lookup of the weight by state id.
             /// </summary>
-            public struct WeightedStateSet
+            public struct WeightedStateSet : IEquatable<WeightedStateSet>
             {
                 /// <summary>
                 /// A mapping from state ids to weights. This array is sorted by state Id.
@@ -407,6 +414,37 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var state1 = this[i];
                         var state2 = that[i];
                         if (state1.Index != state2.Index || state1.WeightHighBits != state2.WeightHighBits)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                /// <summary>
+                /// Checks whether this object is equal to a given one. Weights are compared with
+                /// given precision.
+                /// </summary>
+                /// <param name="that">The object to compare this object with.</param>
+                /// <param name="precision">Maximum difference of weights for them to be considered equal</param>
+                /// <returns>
+                /// <see langword="true"/> if the objects are equal,
+                /// <see langword="false"/> otherwise.
+                /// </returns>
+                public bool EqualsWithPrecision(WeightedStateSet that, double precision)
+                {
+                    if (this.Count != that.Count)
+                    {
+                        return false;
+                    }
+
+                    for (var i = 0; i < this.Count; ++i)
+                    {
+                        var state1 = this[i];
+                        var state2 = that[i];
+                        if (state1.Index != state2.Index ||
+                            Math.Abs(state1.Weight.LogValue - state2.Weight.LogValue) > precision)
                         {
                             return false;
                         }

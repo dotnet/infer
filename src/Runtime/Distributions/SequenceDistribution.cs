@@ -371,7 +371,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static TThis Any(int minLength = 0, int? maxLength = null)
         {
-            return Repeat(ElementDistributionFactory.CreateUniform(), minLength, maxLength); ;
+            return Repeat(ElementDistributionFactory.CreateUniform(), minLength, maxLength);
         }
 
         /// <summary>
@@ -987,14 +987,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns><see langword="true"/> if the internal representation of the current distribution
         /// was successfully replaced with a deterministic automaton or is guaranteed to produce one
         /// on direct conversion, <see langword="false"/> otherwise.</returns>
-        public bool TryDeterminize()
+        public bool TryDeterminize(bool normalize = true, int? maxStateCount = null)
         {
             if (IsPointMass || (this is StringDistribution && !UsesAutomatonRepresentation))
             {
                 return true;
             }
 
-            var determinizationSuccess = ToNormalizedAutomaton().TryDeterminize(out var determinizationResult);
+            var automaton = normalize ? ToNormalizedAutomaton() : ToAutomaton();
+            var determinizationSuccess = automaton.TryDeterminize(out var determinizationResult, maxStateCount);
             SetWeightFunction(determinizationResult, false);
             return determinizationSuccess;
         }
