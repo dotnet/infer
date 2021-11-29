@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the feature-related hyper-parameters from.</param>
-        public FeatureHyperparameters(BinaryReader reader)
+        public FeatureHyperparameters(IReader reader)
         {
             if (reader == null)
             {

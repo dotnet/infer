@@ -741,7 +741,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 IMatchboxRecommender<NativeDataset, int, int, Discrete, NativeDataset> notTrainedRecommender;
                 using (var stream = File.Open(NotTrainedFileName, FileMode.Open))
                 {
-                    using (var reader = new BinaryReader(stream))
+                    using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                     {
                         var deserializedMapping = new NativeRecommenderTestMapping(reader);
                         notTrainedRecommender = MatchboxRecommender.LoadBackwardCompatible(reader, deserializedMapping);
@@ -791,7 +791,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// Tests binary custom serialization/deserialization of the recommender operating on the standard data format.
         /// </summary>
         [Fact]
-        [Trait("Category", "OpenBug")]
+        [Trait("Category", "OpenBug")] // Fails with SerializationException : Unable to find assembly 'Infer.Learners.Tests'
         public void StandardDataFormatCustomSerializationTest()
         {
             const int BatchCount = 2;
@@ -826,7 +826,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider> notTrainedRecommender;
                 using (var stream = File.Open(NotTrainedFileName, FileMode.Open))
                 {
-                    using (var reader = new BinaryReader(stream))
+                    using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                     {
                         var deserializedMapping = new StandardRecommenderTestMapping(reader);
                         notTrainedRecommender = MatchboxRecommender.LoadBackwardCompatible(reader, deserializedMapping);
@@ -1147,7 +1147,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// Checks that the specified deserialization action throws a serialization exception for invalid versions.
         /// </summary>
         /// <param name="deserialize">The action which deserializes from a binary reader.</param>
-        private static void CheckCustomSerializationVersionException(Action<BinaryReader> deserialize)
+        private static void CheckCustomSerializationVersionException(Action<IReader> deserialize)
         {
             using (var stream = new MemoryStream())
             {
@@ -1156,7 +1156,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     Assert.Throws<SerializationException>(() => deserialize(reader));
                 }
@@ -1563,7 +1563,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Initializes a new instance of the <see cref="NativeRecommenderTestMapping"/> class.
             /// </summary>
             /// <param name="reader">The reader to load the mapping from.</param>
-            public NativeRecommenderTestMapping(BinaryReader reader)
+            public NativeRecommenderTestMapping(IReader reader)
             {
                 if (reader == null)
                 {
@@ -1796,7 +1796,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Initializes a new instance of the <see cref="StandardRecommenderTestMapping"/> class.
             /// </summary>
             /// <param name="reader">The reader to load the mapping from.</param>
-            public StandardRecommenderTestMapping(BinaryReader reader)
+            public StandardRecommenderTestMapping(IReader reader)
             {
                 reader.ReadSerializationVersion(4);
 

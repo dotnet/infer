@@ -66,7 +66,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The reader to load the indexed set from.</param>
-        public IndexedSet(BinaryReader reader) : this()
+        public IndexedSet(IReader reader) : this()
         {
             if (reader == null)
             {

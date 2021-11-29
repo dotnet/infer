@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the distribution over traits and bias of a user or an item from.</param>
-        protected EntityParameterDistribution(BinaryReader reader)
+        protected EntityParameterDistribution(IReader reader)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
 

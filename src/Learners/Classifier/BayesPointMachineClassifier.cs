@@ -14,10 +14,11 @@ namespace Microsoft.ML.Probabilistic.Learners
     using Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal;
     using Microsoft.ML.Probabilistic.Learners.Mappings;
     using Microsoft.ML.Probabilistic.Math;
+using Microsoft.ML.Probabilistic.Serialization;
 
-    /// <summary>
-    /// The Bayes point machine classifier factory.
-    /// </summary>
+/// <summary>
+/// The Bayes point machine classifier factory.
+/// </summary>
     public static class BayesPointMachineClassifier
     {
         #region Public factory methods
@@ -304,7 +305,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The binary Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
             LoadBackwardCompatibleBinaryClassifier<TInstanceSource, TInstance, TLabelSource>(
-                BinaryReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
+                IReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
         {
             if (reader == null)
             {
@@ -337,7 +338,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatibleBinaryClassifier(reader, mapping);
             }
@@ -378,7 +379,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
             LoadBackwardCompatibleMulticlassClassifier<TInstanceSource, TInstance, TLabelSource>(
-                BinaryReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
+                IReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
         {
             if (reader == null)
             {
@@ -411,7 +412,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatibleMulticlassClassifier(reader, mapping);
             }
@@ -453,7 +454,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The binary Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
-                BinaryReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
+                IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
             if (reader == null)
             {
@@ -487,7 +488,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatibleBinaryClassifier(reader, mapping);
             }
@@ -530,7 +531,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
-                BinaryReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
+                IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
             if (reader == null)
             {
@@ -564,7 +565,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatibleMulticlassClassifier(reader, mapping);
             }
@@ -775,7 +776,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The binary Bayes point machine classifier instance.</returns>
         internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
             LoadBackwardCompatibleGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource>(
-                BinaryReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
+                IReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
         {
             if (reader == null)
             {
@@ -809,7 +810,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, mapping);
             }
@@ -852,7 +853,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
         internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource>(
-                BinaryReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
+                IReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
         {
             if (reader == null)
             {
@@ -886,7 +887,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, mapping);
             }
@@ -930,7 +931,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The binary Bayes point machine classifier instance.</returns>
         internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
-                BinaryReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
+                IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
             if (reader == null)
             {
@@ -965,7 +966,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, mapping);
             }
@@ -1010,7 +1011,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
         internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
-                BinaryReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
+                IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
             if (reader == null)
             {
@@ -1045,7 +1046,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, mapping);
             }

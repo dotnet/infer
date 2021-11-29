@@ -54,7 +54,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="reader">The binary reader to read the advanced training settings from.</param>
         /// <param name="isTrained">Indicates whether the Matchbox recommender is trained.</param>
-        internal MatchboxRecommenderAdvancedTrainingSettings(BinaryReader reader, Func<bool> isTrained)
+        internal MatchboxRecommenderAdvancedTrainingSettings(IReader reader, Func<bool> isTrained)
         {
             if (reader == null)
             {

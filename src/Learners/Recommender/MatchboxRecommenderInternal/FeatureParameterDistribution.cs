@@ -37,10 +37,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FeatureParameterDistribution"/> class
-        /// from a reader of a binary stream.
+        /// from a reader of a stream.
         /// </summary>
-        /// <param name="reader">The binary reader to read the distribution over feature weights from.</param>
-        public FeatureParameterDistribution(BinaryReader reader)
+        /// <param name="reader">The reader to read the distribution over feature weights from.</param>
+        public FeatureParameterDistribution(IReader reader)
         {
             if (reader == null) throw new ArgumentNullException(nameof(reader));
 

@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     Gaussian natural = reader.ReadGaussian();
                     Assert.Equal(-13.89, natural.MeanTimesPrecision);
@@ -63,7 +63,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     Gamma shapeAndRate = reader.ReadGamma();
                     Assert.Equal(1.0, shapeAndRate.Shape);

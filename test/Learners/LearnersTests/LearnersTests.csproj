@@ -63,6 +63,7 @@
     <ProjectReference Include="..\..\..\src\Learners\Recommender\Recommender.csproj" />
     <ProjectReference Include="..\..\..\src\Learners\Runners\CommandLine\CommandLine.csproj" />
     <ProjectReference Include="..\..\..\src\Learners\Runners\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Tests\Tests.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="CustomSerializedLearners\2015-03-20\SparseBinaryNativeClassifier-2015-03-20.bin">

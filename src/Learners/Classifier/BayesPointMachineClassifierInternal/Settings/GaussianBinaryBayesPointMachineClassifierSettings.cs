@@ -39,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// </summary>
         /// <param name="reader">The binary reader to read the settings of the binary Bayes point machine classifier from.</param>
         /// <param name="isTrained">Indicates whether the binary Bayes point machine classifier is trained.</param>
-        internal GaussianBinaryBayesPointMachineClassifierSettings(BinaryReader reader, Func<bool> isTrained) : base(reader)
+        internal GaussianBinaryBayesPointMachineClassifierSettings(IReader reader, Func<bool> isTrained) : base(reader)
         {
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
 

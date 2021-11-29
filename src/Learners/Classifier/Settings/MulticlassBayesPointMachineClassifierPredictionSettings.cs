@@ -47,7 +47,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the prediction settings from.</param>
-        internal MulticlassBayesPointMachineClassifierPredictionSettings(BinaryReader reader) 
+        internal MulticlassBayesPointMachineClassifierPredictionSettings(IReader reader) 
             : base(reader)
         {
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);

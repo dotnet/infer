@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the model noise variance from.</param>
-        public NoiseHyperparameters(BinaryReader reader)
+        public NoiseHyperparameters(IReader reader)
         {
             if (reader == null)
             {

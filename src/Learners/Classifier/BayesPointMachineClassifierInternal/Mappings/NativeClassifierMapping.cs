@@ -128,7 +128,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// </summary>
         /// <param name="reader">The binary reader to read the mapping from.</param>
         /// <param name="standardMapping">The mapping for accessing data in standard format.</param>
-        protected NativeClassifierMapping(BinaryReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TStandardLabel, Vector> standardMapping)
+        protected NativeClassifierMapping(IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TStandardLabel, Vector> standardMapping)
         {
             this.StandardMapping = standardMapping;
 

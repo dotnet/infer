@@ -90,7 +90,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <param name="reader">The binary reader to read the state of the Bayes point machine classifier from.</param>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
         protected NativeDataFormatBayesPointMachineClassifier(
-            BinaryReader reader, 
+            IReader reader, 
             IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel> mapping)
         {
             Debug.Assert(reader != null, "The reader must not be null.");

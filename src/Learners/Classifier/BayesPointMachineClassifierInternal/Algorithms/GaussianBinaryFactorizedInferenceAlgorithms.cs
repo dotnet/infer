@@ -55,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the state of the inference algorithm from.</param>
-        public GaussianBinaryFactorizedInferenceAlgorithms(BinaryReader reader)
+        public GaussianBinaryFactorizedInferenceAlgorithms(IReader reader)
             : base(reader)
         {
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);

@@ -117,7 +117,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="reader">The binary reader to read the state of the negative data generation mapping from.</param>
         /// <param name="mapping">The top level mapping.</param>
         public NegativeDataGeneratorMapping(
-            BinaryReader reader,
+            IReader reader,
             IRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues> mapping)
         {
             if (reader == null)

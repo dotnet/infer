@@ -104,7 +104,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="reader">The binary reader to read the Matchbox recommender from.</param>
         /// <param name="topLevelMapping">The mapping used for accessing data.</param>
         internal StandardDataFormatMatchboxRecommender(
-            BinaryReader reader, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, Vector> topLevelMapping)
+            IReader reader, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, Vector> topLevelMapping)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
             Debug.Assert(topLevelMapping != null, "The mapping must not be null.");
@@ -648,7 +648,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// <param name="reader">The binary reader to read the state of the mapping from.</param>
             /// <param name="topLevelMapping">The wrapped mapping for accessing data in standard format.</param>
             public NativeRecommenderMapping(
-                BinaryReader reader,
+                IReader reader,
                 IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, Vector> topLevelMapping)
             {
                 Debug.Assert(reader != null, "The reader must not be null.");
@@ -1132,7 +1132,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// from a reader of a binary stream.
             /// </summary>
             /// <param name="reader">The binary reader to read the mapping from entity identifiers to entity objects from.</param>
-            public IndexedEntitySet(BinaryReader reader)
+            public IndexedEntitySet(IReader reader)
             {
                 Debug.Assert(reader != null, "The reader must not be null.");
 

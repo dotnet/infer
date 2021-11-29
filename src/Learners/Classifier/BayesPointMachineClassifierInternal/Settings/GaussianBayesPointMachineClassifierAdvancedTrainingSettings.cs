@@ -56,7 +56,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// </summary>
         /// <param name="reader">The binary reader to read the advanced training settings from.</param>
         /// <param name="isTrained">Indicates whether the Bayes point machine classifier is trained.</param>
-        internal GaussianBayesPointMachineClassifierAdvancedTrainingSettings(BinaryReader reader, Func<bool> isTrained)
+        internal GaussianBayesPointMachineClassifierAdvancedTrainingSettings(IReader reader, Func<bool> isTrained)
         {
             if (reader == null)
             {

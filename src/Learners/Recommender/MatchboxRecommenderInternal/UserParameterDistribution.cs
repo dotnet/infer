@@ -43,7 +43,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the distribution over user parameters from.</param>
-        public UserParameterDistribution(BinaryReader reader) : base(reader)
+        public UserParameterDistribution(IReader reader) : base(reader)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
 

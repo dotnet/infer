@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// </summary>
         /// <param name="reader">The binary reader to read the state of the binary Bayes point machine classifier from.</param>
         /// <param name="standardMapping">The mapping used for accessing data in the standard format.</param>
-        public GaussianBinaryStandardDataFormatBayesPointMachineClassifier(BinaryReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> standardMapping)
+        public GaussianBinaryStandardDataFormatBayesPointMachineClassifier(IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> standardMapping)
             : base(reader, standardMapping)
         {
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);

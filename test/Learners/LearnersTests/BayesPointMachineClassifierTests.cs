@@ -4914,7 +4914,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>> untrainedClassifier;
             using (var stream = File.Open(UntrainedFileName, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     deserializedMapping = new BinaryNativeBayesPointMachineClassifierTestMapping(reader);
                     untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping);
@@ -4996,7 +4996,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>> untrainedClassifier;
             using (var stream = File.Open(UntrainedFileName, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     deserializedMapping = new MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
                     untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping);
@@ -5077,7 +5077,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<string>> untrainedClassifier;
             using (var stream = File.Open(UntrainedFileName, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
                     untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping);
@@ -5158,7 +5158,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<string>> untrainedClassifier;
             using (var stream = File.Open(UntrainedFileName, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     var deserializedMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
                     untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping);
@@ -5241,7 +5241,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>> untrainedClassifier;
             using (var stream = File.Open(UntrainedFileName, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     deserializedMapping = new BinaryNativeBayesPointMachineClassifierTestMapping(reader);
                     untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping);
@@ -5324,7 +5324,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>> untrainedClassifier;
             using (var stream = File.Open(UntrainedFileName, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     deserializedMapping = new MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
                     untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping);
@@ -5406,7 +5406,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<string>> untrainedClassifier;
             using (var stream = File.Open(UntrainedFileName, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
                     untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping);
@@ -5488,7 +5488,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<string>> untrainedClassifier;
             using (var stream = File.Open(UntrainedFileName, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     var deserializedMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
                     untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping);
@@ -5701,7 +5701,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// Checks that the specified deserialization action throws a serialization exception for invalid versions.
         /// </summary>
         /// <param name="deserialize">The action which deserializes from a binary reader.</param>
-        private static void CheckCustomSerializationVersionException(Action<BinaryReader> deserialize)
+        private static void CheckCustomSerializationVersionException(Action<IReader> deserialize)
         {
             using (var stream = new MemoryStream())
             {
@@ -5709,8 +5709,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 writer.Write(new Guid("57CB3182-7C83-49F3-B56D-C3C7661439F5")); // Invalid serialization guid
                 
                 stream.Seek(0, SeekOrigin.Begin);
-                
-                using (var reader = new BinaryReader(stream))
+
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     Assert.Throws<SerializationException>(() => deserialize(reader));
                 }
@@ -9476,7 +9476,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Initializes a new instance of the <see cref="NativeBayesPointMachineClassifierTestMapping{TLabel}"/> class.
             /// </summary>
             /// <param name="reader">The reader to load the mapping from.</param>
-            protected NativeBayesPointMachineClassifierTestMapping(BinaryReader reader)
+            protected NativeBayesPointMachineClassifierTestMapping(IReader reader)
             {
                 this.BatchCount = reader.ReadInt32();
             }
@@ -9611,7 +9611,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Initializes a new instance of the <see cref="BinaryNativeBayesPointMachineClassifierTestMapping"/> class.
             /// </summary>
             /// <param name="reader">The reader to load the mapping from.</param>
-            public BinaryNativeBayesPointMachineClassifierTestMapping(BinaryReader reader) : base(reader)
+            public BinaryNativeBayesPointMachineClassifierTestMapping(IReader reader) : base(reader)
             {
             }
 
@@ -9647,7 +9647,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Initializes a new instance of the <see cref="MulticlassNativeBayesPointMachineClassifierTestMapping"/> class.
             /// </summary>
             /// <param name="reader">The reader to load the mapping from.</param>
-            public MulticlassNativeBayesPointMachineClassifierTestMapping(BinaryReader reader) : base(reader)
+            public MulticlassNativeBayesPointMachineClassifierTestMapping(IReader reader) : base(reader)
             {
             }
 
@@ -9683,7 +9683,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Initializes a new instance of the <see cref="StandardBayesPointMachineClassifierTestMapping"/> class.
             /// </summary>
             /// <param name="reader">The reader to load the mapping from.</param>
-            protected StandardBayesPointMachineClassifierTestMapping(BinaryReader reader)
+            protected StandardBayesPointMachineClassifierTestMapping(IReader reader)
             {
             }
 
@@ -9783,7 +9783,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Initializes a new instance of the <see cref="BinaryStandardBayesPointMachineClassifierTestMapping"/> class.
             /// </summary>
             /// <param name="reader">The reader to load the mapping from.</param>
-            public BinaryStandardBayesPointMachineClassifierTestMapping(BinaryReader reader) : base(reader)
+            public BinaryStandardBayesPointMachineClassifierTestMapping(IReader reader) : base(reader)
             {
             }
 
@@ -9846,7 +9846,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Initializes a new instance of the <see cref="MulticlassStandardBayesPointMachineClassifierTestMapping"/> class.
             /// </summary>
             /// <param name="reader">The reader to load the mapping from.</param>
-            public MulticlassStandardBayesPointMachineClassifierTestMapping(BinaryReader reader) : base(reader)
+            public MulticlassStandardBayesPointMachineClassifierTestMapping(IReader reader) : base(reader)
             {
             }
 

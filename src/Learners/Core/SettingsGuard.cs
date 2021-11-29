@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="reader">The reader to load the <see cref="SettingsGuard"/> from.</param>
         /// <param name="isImmutable">If true, the setting cannot be changed.</param>
-        public SettingsGuard(BinaryReader reader, Func<bool> isImmutable)
+        public SettingsGuard(IReader reader, Func<bool> isImmutable)
         {
             if (reader == null)
             {

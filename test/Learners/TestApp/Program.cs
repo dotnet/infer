@@ -35,7 +35,7 @@ namespace Microsoft.ML.Probabilistic.Learners.TestApp
             // Tests for the Bayes Point machine classifier
             var classifierTests = new BayesPointMachineClassifierTests();
 
-            classifierTests.GaussianSparseBinaryStandardCustomSerializationRegressionTest();
+            classifierTests.DenseBinaryStandardSerializationRegressionTest();
             ////classifierTests.DenseBinaryNativeConstantZeroFeatureTest();
             ////classifierTests.SparseBinaryNativeConstantZeroFeatureTest();
             ////classifierTests.DenseMulticlassNativeConstantZeroFeatureTest();
