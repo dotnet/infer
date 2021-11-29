@@ -58,7 +58,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// prior distributions over weights using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the training settings to.</param>
-        public override void SaveForwardCompatible(BinaryWriter writer)
+        public override void SaveForwardCompatible(IWriter writer)
         {
             base.SaveForwardCompatible(writer);
 

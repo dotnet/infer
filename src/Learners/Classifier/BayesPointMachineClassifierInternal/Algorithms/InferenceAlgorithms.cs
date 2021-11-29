@@ -293,7 +293,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// Saves the state of the inference algorithms using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the inference algorithms to.</param>
-        public virtual void SaveForwardCompatible(BinaryWriter writer)
+        public virtual void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
 

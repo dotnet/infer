@@ -126,7 +126,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the distributions over feature weights using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the distributions over feature weights to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
             writer.Write(this.TraitWeights);

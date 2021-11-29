@@ -25,7 +25,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             using (var stream = new MemoryStream())
             {
-                var writer = new BinaryWriter(stream);
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
                 writer.Write(Gaussian.FromNatural(-13.89, 436.12)); 
                 writer.Write(Gaussian.PointMass(Math.PI)); 
                 writer.Write(Gaussian.Uniform()); 
@@ -56,7 +56,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             using (var stream = new MemoryStream())
             {
-                var writer = new BinaryWriter(stream);
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
                 writer.Write(Gamma.FromShapeAndRate(1.0, 10.0)); 
                 writer.Write(Gamma.PointMass(Math.PI));
                 writer.Write(Gamma.Uniform()); 

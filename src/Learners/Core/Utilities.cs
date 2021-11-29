@@ -12,6 +12,8 @@ namespace Microsoft.ML.Probabilistic.Learners
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
 
+    using Serialization;
+
     /// <summary>
     /// Implements various utilities for all learners.
     /// </summary>
@@ -93,7 +95,7 @@ namespace Microsoft.ML.Probabilistic.Learners
 
             using (Stream stream = File.Open(fileName, fileMode))
             {
-                obj.SaveForwardCompatible(stream);
+                obj.SaveForwardCompatibleBinary(stream);
             }
         }
 
@@ -103,7 +105,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="obj">The object to be serialized.</param>
         /// <param name="stream">The serialization stream.</param>
         /// <remarks>To load a saved learner, you can use the factory methods whose names start with LoadBackwardCompatible.</remarks>
-        public static void SaveForwardCompatible(this ICustomSerializable obj, Stream stream)
+        public static void SaveForwardCompatibleBinary(this ICustomSerializable obj, Stream stream)
         {
             if (obj == null)
             {
@@ -115,7 +117,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
+            using (var writer = new WrappedBinaryWriter(new BinaryWriter(stream, Encoding.UTF8, true)))
             {
                 obj.SaveForwardCompatible(writer);
             }

@@ -114,7 +114,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var negativeDataGeneratorMapping = positiveOnlyMapping.WithGeneratedNegativeData(1.0);
             using (Stream stream = new MemoryStream())
             {
-                negativeDataGeneratorMapping.SaveForwardCompatible(stream);
+                negativeDataGeneratorMapping.SaveForwardCompatibleBinary(stream);
 
                 stream.Seek(0, SeekOrigin.Begin);
 

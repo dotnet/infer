@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the distribution over traits and bias of a user or an item using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the distribution over traits and bias of a user or an item to.</param>
-        public virtual void SaveForwardCompatible(BinaryWriter writer)
+        public virtual void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
 

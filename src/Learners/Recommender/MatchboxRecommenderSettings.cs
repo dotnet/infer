@@ -68,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// Saves the settings of the Matchbox recommender using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the settings to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);

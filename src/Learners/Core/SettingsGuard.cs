@@ -68,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// Saves the state of the <see cref="SettingsGuard"/> using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the <see cref="SettingsGuard"/> to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
             writer.Write(this.message);

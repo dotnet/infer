@@ -83,7 +83,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// Saves the prediction settings of the multi-class Bayes point machine classifier using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the prediction settings to.</param>
-        public override void SaveForwardCompatible(BinaryWriter writer)
+        public override void SaveForwardCompatible(IWriter writer)
         {
             base.SaveForwardCompatible(writer);
 

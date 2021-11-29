@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the noise variance of the Matchbox recommender using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the model noise variance to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
 

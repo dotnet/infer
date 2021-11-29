@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the feature-related hyper-parameters of the Matchbox recommender using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the feature-related hyper-parameters to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
 

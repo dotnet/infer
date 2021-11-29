@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
     using GaussianMatrix = Distributions.DistributionRefArray<Distributions.DistributionStructArray<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>, double[]>;
 
     /// <summary>
-    /// Provides extension methods for <see cref="BinaryWriter"/>.
+    /// Provides extension methods for <see cref="IWriter"/>.
     /// </summary>
     public static class BinaryWriterExtensions
     {
@@ -66,7 +66,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="writer">The binary writer.</param>
         /// <param name="array">The array of integers to write to the stream.</param>
-        public static void Write(this BinaryWriter writer, IList<int> array)
+        public static void Write(this IWriter writer, IList<int> array)
         {
             if (writer == null)
             {
@@ -90,7 +90,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="writer">The binary writer.</param>
         /// <param name="distribution">The <see cref="Gaussian"/> distribution to write to the stream.</param>
-        public static void Write(this BinaryWriter writer, Gaussian distribution)
+        public static void Write(this IWriter writer, Gaussian distribution)
         {
             if (writer == null)
             {
@@ -111,7 +111,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="writer">The binary writer.</param>
         /// <param name="array">The array of <see cref="Gaussian"/> distributions to write to the stream.</param>
-        public static void Write(this BinaryWriter writer, IList<Gaussian> array)
+        public static void Write(this IWriter writer, IList<Gaussian> array)
         {
             if (writer == null)
             {
@@ -135,7 +135,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="writer">The binary writer.</param>
         /// <param name="gaussians">The jagged array of <see cref="Gaussian"/> distributions to write to the stream.</param>
-        public static void Write(this BinaryWriter writer, GaussianMatrix gaussians)
+        public static void Write(this IWriter writer, GaussianMatrix gaussians)
         {
             if (writer == null)
             {
@@ -159,7 +159,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="writer">The binary writer.</param>
         /// <param name="distribution">The <see cref="Gamma"/> distribution to write to the stream.</param>
-        public static void Write(this BinaryWriter writer, Gamma distribution)
+        public static void Write(this IWriter writer, Gamma distribution)
         {
             if (writer == null)
             {
@@ -180,7 +180,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="writer">The binary writer.</param>
         /// <param name="array">The array of <see cref="Gamma"/> distributions to write to the stream.</param>
-        public static void Write(this BinaryWriter writer, IList<Gamma> array)
+        public static void Write(this IWriter writer, IList<Gamma> array)
         {
             if (writer == null)
             {

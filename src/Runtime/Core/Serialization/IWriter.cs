@@ -6,13 +6,13 @@ namespace Microsoft.ML.Probabilistic.Serialization
 {
     using System;
 
-    public interface IReader
+    public interface IWriter
     {
-        bool ReadBoolean();
-        int ReadInt32();
-        double ReadDouble();
-        string ReadString();
-        Guid ReadGuid();
-        object ReadObject();
+        void Write(bool value);
+        void Write(int value);
+        void Write(string value);
+        void Write(double value);
+        void Write(Guid value);
+        void WriteObject(object value);
     }
 }

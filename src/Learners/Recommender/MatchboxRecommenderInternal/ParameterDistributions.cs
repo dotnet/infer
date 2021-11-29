@@ -348,7 +348,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the distributions over parameters using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the distributions over parameters to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
 

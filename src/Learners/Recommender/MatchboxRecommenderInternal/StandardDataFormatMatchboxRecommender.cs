@@ -470,7 +470,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the state of the Matchbox recommender using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the Matchbox recommender to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);
@@ -918,7 +918,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// Saves the state of the mapping using the specified writer to a binary stream.
             /// </summary>
             /// <param name="writer">The writer to save the state of the mapping to.</param>
-            public void SaveForwardCompatible(BinaryWriter writer)
+            public void SaveForwardCompatible(IWriter writer)
             {
                 writer.Write(CustomSerializationVersion);
 
@@ -1203,7 +1203,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// Saves the state of the indexed set using the specified writer to a binary stream.
             /// </summary>
             /// <param name="writer">The writer to save the state of the indexed set to.</param>
-            public void SaveForwardCompatible(BinaryWriter writer)
+            public void SaveForwardCompatible(IWriter writer)
             {
                 writer.Write(CustomSerializationVersion);
                 this.indexedEntitySet.SaveForwardCompatible(writer);

@@ -5705,7 +5705,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             using (var stream = new MemoryStream())
             {
-                var writer = new BinaryWriter(stream);
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
                 writer.Write(new Guid("57CB3182-7C83-49F3-B56D-C3C7661439F5")); // Invalid serialization guid
                 
                 stream.Seek(0, SeekOrigin.Begin);
@@ -9586,7 +9586,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Saves the state of the native data mapping using a writer to a binary stream.
             /// </summary>
             /// <param name="writer">The writer to save the state of the native data mapping to.</param>
-            public void SaveForwardCompatible(BinaryWriter writer)
+            public void SaveForwardCompatible(IWriter writer)
             {
                 writer.Write(this.BatchCount);
             }
@@ -9759,7 +9759,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Saves the state of the standard data mapping using a writer to a binary stream.
             /// </summary>
             /// <param name="writer">The writer to save the state of the standard data mapping to.</param>
-            public void SaveForwardCompatible(BinaryWriter writer)
+            public void SaveForwardCompatible(IWriter writer)
             {
                 // Nothing to serialize.
             }
