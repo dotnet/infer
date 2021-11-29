@@ -4888,8 +4888,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var mapping = new BinaryNativeBayesPointMachineClassifierTestMapping();
             var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(mapping);
 
-            const string TrainedFileName = "trainedBinaryNativeClassifier.bin";
-            const string UntrainedFileName = "untrainedBinaryNativeClassifier.bin";
+            const string TrainedFileName = "trainedBinaryNativeClassifier" + extension;
+            const string UntrainedFileName = "untrainedBinaryNativeClassifier" + extension;
 
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -4910,16 +4910,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
 
             // Deserialize both classifier and mapping
-            BinaryNativeBayesPointMachineClassifierTestMapping deserializedMapping;
-            IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>> untrainedClassifier;
-            using (var stream = File.Open(UntrainedFileName, FileMode.Open))
+            var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    deserializedMapping = new BinaryNativeBayesPointMachineClassifierTestMapping(reader);
-                    untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping);
-                }
-            }
+                var deserializedMapping1 = new BinaryNativeBayesPointMachineClassifierTestMapping(reader);
+                var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping1);
+                return (untrainedClassifier1, deserializedMapping1);
+            });
 
             // Check predictions of deserialized classifiers
             CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -4952,6 +4948,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             }
         }
 
+        const string extension = ".txt";
+
         /// <summary>
         /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier and data in native format.
         /// </summary>
@@ -4970,8 +4968,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var mapping = new MulticlassNativeBayesPointMachineClassifierTestMapping();
             var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(mapping);
 
-            const string TrainedFileName = "trainedMulticlassNativeClassifier.bin";
-            const string UntrainedFileName = "untrainedMulticlassNativeClassifier.bin";
+            const string TrainedFileName = "trainedMulticlassNativeClassifier" + extension;
+            const string UntrainedFileName = "untrainedMulticlassNativeClassifier" + extension;
 
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -4992,16 +4990,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
 
             // Deserialize both classifier and mapping
-            MulticlassNativeBayesPointMachineClassifierTestMapping deserializedMapping;
-            IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>> untrainedClassifier;
-            using (var stream = File.Open(UntrainedFileName, FileMode.Open))
+            var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    deserializedMapping = new MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
-                    untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping);
-                }
-            }
+                var deserializedMapping1 = new MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
+                var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping1);
+                return (untrainedClassifier1, deserializedMapping1);
+            });
 
             // Check predictions of deserialized classifiers
             CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5052,8 +5046,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var mapping = new BinaryStandardBayesPointMachineClassifierTestMapping();
             var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(mapping);
 
-            const string TrainedFileName = "trainedBinaryStandardClassifier.bin";
-            const string UntrainedFileName = "untrainedBinaryStandardClassifier.bin";
+            const string TrainedFileName = "trainedBinaryStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedBinaryStandardClassifier" + extension;
 
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -5074,15 +5068,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
 
             // Deserialize both classifier and mapping
-            IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<string>> untrainedClassifier;
-            using (var stream = File.Open(UntrainedFileName, FileMode.Open))
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
-                    untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping);
-                }
-            }
+                var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
+                return BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping);
+            });
             
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5133,8 +5123,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var mapping = new MulticlassStandardBayesPointMachineClassifierTestMapping();
             var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(mapping);
 
-            const string TrainedFileName = "trainedMulticlassStandardClassifier.bin";
-            const string UntrainedFileName = "untrainedMulticlassStandardClassifier.bin";
+            const string TrainedFileName = "trainedMulticlassStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedMulticlassStandardClassifier" + extension;
 
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -5155,15 +5145,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
 
             // Deserialize both classifier and mapping
-            IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<string>> untrainedClassifier;
-            using (var stream = File.Open(UntrainedFileName, FileMode.Open))
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    var deserializedMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
-                    untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping);
-                }
-            }
+                var deserializedMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
+                return BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping);
+            });
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5215,8 +5201,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var mapping = new BinaryNativeBayesPointMachineClassifierTestMapping();
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(mapping);
 
-            const string TrainedFileName = "trainedGaussianPriorBinaryNativeClassifier.bin";
-            const string UntrainedFileName = "untrainedGaussianPriorBinaryNativeClassifier.bin";
+            const string TrainedFileName = "trainedGaussianPriorBinaryNativeClassifier" + extension;
+            const string UntrainedFileName = "untrainedGaussianPriorBinaryNativeClassifier" + extension;
 
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -5237,16 +5223,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(TrainedFileName, mapping);
 
             // Deserialize both classifier and mapping
-            BinaryNativeBayesPointMachineClassifierTestMapping deserializedMapping;
-            IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>> untrainedClassifier;
-            using (var stream = File.Open(UntrainedFileName, FileMode.Open))
+            var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    deserializedMapping = new BinaryNativeBayesPointMachineClassifierTestMapping(reader);
-                    untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping);
-                }
-            }
+                var deserializedMapping1 = new BinaryNativeBayesPointMachineClassifierTestMapping(reader);
+                var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping1);
+                return (untrainedClassifier1, deserializedMapping1);
+            });
 
             // Check predictions of deserialized classifiers
             CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5298,8 +5280,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var mapping = new MulticlassNativeBayesPointMachineClassifierTestMapping();
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(mapping);
 
-            const string TrainedFileName = "trainedGaussianPriorMulticlassNativeClassifier.bin";
-            const string UntrainedFileName = "untrainedGaussianPriorMulticlassNativeClassifier.bin";
+            const string TrainedFileName = "trainedGaussianPriorMulticlassNativeClassifier" + extension;
+            const string UntrainedFileName = "untrainedGaussianPriorMulticlassNativeClassifier" + extension;
 
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -5320,16 +5302,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(TrainedFileName, mapping);
 
             // Deserialize both classifier and mapping
-            MulticlassNativeBayesPointMachineClassifierTestMapping deserializedMapping;
-            IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>> untrainedClassifier;
-            using (var stream = File.Open(UntrainedFileName, FileMode.Open))
+            var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    deserializedMapping = new MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
-                    untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping);
-                }
-            }
+                var deserializedMapping1 = new MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
+                var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping1);
+                return (untrainedClassifier1, deserializedMapping1);
+            });
 
             // Check predictions of deserialized classifiers
             CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5381,8 +5359,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var mapping = new BinaryStandardBayesPointMachineClassifierTestMapping();
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(mapping);
 
-            const string TrainedFileName = "trainedGaussianPriorBinaryStandardClassifier.bin";
-            const string UntrainedFileName = "untrainedGaussianPriorBinaryStandardClassifier.bin";
+            const string TrainedFileName = "trainedGaussianPriorBinaryStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedGaussianPriorBinaryStandardClassifier" + extension;
 
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -5403,15 +5381,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(TrainedFileName, mapping);
 
             // Deserialize both classifier and mapping
-            IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<string>> untrainedClassifier;
-            using (var stream = File.Open(UntrainedFileName, FileMode.Open))
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
-                    untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping);
-                }
-            }
+                var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
+                return BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping);
+            });
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5463,8 +5437,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var mapping = new MulticlassStandardBayesPointMachineClassifierTestMapping();
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(mapping);
 
-            const string TrainedFileName = "trainedGaussianPriorMulticlassStandardClassifier.bin";
-            const string UntrainedFileName = "untrainedGaussianPriorMulticlassStandardClassifier.bin";
+            const string TrainedFileName = "trainedGaussianPriorMulticlassStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedGaussianPriorMulticlassStandardClassifier" + extension;
 
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -5485,15 +5459,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(TrainedFileName, mapping);
 
             // Deserialize both classifier and mapping
-            IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<string>> untrainedClassifier;
-            using (var stream = File.Open(UntrainedFileName, FileMode.Open))
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    var deserializedMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
-                    untrainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping);
-                }
-            }
+                var deserializedMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
+                return BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping);
+            });
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);

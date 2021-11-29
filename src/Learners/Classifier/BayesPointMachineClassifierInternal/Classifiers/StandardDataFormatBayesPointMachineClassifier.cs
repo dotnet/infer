@@ -65,7 +65,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             Debug.Assert(reader != null, "The reader must not be null.");
 
             reader.VerifySerializationGuid(
-                this.customSerializationGuid, "The binary stream does not contain an Infer.NET Bayes point machine classifier.");
+                this.customSerializationGuid, "The stream does not contain an Infer.NET Bayes point machine classifier.");
             reader.ReadSerializationVersion(CustomSerializationVersion);
 
             // Nothing to deserialize

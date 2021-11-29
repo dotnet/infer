@@ -95,7 +95,14 @@ namespace Microsoft.ML.Probabilistic.Learners
 
             using (Stream stream = File.Open(fileName, fileMode))
             {
-                obj.SaveForwardCompatibleBinary(stream);
+                if (fileName.EndsWith(".bin"))
+                {
+                    obj.SaveForwardCompatibleAsBinary(stream);
+                }
+                else
+                {
+                    obj.SaveForwardCompatibleAsText(stream);
+                }
             }
         }
 
@@ -105,7 +112,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="obj">The object to be serialized.</param>
         /// <param name="stream">The serialization stream.</param>
         /// <remarks>To load a saved learner, you can use the factory methods whose names start with LoadBackwardCompatible.</remarks>
-        public static void SaveForwardCompatibleBinary(this ICustomSerializable obj, Stream stream)
+        public static void SaveForwardCompatibleAsBinary(this ICustomSerializable obj, Stream stream)
         {
             if (obj == null)
             {
@@ -118,6 +125,30 @@ namespace Microsoft.ML.Probabilistic.Learners
             }
 
             using (var writer = new WrappedBinaryWriter(new BinaryWriter(stream, Encoding.UTF8, true)))
+            {
+                obj.SaveForwardCompatible(writer);
+            }
+        }
+
+        /// <summary>
+        /// Persists an object that controls its binary serialization to the specified stream.
+        /// </summary>
+        /// <param name="obj">The object to be serialized.</param>
+        /// <param name="stream">The serialization stream.</param>
+        /// <remarks>To load a saved learner, you can use the factory methods whose names start with LoadBackwardCompatible.</remarks>
+        public static void SaveForwardCompatibleAsText(this ICustomSerializable obj, Stream stream)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException(nameof(obj));
+            }
+
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            using (var writer = new WrappedTextWriter(new StreamWriter(stream)))
             {
                 obj.SaveForwardCompatible(writer);
             }
