@@ -111,7 +111,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// </summary>
         /// <param name="reader">The binary reader to read the Matchbox recommender from.</param>
         /// <param name="mapping">The mapping used for accessing data.</param>
-        internal NativeDataFormatMatchboxRecommender(BinaryReader reader, IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource> mapping)
+        internal NativeDataFormatMatchboxRecommender(IReader reader, IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource> mapping)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
             Debug.Assert(mapping != null, "The mapping must not be null.");
@@ -774,7 +774,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the state of the Matchbox recommender using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the Matchbox recommender to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);

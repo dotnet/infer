@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the distribution over traits and bias of a user or an item from.</param>
-        protected EntityParameterDistribution(BinaryReader reader)
+        protected EntityParameterDistribution(IReader reader)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
 
@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the distribution over traits and bias of a user or an item using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the distribution over traits and bias of a user or an item to.</param>
-        public virtual void SaveForwardCompatible(BinaryWriter writer)
+        public virtual void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
 

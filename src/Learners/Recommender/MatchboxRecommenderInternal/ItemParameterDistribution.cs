@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the distribution over item parameters from.</param>
-        public ItemParameterDistribution(BinaryReader reader) : base(reader)
+        public ItemParameterDistribution(IReader reader) : base(reader)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
 
@@ -52,7 +52,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the distribution over item parameters using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the distribution over item parameters to.</param>
-        public override void SaveForwardCompatible(BinaryWriter writer)
+        public override void SaveForwardCompatible(IWriter writer)
         {
             base.SaveForwardCompatible(writer);
 

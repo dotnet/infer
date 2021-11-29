@@ -88,7 +88,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the state of the inference algorithm from.</param>
-        protected InferenceAlgorithms(BinaryReader reader)
+        protected InferenceAlgorithms(IReader reader)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
 
@@ -293,7 +293,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// Saves the state of the inference algorithms using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the inference algorithms to.</param>
-        public virtual void SaveForwardCompatible(BinaryWriter writer)
+        public virtual void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
 

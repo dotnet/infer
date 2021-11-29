@@ -66,7 +66,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The reader to load the indexed set from.</param>
-        public IndexedSet(BinaryReader reader) : this()
+        public IndexedSet(IReader reader) : this()
         {
             if (reader == null)
             {
@@ -219,7 +219,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// Saves the elements of the indexed set to a binary writer.
         /// </summary>
         /// <param name="writer">The writer to save the elements of the indexed set to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             if (writer == null)
             {

@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the item-related hyper-parameters from.</param>
-        public ItemHyperparameters(BinaryReader reader)
+        public ItemHyperparameters(IReader reader)
         {
             if (reader == null)
             {
@@ -65,7 +65,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the item-related hyper-parameters of the Matchbox recommender using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the item-related hyper-parameters to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
 

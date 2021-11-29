@@ -62,7 +62,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// </summary>
         /// <param name="reader">The binary reader to read the mapping from.</param>
         /// <param name="standardMapping">The mapping for accessing data in standard format.</param>
-        public BinaryNativeClassifierMapping(BinaryReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> standardMapping)
+        public BinaryNativeClassifierMapping(IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> standardMapping)
             : base(reader, standardMapping)
         {
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
@@ -142,7 +142,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// Saves the state of the data mapping using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the data mapping to.</param>
-        public override void SaveForwardCompatible(BinaryWriter writer)
+        public override void SaveForwardCompatible(IWriter writer)
         {
             base.SaveForwardCompatible(writer);
 

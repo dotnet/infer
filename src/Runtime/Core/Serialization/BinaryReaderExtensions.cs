@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
     using GaussianMatrix = Distributions.DistributionRefArray<Distributions.DistributionStructArray<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>, double[]>;
 
     /// <summary>
-    /// Provides extension methods for <see cref="BinaryReader"/>.
+    /// Provides extension methods for <see cref="IReader"/>.
     /// </summary>
     public static class BinaryReaderExtensions
     {
@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// <param name="exceptionMessage">An optional message for the <see cref="SerializationException"/>.</param>
         /// <exception cref="SerializationException">If the deserialized <see cref="Guid"/> is invalid.</exception>
         public static void VerifySerializationGuid(
-            this BinaryReader reader,
+            this IReader reader,
             Guid expectedSerializationGuid,
             string exceptionMessage = null)
         {
@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             {
                 if (exceptionMessage == null)
                 {
-                    exceptionMessage = $"The deserialized guid {deserializedGuid} is invalid. Custom binary serialization of this object expects the guid to be {expectedSerializationGuid}.";
+                    exceptionMessage = $"The deserialized guid {deserializedGuid} is invalid. Custom serialization of this object expects the guid to be {expectedSerializationGuid}.";
                 }
 
                 throw new SerializationException(exceptionMessage);
@@ -66,7 +66,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// <exception cref="SerializationException">
         /// If the deserialized version is less than 1 or greater than <paramref name="maxPermittedSerializationVersion"/>.
         /// </exception>
-        public static int ReadSerializationVersion(this BinaryReader reader, int maxPermittedSerializationVersion, string exceptionMessage = null)
+        public static int ReadSerializationVersion(this IReader reader, int maxPermittedSerializationVersion, string exceptionMessage = null)
         {
             if (reader == null)
             {
@@ -146,7 +146,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="reader">The reader of the binary stream.</param>
         /// <returns>The integer array constructed from the binary stream.</returns>
-        public static int[] ReadInt32Array(this BinaryReader reader)
+        public static int[] ReadInt32Array(this IReader reader)
         {
             if (reader == null)
             {
@@ -173,7 +173,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="reader">The reader of the binary stream.</param>
         /// <returns>The <see cref="Gaussian"/> distribution constructed from the binary stream.</returns>
-        public static Gaussian ReadGaussian(this BinaryReader reader)
+        public static Gaussian ReadGaussian(this IReader reader)
         {
             if (reader == null)
             {
@@ -188,7 +188,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="reader">The reader of the binary stream.</param>
         /// <returns>The array of <see cref="Gaussian"/> distributions constructed from the binary stream.</returns>
-        public static GaussianArray ReadGaussianArray(this BinaryReader reader)
+        public static GaussianArray ReadGaussianArray(this IReader reader)
         {
             if (reader == null)
             {
@@ -209,7 +209,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="reader">The reader of the binary stream.</param>
         /// <returns>The jagged array of <see cref="Gaussian"/> distributions constructed from the binary stream.</returns>
-        public static GaussianMatrix ReadGaussianMatrix(this BinaryReader reader)
+        public static GaussianMatrix ReadGaussianMatrix(this IReader reader)
         {
             if (reader == null)
             {
@@ -230,7 +230,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="reader">The reader of the binary stream.</param>
         /// <returns>The <see cref="Gamma"/> distribution constructed from the binary stream.</returns>
-        public static Gamma ReadGamma(this BinaryReader reader)
+        public static Gamma ReadGamma(this IReader reader)
         {
             if (reader == null)
             {
@@ -245,7 +245,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="reader">The reader of the binary stream.</param>
         /// <returns>The array of <see cref="Gamma"/> distributions constructed from the binary stream.</returns>
-        public static GammaArray ReadGammaArray(this BinaryReader reader)
+        public static GammaArray ReadGammaArray(this IReader reader)
         {
             if (reader == null)
             {

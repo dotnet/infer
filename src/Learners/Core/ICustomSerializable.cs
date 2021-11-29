@@ -4,17 +4,17 @@
 
 namespace Microsoft.ML.Probabilistic.Learners
 {
-    using System.IO;
+    using Serialization;
 
     /// <summary>
-    /// Interface to any object that needs to control its own binary serialization.
+    /// Interface to any object that needs to control its own serialization.
     /// </summary>
     public interface ICustomSerializable
     {
         /// <summary>
-        /// Saves the state of the object to a binary writer.
+        /// Saves the state of the object to a writer.
         /// </summary>
         /// <param name="writer">The writer to save the state of the object to.</param>
-        void SaveForwardCompatible(BinaryWriter writer);
+        void SaveForwardCompatible(IWriter writer);
     }
 }

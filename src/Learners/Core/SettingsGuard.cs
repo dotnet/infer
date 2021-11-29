@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="reader">The reader to load the <see cref="SettingsGuard"/> from.</param>
         /// <param name="isImmutable">If true, the setting cannot be changed.</param>
-        public SettingsGuard(BinaryReader reader, Func<bool> isImmutable)
+        public SettingsGuard(IReader reader, Func<bool> isImmutable)
         {
             if (reader == null)
             {
@@ -68,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// Saves the state of the <see cref="SettingsGuard"/> using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the <see cref="SettingsGuard"/> to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
             writer.Write(this.message);

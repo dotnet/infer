@@ -79,7 +79,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="reader">The binary reader to read the training settings from.</param>
         /// <param name="isTrained">Indicates whether the Bayes point machine classifier is trained.</param>
-        internal BayesPointMachineClassifierTrainingSettings(BinaryReader reader, Func<bool> isTrained)
+        internal BayesPointMachineClassifierTrainingSettings(IReader reader, Func<bool> isTrained)
         {
             if (reader == null)
             {
@@ -166,7 +166,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// Saves the training settings of the Bayes point machine classifier using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the training settings to.</param>
-        public virtual void SaveForwardCompatible(BinaryWriter writer)
+        public virtual void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);
