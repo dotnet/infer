@@ -47,6 +47,9 @@ namespace Microsoft.ML.Probabilistic.Tests
     /// </summary>
     public class BlogTests
     {
+        /// <summary>
+        /// This test should give a warning for excessive memory use.
+        /// </summary>
         internal static void TrueSkill2Test()
         {
             TrueSkillV2Batch model = new TrueSkillV2Batch(1, 1, 1, 1);
