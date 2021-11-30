@@ -8,9 +8,6 @@ resources:
 - repo: self
   clean: true
 
-queue:
-  timeoutInMinutes: 100
-
 trigger: none # disable CI build
 
 variables:
