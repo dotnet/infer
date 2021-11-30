@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="reader">The binary reader to read the settings of the Matchbox recommender from.</param>
         /// <param name="isTrained">Indicates whether the Matchbox recommender is trained.</param>
-        public MatchboxRecommenderSettings(BinaryReader reader, Func<bool> isTrained)
+        public MatchboxRecommenderSettings(IReader reader, Func<bool> isTrained)
         {
             reader.VerifySerializationGuid(
                 this.customSerializationGuid, "The binary stream does not contain the settings of an Infer.NET Matchbox recommender.");
@@ -68,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// Saves the settings of the Matchbox recommender using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the settings to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);

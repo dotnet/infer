@@ -39,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// </summary>
         /// <param name="reader">The binary reader to read the settings of the multi-class Bayes point machine classifier from.</param>
         /// <param name="isTrained">Indicates whether the multi-class Bayes point machine classifier is trained.</param>
-        internal GaussianMulticlassBayesPointMachineClassifierSettings(BinaryReader reader, Func<bool> isTrained) : base(reader)
+        internal GaussianMulticlassBayesPointMachineClassifierSettings(IReader reader, Func<bool> isTrained) : base(reader)
         {
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
 
@@ -54,7 +54,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// Saves the settings of the multi-class Bayes point machine classifier using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the settings to.</param>
-        public override void SaveForwardCompatible(BinaryWriter writer)
+        public override void SaveForwardCompatible(IWriter writer)
         {
             base.SaveForwardCompatible(writer);
 

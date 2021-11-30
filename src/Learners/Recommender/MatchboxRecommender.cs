@@ -13,6 +13,7 @@ namespace Microsoft.ML.Probabilistic.Learners
     using Microsoft.ML.Probabilistic.Learners.Mappings;
     using Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal;
     using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Serialization;
 
     using RatingDistribution = System.Collections.Generic.IDictionary<int, double>;
     
@@ -116,7 +117,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The deserialized recommender object.</returns>
         public static IMatchboxRecommender<TInstanceSource, int, int, Discrete, TFeatureSource>
             LoadBackwardCompatible<TInstanceSource, TFeatureSource>(
-                BinaryReader reader, IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource> mapping)
+                IReader reader, IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource> mapping)
         {
             if (reader == null)
             {
@@ -148,7 +149,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatible(reader, mapping);
             }
@@ -191,7 +192,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The deserialized recommender object.</returns>
         public static IMatchboxRecommender<TInstanceSource, TUser, TItem, RatingDistribution, TFeatureSource>
             LoadBackwardCompatible<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(
-                BinaryReader reader, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping)
+                IReader reader, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping)
         {
             if (reader == null)
             {
@@ -227,7 +228,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
             {
                 return LoadBackwardCompatible(reader, mapping);
             }

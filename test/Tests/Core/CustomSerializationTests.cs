@@ -25,14 +25,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             using (var stream = new MemoryStream())
             {
-                var writer = new BinaryWriter(stream);
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
                 writer.Write(Gaussian.FromNatural(-13.89, 436.12)); 
                 writer.Write(Gaussian.PointMass(Math.PI)); 
                 writer.Write(Gaussian.Uniform()); 
 
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     Gaussian natural = reader.ReadGaussian();
                     Assert.Equal(-13.89, natural.MeanTimesPrecision);
@@ -56,14 +56,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             using (var stream = new MemoryStream())
             {
-                var writer = new BinaryWriter(stream);
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
                 writer.Write(Gamma.FromShapeAndRate(1.0, 10.0)); 
                 writer.Write(Gamma.PointMass(Math.PI));
                 writer.Write(Gamma.Uniform()); 
 
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new BinaryReader(stream))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     Gamma shapeAndRate = reader.ReadGamma();
                     Assert.Equal(1.0, shapeAndRate.Shape);

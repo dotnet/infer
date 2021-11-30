@@ -37,10 +37,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FeatureParameterDistribution"/> class
-        /// from a reader of a binary stream.
+        /// from a reader of a stream.
         /// </summary>
-        /// <param name="reader">The binary reader to read the distribution over feature weights from.</param>
-        public FeatureParameterDistribution(BinaryReader reader)
+        /// <param name="reader">The reader to read the distribution over feature weights from.</param>
+        public FeatureParameterDistribution(IReader reader)
         {
             if (reader == null) throw new ArgumentNullException(nameof(reader));
 
@@ -126,7 +126,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Saves the distributions over feature weights using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the distributions over feature weights to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(CustomSerializationVersion);
             writer.Write(this.TraitWeights);

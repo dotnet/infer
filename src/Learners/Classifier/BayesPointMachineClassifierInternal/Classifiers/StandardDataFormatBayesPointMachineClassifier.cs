@@ -60,12 +60,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// class from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the state of the Bayes point machine classifier from.</param>
-        protected StandardDataFormatBayesPointMachineClassifier(BinaryReader reader)
+        protected StandardDataFormatBayesPointMachineClassifier(IReader reader)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
 
             reader.VerifySerializationGuid(
-                this.customSerializationGuid, "The binary stream does not contain an Infer.NET Bayes point machine classifier.");
+                this.customSerializationGuid, "The stream does not contain an Infer.NET Bayes point machine classifier.");
             reader.ReadSerializationVersion(CustomSerializationVersion);
 
             // Nothing to deserialize
@@ -271,7 +271,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// Saves the state of the Bayes point machine classifier using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the Bayes point machine classifier to.</param>
-        public virtual void SaveForwardCompatible(BinaryWriter writer)
+        public virtual void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);

@@ -117,7 +117,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="reader">The binary reader to read the state of the negative data generation mapping from.</param>
         /// <param name="mapping">The top level mapping.</param>
         public NegativeDataGeneratorMapping(
-            BinaryReader reader,
+            IReader reader,
             IRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues> mapping)
         {
             if (reader == null)
@@ -238,7 +238,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// Saves the negative data generation mapping using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the negative data generation mapping to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);

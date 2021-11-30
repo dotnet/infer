@@ -90,7 +90,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <param name="reader">The binary reader to read the state of the Bayes point machine classifier from.</param>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
         protected NativeDataFormatBayesPointMachineClassifier(
-            BinaryReader reader, 
+            IReader reader, 
             IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel> mapping)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
@@ -100,7 +100,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             this.capabilities = new BayesPointMachineClassifierCapabilities();
 
             reader.VerifySerializationGuid(
-                this.customSerializationGuid, "The binary stream does not contain an Infer.NET Bayes point machine classifier.");
+                this.customSerializationGuid, "The stream does not contain an Infer.NET Bayes point machine classifier.");
 
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
             if (deserializedVersion == CustomSerializationVersion)
@@ -354,7 +354,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// Saves the state of the Bayes point machine classifier using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the Bayes point machine classifier to.</param>
-        public virtual void SaveForwardCompatible(BinaryWriter writer)
+        public virtual void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);

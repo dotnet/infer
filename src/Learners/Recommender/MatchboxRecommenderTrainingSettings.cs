@@ -125,7 +125,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="reader">The binary reader to read the training settings from.</param>
         /// <param name="isTrained">Indicates whether the Matchbox recommender is trained.</param>
-        internal MatchboxRecommenderTrainingSettings(BinaryReader reader, Func<bool> isTrained)
+        internal MatchboxRecommenderTrainingSettings(IReader reader, Func<bool> isTrained)
         {
             if (reader == null)
             {
@@ -271,7 +271,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// Saves the training settings of the Matchbox recommender using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the training settings to.</param>
-        public void SaveForwardCompatible(BinaryWriter writer)
+        public void SaveForwardCompatible(IWriter writer)
         {
             writer.Write(this.customSerializationGuid);
             writer.Write(CustomSerializationVersion);
@@ -296,7 +296,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="reader">The binary reader to read the training settings from.</param>
         /// <param name="isTrained">Indicates whether the Matchbox recommender is trained.</param>
-        private void ReadVersion1(BinaryReader reader, Func<bool> isTrained)
+        private void ReadVersion1(IReader reader, Func<bool> isTrained)
         {
             this.Advanced = new MatchboxRecommenderAdvancedTrainingSettings(reader, isTrained);
             this.useUserFeatures = reader.ReadBoolean();
@@ -311,7 +311,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="reader">The binary reader to read the training settings from.</param>
         /// <param name="isTrained">Indicates whether the Matchbox recommender is trained.</param>
-        private void ReadVersion2(BinaryReader reader, Func<bool> isTrained)
+        private void ReadVersion2(IReader reader, Func<bool> isTrained)
         {
             this.ReadVersion1(reader, isTrained);
             this.useSharedUserThresholds = reader.ReadBoolean();

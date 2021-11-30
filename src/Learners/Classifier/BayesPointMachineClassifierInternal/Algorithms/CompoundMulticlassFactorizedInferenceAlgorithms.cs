@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The binary reader to read the state of the inference algorithm from.</param>
-        public CompoundMulticlassFactorizedInferenceAlgorithms(BinaryReader reader)
+        public CompoundMulticlassFactorizedInferenceAlgorithms(IReader reader)
             : base(reader)
         {
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// Saves the state of the inference algorithms using the specified writer to a binary stream.
         /// </summary>
         /// <param name="writer">The writer to save the state of the inference algorithms to.</param>
-        public override void SaveForwardCompatible(BinaryWriter writer)
+        public override void SaveForwardCompatible(IWriter writer)
         {
             base.SaveForwardCompatible(writer);
 
