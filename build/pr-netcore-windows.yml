@@ -7,5 +7,11 @@
 pool:
   vmImage: 'windows-latest'
 
+resources:
+- repo: self
+  clean: true
+
+trigger: none # disable CI build
+
 extends:
   template: pr-netcore.yml

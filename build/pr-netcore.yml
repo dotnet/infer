@@ -4,12 +4,6 @@
 
 # PR build and test Infer.NET using .NET Core
 
-resources:
-- repo: self
-  clean: true
-
-trigger: none # disable CI build
-
 variables:
   buildConfiguration: 'Release'
 
