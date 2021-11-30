@@ -7,4 +7,5 @@
 pool:
   vmImage: 'macOS-latest'
 
-template: pr-netcore.yml
+extends:
+  template: pr-netcore.yml
