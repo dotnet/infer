@@ -4,6 +4,9 @@
 
 # PR build and test Infer.NET using .NET Core
 
+pool:
+  vmImage: 'ubuntu-latest'
+
 resources:
 - repo: self
   clean: true
