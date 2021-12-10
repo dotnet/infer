@@ -92,14 +92,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     bool extraLiteralsAreZero = true;
                     int parentIndex = context.InputStack.Count - 2;
                     object parent = context.GetAncestor(parentIndex);
-                    while (parent is IArrayIndexerExpression)
+                    while (parent is IArrayIndexerExpression parent_iaie)
                     {
-                        IArrayIndexerExpression parent_iaie = (IArrayIndexerExpression)parent;
                         foreach (IExpression index in parent_iaie.Indices)
                         {
-                            if (index is ILiteralExpression)
+                            if (index is ILiteralExpression ile)
                             {
-                                int value = (int)((ILiteralExpression)index).Value;
+                                int value = (int)ile.Value;
                                 if (value != 0)
                                 {
                                     extraLiteralsAreZero = false;
@@ -154,73 +153,74 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             var stmtsAfter = Builder.StmtCollection();
 
             // does the expression have the form array[indices[k]][indices2[k]][indices3[k]]?
-            if (newvd == null && UseGetItems && iaie.Target is IArrayIndexerExpression &&
-                iaie.Indices.Count == 1 && iaie.Indices[0] is IArrayIndexerExpression)
+            if (newvd == null && UseGetItems && iaie.Indices.Count == 1)
             {
-                IArrayIndexerExpression index3 = (IArrayIndexerExpression)iaie.Indices[0];
-                IArrayIndexerExpression iaie2 = (IArrayIndexerExpression)iaie.Target;
-                if (index3.Indices.Count == 1 && index3.Indices[0] is IVariableReferenceExpression &&
-                    iaie2.Target is IArrayIndexerExpression &&
-                    iaie2.Indices.Count == 1 && iaie2.Indices[0] is IArrayIndexerExpression)
+                if (iaie.Target is IArrayIndexerExpression iaie2 &&
+                    iaie.Indices[0] is IArrayIndexerExpression index3 &&
+                    index3.Indices.Count == 1 &&
+                    index3.Indices[0] is IVariableReferenceExpression innerIndex3 &&
+                    iaie2.Target is IArrayIndexerExpression iaie3 &&
+                    iaie2.Indices.Count == 1 &&
+                    iaie2.Indices[0] is IArrayIndexerExpression index2 &&
+                    index2.Indices.Count == 1 &&
+                    index2.Indices[0] is IVariableReferenceExpression innerIndex2 &&
+                    innerIndex2.Equals(innerIndex3) &&
+                    iaie3.Indices.Count == 1 &&
+                    iaie3.Indices[0] is IArrayIndexerExpression index &&
+                    index.Indices.Count == 1 &&
+                    index.Indices[0] is IVariableReferenceExpression innerIndex &&
+                    innerIndex.Equals(innerIndex2))
                 {
-                    IArrayIndexerExpression index2 = (IArrayIndexerExpression)iaie2.Indices[0];
-                    IArrayIndexerExpression iaie3 = (IArrayIndexerExpression)iaie2.Target;
-                    if (index2.Indices.Count == 1 && index2.Indices[0] is IVariableReferenceExpression &&
-                        iaie3.Indices.Count == 1 && iaie3.Indices[0] is IArrayIndexerExpression)
+                    IForStatement innerLoop = Recognizer.GetLoopForVariable(context, innerIndex);
+                    if (innerLoop != null && 
+                        AreLoopsDisjoint(innerLoop, iaie3.Target, index.Target))
                     {
-                        IArrayIndexerExpression index = (IArrayIndexerExpression)iaie3.Indices[0];
-                        IVariableReferenceExpression innerIndex = (IVariableReferenceExpression)index.Indices[0];
-                        IForStatement innerLoop = Recognizer.GetLoopForVariable(context, innerIndex);
-                        if (index.Indices.Count == 1 && index2.Indices[0].Equals(innerIndex)
-                            && index3.Indices[0].Equals(innerIndex) &&
-                            innerLoop != null && AreLoopsDisjoint(innerLoop, iaie3.Target, index.Target))
+                        // expression has the form array[indices[k]][indices2[k]][indices3[k]]
+                        if (isDef)
                         {
-                            // expression has the form array[indices[k]][indices2[k]][indices3[k]]
-                            if (isDef)
-                            {
-                                Error("fancy indexing not allowed on left hand side");
-                                return iaie;
-                            }
-                            WarnIfLocal(index.Target, iaie3.Target, iaie);
-                            WarnIfLocal(index2.Target, iaie3.Target, iaie);
-                            WarnIfLocal(index3.Target, iaie3.Target, iaie);
-                            containers = RemoveReferencesTo(containers, innerIndex);
-                            IExpression loopSize = Recognizer.LoopSizeExpression(innerLoop);
-                            var indices = Recognizer.GetIndices(iaie);
-                            // Build name of replacement variable from index values
-                            StringBuilder sb = new StringBuilder("_item");
-                            AppendIndexString(sb, iaie3);
-                            AppendIndexString(sb, iaie2);
-                            AppendIndexString(sb, iaie);
-                            string name = ToString(iaie3.Target) + sb.ToString();
-                            VariableInformation varInfo = VariableInformation.GetVariableInformation(context, baseVar);
-                            newvd = varInfo.DeriveArrayVariable(stmts, context, name, loopSize, Recognizer.GetVariableDeclaration(innerIndex), indices);
-                            if (!context.InputAttributes.Has<DerivedVariable>(newvd))
-                                context.InputAttributes.Set(newvd, new DerivedVariable());
-                            IExpression getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<IReadOnlyList<IReadOnlyList<PlaceHolder>>>, IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>, PlaceHolder[]>(Collection.GetItemsFromDeepJagged),
-                               new Type[] { tp }, iaie3.Target, index.Target, index2.Target, index3.Target);
-                            context.InputAttributes.CopyObjectAttributesTo<Algorithm>(baseVar, context.OutputAttributes, getItems);
-                            stmts.Add(Builder.AssignStmt(Builder.VarRefExpr(newvd), getItems));
-                            newExpr = Builder.ArrayIndex(Builder.VarRefExpr(newvd), innerIndex);
-                            rhsExpr = getItems;
+                            Error("fancy indexing not allowed on left hand side");
+                            return iaie;
                         }
+                        WarnIfLocal(index.Target, iaie3.Target, iaie);
+                        WarnIfLocal(index2.Target, iaie3.Target, iaie);
+                        WarnIfLocal(index3.Target, iaie3.Target, iaie);
+                        containers = RemoveReferencesTo(containers, innerIndex);
+                        IExpression loopSize = Recognizer.LoopSizeExpression(innerLoop);
+                        var indices = Recognizer.GetIndices(iaie);
+                        // Build name of replacement variable from index values
+                        StringBuilder sb = new StringBuilder("_item");
+                        AppendIndexString(sb, iaie3);
+                        AppendIndexString(sb, iaie2);
+                        AppendIndexString(sb, iaie);
+                        string name = ToString(iaie3.Target) + sb.ToString();
+                        VariableInformation varInfo = VariableInformation.GetVariableInformation(context, baseVar);
+                        newvd = varInfo.DeriveArrayVariable(stmts, context, name, loopSize, Recognizer.GetVariableDeclaration(innerIndex), indices);
+                        if (!context.InputAttributes.Has<DerivedVariable>(newvd))
+                            context.InputAttributes.Set(newvd, new DerivedVariable());
+                        IExpression getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<IReadOnlyList<IReadOnlyList<PlaceHolder>>>, IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>, PlaceHolder[]>(Collection.GetItemsFromDeepJagged),
+                           new Type[] { tp }, iaie3.Target, index.Target, index2.Target, index3.Target);
+                        context.InputAttributes.CopyObjectAttributesTo<Algorithm>(baseVar, context.OutputAttributes, getItems);
+                        stmts.Add(Builder.AssignStmt(Builder.VarRefExpr(newvd), getItems));
+                        newExpr = Builder.ArrayIndex(Builder.VarRefExpr(newvd), innerIndex);
+                        rhsExpr = getItems;
                     }
                 }
             }
             // does the expression have the form array[indices[k]][indices2[k]]?
-            if (newvd == null && UseGetItems && iaie.Target is IArrayIndexerExpression &&
-                iaie.Indices.Count == 1 && iaie.Indices[0] is IArrayIndexerExpression)
+            if (newvd == null && UseGetItems && iaie.Indices.Count == 1)
             {
-                IArrayIndexerExpression index2 = (IArrayIndexerExpression)iaie.Indices[0];
-                IArrayIndexerExpression target = (IArrayIndexerExpression)iaie.Target;
-                if (index2.Indices.Count == 1 && index2.Indices[0] is IVariableReferenceExpression &&
-                    target.Indices.Count == 1 && target.Indices[0] is IArrayIndexerExpression)
+                if (iaie.Target is IArrayIndexerExpression target &&
+                    iaie.Indices[0] is IArrayIndexerExpression index2 &&
+                    index2.Indices.Count == 1 && 
+                    index2.Indices[0] is IVariableReferenceExpression innerIndex &&
+                    target.Indices.Count == 1 && 
+                    target.Indices[0] is IArrayIndexerExpression index)
                 {
-                    IVariableReferenceExpression innerIndex = (IVariableReferenceExpression)index2.Indices[0];
-                    IArrayIndexerExpression index = (IArrayIndexerExpression)target.Indices[0];
                     IForStatement innerLoop = Recognizer.GetLoopForVariable(context, innerIndex);
-                    if (index.Indices.Count == 1 && index.Indices[0].Equals(innerIndex) &&
-                        innerLoop != null && AreLoopsDisjoint(innerLoop, target.Target, index.Target))
+                    if (index.Indices.Count == 1 &&
+                        index.Indices[0].Equals(innerIndex) && 
+                        innerLoop != null && 
+                        AreLoopsDisjoint(innerLoop, target.Target, index.Target))
                     {
                         // expression has the form array[indices[k]][indices2[k]]
                         if (isDef)
@@ -233,17 +233,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         var indexTarget = index.Target;
                         var index2Target = index2.Target;
                         // check if the index array is jagged, i.e. array[indices[k][j]]
-                        while (indexTarget is IArrayIndexerExpression && index2Target is IArrayIndexerExpression)
+                        while (indexTarget is IArrayIndexerExpression indexTargetExpr && 
+                            index2Target is IArrayIndexerExpression index2TargetExpr)
                         {
-                            IArrayIndexerExpression indexTargetExpr = (IArrayIndexerExpression)indexTarget;
-                            IArrayIndexerExpression index2TargetExpr = (IArrayIndexerExpression)index2Target;
-                            if (indexTargetExpr.Indices.Count == 1 && indexTargetExpr.Indices[0] is IVariableReferenceExpression &&
-                                index2TargetExpr.Indices.Count == 1 && index2TargetExpr.Indices[0] is IVariableReferenceExpression)
+                            if (indexTargetExpr.Indices.Count == 1 && 
+                                indexTargetExpr.Indices[0] is IVariableReferenceExpression innerIndexTarget &&
+                                index2TargetExpr.Indices.Count == 1 && 
+                                index2TargetExpr.Indices[0] is IVariableReferenceExpression innerIndex2Target)
                             {
-                                IVariableReferenceExpression innerIndexTarget = (IVariableReferenceExpression)indexTargetExpr.Indices[0];
-                                IVariableReferenceExpression innerIndex2Target = (IVariableReferenceExpression)index2TargetExpr.Indices[0];
                                 IForStatement indexTargetLoop = Recognizer.GetLoopForVariable(context, innerIndexTarget);
-                                if (indexTargetLoop != null && AreLoopsDisjoint(indexTargetLoop, target.Target, indexTargetExpr.Target) &&
+                                if (indexTargetLoop != null && 
+                                    AreLoopsDisjoint(indexTargetLoop, target.Target, indexTargetExpr.Target) &&
                                     innerIndexTarget.Equals(innerIndex2Target))
                                 {
                                     innerLoops.Add(indexTargetLoop);
@@ -319,76 +319,76 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 string name = ToString(iaie.Target) + sb.ToString();
 
                 // does the expression have the form array[indices[k]]?
-                if (UseGetItems && iaie.Indices.Count == 1 && iaie.Indices[0] is IArrayIndexerExpression)
+                if (UseGetItems &&
+                    iaie.Indices.Count == 1 &&
+                    iaie.Indices[0] is IArrayIndexerExpression index &&
+                    index.Indices.Count == 1 &&
+                    index.Indices[0] is IVariableReferenceExpression innerIndex)
                 {
-                    IArrayIndexerExpression index = (IArrayIndexerExpression)iaie.Indices[0];
-                    if (index.Indices.Count == 1 && index.Indices[0] is IVariableReferenceExpression)
+                    // expression has the form array[indices[k]]
+                    IForStatement innerLoop = Recognizer.GetLoopForVariable(context, innerIndex);
+                    if (innerLoop != null &&
+                        AreLoopsDisjoint(innerLoop, iaie.Target, index.Target))
                     {
-                        // expression has the form array[indices[k]]
-                        IVariableReferenceExpression innerIndex = (IVariableReferenceExpression)index.Indices[0];
-                        IForStatement innerLoop = Recognizer.GetLoopForVariable(context, innerIndex);
-                        if (innerLoop != null && AreLoopsDisjoint(innerLoop, iaie.Target, index.Target))
+                        if (isDef)
                         {
-                            if (isDef)
+                            Error("fancy indexing not allowed on left hand side");
+                            return iaie;
+                        }
+                        var innerLoops = new List<IForStatement>();
+                        innerLoops.Add(innerLoop);
+                        var indexTarget = index.Target;
+                        // check if the index array is jagged, i.e. array[indices[k][j]]
+                        while (indexTarget is IArrayIndexerExpression index2)
+                        {
+                            if (index2.Indices.Count == 1 &&
+                                index2.Indices[0] is IVariableReferenceExpression innerIndex2)
                             {
-                                Error("fancy indexing not allowed on left hand side");
-                                return iaie;
-                            }
-                            var innerLoops = new List<IForStatement>();
-                            innerLoops.Add(innerLoop);
-                            var indexTarget = index.Target;
-                            // check if the index array is jagged, i.e. array[indices[k][j]]
-                            while (indexTarget is IArrayIndexerExpression)
-                            {
-                                IArrayIndexerExpression index2 = (IArrayIndexerExpression)indexTarget;
-                                if (index2.Indices.Count == 1 && index2.Indices[0] is IVariableReferenceExpression)
+                                IForStatement innerLoop2 = Recognizer.GetLoopForVariable(context, innerIndex2);
+                                if (innerLoop2 != null &&
+                                    AreLoopsDisjoint(innerLoop2, iaie.Target, index2.Target))
                                 {
-                                    IVariableReferenceExpression innerIndex2 = (IVariableReferenceExpression)index2.Indices[0];
-                                    IForStatement innerLoop2 = Recognizer.GetLoopForVariable(context, innerIndex2);
-                                    if (innerLoop2 != null && AreLoopsDisjoint(innerLoop2, iaie.Target, index2.Target))
-                                    {
-                                        innerLoops.Add(innerLoop2);
-                                        indexTarget = index2.Target;
-                                        // This limit must match the number of handled cases below.
-                                        if (innerLoops.Count == 3) break;
-                                    }
-                                    else
-                                        break;
+                                    innerLoops.Add(innerLoop2);
+                                    indexTarget = index2.Target;
+                                    // This limit must match the number of handled cases below.
+                                    if (innerLoops.Count == 3) break;
                                 }
                                 else
                                     break;
                             }
-                            WarnIfLocal(indexTarget, iaie.Target, originalExpr);
-                            innerLoops.Reverse();
-                            var loopSizes = innerLoops.ListSelect(ifs => new[] { Recognizer.LoopSizeExpression(ifs) });
-                            var newIndexVars = innerLoops.ListSelect(ifs => new[] { Recognizer.LoopVariable(ifs) });
-                            newvd = varInfo.DeriveArrayVariable(stmts, context, name, loopSizes, newIndexVars, indices);
-                            if (!context.InputAttributes.Has<DerivedVariable>(newvd))
-                                context.InputAttributes.Set(newvd, new DerivedVariable());
-                            IExpression getItems;
-                            if (innerLoops.Count == 1)
-                            {
-                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(Collection.GetItems),
-                                                                               new Type[] { tp }, iaie.Target, indexTarget);
-                            }
-                            else if (innerLoops.Count == 2)
-                            {
-                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<int>>, PlaceHolder[][]>(Collection.GetJaggedItems),
-                                                                               new Type[] { tp }, iaie.Target, indexTarget);
-                            }
-                            else if (innerLoops.Count == 3)
-                            {
-                                getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<IReadOnlyList<int>>>, PlaceHolder[][][]>(Collection.GetDeepJaggedItems),
-                                                                               new Type[] { tp }, iaie.Target, indexTarget);
-                            }
                             else
-                                throw new NotImplementedException($"innerLoops.Count = {innerLoops.Count}");
-                            context.InputAttributes.CopyObjectAttributesTo<Algorithm>(baseVar, context.OutputAttributes, getItems);
-                            stmts.Add(Builder.AssignStmt(Builder.VarRefExpr(newvd), getItems));
-                            var newIndices = newIndexVars.ListSelect(ivds => Util.ArrayInit(ivds.Length, i => Builder.VarRefExpr(ivds[i])));
-                            newExpr = Builder.JaggedArrayIndex(Builder.VarRefExpr(newvd), newIndices);
-                            rhsExpr = getItems;
+                                break;
                         }
+                        WarnIfLocal(indexTarget, iaie.Target, originalExpr);
+                        innerLoops.Reverse();
+                        var loopSizes = innerLoops.ListSelect(ifs => new[] { Recognizer.LoopSizeExpression(ifs) });
+                        var newIndexVars = innerLoops.ListSelect(ifs => new[] { Recognizer.LoopVariable(ifs) });
+                        newvd = varInfo.DeriveArrayVariable(stmts, context, name, loopSizes, newIndexVars, indices);
+                        if (!context.InputAttributes.Has<DerivedVariable>(newvd))
+                            context.InputAttributes.Set(newvd, new DerivedVariable());
+                        IExpression getItems;
+                        if (innerLoops.Count == 1)
+                        {
+                            getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<int>, PlaceHolder[]>(Collection.GetItems),
+                                                                           new Type[] { tp }, iaie.Target, indexTarget);
+                        }
+                        else if (innerLoops.Count == 2)
+                        {
+                            getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<int>>, PlaceHolder[][]>(Collection.GetJaggedItems),
+                                                                           new Type[] { tp }, iaie.Target, indexTarget);
+                        }
+                        else if (innerLoops.Count == 3)
+                        {
+                            getItems = Builder.StaticGenericMethod(new Func<IReadOnlyList<PlaceHolder>, IReadOnlyList<IReadOnlyList<IReadOnlyList<int>>>, PlaceHolder[][][]>(Collection.GetDeepJaggedItems),
+                                                                           new Type[] { tp }, iaie.Target, indexTarget);
+                        }
+                        else
+                            throw new NotImplementedException($"innerLoops.Count = {innerLoops.Count}");
+                        context.InputAttributes.CopyObjectAttributesTo<Algorithm>(baseVar, context.OutputAttributes, getItems);
+                        stmts.Add(Builder.AssignStmt(Builder.VarRefExpr(newvd), getItems));
+                        var newIndices = newIndexVars.ListSelect(ivds => Util.ArrayInit(ivds.Length, i => Builder.VarRefExpr(ivds[i])));
+                        newExpr = Builder.JaggedArrayIndex(Builder.VarRefExpr(newvd), newIndices);
+                        rhsExpr = getItems;
                     }
                 }
                 if (newvd == null)

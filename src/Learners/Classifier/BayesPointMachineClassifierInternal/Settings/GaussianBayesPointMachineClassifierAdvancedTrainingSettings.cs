@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
     /// These settings cannot be modified after training.
     /// </remarks>
     [Serializable]
-    internal class GaussianBayesPointMachineClassifierAdvancedTrainingSettings : ICustomSerializable
+    public class GaussianBayesPointMachineClassifierAdvancedTrainingSettings : ICustomSerializable
     {
         /// <summary>
         /// The current custom binary serialization version of the <see cref="GaussianBayesPointMachineClassifierAdvancedTrainingSettings"/> class.
