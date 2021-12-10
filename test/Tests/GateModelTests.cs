@@ -4337,6 +4337,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable.ConstrainEqualRandom(b[indexObs], likelihood2[index]);
             }
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.Compiled += (sender, e) =>
+            {
+                // check for the inefficient replication warning
+                Assert.Equal(1, e.Warnings.Count);
+            };
             for (int trial = 0; trial < 2; trial++)
             {
                 indexObs.ObservedValue = trial;
@@ -7173,7 +7178,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.True(e.Warnings.Count == 1);
+                Assert.Equal(1, e.Warnings.Count);
             };
             DistributionArray<Bernoulli> bDist = engine.Infer<DistributionArray<Bernoulli>>(b);
             for (int i = 0; i < bDist.Count; i++)
@@ -7215,7 +7220,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.True(e.Warnings.Count == 1);
+                Assert.Equal(1, e.Warnings.Count);
             };
             DistributionArray<Bernoulli> bDist = engine.Infer<DistributionArray<Bernoulli>>(b);
             for (int i = 0; i < bDist.Count; i++)
@@ -7228,6 +7233,47 @@ namespace Microsoft.ML.Probabilistic.Tests
                 // error = 2.285e-05
                 Console.WriteLine("error = {0}", MMath.AbsDiff(bDist[i].GetProbTrue(), bPost, 1e-10).ToString("g4"));
                 Assert.True(MMath.AbsDiff(bDist[i].GetProbTrue(), bPost, 1e-10) < 1e-4);
+            }
+        }
+
+        [Fact]
+        public void EnterArrayElementsTest3()
+        {
+            Range item = new Range(2).Named("item");
+            Range xitem = new Range(2).Named("xitem");
+            VariableArray<bool> x = Variable.Array<bool>(xitem).Named("x");
+            double xPrior = 0.3;
+            x[xitem] = Variable.Bernoulli(xPrior).ForEach(xitem);
+            VariableArray<int> indices = Variable.Array<int>(item).Named("indices");
+            indices.ObservedValue = new int[] { 0, 1 };
+            VariableArray<int> indices2 = Variable.Array<int>(item).Named("indices2");
+            indices2.ObservedValue = new int[] { 1, 0 };
+            VariableArray<bool> b = Variable.Array<bool>(item).Named("b");
+            double bPrior = 0.1;
+            double xLike = 0.4;
+            using (Variable.ForEach(item))
+            {
+                b[item] = Variable.Bernoulli(bPrior);
+                using (Variable.If(b[item]))
+                {
+                    var index = Variable.Max(0, indices[item]);
+                    Variable.ConstrainEqualRandom(x[index], new Bernoulli(xLike));
+                }
+            }
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.ShowProgress = false;
+            engine.Compiler.Compiled += (sender, e) =>
+            {
+                // check for the inefficient replication warning
+                Assert.Equal(1, e.Warnings.Count);
+            };
+            DistributionArray<Bernoulli> bDist = engine.Infer<DistributionArray<Bernoulli>>(b);
+            for (int i = 0; i < bDist.Count; i++)
+            {
+                double sumCondT = xPrior * xLike + (1 - xPrior) * (1 - xLike);
+                double bPost = bPrior * sumCondT / (bPrior * sumCondT + (1 - bPrior));
+                Assert.True(MMath.AbsDiff(bDist[i].GetProbTrue(), bPost, 1e-10) < 1e-10);
             }
         }
 

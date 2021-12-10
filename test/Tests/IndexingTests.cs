@@ -1333,7 +1333,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.True(e.Warnings.Count == 0);
+                Assert.Equal(0, e.Warnings.Count);
             };
             engine.Infer(userThresholds);
         }
@@ -1359,7 +1359,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.True(e.Warnings.Count == 1);
+                Assert.Equal(1, e.Warnings.Count);
             };
             var boolsActual = engine.Infer<IList<Bernoulli>>(bools);
             var boolsExpected = new BernoulliArray(C.SizeAsInt, i =>
@@ -1402,7 +1402,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.True(e.Warnings.Count == 1);
+                Assert.Equal(1, e.Warnings.Count);
             };
             var boolsActual = engine.Infer<IList<Bernoulli>>(bools);
             var boolsExpected = new BernoulliArray(C.SizeAsInt, i =>
@@ -1438,7 +1438,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.True(e.Warnings.Count == 1);
+                Assert.Equal(1, e.Warnings.Count);
             };
             var boolsActual = engine.Infer<IList<Bernoulli>>(bools);
             var boolsExpected = new BernoulliArray(C.SizeAsInt, i =>
@@ -1477,7 +1477,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                //Assert.True(e.Warnings.Count == 1);
+                Assert.Equal(1, e.Warnings.Count);
             };
             var boolsActual = engine.Infer<IList<Bernoulli>>(bools);
             var boolsExpected = new BernoulliArray(C.SizeAsInt, i =>
@@ -1729,7 +1729,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.True(e.Warnings.Count == 1);
+                Assert.Equal(1, e.Warnings.Count);
             };
             IDistribution<bool[]> post = engine.Infer<IDistribution<bool[]>>(bools);            
         }
@@ -1866,7 +1866,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.True(e.Warnings.Count == 1);
+                Assert.Equal(1, e.Warnings.Count);
             };
             IDistribution<bool[][]> weightsActual = engine.Infer<IDistribution<bool[][]>>(bools);
         }
@@ -2433,6 +2433,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             if (!(algorithm is GibbsSampling)) block.CloseBlock();
 
             InferenceEngine engine = new InferenceEngine(algorithm);
+            engine.Compiler.Compiled += (sender, e) =>
+            {
+                // check for the inefficient replication warning
+                Assert.Equal(0, e.Warnings.Count);
+            };
             indices.ObservedValue = new int[] {0};
             indicesLength.ObservedValue = indices.ObservedValue.Length;
             Bernoulli[][] arrayExpectedArray = new Bernoulli[item.SizeAsInt][];
@@ -2524,12 +2529,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             double xLike = 0.6;
             using (Variable.Switch(switchVar))
             {
-                Variable<bool> x = array[indices[switchVar][xitem]].Named("x");
+                Variable<bool> x = array[indices[switchVar][xitem]];
                 Variable.ConstrainEqualRandom(x, new Bernoulli(xLike));
             }
             if (!(algorithm is GibbsSampling)) block.CloseBlock();
 
             InferenceEngine engine = new InferenceEngine(algorithm);
+            engine.Compiler.Compiled += (sender, e) =>
+            {
+                // check for the inefficient replication warning
+                Assert.Equal(0, e.Warnings.Count);
+            };
             indices.ObservedValue = new int[][] {new int[] {0}, new int[] {3}};
             indicesLength.ObservedValue = new int[] {indices.ObservedValue[0].Length, indices.ObservedValue[1].Length};
             Bernoulli[] arrayExpectedArray = new Bernoulli[item.SizeAsInt];

@@ -14,7 +14,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
     /// Settings which affect training of the Bayes point machine classifier with <see cref="Gaussian"/> prior distributions over weights.
     /// </summary>
     [Serializable]
-    internal class GaussianBayesPointMachineClassifierTrainingSettings : BayesPointMachineClassifierTrainingSettings
+    public class GaussianBayesPointMachineClassifierTrainingSettings : BayesPointMachineClassifierTrainingSettings
     {
         /// <summary>
         /// The current serialization version of <see cref="GaussianBayesPointMachineClassifierTrainingSettings"/>.

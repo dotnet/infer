@@ -407,7 +407,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             InferenceEngine engine = new InferenceEngine();
             //engine.Algorithm = new VariationalMessagePassing();
-            engine.Compiler.CatchExceptions = true;
             //engine.Compiler.UnrollLoops = true;
             //engine.Compiler.UseSerialSchedules = false;
             //engine.ResetOnObservedValueChanged = false;

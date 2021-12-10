@@ -592,72 +592,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         /// <summary>
-        /// Returns an expression equal to expr1 and expr2 under their respective bindings, or null if the expressions are not equal.  
-        /// </summary>
-        /// <param name="expr1"></param>
-        /// <param name="bindings1"></param>
-        /// <param name="expr2"></param>
-        /// <param name="bindings2"></param>
-        /// <returns></returns>
-        private static IExpression Unify(
-            IExpression expr1,
-            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings1,
-            IExpression expr2,
-            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings2)
-        {
-            if (expr1.Equals(expr2))
-            {
-                return expr1;
-            }
-            foreach (IReadOnlyCollection<ConditionBinding> binding2 in bindings2)
-            {
-                IExpression expr1b = ReplaceExpression(binding2, expr1);
-                if (expr1b.Equals(expr2))
-                {
-                    return expr1;
-                }
-            }
-            foreach (IReadOnlyCollection<ConditionBinding> binding1 in bindings1)
-            {
-                IExpression expr2b = ReplaceExpression(binding1, expr2);
-                if (expr2b.Equals(expr1))
-                {
-                    return expr2;
-                }
-            }
-            bool lift = false;
-            if (lift)
-            {
-                IExpression lifted1 = GetLiftedExpression(expr1, bindings1);
-                IExpression lifted2 = GetLiftedExpression(expr2, bindings2);
-                if (lifted1 != null && lifted1.Equals(lifted2)) return lifted1;
-            }
-            return Builder.StaticMethod(new Func<int>(GateAnalysisTransform.AnyIndex));
-        }
-
-        private static IExpression GetLiftedExpression(IExpression expr, IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings)
-        {
-            IExpression lifted = null;
-            foreach (IReadOnlyCollection<ConditionBinding> binding in bindings)
-            {
-                IExpression lhs = null;
-                foreach (ConditionBinding b in binding)
-                {
-                    if (b.rhs.Equals(expr)) lhs = b.lhs;
-                }
-                if (lifted == null)
-                {
-                    lifted = lhs;
-                }
-                else if (lhs == null || !lifted.Equals(lhs))
-                {
-                    return null;
-                }
-            }
-            return lifted;
-        }
-
-        /// <summary>
         /// Used only in ArrayIndexerExpressions, to represent a wildcard.
         /// </summary>
         /// <returns></returns>
@@ -747,6 +681,65 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 result.Bindings.AddRange(eb2.Bindings);
             }
             return result;
+
+            // Returns an expression equal to expr1 and expr2 under their respective bindings, or null if the expressions are not equal.  
+            IExpression Unify(
+                IExpression expr1,
+                IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings1,
+                IExpression expr2,
+                IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings2)
+            {
+                if (expr1.Equals(expr2))
+                {
+                    return expr1;
+                }
+                foreach (IReadOnlyCollection<ConditionBinding> binding2 in bindings2)
+                {
+                    IExpression expr1b = ReplaceExpression(binding2, expr1);
+                    if (expr1b.Equals(expr2))
+                    {
+                        return expr1;
+                    }
+                }
+                foreach (IReadOnlyCollection<ConditionBinding> binding1 in bindings1)
+                {
+                    IExpression expr2b = ReplaceExpression(binding1, expr2);
+                    if (expr2b.Equals(expr1))
+                    {
+                        return expr2;
+                    }
+                }
+                bool lift = false;
+                if (lift)
+                {
+                    IExpression lifted1 = GetLiftedExpression(expr1, bindings1);
+                    IExpression lifted2 = GetLiftedExpression(expr2, bindings2);
+                    if (lifted1 != null && lifted1.Equals(lifted2)) return lifted1;
+                }
+                return Builder.StaticMethod(new Func<int>(GateAnalysisTransform.AnyIndex));
+
+                IExpression GetLiftedExpression(IExpression expr, IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings)
+                {
+                    IExpression lifted = null;
+                    foreach (IReadOnlyCollection<ConditionBinding> binding in bindings)
+                    {
+                        IExpression lhs = null;
+                        foreach (ConditionBinding b in binding)
+                        {
+                            if (b.rhs.Equals(expr)) lhs = b.lhs;
+                        }
+                        if (lifted == null)
+                        {
+                            lifted = lhs;
+                        }
+                        else if (lhs == null || !lifted.Equals(lhs))
+                        {
+                            return null;
+                        }
+                    }
+                    return lifted;
+                }
+            }
         }
     }
 

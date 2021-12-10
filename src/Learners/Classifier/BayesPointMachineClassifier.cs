@@ -511,7 +511,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
         /// <returns>The binary Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
             CreateGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource>(
                 IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
         {
@@ -532,7 +532,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
             CreateGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource>(
                 IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
         {
@@ -554,7 +554,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TLabel">The type of a label.</typeparam>
         /// <param name="mapping">The mapping used for accessing data in the standard format.</param>
         /// <returns>The binary Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             CreateGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
                 IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
@@ -576,7 +576,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TLabel">The type of a label.</typeparam>
         /// <param name="mapping">The mapping used for accessing data in the standard format.</param>
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             CreateGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
                 IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
@@ -603,7 +603,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized binary Bayes point machine classifier object.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
         {
             return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
@@ -621,7 +621,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="stream">The stream.</param>
         /// <param name="formatter">The formatter.</param>
         /// <returns>The deserialized binary Bayes point machine classifier object.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(Stream stream, IFormatter formatter)
         {
             return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(stream, formatter);
@@ -638,7 +638,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized multi-class Bayes point machine classifier object.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
         {
             return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
@@ -656,7 +656,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="stream">The stream.</param>
         /// <param name="formatter">The formatter.</param>
         /// <returns>The deserialized multi-class Bayes point machine classifier object.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(Stream stream, IFormatter formatter)
         {
             return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(stream, formatter);
@@ -676,7 +676,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="reader">The reader to a stream of a serialized binary Bayes point machine classifier.</param>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
         /// <returns>The binary Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
             LoadBackwardCompatibleGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource>(
                 IReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
         {
@@ -703,7 +703,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The name of the file of a serialized binary Bayes point machine classifier.</param>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
         /// <returns>The binary Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
             LoadBackwardCompatibleGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource>(
                 string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
         {
@@ -728,7 +728,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="reader">The reader to a stream of a serialized multi-class Bayes point machine classifier.</param>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource>(
                 IReader reader, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
         {
@@ -755,7 +755,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The name of the file of a serialized multi-class Bayes point machine classifier.</param>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource>(
                 string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
         {
@@ -781,7 +781,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="reader">The reader to a stream of a serialized binary Bayes point machine classifier.</param>
         /// <param name="mapping">The mapping used for accessing data in the standard format.</param>
         /// <returns>The binary Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
                 IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
@@ -809,7 +809,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The name of the file of a serialized binary Bayes point machine classifier.</param>
         /// <param name="mapping">The mapping used for accessing data in the standard format.</param>
         /// <returns>The binary Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
                 string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
@@ -835,7 +835,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="reader">The reader to a stream of a serialized multi-class Bayes point machine classifier.</param>
         /// <param name="mapping">The mapping used for accessing data in the standard format.</param>
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
                 IReader reader, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
@@ -863,7 +863,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The name of the file of a serialized multi-class Bayes point machine classifier.</param>
         /// <param name="mapping">The mapping used for accessing data in the standard format.</param>
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
-        internal static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
+        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
                 string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
         {
