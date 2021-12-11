@@ -27,7 +27,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Name="AttributesColumn" Width="0"/>
+            <ColumnDefinition Name="AttributesColumn" Width="250"/>
         </Grid.ColumnDefinitions>
         <Grid Margin="5" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>

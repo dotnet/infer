@@ -109,8 +109,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                         using (Variable.IfNot(playersFirstGame))
                         {
-                            var prevGame = PrevGameIndices[game][gamePlayer];//, 0).Named("prevGame");
-                            var prevGamePlayerIndex = PrevGamePlayerIndices[game][gamePlayer];//, 0).Named("prevGamePlayerIndex");
+                            ////var prevGame = Variable.Min(PrevGameIndices[game][gamePlayer], 0).Named("prevGame");
+                            ////var prevGamePlayerIndex = Variable.Min(PrevGamePlayerIndices[game][gamePlayer], 0).Named("prevGamePlayerIndex");
+                            var prevGame = PrevGameIndices[game][gamePlayer];
+                            var prevGamePlayerIndex = PrevGamePlayerIndices[game][gamePlayer];
                             Skills[game][gamePlayer] = Variable.GaussianFromMeanAndVariance(
                                 Skills[prevGame][prevGamePlayerIndex],
                                 dynamicsVariance

@@ -18805,7 +18805,7 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="DoubleIsBetweenOp">
+  <message_op_class name="IsBetweenGaussianOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.IsBetween(double, double, double)" />, given random arguments to the function.</summary>
     </doc>
@@ -19212,7 +19212,7 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="TruncatedGaussianIsBetweenOp">
+  <message_op_class name="IsBetweenTruncatedGaussianOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.IsBetween(double, double, double)" />, given random arguments to the function.</summary>
     </doc>

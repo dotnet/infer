@@ -3466,6 +3466,17 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
+        /// Returns an int variable which is the maximum of two int variables
+        /// </summary>
+        /// <param name="a">The first variable</param>
+        /// <param name="b">The second variable</param>
+        /// <returns>A new variable</returns>
+        public static Variable<int> Max(Variable<int> a, Variable<int> b)
+        {
+            return Variable<int>.Factor(System.Math.Max, a, b);
+        }
+
+        /// <summary>
         /// Returns a double variable which is the minimum of two double variables
         /// </summary>
         /// <param name="a">The first variable</param>

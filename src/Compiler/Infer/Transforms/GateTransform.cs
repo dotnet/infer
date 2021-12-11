@@ -14,6 +14,7 @@ using Microsoft.ML.Probabilistic.Utilities;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Models.Attributes;
+using Microsoft.ML.Probabilistic.Models;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -82,11 +83,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
 
             string warningText =
-                "This model will consume a lot of memory due to the following mix of indexing expressions inside of a conditional: {0}";
+                "This model will consume excess memory due to the following mix of indexing expressions inside of a conditional: {0}";
             foreach (var entry in inefficientReplacements)
             {
                 if (entry.Value != null)
+                {
                     Warning(string.Format(warningText, StringUtil.CollectionToString(entry.Value, ", ")));
+                }
             }
         }
 
@@ -554,28 +557,28 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (toReplace != null)
             {
                 var currentBindings = bindings.Take(conditionContextIndex + 1).ToList();
-                IExpression clone = ci.GetClone(context, toClone, currentBindings, this, start, conditionContextIndex,
-                    isDef);
+                IExpression clone = ci.GetClone(context, toClone, currentBindings, this, start, conditionContextIndex, isDef);
                 clone = Builder.JaggedArrayIndex(clone, indices);
-                if (true)
+                // check if indices contains an expression that is not a top-level loop variable or loop local
+                // check for dependence on variables tagged with GateBlock that do not depend on a inner lop
+                bool isSubset = indices.Any(bracket => bracket.Any(index =>
                 {
-                    // check if indices contains an expression that is not a top-level loop variable or loop local
-                    bool isSubset = false;
-                    foreach (var bracket in indices)
+                    // Based on GateAnalysisTransform.ContainsLocalVars
+                    bool containsLocalVars = Recognizer.GetVariables(index).Any(indexVar =>
+                        context.InputAttributes.Get<GateBlock>(indexVar) == ci.gateBlock);
+                    if (containsLocalVars)
                     {
-                        foreach (var index in bracket)
-                        {
-                            var indexVar = Recognizer.GetVariableDeclaration(index);
-                            if (indexVar == null)
-                            {
-                                isSubset = true;
-                                break;
-                            }
-                        }
+                        return Recognizer.GetVariables(index).Any(indexVar =>
+                                context.InputAttributes.Get<GateBlock>(indexVar) == ci.gateBlock &&
+                                Recognizer.GetLoopForVariable(context, indexVar) == null);
                     }
-
-                    RecordReplacement(expr, toClone, !isSubset);
-                }
+                    else
+                    {
+                        var indexVarDecl = Recognizer.GetVariableDeclaration(index);
+                        return indexVarDecl == null;
+                    }
+                }));
+                RecordReplacement(expr, toClone, !isSubset);
 
                 int replaceCount = 0;
                 expr = Builder.ReplaceExpression(expr, toReplace, clone, ref replaceCount);
@@ -614,7 +617,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         /// <param name="expr1"></param>
         /// <param name="expr2"></param>
-        /// <param name="indices"></param>
+        /// <param name="indices">Contains indices of <paramref name="expr1"/> that were replaced by wildcards in <paramref name="expr2"/></param>
         /// <returns></returns>
         private static IExpression GetMatchingPrefix(IExpression expr1, IExpression expr2,
             out List<IEnumerable<IExpression>> indices)
@@ -891,7 +894,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (Builder.ContainsExpression(expr, conditionLhs))
                 context.Error($"Internal: expr ({expr}) contains the conditionLhs ({conditionLhs})");
             ClonedVarInfo cvi = GetClonedVarInfo(context, eb, isDef);
-            if (cvi == null) return expr;
+            if (cvi == null)
+            {
+                return expr;
+            }
             if (cvi.arrayDecl == null)
             {
                 var extraBindings = IndexingTransform.FilterBindingSet(eb.Bindings, 
@@ -929,9 +935,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns></returns>
         public IExpression ReplaceAnyItem(BasicTransformContext context, IExpression expr, List<IList<IExpression>> indices)
         {
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression) expr;
                 IExpression result = ReplaceAnyItem(context, iaie.Target, indices);
                 IList<IExpression> newIndices = Builder.ExprCollection();
                 IList<IExpression> allIndices = Builder.ExprCollection();
@@ -1090,8 +1095,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // This is done by attaching the attribute GateExitingVariable to the clones array.
                 // ChannelTransform later reads this attribute.
                 bool useExitRandom =
-                    ((algorithm is VariationalMessagePassing) &&
-                     ((VariationalMessagePassing) algorithm).UseGateExitRandom);
+                    (algorithm is VariationalMessagePassing vmp) &&
+                     vmp.UseGateExitRandom;
                 // if using Gate.ExitRandom, the clones should be marked as GateExiting variables
                 if (useExitRandom)
                     context.OutputAttributes.Set(cvi.arrayDecl, new VariationalMessagePassing.GateExitRandomVariable());
@@ -1245,13 +1250,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal string ToString(IExpression expr)
         {
-            if (expr is IVariableReferenceExpression)
+            if (expr is IVariableReferenceExpression ivre)
             {
-                return ((IVariableReferenceExpression) expr).Variable.Resolve().Name;
+                return ivre.Variable.Resolve().Name;
             }
-            else if (expr is IArrayIndexerExpression)
+            else if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression) expr;
                 StringBuilder sb = new StringBuilder(ToString(iaie.Target));
                 foreach (IExpression indExpr in iaie.Indices)
                     sb.Append("_" + ToString(indExpr));
@@ -1330,10 +1334,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             for (int i = 0; i < statements.Count; i++)
             {
                 IStatement s = statements[i];
-                if (s is IForStatement)
+                if (s is IForStatement ifs)
                 {
                     // Recursively wrap the body statements.
-                    IForStatement ifs = (IForStatement) s;
                     IForStatement fs = Builder.ForStmt();
                     fs.Condition = ifs.Condition;
                     fs.Increment = ifs.Increment;
@@ -1344,10 +1347,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     currentConditionStatement = null;
                     continue;
                 }
-                if (s is IRepeatStatement)
+                if (s is IRepeatStatement irs)
                 {
                     // Recursively wrap the body statements.
-                    IRepeatStatement irs = (IRepeatStatement) s;
                     IRepeatStatement rs = Builder.RepeatStmt();
                     rs.Count = irs.Count;
                     rs.Body = WrapBlockWithConditionals(context, irs.Body);
@@ -1356,10 +1358,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     currentConditionStatement = null;
                     continue;
                 }
-                if (s is IConditionStatement && !CodeRecognizer.IsStochastic(context, ((IConditionStatement) s).Condition))
+                if (s is IConditionStatement ics && !CodeRecognizer.IsStochastic(context, ics.Condition))
                 {
                     // Recursively wrap the body statements.
-                    IConditionStatement ics = (IConditionStatement) s;
                     IConditionStatement cs = Builder.CondStmt();
                     cs.Condition = ics.Condition;
                     cs.Then = WrapBlockWithConditionals(context, ics.Then);
@@ -1611,8 +1612,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (caseNumbers == null) return true;
             if (definitionCount == 0) return true;
             IExpression dimension = caseNumbers.Dimensions[0];
-            if (!(dimension is ILiteralExpression)) return true;
-            return (definitionCount == (int) ((ILiteralExpression) dimension).Value);
+            if (dimension is ILiteralExpression ile) return definitionCount == (int)ile.Value;
+            return true;
         }
 
         public override string ToString()
