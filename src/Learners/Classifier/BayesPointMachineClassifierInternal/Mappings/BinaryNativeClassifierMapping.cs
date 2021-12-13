@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// The current custom binary serialization version of the
         /// <see cref="BinaryNativeClassifierMapping{TInstanceSource,TInstance,TLabelSource,TLabel}"/> class.
         /// </summary>
-        private const int CustomSerializationVersion = 1;
+        private const int CustomSerializationVersion = 2;
 
         /// <summary>
         /// The label of the positive class.
@@ -66,15 +66,25 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             : base(reader, standardMapping)
         {
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
-
-            if (deserializedVersion == CustomSerializationVersion)
+            if (LabelIsBoolean && deserializedVersion >= 2)
+            {
+                SetClassLabels(default);
+            }
+            else
             {
                 this.areClassLabelsSet = reader.ReadBoolean();
-
                 if (this.areClassLabelsSet)
                 {
-                    this.positiveClassLabel = (TLabel)reader.ReadObject();
-                    this.negativeClassLabel = (TLabel)reader.ReadObject();
+                    if (deserializedVersion >= 2)
+                    {
+                        this.positiveClassLabel = standardMapping.ParseLabel(reader.ReadString());
+                        this.negativeClassLabel = standardMapping.ParseLabel(reader.ReadString());
+                    }
+                    else
+                    {
+                        this.positiveClassLabel = reader.ReadObject<TLabel>();
+                        this.negativeClassLabel = reader.ReadObject<TLabel>();
+                    }
                 }
             }
         }
@@ -107,17 +117,14 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <param name="labelSource">An optional label source.</param>
         public void SetClassLabels(TInstanceSource instanceSource, TLabelSource labelSource = default(TLabelSource))
         {
-            Debug.Assert(instanceSource != null, "The instance source must not be null.");
-
             // Get the labels of both positive and negative classes
-            TLabel[] classLabels = this.StandardMapping.GetClassLabelsSafe(instanceSource, labelSource).ToArray();
+            var classLabels = this.StandardMapping.GetClassLabelsSafe(instanceSource, labelSource);
 
-            if (classLabels.Length != 2)
+            if (classLabels.Count != 2)
             {
                 throw new BayesPointMachineClassifierException("There must be precisely two class labels.");
             }
 
-            Array.Sort(classLabels); // Guarantee consistent order of class labels
             this.negativeClassLabel = classLabels[0]; // Guaranteed to be distinct due to safe mapping
             this.positiveClassLabel = classLabels[1];
 
@@ -134,8 +141,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         {
             Debug.Assert(instanceSource != null, "The instance source must not be null.");
 
-            var classLabels = this.StandardMapping.GetClassLabelsSafe(instanceSource, labelSource).ToArray();
-            return classLabels.Length == 2 && classLabels[0].Equals(this.negativeClassLabel) && classLabels[1].Equals(this.positiveClassLabel);
+            var classLabels = this.StandardMapping.GetClassLabelsSafe(instanceSource, labelSource);
+            return classLabels.Count == 2 && classLabels[0].Equals(this.negativeClassLabel) && classLabels[1].Equals(this.positiveClassLabel);
         }
 
         /// <summary>
@@ -147,13 +154,26 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             base.SaveForwardCompatible(writer);
 
             writer.Write(CustomSerializationVersion);
-            writer.Write(this.areClassLabelsSet);
-            if (this.areClassLabelsSet)
+            if (!LabelIsBoolean)
             {
-                writer.WriteObject(this.positiveClassLabel);
-                writer.WriteObject(this.negativeClassLabel);
+                writer.Write(this.areClassLabelsSet);
+                if (this.areClassLabelsSet)
+                {
+                    if (CustomSerializationVersion >= 2 && string.Empty.Length == 0)
+                    {
+                        writer.Write(this.StandardMapping.LabelToString(this.positiveClassLabel));
+                        writer.Write(this.StandardMapping.LabelToString(this.negativeClassLabel));
+                    }
+                    else
+                    {
+                        writer.WriteObject(this.positiveClassLabel);
+                        writer.WriteObject(this.negativeClassLabel);
+                    }
+                }
             }
         }
+
+        protected static bool LabelIsBoolean => true is TLabel;
 
         /// <summary>
         /// Gets the labels for the specified instances in native data format.

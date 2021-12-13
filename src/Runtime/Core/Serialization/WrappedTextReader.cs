@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.ML.Probabilistic.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -43,10 +45,17 @@ namespace Microsoft.ML.Probabilistic.Serialization
             return int.Parse(line);
         }
 
-        public object ReadObject()
+        public T ReadObject<T>()
         {
             string line = reader.ReadLine();
-            return line;
+            if (line is T value)
+            {
+                return value;
+            }
+            else
+            {
+                throw new NotImplementedException($"Cannot read object type {StringUtil.TypeToString(typeof(T))}");
+            }
         }
 
         public string ReadString()

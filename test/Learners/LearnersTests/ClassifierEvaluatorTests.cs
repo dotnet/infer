@@ -375,7 +375,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <summary>
         /// The classifier mapping.
         /// </summary>
-        private class ClassifierMapping : IClassifierMapping<IEnumerable<LabelDistribution>, LabelDistribution, IEnumerable<LabelDistribution>, string, Vector>
+        private class ClassifierMapping : ClassifierMapping<IEnumerable<LabelDistribution>, LabelDistribution, IEnumerable<LabelDistribution>, string, Vector>
         {
             /// <summary>
             /// Provides the instances for a given instance source.
@@ -383,7 +383,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="instanceSource">The source of instances.</param>
             /// <returns>The instances provided by the instance source.</returns>
             /// <remarks>Assumes that the same instance source always provides the same instances.</remarks>
-            public IEnumerable<LabelDistribution> GetInstances(IEnumerable<LabelDistribution> instanceSource)
+            public override IEnumerable<LabelDistribution> GetInstances(IEnumerable<LabelDistribution> instanceSource)
             {
                 if (instanceSource == null)
                 {
@@ -400,7 +400,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="instanceSource">An optional source of instances.</param>
             /// <returns>The features for the given instance.</returns>
             /// <remarks>Assumes that the same instance source always provides the same features for a given instance.</remarks>
-            public Vector GetFeatures(LabelDistribution instance, IEnumerable<LabelDistribution> instanceSource = null)
+            public override Vector GetFeatures(LabelDistribution instance, IEnumerable<LabelDistribution> instanceSource = null)
             {
                 throw new NotImplementedException("Features are not required in evaluation.");
             }
@@ -413,7 +413,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="labelSource">An optional source of labels.</param>
             /// <returns>The label of the given instance.</returns>
             /// <remarks>Assumes that the same sources always provide the same label for a given instance.</remarks>
-            public string GetLabel(LabelDistribution instance, IEnumerable<LabelDistribution> instanceSource = null, IEnumerable<LabelDistribution> labelSource = null)
+            public override string GetLabel(LabelDistribution instance, IEnumerable<LabelDistribution> instanceSource = null, IEnumerable<LabelDistribution> labelSource = null)
             {
                 if (instance == null)
                 {
@@ -441,7 +441,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="instanceSource">An optional instance source.</param>
             /// <param name="labelSource">An optional label source.</param>
             /// <returns>All possible values of a label.</returns>
-            public IEnumerable<string> GetClassLabels(IEnumerable<LabelDistribution> instanceSource = null, IEnumerable<LabelDistribution> labelSource = null)
+            public override IEnumerable<string> GetClassLabels(IEnumerable<LabelDistribution> instanceSource = null, IEnumerable<LabelDistribution> labelSource = null)
             {
                 if (instanceSource == null)
                 {

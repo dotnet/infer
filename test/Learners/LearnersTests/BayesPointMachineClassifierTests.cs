@@ -23,6 +23,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using Microsoft.ML.Probabilistic.Collections;
 
     using StandardPredictiveDistribution = System.Collections.Generic.Dictionary<string, double>;
+    using BoolPredictiveDistribution = System.Collections.Generic.Dictionary<bool, double>;
+    using IntPredictiveDistribution = System.Collections.Generic.Dictionary<int, double>;
 
     /// <summary>
     /// Tests for the Bayes point machine classifier.
@@ -42,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 "Data", "W5ANormalized.csv.gz"));
         }
 
-        private class CsvGzipMapping : IClassifierMapping<string, string, string, string, Vector>
+        private class CsvGzipMapping : ClassifierMapping<string, string, string, string, Vector>
         {
             public static IEnumerable<string> ReadLinesGzip(string fileName)
             {
@@ -62,23 +64,23 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 }
             }
 
-            public IEnumerable<string> GetInstances(string instanceSource)
+            public override IEnumerable<string> GetInstances(string instanceSource)
             {
                 return ReadLinesGzip(instanceSource);
             }
 
-            public Vector GetFeatures(string instance, string instanceSource = null)
+            public override Vector GetFeatures(string instance, string instanceSource = null)
             {
                 var array = instance.Split(",".ToCharArray()).Skip(1).Select(Convert.ToDouble).ToArray();
                 return Vector.FromArray(array);
             }
 
-            public string GetLabel(string instance, string instanceSource = null, string labelSource = null)
+            public override string GetLabel(string instance, string instanceSource = null, string labelSource = null)
             {
                 return instance.Split(",".ToCharArray()).First();
             }
 
-            public IEnumerable<string> GetClassLabels(string instanceSource = null, string labelSource = null)
+            public override IEnumerable<string> GetClassLabels(string instanceSource, string labelSource = null)
             {
                 return ReadLinesGzip(instanceSource).Select(l => l.Split(",".ToCharArray()).First()).Distinct();
             }
@@ -209,6 +211,20 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <summary>
         /// The expected prediction after training of a binary Bayes point machine classifier.
         /// </summary>
+        private BoolPredictiveDistribution[] expectedPredictiveBernoulliSimpleDistributions;
+        private IntPredictiveDistribution[] expectedPredictiveBernoulliSimpleIntDistributions;
+        private IntPredictiveDistribution[] expectedPredictiveDiscreteIntDistributions;
+
+        /// <summary>
+        /// The expected prediction after incremental training of a binary Bayes point machine classifier.
+        /// </summary>
+        private BoolPredictiveDistribution[] expectedIncrementalPredictiveBernoulliSimpleDistributions;
+        private IntPredictiveDistribution[] expectedIncrementalPredictiveBernoulliSimpleIntDistributions;
+        private IntPredictiveDistribution[] expectedIncrementalPredictiveDiscreteIntDistributions;
+
+        /// <summary>
+        /// The expected prediction after training of a binary Bayes point machine classifier.
+        /// </summary>
         private StandardPredictiveDistribution[] expectedPredictiveBernoulliStandardDistributions;
 
         /// <summary>
@@ -269,6 +285,19 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// The testing dataset in sparse native format.
         /// </summary>
         private NativeDataset sparseNativePredictionData;
+
+        /// <summary>
+        /// The training dataset in dense simple format.
+        /// </summary>
+        private IReadOnlyList<Vector> denseSimpleTrainingData;
+        private IReadOnlyList<bool> denseSimpleTrainingLabels;
+        private IReadOnlyList<int> denseSimpleIntTrainingLabels;
+        private IReadOnlyList<int> denseSimpleMulticlassTrainingLabels;
+
+        /// <summary>
+        /// The testing dataset in dense simple format.
+        /// </summary>
+        private IReadOnlyList<Vector> denseSimplePredictionData;
 
         /// <summary>
         /// The training dataset in dense standard format.
@@ -1540,6 +1569,54 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveBernoulliStandardDistributions,
                 this.expectedIncrementalPredictiveBernoulliStandardDistributions,
                 CheckPredictedBernoulliDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in simple format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseBinarySimpleCustomSerializationRegressionTest()
+        {
+            TestBinarySimpleClassifierCustomSerializationRegression(
+                this.denseSimpleTrainingData,
+                this.denseSimpleTrainingLabels,
+                this.denseSimplePredictionData,
+                this.expectedPredictiveBernoulliSimpleDistributions,
+                this.expectedIncrementalPredictiveBernoulliSimpleDistributions,
+                CheckPredictedBernoulliDistributionSimpleTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in simple format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseBinarySimpleIntCustomSerializationRegressionTest()
+        {
+            TestBinarySimpleClassifierCustomSerializationRegression(
+                this.denseSimpleTrainingData,
+                this.denseSimpleIntTrainingLabels,
+                this.denseSimplePredictionData,
+                this.expectedPredictiveBernoulliSimpleIntDistributions,
+                this.expectedIncrementalPredictiveBernoulliSimpleIntDistributions,
+                CheckPredictedBernoulliDistributionSimpleTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in simple format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseMulticlassSimpleCustomSerializationRegressionTest()
+        {
+            TestMulticlassSimpleClassifierCustomSerializationRegression(
+                this.denseSimpleTrainingData,
+                this.denseSimpleMulticlassTrainingLabels,
+                this.denseSimplePredictionData,
+                this.expectedPredictiveDiscreteIntDistributions,
+                this.expectedIncrementalPredictiveDiscreteIntDistributions,
+                CheckPredictedBernoulliDistributionSimpleTestingDataset);
         }
 
         /// <summary>
@@ -4348,16 +4425,78 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         /// <param name="bernoulliDistributions">The <see cref="Bernoulli"/> distributions to wrap.</param>
         /// <returns>The newly created standard distributions.</returns>
+        private static BoolPredictiveDistribution[] CreateSimpleDistributionsFromBernoulliDistributions(Bernoulli[] bernoulliDistributions)
+        {
+            var standardDistributions = new BoolPredictiveDistribution[bernoulliDistributions.Length];
+            for (int i = 0; i < bernoulliDistributions.Length; i++)
+            {
+                standardDistributions[i] = new BoolPredictiveDistribution
+                {
+                    { false, bernoulliDistributions[i].GetProbFalse() }, 
+                    { true, bernoulliDistributions[i].GetProbTrue() }
+                };
+            }
+
+            return standardDistributions;
+        }
+
+        /// <summary>
+        /// Creates an array of standard distributions from a specified array of <see cref="Bernoulli"/> distributions.
+        /// </summary>
+        /// <param name="bernoulliDistributions">The <see cref="Bernoulli"/> distributions to wrap.</param>
+        /// <returns>The newly created standard distributions.</returns>
+        private static IntPredictiveDistribution[] CreateIntDistributionsFromBernoulliDistributions(Bernoulli[] bernoulliDistributions)
+        {
+            var standardDistributions = new IntPredictiveDistribution[bernoulliDistributions.Length];
+            for (int i = 0; i < bernoulliDistributions.Length; i++)
+            {
+                standardDistributions[i] = new IntPredictiveDistribution
+                {
+                    { 0, bernoulliDistributions[i].GetProbFalse() },
+                    { 1, bernoulliDistributions[i].GetProbTrue() }
+                };
+            }
+
+            return standardDistributions;
+        }
+
+        /// <summary>
+        /// Creates an array of standard distributions from a specified array of <see cref="Discrete"/> distributions.
+        /// </summary>
+        /// <param name="discreteDistributions">The <see cref="Discrete"/> distributions to wrap.</param>
+        /// <returns>The newly created standard distributions.</returns>
+        private static IntPredictiveDistribution[] CreateIntDistributionsFromDiscreteDistributions(Discrete[] discreteDistributions)
+        {
+            var standardDistributions = new IntPredictiveDistribution[discreteDistributions.Length];
+            for (int i = 0; i < discreteDistributions.Length; i++)
+            {
+                Assert.Equal(3, discreteDistributions[i].Dimension);
+                standardDistributions[i] = new IntPredictiveDistribution
+                {
+                    { 0, discreteDistributions[i][0] },
+                    { 1, discreteDistributions[i][1] },
+                    { 2, discreteDistributions[i][2] }
+                };
+            }
+
+            return standardDistributions;
+        }
+
+        /// <summary>
+        /// Creates an array of standard distributions from a specified array of <see cref="Bernoulli"/> distributions.
+        /// </summary>
+        /// <param name="bernoulliDistributions">The <see cref="Bernoulli"/> distributions to wrap.</param>
+        /// <returns>The newly created standard distributions.</returns>
         private static StandardPredictiveDistribution[] CreateStandardDistributionsFromBernoulliDistributions(Bernoulli[] bernoulliDistributions)
         {
             var standardDistributions = new StandardPredictiveDistribution[bernoulliDistributions.Length];
             for (int i = 0; i < bernoulliDistributions.Length; i++)
             {
                 standardDistributions[i] = new StandardPredictiveDistribution
-                                               {
-                                                   { "False", bernoulliDistributions[i].GetProbFalse() }, 
-                                                   { "True", bernoulliDistributions[i].GetProbTrue() }
-                                               };
+                {
+                    { "False", bernoulliDistributions[i].GetProbFalse() },
+                    { "True", bernoulliDistributions[i].GetProbTrue() }
+                };
             }
 
             return standardDistributions;
@@ -4535,6 +4674,38 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 {
                     Assert.Equal(pair.Item1[i], pair.Item2[i], tolerance);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Checks the predicted <see cref="Bernoulli"/> distributions over the test set labels.
+        /// </summary>
+        /// <param name="expectedDistributions">The expected distributions for the simple test dataset.</param>
+        /// <param name="predictedDistributions">The predicted distributions for the simple test dataset.</param>
+        /// <param name="tolerance">The maximum tolerated absolute difference between the expected and predicted distributions.</param>
+        private static void CheckPredictedBernoulliDistributionSimpleTestingDataset<TLabel>(
+            IEnumerable<IDictionary<TLabel, double>> expectedDistributions,
+            IEnumerable<IDictionary<TLabel, double>> predictedDistributions,
+            double tolerance = Tolerance)
+        {
+            var expectedDistributionsList = expectedDistributions.ToList();
+            var predictedDistributionsList = predictedDistributions.ToList();
+            Assert.Equal(expectedDistributionsList.Count, predictedDistributionsList.Count);
+            var distributions = expectedDistributionsList.Zip(predictedDistributionsList, ValueTuple.Create);
+            foreach (var pair in distributions)
+            {
+                Assert.Equal(pair.Item1.Count, pair.Item2.Count);
+                if (true is TLabel t && false is TLabel f)
+                {
+                    Assert.Equal(pair.Item1[f], pair.Item2[f], tolerance);
+                    Assert.Equal(pair.Item1[t], pair.Item2[t], tolerance);
+                }
+                else if (0 is TLabel zero && 1 is TLabel one)
+                {
+                    Assert.Equal(pair.Item1[zero], pair.Item2[zero], tolerance);
+                    Assert.Equal(pair.Item1[one], pair.Item2[one], tolerance);
+                }
+                else throw new NotImplementedException();
             }
         }
 
@@ -5036,6 +5207,55 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="expectedLabelDistributions">The expected label distributions.</param>
         /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
         /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestBinarySimpleClassifierCustomSerializationRegression<TLabel>(
+            IReadOnlyList<Vector> trainingData,
+            IReadOnlyList<TLabel> trainingLabels,
+            IReadOnlyList<Vector> testData,
+            IEnumerable<IDictionary<TLabel, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<TLabel, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<TLabel, double>>, IEnumerable<IDictionary<TLabel, double>>, double> checkPrediction)
+        {
+            var mapping = new BinarySimpleTestMapping<TLabel>();
+            var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(mapping);
+
+            const string TrainedFileName = "trainedBinarySimpleClassifier" + extension;
+            const string UntrainedFileName = "untrainedBinarySimpleClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier
+            classifier.SaveForwardCompatible(UntrainedFileName);
+
+            classifier.Train(trainingData, trainingLabels);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                return BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction, trainingLabels);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier and data in standard format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
         private static void TestBinaryStandardClassifierCustomSerializationRegression(
             StandardDataset trainingData,
             StandardDataset testData,
@@ -5073,7 +5293,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
                 return BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping);
             });
-            
+
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
         }
@@ -5103,6 +5323,55 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(fileName, binaryStandardMapping);
                 CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier and data in native format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestMulticlassSimpleClassifierCustomSerializationRegression<TLabel>(
+            IReadOnlyList<Vector> trainingData,
+            IReadOnlyList<TLabel> trainingLabels,
+            IReadOnlyList<Vector> testData,
+            IEnumerable<IDictionary<TLabel, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<TLabel, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<TLabel, double>>, IEnumerable<IDictionary<TLabel, double>>, double> checkPrediction)
+        {
+            var mapping = new MulticlassSimpleBayesPointMachineClassifierTestMapping<TLabel>();
+            var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(mapping);
+
+            const string TrainedFileName = "trainedMulticlassStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedMulticlassStandardClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier
+            classifier.SaveForwardCompatible(UntrainedFileName);
+
+            classifier.Train(trainingData, trainingLabels);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                return BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction, trainingLabels);
         }
 
         /// <summary>
@@ -5607,7 +5876,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TInstanceSource testData,
             IEnumerable<TLabelDistribution> expectedLabelDistributions,
             IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
-            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction)
+            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction, 
+            TLabelSource labelSource = default)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             // Check that trained classifier still protects settings
@@ -5618,14 +5888,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Batched training for untrained classifier
             untrainedClassifier.Settings.Training.BatchCount = 2;
-            untrainedClassifier.Train(trainingData);
+            untrainedClassifier.Train(trainingData, labelSource);
 
             checkPrediction(expectedLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
             checkPrediction(expectedLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
 
             // Incremental training
-            trainedClassifier.TrainIncremental(trainingData);
-            untrainedClassifier.TrainIncremental(trainingData);
+            trainedClassifier.TrainIncremental(trainingData, labelSource);
+            untrainedClassifier.TrainIncremental(trainingData, labelSource);
 
             checkPrediction(expectedIncrementalLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
             checkPrediction(expectedIncrementalLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
@@ -9063,6 +9333,21 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions = 
                 CreateDiscreteDistributionsFromProbabilities(this.gaussianPriorExpectedIncrementalDiscreteModeProbabilities);
 
+            // Expected Bernoulli predictive distributions for data in simple format
+            this.expectedPredictiveBernoulliSimpleDistributions =
+                CreateSimpleDistributionsFromBernoulliDistributions(this.expectedPredictiveBernoulliDistributions);
+            this.expectedPredictiveBernoulliSimpleIntDistributions =
+                CreateIntDistributionsFromBernoulliDistributions(this.expectedPredictiveBernoulliDistributions);
+            this.expectedPredictiveDiscreteIntDistributions =
+                CreateIntDistributionsFromDiscreteDistributions(this.expectedPredictiveDiscreteDistributions);
+
+            this.expectedIncrementalPredictiveBernoulliSimpleDistributions =
+                CreateSimpleDistributionsFromBernoulliDistributions(this.expectedIncrementalPredictiveBernoulliDistributions);
+            this.expectedIncrementalPredictiveBernoulliSimpleIntDistributions =
+                CreateIntDistributionsFromBernoulliDistributions(this.expectedIncrementalPredictiveBernoulliDistributions);
+            this.expectedIncrementalPredictiveDiscreteIntDistributions =
+                CreateIntDistributionsFromDiscreteDistributions(this.expectedIncrementalPredictiveDiscreteDistributions);
+
             // Expected Bernoulli predictive distributions for data in standard format
             this.expectedPredictiveBernoulliStandardDistributions =
                 CreateStandardDistributionsFromBernoulliDistributions(this.expectedPredictiveBernoulliDistributions);
@@ -9148,6 +9433,31 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var trainingLabels = new Dictionary<string, string> { { "First", "A" }, { "Second", "B" }, { "Third", "C" } };
             var predictionLabels = new Dictionary<string, string> { { "First", "C" }, { "Second", "B" } };
 
+            this.denseSimpleTrainingData = new List<Vector>()
+            {
+                DenseVector.FromArray(0, 0),
+                DenseVector.FromArray(1, 0),
+                DenseVector.FromArray(0, 1)
+            };
+            this.denseSimpleTrainingLabels = new List<bool>()
+            {
+                false,
+                true,
+                true
+            };
+            this.denseSimpleIntTrainingLabels = new List<int>()
+            {
+                0,
+                1,
+                1
+            };
+            this.denseSimpleMulticlassTrainingLabels = new List<int>()
+            {
+                0,
+                1,
+                2
+            };
+
             this.denseStandardTrainingData = new StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>
@@ -9174,6 +9484,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 Labels = trainingLabels,
 
                 ClassLabels = classLabels
+            };
+
+            this.denseSimplePredictionData = new List<Vector>()
+            {
+                DenseVector.FromArray(0, 2),
+                DenseVector.FromArray(4, 0)
             };
 
             this.denseStandardPredictionData = new StandardDataset
@@ -9634,13 +9950,69 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             }
         }
 
+        private class BinarySimpleTestMapping<TLabel> : ClassifierMapping<IReadOnlyList<Vector>, int, IReadOnlyList<TLabel>, TLabel, Vector>
+        {
+            public override IEnumerable<int> GetInstances(IReadOnlyList<Vector> featureVectors)
+            {
+                for (int instance = 0; instance < featureVectors.Count; instance++)
+                {
+                    yield return instance;
+                }
+            }
+
+            public override Vector GetFeatures(int instance, IReadOnlyList<Vector> featureVectors)
+            {
+                return featureVectors[instance];
+            }
+
+            public override TLabel GetLabel(int instance, IReadOnlyList<Vector> featureVectors, IReadOnlyList<TLabel> labels)
+            {
+                return labels[instance];
+            }
+
+            public override IEnumerable<TLabel> GetClassLabels(
+                IReadOnlyList<Vector> featureVectors = null, IReadOnlyList<TLabel> labels = null)
+            {
+                if (true is TLabel t && false is TLabel f)
+                {
+                    // This array is intentionally out of order
+                    return new[] { t, f };
+                }
+                else if (0 is TLabel zero && 1 is TLabel one)
+                {
+                    // This array is intentionally out of order
+                    return new[] { one, zero };
+                }
+                else throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// An implementation of <see cref="IClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel, TFeatureValues}"/> 
+        /// for <see cref="StandardDataset"/> and multiple class labels.
+        /// </summary>
+        [Serializable]
+        private class MulticlassSimpleBayesPointMachineClassifierTestMapping<TLabel> : BinarySimpleTestMapping<TLabel>
+        {
+            public override IEnumerable<TLabel> GetClassLabels(
+                IReadOnlyList<Vector> featureVectors = null, IReadOnlyList<TLabel> labels = null)
+            {
+                if (0 is TLabel zero && 1 is TLabel one && 2 is TLabel two)
+                {
+                    // This array is intentionally out of order
+                    return new[] { one, two, zero };
+                }
+                else throw new NotImplementedException();
+            }
+        }
+
         /// <summary>
         /// An abstract base class implementation of <see cref="IClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel, TFeatureValues}"/> 
         /// for <see cref="StandardDataset"/>.
         /// </summary>
         [Serializable]
         private abstract class StandardBayesPointMachineClassifierTestMapping :
-            IClassifierMapping<StandardDataset, string, StandardDataset, string, Vector>, ICustomSerializable
+            ClassifierMapping<StandardDataset, string, StandardDataset, string, Vector>, ICustomSerializable
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="StandardBayesPointMachineClassifierTestMapping"/> class.
@@ -9658,19 +10030,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             }
 
             /// <summary>
-            /// Gets all class labels.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="labelSource">The label source.</param>
-            /// <returns>All possible values of a label.</returns>
-            public abstract IEnumerable<string> GetClassLabels(StandardDataset instanceSource, StandardDataset labelSource);
-
-            /// <summary>
             /// Retrieves a list of instances from a given source.
             /// </summary>
             /// <param name="instanceSource">The source of instances.</param>
             /// <returns>The retrieved list of instances.</returns>
-            public IEnumerable<string> GetInstances(StandardDataset instanceSource)
+            public override IEnumerable<string> GetInstances(StandardDataset instanceSource)
             {
                 if (instanceSource == null)
                 {
@@ -9698,7 +10062,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// <param name="instance">The instance to provide features for.</param>
             /// <param name="instanceSource">The source of instances.</param>
             /// <returns>The features for the given instance.</returns>
-            public Vector GetFeatures(string instance, StandardDataset instanceSource)
+            public override Vector GetFeatures(string instance, StandardDataset instanceSource)
             {
                 if (instance == null || instanceSource == null || instanceSource.FeatureVectors == null)
                 {
@@ -9715,15 +10079,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
                 return featureVector;
             }
-
-            /// <summary>
-            /// Provides the label for a given instance.
-            /// </summary>
-            /// <param name="instance">The instance to provide the label for.</param>
-            /// <param name="instanceSource">The source of instances.</param>
-            /// <param name="labelSource">The source of labels.</param>
-            /// <returns>The label of the given instance.</returns>
-            public abstract string GetLabel(string instance, StandardDataset instanceSource, StandardDataset labelSource);
 
             /// <summary>
             /// Saves the state of the standard data mapping using a writer to a binary stream.
