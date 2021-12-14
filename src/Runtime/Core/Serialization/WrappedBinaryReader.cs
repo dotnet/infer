@@ -39,9 +39,9 @@ namespace Microsoft.ML.Probabilistic.Serialization
             return binaryReader.ReadInt32();
         }
 
-        public object ReadObject()
+        public T ReadObject<T>()
         {
-            return binaryReader.ReadObject();
+            return binaryReader.ReadObject<T>();
         }
 
         public string ReadString()

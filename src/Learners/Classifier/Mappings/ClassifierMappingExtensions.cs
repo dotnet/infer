@@ -25,7 +25,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         /// <param name="labelSource">An optional label source.</param>
         /// <returns>All possible values of a label.</returns>
         /// <exception cref="MappingException">Thrown if the class labels are null, empty, identical or not unique.</exception>
-        public static IEnumerable<TLabel> GetClassLabelsSafe<TInstanceSource, TInstance, TLabelSource, TLabel, TFeatures>(
+        public static IReadOnlyList<TLabel> GetClassLabelsSafe<TInstanceSource, TInstance, TLabelSource, TLabel, TFeatures>(
             this IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, TFeatures> mapping,
             TInstanceSource instanceSource = default(TInstanceSource),
             TLabelSource labelSource = default(TLabelSource))
@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
                 throw new MappingException("The class labels must not be null.");
             }
 
-            IList<TLabel> classLabelList = classLabels.ToList();
+            IReadOnlyList<TLabel> classLabelList = classLabels.OrderBy(classLabel => classLabel).ToList();
 
             if (classLabelList.Any(label => label == null))
             {

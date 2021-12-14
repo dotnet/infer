@@ -16,7 +16,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
     /// The classifier mapping.
     /// </summary>
     [Serializable]
-    public class ClassifierMapping : IClassifierMapping<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, Vector>
+    public class ClassifierMapping : ClassifierMapping<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, Vector>
     {
         /// <summary>
         /// The bidirectional mapping from feature names to feature indexes.
@@ -38,7 +38,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <param name="instanceSource">The source of instances.</param>
         /// <returns>The instances provided by the instance source.</returns>
         /// <remarks>Assumes that the same instance source always provides the same instances.</remarks>
-        public IEnumerable<LabeledFeatureValues> GetInstances(IList<LabeledFeatureValues> instanceSource)
+        public override IEnumerable<LabeledFeatureValues> GetInstances(IList<LabeledFeatureValues> instanceSource)
         {
             if (instanceSource == null)
             {
@@ -55,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <param name="instanceSource">An optional source of instances.</param>
         /// <returns>The features for the given instance.</returns>
         /// <remarks>Assumes that the same instance source always provides the same features for a given instance.</remarks>
-        public Vector GetFeatures(LabeledFeatureValues instance, IList<LabeledFeatureValues> instanceSource = null)
+        public override Vector GetFeatures(LabeledFeatureValues instance, IList<LabeledFeatureValues> instanceSource = null)
         {
             if (instance == null)
             {
@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <param name="labelSource">An optional source of labels.</param>
         /// <returns>The label of the given instance.</returns>
         /// <remarks>Assumes that the same sources always provide the same label for a given instance.</remarks>
-        public string GetLabel(LabeledFeatureValues instance, IList<LabeledFeatureValues> instanceSource, IList<LabelDistribution> labelSource = null)
+        public override string GetLabel(LabeledFeatureValues instance, IList<LabeledFeatureValues> instanceSource, IList<LabelDistribution> labelSource = null)
         {
             if (instance == null)
             {
@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <param name="instanceSource">An optional instance source.</param>
         /// <param name="labelSource">An optional label source.</param>
         /// <returns>All possible values of a label.</returns>
-        public IEnumerable<string> GetClassLabels(IList<LabeledFeatureValues> instanceSource, IList<LabelDistribution> labelSource = null)
+        public override IEnumerable<string> GetClassLabels(IList<LabeledFeatureValues> instanceSource, IList<LabelDistribution> labelSource = null)
         {
             if (instanceSource == null)
             {

@@ -80,7 +80,7 @@ namespace Microsoft.ML.Probabilistic.Collections
                 int elementCount = reader.ReadInt32();
                 for (int index = 0; index < elementCount; index++)
                 {
-                    var element = (T)reader.ReadObject();
+                    var element = reader.ReadObject<T>();
                     this.Add(element, false);
                 }
             }
