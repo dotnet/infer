@@ -108,6 +108,22 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(midpoint2 >= midpoint, $"Failed assertion: {midpoint2} >= {midpoint}, wa={wa:r}, a={a:r}, a2={a2:r}, wb={wb:r}, b={b:r}");
         }
 
+        /// <summary>
+        /// Tests a specific case that previously failed.
+        /// </summary>
+        [Fact]
+        public void WeightedAverage_IsMonotonic3()
+        {
+            double wa = 1E-05;
+            double a = -1.7976931348623157E+308;
+            double a2 = -1.7976931348623155E+308;
+            double wb = 1.0;
+            double b = -1E+287;
+            double midpoint = MMath.WeightedAverage(wa, a, wb, b);
+            double midpoint2 = MMath.WeightedAverage(wa, a2, wb, b);
+            Assert.True(midpoint2 >= midpoint, $"Failed assertion: {midpoint2} >= {midpoint}, wa={wa:r}, a={a:r}, a2={a2:r}, wb={wb:r}, b={b:r}");
+        }
+
         [Fact]
         public void MeanAccumulator_Add_ZeroWeight()
         {
