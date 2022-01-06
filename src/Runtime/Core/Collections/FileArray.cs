@@ -110,7 +110,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static string GetTempFolder(string name)
         {
-            string path = Path.GetTempPath() + name;
+            string path = "FileArray" + Path.DirectorySeparatorChar + name;
             return path;
         }
 
