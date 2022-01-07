@@ -104,7 +104,7 @@ jobs:
   - macOS
   - Windows
   pool:
-    name: VSEngSS-MicroBuild2019 # For real signing
+    name: VSEngSS-MicroBuild2022-1ES # For real signing
 
   steps:
   # Install MicroBuild plugin
