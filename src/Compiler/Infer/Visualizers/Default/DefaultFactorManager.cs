@@ -14,7 +14,6 @@ using Microsoft.ML.Probabilistic.Factors.Attributes;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Compiler.Transforms;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.Reflection;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
@@ -25,7 +24,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
     /// </summary>
     internal class DefaultFactorManager
     {
-        private FactorManager factorManager = new FactorManager();
+        private readonly FactorManager factorManager = new FactorManager();
 
         public IAlgorithm[] algs = { new VariationalMessagePassing(), new ExpectationPropagation() };
 
@@ -48,21 +47,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 
         private string GenerateNewFactorTable()
         {
-            List<Tuple<string, Compiler.Transforms.FactorManager.FactorInfo>> factorList = new List<Tuple<string, Compiler.Transforms.FactorManager.FactorInfo>>();
-            IEnumerable<Compiler.Transforms.FactorManager.FactorInfo> factorInfos = Compiler.Transforms.FactorManager.GetFactorInfos();
+            List<Tuple<string, FactorManager.FactorInfo>> factorList = new List<Tuple<string, FactorManager.FactorInfo>>();
+            IEnumerable<FactorManager.FactorInfo> factorInfos = FactorManager.GetFactorInfos();
 
-            foreach (Compiler.Transforms.FactorManager.FactorInfo info in factorInfos)
+            foreach (FactorManager.FactorInfo info in factorInfos)
             {
                 MethodInfo method = info.Method;
                 // omit obsolete, unsupported, and hidden factors
                 if (HiddenAttribute.IsDefined(method) ||
                     HiddenAttribute.IsDefined(method.DeclaringType) ||
-                    Attribute.IsDefined(method, typeof(System.ObsoleteAttribute))) continue;
-                //if (method.Name != "Logistic") continue;
+                    Attribute.IsDefined(method, typeof(ObsoleteAttribute))) continue;
                 string itemName = StringUtil.MethodFullNameToString(method);
-                factorList.Add(new Tuple<string, Compiler.Transforms.FactorManager.FactorInfo>(itemName, info));
+                ////if (itemName != "EnumSupport.AreEqual<TEnum>") continue;
+                factorList.Add(new Tuple<string, FactorManager.FactorInfo>(itemName, info));
             }
-            factorList.Sort((elem1, elem2) => elem1.Item1.CompareTo(elem2.Item1));
+            factorList.Sort((elem1, elem2) => elem1.Item2.ToString().CompareTo(elem2.Item2.ToString()));
 
             string html = $@"<!DOCTYPE html>
 <html>
@@ -88,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             return headers.ToString();
         }
 
-        private string GetFactorHtml(string name, Compiler.Transforms.FactorManager.FactorInfo info)
+        private string GetFactorHtml(string name, FactorManager.FactorInfo info)
         {
             Console.WriteLine($"Scanning {info}");
             var currentFactor = new StringBuilder();
@@ -104,13 +103,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             args.Append("</span>");
 
             string boldString = info.IsDeterministicFactor ? "" : " text-bold";
-            currentFactor.Append($@"<div class=""box-left{boldString}"">{StringUtil.EscapeXmlCharacters(name)}</div><div class=""box-left"">{args.ToString()}</div>");
+            currentFactor.Append($@"<div class=""box-left{boldString}"">{StringUtil.EscapeXmlCharacters(name)}</div><div class=""box-left"">{args}</div>");
 
             foreach (IAlgorithm alg in this.algs)
             {
-                QualityBand minQB, modeQB, maxQB;
                 ICollection<StochasticityPattern> patterns =
-                    GetAlgorithmPatterns(alg, info, ShowMissingEvidences, out minQB, out modeQB, out maxQB);
+                    GetAlgorithmPatterns(alg, info, ShowMissingEvidences, out QualityBand minQB, out QualityBand modeQB, out QualityBand maxQB);
                 if (patterns.Count == 0)
                 {
                     // not implemented
@@ -142,7 +140,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                     if (sp.Partial) partialCount++;
                     if (sp.evidenceFound) evidenceCount++;
                     if (sb.Length > 0) sb.Append(",</span> ");
-                    sb.Append($"<span>{sp.ToString()}");
+                    sb.Append($"<span>{sp}");
                 }
                 sb.Append("</span>");
                 if (notSupportedCount > 0)
@@ -216,7 +214,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
     .container {{
       display: grid;
       width: 100%;
-      grid-template-columns: {gridTemplate.ToString()};
+      grid-template-columns: {gridTemplate};
       max-width: 1700px;
       box-sizing: border-box;
       border-left: 1px solid #aaa;
@@ -310,9 +308,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         {
             try
             {
-                var p = new Process();
-                p.StartInfo = new ProcessStartInfo(filename);
-                p.StartInfo.UseShellExecute = true;
+                var p = new Process
+                {
+                    StartInfo = new ProcessStartInfo(filename)
+                    {
+                        UseShellExecute = true
+                    }
+                };
                 p.Start();
             }
             catch (Exception ex)
@@ -331,9 +333,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         /// <param name="modeQB">The most common quality band attached to operators for this factor</param>
         /// <param name="maxQB">The maximum quality band attached to operators for this factor</param>
         /// <returns></returns>
-        private ICollection<StochasticityPattern> GetAlgorithmPatterns(IAlgorithm alg, Compiler.Transforms.FactorManager.FactorInfo info, bool ShowMissingEvidences,
+        private ICollection<StochasticityPattern> GetAlgorithmPatterns(IAlgorithm alg, FactorManager.FactorInfo info, bool ShowMissingEvidences,
                                                                        out QualityBand minQB, out QualityBand modeQB, out QualityBand maxQB)
         {
+            bool verbose = false;
             ICollection<StochasticityPattern> patterns = new Set<StochasticityPattern>();
             string suffix = alg.GetOperatorMethodSuffix(new List<ICompilerAttribute>());
             string evidenceMethodName = alg.GetEvidenceMethodName(new List<ICompilerAttribute>());
@@ -372,13 +375,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             // for stochastic arguments.
             foreach (MessageFcnInfo mfi in mfis)
             {
-                //if(info.Method.ContainsGenericParameters) Console.WriteLine();
-                //    Console.WriteLine("mfi=" + mfi.Method);
+                if (verbose) Trace.WriteLine(mfi.Method);
                 StochasticityPattern sp = new StochasticityPattern(info);
                 sp.notSupported = mfi.NotSupportedMessage;
                 Dictionary<string, Type> parameterTypes = new Dictionary<string, Type>();
                 foreach (KeyValuePair<string, Type> kvp in mfi.GetParameterTypes()) parameterTypes[kvp.Key] = kvp.Value;
-                string target = (string)mfi.TargetParameter;
+                string target = mfi.TargetParameter;
                 if (!parameterTypes.ContainsKey(target))
                 {
                     if (!mfi.PassResultIndex)
@@ -403,17 +405,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 if (info.Method.IsGenericMethodDefinition)
                 {
                     // fill in the factor's type parameters from the type arguments of the operator class.
-                    IDictionary<string, Type> typeArgs = Compiler.Transforms.FactorManager.FactorInfo.GetTypeArguments(mfi.Method.DeclaringType);
+                    IDictionary<string, Type> typeArgs = FactorManager.FactorInfo.GetTypeArguments(mfi.Method.DeclaringType);
                     try
                     {
-                        MethodInfo newMethod = Compiler.Transforms.FactorManager.FactorInfo.MakeGenericMethod(info.Method, typeArgs);
-                        sp.info = Compiler.Transforms.FactorManager.GetFactorInfo(newMethod);
+                        MethodInfo newMethod = FactorManager.FactorInfo.MakeGenericMethod(info.Method, typeArgs);
+                        sp.info = FactorManager.GetFactorInfo(newMethod);
                     }
                     catch (Exception)
                     {
-                        sp.info = Compiler.Transforms.FactorManager.GetFactorInfo(info.Method);
-                        //Console.WriteLine("Could not infer generic type parameters of "+StringUtil.MethodFullNameToString(info.Method));
-                        //continue;
+                        sp.info = FactorManager.GetFactorInfo(info.Method);
+                        if (verbose)
+                            Trace.WriteLine("Could not infer generic type parameters of " + StringUtil.MethodFullNameToString(info.Method));
                     }
                     // from now on, sp.info != info
                 }
@@ -423,7 +425,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                     ArgInfo ai = new ArgInfo();
                     if (!parameterTypes.ContainsKey(field))
                     {
-                        //Console.WriteLine("not found: " + field + " in " + mfi.Method);
+                        if (verbose) Trace.WriteLine("not found: " + field + " in " + mfi.Method);
                         continue;
                     }
                     ai.factorType = sp.info.ParameterTypes[field];
@@ -431,7 +433,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                     sp.argInfos[field] = ai;
                 }
 
-                if (!sp.IsValid()) continue;
+                if (verbose) Trace.WriteLine(sp);
+                if (!sp.IsValid())
+                {
+                    if (verbose) Trace.WriteLine("Invalid stochasticity pattern");
+                    continue;
+                }
                 List<StochasticityPattern> toRemove = new List<StochasticityPattern>();
                 foreach (StochasticityPattern sp2 in patterns)
                 {
@@ -441,7 +448,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                         StochasticityPattern sp3 = sp.Intersect(sp2);
                         if (sp3 == null)
                         {
-                            StochasticityPattern sp4 = sp.Intersect(sp2);
                             throw new Exception("intersection is null");
                         }
                         sp = sp3;
@@ -457,30 +463,35 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             int qbCnt = -1;
             modeQB = QualityBand.Unknown;
             foreach (KeyValuePair<QualityBand, int> kvp in qbCounts)
+            {
                 if (kvp.Value > qbCnt)
                 {
                     qbCnt = kvp.Value;
                     modeQB = kvp.Key;
                 }
+            }
 
             modeQB = minQB;
             patterns = IntersectPatterns(patterns);
             patterns = GetCompletePatterns(patterns, suffix);
             patterns = AddDeterministicPatterns(patterns);
             VerifyPatterns(patterns, suffix, evidenceMethodName, ShowMissingEvidences);
-            StochasticityPattern bestp = GetBestPattern(patterns);
-            patterns = new Set<StochasticityPattern>();
-            if (bestp != null)
-            {
-                patterns.Add(bestp);
-                ((Set<StochasticityPattern>)patterns).AddRange(bestp.deterministicPatterns);
-            }
-            return patterns;
+            return RemoveDuplicatePatterns(patterns);
+            //return GetBestPatternPlusDeterministic(patterns);
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
+        private static List<StochasticityPattern> RemoveDuplicatePatterns(IEnumerable<StochasticityPattern> patterns)
+        {
+            var result = new List<StochasticityPattern>();
+            foreach (var pattern in patterns.OrderByDescending(sp => sp.foundCount))
+            {
+                if (!result.Any(sp => sp.IsSamePattern(pattern)))
+                {
+                    result.Add(pattern);
+                }
+            }
+            return result;
+        }
 
         /// <summary>
         /// Create a new set of patterns containing the closure of all pairwise intersections of patterns.
@@ -502,10 +513,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             return result;
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
-
         /// <summary>
         /// Modify the collection by adding all pairwise intersections of patterns.
         /// </summary>
@@ -526,7 +533,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             }
         }
 
-        private static StochasticityPattern GetStochasticityPattern(Compiler.Transforms.FactorManager.FactorInfo info, MessageFcnInfo mfi)
+        private static StochasticityPattern GetStochasticityPattern(FactorManager.FactorInfo info, MessageFcnInfo mfi)
         {
             StochasticityPattern sp = new StochasticityPattern(info);
             sp.notSupported = mfi.NotSupportedMessage;
@@ -548,15 +555,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             if (info.Method.IsGenericMethodDefinition)
             {
                 // fill in the factor's type parameters from the type arguments of the operator class.
-                IDictionary<string, Type> typeArgs = Compiler.Transforms.FactorManager.FactorInfo.GetTypeArguments(mfi.Method.DeclaringType);
+                IDictionary<string, Type> typeArgs = FactorManager.FactorInfo.GetTypeArguments(mfi.Method.DeclaringType);
                 try
                 {
-                    MethodInfo newMethod = Compiler.Transforms.FactorManager.FactorInfo.MakeGenericMethod(info.Method, typeArgs);
-                    sp.info = Compiler.Transforms.FactorManager.GetFactorInfo(newMethod);
+                    MethodInfo newMethod = FactorManager.FactorInfo.MakeGenericMethod(info.Method, typeArgs);
+                    sp.info = FactorManager.GetFactorInfo(newMethod);
                 }
                 catch (Exception)
                 {
-                    sp.info = Compiler.Transforms.FactorManager.GetFactorInfo(info.Method);
+                    sp.info = FactorManager.GetFactorInfo(info.Method);
                 }
                 // from now on, sp.info != info
             }
@@ -576,6 +583,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             return sp;
         }
 
+        private static ICollection<StochasticityPattern> GetBestPatternPlusDeterministic(ICollection<StochasticityPattern> patterns)
+        {
+            StochasticityPattern bestp = GetBestPattern(patterns);
+            if (bestp == null) return patterns;
+            var result = new Set<StochasticityPattern>();
+            result.Add(bestp);
+            result.AddRange(bestp.deterministicPatterns);
+            return result;
+        }
+
+        // Returns null if patterns is empty
         private static StochasticityPattern GetBestPattern(IEnumerable<StochasticityPattern> patterns)
         {
             StochasticityPattern bestp = null;
@@ -597,7 +615,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             return bestp;
         }
 
-        private static ICollection<StochasticityPattern> GetCompletePatterns(IEnumerable<StochasticityPattern> patterns, string suffix)
+        private static Set<StochasticityPattern> GetCompletePatterns(IEnumerable<StochasticityPattern> patterns, string suffix)
         {
             Set<StochasticityPattern> pendingPatterns;
             Set<StochasticityPattern> completePatterns = new Set<StochasticityPattern>();
@@ -689,9 +707,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                         if (entry2.Key == entry.Key)
                         {
                             // replace type with deterministic type.
-                            ArgInfo arg2 = new ArgInfo();
-                            arg2.factorType = arg.factorType;
-                            arg2.opType = arg.factorType;
+                            ArgInfo arg2 = new ArgInfo
+                            {
+                                factorType = arg.factorType,
+                                opType = arg.factorType
+                            };
                             sp2.argInfos[entry2.Key] = arg2;
                         }
                         else
@@ -854,7 +874,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         /// </summary>
         internal class StochasticityPattern
         {
-            internal Compiler.Transforms.FactorManager.FactorInfo info;
+            internal FactorManager.FactorInfo info;
             internal Dictionary<string, ArgInfo> argInfos = new Dictionary<string, ArgInfo>();
             public Set<StochasticityPattern> deterministicPatterns = new Set<StochasticityPattern>();
 
@@ -866,7 +886,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 
             public bool IsComplete
             {
-                get { return (argInfos.Count >= nonConstantCount); }
+                get { return argInfos.Count >= nonConstantCount; }
             }
 
             public bool Partial
@@ -874,7 +894,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 get { return foundCount < neededCount; }
             }
 
-            public StochasticityPattern(Compiler.Transforms.FactorManager.FactorInfo info)
+            public StochasticityPattern(FactorManager.FactorInfo info)
             {
                 this.info = info;
                 nonConstantCount = 0;
@@ -947,8 +967,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 
             public override bool Equals(object o)
             {
-                StochasticityPattern sp = o as StochasticityPattern;
-                if (sp == null) return false;
+                if (!(o is StochasticityPattern sp)) return false;
                 if (sp.info != info) return false;
                 foreach (string field in info.ParameterNames)
                 {
@@ -977,16 +996,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 return hash;
             }
 
-            internal bool IsSamePattern(StochasticityPattern sp)
+            public bool IsSamePattern(StochasticityPattern sp)
             {
                 if (sp.info != info) return false;
                 foreach (string field in info.ParameterNames)
                 {
                     if (!argInfos.ContainsKey(field) || !sp.argInfos.ContainsKey(field)) continue;
+                    if (argInfos[field].IsStoch != sp.argInfos[field].IsStoch) return false;
                     // Must compare types because a pattern involving Gaussians is not equivalent
                     // to one using Gammas.
-                    //if (argInfos[field].IsStoch != sp.argInfos[field].IsStoch) return false;
-                    if (argInfos[field].opType != sp.argInfos[field].opType) return false;
+                    //if (argInfos[field].opType != sp.argInfos[field].opType) return false;
                 }
                 return true;
             }
@@ -1102,8 +1121,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 if (result.notSupported == null) result.notSupported = that.notSupported;
                 foreach (string field in info.ParameterNames)
                 {
-                    ArgInfo arg1, arg2;
-                    that.argInfos.TryGetValue(field, out arg2);
+                    ArgInfo arg1;
+                    that.argInfos.TryGetValue(field, out ArgInfo arg2);
                     if (!argInfos.TryGetValue(field, out arg1))
                     {
                         if (arg2 == null)
@@ -1142,13 +1161,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             /// <returns></returns>
             internal Type IntersectTypes(Type t1, Type t2)
             {
-                Set<Type> types = new Set<Type>();
-                types.Add(t1);
-                types.Add(t2);
+                Set<Type> types = new Set<Type>
+                {
+                    t1,
+                    t2
+                };
                 Type t;
                 if (!intersectionCache.TryGetValue(types, out t))
                 {
-                    t = Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.IntersectTypes(t1, t2);
+                    t = Binding.IntersectTypes(t1, t2);
                     if (t != null) intersectionCache[types] = t;
                 }
                 return t;

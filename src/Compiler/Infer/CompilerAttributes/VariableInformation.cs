@@ -257,9 +257,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             for (int depth = 0; depth < arrayDepth; depth++)
             {
                 bool notLast = (depth < arrayDepth - 1);
-                int rank;
                 Type arrayType = sourceArray.GetExpressionType();
-                Util.GetElementType(arrayType, out rank);
+                Util.GetElementType(arrayType, out int rank);
                 if (sizes.Count <= depth) sizes.Add(new IExpression[rank]);
                 IExpression[] indices = new IExpression[rank];
                 for (int i = 0; i < rank; i++)
@@ -822,8 +821,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 if (char.IsDigit(lastChar))
                     prefix += "_";
             }
-            int count;
-            counts.TryGetValue(prefix, out count);
+            counts.TryGetValue(prefix, out int count);
             if (count == 0) count = 1;
             counts[prefix] = count + 1;
             if (count == 1) return prefix;

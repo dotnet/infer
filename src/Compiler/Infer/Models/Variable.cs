@@ -4648,7 +4648,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </remarks>
         public static Variable<string> StringCapitalized(Variable<int> minLength, Variable<int> maxLength = null)
         {
-            return ReferenceEquals(maxLength, null)
+            return maxLength is null
                 ? Variable<string>.Factor(Factor.StringCapitalized, minLength)
                 : Variable<string>.Factor(Factor.StringCapitalized, minLength, maxLength);
         }
@@ -4711,7 +4711,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </remarks>
         public static Variable<string> String(Variable<int> minLength, Variable<int> maxLength, Variable<DiscreteChar> allowedCharacters)
         {
-            return ReferenceEquals(maxLength, null)
+            return maxLength is null
                 ? Variable<string>.Factor(Factor.String, minLength, allowedCharacters)
                 : Variable<string>.Factor(Factor.String, minLength, maxLength, allowedCharacters);
         }
@@ -5222,7 +5222,6 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Enumeration over supported operators.
         /// </summary>
-#pragma warning disable 1591
         public enum Operator
         {
             Plus,
@@ -5245,7 +5244,6 @@ namespace Microsoft.ML.Probabilistic.Models
             GreaterThanOrEqual,
             LessThanOrEqual
         };
-#pragma warning restore 1591
     }
 
     /// <summary>
@@ -6482,11 +6480,11 @@ namespace Microsoft.ML.Probabilistic.Models
                 {
                     diff = null;
                 }
-                if ((object)diff == null)
+                if (diff is null)
                 {
                     diff = OperatorFactor<T>(Operator.Minus, a, b);
                 }
-                if ((object)diff != null)
+                if (diff is object)
                 {
                     return IsPositive((Variable<double>)(Variable)diff);
                 }
@@ -6497,7 +6495,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         private static Variable<bool> NotOrNull(Variable<bool> Variable)
         {
-            return ((object)Variable == null) ? null : !Variable;
+            return (Variable is null) ? null : !Variable;
         }
 
         /// <summary>
@@ -6683,7 +6681,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<T> operator -(Variable<T> a)
         {
             Variable<T> f = OperatorFactor<T>(Operator.Negative, a);
-            if ((object)f != null) return f;
+            if (f is object) return f;
             else if (a is Variable<double>)
             {
                 Variable<T> zero = (Variable<T>)(object)Constant(0.0);

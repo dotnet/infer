@@ -39,8 +39,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 loopStart = Recognizer.LoopStartExpression(ifs);
                 loopSize = Recognizer.LoopSizeExpression(ifs);
             }
-            else if(ifs.Condition is IBinaryExpression) {
-                IBinaryExpression ibe = (IBinaryExpression)ifs.Condition;
+            else if (ifs.Condition is IBinaryExpression ibe) 
+            {
                 if (ibe.Operator == BinaryOperator.GreaterThanOrEqual)
                 {
                     // loop is "for(int i = end; i >= start; i--)"

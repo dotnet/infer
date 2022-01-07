@@ -83,7 +83,8 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            if (false)
+            bool runAllTests = false;
+            if (runAllTests)
             {
                 // Run all tests (need to run in 64-bit else OutOfMemory due to loading many DLLs)
                 // This is useful when looking for failures due to certain compiler options.
@@ -100,7 +101,11 @@ namespace TestApp
                 //}
                 //TestUtils.CheckTransformNames();
             }
-            //InferenceEngine.ShowFactorManager(true);
+            bool showFactorManager = true;
+            if (showFactorManager)
+            {
+                InferenceEngine.ShowFactorManager(true);
+            }
 #if NETFRAMEWORK
             logWriter.Dispose();
 #endif

@@ -1518,7 +1518,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         public class VectorIsPositiveEP
         {
-            IGeneratedAlgorithm gen;
+            readonly IGeneratedAlgorithm gen;
             public int NumberOfIterations = 100;
 
             public VectorIsPositiveEP(int dim)

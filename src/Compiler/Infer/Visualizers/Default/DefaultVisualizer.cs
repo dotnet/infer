@@ -138,7 +138,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 // http://www.lovettsoftware.com/blogengine.net/post/2010/07/16/DGML-with-Style.aspx
                 var settings = new XmlWriterSettings();
                 settings.Indent = true;
-                Func<Color, string> colorToString = c => c.ToString().Trim('"');
+                ////string colorToString(Color c) => c.ToString().Trim('"');
                 using (var writer = XmlWriter.Create(path, settings))
                 {
                     writer.WriteStartElement("DirectedGraph", "http://schemas.microsoft.com/vs/2009/dgml");
@@ -166,7 +166,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                                 writer.WriteAttributeString("NodeRadius", "100");
                         }
                         // The Outline attribute seems to be ignored.
-                        //writer.WriteAttributeString("Outline", colorToString(node.Attr.Color));
+                        ////writer.WriteAttributeString("Outline", colorToString(node.Attr.Color));
                         writer.WriteEndElement();
                     }
                     writer.WriteEndElement();

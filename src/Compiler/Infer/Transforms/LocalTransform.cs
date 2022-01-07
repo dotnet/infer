@@ -136,9 +136,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             foreach (var container in containers.inputs)
             {
-                if (container is IForStatement)
+                if (container is IForStatement ifs)
                 {
-                    IForStatement ifs = (IForStatement)container;
                     IVariableDeclaration loopVar = Recognizer.LoopVariable(ifs);
                     if (context.InputAttributes.Has<Partitioned>(loopVar)) return true;
                 }
@@ -345,14 +344,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// Holds the ContainerInfo for each 'for' loop on the inputStack as they are being converted.
         /// </summary>
-        private Stack<ContainerInfo> containerInfos = new Stack<ContainerInfo>();
+        private readonly Stack<ContainerInfo> containerInfos = new Stack<ContainerInfo>();
         /// <summary>
         /// Maps an IForStatement to its LocalInfos
         /// </summary>
         internal Dictionary<IStatement, Dictionary<IExpression, LocalInfo>> localInfoOfStmt = new Dictionary<IStatement, Dictionary<IExpression, LocalInfo>>(ReferenceEqualityComparer<IStatement>.Instance);
-        private Stack<IStatement> openContainers = new Stack<IStatement>();
+        private readonly Stack<IStatement> openContainers = new Stack<IStatement>();
         private bool InPartitionedLoop;
-        ModelCompiler compiler;
+        readonly ModelCompiler compiler;
 
         internal LocalAnalysisTransform(ModelCompiler compiler)
         {
@@ -435,8 +434,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 else
                     minExpr = GetCommonPrefix(minExpr, expr);
             }
-            LocalInfo minInfo;
-            localInfos.TryGetValue(minExpr, out minInfo);
+            localInfos.TryGetValue(minExpr, out LocalInfo minInfo);
             foreach (var entry in localInfos)
             {
                 var expr = entry.Key;
@@ -518,9 +516,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     var loopSize = Recognizer.LoopSizeExpression(closedContainer);
                     bool loopMustExecute = false;
-                    if (loopSize is ILiteralExpression)
+                    if (loopSize is ILiteralExpression ile)
                     {
-                        int loopSizeAsInt = (int)((ILiteralExpression)loopSize).Value;
+                        int loopSizeAsInt = (int)ile.Value;
                         if (loopSizeAsInt > 0)
                         {
                             loopMustExecute = true;
@@ -566,9 +564,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             string containerString = StringUtil.ToString(containers.Select(c =>
             {
-                if (c is IForStatement)
+                if (c is IForStatement ifs)
                 {
-                    IForStatement ifs = (IForStatement)c;
                     if (c is IBrokenForStatement)
                         return ifs.Initializer.ToString() + " // broken";
                     else
@@ -584,9 +581,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private static IExpression GetContainerExpression(IStatement container)
         {
-            if (container is IForStatement) return Recognizer.LoopSizeExpression((IForStatement)container);
-            else if (container is IConditionStatement) return ((IConditionStatement)container).Condition;
-            else if (container is IRepeatStatement) return ((IRepeatStatement)container).Count;
+            if (container is IForStatement ifs) return Recognizer.LoopSizeExpression(ifs);
+            else if (container is IConditionStatement ics) return ics.Condition;
+            else if (container is IRepeatStatement irs) return irs.Count;
             else throw new ArgumentException($"unrecognized container type: {container.GetType()}");
         }
 
@@ -741,9 +738,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         AddUsage(prefix, false);
                     }
                 }
-                if (prefix.Target is IArrayIndexerExpression)
+                if (prefix.Target is IArrayIndexerExpression target)
                 {
-                    prefix = (IArrayIndexerExpression)prefix.Target;
+                    prefix = target;
                     isPrefix = true;
                 }
                 else
@@ -763,9 +760,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (expr is IArrayIndexerExpression)
             {
                 IExpression expr2 = expr;
-                while (expr2 is IArrayIndexerExpression)
+                while (expr2 is IArrayIndexerExpression iaie)
                 {
-                    IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr2;
                     bool hasExcludedLoopVar = iaie.Indices.Any(index => Recognizer.GetVariables(index).Any(excludedLoopVar.Equals));
                     if (hasExcludedLoopVar)
                         return GetPrefixInParent(iaie.Target, excludedLoopVar);

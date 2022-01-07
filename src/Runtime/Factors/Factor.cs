@@ -677,7 +677,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             int sum = 0;
             for (int i = 0; i < array.Count; i++)
             {
-                sum = sum + array[i];
+                sum += array[i];
             }
             return sum;
         }
@@ -692,7 +692,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double sum = 0;
             for (int i = 0; i < array.Count; i++)
             {
-                sum = sum + array[i];
+                sum += array[i];
             }
             return sum;
         }

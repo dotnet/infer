@@ -76,8 +76,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <returns>Beta-distributed random variable</returns>
         public static Variable<double> BetaFromMeanAndTotalCount(Variable<double> mean, Variable<double> totalCount)
         {
-            return Variable<double>.Factor(Factor.BetaFromMeanAndTotalCount, mean, totalCount)
-                                   .Attrib(new MarginalPrototype(new Beta(0, 0)));
+            return Variable<double>.Factor(Factor.BetaFromMeanAndTotalCount, mean, totalCount);
         }
 
         [Fact]
