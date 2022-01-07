@@ -26,12 +26,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Creates a distribution over the enum values using the specified probs.
+        /// Creates a distribution over the enum values using the specified probabilities.
         /// </summary>
         public DiscreteEnum(params double[] probs) :
             base(values.Length, Sparsity.Dense)
         {
             disc.SetProbs(Vector.FromArray(probs));
+        }
+
+        /// <summary>
+        /// Creates a distribution over the enum values using the specified probabilities.
+        /// </summary>
+        public DiscreteEnum(Vector probs) :
+            base(values.Length, Sparsity.Dense)
+        {
+            disc.SetProbs(probs);
         }
 
         /// <summary>

@@ -3784,82 +3784,89 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GatedIntAreEqualTest()
         {
-            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
-            IfBlock block = Variable.If(evidence);
-            Vector priorA = Vector.FromArray(0.1, 0.9);
-            Vector priorB = Vector.FromArray(0.2, 0.8);
-            Variable<int> a = Variable.Discrete(priorA).Named("a");
-            Variable<int> b = Variable.Discrete(priorB).Named("b");
-            Variable<bool> c = (a == b);
-            double priorC = 0.3;
-            Variable.ConstrainEqualRandom(c, new Bernoulli(priorC));
-            block.CloseBlock();
-
-            InferenceEngine engine = new InferenceEngine();
-            double evExpected, evActual;
-
-            double probEqual = priorA.Inner(priorB);
-            double evPrior = 0;
-            for (int atrial = 0; atrial < 2; atrial++)
+            foreach (var algorithm in new IAlgorithm[] { new ExpectationPropagation(), new VariationalMessagePassing() })
             {
-                if (atrial == 1)
+                Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+                IfBlock block = Variable.If(evidence);
+                Vector priorA = Vector.FromArray(0.1, 0.9);
+                Vector priorB = Vector.FromArray(0.2, 0.8);
+                Variable<int> a = Variable.Discrete(priorA).Named("a");
+                Variable<int> b = Variable.Discrete(priorB).Named("b");
+                Variable<bool> c = (a == b).Named("c");
+                double priorC = 0.3;
+                Variable.ConstrainEqualRandom(c, new Bernoulli(priorC));
+                block.CloseBlock();
+
+                InferenceEngine engine = new InferenceEngine(algorithm);
+
+                double probEqual = priorA.Inner(priorB);
+                double evPrior = 0;
+                for (int atrial = 0; atrial < 2; atrial++)
                 {
-                    a.ObservedValue = 1;
-                    probEqual = priorB[1];
-                    c.ClearObservedValue();
-                    evPrior = System.Math.Log(priorA[1]);
-                    priorA[0] = 0.0;
-                    priorA[1] = 1.0;
-                }
-                evExpected = System.Math.Log(probEqual * priorC + (1 - probEqual) * (1 - priorC)) + evPrior;
-                evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
-                Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
-                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-5) < 1e-5);
-
-                Bernoulli cExpected = new Bernoulli(probEqual * priorC / (probEqual * priorC + (1 - probEqual) * (1 - priorC)));
-                Bernoulli cActual = engine.Infer<Bernoulli>(c);
-                Console.WriteLine("c = {0} should be {1}", cActual, cExpected);
-                Assert.True(cExpected.MaxDiff(cActual) < 1e-10);
-
-                Vector postB = Vector.Zero(2);
-                postB[0] = priorB[0] * (priorA[0] * priorC + priorA[1] * (1 - priorC));
-                postB[1] = priorB[1] * (priorA[1] * priorC + priorA[0] * (1 - priorC));
-                postB.Scale(1.0 / postB.Sum());
-                Discrete bExpected = new Discrete(postB);
-                Discrete bActual = engine.Infer<Discrete>(b);
-                Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-                Assert.True(bExpected.MaxDiff(bActual) < 1e-10);
-
-                for (int trial = 0; trial < 2; trial++)
-                {
-                    if (trial == 0)
+                    if (atrial == 1)
                     {
-                        c.ObservedValue = true;
-                        evExpected = System.Math.Log(probEqual * priorC) + evPrior;
+                        a.ObservedValue = 1;
+                        probEqual = priorB[1];
+                        c.ClearObservedValue();
+                        evPrior = System.Math.Log(priorA[1]);
+                        priorA[0] = 0.0;
+                        priorA[1] = 1.0;
                     }
-                    else
-                    {
-                        c.ObservedValue = false;
-                        evExpected = System.Math.Log((1 - probEqual) * (1 - priorC)) + evPrior;
-                    }
-                    evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                    double evExpected = System.Math.Log(probEqual * priorC + (1 - probEqual) * (1 - priorC)) + evPrior;
+                    double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
                     Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
-                    Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-5) < 1e-5);
+                    if (algorithm is ExpectationPropagation || atrial == 1)
+                        Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-5) < 1e-5);
 
-                    if (a.IsObserved)
-                    {
-                        bExpected = Discrete.PointMass(c.ObservedValue ? a.ObservedValue : 1 - a.ObservedValue, 2);
-                    }
-                    else
-                    {
-                        postB[0] = priorB[0] * (c.ObservedValue ? priorA[0] : priorA[1]);
-                        postB[1] = priorB[1] * (c.ObservedValue ? priorA[1] : priorA[0]);
-                        postB.Scale(1.0 / postB.Sum());
-                        bExpected = new Discrete(postB);
-                    }
-                    bActual = engine.Infer<Discrete>(b);
+                    Bernoulli cExpected = new Bernoulli(probEqual * priorC / (probEqual * priorC + (1 - probEqual) * (1 - priorC)));
+                    Bernoulli cActual = engine.Infer<Bernoulli>(c);
+                    Console.WriteLine("c = {0} should be {1}", cActual, cExpected);
+                    if (algorithm is ExpectationPropagation || atrial == 1)
+                        Assert.True(cExpected.MaxDiff(cActual) < 1e-10);
+
+                    Vector postB = Vector.Zero(2);
+                    postB[0] = priorB[0] * (priorA[0] * priorC + priorA[1] * (1 - priorC));
+                    postB[1] = priorB[1] * (priorA[1] * priorC + priorA[0] * (1 - priorC));
+                    postB.Scale(1.0 / postB.Sum());
+                    Discrete bExpected = new Discrete(postB);
+                    Discrete bActual = engine.Infer<Discrete>(b);
                     Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-                    Assert.True(bExpected.MaxDiff(bActual) < 1e-10);
+                    if (algorithm is ExpectationPropagation || atrial == 1)
+                        Assert.True(bExpected.MaxDiff(bActual) < 1e-10);
+
+                    if (atrial == 0 && algorithm is VariationalMessagePassing) continue;
+
+                    for (int trial = 0; trial < 2; trial++)
+                    {
+                        if (trial == 0)
+                        {
+                            c.ObservedValue = true;
+                            evExpected = System.Math.Log(probEqual * priorC) + evPrior;
+                        }
+                        else
+                        {
+                            c.ObservedValue = false;
+                            evExpected = System.Math.Log((1 - probEqual) * (1 - priorC)) + evPrior;
+                        }
+                        evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                        Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
+                        Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-5) < 1e-5);
+
+                        if (a.IsObserved)
+                        {
+                            bExpected = Discrete.PointMass(c.ObservedValue ? a.ObservedValue : 1 - a.ObservedValue, 2);
+                        }
+                        else
+                        {
+                            postB[0] = priorB[0] * (c.ObservedValue ? priorA[0] : priorA[1]);
+                            postB[1] = priorB[1] * (c.ObservedValue ? priorA[1] : priorA[0]);
+                            postB.Scale(1.0 / postB.Sum());
+                            bExpected = new Discrete(postB);
+                        }
+                        bActual = engine.Infer<Discrete>(b);
+                        Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
+                        Assert.True(bExpected.MaxDiff(bActual) < 1e-10);
+                    }
                 }
             }
         }
