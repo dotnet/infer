@@ -346,5 +346,25 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             return DiscreteAreEqualOp.LogEvidenceRatio(areEqual, ToInt(A), ToInt(B));
         }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="LogEvidenceRatio(Bernoulli)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(Bernoulli areEqual)
+        {
+            return 0.0;
+        }
+
+        /// <summary>
+        /// Evidence message for VMP.
+        /// </summary>
+        /// <returns>Zero</returns>
+        /// <remarks><para>
+        /// In Variational Message Passing, the evidence contribution of a deterministic factor is zero.
+        /// </para></remarks>
+        [Skip]
+        public static double AverageLogFactor()
+        {
+            return 0.0;
+        }
     }
 }

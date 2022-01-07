@@ -260,7 +260,6 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteAreEqualOp"]/doc/*'/>
     [FactorMethod(typeof(Factor), "AreEqual", typeof(int), typeof(int))]
-    [FactorMethod(typeof(EnumSupport), "AreEqual<>")]
     [Quality(QualityBand.Mature)]
     public static class DiscreteAreEqualOp
     {

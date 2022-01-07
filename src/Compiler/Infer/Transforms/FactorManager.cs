@@ -19,10 +19,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     using Microsoft.ML.Probabilistic.Compiler.CodeModel;
     using Microsoft.ML.Probabilistic.Algorithms;
 
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning disable 1591
-#endif
-
     internal class FactorManager
     {
         /// <summary>
@@ -476,8 +472,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (method.IsDefined(typeof(MultiplyAllAttribute), true))
                 {
                     // MultiplyAll implies SkipIfAllUniform
-                    var list = new List<object>(attrs);
-                    list.Add(new SkipIfAllUniformAttribute());
+                    var list = new List<object>(attrs)
+                    {
+                        new SkipIfAllUniformAttribute()
+                    };
                     attrs = list.ToArray();
                 }
                 foreach (SkipIfAllUniformAttribute attr in attrs)
@@ -617,7 +615,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// </summary>
             public bool IsVoid
             {
-                get { return (Method.ReturnType == typeof(void)); }
+                get { return Method.ReturnType == typeof(void); }
             }
 
             /// <summary>
@@ -1481,9 +1479,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             protected IDictionary<string, string> GetNameMapping(FactorMethodAttribute attr)
             {
                 string[] newParameterNames = attr.NewParameterNames;
-                Dictionary<string, string> map = new Dictionary<string, string>();
-                // always include the empty string
-                map[string.Empty] = string.Empty;
+                Dictionary<string, string> map = new Dictionary<string, string>
+                {
+                    // always include the empty string
+                    [string.Empty] = string.Empty
+                };
                 if (newParameterNames == null)
                 {
                     // map the fields to themselves
@@ -1892,8 +1892,4 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return "i";
         }
     }
-
-#if SUPPRESS_XMLDOC_WARNINGS
-#pragma warning restore 1591
-#endif
 }

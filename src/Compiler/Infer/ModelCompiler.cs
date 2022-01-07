@@ -553,7 +553,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
         }
 
         // Model methods with up to ten parameters are supported directly.
-#pragma warning disable 1591
         /// <exclude/>
         public delegate void ModelDefinitionMethod();
 
@@ -716,7 +715,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             return CompileWithoutParams(method.Method);
         }
-#pragma warning restore 1591
 
         /// <summary>
         /// Compiles the model defined in MSL by the specified method.  The model parameters are set

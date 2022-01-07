@@ -27,7 +27,91 @@ namespace Microsoft.ML.Probabilistic.Tests
 
     public class GatedFactorTests
     {
-        private static bool verbose = false;
+        private static readonly bool verbose = false;
+
+        [Fact]
+        public void BetaTrueCountIsGamma()
+        {
+            BetaTrueCountIsGamma(new ExpectationPropagation());
+            BetaTrueCountIsGamma(new VariationalMessagePassing());
+
+            void BetaTrueCountIsGamma(IAlgorithm algorithm)
+            {
+                Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+                var evBlock = Variable.If(evidence);
+
+                double shape = 2.5;
+                double rate = 3.5;
+                Variable<double> trueCount = Variable.GammaFromShapeAndRate(shape, rate);
+                trueCount.Name = nameof(trueCount);
+                Variable<double> x = Variable.Beta(trueCount, 1).Named("x");
+                x.ObservedValue = 0.25;
+
+                evBlock.CloseBlock();
+
+                InferenceEngine engine = new InferenceEngine(algorithm);
+                var trueCountActual = engine.Infer<Gamma>(trueCount);
+                double xRate = -System.Math.Log(x.ObservedValue);
+                var trueCountExpected = Gamma.FromShapeAndRate(shape + 1, rate + xRate);
+                Assert.True(trueCountExpected.MaxDiff(trueCountActual) < 1e-10);
+
+                var evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+
+                double evExpected = double.NegativeInfinity;
+                var trueCounts = EpTests.linspace(1e-6, 10, 1000);
+                foreach (var trueCountValue in trueCounts)
+                {
+                    trueCount.ObservedValue = trueCountValue;
+                    double ev = engine.Infer<Bernoulli>(evidence).LogOdds;
+                    evExpected = MMath.LogSumExp(evExpected, ev);
+                }
+                double increment = trueCounts[1] - trueCounts[0];
+                evExpected += System.Math.Log(increment);
+                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-8) < 1e-6);
+            }
+        }
+
+        [Fact]
+        public void BetaFalseCountIsGamma()
+        {
+            BetaFalseCountIsGamma(new ExpectationPropagation());
+            BetaFalseCountIsGamma(new VariationalMessagePassing());
+
+            void BetaFalseCountIsGamma(IAlgorithm algorithm)
+            {
+                Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+                var evBlock = Variable.If(evidence);
+
+                double shape = 2.5;
+                double rate = 3.5;
+                Variable<double> falseCount = Variable.GammaFromShapeAndRate(shape, rate);
+                falseCount.Name = nameof(falseCount);
+                Variable<double> x = Variable.Beta(1, falseCount).Named("x");
+                x.ObservedValue = 0.25;
+
+                evBlock.CloseBlock();
+
+                InferenceEngine engine = new InferenceEngine(algorithm);
+                var falseCountActual = engine.Infer<Gamma>(falseCount);
+                double xRate = -System.Math.Log(1 - x.ObservedValue);
+                var falseCountExpected = Gamma.FromShapeAndRate(shape + 1, rate + xRate);
+                Assert.True(falseCountExpected.MaxDiff(falseCountActual) < 1e-10);
+
+                var evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+
+                double evExpected = double.NegativeInfinity;
+                var falseCounts = EpTests.linspace(1e-6, 10, 1000);
+                foreach (var falseCountValue in falseCounts)
+                {
+                    falseCount.ObservedValue = falseCountValue;
+                    double ev = engine.Infer<Bernoulli>(evidence).LogOdds;
+                    evExpected = MMath.LogSumExp(evExpected, ev);
+                }
+                double increment = falseCounts[1] - falseCounts[0];
+                evExpected += System.Math.Log(increment);
+                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-8) < 1e-6);
+            }
+        }
 
         [Fact]
         public void TruncatedGaussianIsBetweenTest()
@@ -2452,7 +2536,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable.ConstrainEqualRandom(x[item], xPrior[item]);
             block.CloseBlock();
 
-            InferenceEngine engine = new InferenceEngine();
+            InferenceEngine engine = new InferenceEngine(algorithm);
             for (int ctrial = 0; ctrial < 3; ctrial++)
             {
                 Vector cMean = Vector.Zero(dc);

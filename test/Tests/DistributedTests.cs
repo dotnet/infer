@@ -465,8 +465,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        private VariableArray<VariableArray<T>, T[][]> Transpose<T>(VariableArray<VariableArray<T>, T[][]> array, VariableArray<VariableArray<int>, int[][]> indices, Range r1,
-                                                                    Range r2)
+        private VariableArray<VariableArray<T>, T[][]> Transpose<T>(
+            VariableArray<VariableArray<T>, T[][]> array,
+            VariableArray<VariableArray<int>, int[][]> indices,
+            Range r1,
+            Range r2)
         {
             return array;
         }

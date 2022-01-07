@@ -3952,7 +3952,7 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="BetaOp">
+  <message_op_class name="BetaFromMeanAndTotalCountOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.BetaFromMeanAndTotalCount(double, double)" />, given random arguments to the function.</summary>
     </doc>
@@ -4220,7 +4220,92 @@
         <paramref name="prob" /> is not a proper distribution.</exception>
     </message_doc>
   </message_op_class>
-  <message_op_class name="BetaFromTrueAndFalseCountsOp">
+  <message_op_class name="BetaFromMeanAndVarianceOp">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Beta.SampleFromMeanAndVariance(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="LogAverageFactor(Beta, double, double, Beta)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sample">Incoming message from <c>sample</c>.</param>
+      <param name="mean">Constant value for <c>mean</c>.</param>
+      <param name="variance">Constant value for <c>variance</c>.</param>
+      <param name="to_sample">Outgoing message to <c>sample</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(sample) p(sample) factor(sample,mean,variance))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(Beta, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sample">Incoming message from <c>sample</c>.</param>
+      <param name="mean">Constant value for <c>mean</c>.</param>
+      <param name="variance">Constant value for <c>variance</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(sample) p(sample) factor(sample,mean,variance) / sum_sample p(sample) messageTo(sample))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AverageLogFactor(Beta, double, double, Beta)">
+      <summary>Evidence message for VMP.</summary>
+      <param name="sample">Incoming message from <c>sample</c>.</param>
+      <param name="mean">Constant value for <c>mean</c>.</param>
+      <param name="variance">Constant value for <c>variance</c>.</param>
+      <param name="to_sample">Outgoing message to <c>sample</c>.</param>
+      <returns>Average of the factor's log-value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>sum_(sample) p(sample) log(factor(sample,mean,variance))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="mean">Constant value for <c>mean</c>.</param>
+      <param name="variance">Constant value for <c>variance</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(sample,mean,variance))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="mean">Constant value for <c>mean</c>.</param>
+      <param name="variance">Constant value for <c>variance</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(sample,mean,variance))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AverageLogFactor(double, double, double)">
+      <summary>Evidence message for VMP.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="mean">Constant value for <c>mean</c>.</param>
+      <param name="variance">Constant value for <c>variance</c>.</param>
+      <returns>Average of the factor's log-value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(sample,mean,variance))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="SampleAverageLogarithm(double, double)">
+      <summary>VMP message to <c>sample</c>.</summary>
+      <param name="mean">Constant value for <c>mean</c>.</param>
+      <param name="variance">Constant value for <c>variance</c>.</param>
+      <returns>The outgoing VMP message to the <c>sample</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>sample</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="SampleAverageConditional(double, double)">
+      <summary>EP message to <c>sample</c>.</summary>
+      <param name="mean">Constant value for <c>mean</c>.</param>
+      <param name="variance">Constant value for <c>variance</c>.</param>
+      <returns>The outgoing EP message to the <c>sample</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>sample</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="BetaOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Beta.Sample(double, double)" />, given random arguments to the function.</summary>
     </doc>
@@ -4304,89 +4389,80 @@
         <para>The outgoing message is the factor viewed as a function of <c>sample</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
-  </message_op_class>
-  <message_op_class name="BetaFromMeanAndVarianceOp">
-    <doc>
-      <summary>Provides outgoing messages for <see cref="Beta.SampleFromMeanAndVariance(double, double)" />, given random arguments to the function.</summary>
-    </doc>
-    <message_doc name="LogAverageFactor(Beta, double, double, Beta)">
-      <summary>Evidence message for EP.</summary>
-      <param name="sample">Incoming message from <c>sample</c>.</param>
-      <param name="mean">Constant value for <c>mean</c>.</param>
-      <param name="variance">Constant value for <c>variance</c>.</param>
-      <param name="to_sample">Outgoing message to <c>sample</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(sample) p(sample) factor(sample,mean,variance))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(Beta, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="sample">Incoming message from <c>sample</c>.</param>
-      <param name="mean">Constant value for <c>mean</c>.</param>
-      <param name="variance">Constant value for <c>variance</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(sample) p(sample) factor(sample,mean,variance) / sum_sample p(sample) messageTo(sample))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AverageLogFactor(Beta, double, double, Beta)">
-      <summary>Evidence message for VMP.</summary>
-      <param name="sample">Incoming message from <c>sample</c>.</param>
-      <param name="mean">Constant value for <c>mean</c>.</param>
-      <param name="variance">Constant value for <c>variance</c>.</param>
-      <param name="to_sample">Outgoing message to <c>sample</c>.</param>
-      <returns>Average of the factor's log-value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>sum_(sample) p(sample) log(factor(sample,mean,variance))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(double, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="sample">Constant value for <c>sample</c>.</param>
-      <param name="mean">Constant value for <c>mean</c>.</param>
-      <param name="variance">Constant value for <c>variance</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(factor(sample,mean,variance))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(double, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="sample">Constant value for <c>sample</c>.</param>
-      <param name="mean">Constant value for <c>mean</c>.</param>
-      <param name="variance">Constant value for <c>variance</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(factor(sample,mean,variance))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AverageLogFactor(double, double, double)">
+    <message_doc name="AverageLogFactor(double, Gamma, double)">
       <summary>Evidence message for VMP.</summary>
       <param name="sample">Constant value for <c>sample</c>.</param>
-      <param name="mean">Constant value for <c>mean</c>.</param>
-      <param name="variance">Constant value for <c>variance</c>.</param>
+      <param name="trueCount">Incoming message from <c>trueCount</c>.</param>
+      <param name="falseCount">Constant value for <c>falseCount</c>.</param>
       <returns>Average of the factor's log-value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(factor(sample,mean,variance))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+        <para>The formula for the result is <c>sum_(trueCount) p(trueCount) log(factor(sample,trueCount,falseCount))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="SampleAverageLogarithm(double, double)">
-      <summary>VMP message to <c>sample</c>.</summary>
-      <param name="mean">Constant value for <c>mean</c>.</param>
-      <param name="variance">Constant value for <c>variance</c>.</param>
-      <returns>The outgoing VMP message to the <c>sample</c> argument.</returns>
+    <message_doc name="LogEvidenceRatio(double, Gamma, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="trueCount">Incoming message from <c>trueCount</c>.</param>
+      <param name="falseCount">Constant value for <c>falseCount</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>sample</c> conditioned on the given values.</para>
+        <para>The formula for the result is <c>log(sum_(trueCount) p(trueCount) factor(sample,trueCount,falseCount))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="SampleAverageConditional(double, double)">
-      <summary>EP message to <c>sample</c>.</summary>
-      <param name="mean">Constant value for <c>mean</c>.</param>
-      <param name="variance">Constant value for <c>variance</c>.</param>
-      <returns>The outgoing EP message to the <c>sample</c> argument.</returns>
+    <message_doc name="AverageLogFactor(double, double, Gamma)">
+      <summary>Evidence message for VMP.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="trueCount">Constant value for <c>trueCount</c>.</param>
+      <param name="falseCount">Incoming message from <c>falseCount</c>.</param>
+      <returns>Average of the factor's log-value across the given argument distributions.</returns>
       <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>sample</c> conditioned on the given values.</para>
+        <para>The formula for the result is <c>sum_(falseCount) p(falseCount) log(factor(sample,trueCount,falseCount))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, double, Gamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="trueCount">Constant value for <c>trueCount</c>.</param>
+      <param name="falseCount">Incoming message from <c>falseCount</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(falseCount) p(falseCount) factor(sample,trueCount,falseCount))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="TrueCountAverageConditional(double, double)">
+      <summary>EP message to <c>trueCount</c>.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="falseCount">Constant value for <c>falseCount</c>.</param>
+      <returns>The outgoing EP message to the <c>trueCount</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>trueCount</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="TrueCountAverageLogarithm(double, double)">
+      <summary>VMP message to <c>trueCount</c>.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="falseCount">Constant value for <c>falseCount</c>.</param>
+      <returns>The outgoing VMP message to the <c>trueCount</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>trueCount</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="FalseCountAverageConditional(double, double)">
+      <summary>EP message to <c>falseCount</c>.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="trueCount">Constant value for <c>trueCount</c>.</param>
+      <returns>The outgoing EP message to the <c>falseCount</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>falseCount</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="FalseCountAverageLogarithm(double, double)">
+      <summary>VMP message to <c>falseCount</c>.</summary>
+      <param name="sample">Constant value for <c>sample</c>.</param>
+      <param name="trueCount">Constant value for <c>trueCount</c>.</param>
+      <returns>The outgoing VMP message to the <c>falseCount</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>falseCount</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
   </message_op_class>
