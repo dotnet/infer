@@ -233,6 +233,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (int)(object)en;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="AAverageConditional(Bernoulli, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})"]/*'/>
+        public static DiscreteEnum<TEnum> AAverageConditional([SkipIfUniform] Bernoulli areEqual, DiscreteEnum<TEnum> B, DiscreteEnum<TEnum> result)
+        {
+            return DiscreteEnum<TEnum>.FromDiscrete(DiscreteAreEqualOp.AAverageConditional(areEqual, B.GetInternalDiscrete(), result.GetInternalDiscrete()));
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="AAverageConditional(Bernoulli, TEnum, DiscreteEnum{TEnum})"]/*'/>
         public static DiscreteEnum<TEnum> AAverageConditional([SkipIfUniform] Bernoulli areEqual, TEnum B, DiscreteEnum<TEnum> result)
         {
@@ -243,6 +249,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static DiscreteEnum<TEnum> AAverageConditional(bool areEqual, TEnum B, DiscreteEnum<TEnum> result)
         {
             return DiscreteEnum<TEnum>.FromDiscrete(DiscreteAreEqualOp.AAverageConditional(areEqual, ToInt(B), result.GetInternalDiscrete()));
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="AAverageLogarithm(Bernoulli, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})"]/*'/>
+        public static DiscreteEnum<TEnum> AAverageLogarithm([SkipIfUniform] Bernoulli areEqual, DiscreteEnum<TEnum> B, DiscreteEnum<TEnum> result)
+        {
+            return DiscreteEnum<TEnum>.FromDiscrete(DiscreteAreEqualOp.AAverageLogarithm(areEqual, B.GetInternalDiscrete(), result.GetInternalDiscrete()));
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="AAverageLogarithm(bool, TEnum, DiscreteEnum{TEnum})"]/*'/>
@@ -257,6 +269,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return DiscreteEnum<TEnum>.FromDiscrete(DiscreteAreEqualOp.AAverageLogarithm(areEqual, ToInt(B), result.GetInternalDiscrete()));
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="BAverageConditional(Bernoulli, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})"]/*'/>
+        public static DiscreteEnum<TEnum> BAverageConditional([SkipIfUniform] Bernoulli areEqual, DiscreteEnum<TEnum> A, DiscreteEnum<TEnum> result)
+        {
+            return DiscreteEnum<TEnum>.FromDiscrete(DiscreteAreEqualOp.BAverageConditional(areEqual, A.GetInternalDiscrete(), result.GetInternalDiscrete()));
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="BAverageConditional(Bernoulli, TEnum, DiscreteEnum{TEnum})"]/*'/>
         public static DiscreteEnum<TEnum> BAverageConditional([SkipIfUniform] Bernoulli areEqual, TEnum A, DiscreteEnum<TEnum> result)
         {
@@ -267,6 +285,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static DiscreteEnum<TEnum> BAverageConditional(bool areEqual, TEnum A, DiscreteEnum<TEnum> result)
         {
             return DiscreteEnum<TEnum>.FromDiscrete(DiscreteAreEqualOp.BAverageConditional(areEqual, ToInt(A), result.GetInternalDiscrete()));
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="BAverageLogarithm(Bernoulli, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})"]/*'/>
+        public static DiscreteEnum<TEnum> BAverageLogarithm([SkipIfUniform] Bernoulli areEqual, DiscreteEnum<TEnum> A, DiscreteEnum<TEnum> result)
+        {
+            return DiscreteEnum<TEnum>.FromDiscrete(DiscreteAreEqualOp.BAverageLogarithm(areEqual, A.GetInternalDiscrete(), result.GetInternalDiscrete()));
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="BAverageLogarithm(Bernoulli, TEnum, DiscreteEnum{TEnum})"]/*'/>
@@ -281,6 +305,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             return DiscreteEnum<TEnum>.FromDiscrete(DiscreteAreEqualOp.BAverageLogarithm(areEqual, ToInt(A), result.GetInternalDiscrete()));
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="AreEqualAverageConditional(DiscreteEnum{TEnum}, DiscreteEnum{TEnum})"]/*'/>
+        public static Bernoulli AreEqualAverageConditional(DiscreteEnum<TEnum> A, DiscreteEnum<TEnum> B)
+        {
+            return DiscreteAreEqualOp.AreEqualAverageConditional(A.GetInternalDiscrete(), B.GetInternalDiscrete());
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="AreEqualAverageConditional(TEnum, DiscreteEnum{TEnum})"]/*'/>
         public static Bernoulli AreEqualAverageConditional(TEnum A, DiscreteEnum<TEnum> B)
         {
@@ -291,6 +321,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Bernoulli AreEqualAverageConditional(DiscreteEnum<TEnum> A, TEnum B)
         {
             return DiscreteAreEqualOp.AreEqualAverageConditional(A.GetInternalDiscrete(), ToInt(B));
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="AreEqualAverageLogarithm(DiscreteEnum{TEnum}, DiscreteEnum{TEnum})"]/*'/>
+        public static Bernoulli AreEqualAverageLogarithm(DiscreteEnum<TEnum> A, DiscreteEnum<TEnum> B)
+        {
+            return DiscreteAreEqualOp.AreEqualAverageLogarithm(A.GetInternalDiscrete(), B.GetInternalDiscrete());
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="AreEqualAverageLogarithm(TEnum, DiscreteEnum{TEnum})"]/*'/>
@@ -327,6 +363,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double LogAverageFactor(bool areEqual, DiscreteEnum<TEnum> A, TEnum B)
         {
             return DiscreteAreEqualOp.LogAverageFactor(areEqual, A.GetInternalDiscrete(), ToInt(B));
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="LogEvidenceRatio(bool, DiscreteEnum{TEnum}, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})"]/*'/>
+        public static double LogEvidenceRatio(bool areEqual, DiscreteEnum<TEnum> A, DiscreteEnum<TEnum> B, [Fresh] DiscreteEnum<TEnum> to_A)
+        {
+            return DiscreteAreEqualOp.LogEvidenceRatio(areEqual, A.GetInternalDiscrete(), B.GetInternalDiscrete(), to_A.GetInternalDiscrete());
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DiscreteEnumAreEqualOp{TEnum}"]/message_doc[@name="LogEvidenceRatio(bool, TEnum, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})"]/*'/>

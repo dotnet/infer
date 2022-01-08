@@ -101,7 +101,7 @@ namespace TestApp
                 //}
                 //TestUtils.CheckTransformNames();
             }
-            bool showFactorManager = true;
+            bool showFactorManager = false;
             if (showFactorManager)
             {
                 InferenceEngine.ShowFactorManager(true);
