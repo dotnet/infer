@@ -163,6 +163,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 int argCount = info.Method.GetParameters().Length;
                 if (info.Method.ReturnType != typeof(void)) argCount++;
                 int maxPatterns = (int)System.Math.Pow(2, argCount);
+                if (info.IsDeterministicFactor) maxPatterns--;  // (D D) -> S doesn't exist for a deterministic factor
 
                 if ((partialCount == 0) && (patterns.Count >= maxPatterns) && (notSupportedCount == 0))
                 {

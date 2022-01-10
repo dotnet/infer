@@ -48,7 +48,7 @@ Write-Host "Install nuget package docfx.console"
 $version = '2.58.9'
 Install-Package -Name docfx.console -provider Nuget -Source https://nuget.org/api/v2 -RequiredVersion $version -Destination $scriptDir\..\..\packages -Force
 Write-Host "Run docfx"
-$docFxPath = [IO.Path]::GetFullPath((join-path $scriptDir ('../../packages/docfx.console.' + $version + '/tools/docfx.exe')))
+$docFxPath = [IO.Path]::GetFullPath((join-path $scriptDir "../../packages/docfx.console.$version/tools/docfx.exe"))
 $docFxJsonPath = "$scriptDir/../docfx.json"
 & "$docFxPath" "$docFxJsonPath"
 if($LASTEXITCODE)
