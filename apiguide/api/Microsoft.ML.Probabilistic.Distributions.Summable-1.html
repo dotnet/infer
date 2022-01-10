@@ -5,12 +5,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Pair
+    <title>Interface Summable&lt;T&gt;
    | Infer.NET API Guide </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Pair
+    <meta name="title" content="Interface Summable&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -78,100 +78,28 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Collections.Pair">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Summable`1">
   
   
-  <h1 id="Microsoft_ML_Probabilistic_Collections_Pair" data-uid="Microsoft.ML.Probabilistic.Collections.Pair" class="text-break">Class Pair
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Summable_1" data-uid="Microsoft.ML.Probabilistic.Distributions.Summable`1" class="text-break">Interface Summable&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Represents a pair of elements.</p>
+  <div class="markdown level0 summary"><p>Supports computing the weighted sum of the current instance and another value that has
+the same type as the result.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">Pair</span></div>
-  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Summable-2.html#Microsoft_ML_Probabilistic_Distributions_Summable_2_Sum_System_Double__0_System_Double_">Summable&lt;T, T&gt;.Sum(Double, T, Double)</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Collections.html">Microsoft.ML.Probabilistic.Collections</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_Pair_syntax">Syntax</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Summable_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class Pair</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public interface Summable&lt;T&gt; : Summable&lt;T, T&gt;</code></pre>
   </div>
-  <h3 id="methods">Methods
-  </h3>
-  <a id="Microsoft_ML_Probabilistic_Collections_Pair_Create_" data-uid="Microsoft.ML.Probabilistic.Collections.Pair.Create*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Pair_Create__2___0___1_" data-uid="Microsoft.ML.Probabilistic.Collections.Pair.Create``2(``0,``1)">Create&lt;T1, T2&gt;(T1, T2)</h4>
-  <div class="markdown level1 summary"><p>Creates a pair of elements.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Pair&lt;T1, T2&gt; Create&lt;T1, T2&gt;(T1 first, T2 second)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">T1</span></td>
-        <td><span class="parametername">first</span></td>
-        <td><p>The first element of the pair.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">T2</span></td>
-        <td><span class="parametername">second</span></td>
-        <td><p>The second element of the pair.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;T1, T2&gt;</td>
-        <td><p>The created pair.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -182,24 +110,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">T1</span></td>
-        <td><p>The type of the first element of the pair.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">T2</span></td>
-        <td><p>The type of the second element of the pair.</p>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the second summand and the result.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Summable_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Typically the type of the second summand and the result would be the same as the type of the current instance.</p>
+</div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

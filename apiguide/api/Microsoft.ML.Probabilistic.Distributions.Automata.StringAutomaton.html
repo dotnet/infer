@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class StringAutomaton
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,334 +89,346 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html">Automaton</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator.html">StringManipulator</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a>&gt;</div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html">Automaton</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator.html">StringManipulator</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a>&gt;</div>
     <div class="level2"><span class="xref">StringAutomaton</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions.IWeightFunction</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html">WeightFunctions.IWeightFunction</a>&lt;&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ComputeCondensation_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__State_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ComputeCondensation(Automaton.State&lt;&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ComputeCondensation_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__State_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ComputeCondensation(Automaton.State&lt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ComputeCondensation_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__State_System_Func_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__Transition_System_Boolean__System_Boolean_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ComputeCondensation(Automaton.State&lt;&gt;, Func&lt;Automaton.Transition&lt;&gt;, Boolean&gt;, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ComputeCondensation_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__State_System_Func_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__Transition_System_Boolean__System_Boolean_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ComputeCondensation(Automaton.State&lt;&gt;, Func&lt;Automaton.Transition&lt;&gt;, Boolean&gt;, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Data">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Data</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Data">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Data</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SequenceManipulator">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SequenceManipulator</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SequenceManipulator">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.SequenceManipulator</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_LogValueOverride">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.LogValueOverride</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_LogValueOverride">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.LogValueOverride</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_PruneStatesWithLogEndWeightLessThan">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.PruneStatesWithLogEndWeightLessThan</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_PruneStatesWithLogEndWeightLessThan">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.PruneStatesWithLogEndWeightLessThan</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GlobalMaxStateCount">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GlobalMaxStateCount</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GlobalMaxStateCount">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GlobalMaxStateCount</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxStateCount">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.MaxStateCount</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxStateCount">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MaxStateCount</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxStateCountBeforeSimplification">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.MaxStateCountBeforeSimplification</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxStateCountBeforeSimplification">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MaxStateCountBeforeSimplification</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxDeadStateCount">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.MaxDeadStateCount</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxDeadStateCount">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MaxDeadStateCount</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_States">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.States</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_States">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.States</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Start">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Start</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Start">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Start</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromData_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__DataContainer_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.FromData(Automaton.DataContainer&lt;&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromData_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__DataContainer_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.FromData(Automaton.DataContainer&lt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Zero">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Zero()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Zero">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Zero()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Constant_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Constant(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Constant_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Constant(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Constant_System_Double__2_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Constant(Double, DiscreteChar)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Constant_System_Double__2_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Constant(Double, ImmutableDiscreteChar)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantLog_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantLog(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantLog_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantLog(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantLog_System_Double__2_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantLog(Double, DiscreteChar)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantLog_System_Double__2_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantLog(Double, ImmutableDiscreteChar)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnElementLog_System_Double__1_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnElementLog(Double, Char)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnElementLog_System_Double__1_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnElementLog(Double, Char)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnElementLog_System_Double__2_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnElementLog(Double, DiscreteChar)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnElementLog_System_Double__2_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnElementLog(Double, ImmutableDiscreteChar)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnLog_System_Double__0_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnLog(Double, String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnLog_System_Double__0_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnLog(Double, String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnLog_System_Double__0___">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnLog(Double, String[])</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnLog_System_Double__0___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnLog(Double, String[])</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnLog_System_Double_System_Collections_Generic_IEnumerable__0__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnLog(Double, IEnumerable&lt;String&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnLog_System_Double_System_Collections_Generic_IEnumerable__0__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnLog(Double, IEnumerable&lt;String&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnElement_System_Double__1_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnElement(Double, Char)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnElement_System_Double__1_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnElement(Double, Char)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnElement_System_Double__2_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnElement(Double, DiscreteChar)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnElement_System_Double__2_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnElement(Double, ImmutableDiscreteChar)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOn_System_Double__0_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOn(Double, String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOn_System_Double__0_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOn(Double, String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Empty_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Empty(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Empty_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Empty(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOn_System_Double__0___">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOn(Double, String[])</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOn_System_Double__0___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOn(Double, String[])</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOn_System_Double_System_Collections_Generic_IEnumerable__0__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOn(Double, IEnumerable&lt;String&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOn_System_Double_System_Collections_Generic_IEnumerable__0__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOn(Double, IEnumerable&lt;String&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WeightedSum_System_Double__4_System_Double__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.WeightedSum(Double, StringAutomaton, Double, StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WeightedSum_System_Double__4_System_Double__4_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.WeightedSum(Double, StringAutomaton, Double, StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WeightedSumLog_System_Double__4_System_Double__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.WeightedSumLog(Double, StringAutomaton, Double, StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WeightedSumLog_System_Double__4_System_Double__4_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.WeightedSumLog(Double, StringAutomaton, Double, StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum__4___">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Sum(StringAutomaton[])</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum__4___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Sum(StringAutomaton[])</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum_System_Collections_Generic_IEnumerable__4__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Sum(IEnumerable&lt;StringAutomaton&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum_System_Collections_Generic_IEnumerable__4__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Sum(IEnumerable&lt;StringAutomaton&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4___">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Product(StringAutomaton[])</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Product(StringAutomaton[])</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product_System_Collections_Generic_IEnumerable__4__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Product(IEnumerable&lt;StringAutomaton&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product_System_Collections_Generic_IEnumerable__4__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Product(IEnumerable&lt;StringAutomaton&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Concatenate__4___">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Concatenate(StringAutomaton[])</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Concatenate__4___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Concatenate(StringAutomaton[])</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Concatenate_System_Collections_Generic_IEnumerable__4__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Concatenate(IEnumerable&lt;StringAutomaton&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Concatenate_System_Collections_Generic_IEnumerable__4__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Concatenate(IEnumerable&lt;StringAutomaton&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.FromValues(IEnumerable&lt;KeyValuePair&lt;String, Double&gt;&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.FromValues(IEnumerable&lt;KeyValuePair&lt;String, Double&gt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat__4_Microsoft_ML_Probabilistic_Math_Vector_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Repeat(StringAutomaton, Vector)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromLogValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.FromLogValues(IEnumerable&lt;KeyValuePair&lt;String, Double&gt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat__4_System_Int32_System_Nullable_System_Int32__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Repeat(StringAutomaton, Int32, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat__4_Microsoft_ML_Probabilistic_Math_Vector_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Repeat(StringAutomaton, Vector)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ToString()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat__4_System_Int32_System_Nullable_System_Int32__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Repeat(StringAutomaton, Int32, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString_System_Action__2_System_Text_StringBuilder__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ToString(Action&lt;DiscreteChar, StringBuilder&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ToString()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString_Microsoft_ML_Probabilistic_Distributions_Automata_IAutomatonFormat_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ToString(IAutomatonFormat)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString_System_Action__2_System_Text_StringBuilder__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ToString(Action&lt;ImmutableDiscreteChar, StringBuilder&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_HasGroup_System_Int32_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.HasGroup(Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString_Microsoft_ML_Probabilistic_Distributions_Automata_IAutomatonFormat_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ToString(IAutomatonFormat)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetGroups">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GetGroups()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_HasGroup_System_Int32_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.HasGroup(Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ClearGroups">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ClearGroups()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetGroups">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetGroups()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetGroup_System_Int32_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetGroup(Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithGroupsClear">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.WithGroupsClear()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetLogNormalizer">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GetLogNormalizer()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithGroup_System_Int32_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.WithGroup(Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeValues">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.NormalizeValues()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetLogNormalizer">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetLogNormalizer()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues_System_Double__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.TryNormalizeValues(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeValues">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.NormalizeValues()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.TryNormalizeValues()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues__4__System_Double__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.TryNormalizeValues(StringAutomaton, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsZero">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.IsZero()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues__4__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.TryNormalizeValues(StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicZero">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.IsCanonicZero()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsZero">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.IsZero()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicConstant">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.IsCanonicConstant()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicZero">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.IsCanonicZero()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOf_System_Double__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToConstantOnSupportOf(Double, StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicConstant">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.IsCanonicConstant()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOfLog_System_Double__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToConstantOnSupportOfLog(Double, StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupport_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnSupport(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TrySetToConstantOnSupportOfLog_System_Double__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.TrySetToConstantOnSupportOfLog(Double, StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupportLog_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ConstantOnSupportLog(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Clone">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Clone()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryGetConstantOnSupportLog_System_Double__4__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.TryGetConstantOnSupportLog(Double, StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Reverse">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Reverse()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Clone">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Clone()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Append__0_System_Int32_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Append(String, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Reverse">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Reverse()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Append__4_System_Int32_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Append(StringAutomaton, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Append__0_System_Int32_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Append(String, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AppendInPlace__0_System_Int32_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.AppendInPlace(String, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Append__4_System_Int32_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Append(StringAutomaton, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AppendInPlace__4_System_Int32_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.AppendInPlace(StringAutomaton, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Product(StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4_System_Boolean_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Product(StringAutomaton, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4_System_Boolean_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Product(StringAutomaton, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToProduct__4__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToProduct(StringAutomaton, StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum__4_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Sum(StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToProduct__4__4_System_Boolean_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToProduct(StringAutomaton, StringAutomaton, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum_System_Double__4_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Sum(Double, StringAutomaton, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Sum(StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SumLog_System_Double__4_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.SumLog(Double, StringAutomaton, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToSum_System_Double__4_System_Double__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToSum(Double, StringAutomaton, Double, StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Scale_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Scale(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToSumLog_System_Double__4_System_Double__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToSumLog(Double, StringAutomaton, Double, StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ScaleLog_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ScaleLog(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Scale_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Scale(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ApplyFunction__5_System_Func_Microsoft_ML_Probabilistic_Collections_Option__2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight_System_Int32_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option___2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.ApplyFunction&lt;TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton&gt;(Func&lt;Option&lt;ImmutableDiscreteChar&gt;, Weight, Int32, (T1, T2)&lt;Option&lt;TDstElementDistribution&gt;, Weight&gt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ScaleLog_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.ScaleLog(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetLogValue__0_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetLogValue(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToScale__4_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToScale(StringAutomaton, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetValue__0_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetValue(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToScaleLog__4_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToScaleLog(StringAutomaton, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryComputePoint">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.TryComputePoint()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToZero">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToZero()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumeratePaths">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.EnumeratePaths()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstant_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToConstant(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Equals__4_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Equals(StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstant_System_Double__2_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToConstant(Double, DiscreteChar)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Equals_System_Object_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToConstantLog(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetHashCode">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_System_Double__2_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToConstantLog(Double, DiscreteChar)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsEpsilonFree">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.IsEpsilonFree</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetTo__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetTo(StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_UsesGroups">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.UsesGroups</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToFunction__5_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton___0___1___2___3___4__System_Func_Microsoft_ML_Probabilistic_Collections_Option___2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight_System_Int32_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option__2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight___">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToFunction&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;(Automaton&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;, Func&lt;Option&lt;TSrcElementDistribution&gt;, Weight, Int32, ValueTuple&lt;Option&lt;DiscreteChar&gt;, Weight&gt;&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsDeterministic">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.IsDeterministic()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetLogValue__0_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GetLogValue(String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetEpsilonClosure">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetEpsilonClosure()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetValue__0_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GetValue(String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithData_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__DataContainer_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.WithData(Automaton.DataContainer&lt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryComputePoint">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.TryComputePoint()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithLogValueOverride_System_Nullable_System_Double__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.WithLogValueOverride(Nullable&lt;Double&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumeratePaths">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.EnumeratePaths()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithPruneStatesWithLogEndWeightLessThan_System_Nullable_System_Double__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.WithPruneStatesWithLogEndWeightLessThan(Nullable&lt;Double&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Equals_System_Object_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Equals(Object)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4_System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetConverger(StringAutomaton, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetHashCode">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GetHashCode()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4___System_Double_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetConverger(StringAutomaton[], Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsEpsilonFree">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.IsEpsilonFree</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AsAutomaton">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.AsAutomaton()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_UsesGroups">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.UsesGroups</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Point">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Point</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsDeterministic">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.IsDeterministic()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsPointMass">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.IsPointMass</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MakeEpsilonFree">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.MakeEpsilonFree()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_UsesAutomatonRepresentation">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.UsesAutomatonRepresentation</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToEpsilonClosureOf__4_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.SetToEpsilonClosureOf(StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat_System_Int32_System_Nullable_System_Int32__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Repeat(Int32, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4_System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GetConverger(StringAutomaton, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxDiff__4_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MaxDiff(StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4___System_Double_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GetConverger(StringAutomaton[], Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeStructure">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.NormalizeStructure()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Write_System_Action_System_Double__System_Action_System_Int32__System_Action__2__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Write(Action&lt;Double&gt;, Action&lt;Int32&gt;, Action&lt;DiscreteChar&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Write_System_Action_System_Double__System_Action_System_Int32__System_Action__2__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Write(Action&lt;Double&gt;, Action&lt;Int32&gt;, Action&lt;ImmutableDiscreteChar&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Read_System_Func_System_Double__System_Func_System_Int32__System_Func__2__">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Read(Func&lt;Double&gt;, Func&lt;Int32&gt;, Func&lt;DiscreteChar&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Read_System_Func_System_Double__System_Func_System_Int32__System_Func__2__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Read(Func&lt;Double&gt;, Func&lt;Int32&gt;, Func&lt;ImmutableDiscreteChar&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.TryDeterminize()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.TryDeterminize()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetOutgoingTransitionsForDeterminization_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__Determinization_WeightedStateSet_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.GetOutgoingTransitionsForDeterminization(Automaton.Determinization.WeightedStateSet&lt;&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize__4__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.TryDeterminize(StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_System_Int32_System_Boolean_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.EnumerateSupport(Int32, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetOutgoingTransitionsForDeterminization_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__Determinization_WeightedStateSet_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.GetOutgoingTransitionsForDeterminization(Automaton.Determinization.WeightedStateSet&lt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Boolean_">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;String&gt;, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_System_Int32_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.EnumerateSupport(Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Simplify">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Simplify()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;String&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_RemoveDeadStates">Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.RemoveDeadStates()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Int32_System_Boolean_">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;String&gt;, Int32, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Simplify__4__">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Simplify(StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_RemoveDeadStates">Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.RemoveDeadStates()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
@@ -424,7 +436,7 @@
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Serializable]
-public class StringAutomaton : Automaton&lt;string, char, DiscreteChar, StringManipulator, StringAutomaton&gt;</code></pre>
+public class StringAutomaton : Automaton&lt;string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;, WeightFunctions&lt;string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.IWeightFunction&lt;StringAutomaton&gt;, WeightFunctions&lt;string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.IWeightFunction, IEquatable&lt;StringAutomaton&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -436,42 +448,16 @@ public class StringAutomaton : Automaton&lt;string, char, DiscreteChar, StringMa
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public StringAutomaton()</code></pre>
   </div>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton_HasElementLogValueOverrides_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.HasElementLogValueOverrides*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton_HasElementLogValueOverrides" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.HasElementLogValueOverrides">HasElementLogValueOverrides</h4>
-  <div class="markdown level1 summary"><p>Whether there are log value overrides at the element level.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool HasElementLogValueOverrides { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton_GetOutgoingTransitionsForDeterminization_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.GetOutgoingTransitionsForDeterminization*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton_GetOutgoingTransitionsForDeterminization_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_System_String_System_Char_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Microsoft_ML_Probabilistic_Distributions_Automata_StringManipulator_Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton__Determinization_WeightedStateSet_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.GetOutgoingTransitionsForDeterminization(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{System.String,System.Char,Microsoft.ML.Probabilistic.Distributions.DiscreteChar,Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator,Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton}.Determinization.WeightedStateSet)">GetOutgoingTransitionsForDeterminization(Automaton&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Determinization.WeightedStateSet)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton_GetOutgoingTransitionsForDeterminization_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_System_String_System_Char_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Microsoft_ML_Probabilistic_Distributions_Automata_StringManipulator_Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton__Determinization_WeightedStateSet_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.GetOutgoingTransitionsForDeterminization(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{System.String,System.Char,Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar,Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator,Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton}.Determinization.WeightedStateSet)">GetOutgoingTransitionsForDeterminization(Automaton&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Determinization.WeightedStateSet)</h4>
   <div class="markdown level1 summary"><p>Computes a set of outgoing transitions from a given state of the determinization result.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override IEnumerable&lt;Automaton&lt;string, char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Determinization.OutgoingTransition&gt; GetOutgoingTransitionsForDeterminization(Automaton&lt;string, char, DiscreteChar, StringManipulator, StringAutomaton&gt;.Determinization.WeightedStateSet sourceStateSet)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override IEnumerable&lt;Automaton&lt;string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Determinization.OutgoingTransition&gt; GetOutgoingTransitionsForDeterminization(Automaton&lt;string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.Determinization.WeightedStateSet sourceStateSet)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -512,7 +498,7 @@ The third element defines the outgoing state.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.Automaton&lt;System.String, System.Char, Microsoft.ML.Probabilistic.Distributions.DiscreteChar, Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator, Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton&gt;.GetOutgoingTransitionsForDeterminization(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton.Determinization.WeightedStateSet&lt;&gt;)</span></div>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.Automaton&lt;System.String, System.Char, Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar, Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator, Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton&gt;.GetOutgoingTransitionsForDeterminization(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton.Determinization.WeightedStateSet&lt;&gt;)</span></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton_Read_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.Read*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_StringAutomaton_Read_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.Read(System.IO.BinaryReader)">Read(BinaryReader)</h4>
   <div class="markdown level1 summary"><p>Reads an automaton from.</p>
@@ -580,13 +566,24 @@ The third element defines the outgoing state.</p>
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
+  </div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

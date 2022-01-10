@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DerivedVariableVmpOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,8 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1" class="text-break">Class DerivedVariableVmpOp&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_DerivedVariableVmp__1___0___0__">DerivedVariableVmp&lt;T&gt;(T, out T)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_DerivedVariableInitVmp__1___0___0___0__">DerivedVariableInitVmp&lt;T&gt;(T, T, out T)</a></li></ul>, given random arguments to the function.</p>
-</div>
+  <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -94,33 +93,33 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;DerivedVariableVmp&lt;&gt;&quot;, new Type[]{}, Default = true)]
-[FactorMethod(typeof(Factor), &quot;DerivedVariableInitVmp&lt;&gt;&quot;, new Type[]{}, Default = true)]
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Clone), &quot;DerivedVariableVmp&lt;&gt;&quot;, new Type[]{}, Default = true)]
+[FactorMethod(typeof(Clone), &quot;DerivedVariableInitVmp&lt;&gt;&quot;, new Type[]{}, Default = true)]
 [Quality(QualityBand.Preview)]
 public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
   </div>
@@ -143,8 +142,7 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.AverageLogFactor">AverageLogFactor()</h4>
-  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -161,18 +159,13 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Zero.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_AverageLogFactor_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(use,def,marginal))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_DefAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.DefAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_DefAverageLogarithm__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.DefAverageLogarithm``1(``0,``0)">DefAverageLogarithm&lt;TDist&gt;(TDist, TDist)</h4>
-  <div class="markdown level1 summary"><p>VMP message to <code>def</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -192,14 +185,12 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">Use</span></td>
-        <td><p>Incoming message from <code>use</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -214,8 +205,7 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">TDist</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -235,13 +225,9 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_DefAverageLogarithm__1___0___0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>def</code> with <code>use</code> integrated out. The formula is <code>sum_use p(use) factor(use,def,marginal)</code>.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_MarginalAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.MarginalAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_MarginalAverageLogarithm__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.MarginalAverageLogarithm``1(``0,``0)">MarginalAverageLogarithm&lt;TDist&gt;(TDist, TDist)</h4>
-  <div class="markdown level1 summary"><p>VMP message to <code>marginal</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -261,14 +247,12 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">Def</span></td>
-        <td><p>Incoming message from <code>def</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -283,8 +267,7 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">TDist</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -304,9 +287,6 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_MarginalAverageLogarithm__1___0___0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>marginal</code>. The formula is <code>exp(sum_(def) p(def) log(factor(use,def,marginal)))</code>.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_MarginalAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.MarginalAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_MarginalAverageLogarithm__2___1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.MarginalAverageLogarithm``2(``1,``0)">MarginalAverageLogarithm&lt;TDist, TPoint&gt;(TPoint, TDist)</h4>
   <div class="markdown level1 summary"></div>
@@ -396,8 +376,7 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">def</span></td>
-        <td><p>Incoming message from <code>def</code>.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -432,9 +411,6 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_MarginalAverageLogarithmInit__1___0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_UseAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.UseAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_UseAverageLogarithm__0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.UseAverageLogarithm(`0)">UseAverageLogarithm(T)</h4>
   <div class="markdown level1 summary"></div>
@@ -477,8 +453,7 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_UseAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.UseAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_UseAverageLogarithm__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.UseAverageLogarithm``1(``0,``0)">UseAverageLogarithm&lt;TDist&gt;(TDist, TDist)</h4>
-  <div class="markdown level1 summary"><p>VMP message to <code>use</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -498,14 +473,12 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">Def</span></td>
-        <td><p>Incoming message from <code>def</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -520,8 +493,7 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">TDist</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -541,9 +513,6 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_UseAverageLogarithm__1___0___0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>use</code> as the random arguments are varied. The formula is <code>proj[sum_(def) p(def) factor(use,def,marginal)]</code>.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_UseAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.UseAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_UseAverageLogarithm__2___1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DerivedVariableVmpOp`1.UseAverageLogarithm``2(``1,``0)">UseAverageLogarithm&lt;TDist, TPoint&gt;(TPoint, TDist)</h4>
   <div class="markdown level1 summary"></div>
@@ -633,8 +602,7 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">def</span></td>
-        <td><p>Incoming message from <code>def</code>.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -669,16 +637,14 @@ public static class DerivedVariableVmpOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DerivedVariableVmpOp_1_UseAverageLogarithmInit__1___0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>
-</div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

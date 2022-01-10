@@ -1,0 +1,973 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2" class="text-break">Class ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>This class can represent distributions over pairs of two types: a factorized <code>P(x, y) = P(x) P(y)</code>,
+and correlated <code>P(x, y) \propto P(x) P(y) I[x=y]</code>. Both elements of a pair must be of the same type.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html">ImmutablePairDistributionBase</a>&lt;TElement, TElementDistribution, TElement, TElementDistribution, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div class="level2"><span class="xref">ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution-2.html">IImmutableDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution.html">IImmutableDistribution</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreateUniform-1.html">CanCreateUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePointMass-2.html">CanCreatePointMass</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-1.html">CanComputeProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-2.html">CanComputeProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-1.html">SummableExactly</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-2.html">SummableExactly</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Summable-2.html">Summable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePartialUniform-1.html">CanCreatePartialUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_ElementDistribution1Factory">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.ElementDistribution1Factory</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_ElementDistribution2Factory">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.ElementDistribution2Factory</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_First">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.First</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_Second">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.Second</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_IsPointMass">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.IsPointMass</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_Point">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.Point</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_CreatePointMass_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option__0__Microsoft_ML_Probabilistic_Collections_Option__2___">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.CreatePointMass((T1, T2)&lt;Option&lt;TElement&gt;, Option&lt;TElement&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_FromFirst_Microsoft_ML_Probabilistic_Collections_Option__1__">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.FromFirst(Option&lt;TElementDistribution&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_FromSecond_Microsoft_ML_Probabilistic_Collections_Option__3__">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.FromSecond(Option&lt;TElementDistribution&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_FromFirstSecond_Microsoft_ML_Probabilistic_Collections_Option__1__Microsoft_ML_Probabilistic_Collections_Option__3__">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.FromFirstSecond(Option&lt;TElementDistribution&gt;, Option&lt;TElementDistribution&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_ProjectFirst__0_Microsoft_ML_Probabilistic_Collections_Option__3___">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.ProjectFirst(TElement, Option&lt;TElementDistribution&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_ProjectFirst__1_Microsoft_ML_Probabilistic_Collections_Option__3___">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.ProjectFirst(TElementDistribution, Option&lt;TElementDistribution&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_IsUniform">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.IsUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_CreateUniform">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.CreateUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_ToString">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_Clone">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.Clone()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_MaxDiff_System_Object_">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.MaxDiff(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_GetLogProb_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option__0__Microsoft_ML_Probabilistic_Collections_Option__2___">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.GetLogProb((T1, T2)&lt;Option&lt;TElement&gt;, Option&lt;TElement&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_GetLogAverageOf__4_">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.GetLogAverageOf(ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_Multiply__4_">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.Multiply(ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_Sum_System_Double__4_System_Double_">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.Sum(Double, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_CreatePartialUniform">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.CreatePartialUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistributionBase_5_IsPartialUniform">ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.IsPartialUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; : ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, IImmutableDistribution&lt;(Option&lt;TElement&gt;, Option&lt;TElement&gt;), ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, IImmutableDistribution, ICloneable, Diffable, CanCreateUniform&lt;ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, CanCreatePointMass&lt;(Option&lt;TElement&gt;, Option&lt;TElement&gt;), ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, CanGetLogProb&lt;(Option&lt;TElement&gt;, Option&lt;TElement&gt;)&gt;, CanGetLogAverageOf&lt;ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, CanComputeProduct&lt;ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, CanComputeProduct&lt;ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SummableExactly&lt;ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, SummableExactly&lt;ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, Summable&lt;ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;, CanCreatePartialUniform&lt;ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt; where TElementDistribution : IImmutableDistribution&lt;TElement, TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, CanComputeProduct&lt;TElementDistribution&gt;, CanCreatePartialUniform&lt;TElementDistribution&gt;, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TElement</span></td>
+        <td><p>The type of a pair element.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TElementDistribution</span></td>
+        <td><p>The type of a distribution over <code data-dev-comment-type="typeparamref" class="typeparamref">TElement</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_HasEqualityConstraint_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.HasEqualityConstraint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_HasEqualityConstraint" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.HasEqualityConstraint">HasEqualityConstraint</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the equality constraint is set on the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasEqualityConstraint { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Constrained_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Constrained*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Constrained__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Constrained(`1)">Constrained(TElementDistribution)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution <code>P(x, y) \propto P(x) P(y) I[x=y]</code>, where <code>P</code> is a given element distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; Constrained(TElementDistribution elementDistribution)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">elementDistribution</span></td>
+        <td><p>The marginal distribution over pair elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Constrained_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Constrained*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Constrained__1__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Constrained(`1,`1)">Constrained(TElementDistribution, TElementDistribution)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution <code>P(x, y) \propto Q(x) R(y) I[x=y]</code>, where <code>Q(x)</code> and <code>R(y)</code> are given element distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; Constrained(TElementDistribution firstElementDistribution, TElementDistribution secondElementDistribution)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">firstElementDistribution</span></td>
+        <td><p>The marginal distribution of the first element of a pair.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">secondElementDistribution</span></td>
+        <td><p>The marginal distribution of the second element of a pair.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_CreatePartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.CreatePartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_CreatePartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.CreatePartialUniform">CreatePartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution uniform over the support of the current distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; CreatePartialUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.CreatePartialUniform()</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_CreatePointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.CreatePointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_CreatePointMass_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option__0__Microsoft_ML_Probabilistic_Collections_Option__0___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.CreatePointMass(System.ValueTuple{Microsoft.ML.Probabilistic.Collections.Option{`0},Microsoft.ML.Probabilistic.Collections.Option{`0}})">CreatePointMass((Option&lt;TElement&gt;, Option&lt;TElement&gt;))</h4>
+  <div class="markdown level1 summary"><p>Creates a point mass distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; CreatePointMass((Option&lt;TElement&gt;, Option&lt;TElement&gt;) point)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;</td>
+        <td><span class="parametername">point</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.CreatePointMass(System.ValueTuple&lt;Microsoft.ML.Probabilistic.Collections.Option&lt;TElement&gt;, Microsoft.ML.Probabilistic.Collections.Option&lt;TElement&gt;&gt;)</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_CreateUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.CreateUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_CreateUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.CreateUniform">CreateUniform()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; CreateUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.CreateUniform()</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution__0__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution{`0,`1})">GetLogAverageOf(ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;)</h4>
+  <div class="markdown level1 summary"><p>The log-probability that two distributions would draw the same sample.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double GetLogAverageOf(ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>Math.Log(sum_x this.Evaluate(x)*that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;)</span></div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution__0__1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This can be considered a type of inner product between distributions.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_GetLogProb_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option__0__Microsoft_ML_Probabilistic_Collections_Option__0___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.GetLogProb(System.ValueTuple{Microsoft.ML.Probabilistic.Collections.Option{`0},Microsoft.ML.Probabilistic.Collections.Option{`0}})">GetLogProb((Option&lt;TElement&gt;, Option&lt;TElement&gt;))</h4>
+  <div class="markdown level1 summary"><p>Evaluate the log of the density function at the specified domain value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double GetLogProb((Option&lt;TElement&gt;, Option&lt;TElement&gt;) pair)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement&gt;&gt;</td>
+        <td><span class="parametername">pair</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log density</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.GetLogProb(System.ValueTuple&lt;Microsoft.ML.Probabilistic.Collections.Option&lt;TElement&gt;, Microsoft.ML.Probabilistic.Collections.Option&lt;TElement&gt;&gt;)</span></div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_GetLogProb_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option__0__Microsoft_ML_Probabilistic_Collections_Option__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Not currently implemented.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Checks whether the current distribution is uniform.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the current distribution is uniform, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.IsUniform()</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>The maximum difference between this instance and the given</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double MaxDiff(object that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.MaxDiff(System.Object)</span></div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_MaxDiff_System_Object__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Not currently implemented.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Multiply_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Multiply_Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution__0__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Multiply(Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution{`0,`1})">Multiply(ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the product of the current instance and <code data-dev-comment-type="paramref" class="paramref">other</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; Multiply(ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>The product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.Multiply(Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;)</span></div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Multiply_Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution__0__1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Not currently implemented.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_ProjectFirst_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.ProjectFirst*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_ProjectFirst__0_Microsoft_ML_Probabilistic_Collections_Option__1___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.ProjectFirst(`0,Microsoft.ML.Probabilistic.Collections.Option{`1}@)">ProjectFirst(TElement, out Option&lt;TElementDistribution&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>P(y) = R(x, y)</code>, where <code>R(x, y)</code> is the current pair distribution,
+and <code>x</code> is a given element.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double ProjectFirst(TElement first, out Option&lt;TElementDistribution&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElement</span></td>
+        <td><span class="parametername">first</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The logarithm of the scale for the projection result.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.ProjectFirst(TElement, Microsoft.ML.Probabilistic.Collections.Option&lt;TElementDistribution&gt;)</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_ProjectFirst_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.ProjectFirst*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_ProjectFirst__1_Microsoft_ML_Probabilistic_Collections_Option__1___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.ProjectFirst(`1,Microsoft.ML.Probabilistic.Collections.Option{`1}@)">ProjectFirst(TElementDistribution, out Option&lt;TElementDistribution&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>P(y) = sum_x Q(x) R(x, y)</code>, where <code>R(x, y)</code> is the current pair distribution,
+and <code>Q(x)</code> is a given element distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double ProjectFirst(TElementDistribution first, out Option&lt;TElementDistribution&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">first</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The logarithm of the scale for the projection result.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.ProjectFirst(TElementDistribution, Microsoft.ML.Probabilistic.Collections.Option&lt;TElementDistribution&gt;)</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Sum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Sum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Sum_System_Double_Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution__0__1__System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Sum(System.Double,Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution{`0,`1},System.Double)">Sum(Double, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes a distribution with its parameters set to best match a mixture distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; Sum(double weightThis, ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; other, double weightOther)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weightThis</span></td>
+        <td><p>A finite nonnegative weight.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weightOther</span></td>
+        <td><p>A finite nonnegative weight.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>A distribution of the result type that best matches a mixture distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.Sum(System.Double, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;, System.Double)</span></div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Sum_System_Double_Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution__0__1__System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Not currently implemented.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a string that represents the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string that represents the distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase&lt;TElement, TElementDistribution, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;&gt;.ToString()</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Transpose_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Transpose*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_Transpose" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.Transpose">Transpose()</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution <code>Q(y, x) = P(x, y)</code>, where <code>P(x, y)</code> is the current distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; Transpose()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_UniformConstrained_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.UniformConstrained*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_ImmutablePairDistribution_2_UniformConstrained" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution`2.UniformConstrained">UniformConstrained()</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution <code>P(x, y) \propto I[x=y]</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutablePairDistribution&lt;TElement, TElementDistribution&gt; UniformConstrained()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution</a>&lt;TElement, TElementDistribution&gt;</td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution-2.html">IImmutableDistribution&lt;T, TThis&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution.html">IImmutableDistribution</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreateUniform-1.html">CanCreateUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePointMass-2.html">CanCreatePointMass&lt;T, TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-1.html">CanComputeProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-2.html">CanComputeProduct&lt;TOther, TResult&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-1.html">SummableExactly&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-2.html">SummableExactly&lt;TOther, TResult&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Summable-2.html">Summable&lt;TOther, TResult&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePartialUniform-1.html">CanCreatePartialUniform&lt;TDist&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

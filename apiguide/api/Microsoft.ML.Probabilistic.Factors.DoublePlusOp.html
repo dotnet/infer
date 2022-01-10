@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DoublePlusOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp" class="text-break">Class DoublePlusOp
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Plus_System_Double_System_Double_">Plus(Double, Double)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Difference_System_Double_System_Double_">Difference(Double, Double)</a></li></ul>, given random arguments to the function.</p>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Difference_System_Double_System_Double_">Difference(Double, Double)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Plus_System_Double_System_Double_">Plus(Double, Double)</a></li></ul>, given random arguments to the function.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -94,25 +94,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
@@ -128,7 +128,7 @@ public static class DoublePlusOp</code></pre>
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.AAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">AAverageConditional(Gaussian, Gaussian)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>difference</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -148,13 +148,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Incoming message from <code>Sum</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
     </tbody>
@@ -170,13 +170,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>A</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>difference</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>A</code> as the random arguments are varied. The formula is <code>proj[p(A) sum_(Sum,B) p(Sum,B) factor(Sum,A,B)]/p(A)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>difference</code> as the random arguments are varied. The formula is <code>proj[p(difference) sum_(a,b) p(a,b) factor(difference,a,b)]/p(difference)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -201,7 +201,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.AAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">AAverageConditional(Gaussian, Double)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>difference</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -221,13 +221,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Incoming message from <code>Sum</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Constant value for <code>B</code>.</p>
+        <td><p>Constant value for <code>b</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -243,13 +243,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>A</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>difference</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>A</code> as the random arguments are varied. The formula is <code>proj[p(A) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(A)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>difference</code> as the random arguments are varied. The formula is <code>proj[p(difference) sum_(a) p(a) factor(difference,a,b)]/p(difference)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -269,7 +269,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.AAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.AAverageConditional(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian)">AAverageConditional(Double, Gaussian)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>difference</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -289,13 +289,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Constant value for <code>Sum</code>.</p>
+        <td><p>Constant value for <code>a</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
     </tbody>
@@ -311,13 +311,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>A</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>difference</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>A</code> as the random arguments are varied. The formula is <code>proj[p(A) sum_(B) p(B) factor(Sum,A,B)]/p(A)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>difference</code> as the random arguments are varied. The formula is <code>proj[p(difference) sum_(b) p(b) factor(difference,a,b)]/p(difference)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -337,7 +337,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.AAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.AAverageConditional(System.Double,System.Double)">AAverageConditional(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>difference</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -357,13 +357,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Constant value for <code>Sum</code>.</p>
+        <td><p>Constant value for <code>a</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Constant value for <code>B</code>.</p>
+        <td><p>Constant value for <code>b</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -379,17 +379,17 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>A</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>difference</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_AAverageConditional_System_Double_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>A</code> conditioned on the given values.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>difference</code> conditioned on the given values.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.BAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">BAverageConditional(Gaussian, Gaussian)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -409,13 +409,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Incoming message from <code>Sum</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
     </tbody>
@@ -431,13 +431,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>B</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>B</code> as the random arguments are varied. The formula is <code>proj[p(B) sum_(Sum,A) p(Sum,A) factor(Sum,A,B)]/p(B)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(a,difference) p(a,difference) factor(difference,a,b)]/p(b)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -462,7 +462,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.BAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">BAverageConditional(Gaussian, Double)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -482,13 +482,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Incoming message from <code>Sum</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Constant value for <code>A</code>.</p>
+        <td><p>Constant value for <code>difference</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -504,13 +504,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>B</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>B</code> as the random arguments are varied. The formula is <code>proj[p(B) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(B)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(a) p(a) factor(difference,a,b)]/p(b)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -530,7 +530,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.BAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.BAverageConditional(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian)">BAverageConditional(Double, Gaussian)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -550,13 +550,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Constant value for <code>Sum</code>.</p>
+        <td><p>Constant value for <code>a</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
     </tbody>
@@ -572,13 +572,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>B</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>B</code> as the random arguments are varied. The formula is <code>proj[p(B) sum_(A) p(A) factor(Sum,A,B)]/p(B)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(difference) p(difference) factor(difference,a,b)]/p(b)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -598,7 +598,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.BAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.BAverageConditional(System.Double,System.Double)">BAverageConditional(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -618,13 +618,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Constant value for <code>Sum</code>.</p>
+        <td><p>Constant value for <code>a</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Constant value for <code>A</code>.</p>
+        <td><p>Constant value for <code>difference</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -640,13 +640,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>B</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_BAverageConditional_System_Double_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>B</code> conditioned on the given values.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.LogAverageFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">LogAverageFactor(Gaussian, Gaussian)</h4>
@@ -670,7 +670,7 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Incoming message from <code>Sum</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
@@ -698,7 +698,7 @@ public static class DoublePlusOp</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(Sum) p(Sum) factor(Sum,A,B))</code>.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a) p(a) factor(difference,a,b))</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -738,13 +738,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Constant value for <code>Sum</code>.</p>
+        <td><p>Constant value for <code>a</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
@@ -772,7 +772,7 @@ public static class DoublePlusOp</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_LogAverageFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A) p(A) factor(Sum,A,B))</code>.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(difference) p(difference) factor(difference,a,b))</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -812,19 +812,19 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Constant value for <code>Sum</code>.</p>
+        <td><p>Constant value for <code>a</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Constant value for <code>A</code>.</p>
+        <td><p>Constant value for <code>difference</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Incoming message from <code>B</code>.</p>
+        <td><p>Incoming message from <code>b</code>.</p>
 </td>
       </tr>
       <tr>
@@ -852,7 +852,7 @@ public static class DoublePlusOp</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_LogAverageFactor_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(B) p(B) factor(Sum,A,B))</code>.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(b) p(b) factor(difference,a,b))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.LogAverageFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_LogAverageFactor_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.LogAverageFactor(System.Double,System.Double,System.Double)">LogAverageFactor(Double, Double, Double)</h4>
@@ -876,19 +876,19 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">Sum</span></td>
-        <td><p>Constant value for <code>Sum</code>.</p>
+        <td><p>Constant value for <code>a</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Constant value for <code>A</code>.</p>
+        <td><p>Constant value for <code>difference</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Constant value for <code>B</code>.</p>
+        <td><p>Constant value for <code>b</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -910,11 +910,11 @@ public static class DoublePlusOp</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_LogAverageFactor_System_Double_System_Double_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(Sum,A,B))</code>.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(difference,a,b))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.SumAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.SumAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">SumAverageConditional(Gaussian, Gaussian)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>Sum</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -934,13 +934,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
     </tbody>
@@ -956,13 +956,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>Sum</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>a</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>Sum</code> as the random arguments are varied. The formula is <code>proj[p(Sum) sum_(A,B) p(A,B) factor(Sum,A,B)]/p(Sum)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(difference,b) p(difference,b) factor(difference,a,b)]/p(a)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -987,7 +987,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.SumAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.SumAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">SumAverageConditional(Gaussian, Double)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>Sum</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1007,13 +1007,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Constant value for <code>B</code>.</p>
+        <td><p>Constant value for <code>b</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1029,13 +1029,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>Sum</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>a</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>Sum</code> as the random arguments are varied. The formula is <code>proj[p(Sum) sum_(A) p(A) factor(Sum,A,B)]/p(Sum)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(difference) p(difference) factor(difference,a,b)]/p(a)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1055,7 +1055,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.SumAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.SumAverageConditional(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian)">SumAverageConditional(Double, Gaussian)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>Sum</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1075,13 +1075,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Constant value for <code>A</code>.</p>
+        <td><p>Constant value for <code>difference</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
     </tbody>
@@ -1097,13 +1097,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>Sum</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>a</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>Sum</code> as the random arguments are varied. The formula is <code>proj[p(Sum) sum_(B) p(B) factor(Sum,A,B)]/p(Sum)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(b) p(b) factor(difference,a,b)]/p(a)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1123,7 +1123,7 @@ public static class DoublePlusOp</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.SumAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DoublePlusOp.SumAverageConditional(System.Double,System.Double)">SumAverageConditional(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>Sum</code>.</p>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1143,13 +1143,13 @@ public static class DoublePlusOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td><p>Constant value for <code>A</code>.</p>
+        <td><p>Constant value for <code>difference</code>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>Constant value for <code>B</code>.</p>
+        <td><p>Constant value for <code>b</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1165,13 +1165,13 @@ public static class DoublePlusOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td><p>The outgoing EP message to the <code>Sum</code> argument.</p>
+        <td><p>The outgoing EP message to the <code>a</code> argument.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoublePlusOp_SumAverageConditional_System_Double_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>Sum</code> conditioned on the given values.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> conditioned on the given values.</p>
 </div>
 </article>
           </div>
@@ -1179,7 +1179,8 @@ public static class DoublePlusOp</code></pre>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct TruncatedGaussian
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -110,17 +110,20 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ITruncatableDistribution-1.html">ITruncatableDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan-1.html">CanGetProbLessThan</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile-1.html">CanGetQuantile</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
@@ -130,7 +133,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Preview)]
-public struct TruncatedGaussian : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;TruncatedGaussian&gt;, Diffable, SettableToProduct&lt;TruncatedGaussian&gt;, SettableToProduct&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToUniform, SettableToRatio&lt;TruncatedGaussian&gt;, SettableToRatio&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToPower&lt;TruncatedGaussian&gt;, Sampleable&lt;double&gt;, SettableToWeightedSum&lt;TruncatedGaussian&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanGetLogNormalizer, CanGetLogAverageOf&lt;TruncatedGaussian&gt;, CanGetLogAverageOfPower&lt;TruncatedGaussian&gt;, CanGetAverageLog&lt;TruncatedGaussian&gt;</code></pre>
+public struct TruncatedGaussian : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;TruncatedGaussian&gt;, Diffable, SettableToProduct&lt;TruncatedGaussian&gt;, SettableToProduct&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToUniform, SettableToRatio&lt;TruncatedGaussian&gt;, SettableToRatio&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToPower&lt;TruncatedGaussian&gt;, Sampleable&lt;double&gt;, SettableToWeightedSum&lt;TruncatedGaussian&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanGetLogNormalizer, CanGetLogAverageOf&lt;TruncatedGaussian&gt;, CanGetLogAverageOfPower&lt;TruncatedGaussian&gt;, CanGetAverageLog&lt;TruncatedGaussian&gt;, ITruncatableDistribution&lt;double&gt;, CanGetProbLessThan&lt;double&gt;, CanGetQuantile&lt;double&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is parameterized by a Gaussian and two real numbers (LowerBound, UpperBound).
@@ -352,7 +355,7 @@ public double UpperBound</code></pre>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[IgnoreDataMember]
-public bool IsPointMass { get; }</code></pre>
+public readonly bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -463,7 +466,7 @@ public double Point { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#system-valuetype-equals(system-object)">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_FromGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.FromGaussian*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_FromGaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.FromGaussian(Microsoft.ML.Probabilistic.Distributions.Gaussian)">FromGaussian(Gaussian)</h4>
   <div class="markdown level1 summary"><p>Create a truncated Gaussian equivalent to a Gaussian, i.e. with no truncation.</p>
@@ -571,7 +574,7 @@ public double Point { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#system-valuetype-gethashcode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian)">GetLogAverageOf(TruncatedGaussian)</h4>
   <div class="markdown level1 summary"><p>Get the logarithm of the average value of that distribution under this distribution, i.e. log(int this(x) that(x) dx)</p>
@@ -776,6 +779,138 @@ public double Point { get; set; }</code></pre>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">variance</span></td>
         <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetProbBetween_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetProbBetween*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetProbBetween_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetProbBetween(System.Double,System.Double)">GetProbBetween(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the probability mass in an interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetProbBetween(double lowerBound, double upperBound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A number between 0 and 1, inclusive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetProbLessThan_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetProbLessThan*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetProbLessThan_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetProbLessThan(System.Double)">GetProbLessThan(Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the probability of drawing a sample less than x.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetProbLessThan(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A real number in [0,1].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetQuantile_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetQuantile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetQuantile_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetQuantile(System.Double)">GetQuantile(Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the largest value x such that GetProbLessThan(x) &lt;= probability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetQuantile(double probability)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">probability</span></td>
+        <td><p>A real number in [0,1].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A number</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1291,7 +1426,53 @@ public static TruncatedGaussian PointMass(double point)</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#system-valuetype-tostring">ValueType.ToString()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_Truncate_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.Truncate*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_Truncate_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.Truncate(System.Double,System.Double)">Truncate(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the distribution of values restricted to an interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ITruncatableDistribution&lt;double&gt; Truncate(double lowerBound, double upperBound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ITruncatableDistribution-1.html">ITruncatableDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.Uniform">Uniform()</h4>
   <div class="markdown level1 summary"><p>Construct a uniform truncated Gaussian. This is mathematically equivalent to
@@ -1617,13 +1798,23 @@ public static TruncatedGaussian Uniform()</code></pre>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
   </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ITruncatableDistribution-1.html">ITruncatableDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan-1.html">CanGetProbLessThan&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile-1.html">CanGetQuantile&lt;T&gt;</a>
+  </div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

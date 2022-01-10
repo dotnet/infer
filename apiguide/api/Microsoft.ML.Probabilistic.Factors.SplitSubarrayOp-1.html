@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SplitSubarrayOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1" class="text-break">Class SplitSubarrayOp&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_System_Collections_Generic_IList___0__System_Int32_____">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</a>, given random arguments to the function.</p>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Collection.html#Microsoft_ML_Probabilistic_Factors_Collection_JaggedSubarray__1_System_Collections_Generic_IReadOnlyList___0__System_Int32_____">JaggedSubarray&lt;T&gt;(IReadOnlyList&lt;T&gt;, Int32[][])</a>, given random arguments to the function.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -94,32 +94,32 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;SplitSubarray&lt;&gt;&quot;, new Type[]{}, Default = true)]
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Collection), &quot;SplitSubarray&lt;&gt;&quot;, new Type[]{}, Default = true)]
 [Quality(QualityBand.Preview)]
 public static class SplitSubarrayOp&lt;T&gt;</code></pre>
   </div>
@@ -143,8 +143,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ArrayAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageConditional__2_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList__0_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ArrayAverageConditional``2(System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},System.Collections.Generic.IReadOnlyList{System.Collections.Generic.IReadOnlyList{`0}},``1)">ArrayAverageConditional&lt;DistributionType, ArrayType&gt;(IList&lt;IList&lt;Int32&gt;&gt;, IReadOnlyList&lt;IReadOnlyList&lt;T&gt;&gt;, ArrayType)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -164,20 +163,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -192,8 +188,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -218,13 +213,9 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageConditional__2_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList__0_____1__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(indices,items) p(indices,items) factor(items,array,indices)]/p(array)</code>.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ArrayAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageConditional__2_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList___0___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ArrayAverageConditional``2(System.Collections.Generic.IReadOnlyList{System.Collections.Generic.IReadOnlyList{``0}},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``1)">ArrayAverageConditional&lt;DistributionType, ArrayType&gt;(IReadOnlyList&lt;IReadOnlyList&lt;DistributionType&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ArrayType)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -244,20 +235,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;DistributionType&gt;&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -272,8 +260,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -298,29 +285,9 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageConditional__2_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList___0___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(items,indices) p(items,indices) factor(items,array,indices)]/p(array)</code>.</p>
-</div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">items</code> is not a proper distribution.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ArrayAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageLogarithm__2_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList__0_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ArrayAverageLogarithm``2(System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},System.Collections.Generic.IReadOnlyList{System.Collections.Generic.IReadOnlyList{`0}},``1)">ArrayAverageLogarithm&lt;DistributionType, ArrayType&gt;(IList&lt;IList&lt;Int32&gt;&gt;, IReadOnlyList&lt;IReadOnlyList&lt;T&gt;&gt;, ArrayType)</h4>
-  <div class="markdown level1 summary"><p>VMP message to <code>array</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -340,20 +307,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -368,8 +332,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -394,13 +357,9 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageLogarithm__2_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList__0_____1__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>array</code>. Because the factor is deterministic, <code>items</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(indices) p(indices) log(sum_items p(items) factor(items,array,indices)))</code>.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ArrayAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageLogarithm__2_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList___0___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ArrayAverageLogarithm``2(System.Collections.Generic.IReadOnlyList{System.Collections.Generic.IReadOnlyList{``0}},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``1)">ArrayAverageLogarithm&lt;DistributionType, ArrayType&gt;(IReadOnlyList&lt;IReadOnlyList&lt;DistributionType&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ArrayType)</h4>
-  <div class="markdown level1 summary"><p>VMP message to <code>array</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -420,20 +379,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;DistributionType&gt;&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -448,8 +404,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -470,25 +425,6 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="parametername">ArrayType</span></td>
         <td><p>The type of the outgoing message.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ArrayAverageLogarithm__2_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList___0___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>array</code>. Because the factor is deterministic, <code>items</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(indices) p(indices) log(sum_items p(items) factor(items,array,indices)))</code>.</p>
-</div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">items</code> is not a proper distribution.</p>
 </td>
       </tr>
     </tbody>
@@ -545,8 +481,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor__2_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.AverageLogFactor``2(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``1},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;DistributionType&gt;, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -566,20 +501,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
-        <td><p>Incoming message from <code>array</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -594,8 +526,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Zero.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -620,13 +551,9 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor__2_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.AverageLogFactor``2(System.Collections.Generic.IList{``1},System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -646,20 +573,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
-        <td><p>Incoming message from <code>array</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -674,8 +598,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Zero.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -700,13 +623,9 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.AverageLogFactor``2(System.Collections.Generic.IList{``1},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -726,20 +645,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
-        <td><p>Incoming message from <code>array</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -754,8 +670,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Zero.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -780,9 +695,6 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_AverageLogFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ItemsAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ItemsAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ItemsAverageConditional__2_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Int32___1_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ItemsAverageConditional``2(System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},System.Int32,``1)">ItemsAverageConditional&lt;DistributionType, ItemType&gt;(IReadOnlyList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, Int32, ItemType)</h4>
   <div class="markdown level1 summary"></div>
@@ -862,8 +774,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ItemsAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ItemsAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ItemsAverageLogarithm__3_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____2_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.ItemsAverageLogarithm``3(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``2)">ItemsAverageLogarithm&lt;DistributionType, ItemType, ResultType&gt;(IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ResultType)</h4>
-  <div class="markdown level1 summary"><p>VMP message to <code>items</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -883,20 +794,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
-        <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">ResultType</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -911,8 +819,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">ResultType</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -938,25 +845,6 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="parametername">ResultType</span></td>
         <td><p>The type of the outgoing message.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_ItemsAverageLogarithm__3_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____2__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>items</code> as the random arguments are varied. The formula is <code>proj[sum_(array,indices) p(array,indices) factor(items,array,indices)]</code>.</p>
-</div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is not a proper distribution.</p>
 </td>
       </tr>
     </tbody>
@@ -1331,8 +1219,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_LogEvidenceRatio__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.LogEvidenceRatio``2(System.Collections.Generic.IList{``1},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">LogEvidenceRatio&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1352,20 +1239,17 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
-        <td><p>Incoming message from <code>array</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1380,8 +1264,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1406,13 +1289,9 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_LogEvidenceRatio__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_LogEvidenceRatio__3___1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp`1.LogEvidenceRatio``3(``1,System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``1)">LogEvidenceRatio&lt;DistributionType, ItemArrayType, ItemType&gt;(ItemArrayType, IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ItemArrayType)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1432,26 +1311,22 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">ItemArrayType</span></td>
         <td><span class="parametername">items</span></td>
-        <td><p>Incoming message from <code>items</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
-        <td><p>Incoming message from <code>array</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Incoming message from <code>indices</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">ItemArrayType</span></td>
         <td><span class="parametername">to_items</span></td>
-        <td><p>Previous outgoing message to <code>items</code>.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1466,8 +1341,7 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1497,16 +1371,14 @@ public static class SplitSubarrayOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SplitSubarrayOp_1_LogEvidenceRatio__3___1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
-</div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

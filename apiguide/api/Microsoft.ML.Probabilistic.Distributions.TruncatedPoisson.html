@@ -1,0 +1,1825 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class TruncatedPoisson
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class TruncatedPoisson
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson" class="text-break">Class TruncatedPoisson
+  </h1>
+  <div class="markdown level0 summary"><p>Left-and-right-truncated Com-Poisson distribution.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">TruncatedPoisson</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.LeftTruncatedPoisson.html">LeftTruncatedPoisson</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICanTruncateLeft-1.html">ICanTruncateLeft</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICanTruncateRight-1.html">ICanTruncateRight</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataContract]
+[Quality(QualityBand.Experimental)]
+public class TruncatedPoisson : IDistribution&lt;int&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;int&gt;, CanGetLogProb&lt;int&gt;, CanGetMean&lt;double&gt;, Sampleable&lt;int&gt;, SettableToProduct&lt;TruncatedPoisson&gt;, SettableToProduct&lt;TruncatedPoisson, TruncatedPoisson&gt;, SettableTo&lt;TruncatedPoisson&gt;, SettableTo&lt;LeftTruncatedPoisson&gt;, SettableTo&lt;Discrete&gt;, SettableToPartialUniform&lt;TruncatedPoisson&gt;, SettableToPartialUniform&lt;Discrete&gt;, CanGetLogAverageOf&lt;TruncatedPoisson&gt;, CanGetAverageLog&lt;TruncatedPoisson&gt;, CanGetLogNormalizer, ICanTruncateLeft&lt;int&gt;, ICanTruncateRight&lt;int&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor">TruncatedPoisson()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TruncatedPoisson()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_Microsoft_ML_Probabilistic_Distributions_LeftTruncatedPoisson_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor(Microsoft.ML.Probabilistic.Distributions.LeftTruncatedPoisson)">TruncatedPoisson(LeftTruncatedPoisson)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TruncatedPoisson(LeftTruncatedPoisson truncatedDistribution)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.LeftTruncatedPoisson.html">LeftTruncatedPoisson</a></td>
+        <td><span class="parametername">truncatedDistribution</span></td>
+        <td><p>The underlying left-truncated CoM-Poisson distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_Microsoft_ML_Probabilistic_Distributions_LeftTruncatedPoisson_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor(Microsoft.ML.Probabilistic.Distributions.LeftTruncatedPoisson,System.Int32)">TruncatedPoisson(LeftTruncatedPoisson, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TruncatedPoisson(LeftTruncatedPoisson leftTruncatedDistribution, int endPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.LeftTruncatedPoisson.html">LeftTruncatedPoisson</a></td>
+        <td><span class="parametername">leftTruncatedDistribution</span></td>
+        <td><p>The underlying left-truncated CoM-Poisson distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">endPoint</span></td>
+        <td><p>The index of the last non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_Microsoft_ML_Probabilistic_Distributions_Poisson_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor(Microsoft.ML.Probabilistic.Distributions.Poisson,System.Int32)">TruncatedPoisson(Poisson, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TruncatedPoisson(Poisson nonTruncatedDistribution, int startPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Poisson.html">Poisson</a></td>
+        <td><span class="parametername">nonTruncatedDistribution</span></td>
+        <td><p>The underlying CoM-Poisson distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The index of the first non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_Microsoft_ML_Probabilistic_Distributions_Poisson_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor(Microsoft.ML.Probabilistic.Distributions.Poisson,System.Int32,System.Int32)">TruncatedPoisson(Poisson, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TruncatedPoisson(Poisson nonTruncatedDistribution, int startPoint, int endPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Poisson.html">Poisson</a></td>
+        <td><span class="parametername">nonTruncatedDistribution</span></td>
+        <td><p>The underlying CoM-Poisson distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The index of the first non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">endPoint</span></td>
+        <td><p>The index of the last non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_System_Double_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor(System.Double,System.Double,System.Int32)">TruncatedPoisson(Double, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TruncatedPoisson(double rate, double precision, int startPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>The rate parameter of the underlying CoM-Poisson distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>The precision parameter of the underlying CoM-Poisson distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The index of the first non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_System_Double_System_Double_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor(System.Double,System.Double,System.Int32,System.Int32)">TruncatedPoisson(Double, Double, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Rate&quot;, &quot;Precision&quot;, &quot;StartPoint&quot;, &quot;EndPoint&quot;})]
+public TruncatedPoisson(double rate, double precision, int startPoint, int endPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>The rate parameter of the underlying CoM-Poisson distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>The precision parameter of the underlying CoM-Poisson distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The index of the first non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">endPoint</span></td>
+        <td><p>The index of the last non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__ctor_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.#ctor(System.Double,System.Int32)">TruncatedPoisson(Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TruncatedPoisson(double rate, int startPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>The rate parameter of the underlying CoM-Poisson distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The index of the first non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_PositiveInfinityEndPoint" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.PositiveInfinityEndPoint">PositiveInfinityEndPoint</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int PositiveInfinityEndPoint = 2147483647</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_EndPoint_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.EndPoint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_EndPoint" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.EndPoint">EndPoint</h4>
+  <div class="markdown level1 summary"><p>The last non-zero point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public int EndPoint { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_EndPointIsPositiveInfinity_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.EndPointIsPositiveInfinity*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_EndPointIsPositiveInfinity" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.EndPointIsPositiveInfinity">EndPointIsPositiveInfinity</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current distribution is right-truncated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool EndPointIsPositiveInfinity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current distribution represents a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_LogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.LogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_LogNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.LogNormalizer">LogNormalizer</h4>
+  <div class="markdown level1 summary"><p>Returns the log normalizer of the instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LogNormalizer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the distribution as a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Precision_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Precision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Precision" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Precision">Precision</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the precision parameter of the COM-Poisson distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Precision { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Rate_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Rate*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Rate" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Rate">Rate</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the rate parameter of the COM-Poisson distribution, always &gt;= 0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Rate { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_StartPoint_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.StartPoint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_StartPoint" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.StartPoint">StartPoint</h4>
+  <div class="markdown level1 summary"><p>The first non-zero point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int StartPoint { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Creates a cloned copy of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_FromMeanAndStartPoint_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.FromMeanAndStartPoint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_FromMeanAndStartPoint_System_Double_System_Double_System_Int32_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.FromMeanAndStartPoint(System.Double,System.Double,System.Int32,System.Double,System.Int32)">FromMeanAndStartPoint(Double, Double, Int32, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> struct given a target
+mean, a start point and a end point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TruncatedPoisson FromMeanAndStartPoint(double targetMean, double precision, int startPoint, double tolerance = 1E-10, int maxIterations = 100)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">targetMean</span></td>
+        <td><p>The desired mean of the Truncated Poisson.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>The desired precision of the Truncated Poisson.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The start point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>Tolerance for mean.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxIterations</span></td>
+        <td><p>Maximum iterations for binary search.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><p>A new instance with the target mean.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_FromMeanAndStartPointAndEndPoint_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.FromMeanAndStartPointAndEndPoint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_FromMeanAndStartPointAndEndPoint_System_Double_System_Double_System_Int32_System_Int32_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.FromMeanAndStartPointAndEndPoint(System.Double,System.Double,System.Int32,System.Int32,System.Double,System.Int32)">FromMeanAndStartPointAndEndPoint(Double, Double, Int32, Int32, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a> struct given a target
+mean, a start point and a end point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TruncatedPoisson FromMeanAndStartPointAndEndPoint(double targetMean, double precision, int startPoint, int endPoint, double tolerance = 1E-10, int maxIterations = 100)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">targetMean</span></td>
+        <td><p>The desired mean of the Truncated Poisson.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>The desired precision of the Truncated Poisson.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The start point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">endPoint</span></td>
+        <td><p>The end point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>Tolerance for mean.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxIterations</span></td>
+        <td><p>Maximum iterations for binary search.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><p>A new instance with the target mean.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson)">GetAverageLog(TruncatedPoisson)</h4>
+  <div class="markdown level1 summary"><p>The expected logarithm of that distribution under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(TruncatedPoisson that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>sum_x this.Evaluate(x)*Math.Log(that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is also known as the cross entropy.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetEndPoint_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetEndPoint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetEndPoint" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetEndPoint">GetEndPoint()</h4>
+  <div class="markdown level1 summary"><p>Gets the end point of the truncated distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetEndPoint()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The end point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson)">GetLogAverageOf(TruncatedPoisson)</h4>
+  <div class="markdown level1 summary"><p>Gets the log of the integral of the product of this truncated COM-Poisson with another truncated COM-Poisson.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(TruncatedPoisson that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other truncated COM-Poisson</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetLogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetLogNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetLogNormalizer">GetLogNormalizer()</h4>
+  <div class="markdown level1 summary"><p>Gets the log of the normalizer of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogNormalizer()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log of the normalizer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetLogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetLogNormalizer_System_Double_System_Double_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetLogNormalizer(System.Double,System.Double,System.Int32,System.Int32)">GetLogNormalizer(Double, Double, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the log normalizer of a truncated Poisson.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GetLogNormalizer(double rate, double prec, int startPoint, int endPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>Rate parameter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">prec</span></td>
+        <td><p>Precision parameter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>Start point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">endPoint</span></td>
+        <td><p>End point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log normalizer of the distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetLogProb_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetLogProb(System.Int32)">GetLogProb(Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the log probability for a given domain value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(int value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The domain value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log probability of the value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetMean" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetMean">GetMean()</h4>
+  <div class="markdown level1 summary"><p>Gets the mean of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMean()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The mean.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetStartPoint_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetStartPoint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_GetStartPoint" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.GetStartPoint">GetStartPoint()</h4>
+  <div class="markdown level1 summary"><p>Gets the start point of the truncated distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetStartPoint()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The start point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_IsPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.IsPartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_IsPartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.IsPartialUniform">IsPartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Checks whether the distribution is uniform over its support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPartialUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the distribution is uniform over its support, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_IsProper_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.IsProper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_IsProper" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.IsProper">IsProper()</h4>
+  <div class="markdown level1 summary"><p>Asks whether this instance is proper or not. A truncated COM-Poisson distribution
+is proper if Rate &gt;= 0 and (Precision &gt; 0 or (Precision == 0 and Rate &lt; 1)).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsProper()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if proper, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current distribution is uniform.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating how close this distribution is to another distribution.
+in terms of probabilities they assign to sequences.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The max difference.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_PartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.PartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_PartialUniform_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.PartialUniform(System.Int32)">PartialUniform(Int32)</h4>
+  <div class="markdown level1 summary"><p>Instantiates a uniform truncated Com-Poisson distribution beyond a given start point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TruncatedPoisson PartialUniform(int startPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The index of the first non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><p>A new uniform truncated Com-Poisson distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_PartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.PartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_PartialUniform_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.PartialUniform(System.Int32,System.Int32)">PartialUniform(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Instantiates a uniform truncated Com-Poisson distribution between given start and end points.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TruncatedPoisson PartialUniform(int startPoint, int endPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The index of the first non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">endPoint</span></td>
+        <td><p>The index of the last non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><p>A new uniform truncated Com-Poisson distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_PointMass_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.PointMass(System.Int32)">PointMass(Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a truncated Com-Poisson distribution which only allows one value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static TruncatedPoisson PointMass(int value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value of the point mass.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><p>A point mass at the given value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Emits a random sample from this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A random sample.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Sample_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Sample(System.Int32)">Sample(Int32)</h4>
+  <div class="markdown level1 summary"><p>Emits a random sample from this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Sample(int result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>This argument is ignored.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A random sample.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetTo_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetTo(Microsoft.ML.Probabilistic.Distributions.Discrete)">SetTo(Discrete)</h4>
+  <div class="markdown level1 summary"><p>Set the instance to have the same value as given</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(Discrete value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetTo_Microsoft_ML_Probabilistic_Distributions_LeftTruncatedPoisson_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetTo(Microsoft.ML.Probabilistic.Distributions.LeftTruncatedPoisson)">SetTo(LeftTruncatedPoisson)</h4>
+  <div class="markdown level1 summary"><p>Set the instance to have the same value as given</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(LeftTruncatedPoisson value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.LeftTruncatedPoisson.html">LeftTruncatedPoisson</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetTo_Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetTo(Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson)">SetTo(TruncatedPoisson)</h4>
+  <div class="markdown level1 summary"><p>Set the instance to have the same value as given</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(TruncatedPoisson value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToPartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToPartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToPartialUniform">SetToPartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets the distribution to be uniform over its support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToPartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToPartialUniform_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToPartialUniform(System.Int32,System.Int32)">SetToPartialUniform(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the current distribution to be uniform between given start and end points.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniform(int startPoint, int endPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td><p>The index of the first non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">endPoint</span></td>
+        <td><p>The index of the last non-zero term in the truncated distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToPartialUniformOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToPartialUniformOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToPartialUniformOf_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToPartialUniformOf(Microsoft.ML.Probabilistic.Distributions.Discrete)">SetToPartialUniformOf(Discrete)</h4>
+  <div class="markdown level1 summary"><p>Sets the distribution to be uniform over the support of a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniformOf(Discrete dist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToPartialUniformOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToPartialUniformOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToPartialUniformOf_Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToPartialUniformOf(Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson)">SetToPartialUniformOf(TruncatedPoisson)</h4>
+  <div class="markdown level1 summary"><p>Sets the distribution to be uniform over the support of a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniformOf(TruncatedPoisson dist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToProduct_Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToProduct(Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson,Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson)">SetToProduct(TruncatedPoisson, TruncatedPoisson)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two truncated COM-Poissons.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(TruncatedPoisson a, TruncatedPoisson b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first truncated COM-Poisson</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second truncated COM-Poisson</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets the current distribution to be uniform.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Overrides ToString method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>String representation of instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_TruncateLeft_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.TruncateLeft*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_TruncateLeft_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.TruncateLeft(System.Int32)">TruncateLeft(Int32)</h4>
+  <div class="markdown level1 summary"><p>Truncates the distribution at the given point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TruncateLeft(int startPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startPoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_TruncateRight_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.TruncateRight*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_TruncateRight_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.TruncateRight(System.Int32)">TruncateRight(Int32)</h4>
+  <div class="markdown level1 summary"><p>Truncates the distribution at the given point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TruncateRight(int endPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">endPoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedPoisson_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.Uniform">Uniform()</h4>
+  <div class="markdown level1 summary"><p>Instantiates a uniform truncated Com-Poisson distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUniform&quot;)]
+public static TruncatedPoisson Uniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></td>
+        <td><p>A new uniform Com-Poisson distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution.html">IDistribution</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean&lt;MeanType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICanTruncateLeft-1.html">ICanTruncateLeft&lt;TDomain&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICanTruncateRight-1.html">ICanTruncateRight&lt;TDomain&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

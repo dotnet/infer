@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class MethodReference
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -94,22 +94,22 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.html">Microsoft.ML.Probabilistic.Compiler.Transforms</a></h6>
@@ -165,33 +165,33 @@ as type arguments.  These can be null to allow arbitrary type arguments.
 Examples:</p>
 <ul><li>
 <code>new MethodReference(typeof(Array),&quot;Copy&quot;,typeof(Array),typeof(Array),typeof(Int32))</code>
-<p>This selects the first overload of the non-generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.copy#System_Array_Copy_System_Array_System_Array_System_Int32_">Copy(Array, Array, Int32)</a>.</p>
+<p>This selects the first overload of the non-generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.copy#system-array-copy(system-array-system-array-system-int32)">Copy(Array, Array, Int32)</a>.</p>
 </li><li>
 <code>new MethodReference(typeof(Array),&quot;Copy&quot;,null,null,typeof(Int32))</code>
 <p>This selects the same method as above, since the number of parameters and the type of the third parameter disambiguate the overload.</p>
 </li><li>
 <code>new MethodReference(typeof(Array),&quot;Find&quot;)</code>
-<p>This throws an exception since <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.find#System_Array_Find__1___0___System_Predicate___0__">Find&lt;T&gt;(T[], Predicate&lt;T&gt;)</a> is a generic method only.</p>
+<p>This throws an exception since <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.find#system-array-find-1(-0()-system-predicate((-0)))">Find&lt;T&gt;(T[], Predicate&lt;T&gt;)</a> is a generic method only.</p>
 </li><li>
 <code>new MethodReference(typeof(Array),&quot;Find&lt;>&quot;)</code>
-<p>This selects the generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.find#System_Array_Find__1___0___System_Predicate___0__">Find&lt;T&gt;(T[], Predicate&lt;T&gt;)</a>, without specifying any type arguments
+<p>This selects the generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.find#system-array-find-1(-0()-system-predicate((-0)))">Find&lt;T&gt;(T[], Predicate&lt;T&gt;)</a>, without specifying any type arguments
 or parameter types.  This method is not overloaded so no disambiguation via parameter types is needed.</p>
 </li><li>
 <code>new MethodReference(typeof(Array),&quot;Find&lt;>&quot;,null)</code>
 <p>This is equivalent to the above.  Adding two more nulls (corresponding to the two parameters of Find) would also be equivalent.</p>
 </li><li>
 <code>new MethodReference(typeof(Array),&quot;Find&lt;>&quot;,typeof(int))</code>
-<p>This selects the generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.find#System_Array_Find__1___0___System_Predicate___0__">Find&lt;T&gt;(T[], Predicate&lt;T&gt;)</a>, with type argument set to <code>int</code>.
+<p>This selects the generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.find#system-array-find-1(-0()-system-predicate((-0)))">Find&lt;T&gt;(T[], Predicate&lt;T&gt;)</a>, with type argument set to <code>int</code>.
 No parameter types are specified.  This method is not overloaded so no disambiguation via parameter types is needed.</p>
 </li><li>
 <code>new MethodReference(typeof(Array),&quot;FindIndex&lt;>&quot;,typeof(int),typeof(int[]),typeof(Predicate&lt;int>))</code>
-<p>This selects the first overload of the generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.findindex#System_Array_FindIndex__1___0___System_Predicate___0__">FindIndex&lt;T&gt;(T[], Predicate&lt;T&gt;)</a>, with type argument set to <code>int</code>.</p>
+<p>This selects the first overload of the generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.findindex#system-array-findindex-1(-0()-system-predicate((-0)))">FindIndex&lt;T&gt;(T[], Predicate&lt;T&gt;)</a>, with type argument set to <code>int</code>.</p>
 </li><li>
 <code>new MethodReference(typeof(Array),&quot;FindIndex&lt;>&quot;,typeof(int),null,null)</code>
 <p>This selects the same method as above, since the number of parameters (two) disambiguates the overload.</p>
 </li><li>
 <code>new MethodReference(typeof(Array),&quot;FindIndex&lt;>&quot;,null,null,null)</code>
-<p>This selects the first overload of the generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.findindex#System_Array_FindIndex__1___0___System_Predicate___0__">FindIndex&lt;T&gt;(T[], Predicate&lt;T&gt;)</a>, without specializing on a type argument.</p>
+<p>This selects the first overload of the generic method <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array.findindex#system-array-findindex-1(-0()-system-predicate((-0)))">FindIndex&lt;T&gt;(T[], Predicate&lt;T&gt;)</a>, without specializing on a type argument.</p>
 </li></ul>
 </div>
   <h3 id="fields">Fields
@@ -462,7 +462,7 @@ No parameter types are specified.  This method is not overloaded so no disambigu
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Transforms_MethodReference_MakeGenericMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.MethodReference.MakeGenericMethod*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Compiler_Transforms_MethodReference_MakeGenericMethod_System_Reflection_MethodInfo_System_Type___" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.MethodReference.MakeGenericMethod(System.Reflection.MethodInfo,System.Type[])">MakeGenericMethod(MethodInfo, Type[])</h4>
-  <div class="markdown level1 summary"><p>Same as <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo.makegenericmethod#System_Reflection_MethodInfo_MakeGenericMethod_System_Type___">MakeGenericMethod(Type[])</a>, but allows <code>null</code> as a wildcard.</p>
+  <div class="markdown level1 summary"><p>Same as <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo.makegenericmethod#system-reflection-methodinfo-makegenericmethod(system-type())">MakeGenericMethod(Type[])</a>, but allows <code>null</code> as a wildcard.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -708,14 +708,15 @@ No parameter types are specified.  This method is not overloaded so no disambigu
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

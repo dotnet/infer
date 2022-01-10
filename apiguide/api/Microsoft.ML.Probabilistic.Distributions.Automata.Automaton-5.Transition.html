@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,19 +89,19 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#system-valuetype-equals(system-object)">ValueType.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#system-valuetype-gethashcode">ValueType.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
@@ -110,7 +110,7 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
-public struct Transition</code></pre>
+public readonly struct Transition</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Whenever a transition is being cloned,
@@ -169,12 +169,12 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
   </h3>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_DestinationStateIndex_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.DestinationStateIndex*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_DestinationStateIndex" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.DestinationStateIndex">DestinationStateIndex</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the destination state index.</p>
+  <div class="markdown level1 summary"><p>Gets the destination state index.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int DestinationStateIndex { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly int DestinationStateIndex { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -198,7 +198,7 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Option&lt;TElementDistribution&gt; ElementDistribution { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly Option&lt;TElementDistribution&gt; ElementDistribution { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -222,7 +222,7 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Group { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly int Group { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -246,7 +246,7 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsEpsilon { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly bool IsEpsilon { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -270,7 +270,7 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Weight Weight { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly Weight Weight { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -340,33 +340,6 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.SetTo*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_SetTo_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__Transition_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.SetTo(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{`0,`1,`2,`3,`4}.Transition)">SetTo(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition)</h4>
-  <div class="markdown level1 summary"><p>Replaces the configuration of this transition with the configuration of a given transition.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetTo(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition that)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Transition.html">Automaton.Transition</a>&lt;&gt;</td>
-        <td><span class="parametername">that</span></td>
-        <td><p>The transition which configuration would be used to replace the configuration of the current transition.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.ToString">ToString()</h4>
   <div class="markdown level1 summary"><p>Gets the string representation of this transition.</p>
@@ -374,7 +347,7 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+    <pre><code class="lang-csharp hljs">public override readonly string ToString()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -393,7 +366,62 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#system-valuetype-tostring">ValueType.ToString()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_With_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.With*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_With_System_Nullable_Microsoft_ML_Probabilistic_Collections_Option__2___System_Nullable_Microsoft_ML_Probabilistic_Distributions_Automata_Weight__System_Nullable_System_Int32__System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.With(System.Nullable{Microsoft.ML.Probabilistic.Collections.Option{`2}},System.Nullable{Microsoft.ML.Probabilistic.Distributions.Automata.Weight},System.Nullable{System.Int32},System.Nullable{System.Int32})">With(Nullable&lt;Option&lt;TElementDistribution&gt;&gt;, Nullable&lt;Weight&gt;, Nullable&lt;Int32&gt;, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition With(Option&lt;TElementDistribution&gt;? elementDistribution = null, Weight? weight = null, int? destinationStateIndex = null, int? group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution&gt;&gt;</td>
+        <td><span class="parametername">elementDistribution</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a>&gt;</td>
+        <td><span class="parametername">weight</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">destinationStateIndex</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">group</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Transition.html">Automaton.Transition</a>&lt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_Write_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.Write*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Transition_Write_System_Action_System_Int32__System_Action_System_Double__System_Action__2__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Transition.Write(System.Action{System.Int32},System.Action{System.Double},System.Action{`2})">Write(Action&lt;Int32&gt;, Action&lt;Double&gt;, Action&lt;TElementDistribution&gt;)</h4>
   <div class="markdown level1 summary"><p>Writes the transition.</p>
@@ -401,7 +429,7 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Write(Action&lt;int&gt; writeInt32, Action&lt;double&gt; writeDouble, Action&lt;TElementDistribution&gt; writeElementDistribution)</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly void Write(Action&lt;int&gt; writeInt32, Action&lt;double&gt; writeDouble, Action&lt;TElementDistribution&gt; writeElementDistribution)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -436,7 +464,8 @@ public Transition(Option&lt;TElementDistribution&gt; elementDistribution, Weight
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

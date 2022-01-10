@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace Microsoft.ML.Probabilistic.Distributions.Automata
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -131,6 +131,17 @@ of an automaton graph.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.GraphVizAutomatonFormat.html">GraphVizAutomatonFormat</a></h4>
       <section><p>Converts a given automaton to its <a href="http://www.graphviz.org/">GraphViz</a> description.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-2.html">ImmutablePairDistribution&lt;TElement, TElementDistribution&gt;</a></h4>
+      <section><p>This class can represent distributions over pairs of two types: a factorized <code>P(x, y) = P(x) P(y)</code>,
+and correlated <code>P(x, y) \propto P(x) P(y) I[x=y]</code>. Both elements of a pair must be of the same type.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistribution-4.html">ImmutablePairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;</a></h4>
+      <section><p>Represents a factorized distribution over pairs of elements
+<code>P(x, y) = P(x)P(y)</code>. Pair elements <code>x</code> and <code>y</code> can be of different types.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ImmutablePairDistributionBase-5.html">ImmutablePairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis&gt;</a></h4>
+      <section><p>A base class for distributions over pairs of elements used to specify transducers.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-2.html">ListAutomaton&lt;TElement, TElementDistribution&gt;</a></h4>
       <section><p>An automaton defined on generic lists.</p>
 </section>
@@ -140,6 +151,14 @@ of an automaton graph.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-4.html">ListAutomaton&lt;TList, TElement, TElementDistribution, TThis&gt;</a></h4>
       <section><p>A base class for automata defined on types implementing <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList&lt;T&gt;</a>.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListDictionaryWeightFunction-2.html">ListDictionaryWeightFunction&lt;TElement, TElementDistribution&gt;</a></h4>
+      <section><p>A <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.DictionaryWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.DictionaryWeightFunction&lt;TThis&gt;</a>
+defined on generic lists.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListDictionaryWeightFunction-3.html">ListDictionaryWeightFunction&lt;TList, TElement, TElementDistribution&gt;</a></h4>
+      <section><p>A <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.DictionaryWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.DictionaryWeightFunction&lt;TThis&gt;</a>
+defined on types implementing <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList&lt;T&gt;</a>.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListManipulator-2.html">ListManipulator&lt;TList, TElement&gt;</a></h4>
       <section><p>Provides the ability to manipulate lists (classes that implement <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList&lt;T&gt;</a>).</p>
 </section>
@@ -148,17 +167,6 @@ of an automaton graph.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListTransducer-3.html">ListTransducer&lt;TList, TElement, TElementDist&gt;</a></h4>
       <section><p>Represents a transducer defined on pairs of lists.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-2.html">PairDistribution&lt;TElement, TElementDistribution&gt;</a></h4>
-      <section><p>This class can represent distributions over pairs of two types: a factorized <code>P(x, y) = P(x) P(y)</code>,
-and correlated <code>P(x, y) \propto P(x) P(y) I[x=y]</code>. Both elements of a pair must be of the same type.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;</a></h4>
-      <section><p>Represents a factorized distribution over pairs of elements
-<code>P(x, y) = P(x)P(y)</code>. Pair elements <code>x</code> and <code>y</code> can be of different types.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis&gt;</a></h4>
-      <section><p>A base class for distributions over pairs of elements used to specify transducers.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpAutomatonFormat.html">RegexpAutomatonFormat</a></h4>
       <section><p>Converts a given automaton to a regular expression
@@ -170,7 +178,7 @@ and correlated <code>P(x, y) \propto P(x) P(y) I[x=y]</code>. Both elements of a
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeBuilder.html">RegexpTreeBuilder</a></h4>
       <section><p>Contains methods for converting automata into regular expressions.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode&lt;TElement&gt;</a></h4>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-2.html">RegexpTreeNode&lt;TElement, TElementSet&gt;</a></h4>
       <section><p>Represents a node in the tree describing a regular expression.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.SequenceDistributionFormatPointMassAsAutomaton.html">SequenceDistributionFormatPointMassAsAutomaton</a></h4>
@@ -186,11 +194,15 @@ If the distribution is a point mass, applies the underlying automaton format to 
 <ul><li>
 If the distribution is not a point mass, applies the underlying automaton format to the probability function.
 </li><li>
-If the distribution is a point mass, simply calls <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">ToString()</a> on the point.
+If the distribution is a point mass, simply calls <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">ToString()</a> on the point.
 </li></ul>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a></h4>
       <section><p>Represents a weighted finite state automaton defined on <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringDictionaryWeightFunction.html">StringDictionaryWeightFunction</a></h4>
+      <section><p><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.DictionaryWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.DictionaryWeightFunction&lt;TThis&gt;</a>
+specialized for strings.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator.html">StringManipulator</a></h4>
       <section><p>Provides the ability to manipulate strings.</p>
@@ -212,6 +224,20 @@ If the distribution is a point mass, simply calls <a class="xref" href="https://
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase-12.UnlimitedStatesComputation.html">TransducerBase&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, TPairDistribution, TThis&gt;.UnlimitedStatesComputation</a></h4>
       <section></section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.DictionaryWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.DictionaryWeightFunction&lt;TThis&gt;</a></h4>
+      <section><p>An implementation of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a>
+that stores the entire support of the weight function along with the associated weights in a dictionary.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.MultiRepresentationWeightFunction-1.Factory.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.MultiRepresentationWeightFunction&lt;TDictionary&gt;.Factory</a></h4>
+      <section><p>An <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunctionFactory-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunctionFactory&lt;TWeightFunction&gt;</a>
+implementation for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.MultiRepresentationWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.MultiRepresentationWeightFunction&lt;TDictionary&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.PointMassWeightFunction.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.PointMassWeightFunction</a></h4>
+      <section><p>An implementation of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a>
+that represents a point mass weight function, aka a weight function that maps one sequence to 1.0 and all other sequences to zero.</p>
+</section>
     <h3 id="structs">Structs
   </h3>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Builder.StateBuilder.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Builder.StateBuilder</a></h4>
@@ -259,6 +285,12 @@ of the state. <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Aut
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a></h4>
       <section><p>Represent an element of the automata weight semiring.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.MultiRepresentationWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.MultiRepresentationWeightFunction&lt;TDictionary&gt;</a></h4>
+      <section><p>An implementation of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a>
+that automatically chooses between <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.PointMassWeightFunction.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.PointMassWeightFunction</a>,
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.DictionaryWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.DictionaryWeightFunction&lt;TThis&gt;</a>, and
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;</a> representation.</p>
+</section>
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.IAutomatonFormat.html">IAutomatonFormat</a></h4>
@@ -269,6 +301,19 @@ of the state. <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Aut
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ISequenceManipulator-2.html">ISequenceManipulator&lt;TSequence, TElement&gt;</a></h4>
       <section><p>An interface for classes that provide functionality to manipulate sequences of a certain type.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction</a></h4>
+      <section><p>The part of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a> API,
+that is agnostic of the concrete weight function class. Implementations of closed constructed
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a> can all be upcasted to this type.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a></h4>
+      <section><p>Interface for a function that maps arbitrary sequences of elements to real values,
+that can, but not necessarily has to be, represented as a weighted finite state automaton.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunctionFactory-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunctionFactory&lt;TWeightFunction&gt;</a></h4>
+      <section><p>Interface for a factory of weight functions, that is reponsible for performing operations that result
+in weight functions, but not necessarily accept them as arguments.</p>
 </section>
     <h3 id="enums">Enums
   </h3>
@@ -285,7 +330,8 @@ The value of an enumeration element corresponds to the priority of the operation
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

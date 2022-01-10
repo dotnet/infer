@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Discrete
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -121,16 +121,16 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
@@ -144,7 +144,7 @@ public class Discrete : IDistribution&lt;int&gt;, IDistribution, ICloneable, Has
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Discrete_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is represented by a normalized Vector of length D.
-In the case of a point mass, the first element is infinity and the second element holds the point location.
+The Vector may be all zero to indicate an empty distribution such as the product of conflicting point masses.
 The probability of value x is available as this[x] or GetLogProb(x).</p>
 </div>
   <h3 id="constructors">Constructors
@@ -531,7 +531,7 @@ if you want to assign the result to a Discrete type</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_Evaluate_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.Evaluate*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_Evaluate_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.Evaluate(System.Int32)">Evaluate(Int32)</h4>
   <div class="markdown level1 summary"><p>Evaluates the density at the specified domain value</p>
@@ -647,7 +647,7 @@ if you want to assign the result to a Discrete type</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Discrete)">GetLogAverageOf(Discrete)</h4>
   <div class="markdown level1 summary"><p>The log of the integral of the product of this discrete and that discrete</p>
@@ -1071,6 +1071,29 @@ is invalid once this workspace is modified.</p>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if uniform</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_IsZero_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.IsZero*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_IsZero" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.IsZero">IsZero()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsZero()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1648,7 +1671,7 @@ fill in the resulting Vector, and then pass it to SetProbs.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.ToString(System.String)">ToString(String)</h4>
   <div class="markdown level1 summary"></div>
@@ -1984,6 +2007,46 @@ even.</p>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_Zero_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.Zero*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_Zero_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.Zero(System.Int32)">Zero(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete Zero(int numValues)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">numValues</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="operators">Operators
   </h3>
   <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_op_Division_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.op_Division*"></a>
@@ -2212,7 +2275,8 @@ even.</p>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

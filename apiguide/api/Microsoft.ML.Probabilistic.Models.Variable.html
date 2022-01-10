@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Variable
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -102,22 +102,22 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Models.html">Microsoft.ML.Probabilistic.Models</a></h6>
@@ -3348,6 +3348,201 @@ the returned CaseBlock must be closed manually by calling CloseBlock().</p>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;&gt;</td>
+        <td><p>A new constant jagged array variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The element type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_Variable_Constant_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Constant*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Constant__1_System_Collections_Generic_IReadOnlyList___0__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Constant``1(System.Collections.Generic.IReadOnlyList{``0})">Constant&lt;T&gt;(IReadOnlyList&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Defines a constant which is a 1D array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;Variable&lt;T&gt;, IReadOnlyList&lt;T&gt;&gt; Constant&lt;T&gt;(IReadOnlyList&lt;T&gt; value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The constant list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
+        <td><p>A new constant variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The element type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_Variable_Constant_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Constant*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Constant__1_System_Collections_Generic_IReadOnlyList___0__Microsoft_ML_Probabilistic_Models_Range_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Constant``1(System.Collections.Generic.IReadOnlyList{``0},Microsoft.ML.Probabilistic.Models.Range)">Constant&lt;T&gt;(IReadOnlyList&lt;T&gt;, Range)</h4>
+  <div class="markdown level1 summary"><p>Defines a constant which is a 1D array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;Variable&lt;T&gt;, IReadOnlyList&lt;T&gt;&gt; Constant&lt;T&gt;(IReadOnlyList&lt;T&gt; value, Range r)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The constant list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a></td>
+        <td><span class="parametername">r</span></td>
+        <td><p>The range associated with this constant list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
+        <td><p>A new constant variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The element type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_Variable_Constant_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Constant*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Constant__1_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList___0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Constant``1(System.Collections.Generic.IReadOnlyList{System.Collections.Generic.IReadOnlyList{``0}},Microsoft.ML.Probabilistic.Models.Range,Microsoft.ML.Probabilistic.Models.Range)">Constant&lt;T&gt;(IReadOnlyList&lt;IReadOnlyList&lt;T&gt;&gt;, Range, Range)</h4>
+  <div class="markdown level1 summary"><p>Defines a constant which is a 2-D jagged array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;VariableArray&lt;Variable&lt;T&gt;, IReadOnlyList&lt;T&gt;&gt;, IReadOnlyList&lt;IReadOnlyList&lt;T&gt;&gt;&gt; Constant&lt;T&gt;(IReadOnlyList&lt;IReadOnlyList&lt;T&gt;&gt; value, Range r1, Range r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The constant list of lists.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td><p>The range associated with the first index.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td><p>The range associated with the second index.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;&gt;</td>
         <td><p>A new constant jagged array variable.</p>
 </td>
       </tr>
@@ -7600,13 +7795,13 @@ of means and precisions</p>
   <div class="markdown level1 remarks"><p>If the indices are known to be all different, use <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_Variable___0____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Subarray&lt;T&gt;(Variable&lt;T[]&gt;, VariableArray&lt;Int32&gt;)</a> for greater efficiency.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_GetItems_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.GetItems*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable_System_Collections_Generic_IList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.GetItems``1(Microsoft.ML.Probabilistic.Models.Variable{System.Collections.Generic.IList{``0}},Microsoft.ML.Probabilistic.Models.VariableArray{System.Int32})">GetItems&lt;T&gt;(Variable&lt;IList&lt;T&gt;&gt;, VariableArray&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable_System_Collections_Generic_IReadOnlyList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.GetItems``1(Microsoft.ML.Probabilistic.Models.Variable{System.Collections.Generic.IReadOnlyList{``0}},Microsoft.ML.Probabilistic.Models.VariableArray{System.Int32})">GetItems&lt;T&gt;(Variable&lt;IReadOnlyList&lt;T&gt;&gt;, VariableArray&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets a variable array containing (possibly duplicated) items of a source array</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VariableArray&lt;T&gt; GetItems&lt;T&gt;(Variable&lt;IList&lt;T&gt;&gt; array, VariableArray&lt;int&gt; indices)</code></pre>
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;T&gt; GetItems&lt;T&gt;(Variable&lt;IReadOnlyList&lt;T&gt;&gt; array, VariableArray&lt;int&gt; indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -7619,7 +7814,7 @@ of means and precisions</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The source array</p>
 </td>
@@ -7664,7 +7859,7 @@ of means and precisions</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable_System_Collections_Generic_IList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable_System_Collections_Generic_IReadOnlyList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>If the indices are known to be all different, use <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_Variable___0____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Subarray&lt;T&gt;(Variable&lt;T[]&gt;, VariableArray&lt;Int32&gt;)</a> for greater efficiency.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_GetItems_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.GetItems*"></a>
@@ -7908,13 +8103,13 @@ of means and precisions</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_HasAnyItemDefined_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.HasAnyItemDefined*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_HasAnyItemDefined_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Models_ConditionBlock__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.HasAnyItemDefined(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Models.ConditionBlock})">HasAnyItemDefined(IList&lt;ConditionBlock&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_HasAnyItemDefined_System_Collections_Generic_IReadOnlyList_Microsoft_ML_Probabilistic_Models_ConditionBlock__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.HasAnyItemDefined(System.Collections.Generic.IReadOnlyList{Microsoft.ML.Probabilistic.Models.ConditionBlock})">HasAnyItemDefined(IReadOnlyList&lt;ConditionBlock&gt;)</h4>
   <div class="markdown level1 summary"><p>True if the variable (or any item of it) is defined in the given context.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected bool HasAnyItemDefined(IList&lt;ConditionBlock&gt; currentConditions)</code></pre>
+    <pre><code class="lang-csharp hljs">protected bool HasAnyItemDefined(IReadOnlyList&lt;ConditionBlock&gt; currentConditions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -7927,7 +8122,7 @@ of means and precisions</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.ConditionBlock.html">ConditionBlock</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.ConditionBlock.html">ConditionBlock</a>&gt;</td>
         <td><span class="parametername">currentConditions</span></td>
         <td></td>
       </tr>
@@ -7991,12 +8186,12 @@ of means and precisions</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_HasDefinedItem_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.HasDefinedItem*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_HasDefinedItem_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Models_ConditionBlock__System_Collections_Generic_List_System_Collections_Generic_List_Microsoft_ML_Probabilistic_Models_IModelExpression___System_Int32_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.HasDefinedItem(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Models.ConditionBlock},System.Collections.Generic.List{System.Collections.Generic.List{Microsoft.ML.Probabilistic.Models.IModelExpression}},System.Int32)">HasDefinedItem(IList&lt;ConditionBlock&gt;, List&lt;List&lt;IModelExpression&gt;&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_HasDefinedItem_System_Collections_Generic_IReadOnlyList_Microsoft_ML_Probabilistic_Models_ConditionBlock__System_Collections_Generic_List_System_Collections_Generic_List_Microsoft_ML_Probabilistic_Models_IModelExpression___System_Int32_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.HasDefinedItem(System.Collections.Generic.IReadOnlyList{Microsoft.ML.Probabilistic.Models.ConditionBlock},System.Collections.Generic.List{System.Collections.Generic.List{Microsoft.ML.Probabilistic.Models.IModelExpression}},System.Int32)">HasDefinedItem(IReadOnlyList&lt;ConditionBlock&gt;, List&lt;List&lt;IModelExpression&gt;&gt;, Int32)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected bool HasDefinedItem(IList&lt;ConditionBlock&gt; currentConditions, List&lt;List&lt;IModelExpression&gt;&gt; indices, int depth)</code></pre>
+    <pre><code class="lang-csharp hljs">protected bool HasDefinedItem(IReadOnlyList&lt;ConditionBlock&gt; currentConditions, List&lt;List&lt;IModelExpression&gt;&gt; indices, int depth)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -8009,7 +8204,7 @@ of means and precisions</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.ConditionBlock.html">ConditionBlock</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.ConditionBlock.html">ConditionBlock</a>&gt;</td>
         <td><span class="parametername">currentConditions</span></td>
         <td></td>
       </tr>
@@ -9225,13 +9420,13 @@ or when the definition context is a prefix of the context.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_IsPrefixOf_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.IsPrefixOf*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_IsPrefixOf__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.IsPrefixOf``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``0})">IsPrefixOf&lt;T&gt;(IList&lt;T&gt;, IList&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_IsPrefixOf__1_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList___0__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.IsPrefixOf``1(System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.IReadOnlyList{``0})">IsPrefixOf&lt;T&gt;(IReadOnlyList&lt;T&gt;, IReadOnlyList&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>True if prefix is a prefix of list.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected static bool IsPrefixOf&lt;T&gt;(IList&lt;T&gt; prefix, IList&lt;T&gt; list)</code></pre>
+    <pre><code class="lang-csharp hljs">protected static bool IsPrefixOf&lt;T&gt;(IReadOnlyList&lt;T&gt; prefix, IReadOnlyList&lt;T&gt; list)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -9244,12 +9439,12 @@ or when the definition context is a prefix of the context.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
         <td><span class="parametername">prefix</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
         <td></td>
       </tr>
@@ -9863,13 +10058,14 @@ To allow duplicate indices, use <a class="xref" href="Microsoft.ML.Probabilistic
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Models_Variable_MayOverlap_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.MayOverlap*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_MayOverlap_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Models_IModelExpression__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Models_IModelExpression__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.MayOverlap(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Models.IModelExpression},System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Models.IModelExpression})">MayOverlap(IList&lt;IModelExpression&gt;, IList&lt;IModelExpression&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <a id="Microsoft_ML_Probabilistic_Models_Variable_Max_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Max*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Max_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Max(Microsoft.ML.Probabilistic.Models.Variable{System.Int32},Microsoft.ML.Probabilistic.Models.Variable{System.Int32})">Max(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns an int variable which is the maximum of two int variables</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected bool MayOverlap(IList&lt;IModelExpression&gt; list1, IList&lt;IModelExpression&gt; list2)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Variable&lt;int&gt; Max(Variable&lt;int&gt; a, Variable&lt;int&gt; b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -9882,12 +10078,60 @@ To allow duplicate indices, use <a class="xref" href="Microsoft.ML.Probabilistic
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first variable</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second variable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><p>A new variable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_Variable_MayOverlap_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.MayOverlap*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_MayOverlap_System_Collections_Generic_IReadOnlyList_Microsoft_ML_Probabilistic_Models_IModelExpression__System_Collections_Generic_IReadOnlyList_Microsoft_ML_Probabilistic_Models_IModelExpression__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.MayOverlap(System.Collections.Generic.IReadOnlyList{Microsoft.ML.Probabilistic.Models.IModelExpression},System.Collections.Generic.IReadOnlyList{Microsoft.ML.Probabilistic.Models.IModelExpression})">MayOverlap(IReadOnlyList&lt;IModelExpression&gt;, IReadOnlyList&lt;IModelExpression&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool MayOverlap(IReadOnlyList&lt;IModelExpression&gt; list1, IReadOnlyList&lt;IModelExpression&gt; list2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>&gt;</td>
         <td><span class="parametername">list1</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>&gt;</td>
         <td><span class="parametername">list2</span></td>
         <td></td>
       </tr>
@@ -10813,13 +11057,13 @@ and will be provided later using If/Case/Switch blocks.</p>
   <div class="markdown level1 remarks"><p>The variable is not constant; its ObservedValue can be changed.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_Observed_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed``1(System.Collections.Generic.IList{``0})">Observed&lt;T&gt;(IList&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IReadOnlyList___0__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed``1(System.Collections.Generic.IReadOnlyList{``0})">Observed&lt;T&gt;(IReadOnlyList&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a variable array and observes it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VariableArray&lt;Variable&lt;T&gt;, IList&lt;T&gt;&gt; Observed&lt;T&gt;(IList&lt;T&gt; observedValue)</code></pre>
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;Variable&lt;T&gt;, IReadOnlyList&lt;T&gt;&gt; Observed&lt;T&gt;(IReadOnlyList&lt;T&gt; observedValue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -10832,7 +11076,7 @@ and will be provided later using If/Case/Switch blocks.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
         <td><span class="parametername">observedValue</span></td>
         <td><p>The observed value.</p>
 </td>
@@ -10849,7 +11093,7 @@ and will be provided later using If/Case/Switch blocks.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
         <td><p>A new variable.</p>
 </td>
       </tr>
@@ -10871,17 +11115,17 @@ and will be provided later using If/Case/Switch blocks.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IReadOnlyList___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The variable is not constant; its ObservedValue can be changed.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_Observed_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Models_Range_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed``1(System.Collections.Generic.IList{``0},Microsoft.ML.Probabilistic.Models.Range)">Observed&lt;T&gt;(IList&lt;T&gt;, Range)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IReadOnlyList___0__Microsoft_ML_Probabilistic_Models_Range_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed``1(System.Collections.Generic.IReadOnlyList{``0},Microsoft.ML.Probabilistic.Models.Range)">Observed&lt;T&gt;(IReadOnlyList&lt;T&gt;, Range)</h4>
   <div class="markdown level1 summary"><p>Creates a variable array and observes it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VariableArray&lt;Variable&lt;T&gt;, IList&lt;T&gt;&gt; Observed&lt;T&gt;(IList&lt;T&gt; observedValue, Range r)</code></pre>
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;Variable&lt;T&gt;, IReadOnlyList&lt;T&gt;&gt; Observed&lt;T&gt;(IReadOnlyList&lt;T&gt; observedValue, Range r)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -10894,7 +11138,7 @@ and will be provided later using If/Case/Switch blocks.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
         <td><span class="parametername">observedValue</span></td>
         <td><p>The observed value.</p>
 </td>
@@ -10917,7 +11161,7 @@ and will be provided later using If/Case/Switch blocks.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
         <td><p>A new variable.</p>
 </td>
       </tr>
@@ -10939,17 +11183,17 @@ and will be provided later using If/Case/Switch blocks.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Models_Range__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IReadOnlyList___0__Microsoft_ML_Probabilistic_Models_Range__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The variable is not constant; its ObservedValue can be changed.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_Observed_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed``1(System.Collections.Generic.IList{System.Collections.Generic.IList{``0}},Microsoft.ML.Probabilistic.Models.Range,Microsoft.ML.Probabilistic.Models.Range)">Observed&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, Range, Range)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList___0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Observed``1(System.Collections.Generic.IReadOnlyList{System.Collections.Generic.IReadOnlyList{``0}},Microsoft.ML.Probabilistic.Models.Range,Microsoft.ML.Probabilistic.Models.Range)">Observed&lt;T&gt;(IReadOnlyList&lt;IReadOnlyList&lt;T&gt;&gt;, Range, Range)</h4>
   <div class="markdown level1 summary"><p>Creates a jagged variable array and observes it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VariableArray&lt;VariableArray&lt;Variable&lt;T&gt;, IList&lt;T&gt;&gt;, IList&lt;IList&lt;T&gt;&gt;&gt; Observed&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt; observedValue, Range r1, Range r2)</code></pre>
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;VariableArray&lt;Variable&lt;T&gt;, IReadOnlyList&lt;T&gt;&gt;, IReadOnlyList&lt;IReadOnlyList&lt;T&gt;&gt;&gt; Observed&lt;T&gt;(IReadOnlyList&lt;IReadOnlyList&lt;T&gt;&gt; observedValue, Range r1, Range r2)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -10962,7 +11206,7 @@ and will be provided later using If/Case/Switch blocks.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">observedValue</span></td>
         <td><p>The observed value.</p>
 </td>
@@ -10991,7 +11235,7 @@ and will be provided later using If/Case/Switch blocks.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;&gt;</td>
         <td><p>A new variable.</p>
 </td>
       </tr>
@@ -11013,7 +11257,7 @@ and will be provided later using If/Case/Switch blocks.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Observed__1_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList___0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The variable is not constant; its ObservedValue can be changed.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_Poisson_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Poisson*"></a>
@@ -12029,13 +12273,13 @@ and will be provided later using If/Case/Switch blocks.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_ShorterIsPrefixOfLonger_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.ShorterIsPrefixOfLonger*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_ShorterIsPrefixOfLonger__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.ShorterIsPrefixOfLonger``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``0})">ShorterIsPrefixOfLonger&lt;T&gt;(IList&lt;T&gt;, IList&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_ShorterIsPrefixOfLonger__1_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList___0__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.ShorterIsPrefixOfLonger``1(System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.IReadOnlyList{``0})">ShorterIsPrefixOfLonger&lt;T&gt;(IReadOnlyList&lt;T&gt;, IReadOnlyList&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>True if the shorter list is a prefix of the longer list.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected static bool ShorterIsPrefixOfLonger&lt;T&gt;(IList&lt;T&gt; a, IList&lt;T&gt; b)</code></pre>
+    <pre><code class="lang-csharp hljs">protected static bool ShorterIsPrefixOfLonger&lt;T&gt;(IReadOnlyList&lt;T&gt; a, IReadOnlyList&lt;T&gt; b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -12048,12 +12292,12 @@ and will be provided later using If/Case/Switch blocks.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
         <td><span class="parametername">a</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
         <td><span class="parametername">b</span></td>
         <td></td>
       </tr>
@@ -12847,7 +13091,7 @@ the resulting random variable has an improper distribution.</p>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_StringFormat_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.StringFormat*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Models_Variable_StringFormat_Microsoft_ML_Probabilistic_Models_Variable_System_String__Microsoft_ML_Probabilistic_Models_Variable_System_String____" data-uid="Microsoft.ML.Probabilistic.Models.Variable.StringFormat(Microsoft.ML.Probabilistic.Models.Variable{System.String},Microsoft.ML.Probabilistic.Models.Variable{System.String}[])">StringFormat(Variable&lt;String&gt;, Variable&lt;String&gt;[])</h4>
   <div class="markdown level1 summary"><p>Replaces argument placeholders such as {0}, {1} etc with arguments having the corresponding index,
-similar to what <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#System_String_Format_System_String_System_Object___">Format(String, Object[])</a> does.</p>
+similar to what <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#system-string-format(system-string-system-object())">Format(String, Object[])</a> does.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -12895,7 +13139,7 @@ similar to what <a class="xref" href="https://docs.microsoft.com/dotnet/api/syst
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Models_Variable_StringFormat_Microsoft_ML_Probabilistic_Models_Variable_System_String__Microsoft_ML_Probabilistic_Models_Variable_System_String_____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This method has the following notable differences from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#System_String_Format_System_String_System_Object___">Format(String, Object[])</a>:</p>
+  <div class="markdown level1 remarks"><p>This method has the following notable differences from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#system-string-format(system-string-system-object())">Format(String, Object[])</a>:</p>
 <ul></ul>
 <item>Placeholder for each of the arguments must be present in the format string exactly once.</item>
 <item>No braces are allowed except for those used to specify placeholders.</item>
@@ -12903,7 +13147,7 @@ similar to what <a class="xref" href="https://docs.microsoft.com/dotnet/api/syst
   <a id="Microsoft_ML_Probabilistic_Models_Variable_StringFormat_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.StringFormat*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Models_Variable_StringFormat_Microsoft_ML_Probabilistic_Models_Variable_System_String__Microsoft_ML_Probabilistic_Models_VariableArray_System_String__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.StringFormat(Microsoft.ML.Probabilistic.Models.Variable{System.String},Microsoft.ML.Probabilistic.Models.VariableArray{System.String})">StringFormat(Variable&lt;String&gt;, VariableArray&lt;String&gt;)</h4>
   <div class="markdown level1 summary"><p>Replaces argument placeholders such as {0}, {1} etc with arguments having the corresponding index,
-similar to what <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#System_String_Format_System_String_System_Object___">Format(String, Object[])</a> does.</p>
+similar to what <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#system-string-format(system-string-system-object())">Format(String, Object[])</a> does.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -12951,7 +13195,7 @@ similar to what <a class="xref" href="https://docs.microsoft.com/dotnet/api/syst
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Models_Variable_StringFormat_Microsoft_ML_Probabilistic_Models_Variable_System_String__Microsoft_ML_Probabilistic_Models_VariableArray_System_String___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This method has the following notable differences from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#System_String_Format_System_String_System_Object___">Format(String, Object[])</a>:</p>
+  <div class="markdown level1 remarks"><p>This method has the following notable differences from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#system-string-format(system-string-system-object())">Format(String, Object[])</a>:</p>
 <ul></ul>
 <item>Placeholder for each of the arguments must be present in the format string exactly once.</item>
 <item>No braces are allowed except for those used to specify placeholders.</item>
@@ -13777,13 +14021,13 @@ the resulting random variable has an improper distribution.</p>
   <div class="markdown level1 remarks"><p>To allow duplicate indices, use <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable___0____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">GetItems&lt;T&gt;(Variable&lt;T[]&gt;, VariableArray&lt;Int32&gt;)</a>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_Subarray_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Subarray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_Variable_System_Collections_Generic_IList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Subarray``1(Microsoft.ML.Probabilistic.Models.Variable{System.Collections.Generic.IList{``0}},Microsoft.ML.Probabilistic.Models.VariableArray{System.Int32})">Subarray&lt;T&gt;(Variable&lt;IList&lt;T&gt;&gt;, VariableArray&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_Variable_System_Collections_Generic_IReadOnlyList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Subarray``1(Microsoft.ML.Probabilistic.Models.Variable{System.Collections.Generic.IReadOnlyList{``0}},Microsoft.ML.Probabilistic.Models.VariableArray{System.Int32})">Subarray&lt;T&gt;(Variable&lt;IReadOnlyList&lt;T&gt;&gt;, VariableArray&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets a variable array containing different items of a source list</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VariableArray&lt;T&gt; Subarray&lt;T&gt;(Variable&lt;IList&lt;T&gt;&gt; array, VariableArray&lt;int&gt; indices)</code></pre>
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;T&gt; Subarray&lt;T&gt;(Variable&lt;IReadOnlyList&lt;T&gt;&gt; array, VariableArray&lt;int&gt; indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -13796,7 +14040,7 @@ the resulting random variable has an improper distribution.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The source array</p>
 </td>
@@ -13841,17 +14085,17 @@ the resulting random variable has an improper distribution.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_Variable_System_Collections_Generic_IList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_Variable_System_Collections_Generic_IReadOnlyList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>To allow duplicate indices, use <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable___0____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">GetItems&lt;T&gt;(Variable&lt;T[]&gt;, VariableArray&lt;Int32&gt;)</a>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_Subarray_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Subarray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Subarray``1(Microsoft.ML.Probabilistic.Models.VariableArray{``0},Microsoft.ML.Probabilistic.Models.VariableArray{Microsoft.ML.Probabilistic.Models.Variable{System.Int32},System.Collections.Generic.IList{System.Int32}})">Subarray&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;Variable&lt;Int32&gt;, IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__System_Collections_Generic_IReadOnlyList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Subarray``1(Microsoft.ML.Probabilistic.Models.VariableArray{``0},Microsoft.ML.Probabilistic.Models.VariableArray{Microsoft.ML.Probabilistic.Models.Variable{System.Int32},System.Collections.Generic.IReadOnlyList{System.Int32}})">Subarray&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;Variable&lt;Int32&gt;, IReadOnlyList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets a variable array containing different items of a source list.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VariableArray&lt;T&gt; Subarray&lt;T&gt;(VariableArray&lt;T&gt; array, VariableArray&lt;Variable&lt;int&gt;, IList&lt;int&gt;&gt; indices)</code></pre>
+    <pre><code class="lang-csharp hljs">public static VariableArray&lt;T&gt; Subarray&lt;T&gt;(VariableArray&lt;T&gt; array, VariableArray&lt;Variable&lt;int&gt;, IReadOnlyList&lt;int&gt;&gt; indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -13870,7 +14114,7 @@ the resulting random variable has an improper distribution.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Variable array containing the indices of the elements to get.  The indices must all be different.</p>
 </td>
@@ -13909,7 +14153,7 @@ the resulting random variable has an improper distribution.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__System_Collections_Generic_IReadOnlyList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>To allow duplicate indices, use <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable___0____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">GetItems&lt;T&gt;(Variable&lt;T[]&gt;, VariableArray&lt;Int32&gt;)</a>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_Subarray_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.Subarray*"></a>
@@ -14673,7 +14917,7 @@ the returned SwitchBlock must be closed manually by calling CloseBlock().</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Models_Variable_TruncatedGammaFromShapeAndRate_" data-uid="Microsoft.ML.Probabilistic.Models.Variable.TruncatedGammaFromShapeAndRate*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Models_Variable_TruncatedGammaFromShapeAndRate_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Models.Variable.TruncatedGammaFromShapeAndRate(Microsoft.ML.Probabilistic.Models.Variable{System.Double},Microsoft.ML.Probabilistic.Models.Variable{System.Double},Microsoft.ML.Probabilistic.Models.Variable{System.Double},Microsoft.ML.Probabilistic.Models.Variable{System.Double})">TruncatedGammaFromShapeAndRate(Variable&lt;Double&gt;, Variable&lt;Double&gt;, Variable&lt;Double&gt;, Variable&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns a random variable that is statistically defined by a truncated Gamma distribution
@@ -15352,7 +15596,8 @@ by random variables.</p>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

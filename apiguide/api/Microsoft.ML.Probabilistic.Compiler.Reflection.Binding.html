@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Binding
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -94,22 +94,22 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.html">Microsoft.ML.Probabilistic.Compiler.Reflection</a></h6>
@@ -196,7 +196,7 @@ specific.  The &lt; operator can be used to compare the specificity of Bindings.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Conversion[] Conversions</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly Conversion[] Conversions</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -242,7 +242,7 @@ specific.  The &lt; operator can be used to compare the specificity of Bindings.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IDictionary&lt;Type, Type&gt; Types</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly Dictionary&lt;Type, Type&gt; Types</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -254,7 +254,7 @@ specific.  The &lt; operator can be used to compare the specificity of Bindings.
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1036,13 +1036,13 @@ include more bindings.  <code data-dev-comment-type="paramref" class="paramref">
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ReplaceTypeParameters_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ReplaceTypeParameters*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ReplaceTypeParameters_System_Type_System_Collections_Generic_IDictionary_System_Type_System_Type__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ReplaceTypeParameters(System.Type,System.Collections.Generic.IDictionary{System.Type,System.Type})">ReplaceTypeParameters(Type, IDictionary&lt;Type, Type&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ReplaceTypeParameters_System_Type_System_Collections_Generic_IReadOnlyDictionary_System_Type_System_Type__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ReplaceTypeParameters(System.Type,System.Collections.Generic.IReadOnlyDictionary{System.Type,System.Type})">ReplaceTypeParameters(Type, IReadOnlyDictionary&lt;Type, Type&gt;)</h4>
   <div class="markdown level1 summary"><p>Replace type parameters in a generic type.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Type ReplaceTypeParameters(Type type, IDictionary&lt;Type, Type&gt; typeMap)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Type ReplaceTypeParameters(Type type, IReadOnlyDictionary&lt;Type, Type&gt; typeMap)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1061,7 +1061,7 @@ include more bindings.  <code data-dev-comment-type="paramref" class="paramref">
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
         <td><span class="parametername">typeMap</span></td>
         <td><p>A dictionary for mapping types</p>
 </td>
@@ -1133,7 +1133,7 @@ include more bindings.  <code data-dev-comment-type="paramref" class="paramref">
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_TypesAssignableFrom_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.TypesAssignableFrom*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_TypesAssignableFrom_System_Type_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.TypesAssignableFrom(System.Type,System.Boolean)">TypesAssignableFrom(Type, Boolean)</h4>
   <div class="markdown level1 summary"><p>All base classes and interfaces of a given type.</p>
@@ -1283,7 +1283,8 @@ include more bindings.  <code data-dev-comment-type="paramref" class="paramref">
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ReplicateExitingOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -94,25 +94,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
@@ -125,7 +125,7 @@ public static class ReplicateExitingOp</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateExitingOp_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
-    This factor is like <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Replicate__1___0_System_Int32_">Replicate&lt;T&gt;(T, Int32)</a> except <code>Uses[0]</code> plays the role of <code>Def</code>,
+    This factor is like <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Clone.html#Microsoft_ML_Probabilistic_Factors_Clone_Replicate__1___0_System_Int32_">Replicate&lt;T&gt;(T, Int32)</a> except <code>Uses[0]</code> plays the role of <code>Def</code>,
     and <code>Def</code> is considered a <code>Use</code>. Needed only when a variable exits a gate in VMP.
 </p>
 </div>
@@ -245,14 +245,13 @@ public static class ReplicateExitingOp</code></pre>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_ReplicateExitingOp_UsesAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateExitingOp.UsesAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateExitingOp_UsesAverageLogarithm__1_System_Collections_Generic_IList___0____0_System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateExitingOp.UsesAverageLogarithm``1(System.Collections.Generic.IList{``0},``0,System.Int32,``0)">UsesAverageLogarithm&lt;T&gt;(IList&lt;T&gt;, T, Int32, T)</h4>
-  <div class="markdown level1 summary"><p>VMP message to <code>Uses</code>.</p>
-</div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateExitingOp_UsesAverageLogarithm__1_System_Collections_Generic_IReadOnlyList___0____0_System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateExitingOp.UsesAverageLogarithm``1(System.Collections.Generic.IReadOnlyList{``0},``0,System.Int32,``0)">UsesAverageLogarithm&lt;T&gt;(IReadOnlyList&lt;T&gt;, T, Int32, T)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[SkipIfAllUniform]
-public static T UsesAverageLogarithm&lt;T&gt;(IList&lt;T&gt; Uses, T Def, int resultIndex, T result)
+public static T UsesAverageLogarithm&lt;T&gt;(IReadOnlyList&lt;T&gt; Uses, T Def, int resultIndex, T result)
     where T : SettableTo&lt;T&gt;, SettableToProduct&lt;T&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -266,28 +265,24 @@ public static T UsesAverageLogarithm&lt;T&gt;(IList&lt;T&gt; Uses, T Def, int re
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
         <td><span class="parametername">Uses</span></td>
-        <td><p>Incoming message from <code>Uses</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">Def</span></td>
-        <td><p>Incoming message from <code>Def</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">resultIndex</span></td>
-        <td><p>Index of the <code>Uses</code> for which a message is desired.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -302,8 +297,7 @@ public static T UsesAverageLogarithm&lt;T&gt;(IList&lt;T&gt; Uses, T Def, int re
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -323,9 +317,6 @@ public static T UsesAverageLogarithm&lt;T&gt;(IList&lt;T&gt; Uses, T Def, int re
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateExitingOp_UsesAverageLogarithm__1_System_Collections_Generic_IList___0____0_System_Int32___0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>Uses</code> as the random arguments are varied. The formula is <code>proj[sum_(Def) p(Def) factor(Uses,Def,count)]</code>.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_ReplicateExitingOp_UsesAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateExitingOp.UsesAverageLogarithmInit*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateExitingOp_UsesAverageLogarithmInit__1___0_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateExitingOp.UsesAverageLogarithmInit``1(``0,System.Int32)">UsesAverageLogarithmInit&lt;T&gt;(T, Int32)</h4>
   <div class="markdown level1 summary"></div>
@@ -399,7 +390,8 @@ public static T UsesAverageLogarithm&lt;T&gt;(IList&lt;T&gt; Uses, T Def, int re
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

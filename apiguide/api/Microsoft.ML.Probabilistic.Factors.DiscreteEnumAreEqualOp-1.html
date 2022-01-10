@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DiscreteEnumAreEqualOp&lt;TEnum&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -94,25 +94,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
@@ -215,6 +215,56 @@ public class DiscreteEnumAreEqualOp&lt;TEnum&gt;</code></pre>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
         <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0},Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">AAverageConditional(Bernoulli, DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DiscreteEnum&lt;TEnum&gt; AAverageConditional(Bernoulli areEqual, DiscreteEnum&lt;TEnum&gt; B, DiscreteEnum&lt;TEnum&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -347,6 +397,56 @@ public class DiscreteEnumAreEqualOp&lt;TEnum&gt;</code></pre>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
         <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0},Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">AAverageLogarithm(Bernoulli, DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DiscreteEnum&lt;TEnum&gt; AAverageLogarithm(Bernoulli areEqual, DiscreteEnum&lt;TEnum&gt; B, DiscreteEnum&lt;TEnum&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -512,6 +612,51 @@ public class DiscreteEnumAreEqualOp&lt;TEnum&gt;</code></pre>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AreEqualAverageConditional_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>areEqual</code> as the random arguments are varied. The formula is <code>proj[p(areEqual) sum_(a,b) p(a,b) factor(areEqual,a,b)]/p(areEqual)</code>.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AreEqualAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AreEqualAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AreEqualAverageConditional_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AreEqualAverageConditional(Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0},Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">AreEqualAverageConditional(DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli AreEqualAverageConditional(DiscreteEnum&lt;TEnum&gt; A, DiscreteEnum&lt;TEnum&gt; B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AreEqualAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AreEqualAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AreEqualAverageLogarithm__0_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AreEqualAverageLogarithm(`0,Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">AreEqualAverageLogarithm(TEnum, DiscreteEnum&lt;TEnum&gt;)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>areEqual</code>.</p>
@@ -616,6 +761,81 @@ public class DiscreteEnumAreEqualOp&lt;TEnum&gt;</code></pre>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AreEqualAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>areEqual</code> as the random arguments are varied. The formula is <code>proj[sum_(a,b) p(a,b) factor(areEqual,a,b)]</code>.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AreEqualAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AreEqualAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AreEqualAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AreEqualAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0},Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">AreEqualAverageLogarithm(DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli AreEqualAverageLogarithm(DiscreteEnum&lt;TEnum&gt; A, DiscreteEnum&lt;TEnum&gt; B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    In Variational Message Passing, the evidence contribution of a deterministic factor is zero.
+</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.BAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli__0_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli,`0,Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">BAverageConditional(Bernoulli, TEnum, DiscreteEnum&lt;TEnum&gt;)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
@@ -687,6 +907,56 @@ public class DiscreteEnumAreEqualOp&lt;TEnum&gt;</code></pre>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
         <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0},Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">BAverageConditional(Bernoulli, DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DiscreteEnum&lt;TEnum&gt; BAverageConditional(Bernoulli areEqual, DiscreteEnum&lt;TEnum&gt; A, DiscreteEnum&lt;TEnum&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -819,6 +1089,56 @@ public class DiscreteEnumAreEqualOp&lt;TEnum&gt;</code></pre>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
         <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0},Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">BAverageLogarithm(Bernoulli, DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DiscreteEnum&lt;TEnum&gt; BAverageLogarithm(Bernoulli areEqual, DiscreteEnum&lt;TEnum&gt; A, DiscreteEnum&lt;TEnum&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1113,6 +1433,46 @@ public class DiscreteEnumAreEqualOp&lt;TEnum&gt;</code></pre>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Bernoulli)">LogEvidenceRatio(Bernoulli)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Bernoulli areEqual)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_LogEvidenceRatio_System_Boolean__0__0_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.LogEvidenceRatio(System.Boolean,`0,`0)">LogEvidenceRatio(Boolean, TEnum, TEnum)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
@@ -1298,13 +1658,69 @@ public class DiscreteEnumAreEqualOp&lt;TEnum&gt;</code></pre>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_LogEvidenceRatio_System_Boolean_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0___0_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteEnumAreEqualOp_1_LogEvidenceRatio_System_Boolean_Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__Microsoft_ML_Probabilistic_Distributions_DiscreteEnum__0__" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteEnumAreEqualOp`1.LogEvidenceRatio(System.Boolean,Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0},Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0},Microsoft.ML.Probabilistic.Distributions.DiscreteEnum{`0})">LogEvidenceRatio(Boolean, DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(bool areEqual, DiscreteEnum&lt;TEnum&gt; A, DiscreteEnum&lt;TEnum&gt; B, DiscreteEnum&lt;TEnum&gt; to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;</td>
+        <td><span class="parametername">to_A</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

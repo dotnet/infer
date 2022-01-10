@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class StringDistribution
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,7 +89,7 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html">SequenceDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator.html">StringManipulator</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html">SequenceDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator.html">StringManipulator</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.MultiRepresentationWeightFunction-1.html">WeightFunctions.MultiRepresentationWeightFunction</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringDictionaryWeightFunction.html">StringDictionaryWeightFunction</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.MultiRepresentationWeightFunction-1.Factory.html">WeightFunctions.MultiRepresentationWeightFunction.Factory</a>&lt;&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
     <div class="level2"><span class="xref">StringDistribution</span></div>
   </div>
   <div classs="implements">
@@ -119,286 +119,301 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Point">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Point</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Point">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Point</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsPointMass">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsPointMass</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_IsPointMass">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.IsPointMass</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsEmpty">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsEmpty</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_UsesAutomatonRepresentation">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.UsesAutomatonRepresentation</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_PointMass__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.PointMass(String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_IsEmpty">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.IsEmpty</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Uniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Uniform()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_PointMass__0_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.PointMass(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Zero">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Zero()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Uniform">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Uniform()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_FromWeightFunction__4_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.FromWeightFunction(StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Zero">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Zero()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_FromWorkspace__4_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.FromWorkspace(StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_FromWeightFunction__5_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.FromWeightFunction(WeightFunctions.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Empty">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Empty()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_FromWeightFunction__4_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.FromWeightFunction(StringAutomaton)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__2_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SingleElement(DiscreteChar)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Empty">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Empty()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__1_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SingleElement(Char)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SingleElement__2_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SingleElement(ImmutableDiscreteChar)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_System_Collections_Generic_IEnumerable__2__System_Boolean_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Concatenate(IEnumerable&lt;DiscreteChar&gt;, Boolean, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SingleElement__1_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SingleElement(Char)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Collections_Generic_IEnumerable__5__System_Boolean_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(IEnumerable&lt;StringDistribution&gt;, Boolean, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Concatenate_System_Collections_Generic_IEnumerable__2__System_Boolean_System_Boolean_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Concatenate(IEnumerable&lt;ImmutableDiscreteChar&gt;, Boolean, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf__5___">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(StringDistribution[])</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOf_System_Collections_Generic_IEnumerable__7__System_Boolean_System_Boolean_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOf(IEnumerable&lt;StringDistribution&gt;, Boolean, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Double__5_System_Double__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(Double, StringDistribution, Double, StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOf__7___">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOf(StringDistribution[])</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(IEnumerable&lt;KeyValuePair&lt;String, Double&gt;&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOf_System_Double__7_System_Double__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOf(Double, StringDistribution, Double, StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Collections_Generic_IEnumerable__0__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(IEnumerable&lt;String&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOf_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOf(IEnumerable&lt;KeyValuePair&lt;String, Double&gt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf__0___">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(String[])</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOf_System_Collections_Generic_IEnumerable__0__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOf(IEnumerable&lt;String&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Any_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Any(Int32, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOf__0___">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOf(String[])</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__1_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Repeat(Char, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Any_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Any(Int32, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__0_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Repeat(String, Int32, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Repeat__1_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Repeat(Char, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__2_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Repeat(DiscreteChar, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Repeat__0_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Repeat(String, Int32, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Repeat(StringDistribution, Int32, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Repeat__2_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Repeat(ImmutableDiscreteChar, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__5_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ZeroOrMore(StringDistribution, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Repeat__7_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Repeat(StringDistribution, Int32, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__0_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ZeroOrMore(String, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ZeroOrMore__7_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ZeroOrMore(StringDistribution, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__1_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ZeroOrMore(Char, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ZeroOrMore__0_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ZeroOrMore(String, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__2_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ZeroOrMore(DiscreteChar, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ZeroOrMore__1_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ZeroOrMore(Char, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__5_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOrMore(StringDistribution, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ZeroOrMore__2_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ZeroOrMore(ImmutableDiscreteChar, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__0_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOrMore(String, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOrMore__7_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOrMore(StringDistribution, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__1_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOrMore(Char, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOrMore__0_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOrMore(String, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__2_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOrMore(DiscreteChar, Nullable&lt;Int32&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOrMore__1_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOrMore(Char, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Optional__5_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Optional(StringDistribution, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_OneOrMore__2_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.OneOrMore(ImmutableDiscreteChar, Nullable&lt;Int32&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Optional__0_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Optional(String, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Optional__7_System_Double_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Optional(StringDistribution, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__1_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Append(Char, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Optional__0_System_Double_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Optional(String, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__2_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Append(DiscreteChar, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Append__1_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Append(Char, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__0_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Append(String, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Append__2_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Append(ImmutableDiscreteChar, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__5_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Append(StringDistribution, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Append__0_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Append(String, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__1_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.AppendInPlace(Char, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Append__7_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Append(StringDistribution, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__2_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.AppendInPlace(DiscreteChar, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_AppendInPlace__1_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.AppendInPlace(Char, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__0_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.AppendInPlace(String, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_AppendInPlace__2_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.AppendInPlace(ImmutableDiscreteChar, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__5_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.AppendInPlace(StringDistribution, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_AppendInPlace__0_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.AppendInPlace(String, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWeightFunction__4_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetWeightFunction(StringAutomaton)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_AppendInPlace__7_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.AppendInPlace(StringDistribution, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWorkspace__4_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetWorkspace(StringAutomaton, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetWeightFunction__4_System_Boolean_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetWeightFunction(StringAutomaton, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetWorkspaceOrPoint">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetWorkspaceOrPoint()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetWeightFunction__5_System_Boolean_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetWeightFunction(WeightFunctions.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetNormalizedWorkspaceOrPoint">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetNormalizedWorkspaceOrPoint()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ToAutomaton">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ToAutomaton()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateSupport_System_Int32_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.EnumerateSupport(Int32, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ToNormalizedAutomaton">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ToNormalizedAutomaton()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;String&gt;, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetWeightFunction">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetWeightFunction()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateComponents">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.EnumerateComponents()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetNormalizedWeightFunction">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetNormalizedWeightFunction()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ToString()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_EnumerateSupport_System_Int32_System_Boolean_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.EnumerateSupport(Int32, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_System_Action__2_System_Text_StringBuilder__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ToString(Action&lt;DiscreteChar, StringBuilder&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Boolean_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;String&gt;, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_Microsoft_ML_Probabilistic_Distributions_Automata_ISequenceDistributionFormat_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ToString(ISequenceDistributionFormat)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_EnumerateComponents">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.EnumerateComponents()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_HasGroup_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.HasGroup(Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_TryDeterminize">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.TryDeterminize()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetGroups">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetGroups()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetLogValueOverride_System_Nullable_System_Double__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetLogValueOverride(Nullable&lt;Double&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetTo__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetTo(StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ApplyTransducer__1___0_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ApplyTransducer&lt;TTransducer&gt;(TTransducer)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToZero">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToZero()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ToString">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ToString()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Product__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Product(StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ToString_System_Action__2_System_Text_StringBuilder__">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ToString(Action&lt;ImmutableDiscreteChar, StringBuilder&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToProduct__5__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToProduct(StringDistribution, StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_ToString_Microsoft_ML_Probabilistic_Distributions_Automata_ISequenceDistributionFormat_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ToString(ISequenceDistributionFormat)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToProductAndReturnLogNormalizer__5__5_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToProductAndReturnLogNormalizer(StringDistribution, StringDistribution, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_HasGroup_System_Int32_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.HasGroup(Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOf__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetLogAverageOf(StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetGroups">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetGroups()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOfPower__5_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetLogAverageOfPower(StringDistribution, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetTo__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetTo(StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetAverageLog__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetAverageLog(StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToZero">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToZero()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogNormalizer">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetLogNormalizer()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Product__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Product(StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToSum_System_Double__5_System_Double__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToSum(Double, StringDistribution, Double, StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToProduct__7__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToProduct(StringDistribution, StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToSumLog_System_Double__5_System_Double__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToSumLog(Double, StringDistribution, Double, StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToProductAndReturnLogNormalizer__7__7_System_Boolean_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToProductAndReturnLogNormalizer(StringDistribution, StringDistribution, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPower__5_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToPower(StringDistribution, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetLogAverageOf__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetLogAverageOf(StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToRatio__5__5_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToRatio(StringDistribution, StringDistribution, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetLogAverageOfPower__7_System_Double_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetLogAverageOfPower(StringDistribution, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_System_ICloneable_Clone">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ICloneable.Clone()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetAverageLog__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetAverageLog(StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Clone">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Clone()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetLogNormalizer">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetLogNormalizer()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_MaxDiff_System_Object_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.MaxDiff(Object)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToSum_System_Double__7_System_Double__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToSum(Double, StringDistribution, Double, StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogProb__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetLogProb(String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToSumLog_System_Double__7_System_Double__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToSumLog(Double, StringDistribution, Double, StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Contains__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Contains(String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToPower__7_System_Double_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToPower(StringDistribution, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetProb__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetProb(String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToRatio__7__7_System_Boolean_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToRatio(StringDistribution, StringDistribution, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Sample__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Sample(String)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_System_ICloneable_Clone">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.ICloneable.Clone()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Sample">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Sample()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Clone">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Clone()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniformOf__2_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToUniformOf(DiscreteChar)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_MaxDiff_System_Object_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.MaxDiff(Object)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToUniform()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetLogProb__0_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetLogProb(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToPartialUniform()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Contains__0_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Contains(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniformOf__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToPartialUniformOf(StringDistribution)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetProb__0_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetProb(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsPartialUniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsPartialUniform()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Sample__0_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Sample(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsProper">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsProper()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Sample">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Sample()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsUniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsUniform()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToUniformOf__2_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToUniformOf(ImmutableDiscreteChar)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsZero">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsZero()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToUniform">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToUniform()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Converge__5_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Converge(StringDistribution, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToPartialUniform">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToPartialUniform()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Equals_System_Object_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Equals(Object)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToPartialUniformOf__7_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToPartialUniformOf(StringDistribution)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetHashCode">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetHashCode()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_IsPartialUniform">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.IsPartialUniform()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_UniformOf__2_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.UniformOf(DiscreteChar, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_IsProper">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.IsProper()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniformOf__2_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToUniformOf(DiscreteChar, Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_IsUniform">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.IsUniform()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ShouldSerializesequenceToWeight">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ShouldSerializesequenceToWeight()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_IsZero">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.IsZero()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Converge__7_System_Double_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Converge(StringDistribution, Double)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Equals_System_Object_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_GetHashCode">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_UniformOf__2_System_Double_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.UniformOf(ImmutableDiscreteChar, Double)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SetToUniformOf__2_System_Double_">SequenceDistribution&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;String, Char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;.SetToUniformOf(ImmutableDiscreteChar, Double)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
@@ -408,10 +423,52 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Preview)]
-public class StringDistribution : SequenceDistribution&lt;string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;, IDistribution&lt;string&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;string&gt;, CanGetLogProb&lt;string&gt;, SettableTo&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution, StringDistribution&gt;, SettableToRatio&lt;StringDistribution&gt;, SettableToRatio&lt;StringDistribution, StringDistribution&gt;, SettableToPower&lt;StringDistribution&gt;, CanGetLogAverageOf&lt;StringDistribution&gt;, CanGetLogAverageOfPower&lt;StringDistribution&gt;, CanGetAverageLog&lt;StringDistribution&gt;, SettableToWeightedSumExact&lt;StringDistribution&gt;, SettableToWeightedSum&lt;StringDistribution&gt;, SettableToPartialUniform&lt;StringDistribution&gt;, CanGetLogNormalizer, Sampleable&lt;string&gt;</code></pre>
+public class StringDistribution : SequenceDistribution&lt;string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton, WeightFunctions&lt;string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;, WeightFunctions&lt;string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;StringDictionaryWeightFunction&gt;.Factory, StringDistribution&gt;, IDistribution&lt;string&gt;, IDistribution, ICloneable, Diffable, SettableToUniform, HasPoint&lt;string&gt;, CanGetLogProb&lt;string&gt;, SettableTo&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution, StringDistribution&gt;, SettableToRatio&lt;StringDistribution&gt;, SettableToRatio&lt;StringDistribution, StringDistribution&gt;, SettableToPower&lt;StringDistribution&gt;, CanGetLogAverageOf&lt;StringDistribution&gt;, CanGetLogAverageOfPower&lt;StringDistribution&gt;, CanGetAverageLog&lt;StringDistribution&gt;, SettableToWeightedSumExact&lt;StringDistribution&gt;, SettableToWeightedSum&lt;StringDistribution&gt;, SettableToPartialUniform&lt;StringDistribution&gt;, CanGetLogNormalizer, Sampleable&lt;string&gt;</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_AppendInPlace_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.AppendInPlace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_AppendInPlace_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.AppendInPlace(Microsoft.ML.Probabilistic.Distributions.DiscreteChar,System.Int32)">AppendInPlace(DiscreteChar, Int32)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution by a distribution over concatenations of sequences
+from the current distribution and a given element.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendInPlace(DiscreteChar element, int group = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
+        <td><span class="parametername">element</span></td>
+        <td><p>The element to append.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_AppendInPlace_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+Append the given element to the sampled sequence and output the result.
+</li></ol>
+</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Capitalized_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Capitalized*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Capitalized_System_Int32_System_Nullable_System_Int32__System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Capitalized(System.Int32,System.Nullable{System.Int32},System.Boolean)">Capitalized(Int32, Nullable&lt;Int32&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Creates a uniform distribution over strings that start with an upper case letter followed by
@@ -422,7 +479,7 @@ there will be no upper bound on the length, and the resulting distribution will 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static StringDistribution Capitalized(int minLength = 2, int? maxLength = default(int? ), bool allowUpperAfterFirst = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static StringDistribution Capitalized(int minLength = 2, int? maxLength = null, bool allowUpperAfterFirst = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -517,7 +574,7 @@ Defaults to <span class="xref">null</span>.</p>
   <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char(Microsoft.ML.Probabilistic.Distributions.DiscreteChar)">Char(DiscreteChar)</h4>
   <div class="markdown level1 summary"><p>Creates a distribution over strings of length 1 induced by a given distribution over characters.
-This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__2_">SingleElement(TElementDistribution)</a>.</p>
+This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SingleElement__2_">SingleElement(TElementDistribution)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -560,13 +617,62 @@ This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Dis
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_Microsoft_ML_Probabilistic_Distributions_DiscreteChar__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The distribution created by this method can differ from the result of
-<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a>
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Repeat__7_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a>
+with both min and max length set to 1 since the latter always creates a partial uniform distribution.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar)">Char(ImmutableDiscreteChar)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over strings of length 1 induced by a given distribution over characters.
+This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SingleElement__2_">SingleElement(TElementDistribution)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Char(ImmutableDiscreteChar characterDist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">characterDist</span></td>
+        <td><p>The distribution over characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The distribution created by this method can differ from the result of
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Repeat__7_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a>
 with both min and max length set to 1 since the latter always creates a partial uniform distribution.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char(System.Char)">Char(Char)</h4>
   <div class="markdown level1 summary"><p>Creates a distribution which puts all mass on a string containing only a given character.
-This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__1_">SingleElement(TElement)</a>.</p>
+This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_SingleElement__1_">SingleElement(TElement)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -616,7 +722,7 @@ there will be no upper bound on the length, and the resulting distribution will 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static StringDistribution Digits(int minLength = 1, int? maxLength = default(int? ), DistributionKind uniformity = DistributionKind.UniformOverValue)</code></pre>
+    <pre><code class="lang-csharp hljs">public static StringDistribution Digits(int minLength = 1, int? maxLength = null, DistributionKind uniformity = DistributionKind.UniformOverValue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -674,7 +780,7 @@ there will be no upper bound on the length, and the resulting distribution will 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static StringDistribution Letters(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static StringDistribution Letters(int minLength = 1, int? maxLength = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -726,7 +832,7 @@ there will be no upper bound on the length, and the resulting distribution will 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static StringDistribution LettersOrDigits(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static StringDistribution LettersOrDigits(int minLength = 1, int? maxLength = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -778,7 +884,7 @@ there will be no upper bound on the length, and the resulting distribution will 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static StringDistribution Lower(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static StringDistribution Lower(int minLength = 1, int? maxLength = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -824,7 +930,7 @@ Defaults to <span class="xref">null</span>.</p>
   <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.String*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_String_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.String(System.String)">String(String)</h4>
   <div class="markdown level1 summary"><p>Creates a point mass distribution.
-This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_PointMass__0_">PointMass(TSequence)</a>.</p>
+This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_PointMass__0_">PointMass(TSequence)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -917,7 +1023,7 @@ class.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.SequenceDistribution&lt;System.String, System.Char, Microsoft.ML.Probabilistic.Distributions.DiscreteChar, Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator, Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton, Microsoft.ML.Probabilistic.Distributions.StringDistribution&gt;.ToString()</span></div>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.SequenceDistribution&lt;System.String, System.Char, Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar, Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator, Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton, Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions&lt;System.String, System.Char, Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar, Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator, Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;Microsoft.ML.Probabilistic.Distributions.Automata.StringDictionaryWeightFunction&gt;, Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions&lt;System.String, System.Char, Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar, Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator, Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton&gt;.MultiRepresentationWeightFunction&lt;Microsoft.ML.Probabilistic.Distributions.Automata.StringDictionaryWeightFunction&gt;.Factory, Microsoft.ML.Probabilistic.Distributions.StringDistribution&gt;.ToString()</span></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Upper_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Upper*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Upper_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Upper(System.Int32,System.Nullable{System.Int32})">Upper(Int32, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a uniform distribution over strings of uppercase letters, with length within the given bounds.
@@ -927,7 +1033,7 @@ there will be no upper bound on the length, and the resulting distribution will 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static StringDistribution Upper(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static StringDistribution Upper(int minLength = 1, int? maxLength = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -980,7 +1086,7 @@ there will be no upper bound on the length, and the resulting distribution will 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static StringDistribution Whitespace(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static StringDistribution Whitespace(int minLength = 1, int? maxLength = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1033,7 +1139,7 @@ there will be no upper bound on the length, and the resulting distribution will 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static StringDistribution WordChars(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static StringDistribution WordChars(int minLength = 1, int? maxLength = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1081,7 +1187,7 @@ Defaults to <span class="xref">null</span>.</p>
   <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_op_Addition_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.op_Addition*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_op_Addition_Microsoft_ML_Probabilistic_Distributions_StringDistribution_Microsoft_ML_Probabilistic_Distributions_StringDistribution_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.op_Addition(Microsoft.ML.Probabilistic.Distributions.StringDistribution,Microsoft.ML.Probabilistic.Distributions.StringDistribution)">Addition(StringDistribution, StringDistribution)</h4>
   <div class="markdown level1 summary"><p>Concatenates the weighted regular languages defined by given distributions
-(see <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__5_System_Int32_">Append(TThis, Int32)</a>).</p>
+(see <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_8_Append__7_System_Int32_">Append(TThis, Int32)</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1198,7 +1304,8 @@ Defaults to <span class="xref">null</span>.</p>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IVariableArray&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,6 +89,12 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.IJaggedVariableArray-1.html#Microsoft_ML_Probabilistic_Models_IJaggedVariableArray_1_Range">IJaggedVariableArray&lt;Variable&lt;T&gt;&gt;.Range</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.IJaggedVariableArray-1.html#Microsoft_ML_Probabilistic_Models_IJaggedVariableArray_1_Item_Microsoft_ML_Probabilistic_Models_IModelExpression_">IJaggedVariableArray&lt;Variable&lt;T&gt;&gt;.Item[IModelExpression]</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariableArray.html#Microsoft_ML_Probabilistic_Models_IVariableArray_Ranges">IVariableArray.Ranges</a>
     </div>
     <div>
@@ -111,7 +117,7 @@
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Models_IVariableArray_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IVariableArray&lt;T&gt; : IVariableArray, IVariable, IModelExpression, HasObservedValue</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IVariableArray&lt;T&gt; : IJaggedVariableArray&lt;Variable&lt;T&gt;&gt;, IVariableArray, IVariable, IModelExpression, HasObservedValue</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -128,80 +134,14 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Microsoft_ML_Probabilistic_Models_IVariableArray_1_Item_" data-uid="Microsoft.ML.Probabilistic.Models.IVariableArray`1.Item*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_IVariableArray_1_Item_Microsoft_ML_Probabilistic_Models_IModelExpression_" data-uid="Microsoft.ML.Probabilistic.Models.IVariableArray`1.Item(Microsoft.ML.Probabilistic.Models.IModelExpression)">Item[IModelExpression]</h4>
-  <div class="markdown level1 summary"><p>Sets/Gets element in array given by index expression</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Variable&lt;T&gt; this[IModelExpression index] { get; set; }</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a></td>
-        <td><span class="parametername">index</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;T&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Models_IVariableArray_1_Range_" data-uid="Microsoft.ML.Probabilistic.Models.IVariableArray`1.Range*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Models_IVariableArray_1_Range" data-uid="Microsoft.ML.Probabilistic.Models.IVariableArray`1.Range">Range</h4>
-  <div class="markdown level1 summary"><p>Range for variable array</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Range Range { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

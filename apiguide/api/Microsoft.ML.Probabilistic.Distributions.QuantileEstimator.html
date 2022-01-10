@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class QuantileEstimator
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -93,28 +93,28 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan-1.html">CanGetProbLessThan</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile-1.html">CanGetQuantile</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
@@ -123,7 +123,7 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
-public class QuantileEstimator : CanGetProbLessThan, CanGetQuantile</code></pre>
+public class QuantileEstimator : CanGetProbLessThan&lt;double&gt;, CanGetQuantile&lt;double&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -320,6 +320,53 @@ public readonly double MaximumError</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_QuantileEstimator_GetProbBetween_" data-uid="Microsoft.ML.Probabilistic.Distributions.QuantileEstimator.GetProbBetween*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_QuantileEstimator_GetProbBetween_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.QuantileEstimator.GetProbBetween(System.Double,System.Double)">GetProbBetween(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the probability mass in an interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetProbBetween(double lowerBound, double upperBound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A number between 0 and 1, inclusive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_QuantileEstimator_GetProbLessThan_" data-uid="Microsoft.ML.Probabilistic.Distributions.QuantileEstimator.GetProbLessThan*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_QuantileEstimator_GetProbLessThan_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.QuantileEstimator.GetProbLessThan(System.Double)">GetProbLessThan(Double)</h4>
   <div class="markdown level1 summary"><p>Returns the quantile rank of x.  This is a probability such that GetQuantile(probability) == x, whenever x is inside the support of the distribution.  May be discontinuous due to duplicates.</p>
@@ -463,7 +510,7 @@ public readonly double MaximumError</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_QuantileEstimator_ValueEquals_" data-uid="Microsoft.ML.Probabilistic.Distributions.QuantileEstimator.ValueEquals*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_QuantileEstimator_ValueEquals_Microsoft_ML_Probabilistic_Distributions_QuantileEstimator_" data-uid="Microsoft.ML.Probabilistic.Distributions.QuantileEstimator.ValueEquals(Microsoft.ML.Probabilistic.Distributions.QuantileEstimator)">ValueEquals(QuantileEstimator)</h4>
   <div class="markdown level1 summary"><p>Returns true if that contains the same information as this.</p>
@@ -507,10 +554,10 @@ public readonly double MaximumError</code></pre>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan-1.html">CanGetProbLessThan&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile-1.html">CanGetQuantile&lt;T&gt;</a>
   </div>
 </article>
           </div>
@@ -518,7 +565,8 @@ public readonly double MaximumError</code></pre>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

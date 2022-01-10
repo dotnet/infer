@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GenericDiscreteBase&lt;T, TThis&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -118,16 +118,16 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
@@ -259,7 +259,7 @@ public int Dimension { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Pair&lt;int, int&gt; IndexRange { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IntPair IndexRange { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -271,7 +271,7 @@ public int Dimension { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.IntPair.html">IntPair</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -374,7 +374,7 @@ public T Point { get; set; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Pair&lt;T, T&gt; ValueRange { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public (T, T) ValueRange { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -386,7 +386,7 @@ public T Point { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;T, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;T, T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -543,7 +543,7 @@ public T Point { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromDiscrete*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromDiscrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromDiscrete(Microsoft.ML.Probabilistic.Distributions.Discrete)">FromDiscrete(Discrete)</h4>
   <div class="markdown level1 summary"><p>Creates a distribution using the probabilities from the given discrete distribution.</p>
@@ -740,7 +740,7 @@ public static TThis FromVector(Vector probs)</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetInternalDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetInternalDiscrete*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetInternalDiscrete" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetInternalDiscrete">GetInternalDiscrete()</h4>
   <div class="markdown level1 summary"><p>Gets the internal discrete distribution that this distribution wraps.</p>
@@ -1485,7 +1485,7 @@ fill in the resulting Vector, and then pass it to SetProbs.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString(`0)">ToString(T)</h4>
   <div class="markdown level1 summary"><p>Implements a custom ToString() for items of type T.</p>
@@ -1976,7 +1976,8 @@ even.</p>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

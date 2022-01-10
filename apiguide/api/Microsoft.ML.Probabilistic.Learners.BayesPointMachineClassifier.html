@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class BayesPointMachineClassifier
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -94,25 +94,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
@@ -231,6 +231,296 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierTrainingSettings.html">BayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
         <td><p>The binary Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_CreateGaussianPriorBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_CreateGaussianPriorBinaryClassifier__3_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier``3(Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Boolean})">CreateGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a binary Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;bool&gt;&gt; CreateGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, bool&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping-4.html">IBayesPointMachineClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
+        <td><p>The binary Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_CreateGaussianPriorBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_CreateGaussianPriorBinaryClassifier__4_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier``4(Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">CreateGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a binary Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; CreateGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping-5.html">IClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The binary Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_CreateGaussianPriorMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_CreateGaussianPriorMulticlassClassifier__3_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier``3(Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Int32})">CreateGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a multi-class Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;int&gt;&gt; CreateGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, int&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping-4.html">IBayesPointMachineClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><p>The multi-class Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_CreateGaussianPriorMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_CreateGaussianPriorMulticlassClassifier__4_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier``4(Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">CreateGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a multi-class Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; CreateGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping-5.html">IClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The multi-class Bayes point machine classifier instance.</p>
 </td>
       </tr>
     </tbody>
@@ -596,13 +886,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier__3_System_IO_BinaryReader_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier``3(System.IO.BinaryReader,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Boolean})">LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(BinaryReader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Boolean&gt;)</h4>
-  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier from a reader to a binary stream and a native data format mapping.</p>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier__3_Microsoft_ML_Probabilistic_Serialization_IReader_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier``3(Microsoft.ML.Probabilistic.Serialization.IReader,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Boolean})">LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IReader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier from a reader to a stream and a native data format mapping.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;bool&gt;&gt; LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(BinaryReader reader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, bool&gt; mapping)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;bool&gt;&gt; LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IReader reader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, bool&gt; mapping)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -615,84 +905,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
-        <td><p>The reader to a binary stream of a serialized binary Bayes point machine classifier.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping-4.html">IBayesPointMachineClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
-        <td><span class="parametername">mapping</span></td>
-        <td><p>The mapping used for accessing data in the native format.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierTrainingSettings.html">BayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
-        <td><p>The binary Bayes point machine classifier instance.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TInstanceSource</span></td>
-        <td><p>The type of a source of instances.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TInstance</span></td>
-        <td><p>The type of an instance.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TLabelSource</span></td>
-        <td><p>The type of a source of labels.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier__3_System_IO_Stream_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier``3(System.IO.Stream,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Boolean})">LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(Stream, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Boolean&gt;)</h4>
-  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier from a binary stream and a native data format mapping.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;bool&gt;&gt; LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(Stream stream, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, bool&gt; mapping)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
-        <td><span class="parametername">stream</span></td>
-        <td><p>The binary stream of a serialized binary Bayes point machine classifier.</p>
+        <td><p>The reader to a stream of a serialized binary Bayes point machine classifier.</p>
 </td>
       </tr>
       <tr>
@@ -821,13 +1036,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier__4_System_IO_BinaryReader_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier``4(System.IO.BinaryReader,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(BinaryReader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
-  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier from a reader to a binary stream and a standard data format mapping.</p>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier__4_Microsoft_ML_Probabilistic_Serialization_IReader_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier``4(Microsoft.ML.Probabilistic.Serialization.IReader,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IReader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier from a reader to a stream and a standard data format mapping.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(BinaryReader reader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IReader reader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -840,89 +1055,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
-        <td><p>The reader to a binary stream of a serialized binary Bayes point machine classifier.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping-5.html">IClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
-        <td><span class="parametername">mapping</span></td>
-        <td><p>The mapping used for accessing data in the standard format.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierTrainingSettings.html">BayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
-        <td><p>The binary Bayes point machine classifier instance.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TInstanceSource</span></td>
-        <td><p>The type of a source of instances.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TInstance</span></td>
-        <td><p>The type of an instance.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TLabelSource</span></td>
-        <td><p>The type of a source of labels.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TLabel</span></td>
-        <td><p>The type of a label.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleBinaryClassifier__4_System_IO_Stream_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier``4(System.IO.Stream,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(Stream, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
-  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier from a binary stream and a standard data format mapping.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(Stream stream, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
-        <td><span class="parametername">stream</span></td>
-        <td><p>The binary stream of a serialized binary Bayes point machine classifier.</p>
+        <td><p>The reader to a stream of a serialized binary Bayes point machine classifier.</p>
 </td>
       </tr>
       <tr>
@@ -1060,14 +1195,15 @@
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier__3_System_IO_BinaryReader_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier``3(System.IO.BinaryReader,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Int32})">LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(BinaryReader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Int32&gt;)</h4>
-  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier from a reader to a binary stream and a native data format mapping.</p>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorBinaryClassifier__3_Microsoft_ML_Probabilistic_Serialization_IReader_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier``3(Microsoft.ML.Probabilistic.Serialization.IReader,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Boolean})">LoadBackwardCompatibleGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IReader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a reader to a stream and a native data format mapping.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;int&gt;&gt; LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(BinaryReader reader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, int&gt; mapping)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;bool&gt;&gt; LoadBackwardCompatibleGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IReader reader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, bool&gt; mapping)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1080,9 +1216,323 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
-        <td><p>The reader to a binary stream of a serialized multi-class Bayes point machine classifier.</p>
+        <td><p>The reader to a stream of a serialized binary Bayes point machine classifier.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping-4.html">IBayesPointMachineClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
+        <td><p>The binary Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorBinaryClassifier__3_System_String_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier``3(System.String,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Boolean})">LoadBackwardCompatibleGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(String, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a file with the specified name and a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;bool&gt;&gt; LoadBackwardCompatibleGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(string fileName, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, bool&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The name of the file of a serialized binary Bayes point machine classifier.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping-4.html">IBayesPointMachineClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
+        <td><p>The binary Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorBinaryClassifier__4_Microsoft_ML_Probabilistic_Serialization_IReader_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier``4(Microsoft.ML.Probabilistic.Serialization.IReader,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IReader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a reader to a stream and a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IReader reader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The reader to a stream of a serialized binary Bayes point machine classifier.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping-5.html">IClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The binary Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorBinaryClassifier__4_System_String_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier``4(System.String,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(String, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a file with the specified name and a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(string fileName, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The name of the file of a serialized binary Bayes point machine classifier.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping-5.html">IClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The binary Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier__3_Microsoft_ML_Probabilistic_Serialization_IReader_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier``3(Microsoft.ML.Probabilistic.Serialization.IReader,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Int32})">LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IReader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a reader to a stream and a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;int&gt;&gt; LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IReader reader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, int&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The reader to a stream of a serialized multi-class Bayes point machine classifier.</p>
 </td>
       </tr>
       <tr>
@@ -1103,7 +1553,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierTrainingSettings.html">BayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><p>The multi-class Bayes point machine classifier instance.</p>
 </td>
       </tr>
@@ -1135,14 +1585,253 @@
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier__3_System_IO_Stream_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier``3(System.IO.Stream,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Int32})">LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(Stream, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Int32&gt;)</h4>
-  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier from a binary stream and a native data format mapping.</p>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier__3_System_String_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier``3(System.String,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Int32})">LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(String, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a file with the specified name and a native data format mapping.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;int&gt;&gt; LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(Stream stream, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, int&gt; mapping)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;int&gt;&gt; LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(string fileName, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, int&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The name of the file of a serialized multi-class Bayes point machine classifier.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping-4.html">IBayesPointMachineClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><p>The multi-class Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier__4_Microsoft_ML_Probabilistic_Serialization_IReader_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier``4(Microsoft.ML.Probabilistic.Serialization.IReader,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IReader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a reader to a stream and a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IReader reader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The reader to a stream of a serialized multi-class Bayes point machine classifier.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping-5.html">IClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The multi-class Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier__4_System_String_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier``4(System.String,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(String, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a file with the specified name and a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(string fileName, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The name of the file of a serialized multi-class Bayes point machine classifier.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping-5.html">IClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The multi-class Bayes point machine classifier instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier__5_System_IO_Stream_System_Runtime_Serialization_IFormatter_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier``5(System.IO.Stream,System.Runtime.Serialization.IFormatter)">LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(Stream, IFormatter)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a stream and formatter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(Stream stream, IFormatter formatter)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1157,7 +1846,172 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
         <td><span class="parametername">stream</span></td>
-        <td><p>The binary stream of a serialized multi-class Bayes point machine classifier.</p>
+        <td><p>The stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.iformatter">IFormatter</a></td>
+        <td><span class="parametername">formatter</span></td>
+        <td><p>The formatter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The deserialized multi-class Bayes point machine classifier object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelDistribution</span></td>
+        <td><p>The type of a distribution over labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleGaussianPriorMulticlassClassifier__5_System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier``5(System.String)">LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(String)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleGaussianPriorMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(string fileName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The file name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The deserialized multi-class Bayes point machine classifier object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelDistribution</span></td>
+        <td><p>The type of a distribution over labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier__3_Microsoft_ML_Probabilistic_Serialization_IReader_Microsoft_ML_Probabilistic_Learners_Mappings_IBayesPointMachineClassifierMapping___0___1___2_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier``3(Microsoft.ML.Probabilistic.Serialization.IReader,Microsoft.ML.Probabilistic.Learners.Mappings.IBayesPointMachineClassifierMapping{``0,``1,``2,System.Int32})">LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IReader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier from a reader to a stream and a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;int&gt;&gt; LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource&gt;(IReader reader, IBayesPointMachineClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, int&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The reader to a stream of a serialized multi-class Bayes point machine classifier.</p>
 </td>
       </tr>
       <tr>
@@ -1286,13 +2140,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier__4_System_IO_BinaryReader_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier``4(System.IO.BinaryReader,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(BinaryReader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
-  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier from a reader to a binary stream and a standard data format mapping.</p>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier__4_Microsoft_ML_Probabilistic_Serialization_IReader_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier``4(Microsoft.ML.Probabilistic.Serialization.IReader,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IReader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier from a reader to a stream and a standard data format mapping.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(BinaryReader reader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(IReader reader, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1305,89 +2159,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
-        <td><p>The reader to a binary stream of a serialized multi-class Bayes point machine classifier.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping-5.html">IClassifierMapping</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
-        <td><span class="parametername">mapping</span></td>
-        <td><p>The mapping used for accessing data in the standard format.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierTrainingSettings.html">BayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MulticlassBayesPointMachineClassifierPredictionSettings-1.html">MulticlassBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
-        <td><p>The multi-class Bayes point machine classifier instance.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TInstanceSource</span></td>
-        <td><p>The type of a source of instances.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TInstance</span></td>
-        <td><p>The type of an instance.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TLabelSource</span></td>
-        <td><p>The type of a source of labels.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TLabel</span></td>
-        <td><p>The type of a label.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadBackwardCompatibleMulticlassClassifier__4_System_IO_Stream_Microsoft_ML_Probabilistic_Learners_Mappings_IClassifierMapping___0___1___2___3_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier``4(System.IO.Stream,Microsoft.ML.Probabilistic.Learners.Mappings.IClassifierMapping{``0,``1,``2,``3,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(Stream, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt;)</h4>
-  <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier from a binary stream and a standard data format mapping.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary&lt;TLabel, double&gt;, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadBackwardCompatibleMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;(Stream stream, IClassifierMapping&lt;TInstanceSource, TInstance, TLabelSource, TLabel, Vector&gt; mapping)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
-        <td><span class="parametername">stream</span></td>
-        <td><p>The binary stream of a serialized multi-class Bayes point machine classifier.</p>
+        <td><p>The reader to a stream of a serialized multi-class Bayes point machine classifier.</p>
 </td>
       </tr>
       <tr>
@@ -1865,6 +2639,172 @@
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadGaussianPriorBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadGaussianPriorBinaryClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadGaussianPriorBinaryClassifier__5_System_IO_Stream_System_Runtime_Serialization_IFormatter_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadGaussianPriorBinaryClassifier``5(System.IO.Stream,System.Runtime.Serialization.IFormatter)">LoadGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(Stream, IFormatter)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a stream and formatter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(Stream stream, IFormatter formatter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>The stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.iformatter">IFormatter</a></td>
+        <td><span class="parametername">formatter</span></td>
+        <td><p>The formatter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The deserialized binary Bayes point machine classifier object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelDistribution</span></td>
+        <td><p>The type of a distribution over labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadGaussianPriorBinaryClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadGaussianPriorBinaryClassifier*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadGaussianPriorBinaryClassifier__5_System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadGaussianPriorBinaryClassifier``5(System.String)">LoadGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(String)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a binary Bayes point machine classifier with <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> prior distributions
+over factorized weights from a file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBayesPointMachineClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;&gt; LoadGaussianPriorBinaryClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(string fileName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The file name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifier-7.html">IBayesPointMachineClassifier</a>&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianBayesPointMachineClassifierTrainingSettings.html">GaussianBayesPointMachineClassifierTrainingSettings</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings-1.html">BinaryBayesPointMachineClassifierPredictionSettings</a>&lt;TLabel&gt;&gt;</td>
+        <td><p>The deserialized binary Bayes point machine classifier object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelSource</span></td>
+        <td><p>The type of a source of labels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabel</span></td>
+        <td><p>The type of a label.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TLabelDistribution</span></td>
+        <td><p>The type of a distribution over labels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadMulticlassClassifier_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadMulticlassClassifier*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifier_LoadMulticlassClassifier__5_System_IO_Stream_System_Runtime_Serialization_IFormatter_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifier.LoadMulticlassClassifier``5(System.IO.Stream,System.Runtime.Serialization.IFormatter)">LoadMulticlassClassifier&lt;TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution&gt;(Stream, IFormatter)</h4>
   <div class="markdown level1 summary"><p>Deserializes a multi-class Bayes point machine classifier from a stream and formatter.</p>
@@ -2211,7 +3151,8 @@
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

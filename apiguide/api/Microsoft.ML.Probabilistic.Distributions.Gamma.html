@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct Gamma
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -112,19 +112,19 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan-1.html">CanGetProbLessThan</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile-1.html">CanGetQuantile</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
@@ -134,7 +134,7 @@
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
 [Quality(QualityBand.Mature)]
-public struct Gamma : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gamma&gt;, SettableToProduct&lt;Gamma&gt;, SettableToProduct&lt;Gamma, Gamma&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gamma&gt;, SettableToRatio&lt;Gamma, Gamma&gt;, SettableToPower&lt;Gamma&gt;, SettableToWeightedSum&lt;Gamma&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gamma&gt;, CanGetLogAverageOfPower&lt;Gamma&gt;, CanGetAverageLog&lt;Gamma&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;, CanGetProbLessThan, CanGetQuantile</code></pre>
+public struct Gamma : IDistribution&lt;double&gt;, IDistribution, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gamma&gt;, SettableToProduct&lt;Gamma&gt;, SettableToProduct&lt;Gamma, Gamma&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gamma&gt;, SettableToRatio&lt;Gamma, Gamma&gt;, SettableToPower&lt;Gamma&gt;, SettableToWeightedSum&lt;Gamma&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gamma&gt;, CanGetLogAverageOfPower&lt;Gamma&gt;, CanGetAverageLog&lt;Gamma&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;, CanGetProbLessThan&lt;double&gt;, CanGetQuantile&lt;double&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Gamma_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -276,7 +276,7 @@ public double Shape</code></pre>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[IgnoreDataMember]
-public bool IsPointMass { get; }</code></pre>
+public readonly bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -390,7 +390,7 @@ if you want to assign the result to a Gamma type</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#system-valuetype-equals(system-object)">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Gamma_FromDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.FromDerivatives*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Gamma_FromDerivatives_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.FromDerivatives(System.Double,System.Double,System.Double,System.Boolean)">FromDerivatives(Double, Double, Double, Boolean)</h4>
   <div class="markdown level1 summary"><p>Construct a Gamma distribution whose pdf has the given derivatives at a point.</p>
@@ -913,7 +913,7 @@ public static Gamma FromShapeAndRate(double shape, double rate)</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#system-valuetype-gethashcode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Gamma_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Gamma_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Gamma)">GetLogAverageOf(Gamma)</h4>
   <div class="markdown level1 summary"><p>The log of the integral of the product of this Gamma and that Gamma</p>
@@ -1325,9 +1325,56 @@ Thus if shape = 1 and rate = 0 the density is 1.</p>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gamma_GetProbBetween_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.GetProbBetween*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gamma_GetProbBetween_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.GetProbBetween(System.Double,System.Double)">GetProbBetween(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the probability mass in an interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetProbBetween(double lowerBound, double upperBound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A number between 0 and 1, inclusive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Gamma_GetProbLessThan_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.GetProbLessThan*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Gamma_GetProbLessThan_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.GetProbLessThan(System.Double)">GetProbLessThan(Double)</h4>
-  <div class="markdown level1 summary"><p>Compute the probability that a sample from this distribution is less than x.</p>
+  <div class="markdown level1 summary"><p>Returns the probability of drawing a sample less than x.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1347,8 +1394,7 @@ Thus if shape = 1 and rate = 0 the density is 1.</p>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">x</span></td>
-        <td><p>Any real number.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1363,7 +1409,7 @@ Thus if shape = 1 and rate = 0 the density is 1.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>The cumulative gamma distribution at <code data-dev-comment-type="paramref" class="paramref">x</code></p>
+        <td><p>A real number in [0,1].</p>
 </td>
       </tr>
     </tbody>
@@ -2197,7 +2243,7 @@ public static double SampleFromMeanAndVariance(double mean, double variance)</co
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#system-valuetype-tostring">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Gamma_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Gamma_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Gamma.Uniform">Uniform()</h4>
   <div class="markdown level1 summary"><p>Create a uniform Gamma distribution.</p>
@@ -2539,10 +2585,10 @@ public static Gamma Uniform()</code></pre>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan-1.html">CanGetProbLessThan&lt;T&gt;</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile-1.html">CanGetQuantile&lt;T&gt;</a>
   </div>
 </article>
           </div>
@@ -2550,7 +2596,8 @@ public static Gamma Uniform()</code></pre>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

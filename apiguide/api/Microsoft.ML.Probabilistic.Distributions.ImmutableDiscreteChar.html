@@ -1,0 +1,2631 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct ImmutableDiscreteChar
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct ImmutableDiscreteChar
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar" class="text-break">Struct ImmutableDiscreteChar
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a distribution over characters.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution-2.html">IImmutableDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution.html">IImmutableDistribution</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreateUniform-1.html">CanCreateUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePointMass-2.html">CanCreatePointMass</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePartialUniform-1.html">CanCreatePartialUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-1.html">CanComputeProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-2.html">CanComputeProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeRatio-1.html">CanComputeRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeRatio-2.html">CanComputeRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputePower-1.html">CanComputePower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-1.html">SummableExactly</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-2.html">SummableExactly</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Summable-2.html">Summable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.iserializable">ISerializable</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+[Serializable]
+public struct ImmutableDiscreteChar : IImmutableDistribution&lt;char, ImmutableDiscreteChar&gt;, IImmutableDistribution, ICloneable, Diffable, CanCreateUniform&lt;ImmutableDiscreteChar&gt;, CanCreatePointMass&lt;char, ImmutableDiscreteChar&gt;, CanGetLogProb&lt;char&gt;, CanCreatePartialUniform&lt;ImmutableDiscreteChar&gt;, CanGetMode&lt;char&gt;, CanGetLogAverageOf&lt;ImmutableDiscreteChar&gt;, CanGetLogAverageOfPower&lt;ImmutableDiscreteChar&gt;, CanGetAverageLog&lt;ImmutableDiscreteChar&gt;, CanEnumerateSupport&lt;char&gt;, CanComputeProduct&lt;ImmutableDiscreteChar&gt;, CanComputeProduct&lt;ImmutableDiscreteChar, ImmutableDiscreteChar&gt;, CanComputeRatio&lt;ImmutableDiscreteChar&gt;, CanComputeRatio&lt;ImmutableDiscreteChar, ImmutableDiscreteChar&gt;, CanComputePower&lt;ImmutableDiscreteChar&gt;, SummableExactly&lt;ImmutableDiscreteChar&gt;, SummableExactly&lt;ImmutableDiscreteChar, ImmutableDiscreteChar&gt;, Summable&lt;ImmutableDiscreteChar, ImmutableDiscreteChar&gt;, Sampleable&lt;char&gt;, ISerializable, IEquatable&lt;ImmutableDiscreteChar&gt;</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsDigit_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsDigit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsDigit" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsDigit">IsDigit</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution equals the distribution created by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Digit">Digit()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsDigit { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsInitialized_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsInitialized*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsInitialized" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsInitialized">IsInitialized</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsInitialized { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsLetter_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsLetter*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsLetter" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsLetter">IsLetter</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution equals the distribution created by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Letter">Letter()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsLetter { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsLetterOrDigit_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsLetterOrDigit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsLetterOrDigit" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsLetterOrDigit">IsLetterOrDigit</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution equals the distribution created by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_LetterOrDigit">LetterOrDigit()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsLetterOrDigit { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsLower_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsLower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsLower" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsLower">IsLower</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution equals the distribution created by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Lower">Lower()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsLower { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Gets whether the distribution parameters represent a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsUpper_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsUpper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsUpper" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsUpper">IsUpper</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution equals the distribution created by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Upper">Upper()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsUpper { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsWordChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsWordChar*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsWordChar" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsWordChar">IsWordChar</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this distribution equals the distribution created by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_WordChar">WordChar()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsWordChar { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Item_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Item_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Item(System.Char)">Item[Char]</h4>
+  <div class="markdown level1 summary"><p>Gets the probability of a given character under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly double this[char value] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The character.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The probability of the character under this distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Gets the point mass represented by the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly char Point { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Ranges_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Ranges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Ranges" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Ranges">Ranges</h4>
+  <div class="markdown level1 summary"><p>Gets an array of character ranges with associated probabilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly ReadOnlyArray&lt;ImmutableDiscreteChar.CharRange&gt; Ranges { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CharRange.html">ImmutableDiscreteChar.CharRange</a>&gt;</td>
+        <td><p>An array of character ranges with associated probabilities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Any_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Any*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Any" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Any">Any()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over all characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar Any()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_AppendRegex_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.AppendRegex*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_AppendRegex_System_Text_StringBuilder_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.AppendRegex(System.Text.StringBuilder,System.Boolean)">AppendRegex(StringBuilder, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Appends a regex expression that represents this character to the supplied string builder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendRegex(StringBuilder stringBuilder, bool useFriendlySymbols = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.stringbuilder">StringBuilder</a></td>
+        <td><span class="parametername">stringBuilder</span></td>
+        <td><p>The string builder to append to</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">useFriendlySymbols</span></td>
+        <td><p>Whether to use friendly symbols.&quot;</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_AppendToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.AppendToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_AppendToString_System_Text_StringBuilder_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.AppendToString(System.Text.StringBuilder)">AppendToString(StringBuilder)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendToString(StringBuilder stringBuilder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.stringbuilder">StringBuilder</a></td>
+        <td><span class="parametername">stringBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Complement_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Complement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Complement" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Complement">Complement()</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over all characters
+that have zero probability under this distribution
+i.e. that are not 'in' this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar Complement()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Complement_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is useful for defining characters that are not in a particular distribution
+e.g. not a letter or not a word character.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Create_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Create*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Create_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CharRange__" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Create(System.Collections.Generic.IEnumerable{Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CharRange})">Create(IEnumerable&lt;ImmutableDiscreteChar.CharRange&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution given a list of constant probability character ranges.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Ranges&quot;})]
+public static ImmutableDiscreteChar Create(IEnumerable&lt;ImmutableDiscreteChar.CharRange&gt; ranges)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CharRange.html">ImmutableDiscreteChar.CharRange</a>&gt;</td>
+        <td><span class="parametername">ranges</span></td>
+        <td><p>The constant-probability character ranges.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Create_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CharRange___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The probabilities do not need to be normalized. The character ranges do not need to be sorted.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CreatePartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CreatePartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CreatePartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CreatePartialUniform">CreatePartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution uniform over the support of the current distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar CreatePartialUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CreatePointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CreatePointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CreatePointMass_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CreatePointMass(System.Char)">CreatePointMass(Char)</h4>
+  <div class="markdown level1 summary"><p>Creates a point mass distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar CreatePointMass(char point)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">point</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CreateUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CreateUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CreateUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CreateUniform">CreateUniform()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar CreateUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Digit_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Digit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Digit" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Digit">Digit()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over digits '0'..'9'.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsDigit&quot;)]
+public static ImmutableDiscreteChar Digit()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Divide_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Divide*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Divide_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Divide(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar,System.Boolean)">Divide(ImmutableDiscreteChar, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Computes the product of the current instance and <code data-dev-comment-type="paramref" class="paramref">denominator</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar Divide(ImmutableDiscreteChar denominator, bool forceProper = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>If true, the result is modified to have parameters in a safe range</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_EnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.EnumerateSupport*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_EnumerateSupport" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.EnumerateSupport">EnumerateSupport()</h4>
+  <div class="markdown level1 summary"><p>Enumerates over the support of the distribution instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;char&gt; EnumerateSupport()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><p>The character values with non-zero mass.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Equals_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Equals(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar)">Equals(ImmutableDiscreteChar)</h4>
+  <div class="markdown level1 summary"><p>Checks if <code data-dev-comment-type="paramref" class="paramref">that</code> equals to this distribution (i.e. represents the same distribution over characters).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(ImmutableDiscreteChar that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The object to compare this distribution with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if this distribution is equal to <code data-dev-comment-type="paramref" class="paramref">that</code>, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Checks if <code data-dev-comment-type="paramref" class="paramref">obj</code> equals to this distribution (i.e. represents the same distribution over characters).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>The object to compare this distribution with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if this distribution is equal to <code data-dev-comment-type="paramref" class="paramref">obj</code>, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#system-valuetype-equals(system-object)">ValueType.Equals(Object)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_FromVector_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.FromVector*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_FromVector_Microsoft_ML_Probabilistic_Math_PiecewiseVector_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.FromVector(Microsoft.ML.Probabilistic.Math.PiecewiseVector)">FromVector(PiecewiseVector)</h4>
+  <div class="markdown level1 summary"><p>Creates a point character from a vector of (unnormalized) character probabilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar FromVector(PiecewiseVector vector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PiecewiseVector.html">PiecewiseVector</a></td>
+        <td><span class="parametername">vector</span></td>
+        <td><p>The vector of unnormalized probabilities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_FromVector_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.FromVector*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_FromVector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.FromVector(Microsoft.ML.Probabilistic.Math.Vector)">FromVector(Vector)</h4>
+  <div class="markdown level1 summary"><p>Creates a point character from a vector of (unnormalized) character probabilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar FromVector(Vector vector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">vector</span></td>
+        <td><p>The vector of unnormalized probabilities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar)">GetAverageLog(ImmutableDiscreteChar)</h4>
+  <div class="markdown level1 summary"><p>The expected logarithm of that distribution under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(ImmutableDiscreteChar distribution)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">distribution</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>sum_x this.Evaluate(x)*Math.Log(that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is also known as the cross entropy.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Gets the hash code of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The hash code.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#system-valuetype-gethashcode">ValueType.GetHashCode()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetImpliedCharClasses_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetImpliedCharClasses*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetImpliedCharClasses_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_CharClasses_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetImpliedCharClasses(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CharClasses)">GetImpliedCharClasses(ImmutableDiscreteChar.CharClasses)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar.CharClasses GetImpliedCharClasses(ImmutableDiscreteChar.CharClasses charClass)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CharClasses.html">ImmutableDiscreteChar.CharClasses</a></td>
+        <td><span class="parametername">charClass</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CharClasses.html">ImmutableDiscreteChar.CharClasses</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar)">GetLogAverageOf(ImmutableDiscreteChar)</h4>
+  <div class="markdown level1 summary"><p>The log-probability that two distributions would draw the same sample.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(ImmutableDiscreteChar distribution)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">distribution</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>Math.Log(sum_x this.Evaluate(x)*that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This can be considered a type of inner product between distributions.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetLogAverageOfPower_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetLogAverageOfPower(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar,System.Double)">GetLogAverageOfPower(ImmutableDiscreteChar, Double)</h4>
+  <div class="markdown level1 summary"><p>The log-integral of one distribution times another raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(ImmutableDiscreteChar distribution, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">distribution</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td><p>The exponent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>Math.Log(sum_x this.Evaluate(x)*Math.Pow(that.Evaluate(x),power))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetLogAverageOfPower_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is not the same as GetLogAverageOf(that^power) because it includes the normalization constant of that.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetLogProb_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetLogProb(System.Char)">GetLogProb(Char)</h4>
+  <div class="markdown level1 summary"><p>Evaluate the log of the density function at the specified domain value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(char value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log density</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetMode_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetMode" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetMode">GetMode()</h4>
+  <div class="markdown level1 summary"><p>Gets the mode of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public char GetMode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><p>The mode.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetProbs_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetProbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_GetProbs" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.GetProbs">GetProbs()</h4>
+  <div class="markdown level1 summary"><p>Gets a vector of character probabilities under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PiecewiseVector GetProbs()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PiecewiseVector.html">PiecewiseVector</a></td>
+        <td><p>A vector of character probabilities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_InRange_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.InRange*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_InRange_System_Char_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.InRange(System.Char,System.Char)">InRange(Char, Char)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over characters in a given range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar InRange(char start, char end)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The start of the range (inclusive).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">end</span></td>
+        <td><p>The end of the range (inclusive).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_InRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.InRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_InRanges_System_Char___" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.InRanges(System.Char[])">InRanges(Char[])</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
+multiple ranges specified by pairs of start and end values. These pairs
+are specified as adjacent values in an array whose length must therefore be even.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar InRanges(params char[] startEndPairs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>[]</td>
+        <td><span class="parametername">startEndPairs</span></td>
+        <td><p>The array of range starts and ends.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_InRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.InRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_InRanges_System_Collections_Generic_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.InRanges(System.Collections.Generic.IEnumerable{System.Char})">InRanges(IEnumerable&lt;Char&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
+multiple ranges specified by pairs of start and end values. These pairs
+are specified as adjacent values in a sequence whose length must therefore be even.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar InRanges(IEnumerable&lt;char&gt; startEndPairs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><span class="parametername">startEndPairs</span></td>
+        <td><p>The sequence of range starts and ends.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsPartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsPartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsPartialUniform">IsPartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Checks whether the distribution is uniform over its support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPartialUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the distribution is uniform over its support, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Checks whether this distribution is a uniform distribution over all characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if this distribution is a uniform distribution over all possible characters,
+<span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Letter_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Letter*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Letter" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Letter">Letter()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over letters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsLetter&quot;)]
+public static ImmutableDiscreteChar Letter()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_LetterOrDigit_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.LetterOrDigit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_LetterOrDigit" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.LetterOrDigit">LetterOrDigit()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over letters and '0'..'9'.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsLetterOrDigit&quot;)]
+public static ImmutableDiscreteChar LetterOrDigit()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Lower_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Lower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Lower" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Lower">Lower()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over lowercase letters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsLower&quot;)]
+public static ImmutableDiscreteChar Lower()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>Gets the maximum difference between the character probabilities under this distribution and a given one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object distribution)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">distribution</span></td>
+        <td><p>The distribution to compute the maximum probability difference with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed maximum probability difference.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Multiply_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Multiply_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Multiply(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar)">Multiply(ImmutableDiscreteChar)</h4>
+  <div class="markdown level1 summary"><p>Computes the product of the current instance and <code data-dev-comment-type="paramref" class="paramref">other</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar Multiply(ImmutableDiscreteChar other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_NonWordChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.NonWordChar*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_NonWordChar" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.NonWordChar">NonWordChar()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over all characters except (letter, digit and '_').</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar NonWordChar()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.OneOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_OneOf_System_Char___" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.OneOf(System.Char[])">OneOf(Char[])</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over the specified set of characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar OneOf(params char[] chars)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>[]</td>
+        <td><span class="parametername">chars</span></td>
+        <td><p>The characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.OneOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_OneOf_System_Collections_Generic_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.OneOf(System.Collections.Generic.IEnumerable{System.Char})">OneOf(IEnumerable&lt;Char&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over the specified set of characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar OneOf(IEnumerable&lt;char&gt; chars)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><span class="parametername">chars</span></td>
+        <td><p>The characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_PointMass_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.PointMass(System.Char)">PointMass(Char)</h4>
+  <div class="markdown level1 summary"><p>Creates a point mass character distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar PointMass(char point)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">point</span></td>
+        <td><p>The point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Pow_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Pow*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Pow_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Pow(System.Double)">Pow(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the value of the current instance raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar Pow(double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Read_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Read*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Read_System_Func_System_Int32__System_Func_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Read(System.Func{System.Int32},System.Func{System.Double})">Read(Func&lt;Int32&gt;, Func&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reads a discrete character.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar Read(Func&lt;int&gt; readInt32, Func&lt;double&gt; readDouble)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">readInt32</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">readDouble</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Sample the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public char Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Sample_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Sample(System.Char)">Sample(Char)</h4>
+  <div class="markdown level1 summary"><p>Draws a sample from the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public char Sample(char result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>A pre-allocated storage for the sample (will be ignored).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><p>The drawn sample.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Sum_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Sum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Sum_Microsoft_ML_Probabilistic_Distributions_Automata_Weight_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Microsoft_ML_Probabilistic_Distributions_Automata_Weight_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Sum(Microsoft.ML.Probabilistic.Distributions.Automata.Weight,Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar,Microsoft.ML.Probabilistic.Distributions.Automata.Weight)">Sum(Weight, ImmutableDiscreteChar, Weight)</h4>
+  <div class="markdown level1 summary"><p>Computes a weighted sum of the current and the given distributions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar Sum(Weight weightThis, ImmutableDiscreteChar other, Weight weightOther)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a></td>
+        <td><span class="parametername">weightThis</span></td>
+        <td><p>The weight of the current distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>The given distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a></td>
+        <td><span class="parametername">weightOther</span></td>
+        <td><p>The weight of the given distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Sum_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Sum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Sum_System_Double_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Sum(System.Double,Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar,System.Double)">Sum(Double, ImmutableDiscreteChar, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes a weighted sum of the current and the given distributions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmutableDiscreteChar Sum(double weightThis, ImmutableDiscreteChar other, double weightOther)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weightThis</span></td>
+        <td><p>The weight of the current distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>The given distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weightOther</span></td>
+        <td><p>The weight of the given distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_ToLower_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.ToLower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_ToLower_Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.ToLower(Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar)">ToLower(ImmutableDiscreteChar)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar ToLower(ImmutableDiscreteChar unnormalizedCharDist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><span class="parametername">unnormalizedCharDist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Gets a string that represents this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string that represents this distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#system-valuetype-tostring">ValueType.ToString()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Uniform">Uniform()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUniform&quot;)]
+public static ImmutableDiscreteChar Uniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformInRange_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformInRange*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformInRange_System_Char_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformInRange(System.Char,System.Char)">UniformInRange(Char, Char)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over characters in a given range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar UniformInRange(char start, char end)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The start of the range (inclusive).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">end</span></td>
+        <td><p>The end of the range (inclusive).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformInRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformInRanges_System_Char___" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformInRanges(System.Char[])">UniformInRanges(Char[])</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
+multiple ranges specified by pairs of start and end values. These pairs
+are specified as adjacent values in an array whose length must therefore be even.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar UniformInRanges(params char[] startEndPairs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>[]</td>
+        <td><span class="parametername">startEndPairs</span></td>
+        <td><p>The array of range starts and ends.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformInRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformInRanges_System_Collections_Generic_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformInRanges(System.Collections.Generic.IEnumerable{System.Char})">UniformInRanges(IEnumerable&lt;Char&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
+multiple ranges specified by pairs of start and end values. These pairs
+are specified as adjacent values in a sequence whose length must therefore be even.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar UniformInRanges(IEnumerable&lt;char&gt; startEndPairs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><span class="parametername">startEndPairs</span></td>
+        <td><p>The sequence of range starts and ends.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformOver_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformOver*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformOver_System_Char___" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformOver(System.Char[])">UniformOver(Char[])</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over the specified set of characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar UniformOver(params char[] chars)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>[]</td>
+        <td><span class="parametername">chars</span></td>
+        <td><p>The characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformOver_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformOver*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_UniformOver_System_Collections_Generic_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.UniformOver(System.Collections.Generic.IEnumerable{System.Char})">UniformOver(IEnumerable&lt;Char&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over the specified set of characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar UniformOver(IEnumerable&lt;char&gt; chars)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><span class="parametername">chars</span></td>
+        <td><p>The characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Upper_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Upper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Upper" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Upper">Upper()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over uppercase letters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUpper&quot;)]
+public static ImmutableDiscreteChar Upper()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Whitespace_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Whitespace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Whitespace" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Whitespace">Whitespace()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over whitespace characters ('\t'..'\r', ' ').</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ImmutableDiscreteChar Whitespace()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_WordChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.WordChar*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_WordChar" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.WordChar">WordChar()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over word characters (letter, digit and '_').</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsWordChar&quot;)]
+public static ImmutableDiscreteChar WordChar()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Write_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_Write_System_Action_System_Int32__System_Action_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.Write(System.Action{System.Int32},System.Action{System.Double})">Write(Action&lt;Int32&gt;, Action&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Writes a discrete character.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(Action&lt;int&gt; writeInt32, Action&lt;double&gt; writeDouble)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">writeInt32</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">writeDouble</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_System_ICloneable_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.System#ICloneable#Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_System_ICloneable_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.System#ICloneable#Clone">ICloneable.Clone()</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object ICloneable.Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The created copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_System_Runtime_Serialization_ISerializable_GetObjectData_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.System#Runtime#Serialization#ISerializable#GetObjectData*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ImmutableDiscreteChar_System_Runtime_Serialization_ISerializable_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">ISerializable.GetObjectData(SerializationInfo, StreamingContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.serializationinfo">SerializationInfo</a></td>
+        <td><span class="parametername">info</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.streamingcontext">StreamingContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution-2.html">IImmutableDistribution&lt;T, TThis&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution.html">IImmutableDistribution</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreateUniform-1.html">CanCreateUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePointMass-2.html">CanCreatePointMass&lt;T, TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePartialUniform-1.html">CanCreatePartialUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-1.html">CanComputeProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-2.html">CanComputeProduct&lt;TOther, TResult&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeRatio-1.html">CanComputeRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeRatio-2.html">CanComputeRatio&lt;TDenominator, TResult&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputePower-1.html">CanComputePower&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-1.html">SummableExactly&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-2.html">SummableExactly&lt;TOther, TResult&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Summable-2.html">Summable&lt;TOther, TResult&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.iserializable">System.Runtime.Serialization.ISerializable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GetDeepJaggedItemsOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1" class="text-break">Class GetDeepJaggedItemsOp&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetDeepJaggedItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____">GetDeepJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</a>, given random arguments to the function.</p>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Collection.html#Microsoft_ML_Probabilistic_Factors_Collection_GetDeepJaggedItems__1_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_IReadOnlyList_System_Int32____">GetDeepJaggedItems&lt;T&gt;(IReadOnlyList&lt;T&gt;, IReadOnlyList&lt;IReadOnlyList&lt;IReadOnlyList&lt;Int32&gt;&gt;&gt;)</a>, given random arguments to the function.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -94,32 +94,32 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;GetDeepJaggedItems&lt;&gt;&quot;, new Type[]{}, Default = true)]
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Collection), &quot;GetDeepJaggedItems&lt;&gt;&quot;, new Type[]{}, Default = true)]
 [Quality(QualityBand.Mature)]
 [Buffers(new string[]{&quot;marginal&quot;})]
 public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
@@ -171,7 +171,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
       <tr>
@@ -220,7 +220,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ArrayAverageConditional__2_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32______1__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(items) p(items) factor(items,array,indices)]/p(array)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(items,indices) p(items,indices) factor(items,array,indices)]/p(array)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -349,7 +349,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
       <tr>
@@ -398,7 +398,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ArrayAverageLogarithm__2_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32______1__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>array</code> with <code>items</code> integrated out. The formula is <code>sum_items p(items) factor(items,array,indices)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>array</code>. Because the factor is deterministic, <code>items</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(indices) p(indices) log(sum_items p(items) factor(items,array,indices)))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.ArrayAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ArrayAverageLogarithm__4_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32______3_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.ArrayAverageLogarithm``4(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}}},``3)">ArrayAverageLogarithm&lt;ItemType, ItemType2, DistributionType, ArrayType&gt;(IList&lt;ItemType&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;, ArrayType)</h4>
@@ -429,7 +429,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
       <tr>
@@ -488,7 +488,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ArrayAverageLogarithm__4_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32______3__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>array</code> with <code>items</code> integrated out. The formula is <code>sum_items p(items) factor(items,array,indices)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>array</code>. Because the factor is deterministic, <code>items</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(indices) p(indices) log(sum_items p(items) factor(items,array,indices)))</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -540,7 +540,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -825,7 +825,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
       <tr>
@@ -890,7 +890,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ItemsAverageConditional__4___1___0___0_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____System_Int32___1__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>items</code> as the random arguments are varied. The formula is <code>proj[p(items) sum_(array) p(array) factor(items,array,indices)]/p(items)</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>items</code> as the random arguments are varied. The formula is <code>proj[p(items) sum_(array,indices) p(array,indices) factor(items,array,indices)]/p(items)</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ItemsAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.ItemsAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ItemsAverageLogarithm__3_System_Collections_Generic_IList___2__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.ItemsAverageLogarithm``3(System.Collections.Generic.IList{``2},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}}},System.Int32,``0)">ItemsAverageLogarithm&lt;ItemType, ItemType2, DistributionType&gt;(IList&lt;DistributionType&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;, Int32, ItemType)</h4>
@@ -921,7 +921,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
       <tr>
@@ -981,7 +981,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_ItemsAverageLogarithm__3_System_Collections_Generic_IList___2__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____System_Int32___0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>items</code> as the random arguments are varied. The formula is <code>proj[sum_(array) p(array) factor(items,array,indices)]</code>.</p>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>items</code> as the random arguments are varied. The formula is <code>proj[sum_(array,indices) p(array,indices) factor(items,array,indices)]</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1033,7 +1033,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1055,7 +1055,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogAverageFactor_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array) p(items,array) factor(items,array,indices))</code>.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogAverageFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogAverageFactor__1_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogAverageFactor``1(System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{`0}}},System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}}})">LogAverageFactor&lt;DistributionType&gt;(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</h4>
@@ -1092,7 +1092,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1130,7 +1130,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogAverageFactor__1_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array) p(items,array) factor(items,array,indices))</code>.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogAverageFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogAverageFactor__3_System_Collections_Generic_IList___0__System_Collections_Generic_IList___2__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogAverageFactor``3(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``2},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}}})">LogAverageFactor&lt;ItemType, ItemType2, DistributionType&gt;(IList&lt;ItemType&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</h4>
@@ -1244,7 +1244,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1292,7 +1292,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogAverageFactor__3_System_Collections_Generic_IList___0__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array) p(items,array) factor(items,array,indices))</code>.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogEvidenceRatio_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogEvidenceRatio(System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{`0}}},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}}})">LogEvidenceRatio(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt;, IList&lt;T&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</h4>
@@ -1328,7 +1328,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1350,7 +1350,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogEvidenceRatio_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogEvidenceRatio__1_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogEvidenceRatio``1(System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{`0}}},System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}}})">LogEvidenceRatio&lt;DistributionType&gt;(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</h4>
@@ -1387,7 +1387,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1425,7 +1425,7 @@ public static class GetDeepJaggedItemsOp&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogEvidenceRatio__1_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList__0____System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GetDeepJaggedItemsOp_1_LogEvidenceRatio__3_System_Collections_Generic_IList___0__System_Collections_Generic_IList___2__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp`1.LogEvidenceRatio``3(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``2},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}}},System.Collections.Generic.IList{``0})">LogEvidenceRatio&lt;ItemType, ItemType2, DistributionType&gt;(IList&lt;ItemType&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;, IList&lt;ItemType&gt;)</h4>
@@ -1697,7 +1697,7 @@ public static ArrayType Marginal&lt;ArrayType, DistributionType&gt;(ArrayType ar
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td><p>Constant value for <code>indices</code>.</p>
+        <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
       <tr>
@@ -1843,7 +1843,8 @@ public static ArrayType Marginal&lt;ArrayType, DistributionType&gt;(ArrayType ar
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

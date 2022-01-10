@@ -1,0 +1,731 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1" class="text-break">Interface WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Interface for a function that maps arbitrary sequences of elements to real values,
+that can, but not necessarily has to be, represented as a weighted finite state automaton.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_AsAutomaton">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.AsAutomaton()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_Point">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.Point</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_IsPointMass">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.IsPointMass</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_UsesAutomatonRepresentation">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.UsesAutomatonRepresentation</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_GetLogNormalizer">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.GetLogNormalizer()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_EnumerateSupport_System_Int32_">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.EnumerateSupport(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.TryEnumerateSupport(Int32, IEnumerable&lt;TSequence&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_EnumeratePaths">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.EnumeratePaths()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_GetLogValue__0_">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.GetLogValue(TSequence)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_IsZero">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.IsZero()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_UsesGroups">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.UsesGroups</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_HasGroup_System_Int32_">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.HasGroup(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_ToString_System_Action__2_System_Text_StringBuilder__">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction.ToString(Action&lt;TElementDistribution, StringBuilder&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1.equals#system-iequatable-1-equals(-0)">IEquatable&lt;TThis&gt;.Equals(TThis)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public interface IWeightFunction&lt;TThis&gt; : WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction, IEquatable&lt;TThis&gt; where TThis : WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TThis</span></td>
+        <td><p>The type of a concrete weight function class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Types implementing this interface must be constant and thread-safe.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Append_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Append*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Append__0_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Append(`0,System.Int32)">Append(TSequence, Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a weight function <code>f'(st) = f(s)</code>, where <code>f(s)</code> is the current weight function
+and <code>t</code> is the given sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis Append(TSequence sequence, int group = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Append_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Append*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Append__5_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Append(`5,System.Int32)">Append(TThis, Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a weight function <code>f'(s) = sum_{tu=s} f(t)g(u)</code>, where <code>f(t)</code> is the current weight function
+and <code>g(u)</code> is the given weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis Append(TThis weightFunction, int group = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">weightFunction</span></td>
+        <td><p>The weight function to append.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_GetGroups_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.GetGroups*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_GetGroups" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.GetGroups">GetGroups()</h4>
+  <div class="markdown level1 summary"><p>If the current weight function uses groups, returns a dictionary [group index] -&gt; group.
+Otherwise, returns an empty dictionary.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Dictionary&lt;int, TThis&gt; GetGroups()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TThis&gt;</td>
+        <td><p>A possibly empty dictionary [group index] -&gt; group.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_MaxDiff__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.MaxDiff(`5)">MaxDiff(TThis)</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating how close this weight function is to a given one
+in terms of weights they assign to sequences.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double MaxDiff(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A non-negative value, which is close to zero if the two weight functions assign similar values to all sequences.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_NormalizeStructure_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.NormalizeStructure*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_NormalizeStructure" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.NormalizeStructure">NormalizeStructure()</h4>
+  <div class="markdown level1 summary"><p>Returns the weight function converted to the normalized form e.g. using special
+case structures for point masses and functions with small support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis NormalizeStructure()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Product_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Product*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Product__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Product(`5)">Product(TThis)</h4>
+  <div class="markdown level1 summary"><p>Computes the product of the current weight function and a given one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis Product(TThis weightFunction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">weightFunction</span></td>
+        <td><p>The weight function to compute the product with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The computed product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Repeat_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Repeat*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Repeat_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Repeat(System.Int32,System.Nullable{System.Int32})">Repeat(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a weight function <code>g(s) = sum_{k=Kmin}^{Kmax} sum_{t1 t2 ... tk = s} f(t1)f(t2)...f(tk)</code>,
+where <code>f(t)</code> is the current weight function, and <code>Kmin</code> and <code>Kmax</code> are the minimum
+and the maximum number of factors in a sum term.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis Repeat(int minTimes = 1, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minTimes</span></td>
+        <td><p>The minimum number of factors in a sum term. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>An optional maximum number of factors in a sum term.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_ScaleLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.ScaleLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_ScaleLog_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.ScaleLog(System.Double)">ScaleLog(Double)</h4>
+  <div class="markdown level1 summary"><p>Scales the weight function and returns the result.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis ScaleLog(double logScale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logScale</span></td>
+        <td><p>The logarithm of the scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The scaled weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Sum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Sum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Sum__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Sum(`5)">Sum(TThis)</h4>
+  <div class="markdown level1 summary"><p>Computes the sum of the current weight function and a given weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis Sum(TThis weightFunction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">weightFunction</span></td>
+        <td><p>The weight function to compute the sum with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The computed sum.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Sum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Sum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_Sum_System_Double__5_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.Sum(System.Double,`5,System.Double)">Sum(Double, TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the weighted sum of the current weight function and a given weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis Sum(double weight1, TThis weightFunction, double weight2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The weight of the current weight function.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">weightFunction</span></td>
+        <td><p>The weight function to compute the sum with.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The weight of the <code data-dev-comment-type="paramref" class="paramref">weightFunction</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_SumLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.SumLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_SumLog_System_Double__5_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.SumLog(System.Double,`5,System.Double)">SumLog(Double, TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the weighted sum of the current weight function and a given weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TThis SumLog(double logWeight1, TThis weightFunction, double logWeight2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logWeight1</span></td>
+        <td><p>The logarithm of the weight of the current weight function.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">weightFunction</span></td>
+        <td><p>The weight function to compute the sum with.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logWeight2</span></td>
+        <td><p>The logarithm of the weight of the <code data-dev-comment-type="paramref" class="paramref">weightFunction</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_TryNormalizeValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.TryNormalizeValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_1_TryNormalizeValues__5__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction`1.TryNormalizeValues(`5@,System.Double@)">TryNormalizeValues(out TThis, out Double)</h4>
+  <div class="markdown level1 summary"><p>Attempts to normalize the weight function so that sum of its values on all possible sequences equals to one (if it is possible)
+and returns the result in an out parameter.
+If successful, calls to <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_AsAutomaton">AsAutomaton()</a>
+methods of the resulting function produce a stochastic automaton,
+i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool TryNormalizeValues(out TThis normalizedFunction, out double logNormalizer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">normalizedFunction</span></td>
+        <td><p>Result of the normaliztion attempt.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logNormalizer</span></td>
+        <td><p>When the function returns, contains the logarithm of the normalizer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the weight function was successfully normalized, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

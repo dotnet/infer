@@ -1,0 +1,592 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction" class="text-break">Interface WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction
+  </h1>
+  <div class="markdown level0 summary"><p>The part of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a> API,
+that is agnostic of the concrete weight function class. Implementations of closed constructed
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a> can all be upcasted to this type.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public interface IWeightFunction</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Types implementing this interface must be constant and thread-safe.</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current weight function assigns a non-zero weight to exactly one point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Gets the only point to which the current function assigns a non-zero weight.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TSequence Point { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td><p>Thrown when an attempt is made to get the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_Point">Point</a>
+of a non-pointmass weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_UsesAutomatonRepresentation_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.UsesAutomatonRepresentation*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_UsesAutomatonRepresentation" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.UsesAutomatonRepresentation">UsesAutomatonRepresentation</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current weight function is represented as an automaton internally.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool UsesAutomatonRepresentation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_UsesGroups_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.UsesGroups*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_UsesGroups" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.UsesGroups">UsesGroups</h4>
+  <div class="markdown level1 summary"><p>Checks if the weight function uses groups.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool UsesGroups { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the weight function uses groups, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_AsAutomaton_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.AsAutomaton*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_AsAutomaton" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.AsAutomaton">AsAutomaton()</h4>
+  <div class="markdown level1 summary"><p>Returns an automaton representation of the current weight function. If the weight function is normalized,
+the resulting automaton is stochastic, i.e. the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TAutomaton AsAutomaton()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TAutomaton</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_EnumeratePaths_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.EnumeratePaths*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_EnumeratePaths" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.EnumeratePaths">EnumeratePaths()</h4>
+  <div class="markdown level1 summary"><p>Enumerates paths through this weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;Tuple&lt;List&lt;TElementDistribution&gt;, double&gt;&gt; EnumeratePaths()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.tuple-2">Tuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;TElementDistribution&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><p>The paths through this weight function, with their log weights</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_EnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.EnumerateSupport*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_EnumerateSupport_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.EnumerateSupport(System.Int32)">EnumerateSupport(Int32)</h4>
+  <div class="markdown level1 summary"><p>Enumerates support of this weight function when possible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;TSequence&gt; EnumerateSupport(int maxCount = 1000000)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxCount</span></td>
+        <td><p>The maximum support enumeration count.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TSequence&gt;</td>
+        <td><p>The sequences in the support of this weight function</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.AutomatonEnumerationCountException.html">AutomatonEnumerationCountException</a></td>
+        <td><p>Thrown if enumeration is too large.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_GetLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.GetLogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_GetLogNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.GetLogNormalizer">GetLogNormalizer()</h4>
+  <div class="markdown level1 summary"><p>Computes the logarithm of the normalizer (sum of values of the weight function on all sequences).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double GetLogNormalizer()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The logarithm of the normalizer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_GetLogNormalizer_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Returns <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double.positiveinfinity">PositiveInfinity</a> if the sum diverges.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_GetLogValue_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.GetLogValue*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_GetLogValue__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.GetLogValue(`0)">GetLogValue(TSequence)</h4>
+  <div class="markdown level1 summary"><p>Computes the logarithm of the value of the weight function on a given sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double GetLogValue(TSequence sequence)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence to compute the value on.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The logarithm of the value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_HasGroup_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.HasGroup*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_HasGroup_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.HasGroup(System.Int32)">HasGroup(Int32)</h4>
+  <div class="markdown level1 summary"><p>Determines whether this weight function has the specified group (if applicable).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool HasGroup(int group)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The specified group.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if it the weight function has this group, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_IsZero_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.IsZero*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_IsZero" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.IsZero">IsZero()</h4>
+  <div class="markdown level1 summary"><p>Checks whether the current weight function is zero on all sequences.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsZero()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the current weight function is zero on all sequences,
+<span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_ToString_System_Action__2_System_Text_StringBuilder__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.ToString(System.Action{`2,System.Text.StringBuilder})">ToString(Action&lt;TElementDistribution, StringBuilder&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns a string that represents the weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string ToString(Action&lt;TElementDistribution, StringBuilder&gt; appendElement)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;TElementDistribution, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.stringbuilder">StringBuilder</a>&gt;</td>
+        <td><span class="parametername">appendElement</span></td>
+        <td><p>Optional method for appending at the element distribution level.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string that represents the weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_TryEnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.TryEnumerateSupport*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions`5.IWeightFunction.TryEnumerateSupport(System.Int32,System.Collections.Generic.IEnumerable{`0}@)">TryEnumerateSupport(Int32, out IEnumerable&lt;TSequence&gt;)</h4>
+  <div class="markdown level1 summary"><p>Tries to enumerate support of this weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool TryEnumerateSupport(int maxCount, out IEnumerable&lt;TSequence&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxCount</span></td>
+        <td><p>The maximum support enumeration count.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TSequence&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>The sequences in the support of this weight function</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if successful, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

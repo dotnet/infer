@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Builder
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -94,25 +94,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
@@ -375,7 +375,7 @@ The resulting automaton is also known as the Cauchy product of two automata.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Append(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt; automaton, int group = 0, bool avoidEpsilonTransitions = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public (bool avoidedEpsilonTransitions, bool preservedDeterminizationState) Append(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt; automaton, int group = 0, bool avoidEpsilonTransitions = true)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -390,17 +390,44 @@ The resulting automaton is also known as the Cauchy product of two automata.</p>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html">Automaton</a>&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;</td>
         <td><span class="parametername">automaton</span></td>
-        <td></td>
+        <td><p>Given automaton.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">group</span></td>
-        <td></td>
+        <td><p>If non-zero, all transitions in the appended part will be put
+into the specified group.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">avoidEpsilonTransitions</span></td>
-        <td></td>
+        <td><p>When set to <span class="xref">true</span> (default), and
+at least one of the following</p>
+<ul><li></li><li></li></ul>
+is true, no epsilon transitions will be used to concatenate the automata. Otherwise,
+epsilon transitions will be used
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><p>A pair of boolean values. The first indicates whether adding new epsilon transitions was avoided.
+The second indicates, whether the determinization state of the concatenated automata was preserved, i.e.
+whether both the current and the given automata being determinized implies that the result automaton is
+determinized as well.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -504,7 +531,7 @@ from given <code data-dev-comment-type="paramref" class="paramref">automaton</co
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Builder_GetAutomaton_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Builder.GetAutomaton*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Builder_GetAutomaton" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Builder.GetAutomaton">GetAutomaton()</h4>
-  <div class="markdown level1 summary"><p>Builds new automaton object.</p>
+  <div class="markdown level1 summary"><p>Builds new automaton object. Builder must not be used after this method is called</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -533,7 +560,7 @@ from given <code data-dev-comment-type="paramref" class="paramref">automaton</co
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer GetData(bool? isDeterminized = default(bool? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer GetData(bool? isDeterminized = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -567,6 +594,9 @@ from given <code data-dev-comment-type="paramref" class="paramref">automaton</co
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Builder_GetData_System_Nullable_System_Boolean___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Builder must not be used after this method is called.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Builder_RemoveState_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Builder.RemoveState*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Builder_RemoveState_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Builder.RemoveState(System.Int32)">RemoveState(Int32)</h4>
   <div class="markdown level1 summary"><p>Removes state with given <code data-dev-comment-type="paramref" class="paramref">stateIndex</code> and all incoming transitions.</p>
@@ -648,7 +678,8 @@ the <code data-dev-comment-type="paramref" class="paramref">removeLabel</code>.<
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

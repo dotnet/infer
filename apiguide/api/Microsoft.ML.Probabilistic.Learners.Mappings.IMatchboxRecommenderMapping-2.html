@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -131,7 +131,7 @@ of cold users or items will be requested during prediction.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;IList&lt;int&gt;&gt; GetAllItemNonZeroFeatureIndices(TFeatureSource featureSource)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;IReadOnlyList&lt;int&gt;&gt; GetAllItemNonZeroFeatureIndices(TFeatureSource featureSource)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -161,7 +161,7 @@ of cold users or items will be requested during prediction.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><p>An array of non-zero item feature index arrays where the outer array is indexed by item id</p>
 </td>
       </tr>
@@ -177,7 +177,7 @@ of cold users or items will be requested during prediction.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;IList&lt;double&gt;&gt; GetAllItemNonZeroFeatureValues(TFeatureSource featureSource)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;IReadOnlyList&lt;double&gt;&gt; GetAllItemNonZeroFeatureValues(TFeatureSource featureSource)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -207,7 +207,7 @@ of cold users or items will be requested during prediction.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><p>An array of non-zero item feature arrays where the outer array is indexed by item id</p>
 </td>
       </tr>
@@ -223,7 +223,7 @@ of cold users or items will be requested during prediction.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;IList&lt;int&gt;&gt; GetAllUserNonZeroFeatureIndices(TFeatureSource featureSource)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;IReadOnlyList&lt;int&gt;&gt; GetAllUserNonZeroFeatureIndices(TFeatureSource featureSource)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -253,7 +253,7 @@ of cold users or items will be requested during prediction.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><p>An array of non-zero user feature index arrays where the outer array is indexed by user id.</p>
 </td>
       </tr>
@@ -269,7 +269,7 @@ of cold users or items will be requested during prediction.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;IList&lt;double&gt;&gt; GetAllUserNonZeroFeatureValues(TFeatureSource featureSource)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;IReadOnlyList&lt;double&gt;&gt; GetAllUserNonZeroFeatureValues(TFeatureSource featureSource)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -299,7 +299,7 @@ of cold users or items will be requested during prediction.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><p>An array of non-zero user feature arrays where the outer array is indexed by user id.</p>
 </td>
       </tr>
@@ -401,7 +401,7 @@ of cold users or items will be requested during prediction.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetItemIds(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;int&gt; GetItemIds(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -437,7 +437,7 @@ of cold users or items will be requested during prediction.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><p>The list of item identifiers.</p>
 </td>
       </tr>
@@ -498,7 +498,7 @@ This is equal to one plus the difference between the maximum and the minimum rat
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetRatings(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;int&gt; GetRatings(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -534,7 +534,7 @@ This is equal to one plus the difference between the maximum and the minimum rat
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><p>The list of ratings</p>
 </td>
       </tr>
@@ -551,7 +551,7 @@ so its implementation must be thread-safe.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetSingleItemNonZeroFeatureIndices(TFeatureSource featureSource, int itemId)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;int&gt; GetSingleItemNonZeroFeatureIndices(TFeatureSource featureSource, int itemId)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -587,7 +587,7 @@ so its implementation must be thread-safe.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><p>Non-zero feature values for the item.</p>
 </td>
       </tr>
@@ -603,7 +603,7 @@ so its implementation must be thread-safe.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;double&gt; GetSingleItemNonZeroFeatureValues(TFeatureSource featureSource, int itemId)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;double&gt; GetSingleItemNonZeroFeatureValues(TFeatureSource featureSource, int itemId)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -639,7 +639,7 @@ so its implementation must be thread-safe.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><p>Non-zero feature values for the item.</p>
 </td>
       </tr>
@@ -655,7 +655,7 @@ so its implementation must be thread-safe.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetSingleUserNonZeroFeatureIndices(TFeatureSource featureSource, int userId)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;int&gt; GetSingleUserNonZeroFeatureIndices(TFeatureSource featureSource, int userId)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -691,7 +691,7 @@ so its implementation must be thread-safe.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><p>Non-zero feature indices for the user.</p>
 </td>
       </tr>
@@ -707,7 +707,7 @@ so its implementation must be thread-safe.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;double&gt; GetSingleUserNonZeroFeatureValues(TFeatureSource featureSource, int userId)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;double&gt; GetSingleUserNonZeroFeatureValues(TFeatureSource featureSource, int userId)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -743,7 +743,7 @@ so its implementation must be thread-safe.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><p>Non-zero feature values for the user.</p>
 </td>
       </tr>
@@ -845,7 +845,7 @@ so its implementation must be thread-safe.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetUserIds(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;int&gt; GetUserIds(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -881,7 +881,7 @@ so its implementation must be thread-safe.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><p>The list of user identifiers.</p>
 </td>
       </tr>
@@ -897,7 +897,8 @@ so its implementation must be thread-safe.</p>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

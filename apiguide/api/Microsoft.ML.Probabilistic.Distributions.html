@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace Microsoft.ML.Probabilistic.Distributions
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -213,6 +213,9 @@ and maintains thinned samples and conditionals</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IrregularQuantiles.html">IrregularQuantiles</a></h4>
       <section><p>Represents a distribution using the quantiles at arbitrary probabilities.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.LeftTruncatedPoisson.html">LeftTruncatedPoisson</a></h4>
+      <section><p>Left-truncated Com-Poisson distribution.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.LinearSpline.html">LinearSpline</a></h4>
       <section><p>Very simple 1-D linear spline class which implements IFunction.
 Assumes knots at regular positions - given by a start and increment.
@@ -257,7 +260,7 @@ a function variable.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SampleList-1.html">SampleList&lt;T&gt;</a></h4>
       <section><p>Sample List</p>
 </section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html">SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;</a></h4>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-8.html">SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TWeightFunction, TWeightFunctionFactory, TThis&gt;</a></h4>
       <section><p>A base class for implementations of distributions over sequences.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistributionFormats.html">SequenceDistributionFormats</a></h4>
@@ -308,8 +311,15 @@ reference</li>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></h4>
       <section><p>Represents a distribution over strings that uses a weighted finite state automaton as the underlying weight function.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatableDistribution-1.html">TruncatableDistribution&lt;T&gt;</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedDistribution.html">TruncatedDistribution</a></h4>
+      <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussianEstimator.html">TruncatedGaussianEstimator</a></h4>
       <section><p>Estimates a TruncatedGaussian distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedPoisson.html">TruncatedPoisson</a></h4>
+      <section><p>Left-and-right-truncated Com-Poisson distribution.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></h4>
       <section><p>Represents a discrete distribution in the log domain without explicit normalization.</p>
@@ -329,6 +339,9 @@ reference</li>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WishartEstimator.html">WishartEstimator</a></h4>
       <section><p>Estimates a Wishart distribution from samples.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WordStrings.html">WordStrings</a></h4>
+      <section><p>Sets of strings of whole words.</p>
+</section>
     <h3 id="structs">Structs
   </h3>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></h4>
@@ -347,9 +360,6 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></h4>
       <section><p>Represents a distribution over characters.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRange.html">DiscreteChar.CharRange</a></h4>
-      <section><p>Represents a range of characters, with an associated probability.</p>
-</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></h4>
       <section><p>A Gamma distribution on positive reals.</p>
 </section>
@@ -358,6 +368,12 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></h4>
       <section><p>Represents a one-dimensional Gaussian distribution.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.html">ImmutableDiscreteChar</a></h4>
+      <section><p>Represents a distribution over characters.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CharRange.html">ImmutableDiscreteChar.CharRange</a></h4>
+      <section><p>Represents a range of characters, with an associated probability.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></h4>
       <section><p>Nonconjugate Gaussian messages for VMP. The mean has a Gaussian distribution and the variance a Gamma distribution.</p>
@@ -381,6 +397,42 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</p>
   </h3>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator&lt;T&gt;</a></h4>
       <section><p>Indicates support for adding an item to a distribution estimator</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputePower-1.html">CanComputePower&lt;TDist&gt;</a></h4>
+      <section><p>Supports computing the value of the current instance raised to a power.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-1.html">CanComputeProduct&lt;T&gt;</a></h4>
+      <section><p>Supports computing the product of the current instance and another value that has
+the same type as the product.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeProduct-2.html">CanComputeProduct&lt;TOther, TResult&gt;</a></h4>
+      <section><p>Supports computing the product of the current instance and another value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeRatio-1.html">CanComputeRatio&lt;T&gt;</a></h4>
+      <section><p>Supports computing the ratio of the current instance and another value that has
+the same type as the ratio.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanComputeRatio-2.html">CanComputeRatio&lt;TDenominator, TResult&gt;</a></h4>
+      <section><p>Supports computing the ratio of the current instance and another value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCopyWithAllElementsSetTo-2.html">CanCopyWithAllElementsSetTo&lt;T, TDist&gt;</a></h4>
+      <section><p>Whether the distribution supports creating copies with all elements set to duplicates of the same value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCopyWithMean-2.html">CanCopyWithMean&lt;MeanType, TDist&gt;</a></h4>
+      <section><p>Whether the distribution supports creating copies with different mean value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCopyWithMeanAndVariance-3.html">CanCopyWithMeanAndVariance&lt;MeanType, VarType, TDist&gt;</a></h4>
+      <section><p>Whether the distribution supports creating copies with different mean and variance.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePartialUniform-1.html">CanCreatePartialUniform&lt;TDist&gt;</a></h4>
+      <section><p>Whether the distribution can create another distribution of the same type and with the same support,
+but partially uniform over said support.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreatePointMass-2.html">CanCreatePointMass&lt;T, TDist&gt;</a></h4>
+      <section><p>Whether the distribution supports being a point mass.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanCreateUniform-1.html">CanCreateUniform&lt;TDist&gt;</a></h4>
+      <section><p>Whether the distribution can be uniform.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a></h4>
       <section><p>Whether the distribution supports enumeration over the support - i.e. enumeration
@@ -418,9 +470,9 @@ where the mean and variance are returned as 'out' argiments</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a></h4>
       <section><p>Whether the distribution supports retrieval of the most probable value</p>
 </section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a></h4>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan-1.html">CanGetProbLessThan&lt;T&gt;</a></h4>
       <section></section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a></h4>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile-1.html">CanGetQuantile&lt;T&gt;</a></h4>
       <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance&lt;VarType&gt;</a></h4>
       <section><p>Whether the distribution supports retrieval of a variance value</p>
@@ -440,6 +492,12 @@ where the mean and variance are returned as 'out' argiments</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a></h4>
       <section><p>Whether the distribution supports being a point mass</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICanTruncateLeft-1.html">ICanTruncateLeft&lt;TDomain&gt;</a></h4>
+      <section><p>Whether the distribution can be left-truncated.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICanTruncateRight-1.html">ICanTruncateRight&lt;TDomain&gt;</a></h4>
+      <section><p>Whether the distribution can be right truncated.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICollectionDistribution.html">ICollectionDistribution</a></h4>
       <section><p>Interface to allow untyped access to collection distribution</p>
 </section>
@@ -458,9 +516,17 @@ where the mean and variance are returned as 'out' argiments</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IGaussianProcess.html">IGaussianProcess</a></h4>
       <section><p>Basic GP interface</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution.html">IImmutableDistribution</a></h4>
+      <section><p>Base type for all immutable distributions that doesn't specify over which domain distribution is defined.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IImmutableDistribution-2.html">IImmutableDistribution&lt;T, TThis&gt;</a></h4>
+      <section><p>Immutable distribution interface</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IsDistributionWrapper.html">IsDistributionWrapper</a></h4>
       <section><p>Marker interface for classes which wrap distributions</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ITruncatableDistribution-1.html">ITruncatableDistribution&lt;T&gt;</a></h4>
+      <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a></h4>
       <section><p>Whether the distribution supports sampling</p>
 </section>
@@ -470,6 +536,19 @@ where the mean and variance are returned as 'out' argiments</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></h4>
       <section><p>Whether the distribution can be set to uniform</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Summable-1.html">Summable&lt;T&gt;</a></h4>
+      <section><p>Supports computing the weighted sum of the current instance and another value that has
+the same type as the result.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Summable-2.html">Summable&lt;TOther, TResult&gt;</a></h4>
+      <section><p>Supports computing the weighted sum of the current instance and another value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-1.html">SummableExactly&lt;T&gt;</a></h4>
+      <section><p>Indicates that the computed weighted sum is exact.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SummableExactly-2.html">SummableExactly&lt;TOther, TResult&gt;</a></h4>
+      <section><p>Indicates that the computed weighted sum is exact.</p>
+</section>
     <h3 id="enums">Enums
   </h3>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.ApproximationMethod.html">ConjugateDirichlet.ApproximationMethod</a></h4>
@@ -478,7 +557,7 @@ Asymptotic: use expectations under the approximating Gamma distribution
 GaussHermiteQuadrature: Use Gauss-Hermite quadrature with 32 quadrature points
 ClenshawCurtisQuadrature: Use Clenshaw Curtis quadrature with an adaptive number of quadrature points</p>
 </section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharClasses.html">DiscreteChar.CharClasses</a></h4>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImmutableDiscreteChar.CharClasses.html">ImmutableDiscreteChar.CharClasses</a></h4>
       <section></section>
     <h3 id="delegates">Delegates
   </h3>
@@ -505,7 +584,8 @@ to do successive sampling without recreating a workspace each time.</p>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

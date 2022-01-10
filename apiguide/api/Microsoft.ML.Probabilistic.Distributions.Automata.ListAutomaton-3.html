@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ListAutomaton&lt;TList, TElement, TElementDistribution&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -92,6 +92,12 @@
     <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html">Automaton</a>&lt;TList, TElement, TElementDistribution, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListManipulator-2.html">ListManipulator</a>&lt;TList, TElement&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-3.html">ListAutomaton</a>&lt;TList, TElement, TElementDistribution&gt;&gt;</div>
     <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-4.html">ListAutomaton</a>&lt;TList, TElement, TElementDistribution, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-3.html">ListAutomaton</a>&lt;TList, TElement, TElementDistribution&gt;&gt;</div>
     <div class="level3"><span class="xref">ListAutomaton&lt;TList, TElement, TElementDistribution&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions.IWeightFunction</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-3.html">ListAutomaton</a>&lt;TList, TElement, TElementDistribution&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html">WeightFunctions.IWeightFunction</a>&lt;&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-3.html">ListAutomaton</a>&lt;TList, TElement, TElementDistribution&gt;&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -210,6 +216,9 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.FromValues(IEnumerable&lt;KeyValuePair&lt;TList, Double&gt;&gt;)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromLogValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.FromLogValues(IEnumerable&lt;KeyValuePair&lt;TList, Double&gt;&gt;)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat__4_Microsoft_ML_Probabilistic_Math_Vector_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Repeat(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Vector)</a>
     </div>
     <div>
@@ -231,10 +240,10 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetGroups">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.GetGroups()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ClearGroups">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.ClearGroups()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithGroupsClear">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.WithGroupsClear()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetGroup_System_Int32_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetGroup(Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithGroup_System_Int32_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.WithGroup(Int32)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetLogNormalizer">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.GetLogNormalizer()</a>
@@ -243,10 +252,10 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeValues">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.NormalizeValues()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues_System_Double__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryNormalizeValues(Double)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues__4__System_Double__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryNormalizeValues(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryNormalizeValues()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues__4__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryNormalizeValues(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsZero">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.IsZero()</a>
@@ -258,13 +267,13 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicConstant">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.IsCanonicConstant()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOf_System_Double__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToConstantOnSupportOf(Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupport_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.ConstantOnSupport(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOfLog_System_Double__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToConstantOnSupportOfLog(Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupportLog_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.ConstantOnSupportLog(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TrySetToConstantOnSupportOfLog_System_Double__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TrySetToConstantOnSupportOfLog(Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryGetConstantOnSupportLog_System_Double__4__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryGetConstantOnSupportLog(Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Clone">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Clone()</a>
@@ -279,28 +288,19 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Append__4_System_Int32_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Append(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AppendInPlace__0_System_Int32_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.AppendInPlace(TList, Int32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AppendInPlace__4_System_Int32_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.AppendInPlace(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Int32)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Product(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4_System_Boolean_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Product(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToProduct__4__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToProduct(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToProduct__4__4_System_Boolean_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToProduct(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Boolean)</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Sum(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToSum_System_Double__4_System_Double__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToSum(Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum_System_Double__4_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Sum(Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToSumLog_System_Double__4_System_Double__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToSumLog(Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SumLog_System_Double__4_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SumLog(Double, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Double)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Scale_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Scale(Double)</a>
@@ -309,31 +309,7 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ScaleLog_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.ScaleLog(Double)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToScale__4_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToScale(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Double)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToScaleLog__4_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToScaleLog(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Double)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToZero">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToZero()</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstant_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToConstant(Double)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstant_System_Double__2_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToConstant(Double, TElementDistribution)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToConstantLog(Double)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_System_Double__2_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToConstantLog(Double, TElementDistribution)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetTo__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetTo(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToFunction__5_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton___0___1___2___3___4__System_Func_Microsoft_ML_Probabilistic_Collections_Option___2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight_System_Int32_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option__2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight___">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToFunction&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;(Automaton&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;, Func&lt;Option&lt;TSrcElementDistribution&gt;, Weight, Int32, ValueTuple&lt;Option&lt;TElementDistribution&gt;, Weight&gt;&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ApplyFunction__5_System_Func_Microsoft_ML_Probabilistic_Collections_Option__2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight_System_Int32_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option___2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight___">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.ApplyFunction&lt;TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton&gt;(Func&lt;Option&lt;TElementDistribution&gt;, Weight, Int32, (T1, T2)&lt;Option&lt;TDstElementDistribution&gt;, Weight&gt;&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetLogValue__0_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.GetLogValue(TList)</a>
@@ -346,6 +322,9 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumeratePaths">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.EnumeratePaths()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Equals__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Equals(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Equals_System_Object_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Equals(Object)</a>
@@ -363,16 +342,43 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsDeterministic">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.IsDeterministic()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MakeEpsilonFree">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.MakeEpsilonFree()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetEpsilonClosure">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.GetEpsilonClosure()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToEpsilonClosureOf__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.SetToEpsilonClosureOf(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithData_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__DataContainer_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.WithData(Automaton.DataContainer&lt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithLogValueOverride_System_Nullable_System_Double__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.WithLogValueOverride(Nullable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithPruneStatesWithLogEndWeightLessThan_System_Nullable_System_Double__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.WithPruneStatesWithLogEndWeightLessThan(Nullable&lt;Double&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4_System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.GetConverger(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;, Double)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetConverger__4___System_Double_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.GetConverger(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;[], Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AsAutomaton">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.AsAutomaton()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Point">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Point</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsPointMass">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.IsPointMass</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_UsesAutomatonRepresentation">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.UsesAutomatonRepresentation</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat_System_Int32_System_Nullable_System_Int32__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Repeat(Int32, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxDiff__4_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.MaxDiff(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeStructure">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.NormalizeStructure()</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Write_System_Action_System_Double__System_Action_System_Int32__System_Action__2__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Write(Action&lt;Double&gt;, Action&lt;Int32&gt;, Action&lt;TElementDistribution&gt;)</a>
@@ -384,48 +390,54 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryDeterminize()</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize__4__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryDeterminize(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetOutgoingTransitionsForDeterminization_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__Determinization_WeightedStateSet_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.GetOutgoingTransitionsForDeterminization(Automaton.Determinization.WeightedStateSet&lt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_System_Int32_System_Boolean_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.EnumerateSupport(Int32, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_System_Int32_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.EnumerateSupport(Int32)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Boolean_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;TList&gt;, Boolean)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;TList&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Simplify">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Simplify()</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Int32_System_Boolean_">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;TList&gt;, Int32, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Simplify__4__">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.Simplify(ListAutomaton&lt;TList, TElement, TElementDistribution&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_RemoveDeadStates">Automaton&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.RemoveDeadStates()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_ListAutomaton_3_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ListAutomaton&lt;TList, TElement, TElementDistribution&gt; : ListAutomaton&lt;TList, TElement, TElementDistribution, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt; where TList : class, IList&lt;TElement&gt;, new()
-    where TElementDistribution : IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public class ListAutomaton&lt;TList, TElement, TElementDistribution&gt; : ListAutomaton&lt;TList, TElement, TElementDistribution, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;, WeightFunctions&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.IWeightFunction&lt;ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;, WeightFunctions&lt;TList, TElement, TElementDistribution, ListManipulator&lt;TList, TElement&gt;, ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.IWeightFunction, IEquatable&lt;ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt; where TList : class, IList&lt;TElement&gt;, new()
+    where TElementDistribution : IImmutableDistribution&lt;TElement, TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, CanComputeProduct&lt;TElementDistribution&gt;, CanCreatePartialUniform&lt;TElementDistribution&gt;, SummableExactly&lt;TElementDistribution&gt;, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -513,13 +525,24 @@ The third element defines the outgoing state.</p>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.Automaton&lt;TList, TElement, TElementDistribution, Microsoft.ML.Probabilistic.Distributions.Automata.ListManipulator&lt;TList, TElement&gt;, Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton&lt;TList, TElement, TElementDistribution&gt;&gt;.GetOutgoingTransitionsForDeterminization(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton.Determinization.WeightedStateSet&lt;&gt;)</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
+  </div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

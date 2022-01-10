@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class BinaryReaderExtensions
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions" class="text-break">Class BinaryReaderExtensions
   </h1>
-  <div class="markdown level0 summary"><p>Provides extension methods for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a>.</p>
+  <div class="markdown level0 summary"><p>Provides extension methods for <a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -94,25 +94,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Serialization.html">Microsoft.ML.Probabilistic.Serialization</a></h6>
@@ -167,13 +167,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGamma_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGamma*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGamma_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGamma(System.IO.BinaryReader)">ReadGamma(BinaryReader)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGamma_Microsoft_ML_Probabilistic_Serialization_IReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGamma(Microsoft.ML.Probabilistic.Serialization.IReader)">ReadGamma(IReader)</h4>
   <div class="markdown level1 summary"><p>Reads a <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a> distribution from the reader of a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma ReadGamma(this BinaryReader reader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Gamma ReadGamma(this IReader reader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -186,7 +186,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The reader of the binary stream.</p>
 </td>
@@ -210,13 +210,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGammaArray_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGammaArray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGammaArray_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGammaArray(System.IO.BinaryReader)">ReadGammaArray(BinaryReader)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGammaArray_Microsoft_ML_Probabilistic_Serialization_IReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGammaArray(Microsoft.ML.Probabilistic.Serialization.IReader)">ReadGammaArray(IReader)</h4>
   <div class="markdown level1 summary"><p>Reads an array of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a> distributions from the reader of a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DistributionStructArray&lt;Gamma, double&gt; ReadGammaArray(this BinaryReader reader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray&lt;Gamma, double&gt; ReadGammaArray(this IReader reader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -229,7 +229,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The reader of the binary stream.</p>
 </td>
@@ -253,13 +253,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussian_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussian*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussian_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussian(System.IO.BinaryReader)">ReadGaussian(BinaryReader)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussian_Microsoft_ML_Probabilistic_Serialization_IReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussian(Microsoft.ML.Probabilistic.Serialization.IReader)">ReadGaussian(IReader)</h4>
   <div class="markdown level1 summary"><p>Reads a <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> distribution from the reader of a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian ReadGaussian(this BinaryReader reader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Gaussian ReadGaussian(this IReader reader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -272,7 +272,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The reader of the binary stream.</p>
 </td>
@@ -296,13 +296,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussianArray_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussianArray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussianArray_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussianArray(System.IO.BinaryReader)">ReadGaussianArray(BinaryReader)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussianArray_Microsoft_ML_Probabilistic_Serialization_IReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussianArray(Microsoft.ML.Probabilistic.Serialization.IReader)">ReadGaussianArray(IReader)</h4>
   <div class="markdown level1 summary"><p>Reads an array of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> distributions from the reader of a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DistributionStructArray&lt;Gaussian, double&gt; ReadGaussianArray(this BinaryReader reader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray&lt;Gaussian, double&gt; ReadGaussianArray(this IReader reader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -315,7 +315,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The reader of the binary stream.</p>
 </td>
@@ -339,13 +339,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussianMatrix_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussianMatrix*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussianMatrix_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussianMatrix(System.IO.BinaryReader)">ReadGaussianMatrix(BinaryReader)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadGaussianMatrix_Microsoft_ML_Probabilistic_Serialization_IReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadGaussianMatrix(Microsoft.ML.Probabilistic.Serialization.IReader)">ReadGaussianMatrix(IReader)</h4>
   <div class="markdown level1 summary"><p>Reads a jagged array of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a> distributions from the reader of a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; ReadGaussianMatrix(this BinaryReader reader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; ReadGaussianMatrix(this IReader reader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -358,7 +358,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The reader of the binary stream.</p>
 </td>
@@ -425,13 +425,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadInt32Array_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadInt32Array*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadInt32Array_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadInt32Array(System.IO.BinaryReader)">ReadInt32Array(BinaryReader)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadInt32Array_Microsoft_ML_Probabilistic_Serialization_IReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadInt32Array(Microsoft.ML.Probabilistic.Serialization.IReader)">ReadInt32Array(IReader)</h4>
   <div class="markdown level1 summary"><p>Reads an array of 4-byte signed integers from the reader of a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int[] ReadInt32Array(this BinaryReader reader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static int[] ReadInt32Array(this IReader reader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -444,7 +444,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The reader of the binary stream.</p>
 </td>
@@ -468,13 +468,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadObject_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadObject*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadObject_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadObject(System.IO.BinaryReader)">ReadObject(BinaryReader)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadObject__1_System_IO_BinaryReader_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadObject``1(System.IO.BinaryReader)">ReadObject&lt;T&gt;(BinaryReader)</h4>
   <div class="markdown level1 summary"><p>Reads an object from the reader of a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static object ReadObject(this BinaryReader reader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static T ReadObject&lt;T&gt;(this BinaryReader reader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -504,21 +504,36 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="xref">T</span></td>
         <td><p>The object constructed from the binary stream.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadSerializationVersion_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadSerializationVersion*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadSerializationVersion_System_IO_BinaryReader_System_Int32_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadSerializationVersion(System.IO.BinaryReader,System.Int32,System.String)">ReadSerializationVersion(BinaryReader, Int32, String)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_ReadSerializationVersion_Microsoft_ML_Probabilistic_Serialization_IReader_System_Int32_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.ReadSerializationVersion(Microsoft.ML.Probabilistic.Serialization.IReader,System.Int32,System.String)">ReadSerializationVersion(IReader, Int32, String)</h4>
   <div class="markdown level1 summary"><p>Gets the serialization version from a reader of a binary stream and throws a <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.serializationexception">SerializationException</a> with
 the specified message if the version is less than 1 or greater than <code data-dev-comment-type="paramref" class="paramref">maxPermittedSerializationVersion</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ReadSerializationVersion(this BinaryReader reader, int maxPermittedSerializationVersion, string exceptionMessage = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static int ReadSerializationVersion(this IReader reader, int maxPermittedSerializationVersion, string exceptionMessage = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -531,7 +546,7 @@ the specified message if the version is less than 1 or greater than <code data-d
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The reader to deserialize the version from.</p>
 </td>
@@ -583,13 +598,13 @@ the specified message if the version is less than 1 or greater than <code data-d
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_VerifySerializationGuid_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.VerifySerializationGuid*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_VerifySerializationGuid_System_IO_BinaryReader_System_Guid_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.VerifySerializationGuid(System.IO.BinaryReader,System.Guid,System.String)">VerifySerializationGuid(BinaryReader, Guid, String)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_BinaryReaderExtensions_VerifySerializationGuid_Microsoft_ML_Probabilistic_Serialization_IReader_System_Guid_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.BinaryReaderExtensions.VerifySerializationGuid(Microsoft.ML.Probabilistic.Serialization.IReader,System.Guid,System.String)">VerifySerializationGuid(IReader, Guid, String)</h4>
   <div class="markdown level1 summary"><p>Deserializes a <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a> from a reader of a binary stream and verifies that it equals the expected <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void VerifySerializationGuid(this BinaryReader reader, Guid expectedSerializationGuid, string exceptionMessage = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void VerifySerializationGuid(this IReader reader, Guid expectedSerializationGuid, string exceptionMessage = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -602,7 +617,7 @@ the specified message if the version is less than 1 or greater than <code data-d
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The reader to deserialize the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a> from.</p>
 </td>
@@ -643,7 +658,8 @@ the specified message if the version is less than 1 or greater than <code data-d
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

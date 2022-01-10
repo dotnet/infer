@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -94,19 +94,25 @@ It can be viewed as a function that maps arbitrary sequences of elements to real
       <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-4.html">ListAutomaton&lt;TList, TElement, TElementDistribution, TThis&gt;</a></div>
       <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions.IWeightFunction</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html">WeightFunctions.IWeightFunction</a>&lt;&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;TThis&gt;</div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
@@ -116,8 +122,7 @@ It can be viewed as a function that maps arbitrary sequences of elements to real
     <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
 [DataContract]
 [Serializable]
-public abstract class Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;
-    where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, new()
+public abstract class Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt; : WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.IWeightFunction&lt;TThis&gt;, WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.IWeightFunction, IEquatable&lt;TThis&gt; where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : IImmutableDistribution&lt;TElement, TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, CanComputeProduct&lt;TElementDistribution&gt;, CanCreatePartialUniform&lt;TElementDistribution&gt;, SummableExactly&lt;TElementDistribution&gt;, new()
     where TSequenceManipulator : ISequenceManipulator&lt;TSequence, TElement&gt;, new()
     where TThis : Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;, new()</code></pre>
   </div>
@@ -137,12 +142,12 @@ public abstract class Automaton&lt;TSequence, TElement, TElementDistribution, TS
       </tr>
       <tr>
         <td><span class="parametername">TElement</span></td>
-        <td><p>The type of a sequence element.</p>
+        <td><p>The immutable type of a sequence element.</p>
 </td>
       </tr>
       <tr>
         <td><span class="parametername">TElementDistribution</span></td>
-        <td><p>The type of a distribution over sequence elements.</p>
+        <td><p>The immutable type of a distribution over sequence elements.</p>
 </td>
       </tr>
       <tr>
@@ -173,6 +178,9 @@ under the distribution;
 If a transition doesn&apos;t have an associated distribution over elements, it is an epsilon transition
 which can be used with no element only.
 </li></ul>
+<p>This class is constant and thread-safe (though, not truly immutable, as some properties are evaluated lazily
+and stored afterwards) and all implementations must preserve this property - some algorithms used
+to implement this class rely on it. For the same reason, implementations are not allowed to add new data fields.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -266,15 +274,39 @@ For inspecting the value use the <a class="xref" href="Microsoft.ML.Probabilisti
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current weight function assigns a non-zero weight to exactly one point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_LogValueOverride_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.LogValueOverride*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_LogValueOverride" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.LogValueOverride">LogValueOverride</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value that, if not null, will be returned when computing the log value of any sequence
+  <div class="markdown level1 summary"><p>Gets a value that, if not null, will be returned when computing the log value of any sequence
 which is in the support of this automaton (i.e. has non-zero value under the automaton).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double? LogValueOverride { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public double? LogValueOverride { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -292,7 +324,7 @@ which is in the support of this automaton (i.e. has non-zero value under the aut
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_LogValueOverride_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This should only be set non-null if this distribution is improper and there is
+  <div class="markdown level1 remarks"><p>This should only be non-null if the distribution this automaton represents is improper and there is
 a need to override the actual automaton value.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxDeadStateCount_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.MaxDeadStateCount*"></a>
@@ -368,16 +400,57 @@ before an attempt to simplify it will be made.</p>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Gets the only point to which the current function assigns a non-zero weight.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TSequence Point { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td><p>Thrown when an attempt is made to get the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html#Microsoft_ML_Probabilistic_Distributions_Automata_WeightFunctions_5_IWeightFunction_Point">Point</a>
+of a non-pointmass weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_PruneStatesWithLogEndWeightLessThan_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.PruneStatesWithLogEndWeightLessThan*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_PruneStatesWithLogEndWeightLessThan" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.PruneStatesWithLogEndWeightLessThan">PruneStatesWithLogEndWeightLessThan</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value for truncating small weights.
+  <div class="markdown level1 summary"><p>Gets a value for truncating small weights.
 If non-null, any transition whose weight falls below this value in a normalized
 automaton will be removed following a product operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double? PruneStatesWithLogEndWeightLessThan { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public double? PruneStatesWithLogEndWeightLessThan { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -468,6 +541,30 @@ automaton will be removed following a product operation.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.StateCollection.html">Automaton.StateCollection</a>&lt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_UsesAutomatonRepresentation_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.UsesAutomatonRepresentation*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_UsesAutomatonRepresentation" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.UsesAutomatonRepresentation">UsesAutomatonRepresentation</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current weight function is represented as an automaton internally.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UsesAutomatonRepresentation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -600,15 +697,18 @@ The resulting automaton is also known as the Cauchy product of two automata.</p>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AppendInPlace_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.AppendInPlace*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AppendInPlace__0_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.AppendInPlace(`0,System.Int32)">AppendInPlace(TSequence, Int32)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an automaton <code>f'(st) = f(s)</code>, where <code>f(s)</code> is the current automaton
-and <code>t</code> is the given sequence.</p>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ApplyFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ApplyFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ApplyFunction__5_System_Func_Microsoft_ML_Probabilistic_Collections_Option__2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight_System_Int32_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option___2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ApplyFunction``5(System.Func{Microsoft.ML.Probabilistic.Collections.Option{`2},Microsoft.ML.Probabilistic.Distributions.Automata.Weight,System.Int32,System.ValueTuple{Microsoft.ML.Probabilistic.Collections.Option{``2},Microsoft.ML.Probabilistic.Distributions.Automata.Weight}})">ApplyFunction&lt;TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton&gt;(Func&lt;Option&lt;TElementDistribution&gt;, Weight, Int32, (Option&lt;TDstElementDistribution&gt;, Weight)&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates an automaton obtained by performing a transition transformation
+on the current automaton.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void AppendInPlace(TSequence sequence, int group = 0)</code></pre>
+    <pre><code class="lang-csharp hljs">public TDstAutomaton ApplyFunction&lt;TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton&gt;(Func&lt;Option&lt;TElementDistribution&gt;, Weight, int, (Option&lt;TDstElementDistribution&gt;, Weight)&gt; transitionTransform)
+    where TDstSequence : class, IEnumerable&lt;TDstElement&gt; where TDstElementDistribution : IImmutableDistribution&lt;TDstElement, TDstElementDistribution&gt;, CanGetLogAverageOf&lt;TDstElementDistribution&gt;, CanComputeProduct&lt;TDstElementDistribution&gt;, CanCreatePartialUniform&lt;TDstElementDistribution&gt;, SummableExactly&lt;TDstElementDistribution&gt;, new()
+    where TDstSequenceManipulator : ISequenceManipulator&lt;TDstSequence, TDstElement&gt;, new()
+    where TDstAutomaton : Automaton&lt;TDstSequence, TDstElement, TDstElementDistribution, TDstSequenceManipulator, TDstAutomaton&gt;, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -621,63 +721,89 @@ and <code>t</code> is the given sequence.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TSequence</span></td>
-        <td><span class="parametername">sequence</span></td>
-        <td><p>The sequence.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">group</span></td>
-        <td><p>The group.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TDstElementDistribution&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a>&gt;&gt;</td>
+        <td><span class="parametername">transitionTransform</span></td>
+        <td><p>The transition transformation.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AppendInPlace_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.AppendInPlace*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AppendInPlace__4_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.AppendInPlace(`4,System.Int32)">AppendInPlace(TThis, Int32)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an automaton <code>f'(s) = sum_{tu=s} f(t)g(u)</code>,
-where <code>f(t)</code> is the current automaton and <code>g(u)</code> is the given automaton.
-The resulting automaton is also known as the Cauchy product of two automata.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void AppendInPlace(TThis automaton, int group = 0)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
+  <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDstAutomaton</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
         <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDstSequence</span></td>
+        <td><p>The type of a created automaton sequence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDstElement</span></td>
+        <td><p>The type of a created automaton sequence element.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDstElementDistribution</span></td>
+        <td><p>The type of a distribution over created automaton sequence elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDstSequenceManipulator</span></td>
+        <td><p>The type providing ways to manipulate created automaton sequences.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDstAutomaton</span></td>
+        <td><p>The type of a created automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AsAutomaton_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.AsAutomaton*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_AsAutomaton" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.AsAutomaton">AsAutomaton()</h4>
+  <div class="markdown level1 summary"><p>Returns an automaton representation of the current weight function. If the weight function is normalized,
+the resulting automaton is stochastic, i.e. the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis AsAutomaton()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton</span></td>
-        <td><p>The automaton to append.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">group</span></td>
-        <td><p>The group.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ClearGroups_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ClearGroups*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ClearGroups" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ClearGroups">ClearGroups()</h4>
-  <div class="markdown level1 summary"><p>Clears the group for all transitions.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void ClearGroups()</code></pre>
-  </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Clone*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Clone">Clone()</h4>
   <div class="markdown level1 summary"><p>Creates a copy of the automaton.</p>
@@ -1585,6 +1711,111 @@ will be scaled by the number of the sequence occurrences.</p>
   <div class="markdown level1 remarks"><p>If the same sequence is specified multiple times, the value of the created automaton on that sequence
 will be scaled by the number of the sequence occurrences.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ConstantOnSupport*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupport_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ConstantOnSupport(System.Double)">ConstantOnSupport(Double)</h4>
+  <div class="markdown level1 summary"><p>Creates an automaton constant on the support of the current automaton.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis ConstantOnSupport(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The desired value on the support of the current automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Resulting automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupport_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will fail if the current automaton cannot be determinized.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupportLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ConstantOnSupportLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantOnSupportLog_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ConstantOnSupportLog(System.Double)">ConstantOnSupportLog(Double)</h4>
+  <div class="markdown level1 summary"><p>Creates an automaton constant on the support of the current automaton.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis ConstantOnSupportLog(double logValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logValue</span></td>
+        <td><p>The logarithm of the desired value on the support of the current automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Resulting automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notimplementedexception">NotImplementedException</a></td>
+        <td><p>Thrown if if the current automaton cannot be determinized.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Empty_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Empty*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Empty_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Empty(System.Double)">Empty(Double)</h4>
   <div class="markdown level1 summary"><p>Creates an automaton which has a given value on the empty sequence and is zero everywhere else.</p>
@@ -1654,14 +1885,14 @@ will be scaled by the number of the sequence occurrences.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.EnumerateSupport*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_System_Int32_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.EnumerateSupport(System.Int32,System.Boolean)">EnumerateSupport(Int32, Boolean)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_EnumerateSupport_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.EnumerateSupport(System.Int32)">EnumerateSupport(Int32)</h4>
   <div class="markdown level1 summary"><p>Enumerates support of this automaton when possible.
 Element distributions must be either point mass or implement <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TSequence&gt; EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TSequence&gt; EnumerateSupport(int maxCount = 1000000)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1677,12 +1908,6 @@ Element distributions must be either point mass or implement <a class="xref" hre
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">maxCount</span></td>
         <td><p>The maximum support enumeration count.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">tryDeterminize</span></td>
-        <td><p>Try to determinize if this is a string automaton</p>
 </td>
       </tr>
     </tbody>
@@ -1720,6 +1945,49 @@ Element distributions must be either point mass or implement <a class="xref" hre
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
         <td><p>Thrown if distribution on some transition is not enumerable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Equals__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Equals(`4)">Equals(TThis)</h4>
+  <div class="markdown level1 summary"><p>Checks if <code data-dev-comment-type="paramref" class="paramref">other</code> is an automaton that defines the same weighted regular language.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(TThis other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>The automaton to compare this automaton with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if this automaton is equal to <code data-dev-comment-type="paramref" class="paramref">other</code>, false otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -1768,7 +2036,7 @@ Element distributions must be either point mass or implement <a class="xref" hre
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromData_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.FromData*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromData_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__DataContainer_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.FromData(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{`0,`1,`2,`3,`4}.DataContainer)">FromData(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer)</h4>
   <div class="markdown level1 summary"><p>Creates an automaton from a given array of states and a start state.
@@ -1814,6 +2082,53 @@ public static TThis FromData(Automaton&lt;TSequence, TElement, TElementDistribut
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromLogValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.FromLogValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromLogValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.FromLogValues(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{`0,System.Double}})">FromLogValues(IEnumerable&lt;KeyValuePair&lt;TSequence, Double&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates an automaton which has given values on given sequences and is zero everywhere else.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromLogValues(IEnumerable&lt;KeyValuePair&lt;TSequence, double&gt;&gt; sequenceToLogValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;TSequence, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><span class="parametername">sequenceToLogValue</span></td>
+        <td><p>The collection of pairs of a sequence and the logarithm of the automaton value on that sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromLogValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the same sequence is presented in the collection of pairs multiple times,
+the value of the automaton on that sequence will be equal to the sum of the values in the collection.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.FromValues*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_FromValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.FromValues(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{`0,System.Double}})">FromValues(IEnumerable&lt;KeyValuePair&lt;TSequence, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates an automaton which has given values on given sequences and is zero everywhere else.</p>
@@ -1959,6 +2274,33 @@ the value of the automaton on that sequence will be equal to the sum of the valu
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetEpsilonClosure_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetEpsilonClosure*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetEpsilonClosure" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetEpsilonClosure">GetEpsilonClosure()</h4>
+  <div class="markdown level1 summary"><p>Returns an epsilon closure of the current automaton.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis GetEpsilonClosure()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetEpsilonClosure_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The resulting automaton will be equal to the current one, but have no epsilon transitions.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetGroups_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetGroups*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetGroups" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetGroups">GetGroups()</h4>
   <div class="markdown level1 summary"></div>
@@ -2008,7 +2350,7 @@ the value of the automaton on that sequence will be equal to the sum of the valu
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetLogNormalizer*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_GetLogNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.GetLogNormalizer">GetLogNormalizer()</h4>
   <div class="markdown level1 summary"><p>Computes the logarithm of the normalizer (sum of values of the automaton on all sequences).</p>
@@ -2216,7 +2558,7 @@ The third element defines the outgoing state.</p>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicConstant_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.IsCanonicConstant*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicConstant" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.IsCanonicConstant">IsCanonicConstant()</h4>
   <div class="markdown level1 summary"><p>Checks whether the automaton is a canonic representation of a constant,
-as produced by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_System_Double_">SetToConstantLog(Double)</a>.</p>
+as produced by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ConstantLog_System_Double_">ConstantLog(Double)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -2246,7 +2588,7 @@ as produced by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Au
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicZero_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.IsCanonicZero*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicZero" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.IsCanonicZero">IsCanonicZero()</h4>
   <div class="markdown level1 summary"><p>Checks whether the automaton is a canonic representation of zero,
-as produced by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToZero">SetToZero()</a> and <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Zero">Zero()</a>.</p>
+as produced by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Zero">Zero()</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -2332,25 +2674,34 @@ i.e. it's epsilon free and for every state and every element there is at most on
 so it should not be used when treating zero specially for performance reasons.
 Use <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_IsCanonicZero">IsCanonicZero()</a> instead.</p>
 </div>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MakeEpsilonFree_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.MakeEpsilonFree*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MakeEpsilonFree" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.MakeEpsilonFree">MakeEpsilonFree()</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an equal automaton that has no epsilon transitions.</p>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_MaxDiff__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.MaxDiff(`4)">MaxDiff(TThis)</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating how close this weight function is to a given one
+in terms of weights they assign to sequences.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void MakeEpsilonFree()</code></pre>
+    <pre><code class="lang-csharp hljs">public double MaxDiff(TThis that)</code></pre>
   </div>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.NormalizeValues*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeValues" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.NormalizeValues">NormalizeValues()</h4>
-  <div class="markdown level1 summary"><p>Normalizes the automaton so that the sum of its values over all possible sequences equals to one
-and returns the logarithm of the normalizer.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double NormalizeValues()</code></pre>
-  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -2362,7 +2713,58 @@ and returns the logarithm of the normalizer.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>The logarithm of the normalizer.</p>
+        <td><p>A non-negative value, which is close to zero if the two weight functions assign similar values to all sequences.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeStructure_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.NormalizeStructure*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeStructure" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.NormalizeStructure">NormalizeStructure()</h4>
+  <div class="markdown level1 summary"><p>Returns the weight function converted to the normalized form e.g. using special
+case structures for point masses and functions with small support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis NormalizeStructure()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.NormalizeValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_NormalizeValues" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.NormalizeValues">NormalizeValues()</h4>
+  <div class="markdown level1 summary"><p>Normalizes the automaton so that the sum of its values over all possible sequences equals to one
+and returns the logarithm of the normalizer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis NormalizeValues()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Will be set to the normalized automaton if the normalization was successful, or to the current automaton otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -2387,13 +2789,56 @@ and returns the logarithm of the normalizer.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Product*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Product(`4)">Product(TThis)</h4>
+  <div class="markdown level1 summary"><p>Computes the product of the current automaton and a given one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Product(TThis automaton)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">automaton</span></td>
+        <td><p>The automaton to compute the product with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The computed product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Product*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Product__4_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Product(`4,System.Boolean)">Product(TThis, Boolean)</h4>
   <div class="markdown level1 summary"><p>Computes the product of the current automaton and a given one.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TThis Product(TThis automaton, bool tryDeterminize = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public TThis Product(TThis automaton, bool tryDeterminize)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2583,7 +3028,7 @@ So we don't have to maintain 2 versions of deserialization.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool RemoveDeadStates()</code></pre>
+    <pre><code class="lang-csharp hljs">public TThis RemoveDeadStates()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2595,8 +3040,9 @@ So we don't have to maintain 2 versions of deserialization.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Result automaton. Simplified automaton, if there were states to be removed, current automaton otherwise.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -2663,7 +3109,7 @@ and the maximum number of factors in a sum term.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis Repeat(TThis automaton, int minTimes = 1, int? maxTimes = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static TThis Repeat(TThis automaton, int minTimes = 1, int? maxTimes = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2715,6 +3161,57 @@ and the maximum number of factors in a sum term.</p>
   <div class="markdown level1 remarks"><p>The result is the sum of Cauchy products of the given automaton with itself,
 each product having a different number of factors.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Repeat*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Repeat(System.Int32,System.Nullable{System.Int32})">Repeat(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a weight function <code>g(s) = sum_{k=Kmin}^{Kmax} sum_{t1 t2 ... tk = s} f(t1)f(t2)...f(tk)</code>,
+where <code>f(t)</code> is the current weight function, and <code>Kmin</code> and <code>Kmax</code> are the minimum
+and the maximum number of factors in a sum term.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Repeat(int minTimes = 1, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minTimes</span></td>
+        <td><p>The minimum number of factors in a sum term. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>An optional maximum number of factors in a sum term.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created weight function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Reverse_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Reverse*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Reverse" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Reverse">Reverse()</h4>
   <div class="markdown level1 summary"><p>Creates an automaton <code>f'(s) = f(reverse(s))</code>,
@@ -2827,618 +3324,33 @@ where <code>reverse</code> is a sequence reverse function.</p>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetGroup_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetGroup*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetGroup_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetGroup(System.Int32)">SetGroup(Int32)</h4>
-  <div class="markdown level1 summary"><p>Sets all transitions to have the specified group.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetGroup(int group)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">group</span></td>
-        <td><p>The specified group.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetTo*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetTo__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetTo(`4)">SetTo(TThis)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with a copy of a given automaton.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetTo(TThis automaton)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton</span></td>
-        <td><p>The automaton to replace the current automaton with.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstant_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstant*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstant_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstant(System.Double)">SetToConstant(Double)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an automaton which maps every sequence to a given value.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToConstant(double value)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">value</span></td>
-        <td><p>The value to map every sequence to.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstant_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstant*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstant_System_Double__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstant(System.Double,`2)">SetToConstant(Double, TElementDistribution)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an automaton which maps every allowed sequence to
-a given value and maps all other sequences to zero.
-A sequence is allowed if all its elements have non-zero probability under a given distribution.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToConstant(double value, TElementDistribution allowedElements)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">value</span></td>
-        <td><p>The value to map every sequence to.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TElementDistribution</span></td>
-        <td><span class="parametername">allowedElements</span></td>
-        <td><p>The distribution representing allowed sequence elements.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstantLog*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstantLog(System.Double)">SetToConstantLog(Double)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an automaton which maps every sequence to a given value.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToConstantLog(double logValue)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logValue</span></td>
-        <td><p>The logarithm of the value to map every sequence to.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstantLog*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantLog_System_Double__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstantLog(System.Double,`2)">SetToConstantLog(Double, TElementDistribution)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an automaton which maps every allowed sequence to
-a given value and maps all other sequences to zero.
-A sequence is allowed if all its elements have non-zero probability under a given distribution.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToConstantLog(double logValue, TElementDistribution allowedElements)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logValue</span></td>
-        <td><p>The logarithm of the value to map every sequence to.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TElementDistribution</span></td>
-        <td><span class="parametername">allowedElements</span></td>
-        <td><p>The distribution representing allowed sequence elements.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstantOnSupportOf*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOf_System_Double__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstantOnSupportOf(System.Double,`4)">SetToConstantOnSupportOf(Double, TThis)</h4>
-  <div class="markdown level1 summary"><p>Sets the automaton to be constant on the support of a given automaton.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToConstantOnSupportOf(double value, TThis automaton)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">value</span></td>
-        <td><p>The desired value on the support of <code data-dev-comment-type="paramref" class="paramref">automaton</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton</span></td>
-        <td><p>The automaton.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOf_System_Double__4__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This function will fail if the <code data-dev-comment-type="paramref" class="paramref">automaton</code> cannot be determinized.</p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOfLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstantOnSupportOfLog*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToConstantOnSupportOfLog_System_Double__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToConstantOnSupportOfLog(System.Double,`4)">SetToConstantOnSupportOfLog(Double, TThis)</h4>
-  <div class="markdown level1 summary"><p>Sets the automaton to be constant on the support of a given automaton.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToConstantOnSupportOfLog(double logValue, TThis automaton)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logValue</span></td>
-        <td><p>The logarithm of the desired value on the support of <code data-dev-comment-type="paramref" class="paramref">automaton</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton</span></td>
-        <td><p>The automaton.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notimplementedexception">NotImplementedException</a></td>
-        <td><p>Thrown if if the <code data-dev-comment-type="paramref" class="paramref">automaton</code> cannot be determinized.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToEpsilonClosureOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToEpsilonClosureOf*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToEpsilonClosureOf__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToEpsilonClosureOf(`4)">SetToEpsilonClosureOf(TThis)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an epsilon closure of a given automaton.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToEpsilonClosureOf(TThis automaton)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton</span></td>
-        <td><p>The automaton which epsilon closure will be used to replace the current automaton.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToEpsilonClosureOf__4__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The resulting automaton will be equal to the given one, but may have a simpler structure.</p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToFunction__5_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton___0___1___2___3___4__System_Func_Microsoft_ML_Probabilistic_Collections_Option___2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight_System_Int32_System_ValueTuple_Microsoft_ML_Probabilistic_Collections_Option__2__Microsoft_ML_Probabilistic_Distributions_Automata_Weight___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToFunction``5(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{``0,``1,``2,``3,``4},System.Func{Microsoft.ML.Probabilistic.Collections.Option{``2},Microsoft.ML.Probabilistic.Distributions.Automata.Weight,System.Int32,System.ValueTuple{Microsoft.ML.Probabilistic.Collections.Option{`2},Microsoft.ML.Probabilistic.Distributions.Automata.Weight}})">SetToFunction&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;(Automaton&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;, Func&lt;Option&lt;TSrcElementDistribution&gt;, Weight, Int32, (Option&lt;TElementDistribution&gt;, Weight)&gt;)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton by an automaton obtained by performing a transition transformation
-on a source automaton.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToFunction&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;(Automaton&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt; sourceAutomaton, Func&lt;Option&lt;TSrcElementDistribution&gt;, Weight, int, (Option&lt;TElementDistribution&gt;, Weight)&gt; transitionTransform)
-    where TSrcSequence : class, IEnumerable&lt;TSrcElement&gt; where TSrcElementDistribution : IDistribution&lt;TSrcElement&gt;, CanGetLogAverageOf&lt;TSrcElementDistribution&gt;, SettableToProduct&lt;TSrcElementDistribution&gt;, SettableToWeightedSumExact&lt;TSrcElementDistribution&gt;, SettableToPartialUniform&lt;TSrcElementDistribution&gt;, new()
-    where TSrcSequenceManipulator : ISequenceManipulator&lt;TSrcSequence, TSrcElement&gt;, new()
-    where TSrcAutomaton : Automaton&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;, new()</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html">Automaton</a>&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;</td>
-        <td><span class="parametername">sourceAutomaton</span></td>
-        <td><p>The source automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TSrcElementDistribution&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a>&gt;&gt;</td>
-        <td><span class="parametername">transitionTransform</span></td>
-        <td><p>The transition transformation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TSrcSequence</span></td>
-        <td><p>The type of a source automaton sequence.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TSrcElement</span></td>
-        <td><p>The type of a source automaton sequence element.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TSrcElementDistribution</span></td>
-        <td><p>The type of a distribution over source automaton sequence elements.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TSrcSequenceManipulator</span></td>
-        <td><p>The type providing ways to manipulate source automaton sequences.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TSrcAutomaton</span></td>
-        <td><p>The type of a source automaton.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToProduct*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToProduct__4__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToProduct(`4,`4)">SetToProduct(TThis, TThis)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton by the product of a given pair of automata.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToProduct(TThis automaton1, TThis automaton2)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton1</span></td>
-        <td><p>The first automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton2</span></td>
-        <td><p>The second automaton.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToProduct*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToProduct__4__4_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToProduct(`4,`4,System.Boolean)">SetToProduct(TThis, TThis, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton by the product of a given pair of automata.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToProduct(TThis automaton1, TThis automaton2, bool tryDeterminize)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton1</span></td>
-        <td><p>The first automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton2</span></td>
-        <td><p>The second automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">tryDeterminize</span></td>
-        <td><p>When to try to dterminize the product.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToScale_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToScale*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToScale__4_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToScale(`4,System.Double)">SetToScale(TThis, Double)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with a given automaton scaled by a given value.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToScale(TThis automaton, double scale)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton</span></td>
-        <td><p>The automaton to scale.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">scale</span></td>
-        <td><p>The scale.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToScaleLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToScaleLog*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToScaleLog__4_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToScaleLog(`4,System.Double)">SetToScaleLog(TThis, Double)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with a given automaton scaled by a given value.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToScaleLog(TThis automaton, double logScale)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton</span></td>
-        <td><p>The automaton to scale.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logScale</span></td>
-        <td><p>The logarithm of the scale.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToSum*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToSum_System_Double__4_System_Double__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToSum(System.Double,`4,System.Double,`4)">SetToSum(Double, TThis, Double, TThis)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton by the weighted sum of a given pair of automata.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, TThis automaton1, double weight2, TThis automaton2)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">weight1</span></td>
-        <td><p>The weight of the first automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton1</span></td>
-        <td><p>The first automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">weight2</span></td>
-        <td><p>The weight of the second automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton2</span></td>
-        <td><p>The second automaton.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToSumLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToSumLog*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToSumLog_System_Double__4_System_Double__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToSumLog(System.Double,`4,System.Double,`4)">SetToSumLog(Double, TThis, Double, TThis)</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton by the weighted sum of a given pair of automata.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToSumLog(double logWeight1, TThis automaton1, double logWeight2, TThis automaton2)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logWeight1</span></td>
-        <td><p>The logarithm of the weight of the first automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton1</span></td>
-        <td><p>The first automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logWeight2</span></td>
-        <td><p>The logarithm of the weight of the second automaton.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TThis</span></td>
-        <td><span class="parametername">automaton2</span></td>
-        <td><p>The second automaton.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToZero_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToZero*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SetToZero" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SetToZero">SetToZero()</h4>
-  <div class="markdown level1 summary"><p>Replaces the current automaton with an automaton which is zero everywhere.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToZero()</code></pre>
-  </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Simplify_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Simplify*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Simplify" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Simplify">Simplify()</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Simplify__4__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Simplify(`4@)">Simplify(out TThis)</h4>
   <div class="markdown level1 summary"><p>Attempts to simplify the structure of the automaton, reducing the number of states and transitions.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Simplify()</code></pre>
+    <pre><code class="lang-csharp hljs">public bool Simplify(out TThis result)</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Result automaton. Simplified automaton, if the operation was successful, current automaton otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -3450,7 +3362,8 @@ on a source automaton.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
+        <td><p><span class="xref">true</span> if the simplification was successful, <span class="xref">false</span> otherwise.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -3583,6 +3496,114 @@ on a source automaton.</p>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Sum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Sum_System_Double__4_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Sum(System.Double,`4,System.Double)">Sum(Double, TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the weighted sum of the current automaton and a given automaton.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Sum(double weightThis, TThis other, double weightOther)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weightThis</span></td>
+        <td><p>The weight of the current automaton.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>The given automaton.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weightOther</span></td>
+        <td><p>The weight of <code data-dev-comment-type="paramref" class="paramref">other</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SumLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SumLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_SumLog_System_Double__4_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.SumLog(System.Double,`4,System.Double)">SumLog(Double, TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the weighted sum of the current automaton and a given automaton.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis SumLog(double logWeightThis, TThis other, double logWeightOther)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logWeightThis</span></td>
+        <td><p>The logarithm of the weight of the current automaton.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>The given automaton.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logWeightOther</span></td>
+        <td><p>The logarithm of the weight of <code data-dev-comment-type="paramref" class="paramref">other</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ToString">ToString()</h4>
   <div class="markdown level1 summary"><p>Returns a string that represents the automaton.</p>
@@ -3609,7 +3630,7 @@ on a source automaton.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_ToString_Microsoft_ML_Probabilistic_Distributions_Automata_IAutomatonFormat_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.ToString(Microsoft.ML.Probabilistic.Distributions.Automata.IAutomatonFormat)">ToString(IAutomatonFormat)</h4>
   <div class="markdown level1 summary"><p>Returns a string that represents the automaton.</p>
@@ -3734,8 +3755,58 @@ and there are no epsilon transitions.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryDeterminize()</code></pre>
+    <pre><code class="lang-csharp hljs">public TThis TryDeterminize()</code></pre>
   </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Result automaton. Determinized automaton, if the operation was successful, current automaton or
+an equvalent automaton without epsilon transitions otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>See <a href="http://www.cs.nyu.edu/~mohri/pub/hwa.pdf"></a> for algorithm details.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryDeterminize*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize__4__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryDeterminize(`4@)">TryDeterminize(out TThis)</h4>
+  <div class="markdown level1 summary"><p>Attempts to determinize the automaton,
+i.e. modify it such that for every state and every element there is at most one transition that allows for that element,
+and there are no epsilon transitions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryDeterminize(out TThis result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Result automaton. Determinized automaton, if the operation was successful, current automaton or
+an equvalent automaton without epsilon transitions otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -3753,18 +3824,68 @@ and there are no epsilon transitions.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize_remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryDeterminize__4___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>See <a href="http://www.cs.nyu.edu/~mohri/pub/hwa.pdf"></a> for algorithm details.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryEnumerateSupport*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryEnumerateSupport(System.Int32,System.Collections.Generic.IEnumerable{`0}@,System.Boolean)">TryEnumerateSupport(Int32, out IEnumerable&lt;TSequence&gt;, Boolean)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryEnumerateSupport(System.Int32,System.Collections.Generic.IEnumerable{`0}@)">TryEnumerateSupport(Int32, out IEnumerable&lt;TSequence&gt;)</h4>
   <div class="markdown level1 summary"><p>Tries to enumerate support of this automaton.
 Element distributions must be either point mass or implement <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryEnumerateSupport(int maxCount, out IEnumerable&lt;TSequence&gt; result, bool tryDeterminize = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public bool TryEnumerateSupport(int maxCount, out IEnumerable&lt;TSequence&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxCount</span></td>
+        <td><p>The maximum support enumeration count.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TSequence&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>The sequences in the support of this automaton</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if successful, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryEnumerateSupport*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Int32_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryEnumerateSupport(System.Int32,System.Collections.Generic.IEnumerable{`0}@,System.Int32,System.Boolean)">TryEnumerateSupport(Int32, out IEnumerable&lt;TSequence&gt;, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Tries to enumerate support of this automaton.
+Element distributions must be either point mass or implement <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryEnumerateSupport(int maxCount, out IEnumerable&lt;TSequence&gt; result, int maxTraversedPaths, bool stopOnNonPointMassElementDistribution)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3789,9 +3910,19 @@ Element distributions must be either point mass or implement <a class="xref" hre
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxTraversedPaths</span></td>
+        <td><p>Maximum number of paths in the automaton this function
+is allowed to traverse before stopping.
+Can be used to limit the performance impact of this call in cases when
+the support is useful only if it can be obtained quickly.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">tryDeterminize</span></td>
-        <td><p>Try to determinize if this is a string automaton</p>
+        <td><span class="parametername">stopOnNonPointMassElementDistribution</span></td>
+        <td><p>When set to true, the enumeration is canceled upon encountering a non-point mass
+element distribution on a transition.</p>
 </td>
       </tr>
     </tbody>
@@ -3812,82 +3943,14 @@ Element distributions must be either point mass or implement <a class="xref" hre
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryNormalizeValues*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryNormalizeValues">TryNormalizeValues()</h4>
-  <div class="markdown level1 summary"><p>Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible).</p>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryGetConstantOnSupportLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryGetConstantOnSupportLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryGetConstantOnSupportLog_System_Double__4__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryGetConstantOnSupportLog(System.Double,`4@)">TryGetConstantOnSupportLog(Double, out TThis)</h4>
+  <div class="markdown level1 summary"><p>Tries to create an automaton constant on the support of the current automaton.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryNormalizeValues()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><p><span class="xref">true</span> if the automaton was successfully normalized, <span class="xref">false</span> otherwise.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryNormalizeValues*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryNormalizeValues(System.Double@)">TryNormalizeValues(out Double)</h4>
-  <div class="markdown level1 summary"><p>Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible).</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryNormalizeValues(out double logNormalizer)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">logNormalizer</span></td>
-        <td><p>When the function returns, contains the logarithm of the normalizer.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><p><span class="xref">true</span> if the automaton was successfully normalized, <span class="xref">false</span> otherwise.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TrySetToConstantOnSupportOfLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TrySetToConstantOnSupportOfLog*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TrySetToConstantOnSupportOfLog_System_Double__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TrySetToConstantOnSupportOfLog(System.Double,`4)">TrySetToConstantOnSupportOfLog(Double, TThis)</h4>
-  <div class="markdown level1 summary"><p>Tries to set the automaton to be constant on the support of a given automaton.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TrySetToConstantOnSupportOfLog(double logValue, TThis automaton)</code></pre>
+    <pre><code class="lang-csharp hljs">public bool TryGetConstantOnSupportLog(double logValue, out TThis automaton)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3908,7 +3971,7 @@ Element distributions must be either point mass or implement <a class="xref" hre
       <tr>
         <td><span class="xref">TThis</span></td>
         <td><span class="parametername">automaton</span></td>
-        <td><p>The automaton.</p>
+        <td><p>The resulting automaton.</p>
 </td>
       </tr>
     </tbody>
@@ -3929,9 +3992,104 @@ Element distributions must be either point mass or implement <a class="xref" hre
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TrySetToConstantOnSupportOfLog_System_Double__4__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This function will return false if the automaton cannot be determinized.</p>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryGetConstantOnSupportLog_System_Double__4___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will return false if the current automaton cannot be determinized.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryNormalizeValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues__4__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryNormalizeValues(`4@)">TryNormalizeValues(out TThis)</h4>
+  <div class="markdown level1 summary"><p>Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryNormalizeValues(out TThis result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Will be set to the normalized automaton if the normalization was successful, or to the current automaton otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the automaton was successfully normalized, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryNormalizeValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_TryNormalizeValues__4__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.TryNormalizeValues(`4@,System.Double@)">TryNormalizeValues(out TThis, out Double)</h4>
+  <div class="markdown level1 summary"><p>Attempts to normalize the automaton so that sum of its values on all possible sequences equals to one (if it is possible)
+and returns the result in an out parameter.
+If successful, produces a stochastic automaton,
+i.e. an automaton, in which the sum of weights of all the outgoing transitions and the ending weight is 1 for every node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryNormalizeValues(out TThis normalizedAutomaton, out double logNormalizer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">normalizedAutomaton</span></td>
+        <td><p>Will be set to the normalized automaton if the normalization was successful, or to the current automaton otherwise.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logNormalizer</span></td>
+        <td><p>When the function returns, contains the logarithm of the normalizer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the normalization was successful, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WeightedSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WeightedSum*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WeightedSum_System_Double__4_System_Double__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WeightedSum(System.Double,`4,System.Double,`4)">WeightedSum(Double, TThis, Double, TThis)</h4>
   <div class="markdown level1 summary"><p>Creates an automaton which is a weighted sum of a given pair of automata.</p>
@@ -4054,6 +4212,198 @@ Element distributions must be either point mass or implement <a class="xref" hre
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithData_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithData*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithData_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__DataContainer_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithData(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{`0,`1,`2,`3,`4}.DataContainer)">WithData(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected TThis WithData(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.DataContainer.html">Automaton.DataContainer</a>&lt;&gt;</td>
+        <td><span class="parametername">data</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithGroup_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithGroup*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithGroup_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithGroup(System.Int32)">WithGroup(Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of the current automaton with all transitions set to have the specified group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis WithGroup(int group)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The specified group.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithGroupsClear_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithGroupsClear*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithGroupsClear" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithGroupsClear">WithGroupsClear()</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of the current automaton with the group for all transitions cleared.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis WithGroupsClear()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithLogValueOverride_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithLogValueOverride*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithLogValueOverride_System_Nullable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithLogValueOverride(System.Nullable{System.Double})">WithLogValueOverride(Nullable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of the current automaton with a different value of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_LogValueOverride">LogValueOverride</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis WithLogValueOverride(double? logValueOverride)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">logValueOverride</span></td>
+        <td><p>New <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_LogValueOverride">LogValueOverride</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithPruneStatesWithLogEndWeightLessThan_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithPruneStatesWithLogEndWeightLessThan*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_WithPruneStatesWithLogEndWeightLessThan_System_Nullable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.WithPruneStatesWithLogEndWeightLessThan(System.Nullable{System.Double})">WithPruneStatesWithLogEndWeightLessThan(Nullable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of the current automaton with a different value of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_PruneStatesWithLogEndWeightLessThan">PruneStatesWithLogEndWeightLessThan</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis WithPruneStatesWithLogEndWeightLessThan(double? pruneStatesWithLogEndWeightLessThan)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">pruneStatesWithLogEndWeightLessThan</span></td>
+        <td><p>New <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_PruneStatesWithLogEndWeightLessThan">PruneStatesWithLogEndWeightLessThan</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Write_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Write*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Write_System_Action_System_Double__System_Action_System_Int32__System_Action__2__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Write(System.Action{System.Double},System.Action{System.Int32},System.Action{`2})">Write(Action&lt;Double&gt;, Action&lt;Int32&gt;, Action&lt;TElementDistribution&gt;)</h4>
   <div class="markdown level1 summary"><p>Writes the current automaton.</p>
@@ -4119,13 +4469,24 @@ So we don't have to maintain 2 versions of deserialization.</p>
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction-1.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction&lt;TThis&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.WeightFunctions-5.IWeightFunction.html">WeightFunctions&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;.IWeightFunction</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
+  </div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

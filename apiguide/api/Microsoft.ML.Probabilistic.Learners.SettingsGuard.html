@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SettingsGuard
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -98,25 +98,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
@@ -128,6 +128,40 @@ public class SettingsGuard : ICustomSerializable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_SettingsGuard__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_SettingsGuard__ctor_Microsoft_ML_Probabilistic_Serialization_IReader_System_Func_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.#ctor(Microsoft.ML.Probabilistic.Serialization.IReader,System.Func{System.Boolean})">SettingsGuard(IReader, Func&lt;Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.SettingsGuard.html">SettingsGuard</a> class
+from a reader of a binary stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SettingsGuard(IReader reader, Func&lt;bool&gt; isImmutable)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IReader.html">IReader</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The reader to load the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.SettingsGuard.html">SettingsGuard</a> from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">isImmutable</span></td>
+        <td><p>If true, the setting cannot be changed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Learners_SettingsGuard__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.#ctor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Learners_SettingsGuard__ctor_System_Func_System_Boolean__System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.#ctor(System.Func{System.Boolean},System.String)">SettingsGuard(Func&lt;Boolean&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.SettingsGuard.html">SettingsGuard</a> class.</p>
@@ -161,40 +195,6 @@ public class SettingsGuard : ICustomSerializable</code></pre>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Learners_SettingsGuard__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_SettingsGuard__ctor_System_IO_BinaryReader_System_Func_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.#ctor(System.IO.BinaryReader,System.Func{System.Boolean})">SettingsGuard(BinaryReader, Func&lt;Boolean&gt;)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.SettingsGuard.html">SettingsGuard</a> class
-from a reader of a binary stream.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SettingsGuard(BinaryReader reader, Func&lt;bool&gt; isImmutable)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
-        <td><span class="parametername">reader</span></td>
-        <td><p>The reader to load the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.SettingsGuard.html">SettingsGuard</a> from.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
-        <td><span class="parametername">isImmutable</span></td>
-        <td><p>If true, the setting cannot be changed.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Learners_SettingsGuard_OnSettingChanging_" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.OnSettingChanging*"></a>
@@ -207,13 +207,13 @@ from a reader of a binary stream.</p>
     <pre><code class="lang-csharp hljs">public void OnSettingChanging()</code></pre>
   </div>
   <a id="Microsoft_ML_Probabilistic_Learners_SettingsGuard_SaveForwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.SaveForwardCompatible*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_SettingsGuard_SaveForwardCompatible_System_IO_BinaryWriter_" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.SaveForwardCompatible(System.IO.BinaryWriter)">SaveForwardCompatible(BinaryWriter)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_SettingsGuard_SaveForwardCompatible_Microsoft_ML_Probabilistic_Serialization_IWriter_" data-uid="Microsoft.ML.Probabilistic.Learners.SettingsGuard.SaveForwardCompatible(Microsoft.ML.Probabilistic.Serialization.IWriter)">SaveForwardCompatible(IWriter)</h4>
   <div class="markdown level1 summary"><p>Saves the state of the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.SettingsGuard.html">SettingsGuard</a> using the specified writer to a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SaveForwardCompatible(BinaryWriter writer)</code></pre>
+    <pre><code class="lang-csharp hljs">public void SaveForwardCompatible(IWriter writer)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -226,7 +226,7 @@ from a reader of a binary stream.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binarywriter">BinaryWriter</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.IWriter.html">IWriter</a></td>
         <td><span class="parametername">writer</span></td>
         <td><p>The writer to save the state of the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.SettingsGuard.html">SettingsGuard</a> to.</p>
 </td>
@@ -242,7 +242,10 @@ from a reader of a binary stream.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Utilities.html#Microsoft_ML_Probabilistic_Learners_Utilities_SaveForwardCompatible_Microsoft_ML_Probabilistic_Learners_ICustomSerializable_System_String_System_IO_FileMode_">Utilities.SaveForwardCompatible(ICustomSerializable, String, FileMode)</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Utilities.html#Microsoft_ML_Probabilistic_Learners_Utilities_SaveForwardCompatible_Microsoft_ML_Probabilistic_Learners_ICustomSerializable_System_IO_Stream_">Utilities.SaveForwardCompatible(ICustomSerializable, Stream)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Utilities.html#Microsoft_ML_Probabilistic_Learners_Utilities_SaveForwardCompatibleAsBinary_Microsoft_ML_Probabilistic_Learners_ICustomSerializable_System_IO_Stream_">Utilities.SaveForwardCompatibleAsBinary(ICustomSerializable, Stream)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Utilities.html#Microsoft_ML_Probabilistic_Learners_Utilities_SaveForwardCompatibleAsText_Microsoft_ML_Probabilistic_Learners_ICustomSerializable_System_IO_Stream_">Utilities.SaveForwardCompatibleAsText(ICustomSerializable, Stream)</a>
   </div>
 </article>
           </div>
@@ -250,7 +253,8 @@ from a reader of a binary stream.</p>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

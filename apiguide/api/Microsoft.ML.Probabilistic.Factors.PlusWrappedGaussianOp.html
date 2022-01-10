@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class PlusWrappedGaussianOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,7 +83,8 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp" class="text-break">Class PlusWrappedGaussianOp
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Difference_System_Double_System_Double_">Difference(Double, Double)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Plus_System_Double_System_Double_">Plus(Double, Double)</a></li></ul>, given random arguments to the function.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -93,25 +94,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
@@ -127,7 +128,8 @@ public static class PlusWrappedGaussianOp</code></pre>
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">AAverageConditional(WrappedGaussian, WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>difference</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -146,12 +148,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -166,13 +170,39 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>difference</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>difference</code> as the random arguments are varied. The formula is <code>proj[p(difference) sum_(a,b) p(a,b) factor(difference,a,b)]/p(difference)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">b</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double)">AAverageConditional(WrappedGaussian, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>difference</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -191,12 +221,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -211,13 +243,34 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>difference</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>difference</code> as the random arguments are varied. The formula is <code>proj[p(difference) sum_(a) p(a) factor(difference,a,b)]/p(difference)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">AAverageLogarithm(WrappedGaussian, WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>difference</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -236,12 +289,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -256,13 +311,39 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>difference</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>difference</code> as the random arguments are varied. The formula is <code>proj[sum_(a,b) p(a,b) factor(difference,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">b</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double)">AAverageLogarithm(WrappedGaussian, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>difference</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -281,12 +362,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -301,13 +384,34 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>difference</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>difference</code> as the random arguments are varied. The formula is <code>proj[sum_(a) p(a) factor(difference,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">AverageLogFactor(WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -326,7 +430,8 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -341,13 +446,18 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Zero.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.BAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">BAverageConditional(WrappedGaussian, WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -366,12 +476,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -386,13 +498,39 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(a,difference) p(a,difference) factor(difference,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">a</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.BAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double)">BAverageConditional(WrappedGaussian, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -411,12 +549,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Constant value for <code>difference</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -431,13 +571,34 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(a) p(a) factor(difference,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.BAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">BAverageLogarithm(WrappedGaussian, WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -456,12 +617,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -476,13 +639,39 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. Because the factor is deterministic, <code>difference</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(a) p(a) log(sum_difference p(difference) factor(difference,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">a</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.BAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double)">BAverageLogarithm(WrappedGaussian, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -501,12 +690,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">sum</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Constant value for <code>difference</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -521,13 +712,34 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. The formula is <code>exp(sum_(a) p(a) log(factor(difference,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageConditional(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">SumAverageConditional(WrappedGaussian, WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -546,12 +758,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -566,13 +780,39 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>a</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(difference,b) p(difference,b) factor(difference,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">a</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">b</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageConditional(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double)">SumAverageConditional(WrappedGaussian, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -591,12 +831,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -611,13 +853,34 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>a</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(difference) p(difference) factor(difference,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">a</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageConditional(System.Double,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">SumAverageConditional(Double, WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -636,12 +899,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Constant value for <code>difference</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -656,13 +921,34 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>a</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(b) p(b) factor(difference,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">b</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">SumAverageLogarithm(WrappedGaussian, WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -681,12 +967,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -701,13 +989,39 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>a</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. Because the factor is deterministic, <code>difference</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(b) p(b) log(sum_difference p(difference) factor(difference,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">a</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">b</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double)">SumAverageLogarithm(WrappedGaussian, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -726,12 +1040,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>difference</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -746,13 +1062,34 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>a</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> with <code>difference</code> integrated out. The formula is <code>sum_difference p(difference) factor(difference,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">a</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.PlusWrappedGaussianOp.SumAverageLogarithm(System.Double,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">SumAverageLogarithm(Double, WrappedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -771,12 +1108,14 @@ public static class PlusWrappedGaussianOp</code></pre>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">a</span></td>
-        <td></td>
+        <td><p>Constant value for <code>difference</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
         <td><span class="parametername">b</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -791,7 +1130,27 @@ public static class PlusWrappedGaussianOp</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>a</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PlusWrappedGaussianOp_SumAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. The formula is <code>exp(sum_(b) p(b) log(factor(difference,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">b</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -801,7 +1160,8 @@ public static class PlusWrappedGaussianOp</code></pre>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

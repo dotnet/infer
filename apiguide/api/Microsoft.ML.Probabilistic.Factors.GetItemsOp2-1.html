@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GetItemsOp2&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,8 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1" class="text-break">Class GetItemsOp2&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
-</div>
+  <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -94,32 +93,32 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;GetItems&lt;&gt;&quot;, new Type[]{}, Default = false)]
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Collection), &quot;GetItems&lt;&gt;&quot;, new Type[]{}, Default = false)]
 [Buffers(new string[]{&quot;partial&quot;})]
 [Quality(QualityBand.Mature)]
 public static class GetItemsOp2&lt;T&gt;</code></pre>
@@ -216,13 +215,13 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditional__1___0_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditional``1(``0,System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Int32},System.Int32,``0)">ItemsAverageConditional&lt;DistributionType&gt;(DistributionType, IList&lt;DistributionType&gt;, IList&lt;Int32&gt;, Int32, DistributionType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditional__1___0_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList_System_Int32__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditional``1(``0,System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.IReadOnlyList{System.Int32},System.Int32,``0)">ItemsAverageConditional&lt;DistributionType&gt;(DistributionType, IReadOnlyList&lt;DistributionType&gt;, IReadOnlyList&lt;Int32&gt;, Int32, DistributionType)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>items</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DistributionType ItemsAverageConditional&lt;DistributionType&gt;(DistributionType partial, [SkipIfAllUniform] IList&lt;DistributionType&gt; array, IList&lt;int&gt; indices, int resultIndex, DistributionType result)
+    <pre><code class="lang-csharp hljs">public static DistributionType ItemsAverageConditional&lt;DistributionType&gt;(DistributionType partial, [SkipIfAllUniform] IReadOnlyList&lt;DistributionType&gt; array, IReadOnlyList&lt;int&gt; indices, int resultIndex, DistributionType result)
     where DistributionType : SettableToProduct&lt;DistributionType&gt;, SettableToRatio&lt;DistributionType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -242,13 +241,13 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Constant value for <code>indices</code>.</p>
 </td>
@@ -299,7 +298,7 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditional__1___0_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__System_Int32___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditional__1___0_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList_System_Int32__System_Int32___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>items</code> as the random arguments are varied. The formula is <code>proj[p(items) sum_(array) p(array) factor(items,array,indices)]/p(items)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -319,12 +318,12 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditional2_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditional2*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditional2__1___0_System_Collections_Generic_IList___0__System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditional2``1(``0,System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Int32},System.Int32,``0)">ItemsAverageConditional2&lt;DistributionType&gt;(DistributionType, IList&lt;DistributionType&gt;, IList&lt;DistributionType&gt;, IList&lt;Int32&gt;, Int32, DistributionType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditional2__1___0_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList_System_Int32__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditional2``1(``0,System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.IReadOnlyList{System.Int32},System.Int32,``0)">ItemsAverageConditional2&lt;DistributionType&gt;(DistributionType, IReadOnlyList&lt;DistributionType&gt;, IReadOnlyList&lt;DistributionType&gt;, IReadOnlyList&lt;Int32&gt;, Int32, DistributionType)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DistributionType ItemsAverageConditional2&lt;DistributionType&gt;(DistributionType items, [SkipIfAllUniform] IList&lt;DistributionType&gt; array, IList&lt;DistributionType&gt; to_array, IList&lt;int&gt; indices, int resultIndex, DistributionType result)
+    <pre><code class="lang-csharp hljs">public static DistributionType ItemsAverageConditional2&lt;DistributionType&gt;(DistributionType items, [SkipIfAllUniform] IReadOnlyList&lt;DistributionType&gt; array, IReadOnlyList&lt;DistributionType&gt; to_array, IReadOnlyList&lt;int&gt; indices, int resultIndex, DistributionType result)
     where DistributionType : SettableToProduct&lt;DistributionType&gt;, SettableToRatio&lt;DistributionType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -343,17 +342,17 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">to_array</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td></td>
       </tr>
@@ -401,12 +400,12 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditionalInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit__1_Microsoft_ML_Probabilistic_Distributions_DistributionRefArray___0__0__System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditionalInit``1(Microsoft.ML.Probabilistic.Distributions.DistributionRefArray{``0,`0},System.Collections.Generic.IList{System.Int32})">ItemsAverageConditionalInit&lt;TDist&gt;(DistributionRefArray&lt;TDist, T&gt;, IList&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit__1_Microsoft_ML_Probabilistic_Distributions_DistributionRefArray___0__0__System_Collections_Generic_IReadOnlyList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditionalInit``1(Microsoft.ML.Probabilistic.Distributions.DistributionRefArray{``0,`0},System.Collections.Generic.IReadOnlyList{System.Int32})">ItemsAverageConditionalInit&lt;TDist&gt;(DistributionRefArray&lt;TDist, T&gt;, IReadOnlyList&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DistributionRefArray&lt;TDist, T&gt; ItemsAverageConditionalInit&lt;TDist&gt;(DistributionRefArray&lt;TDist, T&gt; array, IList&lt;int&gt; indices)
+    <pre><code class="lang-csharp hljs">public static DistributionRefArray&lt;TDist, T&gt; ItemsAverageConditionalInit&lt;TDist&gt;(DistributionRefArray&lt;TDist, T&gt; array, IReadOnlyList&lt;int&gt; indices)
     where TDist : class, SettableTo&lt;TDist&gt;, SettableToProduct&lt;TDist&gt;, SettableToRatio&lt;TDist&gt;, SettableToPower&lt;TDist&gt;, SettableToWeightedSum&lt;TDist&gt;, CanGetLogAverageOf&lt;TDist&gt;, CanGetLogAverageOfPower&lt;TDist&gt;, CanGetAverageLog&lt;TDist&gt;, IDistribution&lt;T&gt;, Sampleable&lt;T&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -426,7 +425,7 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Constant value for <code>indices</code>.</p>
 </td>
@@ -464,16 +463,16 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit__1_Microsoft_ML_Probabilistic_Distributions_DistributionRefArray___0__0__System_Collections_Generic_IList_System_Int32___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit__1_Microsoft_ML_Probabilistic_Distributions_DistributionRefArray___0__0__System_Collections_Generic_IReadOnlyList_System_Int32___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditionalInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit__1_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray___0__0__System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditionalInit``1(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray{``0,`0},System.Collections.Generic.IList{System.Int32})">ItemsAverageConditionalInit&lt;TDist&gt;(DistributionStructArray&lt;TDist, T&gt;, IList&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit__1_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray___0__0__System_Collections_Generic_IReadOnlyList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.ItemsAverageConditionalInit``1(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray{``0,`0},System.Collections.Generic.IReadOnlyList{System.Int32})">ItemsAverageConditionalInit&lt;TDist&gt;(DistributionStructArray&lt;TDist, T&gt;, IReadOnlyList&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DistributionStructArray&lt;TDist, T&gt; ItemsAverageConditionalInit&lt;TDist&gt;(DistributionStructArray&lt;TDist, T&gt; array, IList&lt;int&gt; indices)
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray&lt;TDist, T&gt; ItemsAverageConditionalInit&lt;TDist&gt;(DistributionStructArray&lt;TDist, T&gt; array, IReadOnlyList&lt;int&gt; indices)
     where TDist : struct, SettableToProduct&lt;TDist&gt;, SettableToRatio&lt;TDist&gt;, SettableToPower&lt;TDist&gt;, SettableToWeightedSum&lt;TDist&gt;, CanGetLogAverageOf&lt;TDist&gt;, CanGetLogAverageOfPower&lt;TDist&gt;, CanGetAverageLog&lt;TDist&gt;, IDistribution&lt;T&gt;, Sampleable&lt;T&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -493,7 +492,7 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Constant value for <code>indices</code>.</p>
 </td>
@@ -531,17 +530,17 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit__1_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray___0__0__System_Collections_Generic_IList_System_Int32___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_ItemsAverageConditionalInit__1_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray___0__0__System_Collections_Generic_IReadOnlyList_System_Int32___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_Partial_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.Partial*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_Partial__1___0_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.Partial``1(``0,System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Int32},System.Int32,``0)">Partial&lt;DistributionType&gt;(DistributionType, IList&lt;DistributionType&gt;, IList&lt;Int32&gt;, Int32, DistributionType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_Partial__1___0_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList_System_Int32__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.Partial``1(``0,System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.IReadOnlyList{System.Int32},System.Int32,``0)">Partial&lt;DistributionType&gt;(DistributionType, IReadOnlyList&lt;DistributionType&gt;, IReadOnlyList&lt;Int32&gt;, Int32, DistributionType)</h4>
   <div class="markdown level1 summary"><p>Update the buffer <code>partial</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DistributionType Partial&lt;DistributionType&gt;(DistributionType items, IList&lt;DistributionType&gt; to_array, IList&lt;int&gt; indices, int resultIndex, DistributionType result)
+    <pre><code class="lang-csharp hljs">public static DistributionType Partial&lt;DistributionType&gt;(DistributionType items, IReadOnlyList&lt;DistributionType&gt; to_array, IReadOnlyList&lt;int&gt; indices, int resultIndex, DistributionType result)
     where DistributionType : SettableToProduct&lt;DistributionType&gt;, SettableToRatio&lt;DistributionType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -561,13 +560,13 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">to_array</span></td>
         <td><p>Outgoing message to <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Constant value for <code>indices</code>.</p>
 </td>
@@ -618,7 +617,7 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_Partial__1___0_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__System_Int32___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_Partial__1___0_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_IReadOnlyList_System_Int32__System_Int32___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemsOp2_1_PartialInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsOp2`1.PartialInit*"></a>
@@ -690,7 +689,8 @@ public static class GetItemsOp2&lt;T&gt;</code></pre>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

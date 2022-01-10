@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class CutForwardWhenOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,7 +83,8 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1" class="text-break">Class CutForwardWhenOp&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Cut.html#Microsoft_ML_Probabilistic_Factors_Cut_ForwardWhen__1___0_System_Boolean_">ForwardWhen&lt;T&gt;(T, Boolean)</a>, given random arguments to the function.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -93,25 +94,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
@@ -142,7 +143,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ForwardWhenAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageConditional__0_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ForwardWhenAverageConditional(`0)">ForwardWhenAverageConditional(T)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>forwardWhen</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -161,7 +163,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">Value</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>value</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -176,10 +179,14 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>forwardWhen</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageConditional__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>forwardWhen</code> as the random arguments are varied. The formula is <code>proj[p(forwardWhen) sum_(value) p(value) factor(forwardWhen,value,shouldCut)]/p(forwardWhen)</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ForwardWhenAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageConditional__1___0_System_Boolean___0_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ForwardWhenAverageConditional``1(``0,System.Boolean,``0)">ForwardWhenAverageConditional&lt;TDist&gt;(TDist, Boolean, TDist)</h4>
   <div class="markdown level1 summary"></div>
@@ -249,7 +256,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ForwardWhenAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageLogarithm__0_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ForwardWhenAverageLogarithm(`0)">ForwardWhenAverageLogarithm(T)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>forwardWhen</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -268,7 +276,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">Value</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>value</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -283,13 +292,18 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>forwardWhen</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageLogarithm__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>forwardWhen</code> as the random arguments are varied. The formula is <code>proj[sum_(value) p(value) factor(forwardWhen,value,shouldCut)]</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ForwardWhenAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageLogarithm__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ForwardWhenAverageLogarithm``1(``0)">ForwardWhenAverageLogarithm&lt;TDist&gt;(TDist)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>forwardWhen</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -309,7 +323,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">Value</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>value</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -324,7 +339,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">TDist</span></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>forwardWhen</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -344,9 +360,13 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ForwardWhenAverageLogarithm__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>forwardWhen</code> as the random arguments are varied. The formula is <code>proj[sum_(value) p(value) factor(forwardWhen,value,shouldCut)]</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ValueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ValueAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ValueAverageConditional__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ValueAverageConditional``1(``0)">ValueAverageConditional&lt;TDist&gt;(TDist)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>value</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -366,7 +386,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">forwardWhen</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>forwardWhen</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -381,7 +402,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">TDist</span></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>value</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -401,9 +423,13 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ValueAverageConditional__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>value</code> as the random arguments are varied. The formula is <code>proj[p(value) sum_(forwardWhen) p(forwardWhen) factor(forwardWhen,value,shouldCut)]/p(value)</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ValueAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ValueAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ValueAverageLogarithm__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.CutForwardWhenOp`1.ValueAverageLogarithm``1(``0)">ValueAverageLogarithm&lt;TDist&gt;(TDist)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>value</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -423,7 +449,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -438,7 +465,8 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">TDist</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -458,13 +486,17 @@ public static class CutForwardWhenOp&lt;T&gt;</code></pre>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CutForwardWhenOp_1_ValueAverageLogarithm__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>value</code> conditioned on the given values.</p>
+</div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

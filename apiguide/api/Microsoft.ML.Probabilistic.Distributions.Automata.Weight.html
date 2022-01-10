@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct Weight
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,17 +89,18 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iformattable">IFormattable</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
@@ -108,7 +109,7 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Serializable]
 [DataContract]
-public struct Weight : IComparable&lt;Weight&gt;</code></pre>
+public readonly struct Weight : IComparable&lt;Weight&gt;, IFormattable</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Weights are stored in log-domain so that weights of tiny magnitude can be handled without the loss of precision.</p>
@@ -122,7 +123,7 @@ public struct Weight : IComparable&lt;Weight&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Weight Infinity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static readonly Weight Infinity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -146,7 +147,7 @@ public struct Weight : IComparable&lt;Weight&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsInfinity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly bool IsInfinity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -170,7 +171,7 @@ public struct Weight : IComparable&lt;Weight&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsZero { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly bool IsZero { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -194,7 +195,7 @@ public struct Weight : IComparable&lt;Weight&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double LogValue { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly double LogValue { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -218,7 +219,7 @@ public struct Weight : IComparable&lt;Weight&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Weight One { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static readonly Weight One { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -242,7 +243,7 @@ public struct Weight : IComparable&lt;Weight&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Value { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly double Value { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -266,7 +267,7 @@ public struct Weight : IComparable&lt;Weight&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Weight Zero { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static readonly Weight Zero { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -432,7 +433,7 @@ in the sort order as the other object.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int CompareTo(Weight that)</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly int CompareTo(Weight that)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -478,7 +479,7 @@ in the sort order.  Zero This instance occurs in the same position in the sort o
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+    <pre><code class="lang-csharp hljs">public override readonly bool Equals(object obj)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -516,7 +517,7 @@ in the sort order.  Zero This instance occurs in the same position in the sort o
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#system-valuetype-equals(system-object)">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_FromLogValue_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.FromLogValue*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_FromLogValue_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.FromLogValue(System.Double)">FromLogValue(Double)</h4>
   <div class="markdown level1 summary"><p>Creates a weight from the logarithm of its value.</p>
@@ -611,7 +612,7 @@ public static Weight FromLogValue(double logValue)</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+    <pre><code class="lang-csharp hljs">public override readonly int GetHashCode()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -630,7 +631,7 @@ public static Weight FromLogValue(double logValue)</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#system-valuetype-gethashcode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_Inverse_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.Inverse*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_Inverse_Microsoft_ML_Probabilistic_Distributions_Automata_Weight_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.Inverse(Microsoft.ML.Probabilistic.Distributions.Automata.Weight)">Inverse(Weight)</h4>
   <div class="markdown level1 summary"><p>Computes the inverse of a given weight.</p>
@@ -964,7 +965,7 @@ public static Weight FromLogValue(double logValue)</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+    <pre><code class="lang-csharp hljs">public override readonly string ToString()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -983,7 +984,7 @@ public static Weight FromLogValue(double logValue)</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#system-valuetype-tostring">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_ToString_System_IFormatProvider_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.ToString(System.IFormatProvider)">ToString(IFormatProvider)</h4>
   <div class="markdown level1 summary"><p>Gets a string representation of this object.</p>
@@ -991,7 +992,7 @@ public static Weight FromLogValue(double logValue)</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string ToString(IFormatProvider provider)</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly string ToString(IFormatProvider provider)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1027,6 +1028,91 @@ public static Weight FromLogValue(double logValue)</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.ToString(System.String)">ToString(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string ToString(string format)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">format</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_ToString_System_String_System_IFormatProvider_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.ToString(System.String,System.IFormatProvider)">ToString(String, IFormatProvider)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string ToString(string format, IFormatProvider formatProvider)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">format</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></td>
+        <td><span class="parametername">formatProvider</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_Write_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.Write*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Weight_Write_System_Action_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.Write(System.Action{System.Double})">Write(Action&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Writes the weight.</p>
@@ -1034,7 +1120,7 @@ public static Weight FromLogValue(double logValue)</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Write(Action&lt;double&gt; writeDouble)</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly void Write(Action&lt;double&gt; writeDouble)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1490,13 +1576,17 @@ public static Weight FromLogValue(double logValue)</code></pre>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icomparable-1">System.IComparable&lt;T&gt;</a>
   </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iformattable">System.IFormattable</a>
+  </div>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>
