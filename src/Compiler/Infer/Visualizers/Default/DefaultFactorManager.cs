@@ -63,6 +63,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             }
             factorList.Sort((elem1, elem2) => elem1.Item2.ToString().CompareTo(elem2.Item2.ToString()));
 
+            string indent = "            ";
+            string separator = Environment.NewLine + indent;
             string html = $@"<!DOCTYPE html>
 <html>
     <head>
@@ -73,7 +75,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             <div class=""box-header"">Factor</div>
             <div class=""box-header"">Arguments</div>  
             {AddAlgorithmsHeaders()}
-            {String.Join(String.Empty, factorList.Select(i => GetFactorHtml(i.Item1, i.Item2)))}
+            {string.Join(separator, factorList.Select(i => GetFactorHtml(i.Item1, i.Item2)))}
         </div>
     </body>
 </html>";
@@ -161,6 +163,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 int argCount = info.Method.GetParameters().Length;
                 if (info.Method.ReturnType != typeof(void)) argCount++;
                 int maxPatterns = (int)System.Math.Pow(2, argCount);
+                if (info.IsDeterministicFactor) maxPatterns--;  // (D D) -> S doesn't exist for a deterministic factor
 
                 if ((partialCount == 0) && (patterns.Count >= maxPatterns) && (notSupportedCount == 0))
                 {
