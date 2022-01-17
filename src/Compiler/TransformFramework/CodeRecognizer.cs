@@ -2291,6 +2291,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (expr is ILambdaExpression) return false; // todo: stochastic case?
             if (expr is IAnonymousMethodExpression) return false;
             if (expr is ITypeOfExpression) return false;
+            if (expr is IMethodReferenceExpression) return false;
 
             IVariableDeclaration ivd = Instance.GetVariableDeclaration(expr);
             if (ivd == null)

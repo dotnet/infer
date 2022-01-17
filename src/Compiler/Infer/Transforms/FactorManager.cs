@@ -280,7 +280,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             Console.WriteLine("FactorManager.GetDependencyInfo: reflecting on "+StringUtil.MethodFullNameToString(method));
 #endif
                 CodeBuilder Builder = CodeBuilder.Instance;
-                ParameterInfo[] parameters = method.GetParameters();
+                ParameterInfo[] parameters = Util.GetParameters(method);
                 ParameterInfo indexParameter = null;
                 IExpression resultIndex = null;
                 foreach (ParameterInfo parameter in parameters)

@@ -25598,7 +25598,7 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="GaussianRatioEvidenceOp">
+  <message_op_class name="RatioGaussianOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.Ratio(double, double)" />, given random arguments to the function.</summary>
     </doc>
@@ -25715,7 +25715,7 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="GaussianRatioVmpOp">
+  <message_op_class name="RatioGaussianVmpOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.Ratio(double, double)" />, given random arguments to the function.</summary>
     </doc>

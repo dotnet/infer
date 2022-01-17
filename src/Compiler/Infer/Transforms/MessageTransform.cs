@@ -901,9 +901,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             // Generate code to emit message events
                             var methodRef = new CodeModel.Concrete.XMethodReference(transform.GetMessageUpdatedMethod());
-                            var mre = Builder.MethodRefExpr();
-                            mre.Method = methodRef;
-                            mre.Target = Builder.ThisRefExpr();
+                            var mre = Builder.MethodRefExpr(methodRef, Builder.ThisRefExpr());
                             operatorMethod = Builder.StaticGenericMethod(
                                 new Func<PlaceHolder, string, Action<MessageUpdatedEventArgs>, bool, PlaceHolder>(Tracing.FireEvent<PlaceHolder>),
                                 new Type[] { returnType }, operatorMethod, textExpr, mre, Builder.LiteralExpr(trace != null));
@@ -2267,15 +2265,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             Type srcType = distributionExpr.GetExpressionType();
             Type sampleableType = typeof(Sampleable<>).MakeGenericType(Distribution.GetDomainType(srcType));
             MethodInfo smplMthd = sampleableType.GetMethod("Sample", new Type[] { });
-            IMethodReferenceExpression imre = Builder.MethodRefExpr();
             if (!sampleableType.IsAssignableFrom(srcType))
             {
                 distributionExpr = Builder.CastExpr(distributionExpr, sampleableType);
             }
-            imre.Target = distributionExpr;
-            imre.Method = Builder.MethodRef(smplMthd);
             IMethodInvokeExpression imie = Builder.MethodInvkExpr();
-            imie.Method = imre;
+            imie.Method = Builder.MethodRefExpr(Builder.MethodRef(smplMthd), distributionExpr);
             return imie;
         }
 
@@ -2291,11 +2286,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 distExpr = ConvertInitialiser(distExpr, iprType, varInfo);
                 IStatement is1 = Builder.AssignStmt(ipr, distExpr);
                 MethodInfo postUpdate = gmType.GetMethod("PostUpdate");
-                IMethodReferenceExpression imre = Builder.MethodRefExpr();
-                imre.Target = gibbsMargExpr;
-                imre.Method = Builder.MethodRef(postUpdate);
                 IMethodInvokeExpression imie = Builder.MethodInvkExpr();
-                imie.Method = imre;
+                imie.Method = Builder.MethodRefExpr(Builder.MethodRef(postUpdate), gibbsMargExpr);
                 IStatement is2 = Builder.ExprStatement(imie);
                 IBlockStatement ibs = Builder.BlockStmt();
                 context.OutputAttributes.Set(ibs, new Initializer() { UserInitialized = true });

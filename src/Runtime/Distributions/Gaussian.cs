@@ -997,6 +997,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 ddlogp = 0;
             }
+            if (ddlogp == 0) return Gaussian.FromNatural(dlogp, 0);
             if (double.IsInfinity(dlogp)) return Gaussian.PointMass(dlogp); // to avoid NaN
             double meanTimesPrecision = dlogp - ddlogp * x;
             if (Math.Abs(meanTimesPrecision) > double.MaxValue)

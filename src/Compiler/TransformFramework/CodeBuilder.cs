@@ -637,10 +637,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public IMethodInvokeExpression Method(IExpression target, MethodInfo mi, params IExpression[] args)
         {
             IMethodInvokeExpression mie = MethodInvkExpr();
-            IMethodReferenceExpression mre = MethodRefExpr();
-            mre.Target = target;
-            mre.Method = GenericMethodRef(mi);
-            mie.Method = mre;
+            mie.Method = MethodRefExpr(GenericMethodRef(mi), target);
             ParameterInfo[] parameters = mi.GetParameters();
             bool hasParamsArgument = false;
             for (int i = 0; i < args.Length; i++)
@@ -687,10 +684,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public IMethodInvokeExpression Method(IExpression target, IMethodDeclaration imd, params IExpression[] args)
         {
             IMethodInvokeExpression mie = MethodInvkExpr();
-            IMethodReferenceExpression mre = MethodRefExpr();
-            mre.Target = target;
-            mre.Method = imd;
-            mie.Method = mre;
+            mie.Method = MethodRefExpr(imd, target);
             mie.Arguments.AddRange(args);
             return mie;
         }
@@ -705,10 +699,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public IMethodInvokeExpression Method(IExpression target, IMethodReference imr, params IExpression[] args)
         {
             IMethodInvokeExpression mie = MethodInvkExpr();
-            IMethodReferenceExpression mre = MethodRefExpr();
-            mre.Target = target;
-            mre.Method = imr;
-            mie.Method = mre;
+            mie.Method = MethodRefExpr(imr, target);
             mie.Arguments.AddRange(args);
             return mie;
         }
@@ -867,7 +858,15 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns>The constructor reference</returns>
         public IMethodReference ConstructorRef(Type t, Type[] types)
         {
-            ConstructorInfo mi = t.GetConstructor(types);
+            ConstructorInfo mi;
+            if (typeof(Delegate).IsAssignableFrom(t))
+            {
+                mi = t.GetConstructors()[0];
+            }
+            else
+            {
+                mi = t.GetConstructor(types);
+            }
             if (mi == null && types.Length > 0)
                 throw new MissingMethodException($"GetConstructor failed for type {StringUtil.TypeToString(t)} with arguments {StringUtil.ArrayToString(types)}");
             IMethodReference m = MethodRef();
@@ -1723,10 +1722,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
             else if (expr is IMethodReferenceExpression imre)
             {
-                var mre = MethodRefExpr();
-                mre.Method = imre.Method;
-                mre.Target = ReplaceExpression(imre.Target, exprFind, exprReplace, ref replaceCount);
-                return mre;
+                var target = ReplaceExpression(imre.Target, exprFind, exprReplace, ref replaceCount);
+                return MethodRefExpr(imre.Method, target);
             }
             else if (expr is IThisReferenceExpression)
             {

@@ -30,6 +30,36 @@ namespace Microsoft.ML.Probabilistic.Tests
         private static readonly bool verbose = false;
 
         [Fact]
+        public void BetaTrueCountIsGamma_BigData()
+        {
+            double shape = 2.5;
+            double rate = 3.5;
+            Variable<double> trueCount = Variable.GammaFromShapeAndRate(shape, rate);
+            trueCount.Name = nameof(trueCount);
+            int count = 10000;
+            Range item = new Range(count);
+            var p = Variable.Array<double>(item).Named("p");
+            using (Variable.ForEach(item))
+            {
+                var c = Variable.Bernoulli(0.5);
+
+                using (Variable.If(c))
+                {
+                    p[item] = Variable.Beta(trueCount, 1);
+                }
+
+                using (Variable.IfNot(c))
+                {
+                    p[item] = Variable.Beta(1, 1);
+                }
+            }
+            p.ObservedValue = Util.ArrayInit(count, i => 0.0001);
+
+            InferenceEngine engine = new InferenceEngine();
+            var trueCountActual = engine.Infer<Gamma>(trueCount);
+        }
+
+        [Fact]
         public void BetaTrueCountIsGamma()
         {
             BetaTrueCountIsGamma(new ExpectationPropagation());
