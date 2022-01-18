@@ -28,14 +28,21 @@ This example creates two random variables, **mean** and **precision** with Gauss
 You can see from this example that the modelling API is accessed almost entirely through static methods on the [**Variable**](../apiguide/api/Microsoft.ML.Probabilistic.Models.Variable.html) class. The following pages describe how various modelling tasks can be achieved using the modelling API:
 
 *   [Creating variables](Creating variables.md)
-*   [Applying functions and operators to variables](Applying functions and operators to variables.md)
+    *   [Variable types and their distributions](Variable types and their distributions.md)
+    *   [Vector and Matrix types](Vector and matrix types.md)
+    *   [Applying functions and operators to variables](Applying functions and operators to variables.md)        
 *   [Attaching constraints to variables](Attaching constraints to variables.md)
-*   [Working with arrays and ranges](Arrays and ranges.md)
-*   [ForEach blocks](ForEach blocks.md)
-*   [Jagged arrays](Jagged arrays.md)
-*   [Indexing arrays by observed variables](Indexing arrays by observed variables.md)
+*   Working with arrays and ranges
+    *   [Arrays and ranges](Arrays and ranges.md)
+    *   [ForEach blocks](ForEach blocks.md)
+    *   [Markov chains and grids](Markov chains and grids.md)
+    *   [Jagged arrays](Jagged arrays.md)
+    *   [Indexing arrays by observed variables](Indexing arrays by observed variables.md)
+    *   [Cloning ranges](Cloning ranges.md)
 *   [Branching on variables to create mixture models](Branching on variables to create mixture models.md)
+    *   [The importance of using SetTo](The importance of using SetTo.md)
 *   [Repeat blocks](Repeat blocks.md)
 *   [Computing model evidence for model selection](Computing model evidence for model selection.md)
+*   [Increment log density](Increment log density.md)
 
 Finally, note that the use of `Variable.Constant()` is a convenience for the early stages of model development. For efficiency, scalability, and flexibility, it is preferable the Observed value mechanism as described in [Creating variables](Creating variables.md).
