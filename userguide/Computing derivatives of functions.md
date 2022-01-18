@@ -18,7 +18,7 @@ Variable<double> xPoint = Variable.Observed(0.5);
 Variable<double> x = Variable.GammaFromMeanAndVariance(xPoint, 0.0);
 x.AddAttribute(QueryTypes.MarginalDividedByPrior);
 Variable<double> f = Variable.Log(x);
-Variable.ConstrainEqualRandom(f, Gaussian.FromNatural(1, 0));
+Variable.ConstrainEqualRandom(f, Gaussian.FromNatural(1, 0)); // increment the log density by f
 
 InferenceEngine engine = new InferenceEngine();
 var xPost = engine.Infer<Gaussian>(x, QueryTypes.MarginalDividedByPrior);
@@ -26,3 +26,17 @@ xPost.GetDerivatives(xPoint.ObservedValue, out double derivative, out _);
 // derivative is 1 / xPoint
 ```
 To compute the derivative at a different point, change `xPoint.ObservedValue` and call `engine.Infer` again.
+Here is another example, using a Gaussian-distributed `x` and a Gamma-distributed `f`:
+```csharp
+// Compute the derivative of the function exp(x) at the point x = 0.5
+Variable<double> xPoint = Variable.Observed(0.5);
+Variable<double> x = Variable.GaussianFromMeanAndVariance(xPoint, 0.0);
+x.AddAttribute(QueryTypes.MarginalDividedByPrior);
+Variable<double> f = Variable.Exp(x);
+Variable.ConstrainEqualRandom(f, Gamma.FromNatural(0, -1)); // increment the log density by f
+
+InferenceEngine engine = new InferenceEngine();
+var xPost = engine.Infer<Gaussian>(x, QueryTypes.MarginalDividedByPrior);
+xPost.GetDerivatives(xPoint.ObservedValue, out double derivative, out _);
+// derivative is exp(xPoint)
+```
