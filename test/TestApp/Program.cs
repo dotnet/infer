@@ -77,11 +77,13 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.UseLocals = false;
             TestUtils.SetDebugOptions();
             TestUtils.SetBrowserMode(BrowserMode.OnError);
-            //TestUtils.SetBrowserMode(BrowserMode.Always);
+            TestUtils.SetBrowserMode(BrowserMode.Always);
             //TestUtils.SetBrowserMode(BrowserMode.WriteFiles);
 
             Stopwatch watch = new Stopwatch();
             watch.Start();
+
+            new InferTests().MarginalDividedByPriorPointMassTest();
 
             bool runAllTests = false;
             if (runAllTests)

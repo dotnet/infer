@@ -13,17 +13,20 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Mature)]
     public static class RatioGaussianOp
     {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="RatioGaussianOp"]/message_doc[@name="RatioAverageConditional(Gaussian, double)"]/*'/>
         public static Gaussian RatioAverageConditional(Gaussian a, double b)
         {
             return RatioGaussianVmpOp.RatioAverageLogarithm(a, b);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="RatioGaussianOp"]/message_doc[@name="RatioAverageConditional(Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian RatioAverageConditional(Gaussian ratio, [SkipIfUniform] Gaussian a, [SkipIfUniform] Gaussian b)
         {
             if (b.IsPointMass) return RatioAverageConditional(a, b.Point);
             else throw new NotSupportedException();
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="RatioGaussianOp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian ratio, Gaussian a, [SkipIfUniform] Gaussian b)
         {
             if (b.IsPointMass)
@@ -42,6 +45,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             else throw new NotSupportedException();
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="RatioGaussianOp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian BAverageConditional([SkipIfUniform] Gaussian ratio, [SkipIfUniform] Gaussian a, Gaussian b)
         {
             //if (string.Empty.Length == 0) return GaussianProductOp.BAverageConditional(Gaussian.FromNatural(a.MeanTimesPrecision, Math.Min(a.Precision, 1e16)), Gaussian.FromNatural(ratio.MeanTimesPrecision, ratio.Precision + 1e-16), b);

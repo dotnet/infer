@@ -16,6 +16,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public static class IntegralOp
     {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntegralOp"]/message_doc[@name="IntegralAverageConditional(Gaussian, Gaussian, Func{double,double}, ITruncatableDistribution{double})"]/*'/>
         public static Gaussian IntegralAverageConditional([RequiredArgument] Gaussian lowerBound, [RequiredArgument] Gaussian upperBound, Func<double,double> func, ITruncatableDistribution<double> distribution)
         {
             if (lowerBound.IsPointMass && upperBound.IsPointMass)
@@ -25,26 +26,40 @@ namespace Microsoft.ML.Probabilistic.Factors
             else throw new NotSupportedException();
         }
 
-        public static Gaussian LowerBoundAverageConditional(Gaussian integral, [RequiredArgument] Gaussian lowerBound, Func<double, double> func, ITruncatableDistribution<double> distribution)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntegralOp"]/message_doc[@name="LowerBoundAverageConditional(Gaussian, double, Func{double,double}, ITruncatableDistribution{double})"]/*'/>
+        public static Gaussian LowerBoundAverageConditional(Gaussian integral, double lowerBound, Func<double, double> func, ITruncatableDistribution<double> distribution)
         {
             CanGetLogProb<double> canGetLogProb = (CanGetLogProb<double>)distribution;
-            if (lowerBound.IsPointMass && integral.Precision == 0)
+            double dlogf = integral.MeanTimesPrecision * -func(lowerBound) * Math.Exp(canGetLogProb.GetLogProb(lowerBound));
+            double ddlogf = 0; // approximation ignoring integral.Precision
+            return Gaussian.FromDerivatives(lowerBound, dlogf, ddlogf, false);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntegralOp"]/message_doc[@name="LowerBoundAverageConditional(Gaussian, Gaussian, Func{double,double}, ITruncatableDistribution{double})"]/*'/>
+        public static Gaussian LowerBoundAverageConditional(Gaussian integral, [RequiredArgument] Gaussian lowerBound, Func<double, double> func, ITruncatableDistribution<double> distribution)
+        {
+            if (lowerBound.IsPointMass)
             {
-                double dlogf = integral.MeanTimesPrecision * -func(lowerBound.Point) * Math.Exp(canGetLogProb.GetLogProb(lowerBound.Point));
-                double ddlogf = 0;
-                return Gaussian.FromDerivatives(lowerBound.Point, dlogf, ddlogf, false);
+                return LowerBoundAverageConditional(integral, lowerBound.Point, func, distribution);
             }
             else throw new NotSupportedException();
         }
 
-        public static Gaussian UpperBoundAverageConditional(Gaussian integral, [RequiredArgument] Gaussian upperBound, Func<double, double> func, ITruncatableDistribution<double> distribution)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntegralOp"]/message_doc[@name="UpperBoundAverageConditional(Gaussian, double, Func{double,double}, ITruncatableDistribution{double})"]/*'/>
+        public static Gaussian UpperBoundAverageConditional(Gaussian integral, double upperBound, Func<double, double> func, ITruncatableDistribution<double> distribution)
         {
             CanGetLogProb<double> canGetLogProb = (CanGetLogProb<double>)distribution;
-            if (upperBound.IsPointMass && integral.Precision == 0)
+            double dlogf = integral.MeanTimesPrecision * func(upperBound) * Math.Exp(canGetLogProb.GetLogProb(upperBound));
+            double ddlogf = 0; // approximation ignoring integral.Precision
+            return Gaussian.FromDerivatives(upperBound, dlogf, ddlogf, false);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntegralOp"]/message_doc[@name="UpperBoundAverageConditional(Gaussian, Gaussian, Func{double,double}, ITruncatableDistribution{double})"]/*'/>
+        public static Gaussian UpperBoundAverageConditional(Gaussian integral, [RequiredArgument] Gaussian upperBound, Func<double, double> func, ITruncatableDistribution<double> distribution)
+        {
+            if (upperBound.IsPointMass)
             {
-                double dlogf = integral.MeanTimesPrecision * func(upperBound.Point) * Math.Exp(canGetLogProb.GetLogProb(upperBound.Point));
-                double ddlogf = 0;
-                return Gaussian.FromDerivatives(upperBound.Point, dlogf, ddlogf, false);
+                return UpperBoundAverageConditional(integral, upperBound.Point, func, distribution);
             }
             else throw new NotSupportedException();
         }

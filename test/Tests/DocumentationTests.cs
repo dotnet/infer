@@ -1572,6 +1572,38 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(message.IsUniform());
         }
 
+        [Fact]
+        public void DerivativeExample()
+        {
+            // Compute the derivative of the function log(x) at the point x = 0.5
+            Variable<double> xPoint = Variable.Observed(0.5);
+            Variable<double> x = Variable.GammaFromMeanAndVariance(0.5, 0.0);
+            x.Name = nameof(x);
+            x.AddAttribute(QueryTypes.MarginalDividedByPrior);
+            Variable<double> f = Variable.Log(x);
+            Variable.ConstrainEqualRandom(f, Gaussian.FromNatural(1, 0));
+            InferenceEngine engine = new InferenceEngine();
+            var xPost = engine.Infer<Gamma>(x, QueryTypes.MarginalDividedByPrior);
+            xPost.GetDerivatives(xPoint.ObservedValue, out double derivative, out _);
+            Assert.Equal(1.0 / xPoint.ObservedValue, derivative);
+        }
+
+        [Fact]
+        public void DerivativeExample2()
+        {
+            // Compute the derivative of the function exp(x) at the point x = 0.5
+            Variable<double> xPoint = Variable.Observed(0.5);
+            Variable<double> x = Variable.GaussianFromMeanAndVariance(xPoint, 0.0);
+            x.Name = nameof(x);
+            x.AddAttribute(QueryTypes.MarginalDividedByPrior);
+            Variable<double> f = Variable.Exp(x);
+            Variable.ConstrainEqualRandom(f, Gamma.FromNatural(0, -1));
+            InferenceEngine engine = new InferenceEngine();
+            var xPost = engine.Infer<Gaussian>(x, QueryTypes.MarginalDividedByPrior);
+            xPost.GetDerivatives(xPoint.ObservedValue, out double derivative, out _);
+            Assert.Equal(System.Math.Exp(xPoint.ObservedValue), derivative);
+        }
+
         /// <summary>
         /// A simplified exmaple of the popular TrueSkill model.
         /// The data describes a competition of series of two-player games.

@@ -931,7 +931,7 @@
   </message_op_class>
   <message_op_class name="DiscreteAreEqualOp">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.AreEqual(int, int)" /></description></item><item><description><see cref="EnumSupport.AreEqual{TEnum}(TEnum, TEnum)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Factor.AreEqual(int, int)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(bool, int, int)">
       <summary>Evidence message for EP.</summary>
@@ -1353,223 +1353,6 @@
       </returns>
       <remarks>
         <para>The outgoing message is the factor viewed as a function of <c>b</c> conditioned on the given values.</para>
-      </remarks>
-    </message_doc>
-  </message_op_class>
-  <message_op_class name="DiscreteEnumAreEqualOp{TEnum}">
-    <doc>
-      <summary>Provides outgoing messages for <see cref="EnumSupport.AreEqual{TEnum}(TEnum, TEnum)" />, given random arguments to the function.</summary>
-    </doc>
-    <message_doc name="AAverageConditional(Bernoulli, TEnum, DiscreteEnum{TEnum})">
-      <summary>EP message to <c>a</c>.</summary>
-      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(areEqual,b) p(areEqual,b) factor(areEqual,a,b)]/p(a)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="areEqual" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageConditional(bool, TEnum, DiscreteEnum{TEnum})">
-      <summary>EP message to <c>a</c>.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(b) p(b) factor(areEqual,a,b)]/p(a)</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(bool, TEnum, DiscreteEnum{TEnum})">
-      <summary>VMP message to <c>a</c>.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(areEqual,a,b)))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(Bernoulli, TEnum, DiscreteEnum{TEnum})">
-      <summary>VMP message to <c>a</c>.</summary>
-      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. Because the factor is deterministic, <c>areEqual</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(b) p(b) log(sum_areEqual p(areEqual) factor(areEqual,a,b)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="areEqual" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(Bernoulli, TEnum, DiscreteEnum{TEnum})">
-      <summary>EP message to <c>b</c>.</summary>
-      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(areEqual,a) p(areEqual,a) factor(areEqual,a,b)]/p(b)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="areEqual" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageConditional(bool, TEnum, DiscreteEnum{TEnum})">
-      <summary>EP message to <c>b</c>.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a) p(a) factor(areEqual,a,b)]/p(b)</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(Bernoulli, TEnum, DiscreteEnum{TEnum})">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>areEqual</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_areEqual p(areEqual) factor(areEqual,a,b)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="areEqual" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(bool, TEnum, DiscreteEnum{TEnum})">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. The formula is <c>exp(sum_(a) p(a) log(factor(areEqual,a,b)))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AreEqualAverageConditional(TEnum, DiscreteEnum{TEnum})">
-      <summary>EP message to <c>areEqual</c>.</summary>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>The outgoing EP message to the <c>areEqual</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[p(areEqual) sum_(a,b) p(a,b) factor(areEqual,a,b)]/p(areEqual)</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AreEqualAverageConditional(DiscreteEnum{TEnum}, TEnum)">
-      <summary>EP message to <c>areEqual</c>.</summary>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>The outgoing EP message to the <c>areEqual</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[p(areEqual) sum_(a,b) p(a,b) factor(areEqual,a,b)]/p(areEqual)</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AreEqualAverageLogarithm(TEnum, DiscreteEnum{TEnum})">
-      <summary>VMP message to <c>areEqual</c>.</summary>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>areEqual</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(areEqual,a,b)]</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AreEqualAverageLogarithm(DiscreteEnum{TEnum}, TEnum)">
-      <summary>VMP message to <c>areEqual</c>.</summary>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>areEqual</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(areEqual,a,b)]</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(Bernoulli, TEnum, TEnum)">
-      <summary>Evidence message for EP.</summary>
-      <param name="areEqual">Incoming message from <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(areEqual,a,b) p(areEqual,a,b) factor(areEqual,a,b))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(bool, TEnum, TEnum)">
-      <summary>Evidence message for EP.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(bool, TEnum, DiscreteEnum{TEnum})">
-      <summary>Evidence message for EP.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(bool, DiscreteEnum{TEnum}, TEnum)">
-      <summary>Evidence message for EP.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(bool, TEnum, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
-      <summary>Evidence message for EP.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <param name="to_B">Outgoing message to <c>B</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(bool, DiscreteEnum{TEnum}, TEnum, DiscreteEnum{TEnum})">
-      <summary>Evidence message for EP.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <param name="to_A">Outgoing message to <c>A</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(bool, TEnum, TEnum)">
-      <summary>Evidence message for EP.</summary>
-      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
   </message_op_class>
@@ -8786,6 +8569,323 @@
       </remarks>
     </message_doc>
   </message_op_class>
+  <message_op_class name="DiscreteEnumAreEqualOp{TEnum}">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="EnumSupport.AreEqual{TEnum}(TEnum, TEnum)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="AAverageConditional(Bernoulli, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(areEqual,b) p(areEqual,b) factor(areEqual,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="areEqual" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Bernoulli, TEnum, DiscreteEnum{TEnum})">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(areEqual,b) p(areEqual,b) factor(areEqual,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="areEqual" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(bool, TEnum, DiscreteEnum{TEnum})">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(b) p(b) factor(areEqual,a,b)]/p(a)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(Bernoulli, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. Because the factor is deterministic, <c>areEqual</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(b) p(b) log(sum_areEqual p(areEqual) factor(areEqual,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="areEqual" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(bool, TEnum, DiscreteEnum{TEnum})">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(areEqual,a,b)))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(Bernoulli, TEnum, DiscreteEnum{TEnum})">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. Because the factor is deterministic, <c>areEqual</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(b) p(b) log(sum_areEqual p(areEqual) factor(areEqual,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="areEqual" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Bernoulli, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(areEqual,a) p(areEqual,a) factor(areEqual,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="areEqual" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Bernoulli, TEnum, DiscreteEnum{TEnum})">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(areEqual,a) p(areEqual,a) factor(areEqual,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="areEqual" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(bool, TEnum, DiscreteEnum{TEnum})">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a) p(a) factor(areEqual,a,b)]/p(b)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(Bernoulli, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>areEqual</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_areEqual p(areEqual) factor(areEqual,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="areEqual" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(Bernoulli, TEnum, DiscreteEnum{TEnum})">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>areEqual</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_areEqual p(areEqual) factor(areEqual,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="areEqual" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(bool, TEnum, DiscreteEnum{TEnum})">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. The formula is <c>exp(sum_(a) p(a) log(factor(areEqual,a,b)))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AreEqualAverageConditional(DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
+      <summary>EP message to <c>areEqual</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>areEqual</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[p(areEqual) sum_(a,b) p(a,b) factor(areEqual,a,b)]/p(areEqual)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AreEqualAverageConditional(TEnum, DiscreteEnum{TEnum})">
+      <summary>EP message to <c>areEqual</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>areEqual</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[p(areEqual) sum_(a,b) p(a,b) factor(areEqual,a,b)]/p(areEqual)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AreEqualAverageConditional(DiscreteEnum{TEnum}, TEnum)">
+      <summary>EP message to <c>areEqual</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>areEqual</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[p(areEqual) sum_(a,b) p(a,b) factor(areEqual,a,b)]/p(areEqual)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AreEqualAverageLogarithm(DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
+      <summary>VMP message to <c>areEqual</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>areEqual</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(areEqual,a,b)]</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AreEqualAverageLogarithm(TEnum, DiscreteEnum{TEnum})">
+      <summary>VMP message to <c>areEqual</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>areEqual</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(areEqual,a,b)]</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AreEqualAverageLogarithm(DiscreteEnum{TEnum}, TEnum)">
+      <summary>VMP message to <c>areEqual</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>areEqual</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>areEqual</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(areEqual,a,b)]</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(Bernoulli, TEnum, TEnum)">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(areEqual,a,b) p(areEqual,a,b) factor(areEqual,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(bool, TEnum, TEnum)">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(bool, TEnum, DiscreteEnum{TEnum})">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(bool, DiscreteEnum{TEnum}, TEnum)">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(bool, DiscreteEnum{TEnum}, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="to_A">Outgoing message to <c>A</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(bool, TEnum, DiscreteEnum{TEnum}, DiscreteEnum{TEnum})">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="to_B">Outgoing message to <c>B</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(bool, DiscreteEnum{TEnum}, TEnum, DiscreteEnum{TEnum})">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <param name="to_A">Outgoing message to <c>A</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(bool, TEnum, TEnum)">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Constant value for <c>areEqual</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(Bernoulli)">
+      <summary>Evidence message for EP.</summary>
+      <param name="areEqual">Incoming message from <c>areEqual</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(areEqual) p(areEqual) factor(areEqual,a,b) / sum_areEqual p(areEqual) messageTo(areEqual))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AverageLogFactor()">
+      <summary>Evidence message for VMP.</summary>
+      <returns>Zero.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(areEqual,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
   <message_op_class name="ExpOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Exp(double)" />, given random arguments to the function.</summary>
@@ -10255,7 +10355,7 @@
   </message_op_class>
   <message_op_class name="GaussianProductOp">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.Product(double, double)" /></description></item><item><description><see cref="Factor.Ratio(double, double)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Factor.Product(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ProductAverageConditionalInit(Gaussian, Gaussian)">
       <summary />
@@ -10501,7 +10601,7 @@
   </message_op_class>
   <message_op_class name="GaussianProductOpBase">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.Product(double, double)" /></description></item><item><description><see cref="Factor.Ratio(double, double)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Factor.Product(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ProductAverageConditional(double, Gaussian)">
       <summary>EP message to <c>product</c>.</summary>
@@ -10621,7 +10721,7 @@
   </message_op_class>
   <message_op_class name="GaussianProductOp_Slow">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.Product(double, double)" /></description></item><item><description><see cref="Factor.Ratio(double, double)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Factor.Product(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ProductAverageConditional(Gaussian, Gaussian, Gaussian)">
       <summary>EP message to <c>product</c>.</summary>
@@ -10903,7 +11003,7 @@
   </message_op_class>
   <message_op_class name="GaussianProductOp_LaplaceProp">
     <doc>
-      <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Factor.Product(double, double)" /></description></item><item><description><see cref="Factor.Ratio(double, double)" /></description></item></list>, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Factor.Product(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="ProductAverageConditional(Gaussian, Gaussian)">
       <summary>EP message to <c>product</c>.</summary>
@@ -18881,6 +18981,44 @@
       </remarks>
     </message_doc>
   </message_op_class>
+  <message_op_class name="IntegralOp">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Integral(double, double, Func{double, double}, ITruncatableDistribution{double})" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="IntegralAverageConditional(Gaussian, Gaussian, Func{double, double}, ITruncatableDistribution{double})">
+      <summary>EP message to <c>integral</c>.</summary>
+      <param name="lowerBound">Incoming message from <c>lowerBound</c>.</param>
+      <param name="upperBound">Incoming message from <c>upperBound</c>.</param>
+      <param name="func">Constant value for <c>func</c>.</param>
+      <param name="distribution">Constant value for <c>distribution</c>.</param>
+      <returns>The outgoing EP message to the <c>integral</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>integral</c> as the random arguments are varied. The formula is <c>proj[p(integral) sum_(lowerBound,upperBound) p(lowerBound,upperBound) factor(integral,lowerBound,upperBound,func,distribution)]/p(integral)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LowerBoundAverageConditional(Gaussian, Gaussian, Func{double, double}, ITruncatableDistribution{double})">
+      <summary>EP message to <c>lowerBound</c>.</summary>
+      <param name="integral">Incoming message from <c>integral</c>.</param>
+      <param name="lowerBound">Incoming message from <c>lowerBound</c>.</param>
+      <param name="func">Constant value for <c>func</c>.</param>
+      <param name="distribution">Constant value for <c>distribution</c>.</param>
+      <returns>The outgoing EP message to the <c>lowerBound</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>lowerBound</c> as the random arguments are varied. The formula is <c>proj[p(lowerBound) sum_(integral) p(integral) factor(integral,lowerBound,upperBound,func,distribution)]/p(lowerBound)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="UpperBoundAverageConditional(Gaussian, Gaussian, Func{double, double}, ITruncatableDistribution{double})">
+      <summary>EP message to <c>upperBound</c>.</summary>
+      <param name="integral">Incoming message from <c>integral</c>.</param>
+      <param name="upperBound">Incoming message from <c>upperBound</c>.</param>
+      <param name="func">Constant value for <c>func</c>.</param>
+      <param name="distribution">Constant value for <c>distribution</c>.</param>
+      <returns>The outgoing EP message to the <c>upperBound</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>upperBound</c> as the random arguments are varied. The formula is <c>proj[p(upperBound) sum_(integral) p(integral) factor(integral,lowerBound,upperBound,func,distribution)]/p(upperBound)</c>.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
   <message_op_class name="IsBetweenGaussianOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.IsBetween(double, double, double)" />, given random arguments to the function.</summary>
@@ -20932,6 +21070,15 @@
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
         <para>The formula for the result is <c>log(sum_(d) p(d) factor(log,d))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="DAverageConditional(Gaussian, double)">
+      <summary>EP message to <c>d</c>.</summary>
+      <param name="log">Incoming message from <c>log</c>.</param>
+      <param name="d">Constant value for <c>d</c>.</param>
+      <returns>The outgoing EP message to the <c>d</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>d</c> as the random arguments are varied. The formula is <c>proj[p(d) sum_(log) p(log) factor(log,d)]/p(d)</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="DAverageConditional(Gaussian, Gamma, Gaussian)">
@@ -25598,184 +25745,163 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="RatioGaussianOp">
+  <message_op_class name="ProbBetweenOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Factor.Ratio(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Factor.ProbBetween{T}(CanGetProbLessThan{T}, T, T)" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="LogAverageFactor(Gaussian, Gaussian, double, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Incoming message from <c>ratio</c>.</param>
-      <param name="a">Incoming message from <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <param name="to_ratio">Outgoing message to <c>ratio</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+    <message_doc name="ProbBetweenAverageConditional(CanGetProbLessThan{double}, Gaussian, Gaussian)">
+      <summary>EP message to <c>probBetween</c>.</summary>
+      <param name="canGetProbLessThan">Incoming message from <c>canGetProbLessThan</c>.</param>
+      <param name="lowerBound">Incoming message from <c>lowerBound</c>.</param>
+      <param name="upperBound">Incoming message from <c>upperBound</c>.</param>
+      <returns>The outgoing EP message to the <c>probBetween</c> argument.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(ratio,a) p(ratio,a) factor(ratio,a,b))</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>probBetween</c> as the random arguments are varied. The formula is <c>proj[p(probBetween) sum_(canGetProbLessThan,lowerBound,upperBound) p(canGetProbLessThan,lowerBound,upperBound) factor(probBetween,canGetProbLessThan,lowerBound,upperBound)]/p(probBetween)</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor(Gaussian, double, Gaussian, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Incoming message from <c>ratio</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Incoming message from <c>b</c>.</param>
-      <param name="to_ratio">Outgoing message to <c>ratio</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+    <message_doc name="LowerBoundAverageConditional(Gaussian, CanGetProbLessThan{double}, Gaussian)">
+      <summary>EP message to <c>lowerBound</c>.</summary>
+      <param name="probBetween">Incoming message from <c>probBetween</c>.</param>
+      <param name="canGetProbLessThan">Incoming message from <c>canGetProbLessThan</c>.</param>
+      <param name="lowerBound">Incoming message from <c>lowerBound</c>.</param>
+      <returns>The outgoing EP message to the <c>lowerBound</c> argument.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(ratio,b) p(ratio,b) factor(ratio,a,b))</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>lowerBound</c> as the random arguments are varied. The formula is <c>proj[p(lowerBound) sum_(probBetween,canGetProbLessThan) p(probBetween,canGetProbLessThan) factor(probBetween,canGetProbLessThan,lowerBound,upperBound)]/p(lowerBound)</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor(double, Gaussian, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Constant value for <c>ratio</c>.</param>
-      <param name="a">Incoming message from <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+    <message_doc name="UpperBoundAverageConditional(Gaussian, CanGetProbLessThan{double}, Gaussian)">
+      <summary>EP message to <c>upperBound</c>.</summary>
+      <param name="probBetween">Incoming message from <c>probBetween</c>.</param>
+      <param name="canGetProbLessThan">Incoming message from <c>canGetProbLessThan</c>.</param>
+      <param name="upperBound">Incoming message from <c>upperBound</c>.</param>
+      <returns>The outgoing EP message to the <c>upperBound</c> argument.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(a) p(a) factor(ratio,a,b))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(double, double, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Constant value for <c>ratio</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Incoming message from <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(b) p(b) factor(ratio,a,b))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(double, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Constant value for <c>ratio</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(factor(ratio,a,b))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(double, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Constant value for <c>ratio</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(factor(ratio,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogAverageFactor(Gaussian, double, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Incoming message from <c>ratio</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(ratio) p(ratio) factor(ratio,a,b))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(Gaussian, Gaussian, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Incoming message from <c>ratio</c>.</param>
-      <param name="a">Incoming message from <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(ratio,a) p(ratio,a) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(Gaussian, double, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Incoming message from <c>ratio</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Incoming message from <c>b</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(ratio,b) p(ratio,b) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(double, Gaussian, double)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Constant value for <c>ratio</c>.</param>
-      <param name="a">Incoming message from <c>a</c>.</param>
-      <param name="b">Constant value for <c>b</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(a) p(a) factor(ratio,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="LogEvidenceRatio(double, double, Gaussian)">
-      <summary>Evidence message for EP.</summary>
-      <param name="ratio">Constant value for <c>ratio</c>.</param>
-      <param name="a">Constant value for <c>a</c>.</param>
-      <param name="b">Incoming message from <c>b</c>.</param>
-      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
-      <remarks>
-        <para>The formula for the result is <c>log(sum_(b) p(b) factor(ratio,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>upperBound</c> as the random arguments are varied. The formula is <c>proj[p(upperBound) sum_(probBetween,canGetProbLessThan) p(probBetween,canGetProbLessThan) factor(probBetween,canGetProbLessThan,lowerBound,upperBound)]/p(upperBound)</c>.</para>
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="RatioGaussianVmpOp">
+  <message_op_class name="ProductExpOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Factor.Ratio(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Factor.ProductExp(double, double)" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="AverageLogFactor(Gaussian)">
-      <summary>Evidence message for VMP.</summary>
-      <param name="ratio">Incoming message from <c>ratio</c>.</param>
-      <returns>Zero.</returns>
-      <remarks>
-        <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="RatioAverageLogarithm(Gaussian)">
-      <summary>VMP message to <c>ratio</c>.</summary>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>ratio</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[sum_(b) p(b) factor(ratio,a,b)]</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="RatioAverageLogarithm(Gaussian, double)">
-      <summary>VMP message to <c>ratio</c>.</summary>
+    <message_doc name="ProductExpAverageLogarithm(Gaussian, Gaussian)">
+      <summary>VMP message to <c>productExp</c>.</summary>
       <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="B">Constant value for <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>ratio</c> argument.</returns>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>productExp</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[sum_(a) p(a) factor(ratio,a,b)]</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>productExp</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(productExp,a,b)]</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="A" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="AAverageLogarithm(Gaussian)">
-      <summary>VMP message to <c>a</c>.</summary>
-      <param name="B">Incoming message from <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+    <message_doc name="ProductExpAverageLogarithm(double, Gaussian)">
+      <summary>VMP message to <c>productExp</c>.</summary>
+      <param name="A">Constant value for <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>productExp</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(ratio,a,b)))</c>.</para>
-      </remarks>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(Gaussian, double)">
-      <summary>VMP message to <c>a</c>.</summary>
-      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="B">Constant value for <c>b</c>.</param>
-      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>a</c> with <c>ratio</c> integrated out. The formula is <c>sum_ratio p(ratio) factor(ratio,a,b)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>productExp</c> as the random arguments are varied. The formula is <c>proj[sum_(b) p(b) factor(productExp,a,b)]</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
-        <paramref name="ratio" /> is not a proper distribution.</exception>
+        <paramref name="B" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="AAverageLogarithm(double, double)">
+    <message_doc name="AAverageLogarithm(Gaussian, Gaussian)">
       <summary>VMP message to <c>a</c>.</summary>
-      <param name="ratio">Constant value for <c>ratio</c>.</param>
-      <param name="B">Constant value for <c>b</c>.</param>
+      <param name="ProductExp">Incoming message from <c>productExp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>a</c> conditioned on the given values.</para>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. Because the factor is deterministic, <c>productExp</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(b) p(b) log(sum_productExp p(productExp) factor(productExp,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ProductExp" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageLogarithm(double, Gaussian)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="ProductExp">Constant value for <c>productExp</c>.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(productExp,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(Gaussian, Gaussian, Gaussian, NonconjugateGaussian, NonconjugateGaussian)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="ProductExp">Incoming message from <c>productExp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_B">Previous outgoing message to <c>B</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>productExp</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_productExp p(productExp) factor(productExp,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ProductExp" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="A" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(Gaussian, Gaussian, Gaussian, Gaussian)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="ProductExp">Incoming message from <c>productExp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>productExp</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_productExp p(productExp) factor(productExp,a,b)))</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ProductExp" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="A" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(double, Gaussian)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="ProductExp">Constant value for <c>productExp</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. The formula is <c>exp(sum_(a) p(a) log(factor(productExp,a,b)))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="BAverageLogarithm()">
+    <message_doc name="BAverageLogarithm(Gaussian, double, Gaussian, NonconjugateGaussian, NonconjugateGaussian)">
       <summary>VMP message to <c>b</c>.</summary>
+      <param name="ProductExp">Incoming message from <c>productExp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Constant value for <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="to_B">Previous outgoing message to <c>B</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>b</c> with <c>productExp</c> integrated out. The formula is <c>sum_productExp p(productExp) factor(productExp,a,b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ProductExp" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageLogarithm(double, double)">
+      <summary>VMP message to <c>b</c>.</summary>
+      <param name="ProductExp">Constant value for <c>productExp</c>.</param>
+      <param name="A">Constant value for <c>a</c>.</param>
       <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
       <remarks>
         <para>The outgoing message is the factor viewed as a function of <c>b</c> conditioned on the given values.</para>
@@ -26173,128 +26299,235 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="ProductExpOp">
+  <message_op_class name="RatioGaussianOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Factor.ProductExp(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="Factor.Ratio(double, double)" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="ProductExpAverageLogarithm(Gaussian, Gaussian)">
-      <summary>VMP message to <c>productExp</c>.</summary>
-      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>productExp</c> argument.</returns>
+    <message_doc name="RatioAverageConditional(Gaussian, double)">
+      <summary>EP message to <c>ratio</c>.</summary>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>productExp</c> as the random arguments are varied. The formula is <c>proj[sum_(a,b) p(a,b) factor(productExp,a,b)]</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a) p(a) factor(ratio,a,b)]/p(ratio)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="RatioAverageConditional(Gaussian, Gaussian, Gaussian)">
+      <summary>EP message to <c>ratio</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a,b) p(a,b) factor(ratio,a,b)]/p(ratio)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gaussian, Gaussian, Gaussian)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(ratio,b) p(ratio,b) factor(ratio,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gaussian, Gaussian, Gaussian)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(ratio,a) p(ratio,a) factor(ratio,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogAverageFactor(Gaussian, Gaussian, double, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <param name="to_ratio">Outgoing message to <c>ratio</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,a) p(ratio,a) factor(ratio,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(Gaussian, double, Gaussian, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <param name="to_ratio">Outgoing message to <c>ratio</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,b) p(ratio,b) factor(ratio,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, Gaussian, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Constant value for <c>ratio</c>.</param>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a) p(a) factor(ratio,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, double, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Constant value for <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(b) p(b) factor(ratio,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(double, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Constant value for <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(ratio,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Constant value for <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(factor(ratio,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogAverageFactor(Gaussian, double, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio) p(ratio) factor(ratio,a,b))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(Gaussian, Gaussian, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,a) p(ratio,a) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(Gaussian, double, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,b) p(ratio,b) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, Gaussian, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Constant value for <c>ratio</c>.</param>
+      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(a) p(a) factor(ratio,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, double, Gaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Constant value for <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(b) p(b) factor(ratio,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="RatioGaussianVmpOp">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Ratio(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="AverageLogFactor(Gaussian)">
+      <summary>Evidence message for VMP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <returns>Zero.</returns>
+      <remarks>
+        <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="RatioAverageLogarithm(Gaussian)">
+      <summary>VMP message to <c>ratio</c>.</summary>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[sum_(b) p(b) factor(ratio,a,b)]</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="RatioAverageLogarithm(Gaussian, double)">
+      <summary>VMP message to <c>ratio</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[sum_(a) p(a) factor(ratio,a,b)]</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="A" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="B" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ProductExpAverageLogarithm(double, Gaussian)">
-      <summary>VMP message to <c>productExp</c>.</summary>
-      <param name="A">Constant value for <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <returns>The outgoing VMP message to the <c>productExp</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>productExp</c> as the random arguments are varied. The formula is <c>proj[sum_(b) p(b) factor(productExp,a,b)]</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="B" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="AAverageLogarithm(Gaussian, Gaussian)">
+    <message_doc name="AAverageLogarithm(Gaussian)">
       <summary>VMP message to <c>a</c>.</summary>
-      <param name="ProductExp">Incoming message from <c>productExp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
       <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. Because the factor is deterministic, <c>productExp</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(b) p(b) log(sum_productExp p(productExp) factor(productExp,a,b)))</c>.</para>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(ratio,a,b)))</c>.</para>
       </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="ProductExp" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="B" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="AAverageLogarithm(double, Gaussian)">
+    <message_doc name="AAverageLogarithm(Gaussian, double)">
       <summary>VMP message to <c>a</c>.</summary>
-      <param name="ProductExp">Constant value for <c>productExp</c>.</param>
-      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Constant value for <c>b</c>.</param>
       <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>a</c>. The formula is <c>exp(sum_(b) p(b) log(factor(productExp,a,b)))</c>.</para>
+        <para>The outgoing message is the factor viewed as a function of <c>a</c> with <c>ratio</c> integrated out. The formula is <c>sum_ratio p(ratio) factor(ratio,a,b)</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
-        <paramref name="B" /> is not a proper distribution.</exception>
+        <paramref name="ratio" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="BAverageLogarithm(Gaussian, Gaussian, Gaussian, NonconjugateGaussian, NonconjugateGaussian)">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="ProductExp">Incoming message from <c>productExp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="to_B">Previous outgoing message to <c>B</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
+    <message_doc name="AAverageLogarithm(double, double)">
+      <summary>VMP message to <c>a</c>.</summary>
+      <param name="ratio">Constant value for <c>ratio</c>.</param>
+      <param name="B">Constant value for <c>b</c>.</param>
+      <returns>The outgoing VMP message to the <c>a</c> argument.</returns>
       <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>productExp</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_productExp p(productExp) factor(productExp,a,b)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="ProductExp" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="A" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="B" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(Gaussian, Gaussian, Gaussian, Gaussian)">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="ProductExp">Incoming message from <c>productExp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. Because the factor is deterministic, <c>productExp</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(a) p(a) log(sum_productExp p(productExp) factor(productExp,a,b)))</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="ProductExp" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="A" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="B" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(double, Gaussian)">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="ProductExp">Constant value for <c>productExp</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
-      <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
-      <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>b</c>. The formula is <c>exp(sum_(a) p(a) log(factor(productExp,a,b)))</c>.</para>
+        <para>The outgoing message is the factor viewed as a function of <c>a</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
-    <message_doc name="BAverageLogarithm(Gaussian, double, Gaussian, NonconjugateGaussian, NonconjugateGaussian)">
+    <message_doc name="BAverageLogarithm()">
       <summary>VMP message to <c>b</c>.</summary>
-      <param name="ProductExp">Incoming message from <c>productExp</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="A">Constant value for <c>a</c>.</param>
-      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
-      <param name="to_B">Previous outgoing message to <c>B</c>.</param>
-      <param name="result">Modified to contain the outgoing message.</param>
-      <returns>
-        <paramref name="result" />
-      </returns>
-      <remarks>
-        <para>The outgoing message is the factor viewed as a function of <c>b</c> with <c>productExp</c> integrated out. The formula is <c>sum_productExp p(productExp) factor(productExp,a,b)</c>.</para>
-      </remarks>
-      <exception cref="ImproperMessageException">
-        <paramref name="ProductExp" /> is not a proper distribution.</exception>
-      <exception cref="ImproperMessageException">
-        <paramref name="B" /> is not a proper distribution.</exception>
-    </message_doc>
-    <message_doc name="BAverageLogarithm(double, double)">
-      <summary>VMP message to <c>b</c>.</summary>
-      <param name="ProductExp">Constant value for <c>productExp</c>.</param>
-      <param name="A">Constant value for <c>a</c>.</param>
       <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
       <remarks>
         <para>The outgoing message is the factor viewed as a function of <c>b</c> conditioned on the given values.</para>
@@ -26608,6 +26841,30 @@
       </returns>
       <remarks>
         <para>The outgoing message is the factor viewed as a function of <c>a</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="QuantileOp">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Quantile(CanGetQuantile{double}, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="QuantileAverageConditional(CanGetQuantile{double}, Gaussian)">
+      <summary>EP message to <c>quantile</c>.</summary>
+      <param name="canGetQuantile">Constant value for <c>canGetQuantile</c>.</param>
+      <param name="probability">Incoming message from <c>probability</c>.</param>
+      <returns>The outgoing EP message to the <c>quantile</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>quantile</c> as the random arguments are varied. The formula is <c>proj[p(quantile) sum_(probability) p(probability) factor(quantile,canGetQuantile,probability)]/p(quantile)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ProbabilityAverageConditional(Gaussian, CanGetQuantile{double}, Gaussian)">
+      <summary>EP message to <c>probability</c>.</summary>
+      <param name="quantile">Incoming message from <c>quantile</c>.</param>
+      <param name="canGetQuantile">Constant value for <c>canGetQuantile</c>.</param>
+      <param name="probability">Incoming message from <c>probability</c>.</param>
+      <returns>The outgoing EP message to the <c>probability</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>probability</c> as the random arguments are varied. The formula is <c>proj[p(probability) sum_(quantile) p(quantile) factor(quantile,canGetQuantile,probability)]/p(probability)</c>.</para>
       </remarks>
     </message_doc>
   </message_op_class>

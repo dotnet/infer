@@ -657,6 +657,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return backward;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Slow"]/message_doc[@name="DAverageConditional(Gamma, double)"]/*'/>
         public static Gaussian DAverageConditional([SkipIfUniform] Gamma exp, double d)
         {
             double expx = Math.Exp(d);
@@ -668,6 +669,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.FromDerivatives(d, dlogf, ddlogf, true);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Slow"]/message_doc[@name="DAverageConditional(Gamma, Gaussian)"]/*'/>
         public static Gaussian DAverageConditional([SkipIfUniform] Gamma exp, [Proper] Gaussian d)
         {
             // as a function of d, the factor is Ga(exp(d); shape, rate) = exp(d*(shape-1) -rate*exp(d))
@@ -675,6 +677,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return Gaussian.Uniform();
             if (exp.IsPointMass)
                 return ExpOp.DAverageConditional(exp.Point);
+            if (d.IsPointMass)
+            {
+                return DAverageConditional(exp, d.Point);
+            }
             if (exp.Rate < 0)
                 throw new ImproperMessageException(exp);
             if (exp.Rate == 0)
@@ -693,10 +699,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // var(d) = var(u) = trigamma(a-1)
                 double lnRate = Math.Log(exp.Rate);
                 return new Gaussian(MMath.Digamma(exp.Shape - 1) - lnRate, MMath.Trigamma(exp.Shape - 1));
-            }
-            if (d.IsPointMass)
-            {
-                return DAverageConditional(exp, d.Point);
             }
             GetIntegrationBounds(exp, d, out double dmode, out double dminMinusMode, out double dmaxMinusMode);
             if (dminMinusMode == dmaxMinusMode) return DAverageConditional(exp, d.Point);

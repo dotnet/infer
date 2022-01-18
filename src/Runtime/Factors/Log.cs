@@ -67,9 +67,24 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogAverageFactor(log, d);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="LogOp_EP"]/message_doc[@name="DAverageConditional(Gaussian, double)"]/*'/>
+        public static Gamma DAverageConditional(Gaussian log, double d)
+        {
+            // Factor is N(log(d); m, v) = exp(m/v*log(d) - 0.5/v*log(d)^2)
+            double logd = Math.Log(d);
+            double dlogp = (log.MeanTimesPrecision - log.Precision * logd) / d;
+            double ddlogp = (-log.Precision / d - dlogp) / d;
+            return Gamma.FromDerivatives(d, dlogp, ddlogp, false);
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="LogOp_EP"]/message_doc[@name="DAverageConditional(Gaussian, Gamma, Gaussian)"]/*'/>
         public static Gamma DAverageConditional([Proper] Gaussian log, Gamma d, Gaussian to_log)
         {
+            // Factor is N(log(d); m, v)
+            if (d.IsPointMass)
+            {
+                return DAverageConditional(log, d.Point);
+            }
             var g = Gamma.FromShapeAndRate(d.Shape + 1, d.Rate);
             return ExpOp.ExpAverageConditional(g, log, to_log);
         }

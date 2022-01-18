@@ -433,10 +433,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                // This method is most efficient since it involves a single division, but less accurate.
-                double result = (MeanTimesPrecision - 0.5 * x * Precision) * x;
-                result -= GetLogNormalizer();
-                return result;
+                return (MeanTimesPrecision - 0.5 * x * Precision) * x;
             }
         }
 

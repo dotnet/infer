@@ -43,11 +43,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void IntegralTest()
         {
             Gaussian dist = new Gaussian(0, 1);
-            var lowerBound = Variable.GaussianFromMeanAndVariance(0.1, 0.0);
+            double lowerBoundPoint = 0.1;
+            var lowerBound = Variable.GaussianFromMeanAndVariance(lowerBoundPoint, 0.0);
             lowerBound.Name = nameof(lowerBound);
             lowerBound.AddAttribute(QueryTypes.Marginal);
             lowerBound.AddAttribute(QueryTypes.MarginalDividedByPrior);
-            var upperBound = Variable.GaussianFromMeanAndVariance(0.5, 0.0);
+            double upperBoundPoint = 0.5;
+            var upperBound = Variable.GaussianFromMeanAndVariance(upperBoundPoint, 0.0);
             upperBound.Name = nameof(upperBound);
             upperBound.AddAttribute(QueryTypes.Marginal);
             upperBound.AddAttribute(QueryTypes.MarginalDividedByPrior);
@@ -58,24 +60,24 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             var actual = engine.Infer(integral);
             Console.WriteLine(actual);
-            var leftMsg = engine.Infer(lowerBound, QueryTypes.MarginalDividedByPrior);
-            Console.WriteLine(leftMsg);
-            var rightMsg = engine.Infer(upperBound, QueryTypes.MarginalDividedByPrior);
-            Console.WriteLine(rightMsg);
+            var lowerMsg = engine.Infer<Gaussian>(lowerBound, QueryTypes.MarginalDividedByPrior);
+            lowerMsg.GetDerivatives(lowerBoundPoint, out double lowerBoundDerivative, out _);
+            var upperMsg = engine.Infer<Gaussian>(upperBound, QueryTypes.MarginalDividedByPrior);
+            upperMsg.GetDerivatives(upperBoundPoint, out double upperBoundDerivative, out _);
 
-            lowerBound.ObservedValue = engine.Infer<Gaussian>(lowerBound).Point;
-            upperBound.ObservedValue = engine.Infer<Gaussian>(upperBound).Point;
+            lowerBound.ObservedValue = lowerBoundPoint;
+            upperBound.ObservedValue = upperBoundPoint;
             double f = engine.Infer<Gaussian>(integral).GetMean();
             double delta = 1e-4;
-            double leftOld = lowerBound.ObservedValue;
             lowerBound.ObservedValue += delta;
             double fdl = engine.Infer<Gaussian>(integral).GetMean();
-            lowerBound.ObservedValue = leftOld;
+            lowerBound.ObservedValue = lowerBoundPoint;
             upperBound.ObservedValue += delta;
             double fdr = engine.Infer<Gaussian>(integral).GetMean();
-            double leftMsgExpected = (fdl - f) / delta;
-            double rightMsgExpected = (fdr - f) / delta;
-            Console.WriteLine($"leftMsgExpected = {leftMsgExpected} rightMsgExpected = {rightMsgExpected}");
+            double lowerBoundDerivativeExpected = (fdl - f) / delta;
+            double upperBoundDerivativeExpected = (fdr - f) / delta;
+            Assert.Equal(lowerBoundDerivativeExpected, lowerBoundDerivative, 5 * delta);
+            Assert.Equal(upperBoundDerivativeExpected, upperBoundDerivative, 5 * delta);
         }
 
         public static double Predictability(double skillDifference)
@@ -108,40 +110,34 @@ namespace Microsoft.ML.Probabilistic.Tests
             abs.Name = nameof(abs);
             var noisy = Variable.GaussianFromMeanAndPrecision(abs / MMath.Sqrt2, 1);
             Variable.ConstrainPositive(noisy);
-            ScaleLikelihood(100);
+            IncrementLogLikelihood(System.Math.Log(100));
             evBlock.CloseBlock();
 
             InferenceEngine engine = new InferenceEngine();
             var ev = engine.Infer<Bernoulli>(evidence).LogOdds;
             var lowerMsg = engine.Infer<Gaussian>(lowerBound, QueryTypes.MarginalDividedByPrior);
-            lowerMsg.GetDerivatives(lowerPoint.ObservedValue, out double derivOfLogLikelihood, out double _);
+            lowerMsg.GetDerivatives(lowerPoint.ObservedValue, out double lowerBoundDerivative, out _);
             double likelihood = System.Math.Exp(ev);
-            Console.WriteLine($"likelihood = {likelihood}");
-            var derivOfLikelihood = derivOfLogLikelihood * likelihood;
-            Console.WriteLine(derivOfLikelihood);
 
             var upperMsg = engine.Infer<Gaussian>(upperBound, QueryTypes.MarginalDividedByPrior);
-            upperMsg.GetDerivatives(upperPoint.ObservedValue, out double derivOfLogLikelihood2, out double _);
-            var derivOfLikelihood2 = derivOfLogLikelihood2 * likelihood;
-            Console.WriteLine(derivOfLikelihood2);
+            upperMsg.GetDerivatives(upperPoint.ObservedValue, out double upperBoundDerivative, out double _);
 
-            double f = System.Math.Exp(engine.Infer<Bernoulli>(evidence).LogOdds);
+            double f = engine.Infer<Bernoulli>(evidence).LogOdds;
             double delta = 1e-4;
             double lowerOld = lowerPoint.ObservedValue;
             lowerPoint.ObservedValue += delta;
-            double fdl = System.Math.Exp(engine.Infer<Bernoulli>(evidence).LogOdds);
+            double fdl = engine.Infer<Bernoulli>(evidence).LogOdds;
             lowerPoint.ObservedValue = lowerOld;
             upperPoint.ObservedValue += delta;
-            double fdr = System.Math.Exp(engine.Infer<Bernoulli>(evidence).LogOdds);
-            double lowerMsgExpected = (fdl - f) / delta;
-            double upperMsgExpected = (fdr - f) / delta;
-            Console.WriteLine($"lowerMsgExpected = {lowerMsgExpected} upperMsgExpected = {upperMsgExpected}");
+            double fdr = engine.Infer<Bernoulli>(evidence).LogOdds;
+            double lowerBoundDerivativeExpected = (fdl - f) / delta;
+            double upperBoundDerivativeExpected = (fdr - f) / delta;
+            Assert.Equal(lowerBoundDerivativeExpected, lowerBoundDerivative, 5 * delta);
+            Assert.Equal(upperBoundDerivativeExpected, upperBoundDerivative, 5 * delta);
 
-            void ScaleLikelihood(double scale)
+            void IncrementLogLikelihood(double increment)
             {
-                var zero = Variable.Constant(0.0);
-                var variance = System.Math.Pow(1.0 / scale, 2.0) / System.Math.PI / 2;
-                Variable.ConstrainEqualRandom(zero, new Gaussian(0, variance));
+                Variable.ConstrainEqualRandom(Variable.Constant(increment), Gaussian.FromNatural(1, 0));
             }
         }
 
@@ -164,7 +160,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ProbBetweenTest()
         {
             Gaussian dist = new Gaussian(0, 1);
-            var dp = Variable.GaussianFromMeanAndVariance(0.1, 0.0);
+            double dpPoint = 0.1;
+            var dp = Variable.GaussianFromMeanAndVariance(dpPoint, 0.0);
             dp.Name = nameof(dp);
             dp.AddAttribute(QueryTypes.MarginalDividedByPrior);
             var left = Variable<double>.Factor(Factor.Quantile, (CanGetQuantile<double>)dist, 0.5 - dp);
@@ -183,12 +180,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             var actual = engine.Infer(waitTime);
             Console.WriteLine(actual);
-            var leftMsg = engine.Infer(left, QueryTypes.MarginalDividedByPrior);
-            Console.WriteLine(leftMsg);
-            var rightMsg = engine.Infer(right, QueryTypes.MarginalDividedByPrior);
-            Console.WriteLine(rightMsg);
-            var dpMsg = engine.Infer(dp, QueryTypes.MarginalDividedByPrior);
-            Console.WriteLine(dpMsg);
+            var dpMsg = engine.Infer<Gaussian>(dp, QueryTypes.MarginalDividedByPrior);
+            dpMsg.GetDerivatives(dpPoint, out double dpDerivative, out _);
 
             if (false)
             {
@@ -208,13 +201,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             else
             {
-                dp.ObservedValue = 0.1;
+                dp.ObservedValue = dpPoint;
                 double f = engine.Infer<Gaussian>(waitTime).GetMean();
                 double delta = 1e-4;
                 dp.ObservedValue += delta;
                 double fd = engine.Infer<Gaussian>(waitTime).GetMean();
-                double dpMsgExpected = (fd - f) / delta;
-                Console.WriteLine($"dpMsgExpected = {dpMsgExpected}");
+                double dpDerivativeExpected = (fd - f) / delta;
+                Assert.Equal(dpDerivativeExpected, dpDerivative, 11 * delta * System.Math.Abs(dpDerivativeExpected));
             }
         }
 
