@@ -7,10 +7,23 @@ layout: default
 
 Sometimes it is convenient to specify parts of the model directly in terms of their log density instead of writing a sampler.  This can be done using `Variable.ConstrainEqualRandom`.  
 When you write `Variable.ConstrainEqualRandom(x, dist)`, you are incrementing the log density by `dist.GetLogProb(x)`.  
-If you just want to increment the log density by `x`, use `Variable.ConstrainEqualRandom(x, Gaussian.FromNatural(1,0))` or `Variable.ConstrainEqualRandom(x, Gamma.FromNatural(0,-1))` as appropriate.
-
-For example, `Variable.ConstrainEqualRandom(x, new Gaussian(0, 1))` increments the log-density by `(new Gaussian(0,1)).GetLogProb(x)` which is equal to `-0.5*x*x - MMath.LnSqrt2PI`.  This is equivalent to the following:
-
+If you just want to increment the log density by `x`, use
+```csharp
+/// Increments the log density by x
+Variable.ConstrainEqualRandom(x, Gaussian.FromNatural(1,0));
+```
+or 
+```csharp
+/// Increments the log density by x
+Variable.ConstrainEqualRandom(x, Gamma.FromNatural(0,-1));
+```
+as appropriate.
+For example:
+```csharp
+/// Increments the log-density by -0.5*x*x - MMath.LnSqrt2PI
+Variable.ConstrainEqualRandom(x, new Gaussian(0, 1))
+```
+increments the log-density by `(new Gaussian(0,1)).GetLogProb(x)` which is equal to `-0.5*x*x - MMath.LnSqrt2PI`.  This is equivalent to:
 ```csharp
 Variable<double> y = Variable.GaussianFromMeanAndVariance(x, 1);
 y.ObservedValue = 0;
