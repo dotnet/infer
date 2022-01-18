@@ -5,7 +5,7 @@ layout: default
 
 ## Computing model evidence for model selection
 
-The central quantity in [Bayesian model selection](http://alumni.media.mit.edu/~tpminka/statlearn/demo/) is the probability of the data with all parameters integrated out, also known as the model evidence. Infer.NET can compute model evidence as a special case of mixture modelling. Esssentially you create a mixture of your model with an empty model, and the learned mixing weight is then the model evidence. The following example illustrates:
+The central quantity in [Bayesian model selection](http://alumni.media.mit.edu/~tpminka/statlearn/demo/) is the probability of the data with all parameters integrated out, also known as the model evidence. Infer.NET can compute model evidence as a special case of mixture modelling. Essentially you create a mixture of your model with an empty model, and the learned mixing weight is then the model evidence. The following example illustrates:
 
 ```csharp
 Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");  

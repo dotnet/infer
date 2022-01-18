@@ -33,6 +33,7 @@ layout: default
             *   [The importance of using SetTo](The importance of using SetTo.md)
         *   [Repeat blocks](Repeat blocks.md)
         *   [Computing model evidence for model selection](Computing model evidence for model selection.md)
+        *   [Increment log density](Increment log density.md)
 
     *   [Factors and constraints](Factors and Constraints.md)
         *   [Boolean factors](Bool factors.md)
@@ -76,6 +77,7 @@ layout: default
         *   [Using shared variables to support hybrid algorithms](Shared variable hybrid.md)
     *   [Online learning](Online learning.md)
     *   [Distributed inference](Distributed inference.md)
+    *   [Computing derivatives of functions](Computing derivatives of functions.md)
 
 *   **Extending Infer.NET**
 

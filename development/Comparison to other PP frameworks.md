@@ -21,7 +21,7 @@ layout: default
 | **Mixture models**                         | Yes                       | Awkward | Yes | | |		
 | **Repeat blocks / raising model to power** | Yes                       | No | No | | |		
 | **Arrays of arrays (jagged arrays)**       | Yes                       | No | No | | |		
-| **Increment log density**                  | No                        | Yes | Yes | | |		
+| **Increment log density**                  | Yes                       | Yes | Yes | | |		
 | **Turing complete**                        | No                        | No | Yes? | | |		
 | **Model evidence computation**             | Yes                       | No |	No | | |		
 | **Non-parametric models**                  | GP only                   | No | No | | |		
