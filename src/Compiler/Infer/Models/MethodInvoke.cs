@@ -156,6 +156,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns></returns>
         internal bool CanBeInlined()
         {
+            // TODO: Check for IsIncreasing
             if (op == null) return false;
             bool hasLoopIndex = false;
             for (int i = 0; i < args.Count; i++)

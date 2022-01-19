@@ -197,13 +197,20 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(0 <= NormalCdfIntegral(213393529.2046706974506378173828125, -213393529.2046706974506378173828125, -1, 0.72893668811495072384656764856902984306419313043079455383121967315673828125e-9).Mantissa);
             Assert.True(0 < NormalCdfIntegral(-0.421468532207607216033551367218024097383022308349609375, 0.42146843802130329326161017888807691633701324462890625, -0.99999999999999989, 0.62292398855983019004972723654291189010479001808562316000461578369140625e-8).Mantissa);
 
+            // Checking all cases takes a long time.
+            const int limit = 2_000_000;
+            int count = 0;
             Parallel.ForEach(OperatorTests.Doubles(), x =>
             {
+                if (count > limit) return;
                 foreach (var y in OperatorTests.Doubles())
                 {
+                    if (count > limit) break;
                     foreach (var r in OperatorTests.Doubles().Where(d => d >= -1 && d <= 1))
                     {
+                        if (count > limit) break;
                         MMath.NormalCdfIntegral(x, y, r);
+                        Interlocked.Add(ref count, 1);
                     }
                 }
             });

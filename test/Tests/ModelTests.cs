@@ -334,6 +334,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             });
         }
 
+        /// <summary>
+        /// Tests that a constant that was previously not inferred can be inferred.
+        /// </summary>
         [Fact]
         public void RandomPointMassTest()
         {
@@ -341,7 +344,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             var x = Variable.GaussianFromMeanAndVariance(v, 1).Named("x");
             Variable.ConstrainPositive(x);
             var engine = new InferenceEngine();
+            // Must not use OptimiseForVariables
             //engine.OptimiseForVariables = new List<IVariable>() { x, v };
+            // Must infer x before v
             Console.WriteLine(engine.Infer(x));
             Console.WriteLine(engine.Infer(v));
         }

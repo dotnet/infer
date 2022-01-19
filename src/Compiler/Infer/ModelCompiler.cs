@@ -880,6 +880,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             tc.AddTransform(new ExternalVariablesTransform());
             tc.AddTransform(new IntermediateVariableTransform());
             tc.AddTransform(new ModelAnalysisTransform());
+            tc.AddTransform(new ConstantFoldingTransform());
             tc.AddTransform(new ArrayAnalysisTransform());
             tc.AddTransform(new EqualityPropagationTransform());
             tc.AddTransform(new StocAnalysisTransform(true));

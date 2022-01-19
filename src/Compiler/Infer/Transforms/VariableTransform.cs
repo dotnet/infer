@@ -97,11 +97,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(target);
             if (ivd == null)
                 return;
-            if (rhs is IArrayCreateExpression)
+            if (rhs is IArrayCreateExpression iace)
             {
-                IArrayCreateExpression iace = (IArrayCreateExpression)rhs;
                 bool zeroLength = iace.Dimensions.All(dimExpr =>
-                    (dimExpr is ILiteralExpression) && ((ILiteralExpression)dimExpr).Value.Equals(0));
+                    (dimExpr is ILiteralExpression ile) && ile.Value.Equals(0));
                 if (!zeroLength && iace.Initializer == null)
                     return; // variable will have assignments to elements
             }
@@ -111,6 +110,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             bool isStochastic = CodeRecognizer.IsStochastic(context, ivd);
             if (!isStochastic) return;
             VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
+            bool hasMarginalPrototype = vi.marginalPrototypeExpression != null;
+            hasMarginalPrototype = true;
+            if (!hasMarginalPrototype) return;
             Containers defContainers = context.InputAttributes.Get<Containers>(ivd);
             int ancIndex = defContainers.GetMatchingAncestorIndex(context);
             Containers missing = defContainers.GetContainersNotInContext(context, ancIndex);
@@ -119,7 +121,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (lhs is IVariableDeclarationExpression)
                 lhs = Builder.VarRefExpr(ivd);
             IExpression defExpr = lhs;
-            if (firstTime && isStochastic)
+            if (firstTime && hasMarginalPrototype)
             {
                 // Create a ChannelInfo attribute for use by later transforms, e.g. MessageTransform
                 ChannelInfo defChannel = ChannelInfo.DefChannel(vi);
@@ -131,7 +133,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             Algorithm algAttr = context.InputAttributes.Get<Algorithm>(ivd);
             if (algAttr != null)
                 algorithm = algAttr.algorithm;
-            if (algorithm is VariationalMessagePassing && ((VariationalMessagePassing)algorithm).UseDerivMessages && isDerived && firstTime)
+            if (algorithm is VariationalMessagePassing vmp && vmp.UseDerivMessages && isDerived && firstTime)
             {
                 vi.DefineAllIndexVars(context);
                 IList<IStatement> stmts = Builder.StmtCollection();
@@ -164,7 +166,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IList<IStatement> stmts = Builder.StmtCollection();
 
                 CreateMarginalChannel(ivd, vi, stmts);
-                if (isStochastic)
+                //if (isStochastic)
                 {
                     CreateUseChannel(ivd, vi, stmts);
                     context.InputAttributes.Set(useOfVariable[ivd], defContainers);
@@ -180,7 +182,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return;
             }
             IExpression marginalExpr = Builder.ReplaceVariable(lhs, ivd, marginalOfVariable[ivd]);
-            IExpression useExpr = isStochastic ? Builder.ReplaceVariable(lhs, ivd, useOfVariable[ivd]) : marginalExpr;
+            IExpression useExpr = isStochastic || true ? Builder.ReplaceVariable(lhs, ivd, useOfVariable[ivd]) : marginalExpr;
             InitialiseTo it = context.InputAttributes.Get<InitialiseTo>(ivd);
             Type[] genArgs = new Type[] { defExpr.GetExpressionType() };
             if (rhs is IMethodInvokeExpression)
@@ -402,30 +404,29 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private object AddMarginalStatements(IExpression expr)
         {
             object decl = Recognizer.GetDeclaration(expr);
-            if (!marginalOfVariable.ContainsKey(decl))
-            {
-                VariableInformation vi = VariableInformation.GetVariableInformation(context, decl);
-                vi.DefineAllIndexVars(context);
-                IList<IStatement> stmts = Builder.StmtCollection();
+            if (marginalOfVariable.ContainsKey(decl)) return decl;
 
-                CreateMarginalChannel(decl, vi, stmts);
-                CreateUseChannel(decl, vi, stmts);
-                IVariableDeclaration useDecl = useOfVariable[decl];
-                useOfVariable.Remove(decl);
-                IExpression useExpr = Builder.VarRefExpr(useDecl);
-                IVariableDeclaration marginalDecl = marginalOfVariable[decl];
-                IExpression marginalExpr = Builder.VarRefExpr(marginalDecl);
-                Type[] genArgs = new Type[] { expr.GetExpressionType() };
-                IAlgorithm algorithm = this.algorithmDefault;
-                Delegate d = algorithm.GetVariableFactor(true, false);
-                IExpression variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, expr, marginalExpr);
-                //IExpression variableFactorExpr = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Factor.Copy), genArgs, expr);
-                context.OutputAttributes.Set(variableFactorExpr, new IsVariableFactor());
-                var assignStmt = Builder.AssignStmt(useExpr, variableFactorExpr);
-                stmts.Add(assignStmt);
+            VariableInformation vi = VariableInformation.GetVariableInformation(context, decl);
+            vi.DefineAllIndexVars(context);
+            IList<IStatement> stmts = Builder.StmtCollection();
 
-                context.AddStatementsBeforeCurrent(stmts);
-            }
+            CreateMarginalChannel(decl, vi, stmts);
+            CreateUseChannel(decl, vi, stmts);
+            IVariableDeclaration useDecl = useOfVariable[decl];
+            useOfVariable.Remove(decl);
+            IExpression useExpr = Builder.VarRefExpr(useDecl);
+            IVariableDeclaration marginalDecl = marginalOfVariable[decl];
+            IExpression marginalExpr = Builder.VarRefExpr(marginalDecl);
+            Type[] genArgs = new Type[] { expr.GetExpressionType() };
+            IAlgorithm algorithm = this.algorithmDefault;
+            Delegate d = algorithm.GetVariableFactor(true, false);
+            IExpression variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, expr, marginalExpr);
+            //IExpression variableFactorExpr = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Factor.Copy), genArgs, expr);
+            context.OutputAttributes.Set(variableFactorExpr, new IsVariableFactor());
+            var assignStmt = Builder.AssignStmt(useExpr, variableFactorExpr);
+            stmts.Add(assignStmt);
+
+            context.AddStatementsBeforeCurrent(stmts);
             return decl;
         }
     }

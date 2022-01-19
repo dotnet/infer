@@ -1581,6 +1581,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             x.Name = nameof(x);
             x.AddAttribute(QueryTypes.MarginalDividedByPrior);
             Variable<double> f = Variable.Log(x);
+            f.Name = nameof(f);
+            f.AddAttribute(new MarginalPrototype(new Gaussian()));
             Variable.ConstrainEqualRandom(f, Gaussian.FromNatural(1, 0));
             InferenceEngine engine = new InferenceEngine();
             var xPost = engine.Infer<Gamma>(x, QueryTypes.MarginalDividedByPrior);

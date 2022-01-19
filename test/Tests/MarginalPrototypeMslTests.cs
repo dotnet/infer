@@ -693,7 +693,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         private void ProductModel()
         {
             double a = Factor.Random(new Gaussian(0.1, 0.2));
-            double b = Factor.Random(new Gaussian(0.3, 0.4));
+            double b = Factor.Random(new Gaussian(0.3, 0.0));
             double c = Factor.Product(a, b);
             double d = Factor.Ratio(a, b);
             InferNet.Infer(c, nameof(c));

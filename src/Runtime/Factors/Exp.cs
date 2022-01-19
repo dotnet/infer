@@ -677,14 +677,14 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return Gaussian.Uniform();
             if (exp.IsPointMass)
                 return ExpOp.DAverageConditional(exp.Point);
+            if (exp.Rate == 0)
+                return Gaussian.FromNatural(exp.Shape - 1, 0);
             if (d.IsPointMass)
             {
                 return DAverageConditional(exp, d.Point);
             }
             if (exp.Rate < 0)
                 throw new ImproperMessageException(exp);
-            if (exp.Rate == 0)
-                return Gaussian.FromNatural(exp.Shape - 1, 0);
             if (d.IsUniform())
             {
                 if (exp.Shape <= 1)

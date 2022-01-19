@@ -83,7 +83,10 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new InferTests().MarginalDividedByPriorPointMassTest();
+            //new InferTests().MarginalDividedByPriorPointMassTest();
+            //new DocumentationTests().DerivativeExample();
+            //new ModelTests().ModuloTest();
+            new GateModelTests().GateModelPiecewiseLinear2();
 
             bool runAllTests = false;
             if (runAllTests)

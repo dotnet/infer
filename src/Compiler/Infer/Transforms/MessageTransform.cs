@@ -359,6 +359,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     bool isChild = isReturnOrOut[i];
                     IExpression channelRef = arguments[i];
                     bool isConstant = !CodeRecognizer.IsStochastic(context, channelRef);
+                    if (channelRef is IVariableReferenceExpression ivre)
+                    {
+                        //isConstant = VariableInformation.GetVariableInformation(context, ivre.Variable.Variable).marginalPrototypeExpression == null;
+                    }
                     if (!isConstant) resultIsConstant = false;
                     argIsConstant.Add(isConstant);
                     MessageInfo mi;
@@ -668,7 +672,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // For Gibbs, we do not want to allow EP methods which require projection. A crude
                 // way of detecting these is to look at the arguments, and reject any method which
                 // includes as an argument the incoming message corresponding to the target parameter
-                if (alg is GibbsSampling && (!useFactor) && (!isVariableFactor))
+                if (alg is GibbsSampling && !useFactor && !isVariableFactor)
                     customArgumentTypes[targetParameter] = typeof(PlaceHolder);
 
                 MessageFcnInfo fninfo;
@@ -1423,8 +1427,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// These are the _F and _B variables in the generated code. The MessageArrayInformation
         /// instances record information about these variables.
         /// </summary>
-        private MessageArrayInformation CreateMessageVariable(string name, ChannelInfo channelInfo, ChannelToMessageInfo ctmi, MessageDirection direction,
-                                                               ChannelPathAttribute[] cpas)
+        private MessageArrayInformation CreateMessageVariable(
+            string name,
+            ChannelInfo channelInfo,
+            ChannelToMessageInfo ctmi,
+            MessageDirection direction,
+            ChannelPathAttribute[] cpas)
         {
             string messageName = name + (direction == MessageDirection.Backwards ? "_B" : "_F");
             // Ask the algorithm for the message prototype in this direction
@@ -1512,6 +1520,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (channelInfo.decl != null && !context.InputAttributes.Has<IsInferred>(channelInfo.decl)) qtlist = new List<QueryType>();
             else qtlist = context.InputAttributes.GetAll<QueryTypeCompilerAttribute>(channelInfo.varInfo.declaration).Select(attr => attr.QueryType).ToList();
             IExpression mpe = algorithm.GetMessagePrototype(channelInfo, direction, prototypeExpression, null, qtlist);
+            if (direction == MessageDirection.Forwards && !channelInfo.IsMarginal && !channelInfo.varInfo.IsStochastic)
+            {
+                //return Builder.DefaultExpr(channelInfo.channelType);
+            }
+
             string path = "";
             // Check for any path attributes for the channel
             bool foundOne = false;

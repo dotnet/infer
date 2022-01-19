@@ -1400,6 +1400,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void MarginalDividedByPriorPointMassTest()
         {
             Variable<double> x = Variable.Random(Gaussian.PointMass(0.5));
+            //Variable<double> x = Variable.GaussianFromMeanAndVariance(0.5, 0.0);
+            x.Name = nameof(x);
             x.AddAttribute(QueryTypes.MarginalDividedByPrior);
             Variable.ConstrainEqualRandom(x, Gaussian.FromNatural(2, 0));
 
