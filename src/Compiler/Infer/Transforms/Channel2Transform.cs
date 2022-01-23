@@ -209,8 +209,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             int useCount = usageInfo.NumberOfUses;
             if (useCount <= 1) return;
 
-            VariableToChannelInformation vtci;
-            bool firstTime = !usesOfVariable.TryGetValue(ivd, out vtci);
+            bool firstTime = !usesOfVariable.TryGetValue(ivd, out VariableToChannelInformation vtci);
             int targetDepth = Recognizer.GetIndexingDepth(target);
             int minDepth = usageInfo.indexingDepths[0];
             int usageDepth = minDepth;

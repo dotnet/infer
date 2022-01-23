@@ -359,9 +359,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     bool isChild = isReturnOrOut[i];
                     IExpression channelRef = arguments[i];
                     bool isConstant = !CodeRecognizer.IsStochastic(context, channelRef);
-                    if (channelRef is IVariableReferenceExpression ivre)
+                    if (!(alg is GibbsSampling))
                     {
-                        //isConstant = VariableInformation.GetVariableInformation(context, ivre.Variable.Variable).marginalPrototypeExpression == null;
+                        IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(channelRef);
+                        if (ivd != null)
+                        {
+                            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
+                            isConstant = isConstant && !vi.NeedsMarginalDividedByPrior;
+                        }
                     }
                     if (!isConstant) resultIsConstant = false;
                     argIsConstant.Add(isConstant);
@@ -1473,7 +1478,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 messageType = innermostType;
                 isGibbsMarginal = true;
             }
-            else
+            else if (innermostType.Equals(channelInfo.channelType))
+            {
+                messageType = channelInfo.channelType;
+            }
+            else 
             {
                 messageType = JaggedArray.GetTypes(
                     channelInfo.channelType,
@@ -1522,7 +1531,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IExpression mpe = algorithm.GetMessagePrototype(channelInfo, direction, prototypeExpression, null, qtlist);
             if (direction == MessageDirection.Forwards && !channelInfo.IsMarginal && !channelInfo.varInfo.IsStochastic)
             {
-                //return Builder.DefaultExpr(channelInfo.channelType);
+                return Builder.DefaultExpr(channelInfo.channelType);
             }
 
             string path = "";
@@ -2462,6 +2471,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IVariableDeclaration ivd2 = mai.decl;
             IExpression vre = Builder.VarRefExpr(ivd2);
             return vre;
+        }
+
+        protected override IExpression ConvertArrayIndexer(IArrayIndexerExpression iaie)
+        {
+            MessageDirection? oldDirection = messageDirection;
+            messageDirection = MessageDirection.Forwards;
+            IList<IExpression> newIndices = ConvertCollection(iaie.Indices);
+            messageDirection = oldDirection;
+            IExpression newTarget = ConvertExpression(iaie.Target);
+            if (ReferenceEquals(newTarget, iaie.Target) &&
+                ReferenceEquals(newIndices, iaie.Indices))
+                return iaie;
+            IArrayIndexerExpression aie = Builder.ArrayIndxrExpr();
+            aie.Target = newTarget;
+            aie.Indices.AddRange(newIndices);
+            Context.InputAttributes.CopyObjectAttributesTo(iaie, context.OutputAttributes, aie);
+            return aie;
         }
 
         /// <summary>

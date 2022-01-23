@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Models.Attributes;
+using Microsoft.ML.Probabilistic.Compiler.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -89,29 +90,36 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override IExpression ConvertMethodInvoke(IMethodInvokeExpression imie)
         {
-            if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, ICompilerAttribute, PlaceHolder>(Attrib.Var)))
-            {
-                IVariableReferenceExpression ivre = imie.Arguments[0] as IVariableReferenceExpression;
-                IVariableDeclaration target = ivre.Variable.Resolve();
-                IExpression expr = CodeRecognizer.RemoveCast(imie.Arguments[1]);
-                AddAttribute(target, expr);
-                return null;
-            }
-            else if (Recognizer.IsStaticMethod(imie, new Action<object, object>(Attrib.InitialiseTo)))
-            {
-                IVariableReferenceExpression ivre = CodeRecognizer.RemoveCast(imie.Arguments[0]) as IVariableReferenceExpression;
-                IVariableDeclaration target = ivre.Variable.Resolve();
-                context.OutputAttributes.Set(target, new InitialiseTo(imie.Arguments[1]));
-                return null;
-            }
-            else if (CodeRecognizer.IsInfer(imie))
-            {
-                // the arguments must not be substituted for their values, so we don't call ConvertExpression
-                return imie;
-            }
             IExpression converted = base.ConvertMethodInvoke(imie);
             if (converted is IMethodInvokeExpression mie)
             {
+                if (Recognizer.IsStaticGenericMethod(imie, new Func<PlaceHolder, ICompilerAttribute, PlaceHolder>(Attrib.Var)))
+                {
+                    IVariableReferenceExpression ivre = imie.Arguments[0] as IVariableReferenceExpression;
+                    IVariableDeclaration target = ivre.Variable.Resolve();
+                    IExpression expr = imie.Arguments[1];
+                    AddAttribute(target, expr);
+                    return null;
+                }
+                else if (Recognizer.IsStaticMethod(imie, new Action<object, object>(Attrib.InitialiseTo)))
+                {
+                    IVariableReferenceExpression ivre = imie.Arguments[0] as IVariableReferenceExpression;
+                    IVariableDeclaration target = ivre.Variable.Resolve();
+                    context.OutputAttributes.Set(target, new InitialiseTo(imie.Arguments[1]));
+                    return null;
+                }
+                else if (CodeRecognizer.IsInfer(imie))
+                {
+                    // the arguments must not be substituted for their values, so we don't call ConvertExpression
+                    IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(imie.Arguments[0]);
+                    if (ivd != null)
+                    {
+                        var vi = VariableInformation.GetVariableInformation(context, ivd);
+                        QueryType query = (imie.Arguments.Count < 3) ? null : (QueryType)evaluator.Evaluate(imie.Arguments[2]);
+                        vi.NeedsMarginalDividedByPrior = (query == QueryTypes.MarginalDividedByPrior);
+                    }
+                    return imie;
+                }
                 bool anyArgumentIsLiteral = mie.Arguments.Any(arg => arg is ILiteralExpression);
                 if (anyArgumentIsLiteral)
                 {
@@ -301,6 +309,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             conditionContext.RemoveRange(startIndex, conditionContext.Count - startIndex);
             if (cs.Then.Statements.Count == 0 && (cs.Else == null || cs.Else.Statements.Count == 0)) return null;
+            if (ReferenceEquals(cs.Condition, ics.Condition) && ReferenceEquals(cs.Then, ics.Then) && ReferenceEquals(cs.Else, ics.Else))
+                return ics;
             return cs;
         }
 

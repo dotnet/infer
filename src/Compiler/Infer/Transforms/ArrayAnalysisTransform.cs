@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms

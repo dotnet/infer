@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Utilities;
 
     /// <summary>
-    /// The distribution of a Gamma variable raised to a power.  The Weibull distribution is a special case.
+    /// The distribution of a Gamma variable raised to a power.  Also known as the Generalized Gamma distribution.  The Weibull distribution is a special case.
     /// </summary>
     /// <remarks><para>
     /// The Gamma-power distribution is defined as the distribution of a Gamma(a,b) variable raised to the power c.  

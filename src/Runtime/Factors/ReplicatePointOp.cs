@@ -10,7 +10,6 @@ namespace Microsoft.ML.Probabilistic.Factors
     using System;
     using System.Collections.Generic;
     using Collections;
-    using Microsoft.ML.Probabilistic;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;

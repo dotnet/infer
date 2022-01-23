@@ -730,8 +730,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     else
                         break;
                 }
-                else
+                else if (!prefix1.Equals(prefix2))
+                {
                     throw new Exception("Unhandled expression type: " + prefix1);
+                }
             }
             return true;
         }
@@ -939,6 +941,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 || expr is IVariableDeclarationExpression || expr is IArrayCreateExpression)
             {
                 return 1;
+            }
+            else if (expr is IAddressOutExpression iaoe)
+            {
+                return 2;
             }
             else
                 throw new NotImplementedException();
@@ -2287,7 +2293,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 return IsStochastic(context, ipie.Target) || IsAnyStochastic(context, ipie.Indices);
             }
             if (expr is IAddressDereferenceExpression) return false;
-            if (expr is IAddressOutExpression iaoe) return IsStochastic(context, iaoe.Expression);
+            if (expr is IAddressOutExpression) return false;
             if (expr is ILambdaExpression) return false; // todo: stochastic case?
             if (expr is IAnonymousMethodExpression) return false;
             if (expr is ITypeOfExpression) return false;
@@ -2306,6 +2312,86 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
             return vi.IsStochastic;
+        }
+
+        /// <summary>
+        /// Returns true if any of the expression are stochastic.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="iec"></param>
+        /// <returns></returns>
+        internal static bool AnyNeedsMarginalDividedByPrior(BasicTransformContext context, IList<IExpression> iec)
+        {
+            foreach (IExpression expr in iec) if (NeedsMarginalDividedByPrior(context, expr)) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if the expression is stochastic.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="expr"></param>
+        /// <returns></returns>
+        internal static bool NeedsMarginalDividedByPrior(BasicTransformContext context, IExpression expr)
+        {
+            if (expr is ILiteralExpression) return false;
+            if (expr is IDefaultExpression) return false;
+            if (expr is IMethodInvokeExpression imie)
+            {
+                bool stochArgs = AnyNeedsMarginalDividedByPrior(context, imie.Arguments);
+                bool stochFactor = false;
+                FactorManager.FactorInfo info = GetFactorInfo(context, imie);
+                if (info != null) stochFactor = !info.IsDeterministicFactor;
+                bool st = stochArgs || stochFactor;
+                //if (st) context.OutputAttributes.Set(imie, new Stochastic()); // for IfCuttingTransform
+                return st;
+            }
+            if (expr is IArgumentReferenceExpression) return false;
+            if (expr is IPropertyReferenceExpression ipre) return NeedsMarginalDividedByPrior(context, ipre.Target);
+            if (expr is IFieldReferenceExpression ifre) return NeedsMarginalDividedByPrior(context, ifre.Target);
+            if (expr is IArrayCreateExpression) return false;
+            if (expr is IObjectCreateExpression ioce)
+            {
+                return AnyNeedsMarginalDividedByPrior(context, ioce.Arguments);
+            }
+            if (expr is IUnaryExpression iue)
+            {
+                return NeedsMarginalDividedByPrior(context, iue.Expression);
+            }
+            if (expr is IBinaryExpression ibe)
+            {
+                return NeedsMarginalDividedByPrior(context, ibe.Left) || NeedsMarginalDividedByPrior(context, ibe.Right);
+            }
+            if (expr is IArrayIndexerExpression iaie)
+            {
+                return NeedsMarginalDividedByPrior(context, iaie.Target) || AnyNeedsMarginalDividedByPrior(context, iaie.Indices);
+            }
+            if (expr is ICastExpression ice) return NeedsMarginalDividedByPrior(context, ice.Expression);
+            if (expr is ICheckedExpression ichecked) return NeedsMarginalDividedByPrior(context, ichecked.Expression);
+            if (expr is IPropertyIndexerExpression ipie)
+            {
+                return NeedsMarginalDividedByPrior(context, ipie.Target) || AnyNeedsMarginalDividedByPrior(context, ipie.Indices);
+            }
+            if (expr is IAddressDereferenceExpression) return false;
+            if (expr is IAddressOutExpression) return false;
+            if (expr is ILambdaExpression) return false; // todo: stochastic case?
+            if (expr is IAnonymousMethodExpression) return false;
+            if (expr is ITypeOfExpression) return false;
+            if (expr is IMethodReferenceExpression) return false;
+
+            IVariableDeclaration ivd = Instance.GetVariableDeclaration(expr);
+            if (ivd == null)
+            {
+                context.Error("Could not find stochasticity of expression of type " + expr.GetType().Name + ": " + expr);
+                return false;
+            }
+            return NeedsMarginalDividedByPrior(context, ivd);
+        }
+
+        internal static bool NeedsMarginalDividedByPrior(BasicTransformContext context, IVariableDeclaration ivd)
+        {
+            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
+            return vi.NeedsMarginalDividedByPrior;
         }
 
         internal static bool IsInfer(IExpression expr)

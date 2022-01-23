@@ -21,9 +21,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     /// <summary>
     /// Transform which:
     ///   Removes all methods other than the one containing the model.
-    ///   Calls to InferNet.PreserveWhenCompiled are stripped out.
+    ///   Removes calls to InferNet.PreserveWhenCompiled.
+    ///   Removes casts.
     ///   Attach index variable information to arrays (via VariableInformation attributes).
     ///   Attach Constraint attributes to assignments that are actually constraints.
+    ///   Attach DerivedVariable attributes to children of deterministic factors. (should probably be a separate transform)
     /// </summary>
     internal class ModelAnalysisTransform : ShallowCopyTransform
     {

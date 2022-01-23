@@ -669,9 +669,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (ist is IExpressionStatement ies)
                     {
                         IExpression expr = ies.Expression;
-                        if (expr is IAssignExpression)
+                        if (expr is IAssignExpression iae)
                         {
-                            IAssignExpression iae = (IAssignExpression)ies.Expression;
                             expr = iae.Target;
                         }
                         if (expr is IVariableDeclarationExpression)
