@@ -18996,6 +18996,17 @@
         <para>The outgoing message is a distribution matching the moments of <c>integral</c> as the random arguments are varied. The formula is <c>proj[p(integral) sum_(lowerBound,upperBound) p(lowerBound,upperBound) factor(integral,lowerBound,upperBound,func,distribution)]/p(integral)</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="LowerBoundAverageConditional(Gaussian, double, Func{double, double}, ITruncatableDistribution{double})">
+      <summary>EP message to <c>lowerBound</c>.</summary>
+      <param name="integral">Incoming message from <c>integral</c>.</param>
+      <param name="lowerBound">Constant value for <c>lowerBound</c>.</param>
+      <param name="func">Constant value for <c>func</c>.</param>
+      <param name="distribution">Constant value for <c>distribution</c>.</param>
+      <returns>The outgoing EP message to the <c>lowerBound</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>lowerBound</c> as the random arguments are varied. The formula is <c>proj[p(lowerBound) sum_(integral) p(integral) factor(integral,lowerBound,upperBound,func,distribution)]/p(lowerBound)</c>.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="LowerBoundAverageConditional(Gaussian, Gaussian, Func{double, double}, ITruncatableDistribution{double})">
       <summary>EP message to <c>lowerBound</c>.</summary>
       <param name="integral">Incoming message from <c>integral</c>.</param>
@@ -19005,6 +19016,17 @@
       <returns>The outgoing EP message to the <c>lowerBound</c> argument.</returns>
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>lowerBound</c> as the random arguments are varied. The formula is <c>proj[p(lowerBound) sum_(integral) p(integral) factor(integral,lowerBound,upperBound,func,distribution)]/p(lowerBound)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="UpperBoundAverageConditional(Gaussian, double, Func{double, double}, ITruncatableDistribution{double})">
+      <summary>EP message to <c>upperBound</c>.</summary>
+      <param name="integral">Incoming message from <c>integral</c>.</param>
+      <param name="upperBound">Constant value for <c>upperBound</c>.</param>
+      <param name="func">Constant value for <c>func</c>.</param>
+      <param name="distribution">Constant value for <c>distribution</c>.</param>
+      <returns>The outgoing EP message to the <c>upperBound</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>upperBound</c> as the random arguments are varied. The formula is <c>proj[p(upperBound) sum_(integral) p(integral) factor(integral,lowerBound,upperBound,func,distribution)]/p(upperBound)</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="UpperBoundAverageConditional(Gaussian, Gaussian, Func{double, double}, ITruncatableDistribution{double})">
@@ -25759,6 +25781,16 @@
         <para>The outgoing message is a distribution matching the moments of <c>probBetween</c> as the random arguments are varied. The formula is <c>proj[p(probBetween) sum_(canGetProbLessThan,lowerBound,upperBound) p(canGetProbLessThan,lowerBound,upperBound) factor(probBetween,canGetProbLessThan,lowerBound,upperBound)]/p(probBetween)</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="LowerBoundAverageConditional(Gaussian, CanGetProbLessThan{double}, double)">
+      <summary>EP message to <c>lowerBound</c>.</summary>
+      <param name="probBetween">Incoming message from <c>probBetween</c>.</param>
+      <param name="canGetProbLessThan">Incoming message from <c>canGetProbLessThan</c>.</param>
+      <param name="lowerBound">Incoming message from <c>lowerBound</c>.</param>
+      <returns>The outgoing EP message to the <c>lowerBound</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>lowerBound</c> as the random arguments are varied. The formula is <c>proj[p(lowerBound) sum_(probBetween,canGetProbLessThan) p(probBetween,canGetProbLessThan) factor(probBetween,canGetProbLessThan,lowerBound,upperBound)]/p(lowerBound)</c>.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="LowerBoundAverageConditional(Gaussian, CanGetProbLessThan{double}, Gaussian)">
       <summary>EP message to <c>lowerBound</c>.</summary>
       <param name="probBetween">Incoming message from <c>probBetween</c>.</param>
@@ -26305,12 +26337,14 @@
     </doc>
     <message_doc name="RatioAverageConditional(Gaussian, double)">
       <summary>EP message to <c>ratio</c>.</summary>
-      <param name="a">Incoming message from <c>a</c>.</param>
+      <param name="a">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="b">Constant value for <c>b</c>.</param>
       <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a) p(a) factor(ratio,a,b)]/p(ratio)</c>.</para>
       </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="RatioAverageConditional(Gaussian, Gaussian, Gaussian)">
       <summary>EP message to <c>ratio</c>.</summary>
@@ -26325,6 +26359,17 @@
         <paramref name="a" /> is not a proper distribution.</exception>
       <exception cref="ImproperMessageException">
         <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gaussian, double)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(ratio) p(ratio) factor(ratio,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="AAverageConditional(Gaussian, Gaussian, Gaussian)">
       <summary>EP message to <c>a</c>.</summary>
@@ -26855,6 +26900,25 @@
       <returns>The outgoing EP message to the <c>quantile</c> argument.</returns>
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>quantile</c> as the random arguments are varied. The formula is <c>proj[p(quantile) sum_(probability) p(probability) factor(quantile,canGetQuantile,probability)]/p(quantile)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ProbabilityAverageConditional(double, CanGetQuantile{double})">
+      <summary>EP message to <c>probability</c>.</summary>
+      <param name="quantile">Constant value for <c>quantile</c>.</param>
+      <param name="canGetQuantile">Constant value for <c>canGetQuantile</c>.</param>
+      <returns>The outgoing EP message to the <c>probability</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>probability</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ProbabilityAverageConditional(Gaussian, CanGetQuantile{double}, double)">
+      <summary>EP message to <c>probability</c>.</summary>
+      <param name="quantile">Incoming message from <c>quantile</c>.</param>
+      <param name="canGetQuantile">Constant value for <c>canGetQuantile</c>.</param>
+      <param name="probability">Constant value for <c>probability</c>.</param>
+      <returns>The outgoing EP message to the <c>probability</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>probability</c> as the random arguments are varied. The formula is <c>proj[p(probability) sum_(quantile) p(quantile) factor(quantile,canGetQuantile,probability)]/p(probability)</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="ProbabilityAverageConditional(Gaussian, CanGetQuantile{double}, Gaussian)">
@@ -32617,6 +32681,17 @@
         <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>random</c>. The formula is <c>exp(sum_(dist) p(dist) log(factor(random,dist)))</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="DistAverageLogarithm{T, TDist}(T, TDist)">
+      <summary>VMP message to <c>dist</c>.</summary>
+      <param name="random">Incoming message from <c>random</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>dist</c>. The formula is <c>exp(sum_(random) p(random) log(factor(random,dist)))</c>.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="RandomMaxConditional(Bernoulli)">
       <summary />
       <param name="dist">Incoming message from <c>dist</c>.</param>
@@ -33338,6 +33413,17 @@
         <para>The outgoing message is a distribution matching the moments of <c>marginal</c> as the random arguments are varied. The formula is <c>proj[p(marginal) sum_(use,def) p(use,def) factor(use,def,marginal)]/p(marginal)</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="MarginalAverageConditional{TDist, T}(T, TDist)">
+      <summary>EP message to <c>marginal</c>.</summary>
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>marginal</c> as the random arguments are varied. The formula is <c>proj[p(marginal) sum_(def) p(def) factor(use,def,marginal)]/p(marginal)</c>.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="MarginalAverageConditionalInit{T}(T)">
       <summary />
       <param name="def">Incoming message from <c>def</c>.</param>
@@ -33363,11 +33449,11 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="VariableVmpOp">
+  <message_op_class name="VariableVmpOp{T}">
     <doc>
       <summary>Provides outgoing messages for the following factors:<list type="bullet"><item><description><see cref="Clone.Variable{T}(T, out T)" /></description></item><item><description><see cref="Clone.VariableInit{T}(T, T, out T)" /></description></item></list>, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="AverageLogFactor{T}(T)">
+    <message_doc name="AverageLogFactor{TDist}(TDist)">
       <summary>Evidence message for VMP.</summary>
       <param name="to_marginal">Previous outgoing message to <c>marginal</c>.</param>
       <returns>Average of the factor's log-value across the given argument distributions.</returns>
@@ -33375,7 +33461,7 @@
         <para>The formula for the result is <c>log(factor(use,def,marginal))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="MarginalAverageLogarithm{T}(T, T, T)">
+    <message_doc name="MarginalAverageLogarithm{TDist}(TDist, TDist, TDist)">
       <summary>VMP message to <c>marginal</c>.</summary>
       <param name="use">Incoming message from <c>use</c>.</param>
       <param name="def">Incoming message from <c>def</c>.</param>
@@ -33387,7 +33473,18 @@
         <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>marginal</c>. The formula is <c>exp(sum_(use,def) p(use,def) log(factor(use,def,marginal)))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="MarginalAverageLogarithmInit{T}(T)">
+    <message_doc name="MarginalAverageLogarithm{TDist}(T, TDist)">
+      <summary>VMP message to <c>marginal</c>.</summary>
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>marginal</c>. The formula is <c>exp(sum_(def) p(def) log(factor(use,def,marginal)))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="MarginalAverageLogarithmInit{TDist}(TDist)">
       <summary />
       <param name="def">Incoming message from <c>def</c>.</param>
       <returns />
@@ -33395,7 +33492,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="UseAverageLogarithm{T}(T, T)">
+    <message_doc name="UseAverageLogarithm{TDist}(TDist, TDist)">
       <summary>VMP message to <c>use</c>.</summary>
       <param name="to_marginal">Previous outgoing message to <c>marginal</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -33406,7 +33503,15 @@
         <para>The outgoing message is the factor viewed as a function of <c>use</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
-    <message_doc name="UseAverageLogarithmInit{T}(T)">
+    <message_doc name="UseAverageLogarithm(T)">
+      <summary>VMP message to <c>use</c>.</summary>
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <returns>The outgoing VMP message to the <c>use</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>use</c>. The formula is <c>exp(sum_(def) p(def) log(factor(use,def,marginal)))</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="UseAverageLogarithmInit{TDist}(TDist)">
       <summary />
       <param name="def">Incoming message from <c>def</c>.</param>
       <returns />
@@ -33414,7 +33519,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="DefAverageLogarithm{T}(T, T)">
+    <message_doc name="DefAverageLogarithm{TDist}(TDist, TDist)">
       <summary>VMP message to <c>def</c>.</summary>
       <param name="to_marginal">Previous outgoing message to <c>marginal</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -33513,11 +33618,11 @@
       </remarks>
     </message_doc>
   </message_op_class>
-  <message_op_class name="VariableMaxOp">
+  <message_op_class name="VariableMaxOp{T}">
     <doc>
       <summary>Provides outgoing messages for <see cref="Clone.VariableMax{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="UseMaxConditional{T}(T, T)">
+    <message_doc name="UseMaxConditional{TDist}(TDist, TDist)">
       <summary />
       <param name="Def">Incoming message from <c>def</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -33528,7 +33633,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="UseMaxConditionalInit{T}(T)">
+    <message_doc name="UseMaxConditionalInit{TDist}(TDist)">
       <summary />
       <param name="Def">Incoming message from <c>def</c>.</param>
       <returns />
@@ -33536,7 +33641,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="UseMaxConditional{TDist, T}(T, TDist)">
+    <message_doc name="UseMaxConditional{TDist}(T, TDist)">
       <summary />
       <param name="Def">Incoming message from <c>def</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -33547,7 +33652,15 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="DefMaxConditional{T}(T)">
+    <message_doc name="UseMaxConditional(T)">
+      <summary />
+      <param name="Def">Incoming message from <c>def</c>.</param>
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="DefMaxConditional{TDist}(TDist)">
       <summary />
       <param name="Use">Incoming message from <c>use</c>.</param>
       <returns />
@@ -33555,7 +33668,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="MarginalMaxConditional{T}(T, T, T)">
+    <message_doc name="MarginalMaxConditional{TDist}(TDist, TDist, TDist)">
       <summary />
       <param name="Use">Incoming message from <c>use</c>.</param>
       <param name="Def">Incoming message from <c>def</c>.</param>
@@ -33567,7 +33680,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="MarginalMaxConditionalInit{T}(T)">
+    <message_doc name="MarginalMaxConditionalInit{TDist}(TDist)">
       <summary />
       <param name="def">Incoming message from <c>def</c>.</param>
       <returns />
@@ -33575,7 +33688,7 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="MarginalMaxConditional{TDist, T}(T, TDist)">
+    <message_doc name="MarginalMaxConditional{TDist}(T, TDist)">
       <summary />
       <param name="Def">Incoming message from <c>def</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>

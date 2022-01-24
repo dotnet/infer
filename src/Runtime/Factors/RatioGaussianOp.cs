@@ -26,6 +26,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             else throw new NotSupportedException();
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="RatioGaussianOp"]/message_doc[@name="AAverageConditional(Gaussian, double)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian ratio, double b)
         {
             return GaussianProductOp.ProductAverageConditional(ratio, b);
