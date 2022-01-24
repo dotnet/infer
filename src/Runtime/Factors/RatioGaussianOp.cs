@@ -14,7 +14,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     public static class RatioGaussianOp
     {
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="RatioGaussianOp"]/message_doc[@name="RatioAverageConditional(Gaussian, double)"]/*'/>
-        public static Gaussian RatioAverageConditional(Gaussian a, double b)
+        public static Gaussian RatioAverageConditional([SkipIfUniform] Gaussian a, double b)
         {
             return RatioGaussianVmpOp.RatioAverageLogarithm(a, b);
         }
@@ -26,21 +26,17 @@ namespace Microsoft.ML.Probabilistic.Factors
             else throw new NotSupportedException();
         }
 
+        public static Gaussian AAverageConditional([SkipIfUniform] Gaussian ratio, double b)
+        {
+            return GaussianProductOp.ProductAverageConditional(ratio, b);
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="RatioGaussianOp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian ratio, Gaussian a, [SkipIfUniform] Gaussian b)
         {
             if (b.IsPointMass)
             {
-                if (a.IsPointMass && ratio.Precision == 0)
-                {
-                    // f(a) = N(m; a/b, v)
-                    // logf = -0.5*log(v) -0.5*(m - a/b)^2/v
-                    // dlogf = (m - a/b)/v/b -> m/v/b
-                    double dlogp = ratio.MeanTimesPrecision / b.Point;
-                    double ddlogp = 0;
-                    return Gaussian.FromDerivatives(a.Point, dlogp, ddlogp, false);
-                }
-                return GaussianProductOp.ProductAverageConditional(Gaussian.FromNatural(a.MeanTimesPrecision, Math.Min(a.Precision, 1e16)), Gaussian.FromNatural(ratio.MeanTimesPrecision, ratio.Precision + 1e-16), b);
+                return AAverageConditional(ratio, b.Point);
             }
             else throw new NotSupportedException();
         }
