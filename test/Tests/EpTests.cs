@@ -40,6 +40,27 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void CutForwardWhenTest()
+        {
+            Range item = new Range(2);
+            Variable<double> x = Variable.GaussianFromMeanAndPrecision(0, 1);
+            using (Variable.ForEach(item))
+            {
+                var isForwardLoop = item.IsIncreasing();
+                var xCut = Variable.CutForwardWhen(x, isForwardLoop);
+                Variable.ConstrainPositive(xCut);
+            }
+
+            InferenceEngine engine = new InferenceEngine();
+            var xWithoutBackwardPass = engine.Infer<Gaussian>(x);
+            // Without a backward pass, isForwardLoop is always true so the posterior equals the prior.
+            Assert.Equal(new Gaussian(0, 1), xWithoutBackwardPass);
+            item.AddAttribute(new Sequential() { BackwardPass = true });
+            var xWithBackwardPass = engine.Infer<Gaussian>(x);
+            Assert.NotEqual(new Gaussian(0, 1), xWithBackwardPass);
+        }
+
+        [Fact]
         public void IntegralTest()
         {
             Gaussian dist = new Gaussian(0, 1);

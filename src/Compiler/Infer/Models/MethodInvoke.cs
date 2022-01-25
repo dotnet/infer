@@ -156,7 +156,8 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns></returns>
         internal bool CanBeInlined()
         {
-            // TODO: Check for IsIncreasing
+            bool isIsIncreasing = method.Equals(new Func<int,bool>(Factors.InferNet.IsIncreasing).Method);
+            if (isIsIncreasing) return true;
             if (op == null) return false;
             bool hasLoopIndex = false;
             for (int i = 0; i < args.Count; i++)
