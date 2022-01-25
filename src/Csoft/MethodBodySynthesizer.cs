@@ -498,11 +498,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (symbol is IMethodSymbol)
             {
                 var methodDecl = GetMethodRef((IMethodSymbol)symbol);
-                var mre = Builder.MethodRefExpr();
-                mre.Method = methodDecl;
                 // TODO get the correct target
-                mre.Target = Builder.ThisRefExpr();
-                return mre;
+                return Builder.MethodRefExpr(methodDecl, Builder.ThisRefExpr());
             }
             if (symbol is IPropertySymbol)
             {

@@ -433,10 +433,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                // This method is most efficient since it involves a single division, but less accurate.
-                double result = (MeanTimesPrecision - 0.5 * x * Precision) * x;
-                result -= GetLogNormalizer();
-                return result;
+                return (MeanTimesPrecision - 0.5 * x * Precision) * x;
             }
         }
 
@@ -997,6 +994,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 ddlogp = 0;
             }
+            if (ddlogp == 0) return Gaussian.FromNatural(dlogp, 0);
             if (double.IsInfinity(dlogp)) return Gaussian.PointMass(dlogp); // to avoid NaN
             double meanTimesPrecision = dlogp - ddlogp * x;
             if (Math.Abs(meanTimesPrecision) > double.MaxValue)

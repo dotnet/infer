@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.ML.Probabilistic.Compiler.Transforms;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
@@ -48,6 +47,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// True if this is a stochastic variable.  False for constants and loop variables.
         /// </summary>
         public bool IsStochastic;
+
+        /// <summary>
+        /// True if this variable needs a backward message.  Can be true when IsStochastic is false.
+        /// </summary>
+        public bool NeedsMarginalDividedByPrior;
 
         // Marginal prototype (this is the prototype of an element, if this is an array)
         internal IExpression marginalPrototypeExpression;
@@ -308,7 +312,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         public override string ToString()
         {
             StringBuilder s = new StringBuilder();
-            string stocString = IsStochastic ? "stoc " : "";
+            string stocString = IsStochastic ? "stoc " : (NeedsMarginalDividedByPrior ? "mdp " : "");
             foreach (IExpression[] lengths in sizes)
             {
                 s.Append('[');
@@ -584,6 +588,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             context.OutputAttributes.Remove<MarginalPrototype>(arrayvd);
             VariableInformation vi = VariableInformation.GetVariableInformation(context, arrayvd);
             vi.IsStochastic = IsStochastic;
+            vi.NeedsMarginalDividedByPrior = NeedsMarginalDividedByPrior;
             vi.sizes = newSizes;
             vi.indexVars = newIndexVars;
             vi.DistArrayDepth = distArrayDepth + System.Math.Max(0, this.DistArrayDepth - indexingDepth);

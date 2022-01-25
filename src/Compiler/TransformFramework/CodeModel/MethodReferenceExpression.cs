@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
         /// </summary>
         public override Type GetExpressionType()
         {
-            return null;
+            return typeof(Delegate);
         }
     }
 }

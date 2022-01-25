@@ -251,9 +251,13 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// Default constructor for method reference expression
         /// </summary>
         /// <returns>A new method reference expression</returns>
-        public virtual IMethodReferenceExpression MethodRefExpr()
+        public virtual IMethodReferenceExpression MethodRefExpr(IMethodReference method, IExpression target)
         {
-            return new XMethodReferenceExpression();
+            return new XMethodReferenceExpression()
+            {
+                Method = method,
+                Target = target
+            };
         }
 
         /// <summary>

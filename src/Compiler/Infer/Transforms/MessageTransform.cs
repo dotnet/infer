@@ -359,6 +359,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     bool isChild = isReturnOrOut[i];
                     IExpression channelRef = arguments[i];
                     bool isConstant = !CodeRecognizer.IsStochastic(context, channelRef);
+                    if (!(alg is GibbsSampling))
+                    {
+                        IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(channelRef);
+                        if (ivd != null)
+                        {
+                            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
+                            isConstant = isConstant && !vi.NeedsMarginalDividedByPrior;
+                        }
+                    }
                     if (!isConstant) resultIsConstant = false;
                     argIsConstant.Add(isConstant);
                     MessageInfo mi;
@@ -668,7 +677,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // For Gibbs, we do not want to allow EP methods which require projection. A crude
                 // way of detecting these is to look at the arguments, and reject any method which
                 // includes as an argument the incoming message corresponding to the target parameter
-                if (alg is GibbsSampling && (!useFactor) && (!isVariableFactor))
+                if (alg is GibbsSampling && !useFactor && !isVariableFactor)
                     customArgumentTypes[targetParameter] = typeof(PlaceHolder);
 
                 MessageFcnInfo fninfo;
@@ -901,9 +910,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             // Generate code to emit message events
                             var methodRef = new CodeModel.Concrete.XMethodReference(transform.GetMessageUpdatedMethod());
-                            var mre = Builder.MethodRefExpr();
-                            mre.Method = methodRef;
-                            mre.Target = Builder.ThisRefExpr();
+                            var mre = Builder.MethodRefExpr(methodRef, Builder.ThisRefExpr());
                             operatorMethod = Builder.StaticGenericMethod(
                                 new Func<PlaceHolder, string, Action<MessageUpdatedEventArgs>, bool, PlaceHolder>(Tracing.FireEvent<PlaceHolder>),
                                 new Type[] { returnType }, operatorMethod, textExpr, mre, Builder.LiteralExpr(trace != null));
@@ -1425,8 +1432,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// These are the _F and _B variables in the generated code. The MessageArrayInformation
         /// instances record information about these variables.
         /// </summary>
-        private MessageArrayInformation CreateMessageVariable(string name, ChannelInfo channelInfo, ChannelToMessageInfo ctmi, MessageDirection direction,
-                                                               ChannelPathAttribute[] cpas)
+        private MessageArrayInformation CreateMessageVariable(
+            string name,
+            ChannelInfo channelInfo,
+            ChannelToMessageInfo ctmi,
+            MessageDirection direction,
+            ChannelPathAttribute[] cpas)
         {
             string messageName = name + (direction == MessageDirection.Backwards ? "_B" : "_F");
             // Ask the algorithm for the message prototype in this direction
@@ -1467,7 +1478,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 messageType = innermostType;
                 isGibbsMarginal = true;
             }
-            else
+            else if (innermostType.Equals(channelInfo.channelType))
+            {
+                messageType = channelInfo.channelType;
+            }
+            else 
             {
                 messageType = JaggedArray.GetTypes(
                     channelInfo.channelType,
@@ -1514,6 +1529,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (channelInfo.decl != null && !context.InputAttributes.Has<IsInferred>(channelInfo.decl)) qtlist = new List<QueryType>();
             else qtlist = context.InputAttributes.GetAll<QueryTypeCompilerAttribute>(channelInfo.varInfo.declaration).Select(attr => attr.QueryType).ToList();
             IExpression mpe = algorithm.GetMessagePrototype(channelInfo, direction, prototypeExpression, null, qtlist);
+            if (direction == MessageDirection.Forwards && !channelInfo.IsMarginal && !channelInfo.varInfo.IsStochastic)
+            {
+                return Builder.DefaultExpr(channelInfo.channelType);
+            }
+
             string path = "";
             // Check for any path attributes for the channel
             bool foundOne = false;
@@ -2267,15 +2287,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             Type srcType = distributionExpr.GetExpressionType();
             Type sampleableType = typeof(Sampleable<>).MakeGenericType(Distribution.GetDomainType(srcType));
             MethodInfo smplMthd = sampleableType.GetMethod("Sample", new Type[] { });
-            IMethodReferenceExpression imre = Builder.MethodRefExpr();
             if (!sampleableType.IsAssignableFrom(srcType))
             {
                 distributionExpr = Builder.CastExpr(distributionExpr, sampleableType);
             }
-            imre.Target = distributionExpr;
-            imre.Method = Builder.MethodRef(smplMthd);
             IMethodInvokeExpression imie = Builder.MethodInvkExpr();
-            imie.Method = imre;
+            imie.Method = Builder.MethodRefExpr(Builder.MethodRef(smplMthd), distributionExpr);
             return imie;
         }
 
@@ -2291,11 +2308,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 distExpr = ConvertInitialiser(distExpr, iprType, varInfo);
                 IStatement is1 = Builder.AssignStmt(ipr, distExpr);
                 MethodInfo postUpdate = gmType.GetMethod("PostUpdate");
-                IMethodReferenceExpression imre = Builder.MethodRefExpr();
-                imre.Target = gibbsMargExpr;
-                imre.Method = Builder.MethodRef(postUpdate);
                 IMethodInvokeExpression imie = Builder.MethodInvkExpr();
-                imie.Method = imre;
+                imie.Method = Builder.MethodRefExpr(Builder.MethodRef(postUpdate), gibbsMargExpr);
                 IStatement is2 = Builder.ExprStatement(imie);
                 IBlockStatement ibs = Builder.BlockStmt();
                 context.OutputAttributes.Set(ibs, new Initializer() { UserInitialized = true });
@@ -2457,6 +2471,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IVariableDeclaration ivd2 = mai.decl;
             IExpression vre = Builder.VarRefExpr(ivd2);
             return vre;
+        }
+
+        protected override IExpression ConvertArrayIndexer(IArrayIndexerExpression iaie)
+        {
+            MessageDirection? oldDirection = messageDirection;
+            messageDirection = MessageDirection.Forwards;
+            IList<IExpression> newIndices = ConvertCollection(iaie.Indices);
+            messageDirection = oldDirection;
+            IExpression newTarget = ConvertExpression(iaie.Target);
+            if (ReferenceEquals(newTarget, iaie.Target) &&
+                ReferenceEquals(newIndices, iaie.Indices))
+                return iaie;
+            IArrayIndexerExpression aie = Builder.ArrayIndxrExpr();
+            aie.Target = newTarget;
+            aie.Indices.AddRange(newIndices);
+            Context.InputAttributes.CopyObjectAttributesTo(iaie, context.OutputAttributes, aie);
+            return aie;
         }
 
         /// <summary>

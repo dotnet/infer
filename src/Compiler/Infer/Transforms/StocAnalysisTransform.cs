@@ -4,16 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Models;
-using System.Linq;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
@@ -66,7 +65,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                     if (targetDecl is IVariableDeclaration ivd)
                     {
-                        SetStoch(target, CodeRecognizer.IsStochastic(context, imie) || IsStochContext(ivd));
+                        bool isStoch = CodeRecognizer.IsStochastic(context, imie) || IsStochContext(ivd);
+                        bool needsMarginalDividedByPrior = CodeRecognizer.NeedsMarginalDividedByPrior(context, imie);
+                        SetStoch(target, isStoch, needsMarginalDividedByPrior);
                     }
                 }
             }
@@ -149,26 +150,29 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             if (ipd == null)
             {
-                bool setStoch = true;
-                if (ae.Expression is IArrayCreateExpression iace)
-                {
-                    // Array creation with no initialiser can be either for stochastic or deterministic
-                    // variables, so just return without marking the variable.
-                    if (iace.Initializer == null) setStoch = false;
-                }
-                if (setStoch)
-                {
-                    IStatement ist = context.FindAncestor<IStatement>();
-                    if (context.InputAttributes.Has<Microsoft.ML.Probabilistic.Models.Constraint>(ist)) setStoch = false;
-                }
+                // Array creation with no initialiser can be either for stochastic or deterministic
+                // variables, so just return without marking the variable.
+                bool setStoch = !IsArrayCreateWithoutInitializer(ae.Expression) && !IsConstraint();
                 if (setStoch)
                 {
                     // Sets the stochasticity of the LHS of an assignment, given the RHS.
                     bool isStoch = CodeRecognizer.IsStochastic(context, ae.Expression) || IsStochContext(ivd);
-                    SetStoch(ae.Target, isStoch);
+                    bool needsMarginalDividedByPrior = CodeRecognizer.NeedsMarginalDividedByPrior(context, ae.Expression);
+                    SetStoch(ae.Target, isStoch, needsMarginalDividedByPrior);
                 }
             }
             return ae;
+
+            bool IsArrayCreateWithoutInitializer(IExpression expression)
+            {
+                return (expression is IArrayCreateExpression iace) && (iace.Initializer == null);
+            }
+
+            bool IsConstraint()
+            {
+                IStatement ist = context.FindAncestor<IStatement>();
+                return context.InputAttributes.Has<Constraint>(ist);
+            }
         }
 
         protected override IVariableDeclaration ConvertVariableDecl(IVariableDeclaration ivd)
@@ -184,12 +188,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return base.ConvertVariableDecl(ivd);
         }
 
-        protected void SetStoch(IExpression expr, bool stoch)
+        protected void SetStoch(IExpression expr, bool isStoch, bool needsMarginalDividedByPrior)
         {
             if (expr is IArgumentReferenceExpression) return;
             if (expr is IArrayIndexerExpression iaie)
             {
-                SetStoch(iaie.Target, stoch);
+                SetStoch(iaie.Target, isStoch, needsMarginalDividedByPrior);
                 return;
             }
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(expr);
@@ -198,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Error("Could not find target variable of expression: " + expr);
                 return;
             }
-            if (stoch)
+            if (isStoch)
             {
                 VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
                 vi.IsStochastic = true;
@@ -206,6 +210,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             else
             {
                 varsWithConstantDefinition.Add(ivd);
+            }
+            if (needsMarginalDividedByPrior)
+            {
+                VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
+                vi.NeedsMarginalDividedByPrior = true;
             }
         }
 

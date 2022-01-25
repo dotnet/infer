@@ -2991,7 +2991,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void ChainWithTransitionParameterTest2()
+        public void ChainWithTwoTransitionParameters()
         {
             int length = 1000;
 
@@ -3087,7 +3087,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void ChainWithTransitionParameterTest3()
+        public void ChainWithTransitionAndPrecisionParameter()
         {
             int length = 1000;
 

@@ -449,10 +449,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     toSearch.Push(variable.initialiseBackwardTo);
                 }
 
-                if (!variable.Inline)
-                {
-                    variable.Inline = ShouldInline(variable);
-                }
+                variable.Inline = ShouldInline(variable);
 
                 if (variable is IVariableArray iva)
                 {
@@ -488,8 +485,13 @@ namespace Microsoft.ML.Probabilistic.Models
                 SearchMethodInvoke(factor);
         }
 
-        private static bool ShouldInline(Variable variable)
+        private bool ShouldInline<T>(Variable<T> variable)
         {
+            if (variable.IsObserved && variable.IsReadOnly)
+            {
+                return ShouldInlineConstant(variable);
+            }
+
             bool inline;
             if (variable.definition != null)
             {
@@ -648,7 +650,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         private bool ShouldInlineConstant<T>(Variable<T> constant)
         {
-            return (Quoter.ShouldInlineType(typeof(T)) && (!constant.IsDefined) && !variablesToInfer.Contains(constant));
+            return Quoter.ShouldInlineType(typeof(T)) && !constant.IsDefined && !variablesToInfer.Contains(constant);
         }
 
         /// <summary>

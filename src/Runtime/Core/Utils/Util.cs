@@ -173,6 +173,17 @@ namespace Microsoft.ML.Probabilistic.Utilities
             }
         }
 
+        public static ParameterInfo[] GetParameters(MethodBase method)
+        {
+            var parameters = method.GetParameters();
+            if (method.IsConstructor && typeof(Delegate).IsAssignableFrom(method.DeclaringType))
+            {
+                // Delegate constructors have a hidden second argument
+                parameters = parameters.Take(1).ToArray();
+            }
+            return parameters;
+        }
+
         public static Type GetElementType(Type type)
         {
             return GetElementType(type, out int rank);

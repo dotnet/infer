@@ -255,6 +255,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             var p = Variable.Observed(unary, rows, cols);
+            p.Name = nameof(p);
             states[rows, cols] = Variable.Random<bool, Bernoulli>(p[rows, cols]);
 
             double logCost = 0;

@@ -42,38 +42,37 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 Microsoft.ML.Probabilistic.Distributions.Kernels.NNKernel g = (Microsoft.ML.Probabilistic.Distributions.Kernels.NNKernel) value;
                 expr = Builder.NewObject(value.GetType(), Quote(g.GetLogWeightVariances()), Quote(g.GetLogBiasWeightVariance()));
             }
-            else if (value is Array)
+            else if (value is Array array)
             {
-                expr = QuoteArray((Array) value);
+                expr = QuoteArray(array);
             }
             else if (value is ConvertibleToArray)
             {
                 expr = Builder.NewObject(value.GetType(), QuoteArray(((ConvertibleToArray) value).ToArray()));
             }
-            else if (value is IList)
+            else if (value is IList ilist)
             {
-                expr = QuoteList((IList) value);
+                expr = QuoteList(ilist);
             }
-            else if (value is IDictionary)
+            else if (value is IDictionary idictionary)
             {
-                expr = QuoteDictionary((IDictionary) value);
+                expr = QuoteDictionary(idictionary);
             }
             else if (value is Enum)
             {
                 expr = Builder.LiteralExpr(value);
             }
-            else if (value is PropertyInfo)
+            else if (value is PropertyInfo propertyInfo)
             {
-                expr = QuotePropertyInfo((PropertyInfo) value);
+                expr = QuotePropertyInfo(propertyInfo);
             }
             else if (value is System.Linq.Expressions.Expression)
             {
                 var expconv = new Microsoft.ML.Probabilistic.Compiler.Transforms.LinqExpressionTransform();
                 expr = expconv.Convert((System.Linq.Expressions.Expression) value);
             }
-            else if (value is DateTime)
+            else if (value is DateTime dt)
             {
-                DateTime dt = (DateTime) value;
                 var args = new List<int> {dt.Year, dt.Month, dt.Day};
                 if ((dt.Hour != 0) || (dt.Minute != 0) || (dt.Second != 0) || (dt.Millisecond != 0))
                 {
@@ -85,6 +84,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 var argsArray = new IExpression[args.Count];
                 for (int i = 0; i < args.Count; i++) argsArray[i] = Builder.LiteralExpr(args[i]);
                 expr = Builder.NewObject(typeof (DateTime), argsArray);
+            }
+            else if (value is Delegate d)
+            {
+                expr = Builder.NewObject(d.GetType(), Builder.MethodRefExpr(Builder.MethodRef(d.Method), d.Target is null ? Builder.TypeRefExpr(d.Method.DeclaringType) : Quote(d.Target)));
             }
             else
             {

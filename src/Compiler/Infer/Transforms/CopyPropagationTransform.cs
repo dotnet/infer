@@ -71,15 +71,34 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 ConvertExpression(ivde);
             if (iae.Expression.Equals(copyExpr))
                 return iae; // was 'null'
-            // convert only right hand side
+            var newTarget = ConvertIndices(iae.Target);
+            // convert right hand side
             IExpression expr = ConvertExpression(iae.Expression);
-            if (ReferenceEquals(expr, iae.Expression))
+            if (ReferenceEquals(newTarget, iae.Target) &&
+                ReferenceEquals(expr, iae.Expression))
                 return iae;
             IAssignExpression ae = Builder.AssignExpr();
             ae.Expression = expr;
-            ae.Target = iae.Target;
+            ae.Target = newTarget;
             context.InputAttributes.CopyObjectAttributesTo(iae, context.OutputAttributes, ae);
             return ae;
+        }
+
+        private IExpression ConvertIndices(IExpression expr)
+        {
+            if (!(expr is IArrayIndexerExpression iaie)) return expr;
+            var newTarget = ConvertIndices(iaie.Target);
+            formalTypeStack.Push(typeof(int));
+            IList<IExpression> newIndices = ConvertCollection(iaie.Indices);
+            formalTypeStack.Pop();
+            if (ReferenceEquals(newTarget, iaie.Target) &&
+                ReferenceEquals(newIndices, iaie.Indices))
+                return iaie;
+            IArrayIndexerExpression aie = Builder.ArrayIndxrExpr();
+            aie.Target = newTarget;
+            aie.Indices.AddRange(newIndices);
+            Context.InputAttributes.CopyObjectAttributesTo(iaie, context.OutputAttributes, aie);
+            return aie;
         }
 
         /// <summary>

@@ -7,7 +7,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System;
     using System.Collections.Generic;
     using System.Linq;
-using System.Reflection;
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
@@ -19,7 +18,7 @@ using System.Reflection;
     /// Represents a distribution using the quantiles at probabilities (0,...,n-1)/(n-1)
     /// </summary>
     [Serializable, DataContract]
-    public class OuterQuantiles : CanGetQuantile<double>, CanGetProbLessThan<double>
+    public class OuterQuantiles : CanGetQuantile<double>, CanGetProbLessThan<double>, CanGetLogProb<double>
     {
         /// <summary>
         /// Numbers in increasing order.
@@ -36,6 +35,7 @@ using System.Reflection;
             this.quantiles = quantiles;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             string quantileString;
@@ -56,12 +56,14 @@ using System.Reflection;
             return quantiles;
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (!(obj is OuterQuantiles that)) return false;
             return quantiles.ValueEquals(that.quantiles);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return Hash.GetHashCodeAsSequence(quantiles);
@@ -90,6 +92,7 @@ using System.Reflection;
             return new OuterQuantiles(quantiles);
         }
 
+        /// <inheritdoc/>
         public double GetProbLessThan(double x)
         {
             return GetProbLessThan(x, this.quantiles);
@@ -137,16 +140,34 @@ using System.Reflection;
         }
 
         /// <inheritdoc/>
+        public double GetLogProb(double value)
+        {
+            int n = quantiles.Length;
+            if (n == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
+            // The index of the specified value in the specified array, if value is found; otherwise, a negative number. 
+            // If value is not found and value is less than one or more elements in array, the negative number returned 
+            // is the bitwise complement of the index of the first element that is larger than value. 
+            // If value is not found and value is greater than all elements in array, the negative number returned is 
+            // the bitwise complement of (the index of the last element plus 1). 
+            int index = Array.BinarySearch(quantiles, value);
+            if (index < 0)
+            {
+                index = ~index;
+            }
+            if (index == 0) index++;
+            if (index >= n) index = n - 1;
+            // quantiles[index-1] < x <= quantiles[index]
+            double diff = quantiles[index] - quantiles[index - 1];
+            return 1.0 / (n - 1) / Math.Max(1e-4, diff);
+        }
+
+        /// <inheritdoc/>
         public double GetProbBetween(double lowerBound, double upperBound)
         {
             return Math.Max(0.0, GetProbLessThan(upperBound) - GetProbLessThan(lowerBound));
         }
 
-        /// <summary>
-        /// Returns the largest value x such that GetProbLessThan(x) &lt;= probability.
-        /// </summary>
-        /// <param name="probability">A real number in [0,1].</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public double GetQuantile(double probability)
         {
             return GetQuantile(probability, this.quantiles);

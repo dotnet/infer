@@ -79,6 +79,16 @@ namespace Microsoft.ML.Probabilistic.Factors
             return dist;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UnaryOp{DomainType}"]/message_doc[@name="DistAverageLogarithm{T}(T)"]/*'/>
+        /// <typeparam name="T">The type of the distribution over the sampled variable.</typeparam>
+        /// <typeparam name="TDist">The type of the distribution over the distribution of the sampled variable.</typeparam>
+        public static TDist DistAverageLogarithm<T, TDist>(T random, TDist result)
+            where TDist : HasPoint<T>
+        {
+            result.Point = random;
+            return result;
+        }
+
         //-- Max product ---------------------------------------------------------------------------------------
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="UnaryOp{DomainType}"]/message_doc[@name="RandomMaxConditional(Bernoulli)"]/*'/>

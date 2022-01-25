@@ -483,21 +483,10 @@ namespace Microsoft.ML.Probabilistic.Models
                 else
                 {
                     // constant
-                    if (!IsDefined)
+                    if (Inline)
                     {
                         HasObservedValue hov = this as HasObservedValue;
-                        Type type;
-                        if (hov.ObservedValue is null)
-                        {
-                            Type face = GetType().GetInterface(typeof(IModelExpression<>).Name, false);
-                            Type[] typeArgs = face.GetGenericArguments();
-                            type = typeArgs[0];
-                        }
-                        else
-                        {
-                            type = hov.ObservedValue.GetType();
-                        }
-                        if (Quoter.ShouldInlineType(type)) return Quoter.Quote(hov.ObservedValue);
+                        return Quoter.Quote(hov.ObservedValue);
                     }
                     return Builder.VarRefExpr((IVariableDeclaration)GetDeclaration());
                 }
@@ -1524,7 +1513,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 }
             }
             object distConst = Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(typeof(Variable), "Constant", dist);
-            return Variable<T>.FactorUntyped(typeof(Factor).GetMethod("Random").MakeGenericMethod(typeof(T)), (Variable)distConst);
+            return Variable<T>.FactorUntyped(new Func<Sampleable<T>, T>(Factor.Random<T>).Method, (Variable)distConst);
         }
 
         /// <summary>
@@ -6011,7 +6000,6 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<T> Random<TDist>(Variable<TDist> dist) where TDist : IDistribution<T> //, Sampleable<T>
         {
             return FactorUntyped(new Func<Sampleable<T>, T>(Factors.Factor.Random<T>).Method, (Variable)dist);
-            //return FactorUntyped(typeof(Factor).GetMethod("Random").MakeGenericMethod(typeof(T)), (Variable)dist);
         }
 
         /// <summary>
