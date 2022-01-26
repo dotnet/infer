@@ -19,15 +19,21 @@
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
-      <PropertyGroup>
-        <TargetFramework>net5.0-windows</TargetFramework>
+      <PropertyGroup Condition="'$(IsWindows)'=='true'">
+			  <TargetFramework>net5.0-windows</TargetFramework>
+		  </PropertyGroup>
+		  <PropertyGroup Condition="'$(IsWindows)'!='true'">
+        <TargetFramework>net5.0</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
-      <PropertyGroup>
+    	<PropertyGroup Condition="'$(IsWindows)'=='true'">
         <TargetFrameworks>net5.0-windows;net461</TargetFrameworks>
       </PropertyGroup>
-    </Otherwise>
+		  <PropertyGroup Condition="'$(IsWindows)'!='true'">
+			  <TargetFramework>net5.0;net461</TargetFramework>
+		  </PropertyGroup>
+	  </Otherwise>
   </Choose>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
