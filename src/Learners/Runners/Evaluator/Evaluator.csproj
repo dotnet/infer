@@ -9,6 +9,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <RootNamespace>Microsoft.ML.Probabilistic.Learners.Runners</RootNamespace>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
+    <!-- Migrate WebClient to HttpClient usage. -->
+    <NoWarn>SYSLIB0014;$(NoWarn)</NoWarn>
   </PropertyGroup>
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
