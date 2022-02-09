@@ -6,16 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using System.IO;
-using System.Globalization;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Math;
-using System.Xml;
-using System.Xml.Schema;
 
 namespace Microsoft.ML.Probabilistic.Utilities
 {
     using System.Linq;
+    using System.Linq.Expressions;
 
 #if SUPPRESS_XMLDOC_WARNINGS
 #pragma warning disable 1591
@@ -463,6 +460,23 @@ namespace Microsoft.ML.Probabilistic.Utilities
             }
 
             yield break;
+        }
+
+        /// <summary>
+        /// A faster versio of `new T()` when T is a generic type parameter.
+        /// See: https://stackoverflow.com/a/1280832
+        /// </summary>
+        public static T New<T>()
+            where T : new()
+        {
+            return NewFuncCache<T>.NewFunc();
+        }
+
+        private static class NewFuncCache<T>
+            where T : new()
+        {
+            public static Expression<Func<T>> NewExpression = () => new T();
+            public static Func<T> NewFunc = NewExpression.Compile();
         }
     }
 
