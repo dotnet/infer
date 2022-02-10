@@ -4851,21 +4851,30 @@ rr = mpf('-0.99999824265582826');
                 // Instead of scaling by 1/weight2, choose scale so that scale*(weight1+weight2) <= double.MaxValue.
                 // We know that (weight1+weight2) == weight1
                 // weight2 < 1
-                double scale = double.MaxValue / weight1; // scale >= 1 but scale*weight2 < 1
-                // Below is equivalent to:
-                // result = (scale * weight1 * value1 + scale * weight2 * value2) / (scale * weight1 + scale * weight2);
-                double scaleWeight2Value2 = scale * weight2 * value2; // cannot overflow
-                result = (double.MaxValue * value1 + scaleWeight2Value2) / double.MaxValue;
-                if (double.IsNaN(result) || double.IsInfinity(result))
+                const double nextBelowOne = double.MaxValue * ScaleBM1024; // nextBelowOne < 1
+                if (weight1 < 1)
                 {
-                    // Overflow happened.  Scale down to avoid overflow.
-                    // We scale by a power of 2 to ensure that the result is rounded the same way as above.
-                    // Otherwise, the function would not always be monotonic in value1 and value2.
-                    const double nextBelowOne = double.MaxValue * ScaleBM1024; // nextBelowOne < 1
-                    // IsInfinity(result) implies value1 > 1 so the first term cannot underflow.
-                    // This cannot overflow, because the second term's magnitude is less than 1.
-                    result = (nextBelowOne * value1 + scaleWeight2Value2 * ScaleBM1024) / nextBelowOne;
-                    if (double.IsNaN(result)) return value1 + value2;
+                    double scale = nextBelowOne / weight1; // scale >= 1 but scale*weight2 < 1
+                    double scaleWeight2Value2 = scale * weight2 * value2; // cannot overflow
+                    result = (nextBelowOne * value1 + scaleWeight2Value2) / nextBelowOne;
+                }
+                else
+                {
+                    double scale = double.MaxValue / weight1; // scale >= 1 but scale*weight2 < 1
+                    // Below is equivalent to:
+                    // result = (scale * weight1 * value1 + scale * weight2 * value2) / (scale * weight1 + scale * weight2);
+                    double scaleWeight2Value2 = scale * weight2 * value2; // cannot overflow
+                    result = (double.MaxValue * value1 + scaleWeight2Value2) / double.MaxValue;
+                    if (double.IsNaN(result) || double.IsInfinity(result))
+                    {
+                        // Overflow happened.  Scale down to avoid overflow.
+                        // We scale by a power of 2 to ensure that the result is rounded the same way as above.
+                        // Otherwise, the function would not always be monotonic in value1 and value2.
+                        // IsInfinity(result) implies value1 > 1 so the first term cannot underflow.
+                        // This cannot overflow, because the second term's magnitude is less than 1.
+                        result = (nextBelowOne * value1 + scaleWeight2Value2 * ScaleBM1024) / nextBelowOne;
+                        if (double.IsNaN(result)) return value1 + value2;
+                    }
                 }
             }
             else
