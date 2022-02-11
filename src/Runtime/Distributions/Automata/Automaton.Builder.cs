@@ -9,6 +9,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Diagnostics;
 
     using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
     {
@@ -428,7 +429,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Builds new automaton object. Builder must not be used after this method is called
             /// </summary>
-            public TThis GetAutomaton() => new TThis() { Data = this.GetData() };
+            public TThis GetAutomaton()
+            {
+                var result = Util.New<TThis>();
+                result.Data = this.GetData();
+                return result;
+            }
 
             /// <summary>
             /// Stores built automaton in pre-allocated <see cref="Automaton{TSequence,TElement,TElementDistribution,TSequenceManipulator,TThis}"/> object.

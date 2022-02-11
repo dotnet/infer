@@ -321,7 +321,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 builder.Start.AddTransition(allowedElements, Weight.FromLogValue(-allowedElements.GetLogAverageOf(allowedElements)), builder.StartStateIndex);
             }
 
-            return new TThis() { Data = builder.GetData(true) };
+            var result = Util.New<TThis>();
+            result.Data = builder.GetData(true);
+            return result;
         }
 
         /// <summary>
@@ -348,15 +350,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(allowedElements, nameof(allowedElements));
 
-            var result = new Builder();
+            var builder = new Builder();
             if (!double.IsNegativeInfinity(logValue))
             {
                 allowedElements = allowedElements.CreatePartialUniform();
-                var finish = result.Start.AddTransition(allowedElements, Weight.FromLogValue(-allowedElements.GetLogAverageOf(allowedElements)));
+                var finish = builder.Start.AddTransition(allowedElements, Weight.FromLogValue(-allowedElements.GetLogAverageOf(allowedElements)));
                 finish.SetEndWeight(Weight.FromLogValue(logValue));
             }
 
-            return new TThis() { Data = result.GetData(true) };
+            var result = Util.New<TThis>();
+            result.Data = builder.GetData(true);
+            return result;
         }
 
         /// <summary>
@@ -400,19 +404,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(sequences, "sequences");
 
-            var result = new Builder();
+            var builder = new Builder();
             int sequenceCount = 0;
             if (!double.IsNegativeInfinity(logValue))
             {
                 foreach (var sequence in sequences)
                 {
-                    var sequenceEndState = result.Start.AddTransitionsForSequence(sequence);
+                    var sequenceEndState = builder.Start.AddTransitionsForSequence(sequence);
                     sequenceEndState.SetEndWeight(Weight.FromLogValue(logValue));
                     ++sequenceCount;
                 }
             }
 
-            return new TThis() { Data = result.GetData(sequenceCount <= 1 ? (bool?)true : null) };
+            var result = Util.New<TThis>();
+            result.Data = builder.GetData(sequenceCount <= 1 ? (bool?)true : null);
+            return result;
         }
 
         /// <summary>
@@ -1262,7 +1268,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            automaton = new TThis() { Data = result.GetData(true) };
+            automaton = Util.New<TThis>();
+            automaton.Data = result.GetData(true);
             return true;
         }
 
@@ -1477,7 +1484,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var bothInputsDeterminized = automaton1.Data.IsDeterminized == true && automaton2.Data.IsDeterminized == true;
             var determinizationState = bothInputsDeterminized ? (bool?)true : null;
 
-            var result = new TThis() { Data = builder.GetData(determinizationState) };
+            var result = Util.New<TThis>();
+            result.Data = builder.GetData(determinizationState);
             if (determinizationState != true && result is StringAutomaton && tryDeterminize)
             {
                 result = result.TryDeterminize();
@@ -2141,36 +2149,42 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #region Helpers
 
-        protected TThis WithData(DataContainer data) => new TThis()
+        protected TThis WithData(DataContainer data)
         {
-            Data = data,
-            LogValueOverride = LogValueOverride,
-            PruneStatesWithLogEndWeightLessThan = PruneStatesWithLogEndWeightLessThan
-        };
+            var result = Util.New<TThis>();
+            result.Data = data;
+            result.LogValueOverride = LogValueOverride;
+            result.PruneStatesWithLogEndWeightLessThan = PruneStatesWithLogEndWeightLessThan;
+            return result;
+        }
 
         /// <summary>
         /// Creates a copy of the current automaton with a different value of <see cref="LogValueOverride"/>.
         /// </summary>
         /// <param name="logValueOverride">New <see cref="LogValueOverride"/>.</param>
         /// <returns>The created automaton.</returns>
-        public TThis WithLogValueOverride(double? logValueOverride) => new TThis()
+        public TThis WithLogValueOverride(double? logValueOverride)
         {
-            Data = Data,
-            LogValueOverride = logValueOverride,
-            PruneStatesWithLogEndWeightLessThan = PruneStatesWithLogEndWeightLessThan
-        };
+            var result = Util.New<TThis>();
+            result.Data = Data;
+            result.LogValueOverride = logValueOverride;
+            result.PruneStatesWithLogEndWeightLessThan = PruneStatesWithLogEndWeightLessThan;
+            return result;
+        }
 
         /// <summary>
         /// Creates a copy of the current automaton with a different value of <see cref="PruneStatesWithLogEndWeightLessThan"/>.
         /// </summary>
         /// <param name="pruneStatesWithLogEndWeightLessThan">New <see cref="PruneStatesWithLogEndWeightLessThan"/>.</param>
         /// <returns>The created automaton.</returns>
-        public TThis WithPruneStatesWithLogEndWeightLessThan(double? pruneStatesWithLogEndWeightLessThan) => new TThis()
+        public TThis WithPruneStatesWithLogEndWeightLessThan(double? pruneStatesWithLogEndWeightLessThan)
         {
-            Data = Data,
-            LogValueOverride = LogValueOverride,
-            PruneStatesWithLogEndWeightLessThan = pruneStatesWithLogEndWeightLessThan
-        };
+            var result = Util.New<TThis>();
+            result.Data = Data;
+            result.LogValueOverride = LogValueOverride;
+            result.PruneStatesWithLogEndWeightLessThan = pruneStatesWithLogEndWeightLessThan;
+            return result;
+        }
 
         /// <summary>
         /// Gets a value indicating how close two given automata are

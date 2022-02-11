@@ -8,6 +8,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System.Collections.Generic;
 
     using Math;
+    using Microsoft.ML.Probabilistic.Collections;
 
     /// <summary>
     /// Interface to allow untyped access to collection distribution
@@ -36,22 +37,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <summary>
     /// Element mapping information for the product of collection distributions
     /// </summary>
-    public class CollectionElementMappingInfo
+    public sealed class CollectionElementMappingInfo
     {
-        private readonly List<Tuple<List<int>, List<int>>> elementMapping;
-
-        public CollectionElementMappingInfo(List<Tuple<List<int>, List<int>>> elementMapping)
+        public CollectionElementMappingInfo(List<(ReadOnlyArray<int>, ReadOnlyArray<int>)> elementMapping)
         {
-            this.elementMapping = elementMapping;
+            this.ElementMapping = elementMapping;
         }
 
         /// <summary>
         /// The evidence associated with the elements of collection distribution
         /// </summary>
-        public List<Tuple<List<int>, List<int>>> ElementMapping
-        {
-            get { return elementMapping; }
-        }
+        public List<(ReadOnlyArray<int>, ReadOnlyArray<int>)> ElementMapping { get; }
     }
 
     /// <summary>
