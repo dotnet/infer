@@ -227,7 +227,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (B.IsPointMass)
                 return ProductAverageConditional(A, B.Point);
             if (Product.IsPointMass)
-                throw new NotImplementedException();
+                return GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
             if (Product.Precision < 1e-100)
                 return GaussianProductVmpOp.ProductAverageLogarithm(A, B);
             double mA, vA;
@@ -381,14 +381,14 @@ namespace Microsoft.ML.Probabilistic.Factors
                     sumA2 += a * a * fInvA;
                 }
                 double mean = sumA / z;
-                double var = sumA2 / z - mean * mean;
-                if (z == 0 || var <= 0)
+                double variance = sumA2 / z - mean * mean;
+                if (z == 0 || variance <= 0 || variance >= vA)
                 {
                     return GaussianProductOp_Slow.AAverageConditional(Product, A, B);
                     //throw new Exception("quadrature failed");
                 }
                 Gaussian result = new Gaussian();
-                result.SetMeanAndVariance(mean, var);
+                result.SetMeanAndVariance(mean, variance);
                 result.SetToRatio(result, A, ForceProper);
                 return result;
             }
@@ -542,9 +542,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         double diff = mProduct - a * mB;
                         double diffv = diff / v;
                         double diffv2 = diffv * diffv;
-                        double v2 = v * v;
                         double dlogf = -diffv;
-                        double avb = a * vB;
                         double ddlogf = diffv2 -1/v;
                         if ((i == 0 || i == n - 1) && (logf > -49))
                             throw new Exception("invalid integration bounds");
@@ -566,23 +564,41 @@ namespace Microsoft.ML.Probabilistic.Factors
                 else
                 {
                     // Compute the marginal and then divide
+                    double rmin = Math.Sign(amin) * Math.Pow(Math.Abs(amin), 1.0 / 3);
+                    double rmax = Math.Sign(amax) * Math.Pow(Math.Abs(amax), 1.0 / 3);
+                    double rinc = (rmax - rmin) / (n - 1);
+                    bool useCube = 1000 * vB > vProduct;
                     MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
                     for (int i = 0; i < n; i++)
                     {
-                        double a = amin + i * inc;
+                        double a, r = default;
+                        if (useCube)
+                        {
+                            r = rmin + i * rinc;
+                            a = Math.Pow(r, 3);
+                        }
+                        else
+                        {
+                            a = amin + i * inc;
+                        }
                         double logfA = LogLikelihoodRatio(a, a0, mProduct, vProduct, mA, pA, mB, vB);
                         double fA = Math.Exp(logfA);
-                        double v = vProduct + a * a * vB;
-                        double mX = a * (mProduct * a * vB + vProduct * mB)/v;
-                        double vX = a*a*vB*vProduct / v;
+                        if (useCube)
+                        {
+                            fA *= 3 * r * r;
+                        }
+                        double avB = a * vB;
+                        double v = vProduct + a * avB;
+                        double mX = a * (mProduct * avB + vProduct * mB) / v;
+                        double vX = a * avB * vProduct / v;
                         mva.Add(mX, vX, fA);
                     }
                     double mean = mva.Mean;
-                    double var = mva.Variance;
-                    if (var <= 0)
+                    double variance = mva.Variance;
+                    if (variance <= 0)
                         throw new Exception("quadrature failed");
                     Gaussian result = new Gaussian();
-                    result.SetMeanAndVariance(mean, var);
+                    result.SetMeanAndVariance(mean, variance);
                     result.SetToRatio(result, Product, GaussianProductOp.ForceProper);
                     return result;
                 }
@@ -662,11 +678,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                         mva.Add(a, fA);
                     }
                     double mean = mva.Mean;
-                    double var = mva.Variance;
-                    if (var <= 0)
+                    double variance = mva.Variance;
+                    if (variance <= 0)
                         throw new Exception("quadrature failed");
                     Gaussian result = new Gaussian();
-                    result.SetMeanAndVariance(mean, var);
+                    result.SetMeanAndVariance(mean, variance);
                     result.SetToRatio(result, A, GaussianProductOp.ForceProper);
                     return result;
                 }
