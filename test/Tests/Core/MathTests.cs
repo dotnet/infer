@@ -48,8 +48,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                             if (count > limit) break;
                             if (double.IsNaN(a + b)) continue;
                             double midpoint = MMath.WeightedAverage(wa, a, wb, b);
-                            Assert.True(midpoint >= System.Math.Min(a, b), $"Failed assertion: {midpoint} >= {System.Math.Min(a, b)}, wa={wa:r}, a={a:r}, wb={wb:r}, b={b:r}");
-                            Assert.True(midpoint <= System.Math.Max(a, b), $"Failed assertion: {midpoint} <= {System.Math.Max(a, b)}, wa={wa:r}, a={a:r}, wb={wb:r}, b={b:r}");
+                            Assert.True(midpoint >= System.Math.Min(a, b), $"Failed assertion: MMath.WeightedAverage({wa:r}, {a:r}, {wb:r}, {b:r}) {midpoint} >= {System.Math.Min(a, b)}");
+                            Assert.True(midpoint <= System.Math.Max(a, b), $"Failed assertion: MMath.WeightedAverage({wa:r}, {a:r}, {wb:r}, {b:r}) {midpoint} <= {System.Math.Max(a, b)}");
                             if (wa == wb) Assert.Equal(MMath.Average(a, b), midpoint);
                             Interlocked.Add(ref count, 1);
                         }

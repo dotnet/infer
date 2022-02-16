@@ -4854,9 +4854,9 @@ rr = mpf('-0.99999824265582826');
                 const double nextBelowOne = double.MaxValue * ScaleBM1024; // nextBelowOne < 1
                 if (weight1 < 1)
                 {
-                    double scale = nextBelowOne / weight1; // scale >= 1 but scale*weight2 < 1
+                    double scale = nextBelowOne / weight1; // scale >= 1 but scale*weight2 << 1
                     double scaleWeight2Value2 = scale * weight2 * value2; // cannot overflow
-                    result = (nextBelowOne * value1 + scaleWeight2Value2) / nextBelowOne;
+                    result = (nextBelowOne * value1 + scaleWeight2Value2) / nextBelowOne; // cannot overflow
                 }
                 else
                 {
