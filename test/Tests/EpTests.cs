@@ -966,11 +966,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             var basePrecision = Variable.GammaFromShapeAndRate(1, basePrecisionRate);
             basePrecision.AddAttribute(new PointEstimate());
             //basePrecision.InitialiseTo(Gamma.PointMass(0.01));
+            basePrecision.Name = nameof(basePrecision);
             var baseSkill = Variable.Array<double>(player);
+            baseSkill.Name = nameof(baseSkill);
             baseSkill[player] = Variable.GaussianFromMeanAndPrecision(0, basePrecision).ForEach(player);
             Range mode = new Range(2);
             var offsetPrecisionRate = Variable.GammaFromShapeAndRate(1, 1);
             var offsetPrecision = Variable.Array<double>(mode);
+            offsetPrecision.Name = nameof(offsetPrecision);
             offsetPrecision[mode] = Variable.GammaFromShapeAndRate(1, offsetPrecisionRate).ForEach(mode);
             offsetPrecision.AddAttribute(new PointEstimate());
             var offset = Variable.Array(Variable.Array<double>(mode), player);
@@ -995,18 +998,28 @@ namespace Microsoft.ML.Probabilistic.Tests
             if (gaussianLikelihood)
             {
                 var data = Variable.Observed(default(Gaussian[][]), player, mode);
-                Range game = new Range(100);
-                using (Variable.ForEach(game))
+                double dataPrecision = 100;
+                bool redundantAddition = false;
+                if (redundantAddition)
                 {
-                    var skillInGame = Variable.Array(Variable.Array<double>(mode), player);
-                    skillInGame[player][mode] = baseSkill[player] + offset[player][mode];
-                    Variable.ConstrainEqualRandom(skillInGame[player][mode], data[player][mode]);
+                    int gameCount = 100;
+                    Range game = new Range(gameCount);
+                    using (Variable.ForEach(game))
+                    {
+                        var skillInGame = Variable.Array(Variable.Array<double>(mode), player);
+                        skillInGame[player][mode] = baseSkill[player] + offset[player][mode];
+                        Variable.ConstrainEqualRandom(skillInGame[player][mode], data[player][mode]);
+                    }
+                    dataPrecision /= gameCount;
                 }
-                //Variable.ConstrainEqualRandom(skill[player][mode], data[player][mode]);
+                else
+                {
+                    Variable.ConstrainEqualRandom(skill[player][mode], data[player][mode]);
+                }
 
                 data.ObservedValue = Util.ArrayInit(player.SizeAsInt, i =>
                     Util.ArrayInit(mode.SizeAsInt, j =>
-                        Gaussian.FromMeanAndPrecision(trueSkills[i][j], 1)));
+                        Gaussian.FromMeanAndPrecision(trueSkills[i][j], dataPrecision)));
             }
             else
             {
@@ -1042,15 +1055,259 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             InferenceEngine engine = new InferenceEngine();
             engine.NumberOfIterations = 100;
-            engine.Compiler.GivePriorityTo(typeof(VariablePointOp_Mean<>));
-            engine.Compiler.GivePriorityTo(typeof(GammaFromShapeAndRateOp_Laplace));
+            //engine.Compiler.GivePriorityTo(typeof(VariablePointOp_Mean<>));
+            //engine.Compiler.GivePriorityTo(typeof(GammaFromShapeAndRateOp_Laplace));
             var baseSkillActual = engine.Infer<IList<Gaussian>>(baseSkill);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
-                Console.WriteLine("baseSkill[{0}] = {1} should be {2}", i, baseSkillActual[i], trueBaseSkills[i]);
+                Trace.WriteLine($"baseSkill[{i}] = {baseSkillActual[i]} should be {trueBaseSkills[i]}");
             }
-            Console.WriteLine("basePrecision = {0} should be {1}", engine.Infer(basePrecision), trueBasePrecision);
-            Console.WriteLine(StringUtil.JoinColumns(engine.Infer(offsetPrecision), " should be ", StringUtil.VerboseToString(trueOffsetPrecisions)));
+            Trace.WriteLine($"basePrecision = {engine.Infer(basePrecision)} should be {trueBasePrecision}");
+            Trace.WriteLine(StringUtil.JoinColumns(engine.Infer(offsetPrecision), " should be ", StringUtil.VerboseToString(trueOffsetPrecisions)));
+        }
+
+        /// <summary>
+        /// Test different ways of representing a model
+        /// </summary>
+        internal void FactorAnalysisTest2()
+        {
+            Range player = new Range(1000);
+            player.Name = nameof(player);
+            var baseVariance = Variable.Exp(Variable.GaussianFromMeanAndPrecision(-2, 1e-2));
+            baseVariance.AddAttribute(new PointEstimate());
+            bool initialiseSmall = false;
+            if (initialiseSmall)
+            {
+                baseVariance.InitialiseTo(Gamma.PointMass(0.01));
+            }
+            else
+            {
+                // If baseVariance is initialised smaller than offsetVariance, baseVariance will get stuck at zero.
+                baseVariance.InitialiseTo(Gamma.PointMass(1));
+            }
+            baseVariance.Name = nameof(baseVariance);
+            var baseSkill = Variable.Array<double>(player);
+            baseSkill.Name = nameof(baseSkill);
+            baseSkill[player] = Variable.GaussianFromMeanAndVariance(0, baseVariance).ForEach(player);
+            Range mode = new Range(2);
+            mode.Name = nameof(mode);
+            var offsetVariance = Variable.Array<double>(mode);
+            offsetVariance.Name = nameof(offsetVariance);
+            offsetVariance[mode] = Variable.Exp(Variable.GaussianFromMeanAndPrecision(-2, 1e-2).ForEach(mode));
+            offsetVariance.AddAttribute(new PointEstimate());
+            offsetVariance[mode].InitialiseTo(Gamma.PointMass(0.1));
+            var offset = Variable.Array(Variable.Array<double>(mode), player);
+            offset.Name = nameof(offset);
+            offset[player][mode] = Variable.GaussianFromMeanAndVariance(0, offsetVariance[mode]).ForEach(player);
+            var skill = Variable.Array(Variable.Array<double>(mode), player);
+            skill.Name = nameof(skill);
+            // equivalent to: Variable.GaussianFromMeanAndVariance(baseSkill[player], offsetVariance[mode])
+            skill[player][mode] = baseSkill[player] + offset[player][mode];
+
+            // sample from model
+            Rand.Restart(0);
+            double trueBaseVariance = 5;
+            Gaussian basePrior = Gaussian.FromMeanAndVariance(0, trueBaseVariance);
+            double[] trueBaseSkills = Util.ArrayInit(player.SizeAsInt, i => basePrior.Sample());
+            double[] trueOffsetVariances = Util.ArrayInit(mode.SizeAsInt, j => 1.0);
+            double[][] trueOffsets = Util.ArrayInit(player.SizeAsInt, i =>
+                Util.ArrayInit(mode.SizeAsInt, j =>
+                    Gaussian.FromMeanAndVariance(0, trueOffsetVariances[j]).Sample()));
+            double[][] trueSkills = Util.ArrayInit(player.SizeAsInt, i =>
+                Util.ArrayInit(mode.SizeAsInt, j =>
+                    trueBaseSkills[i] + trueOffsets[i][j]));
+
+            int teamSize = 1;
+            bool redundantAddition = false;
+            bool gaussianLikelihood = true;
+            bool sequential = false;
+            if (gaussianLikelihood)
+            {
+                var data = Variable.Observed(default(Gaussian[][]), player, mode);
+                // If dataPrecision is smaller than true offsetVariance, learned offsetVariance goes to zero.
+                double dataPrecision = 10;
+                if (redundantAddition)
+                {
+                    int gameCount = 100;
+                    Range game = new Range(gameCount);
+                    using (Variable.ForEach(game))
+                    {
+                        var skillInGame = Variable.Array(Variable.Array<double>(mode), player);
+                        skillInGame[player][mode] = baseSkill[player] + offset[player][mode];
+                        Variable.ConstrainEqualRandom(skillInGame[player][mode], data[player][mode]);
+                    }
+                    dataPrecision /= gameCount;
+                }
+                else
+                {
+                    Variable.ConstrainEqualRandom(skill[player][mode], data[player][mode]);
+                }
+
+                data.ObservedValue = Util.ArrayInit(player.SizeAsInt, i =>
+                    Util.ArrayInit(mode.SizeAsInt, j =>
+                        Gaussian.FromMeanAndPrecision(trueSkills[i][j], dataPrecision)));
+            }
+            else
+            {
+                var gameCount = 20000;
+                // With too few games and teamSize=1, redundantAddition causes learned all offsetVariances to be zero, or
+                // one learned offsetVariance is zero, and the others are inflated to compensate.
+                // More games just slows down convergence.
+                // Sequential does not affect this.
+                // The estimates have similar accuracy, but posterior variance is lower.
+                // Because estimates tend to be smoothed versions of the truth, low posterior variance leads to smaller variance estimates.
+                //if (redundantAddition) gameCount *= 10;
+                Range game = new Range(gameCount);
+                if (teamSize > 2 || (teamSize == 2 && redundantAddition))
+                {
+                    // teamSize>2 causes estimates to go to infinity if games are not sequential
+                    // teamSize=2 with redundantAddition causes stuck state if games are not sequential
+                    game.AddAttribute(new Sequential());
+                    sequential = true;
+                }
+                var observedModes = Variable.Observed(Util.ArrayInit(gameCount, i => Rand.Int(mode.SizeAsInt)), game);
+                observedModes.Name = nameof(observedModes);
+                var allPlayers = Enumerable.Range(0, player.SizeAsInt).ToArray();
+                if (teamSize == 1)
+                {
+                    // works for redundantAddition=false and true without Sequential
+                    // teamSize=1, redundantAddition=true Sequential gives baseVariance=9 (others are fine)
+                    // schedule is ruining the results?
+                    List<int> observedWinner = new List<int>();
+                    List<int> observedLoser = new List<int>();
+                    for (int i = 0; i < gameCount; i++)
+                    {
+                        var modeOfGame = observedModes.ObservedValue[i];
+                        var players = Rand.SampleWithoutReplacement(allPlayers, 2).ToList();
+                        var team0Performance = trueSkills[players[0]][modeOfGame] + Rand.Normal();
+                        var team1Performance = trueSkills[players[1]][modeOfGame] + Rand.Normal();
+                        if (team0Performance > team1Performance)
+                        {
+                            observedWinner.Add(players[0]);
+                            observedLoser.Add(players[1]);
+                        }
+                        else
+                        {
+                            observedWinner.Add(players[1]);
+                            observedLoser.Add(players[0]);
+                        }
+                    }
+                    var winner = Variable.Observed(observedWinner, game);
+                    winner.Name = nameof(winner);
+                    var loser = Variable.Observed(observedLoser, game);
+                    loser.Name = nameof(loser);
+                    using (Variable.ForEach(game))
+                    {
+                        var modeOfGame = observedModes[game];
+                        Variable<double> winnerSkill;
+                        Variable<double> loserSkill;
+                        if (redundantAddition)
+                        {
+                            winnerSkill = baseSkill[winner[game]] + offset[winner[game]][modeOfGame];
+                            loserSkill = baseSkill[loser[game]] + offset[loser[game]][modeOfGame];
+                        }
+                        else
+                        {
+                            winnerSkill = skill[winner[game]][modeOfGame];
+                            loserSkill = skill[loser[game]][modeOfGame];
+                        }
+                        var winnerPerformance = Variable.GaussianFromMeanAndPrecision(winnerSkill, 1);
+                        winnerPerformance.Name = nameof(winnerPerformance);
+                        var loserPerformance = Variable.GaussianFromMeanAndPrecision(loserSkill, 1);
+                        loserPerformance.Name = nameof(loserPerformance);
+                        Variable.ConstrainTrue(winnerPerformance > loserPerformance);
+
+                    }
+                }
+                else
+                {
+                    // teamSize=1, redundantAddition=true gives baseVariance=9 (others are fine)
+                    // teamSize=2, redundantAddition=true gives baseVariance=14 (others are fine)
+                    // teamSize=3, redundantAddition=true gives baseVariance=18 (others are fine)
+                    // teamSize=4, redundantAddition=true gives baseVariance=22 (others are fine)
+                    List<int[]> observedWinner = new List<int[]>();
+                    List<int[]> observedLoser = new List<int[]>();
+                    for (int i = 0; i < gameCount; i++)
+                    {
+                        var modeOfGame = observedModes.ObservedValue[i];
+                        var players = Rand.SampleWithoutReplacement(allPlayers, 2 * teamSize).ToList();
+                        var team0 = Collection.Split(players, teamSize, out int[] team1);
+                        var team0Performance = team0.Select(p => trueSkills[p][modeOfGame] + Rand.Normal()).Sum();
+                        var team1Performance = team1.Select(p => trueSkills[p][modeOfGame] + Rand.Normal()).Sum();
+                        if (team0Performance > team1Performance)
+                        {
+                            observedWinner.Add(team0);
+                            observedLoser.Add(team1);
+                        }
+                        else
+                        {
+                            observedWinner.Add(team1);
+                            observedLoser.Add(team0);
+                        }
+                    }
+                    Range playerOnTeam = new Range(teamSize);
+                    playerOnTeam.Name = nameof(playerOnTeam);
+                    var winner = Variable.Observed(observedWinner, game, playerOnTeam);
+                    winner.Name = nameof(winner);
+                    var loser = Variable.Observed(observedLoser, game, playerOnTeam);
+                    loser.Name = nameof(loser);
+                    using (Variable.ForEach(game))
+                    {
+                        var modeOfGame = observedModes[game];
+                        VariableArray<double> winnerSkills = Variable.Array<double>(playerOnTeam);
+                        winnerSkills.Name = nameof(winnerSkills);
+                        VariableArray<double> loserSkills = Variable.Array<double>(playerOnTeam);
+                        loserSkills.Name = nameof(loserSkills);
+                        if (redundantAddition)
+                        {
+                            winnerSkills[playerOnTeam] = baseSkill[winner[game][playerOnTeam]] + offset[winner[game][playerOnTeam]][modeOfGame];
+                            loserSkills[playerOnTeam] = baseSkill[loser[game][playerOnTeam]] + offset[loser[game][playerOnTeam]][modeOfGame];
+                        }
+                        else
+                        {
+                            winnerSkills[playerOnTeam] = skill[winner[game][playerOnTeam]][modeOfGame];
+                            loserSkills[playerOnTeam] = skill[loser[game][playerOnTeam]][modeOfGame];
+                        }
+                        var winnerPerformances = Variable.Array<double>(playerOnTeam);
+                        winnerPerformances.Name = nameof(winnerPerformances);
+                        winnerPerformances[playerOnTeam] = Variable.GaussianFromMeanAndPrecision(winnerSkills[playerOnTeam], 1);
+                        var winnerPerformance = Variable.Sum(winnerPerformances);
+                        winnerPerformance.Name = nameof(winnerPerformance);
+                        var loserPerformances = Variable.Array<double>(playerOnTeam);
+                        loserPerformances.Name = nameof(loserPerformances);
+                        loserPerformances[playerOnTeam] = Variable.GaussianFromMeanAndPrecision(loserSkills[playerOnTeam], 1);
+                        var loserPerformance = Variable.Sum(loserPerformances);
+                        loserPerformance.Name = nameof(loserPerformance);
+                        Variable.ConstrainTrue(winnerPerformance > loserPerformance);
+                    }
+                }
+            }
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.UseParallelForLoops = !sequential;
+            //engine.Compiler.GivePriorityTo(typeof(VariablePointOp_Mean<>));
+            //engine.Compiler.GivePriorityTo(typeof(GammaFromShapeAndRateOp_Laplace));
+            engine.Compiler.GivePriorityTo(typeof(GaussianOp_PointPrecision));
+            engine.Compiler.GivePriorityTo(typeof(GaussianFromMeanAndVarianceOp_PointVariance));
+            for (int i = 0; i < 1000; i++)
+            {
+                engine.NumberOfIterations = i + 1;
+                Trace.WriteLine($"baseVariance = {engine.Infer(baseVariance)} should be {trueBaseVariance}");
+                Trace.WriteLine(StringUtil.JoinColumns(engine.Infer(offsetVariance), " should be ", StringUtil.VerboseToString(trueOffsetVariances)));
+            }
+            var baseSkillActual = engine.Infer<IReadOnlyList<Gaussian>>(baseSkill);
+            var offsetSkillActual = engine.Infer<IReadOnlyList<IReadOnlyList<Gaussian>>>(offset);
+            for (int i = 0; i < 5; i++)
+            {
+                // baseSkills are not always accurate since they are inferred to be between the mode skills.
+                Trace.WriteLine($"baseSkill[{i}] = {baseSkillActual[i]} should be {trueBaseSkills[i]}");
+                for (int j = 0; j < mode.SizeAsInt; j++)
+                {
+                    Trace.WriteLine($"offset[{i}][{j}] = {offsetSkillActual[i][j]} should be {trueOffsets[i][j]}");
+                }
+            }
+            Trace.WriteLine($"baseVariance = {engine.Infer(baseVariance)} should be {trueBaseVariance}");
+            Trace.WriteLine(StringUtil.JoinColumns(engine.Infer(offsetVariance), " should be ", StringUtil.VerboseToString(trueOffsetVariances)));
         }
 
         /// <summary>

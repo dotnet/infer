@@ -129,6 +129,68 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests a model that needs a fresh node to appear twice in the iteration schedule.
+        /// Otherwise, the schedule cannot be initialised.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        public void FreshChainTest()
+        {
+            double[] data = new double[] {
+                0.592,
+                0.708,
+                0.789,
+                0.621,
+                0.873,
+                1.074,
+                4.634,
+                3.945,
+                2.118,
+                4.207,
+                2.884,
+                1.462,
+                2.851 };
+
+            Range n = new Range(data.Length);
+
+            VariableArray<double> nodes = Variable.Array<double>(n).Named("nodes");
+            VariableArray<double> NoisyNodes = Variable.Array<double>(n).Named("NoisyNodes");
+            // workaround
+            //nodes[n].InitialiseTo(Variable<Gamma>.Factor(Gamma.PointMass, NoisyNodes[n]));
+
+            using (var mblock = Variable.ForEach(n))
+            {
+                var i = mblock.Index;
+                var mIs0 = (i == 0);
+                var mIsGr = (i > 0);
+
+                using (Variable.If(mIs0))
+                {
+                    nodes[n] = Variable.GammaFromMeanAndVariance(1, 1);
+                }
+
+                using (Variable.If(mIsGr))
+                {
+                    var prevM = i - 1;
+                    nodes[n] = nodes[prevM] * Variable.GammaFromMeanAndVariance(1, 1);
+                }
+
+                NoisyNodes[n] = nodes[n] * Variable.GammaFromMeanAndVariance(1, 1);
+            }
+
+            NoisyNodes.ObservedValue = data;
+
+            InferenceEngine engine = new InferenceEngine(new ExpectationPropagation());
+
+            Gamma[] postNodes = engine.Infer<Gamma[]>(nodes);
+
+            for (int i = 0; i < n.SizeAsInt; i++)
+            {
+                Console.WriteLine("{0}: {1}", data[i], postNodes[i]);
+            }
+        }
+
+        /// <summary>
         /// Test a model where inference fails due to incorrect initial messages.
         /// Fails with "The distribution is improper" because D_uses_F[4] is uniform.
         /// This happens because D_uses_F[day][0] is not updated in the same loop as vdouble16_F which has an offset dependency on it.

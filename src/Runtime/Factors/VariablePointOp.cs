@@ -136,7 +136,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         bool hasPrevious;
         double prevPoint;
         double prevSign2 = double.NaN, prevSign3 = double.NaN;
-        public static bool EnsureConvergence = true;
+        public static bool EnsureConvergence = false;
         int updateCount = 0;
         int updateLimit = int.MaxValue;
         int recoveryCount = 10;

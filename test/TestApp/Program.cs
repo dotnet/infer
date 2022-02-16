@@ -77,7 +77,7 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.UseLocals = false;
             TestUtils.SetDebugOptions();
             TestUtils.SetBrowserMode(BrowserMode.OnError);
-            TestUtils.SetBrowserMode(BrowserMode.Always);
+            //TestUtils.SetBrowserMode(BrowserMode.Always);
             //TestUtils.SetBrowserMode(BrowserMode.WriteFiles);
 
             Stopwatch watch = new Stopwatch();
@@ -113,7 +113,6 @@ namespace TestApp
             watch.Stop();
             Console.WriteLine("elapsed time = {0}ms", watch.ElapsedMilliseconds);
         }
-
     }
 }
 

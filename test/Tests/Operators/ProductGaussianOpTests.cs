@@ -34,6 +34,19 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ProductOpTest()
         {
+            Assert.True(GaussianProductOp_Slow.ProductAverageConditional(
+                Gaussian.FromNatural(0.0019528178431691338, 3.25704676859826E-06),
+                Gaussian.FromNatural(-1.4311468676808659E-17, 5.4527745979495584E-21),
+                Gaussian.FromNatural(2157531.2967657731, 1830.6558666566498)).Precision > 0); // Gaussian.FromNatural()
+            Assert.True(GaussianProductOp_Slow.ProductAverageConditional(
+                Gaussian.FromNatural(6.2927332361739073E-13, 0.00099999696614431447),
+                Gaussian.FromNatural(-3.4418586572681724E-14, 4.2560312731693555E-12),
+                Gaussian.FromNatural(-2.58594546750577, 0.1)).Precision > 0); // Gaussian.FromNatural(1.262909232222487E-15, 6.6429067108186857E-15)
+            Assert.True(GaussianProductOp_Slow.ProductAverageConditional(
+                Gaussian.FromNatural(1.0947079898711334E-15, 0.00099999696759297),
+                Gaussian.FromNatural(-9.7432361496028023E-16, 2.630301623215118E-09),
+                Gaussian.FromNatural(-2.5848205615986561, 0.1)).Precision > 0); // Gaussian.FromNatural(7.0300069947451969E-17, 4.2701144269824409E-12)
+
             var testCases = new[]
             {
                 (4.94065645841247E-324, 0, -1e-5, 29),
@@ -77,7 +90,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                   Gaussian.FromMeanAndVariance(BMean, BVariance)).MaxDiff(expected) < 1e-5);
             }
 
-
+            Assert.True(GaussianProductOp.AAverageConditional(
+                Gaussian.FromNatural(0.11690888200261176, 0.00021561758318567543),
+                Gaussian.FromNatural(2.3189502343045755E-17, 0.00024804962073216578),
+                Gaussian.FromNatural(3825912.925085804, 3815545.0940052439)).Precision > 0); // Gaussian.FromNatural(0.11722698913727095, 0.00021679261874209184)
             Assert.True(GaussianProductOp.AAverageConditional(6.0, 2.0)
               .MaxDiff(Gaussian.PointMass(6.0 / 2.0)) < tolerance);
             Assert.True(GaussianProductOp.AAverageConditional(6.0, new Gaussian(1, 3), Gaussian.PointMass(2.0))
