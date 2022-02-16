@@ -403,21 +403,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IStatement innerStmt = ist;
                     while (Containers.IsContainer(innerStmt))
                     {
-                        if (innerStmt is IForStatement)
-                            innerStmt = ((IForStatement)innerStmt).Body.Statements[0];
-                        else if (innerStmt is IConditionStatement)
-                            innerStmt = ((IConditionStatement)innerStmt).Then.Statements[0];
+                        if (innerStmt is IForStatement ifs)
+                            innerStmt = ifs.Body.Statements[0];
+                        else if (innerStmt is IConditionStatement ics)
+                            innerStmt = ics.Then.Statements[0];
                         else
                             throw new Exception();
                     }
-                    if (innerStmt is IExpressionStatement)
+                    if (innerStmt is IExpressionStatement ies)
                     {
-                        IExpressionStatement ies = (IExpressionStatement)innerStmt;
-                        if (ies.Expression is IAssignExpression)
+                        if (ies.Expression is IAssignExpression iae)
                         {
-                            IAssignExpression iae = (IAssignExpression)ies.Expression;
                             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(iae.Target);
-                            if (ivd != null && ivd.Name == "skillInSquad_F" && iae.Expression.ToString().Contains("skills_F"))
+                            if (ivd != null && ivd.Name == "NoisyNodes_index0__Q" && iae.Expression.ToString().Contains("nodes_uses_F"))
                                 Console.WriteLine(ivd);
                         }
                     }
