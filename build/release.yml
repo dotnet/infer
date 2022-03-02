@@ -17,7 +17,7 @@ trigger: none # disable CI build
 jobs:
 - job: macOS # Hosted MacOS agent
   pool:
-    vmImage: macOS-10.14
+    vmImage: macOS-latest
   steps:
   - task: UseDotNet@2
     inputs:
@@ -47,7 +47,7 @@ jobs:
 
 - job: Windows # Hosted Windows agent
   pool:
-    vmImage: windows-2019
+    vmImage: windows-latest
 
   steps:
   - task: Bash@3
@@ -145,7 +145,6 @@ jobs:
     inputs:
       solution: build/sign.proj
       msbuildArguments: /p:SignType=$(SignType) /verbosity:detailed
-      msbuildVersion: 14.0
       maximumCpuCount: true
     condition: in(variables.SignType, 'real', 'test')
 
@@ -177,7 +176,6 @@ jobs:
     inputs:
       solution: build/sign.proj
       msbuildArguments: /p:SignType=$(SignType) /p:SignNugetPackages=true /verbosity:detailed
-      msbuildVersion: 14.0
       maximumCpuCount: true
     condition: in(variables.SignType, 'real', 'test')
 
