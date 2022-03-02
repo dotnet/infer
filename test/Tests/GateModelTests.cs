@@ -7257,6 +7257,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 using (Variable.If(b[item]))
                 {
                     var index = Variable.Max(0, indices[item]);
+                    index.Name = nameof(index);
                     Variable.ConstrainEqualRandom(x[index], new Bernoulli(xLike));
                 }
             }
@@ -7275,6 +7276,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double bPost = bPrior * sumCondT / (bPrior * sumCondT + (1 - bPrior));
                 Assert.True(MMath.AbsDiff(bDist[i].GetProbTrue(), bPost, 1e-10) < 1e-10);
             }
+
+            b.ObservedValue = new bool[] { true, false };
+            InferenceEngine engine2 = new InferenceEngine();
+            engine2.ShowProgress = false;
+            engine2.Compiler.Compiled += (sender, e) =>
+            {
+                Assert.Equal(0, e.Warnings.Count);
+            };
+            DistributionArray<Bernoulli> bDist2 = engine2.Infer<DistributionArray<Bernoulli>>(b);
         }
 
         internal void FairCoinTest()

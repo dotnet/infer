@@ -7,15 +7,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.Graphs;
-using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Compiler.Visualizers;
+using Microsoft.ML.Probabilistic.Models.Attributes;
 using NodeIndex = System.Int32;
 using EdgeIndex = System.Int32;
-using Microsoft.ML.Probabilistic.Models.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -45,12 +44,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal static bool deleteAllOffsetEdges = false;
 
         internal static int LastScheduleLength = 0;
-        private ModelCompiler compiler;
+        private readonly ModelCompiler compiler;
         private int whileDepth;
-        private List<IList<IStatement>> initStmtsOfWhile = new List<IList<IStatement>>();
-        private Set<IStatement> topLevelWhileStmts = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
-        private Dictionary<IWhileStatement, IWhileStatement> convertedWhiles = new Dictionary<IWhileStatement, IWhileStatement>(ReferenceEqualityComparer<IWhileStatement>.Instance);
-        private List<IStatement> statementsToFinalize = new List<IStatement>();
+        private readonly List<IList<IStatement>> initStmtsOfWhile = new List<IList<IStatement>>();
+        private readonly Set<IStatement> topLevelWhileStmts = new Set<IStatement>(ReferenceEqualityComparer<IStatement>.Instance);
+        private readonly Dictionary<IWhileStatement, IWhileStatement> convertedWhiles = new Dictionary<IWhileStatement, IWhileStatement>(ReferenceEqualityComparer<IWhileStatement>.Instance);
+        private readonly List<IStatement> statementsToFinalize = new List<IStatement>();
         private Dictionary<NodeIndex, NodeIndex> groupOf;
         private Dictionary<NodeIndex, SerialLoopInfo> loopInfoOfGroup;
         private int nextGroupIndex, nextNodeIndex;

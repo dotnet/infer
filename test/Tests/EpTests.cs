@@ -545,6 +545,53 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(bExpected, bActual, 0.1);
         }
 
+        internal void BaseOffsetTest2()
+        {
+            double baseSkillPriorVariance = 0.45580040754755607;
+            double baseSkillWeight = 3.0889215616628265;
+            double skillPriorMean = 4.4812609769076293;
+            double skillOffsetPriorVariance = 2.5342192437224029;
+            Gaussian messageToScaledBase = DoublePlusOp.AAverageConditional(Gaussian.PointMass(21), new Gaussian(skillPriorMean, skillOffsetPriorVariance));
+            Gaussian messageToBase = GaussianProductOp.AAverageConditional(messageToScaledBase, baseSkillWeight);
+            Gaussian basePosterior = new Gaussian(0, baseSkillPriorVariance) * messageToBase;
+            Console.WriteLine(basePosterior);
+            Variable<double> baseSkill = Variable.GaussianFromMeanAndVariance(0, baseSkillPriorVariance);
+            Variable<double> offset = Variable.GaussianFromMeanAndVariance(skillPriorMean, skillOffsetPriorVariance);
+            Variable<double> skill = baseSkill * baseSkillWeight + offset;
+            Gaussian[] messages = new Gaussian[]
+            {
+                new Gaussian(26.56, 15.14),
+                new Gaussian(24.34, 15.12),
+                new Gaussian(23.12, 15.1),
+                new Gaussian(22.39, 15.08),
+                new Gaussian(21.99, 15.06),
+                new Gaussian(21.73, 15.04),
+                new Gaussian(21.52, 15.02),
+                new Gaussian(21.39, 15.01),
+                new Gaussian(21.3, 14.99),
+                new Gaussian(21.23, 14.98),
+                new Gaussian(21.18, 14.97),
+                new Gaussian(21.14, 14.96),
+                new Gaussian(21.11, 14.95),
+                new Gaussian(21.08, 14.94),
+                new Gaussian(21.06, 14.93),
+                new Gaussian(21.04, 14.93),
+                new Gaussian(21.03, 14.92),
+                new Gaussian(21.02, 14.91),
+                new Gaussian(21.01, 14.91),
+                new Gaussian(21.01, 14.9),
+                new Gaussian(21, 14.9)
+            };
+            InferenceEngine engine = new InferenceEngine();
+            engine.ShowProgress = false;
+            for (int i = 0; i < messages.Length; i++)
+            {
+                Gaussian message = messages[i];
+                Variable.ConstrainEqualRandom(skill, message);
+                Console.WriteLine($"{i} {engine.Infer(baseSkill)}");
+            }
+        }
+
         internal void BaseOffsetTest()
         {
             int N = 100;
