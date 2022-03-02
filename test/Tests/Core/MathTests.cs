@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Math;
-using System.Threading;
+using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {

@@ -560,14 +560,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IExpression clone = ci.GetClone(context, toClone, currentBindings, this, start, conditionContextIndex, isDef);
                 clone = Builder.JaggedArrayIndex(clone, indices);
                 // check if indices contains an expression that is not a top-level loop variable or loop local
-                // check for dependence on variables tagged with GateBlock that do not depend on a inner lop
-                bool isSubset = indices.Any(bracket => bracket.Any(index =>
+                bool isSubset = ci.isStochastic && indices.Any(bracket => bracket.Any(index =>
                 {
                     // Based on GateAnalysisTransform.ContainsLocalVars
                     bool containsLocalVars = Recognizer.GetVariables(index).Any(indexVar =>
                         context.InputAttributes.Get<GateBlock>(indexVar) == ci.gateBlock);
                     if (containsLocalVars)
                     {
+                        // check for dependence on variables tagged with GateBlock that do not depend on a inner loop
                         return Recognizer.GetVariables(index).Any(indexVar =>
                                 context.InputAttributes.Get<GateBlock>(indexVar) == ci.gateBlock &&
                                 Recognizer.GetLoopForVariable(context, indexVar) == null);
