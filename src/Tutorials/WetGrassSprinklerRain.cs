@@ -13,6 +13,13 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 {
     public class WetGlassSprinklerRainModel
     {
+        // Although all the variables in this example have just 2 states (true/false),
+        // the example is formulated in a way that shows how to extend to multiple states
+        public const int CloudyStateCount = 2;
+        public const int SprinklerStateCount = 2;
+        public const int RainStateCount = 2;
+        public const int WetGrassStateCount = 2;
+
         // Primary random variables
         public VariableArray<int> Cloudy;
         public VariableArray<int> Sprinkler;
@@ -54,12 +61,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             NumberOfExamples = Variable.New<int>().Named("NofE");
             Range N = new Range(NumberOfExamples).Named("N");
 
-            // Although all the variables in this example have just 2 states (true/false),
-            // the example is formulated in a way that shows how to extend to multiple states
-            Range C = new Range(2).Named("C");
-            Range S = new Range(2).Named("S");
-            Range R = new Range(2).Named("R");
-            Range W = new Range(2).Named("W");
+            Range C = new Range(CloudyStateCount).Named("C");
+            Range S = new Range(SprinklerStateCount).Named("S");
+            Range R = new Range(RainStateCount).Named("R");
+            Range W = new Range(WetGrassStateCount).Named("W");
 
             // Define the priors and the parameters
             ProbCloudyPrior = Variable.New<Dirichlet>().Named("ProbCloudyPrior");
@@ -144,11 +149,13 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             int[] wetgrass)
         {
             // Set all priors to uniform
-            Dirichlet probCloudyPrior = Dirichlet.Uniform(2);
-            Dirichlet[] dirUnifArray = Enumerable.Repeat(Dirichlet.Uniform(2), 2).ToArray();
-            Dirichlet[][] dirUnifArrayArray = Enumerable.Repeat(dirUnifArray, 2).ToArray();
+            Dirichlet probCloudyPrior = Dirichlet.Uniform(CloudyStateCount);
+            Dirichlet[] cptSprinklerPrior = Enumerable.Repeat(Dirichlet.Uniform(SprinklerStateCount), CloudyStateCount).ToArray();
+            Dirichlet[] cptRainPrior = Enumerable.Repeat(Dirichlet.Uniform(RainStateCount), CloudyStateCount).ToArray();
+            Dirichlet[] dirUnifArray = Enumerable.Repeat(Dirichlet.Uniform(WetGrassStateCount), RainStateCount).ToArray();
+            Dirichlet[][] cptWetGrassPrior = Enumerable.Repeat(dirUnifArray, SprinklerStateCount).ToArray();
 
-            LearnParameters(cloudy, sprinkler, rain, wetgrass, probCloudyPrior, dirUnifArray, dirUnifArray, dirUnifArrayArray);
+            LearnParameters(cloudy, sprinkler, rain, wetgrass, probCloudyPrior, cptSprinklerPrior, cptRainPrior, cptWetGrassPrior);
         }
 
         /// <summary>

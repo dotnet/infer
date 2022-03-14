@@ -68,9 +68,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 if (array[i].Precision == 0)
                     return array[i];
-                double mean1;
-                double variance1;
-                array[i].GetMeanAndVarianceImproper(out mean1, out variance1);
+                array[i].GetMeanAndVarianceImproper(out double mean1, out double variance1);
                 mean = mean + mean1;
                 variance = variance + variance1;
             }
@@ -97,15 +95,13 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 return result;
             }
-            double sumMean, sumVariance;
-            sum.GetMeanAndVarianceImproper(out sumMean, out sumVariance);
+            sum.GetMeanAndVarianceImproper(out double sumMean, out double sumVariance);
 
             // Check if an element of the array is uniform.
             int indexOfUniform = -1;
             for (int i = 0; i < array.Count; i++)
             {
-                double meani, variancei;
-                array[i].GetMeanAndVarianceImproper(out meani, out variancei);
+                array[i].GetMeanAndVarianceImproper(out double meani, out double variancei);
                 // instead of testing IsUniform, we need to test the more strict requirement 
                 // of variance < Infinity due to the way we are doing the computations
                 if (double.IsPositiveInfinity(variancei))
@@ -137,8 +133,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             // at this point, the array has no uniform elements.
 
             // get the mean and variance of sum of all the Gaussians;
-            double totalMean, totalVariance;
-            to_sum.GetMeanAndVarianceImproper(out totalMean, out totalVariance);
+            to_sum.GetMeanAndVarianceImproper(out double totalMean, out double totalVariance);
 
             // subtract it off from the mean and variance of incoming Gaussian from Sum
             double totalMsgMean = sumMean - totalMean;
@@ -146,8 +141,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             for (int i = 0; i < array.Count; i++)
             {
-                double meani, variancei;
-                array[i].GetMeanAndVarianceImproper(out meani, out variancei);
+                array[i].GetMeanAndVarianceImproper(out double meani, out double variancei);
                 double msgMean = totalMsgMean + meani;
                 double msgVariance = totalMsgVariance - variancei;
                 if (Math.Abs(msgVariance) < Math.Abs(totalMsgVariance) * 1e-10)
