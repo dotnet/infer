@@ -3632,6 +3632,55 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void ObservedVariableNameClash()
+        {
+            Assert.Throws<InferCompilerException>(() =>
+            {
+                var x = Variable.Observed(1.0).Named("x");
+                var y = Variable.Observed(2.0).Named("x");
+                var z = (x + y).Named("z");
+                InferenceEngine engine = new InferenceEngine();
+                engine.Infer(z);
+            });
+        }
+
+        [Fact]
+        public void ObservedVariableNameCapitalisationClash()
+        {
+            var x = Variable.Observed(1.0).Named("x");
+            var y = Variable.Observed(2.0).Named("X");
+            var z = (x + y).Named("z");
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(z);
+        }
+
+        [Fact]
+        public void InferredVariableNameClash()
+        {
+            Assert.Throws<InferCompilerException>(() =>
+            {
+                Variable<double> x = Variable.Beta(1, 1).Named("x");
+                Variable<bool> y = Variable.Bernoulli(x).Named("x");
+                InferenceEngine engine = new InferenceEngine();
+                engine.Infer(x);
+                engine.Infer(y);
+            });
+        }
+
+        [Fact]
+        public void InferredVariableNameCapitalisationClash()
+        {
+            Assert.Throws<CompilationFailedException>(() =>
+            {
+                Variable<double> x = Variable.Beta(1, 1).Named("x");
+                Variable<bool> x2 = Variable.Bernoulli(x).Named("X");
+                InferenceEngine engine = new InferenceEngine();
+                engine.Infer(x);
+                engine.Infer(x2);
+            });
+        }
+
+        [Fact]
         public void RangeNameClashTest()
         {
             Assert.Throws<InferCompilerException>(() =>
