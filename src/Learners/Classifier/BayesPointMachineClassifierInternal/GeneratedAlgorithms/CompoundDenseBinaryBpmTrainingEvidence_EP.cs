@@ -54,15 +54,15 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>True if Constant has executed. Set this to false to force re-execution of Constant</summary>
 		public bool Constant_isDone;
 		/// <summary>Field backing the FeatureCount property</summary>
-		private int featureCount;
+		private int FeatureCount_field;
 		public DistributionStructArray<Gaussian,double>[] FeatureScores_B;
 		public DistributionStructArray<Gaussian,double>[] FeatureScores_F;
 		/// <summary>Field backing the FeatureValues property</summary>
-		private double[][] featureValues;
+		private double[][] FeatureValues_field;
 		/// <summary>Field backing the InstanceCount property</summary>
-		private int instanceCount;
+		private int InstanceCount_field;
 		/// <summary>Field backing the Labels property</summary>
-		private bool[] labels;
+		private bool[] Labels_field;
 		/// <summary>Message to marginal of 'ModelSelector'</summary>
 		public Bernoulli ModelSelector_marginal_F;
 		public Bernoulli ModelSelector_selector_B;
@@ -108,9 +108,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>The constant 'vBernoulli4'</summary>
 		public Bernoulli vBernoulli4;
 		/// <summary>Field backing the WeightConstraints property</summary>
-		private DistributionStructArray<Gaussian,double> weightConstraints;
+		private DistributionStructArray<Gaussian,double> WeightConstraints_field;
 		/// <summary>Field backing the WeightPrecisionRateConstraints property</summary>
-		private DistributionStructArray<Gamma,double> weightPrecisionRateConstraints;
+		private DistributionStructArray<Gamma,double> WeightPrecisionRateConstraints_field;
 		public Gamma WeightPrecisionRateRates_F_reduced;
 		public DistributionStructArray<Gamma,double> WeightPrecisionRates_depth0_F;
 		/// <summary>Message to marginal of 'WeightPrecisionRates'</summary>
@@ -154,11 +154,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public int FeatureCount
 		{
 			get {
-				return this.featureCount;
+				return this.FeatureCount_field;
 			}
 			set {
-				if (this.featureCount!=value) {
-					this.featureCount = value;
+				if (this.FeatureCount_field!=value) {
+					this.FeatureCount_field = value;
 					this.numberOfIterationsDone = 0;
 					this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
 					this.Changed_FeatureCount_isDone = false;
@@ -179,13 +179,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public double[][] FeatureValues
 		{
 			get {
-				return this.featureValues;
+				return this.FeatureValues_field;
 			}
 			set {
-				if ((value!=null)&&(value.Length!=this.instanceCount)) {
-					throw new ArgumentException(((("Provided array of length "+value.Length)+" when length ")+this.instanceCount)+" was expected for variable \'FeatureValues\'");
+				if ((value!=null)&&(value.Length!=this.InstanceCount)) {
+					throw new ArgumentException(((("Provided array of length "+value.Length)+" when length ")+this.InstanceCount)+" was expected for variable \'FeatureValues\'");
 				}
-				this.featureValues = value;
+				this.FeatureValues_field = value;
 				this.numberOfIterationsDone = 0;
 				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
 				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised = false;
@@ -201,11 +201,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public int InstanceCount
 		{
 			get {
-				return this.instanceCount;
+				return this.InstanceCount_field;
 			}
 			set {
-				if (this.instanceCount!=value) {
-					this.instanceCount = value;
+				if (this.InstanceCount_field!=value) {
+					this.InstanceCount_field = value;
 					this.numberOfIterationsDone = 0;
 					this.Changed_InstanceCount_isDone = false;
 					this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
@@ -224,13 +224,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public bool[] Labels
 		{
 			get {
-				return this.labels;
+				return this.Labels_field;
 			}
 			set {
-				if ((value!=null)&&(value.Length!=this.instanceCount)) {
-					throw new ArgumentException(((("Provided array of length "+value.Length)+" when length ")+this.instanceCount)+" was expected for variable \'Labels\'");
+				if ((value!=null)&&(value.Length!=this.InstanceCount)) {
+					throw new ArgumentException(((("Provided array of length "+value.Length)+" when length ")+this.InstanceCount)+" was expected for variable \'Labels\'");
 				}
-				this.labels = value;
+				this.Labels_field = value;
 				this.numberOfIterationsDone = 0;
 				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
 				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised = false;
@@ -252,10 +252,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Gaussian,double> WeightConstraints
 		{
 			get {
-				return this.weightConstraints;
+				return this.WeightConstraints_field;
 			}
 			set {
-				this.weightConstraints = value;
+				this.WeightConstraints_field = value;
 				this.numberOfIterationsDone = 0;
 				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
 				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised = false;
@@ -270,10 +270,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Gamma,double> WeightPrecisionRateConstraints
 		{
 			get {
-				return this.weightPrecisionRateConstraints;
+				return this.WeightPrecisionRateConstraints_field;
 			}
 			set {
-				this.weightPrecisionRateConstraints = value;
+				this.WeightPrecisionRateConstraints_field = value;
 				this.numberOfIterationsDone = 0;
 				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
 				this.Changed_FeatureCount_WeightPrecisionRateConstraints_isDone = false;
@@ -294,42 +294,42 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_isDone) {
 				return ;
 			}
-			this.ModelSelector_selector_cases_0_rep2_uses_B = new Bernoulli[this.featureCount][];
-			this.WeightPrecisionRates_depth0_F = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.WeightPrecisionRates_marginal_F = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.SharedWeightPrecisionRates_uses_F = new Gamma[this.featureCount][];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.ModelSelector_selector_cases_0_rep2_uses_B = new Bernoulli[this.FeatureCount][];
+			this.WeightPrecisionRates_depth0_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.WeightPrecisionRates_marginal_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.SharedWeightPrecisionRates_uses_F = new Gamma[this.FeatureCount][];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.SharedWeightPrecisionRates_uses_F[FeatureRange] = new Gamma[2];
 			}
 			this.WeightPrecisionRateRates_F_reduced = default(Gamma);
-			if (this.featureCount>0) {
+			if (this.FeatureCount>0) {
 				this.WeightPrecisionRateRates_F_reduced = GammaFromShapeAndRateOpBase.SampleAverageConditional(1.0, 1.0);
 			}
-			this.Weights_uses_F = new Gaussian[this.featureCount][];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.Weights_uses_F = new Gaussian[this.FeatureCount][];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.Weights_uses_F[FeatureRange] = new Gaussian[2];
 				this.Weights_uses_F[FeatureRange][1] = Gaussian.Uniform();
 			}
-			this.Weights_uses_B = new Gaussian[this.featureCount][];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.Weights_uses_B = new Gaussian[this.FeatureCount][];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.Weights_uses_B[FeatureRange] = new Gaussian[2];
 				this.Weights_uses_B[FeatureRange][0] = Gaussian.Uniform();
 				this.Weights_uses_B[FeatureRange][1] = Gaussian.Uniform();
 			}
-			this.Weights_F = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			this.WeightPrecisions_B = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.WeightPrecisions_F = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.SharedWeightPrecisionRates_uses_B = new Gamma[this.featureCount][];
-			this.WeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.WeightPrecisionRates_uses_B = new Gamma[this.featureCount][];
-			this.WeightPrecisionRates_rep_B_toDef = new Gamma[this.featureCount];
-			this.WeightPrecisionRates_uses_F = new Gamma[this.featureCount][];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.Weights_F = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+			this.WeightPrecisions_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.WeightPrecisions_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.SharedWeightPrecisionRates_uses_B = new Gamma[this.FeatureCount][];
+			this.WeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.WeightPrecisionRates_uses_B = new Gamma[this.FeatureCount][];
+			this.WeightPrecisionRates_rep_B_toDef = new Gamma[this.FeatureCount];
+			this.WeightPrecisionRates_uses_F = new Gamma[this.FeatureCount][];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_uses_F[FeatureRange] = new Gamma[2];
 				this.WeightPrecisionRates_uses_F[FeatureRange][1] = Gamma.Uniform();
 			}
-			this.WeightPrecisionRates_rep_B = new Gamma[this.featureCount][];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.WeightPrecisionRates_rep_B = new Gamma[this.FeatureCount][];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_rep_B_toDef[FeatureRange] = ReplicateOp_Divide.ToDefInit<Gamma>(this.WeightPrecisionRates_uses_F[FeatureRange][1]);
 				this.WeightPrecisionRates_uses_B[FeatureRange] = new Gamma[2];
 				this.WeightPrecisionRates_uses_B[FeatureRange][0] = Gamma.Uniform();
@@ -339,21 +339,21 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.SharedWeightPrecisionRates_uses_B[FeatureRange][1] = Gamma.Uniform();
 				this.SharedWeightPrecisionRates_uses_B[FeatureRange][0] = Gamma.Uniform();
 			}
-			this.SharedWeightPrecisionRates_F = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.SharedWeightPrecisionRates_B_FeatureRange__Q = new Gamma[this.featureCount];
-			this.SharedWeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.featureCount);
-			this.CommonWeightPrecision_rep_F = new Gamma[this.featureCount];
-			this.CommonWeightPrecision_rep_B = new Gamma[this.featureCount];
-			this.Weights_use_B = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			this.Weights_rep_F_marginal = new Gaussian[this.featureCount];
-			this.Weights_rep_B_toDef = new Gaussian[this.featureCount];
-			this.Weights_rep_F = new Gaussian[this.featureCount][];
-			this.Weights_rep_B = new Gaussian[this.featureCount][];
-			this.WeightPrecisions_B_FeatureRange__Q = new Gamma[this.featureCount];
-			this.ModelSelector_selector_cases_0_rep2_B = new Bernoulli[this.featureCount];
-			this.ModelSelector_selector_cases_0_rep5_uses_B = new Bernoulli[this.featureCount][];
-			this.ModelSelector_selector_cases_0_rep5_B = new Bernoulli[this.featureCount];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.SharedWeightPrecisionRates_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.SharedWeightPrecisionRates_B_FeatureRange__Q = new Gamma[this.FeatureCount];
+			this.SharedWeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.CommonWeightPrecision_rep_F = new Gamma[this.FeatureCount];
+			this.CommonWeightPrecision_rep_B = new Gamma[this.FeatureCount];
+			this.Weights_use_B = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+			this.Weights_rep_F_marginal = new Gaussian[this.FeatureCount];
+			this.Weights_rep_B_toDef = new Gaussian[this.FeatureCount];
+			this.Weights_rep_F = new Gaussian[this.FeatureCount][];
+			this.Weights_rep_B = new Gaussian[this.FeatureCount][];
+			this.WeightPrecisions_B_FeatureRange__Q = new Gamma[this.FeatureCount];
+			this.ModelSelector_selector_cases_0_rep2_B = new Bernoulli[this.FeatureCount];
+			this.ModelSelector_selector_cases_0_rep5_uses_B = new Bernoulli[this.FeatureCount][];
+			this.ModelSelector_selector_cases_0_rep5_B = new Bernoulli[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange] = new Bernoulli[3];
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][1] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][0] = Bernoulli.Uniform();
@@ -369,14 +369,14 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.WeightPrecisionRates_depth0_F[FeatureRange] = Gamma.Uniform();
 				this.WeightPrecisionRates_marginal_F[FeatureRange] = Gamma.Uniform();
 			}
-			this.ModelSelector_selector_cases_0_rep3_B = new Bernoulli[this.featureCount];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.ModelSelector_selector_cases_0_rep3_B = new Bernoulli[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep3_B[FeatureRange] = Bernoulli.Uniform();
 			}
-			this.ModelSelector_selector_cases_0_rep4_uses_B = new Bernoulli[this.featureCount][];
-			this.Weights_depth0_F = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			this.ModelSelector_selector_cases_0_rep4_B = new Bernoulli[this.featureCount];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.ModelSelector_selector_cases_0_rep4_uses_B = new Bernoulli[this.FeatureCount][];
+			this.Weights_depth0_F = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+			this.ModelSelector_selector_cases_0_rep4_B = new Bernoulli[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange] = new Bernoulli[3];
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][1] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][0] = Bernoulli.Uniform();
@@ -385,29 +385,29 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep4_B[FeatureRange] = Bernoulli.Uniform();
 				this.Weights_depth0_F[FeatureRange] = Gaussian.Uniform();
 			}
-			this.WeightPrecisionRates_rep_F_marginal = new Gamma[this.featureCount];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.WeightPrecisionRates_rep_F_marginal = new Gamma[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.MarginalInit<Gamma>(this.WeightPrecisionRates_uses_F[FeatureRange][1]);
 			}
-			this.WeightPrecisionRates_rep_F = new Gamma[this.featureCount][];
-			this.ModelSelector_selector_cases_0_rep7_uses_B = new Bernoulli[this.featureCount][];
-			this.ModelSelector_selector_cases_0_rep7_B = new Bernoulli[this.featureCount];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.WeightPrecisionRates_rep_F = new Gamma[this.FeatureCount][];
+			this.ModelSelector_selector_cases_0_rep7_uses_B = new Bernoulli[this.FeatureCount][];
+			this.ModelSelector_selector_cases_0_rep7_B = new Bernoulli[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep7_uses_B[FeatureRange] = new Bernoulli[2];
 				this.ModelSelector_selector_cases_0_rep7_uses_B[FeatureRange][0] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep7_uses_B[FeatureRange][1] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep7_B[FeatureRange] = Bernoulli.Uniform();
 			}
-			this.ModelSelector_selector_cases_0_rep10_uses_B = new Bernoulli[this.featureCount][];
-			this.ModelSelector_selector_cases_0_rep10_B = new Bernoulli[this.featureCount];
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.ModelSelector_selector_cases_0_rep10_uses_B = new Bernoulli[this.FeatureCount][];
+			this.ModelSelector_selector_cases_0_rep10_B = new Bernoulli[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep10_uses_B[FeatureRange] = new Bernoulli[2];
 				this.ModelSelector_selector_cases_0_rep10_uses_B[FeatureRange][0] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep10_uses_B[FeatureRange][1] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep10_B[FeatureRange] = Bernoulli.Uniform();
 			}
-			this.Weights_marginal_F = new DistributionStructArray<Gaussian,double>(this.featureCount);
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.Weights_marginal_F = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.Weights_marginal_F[FeatureRange] = Gaussian.Uniform();
 			}
 			this.Changed_FeatureCount_isDone = true;
@@ -419,12 +419,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_FeatureValues_InstanceCount_isDone) {
 				return ;
 			}
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-					this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange] = GaussianOpBase.PrecisionAverageConditional(this.featureValues[InstanceRange][FeatureRange], 0.0);
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+					this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange] = GaussianOpBase.PrecisionAverageConditional(this.FeatureValues[InstanceRange][FeatureRange], 0.0);
 				}
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_rep_B_toDef[FeatureRange] = ReplicateOp_Divide.ToDef<Gamma>(this.WeightPrecisionRates_rep_B[FeatureRange], this.WeightPrecisionRates_rep_B_toDef[FeatureRange]);
 				this.WeightPrecisionRates_uses_B[FeatureRange][1] = ArrayHelper.SetTo<Gamma>(this.WeightPrecisionRates_uses_B[FeatureRange][1], this.WeightPrecisionRates_rep_B_toDef[FeatureRange]);
 			}
@@ -439,26 +439,26 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			for(int iteration = this.numberOfIterationsDone; iteration<numberOfIterations; iteration++) {
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.Weights_uses_F[FeatureRange][1] = ReplicateOp_NoDivide.UsesAverageConditional<Gaussian>(this.Weights_uses_B[FeatureRange], this.Weights_F[FeatureRange], 1, this.Weights_uses_F[FeatureRange][1]);
 					this.Weights_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.Marginal<Gaussian>(this.Weights_rep_B_toDef[FeatureRange], this.Weights_uses_F[FeatureRange][1], this.Weights_rep_F_marginal[FeatureRange]);
 				}
-				for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-					for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+				for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 						this.Weights_rep_F[FeatureRange][InstanceRange] = ReplicateOp_Divide.UsesAverageConditional<Gaussian>(this.Weights_rep_B[FeatureRange][InstanceRange], this.Weights_rep_F_marginal[FeatureRange], InstanceRange, this.Weights_rep_F[FeatureRange][InstanceRange]);
-						this.FeatureScores_F[InstanceRange][FeatureRange] = GaussianProductOpBase.ProductAverageConditional(this.featureValues[InstanceRange][FeatureRange], this.Weights_rep_F[FeatureRange][InstanceRange]);
+						this.FeatureScores_F[InstanceRange][FeatureRange] = GaussianProductOpBase.ProductAverageConditional(this.FeatureValues[InstanceRange][FeatureRange], this.Weights_rep_F[FeatureRange][InstanceRange]);
 					}
 					this.Score_F[InstanceRange] = FastSumOp.SumAverageConditional(this.FeatureScores_F[InstanceRange]);
 					this.NoisyScore_F[InstanceRange] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.Score_F[InstanceRange], 1.0);
-					this.NoisyScore_use_B[InstanceRange] = IsPositiveOp_Proper.XAverageConditional(Bernoulli.PointMass(this.labels[InstanceRange]), this.NoisyScore_F[InstanceRange]);
+					this.NoisyScore_use_B[InstanceRange] = IsPositiveOp_Proper.XAverageConditional(Bernoulli.PointMass(this.Labels[InstanceRange]), this.NoisyScore_F[InstanceRange]);
 					this.Score_B[InstanceRange] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.NoisyScore_use_B[InstanceRange], 1.0);
 					this.FeatureScores_B[InstanceRange] = FastSumOp.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(this.Score_B[InstanceRange], this.Score_F[InstanceRange], this.FeatureScores_F[InstanceRange], this.FeatureScores_B[InstanceRange]);
-					for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-						this.Weights_rep_B[FeatureRange][InstanceRange] = GaussianProductOpBase.BAverageConditional(this.FeatureScores_B[InstanceRange][FeatureRange], this.featureValues[InstanceRange][FeatureRange]);
+					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+						this.Weights_rep_B[FeatureRange][InstanceRange] = GaussianProductOpBase.BAverageConditional(this.FeatureScores_B[InstanceRange][FeatureRange], this.FeatureValues[InstanceRange][FeatureRange]);
 						this.Weights_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.MarginalIncrement<Gaussian>(this.Weights_rep_F_marginal[FeatureRange], this.Weights_rep_F[FeatureRange][InstanceRange], this.Weights_rep_B[FeatureRange][InstanceRange]);
 					}
 				}
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange] = GammaFromShapeAndRateOp_Laplace.Q(this.SharedWeightPrecisionRates_use_B[FeatureRange], 1.0, this.WeightPrecisionRateRates_F_reduced);
 					this.Weights_rep_B_toDef[FeatureRange] = ReplicateOp_Divide.ToDef<Gaussian>(this.Weights_rep_B[FeatureRange], this.Weights_rep_B_toDef[FeatureRange]);
 					this.Weights_uses_B[FeatureRange][1] = ArrayHelper.SetTo<Gaussian>(this.Weights_uses_B[FeatureRange][1], this.Weights_rep_B_toDef[FeatureRange]);
@@ -471,7 +471,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.CommonWeightPrecision_rep_B_toDef = ReplicateOp_Divide.ToDef<Gamma>(this.CommonWeightPrecision_rep_B, this.CommonWeightPrecision_rep_B_toDef);
 				this.CommonWeightPrecision_rep_F_marginal = ReplicateOp_Divide.Marginal<Gamma>(this.CommonWeightPrecision_rep_B_toDef, this.CommonWeightPrecision_F, this.CommonWeightPrecision_rep_F_marginal);
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.CommonWeightPrecision_rep_F[FeatureRange] = ReplicateOp_Divide.UsesAverageConditional<Gamma>(this.CommonWeightPrecision_rep_B[FeatureRange], this.CommonWeightPrecision_rep_F_marginal, FeatureRange, this.CommonWeightPrecision_rep_F[FeatureRange]);
 					this.WeightPrecisions_B_FeatureRange__Q[FeatureRange] = GammaRatioOp_Laplace.Q(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 					this.SharedWeightPrecisionRates_uses_B[FeatureRange][0] = GammaRatioOp_Laplace.BAverageConditional(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0], this.WeightPrecisions_B_FeatureRange__Q[FeatureRange]);
@@ -481,7 +481,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.OnProgressChanged(new ProgressChangedEventArgs(iteration));
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][0] = Bernoulli.FromLogOdds(GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(this.SharedWeightPrecisionRates_use_B[FeatureRange], 1.0, this.WeightPrecisionRateRates_F_reduced, this.SharedWeightPrecisionRates_F[FeatureRange], this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange]));
 				this.SharedWeightPrecisionRates_uses_F[FeatureRange][1] = ReplicateOp_NoDivide.UsesAverageConditional<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_F[FeatureRange], 1, this.SharedWeightPrecisionRates_uses_F[FeatureRange][1]);
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][2] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange]));
@@ -494,12 +494,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.WeightPrecisionRates_marginal_F[FeatureRange] = DerivedVariableOp.MarginalAverageConditional<Gamma>(this.WeightPrecisionRates_use_B[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][1], this.WeightPrecisionRates_marginal_F[FeatureRange]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[13] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep2_B, this.ModelSelector_selector_cases_0_uses_B[13]);
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep3_B[FeatureRange] = Bernoulli.FromLogOdds(GammaRatioOp_Laplace.LogEvidenceRatio(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0], this.WeightPrecisions_F[FeatureRange], this.WeightPrecisions_B_FeatureRange__Q[FeatureRange]));
 			}
 			this.ModelSelector_selector_cases_0_uses_B[17] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep3_B, this.ModelSelector_selector_cases_0_uses_B[17]);
 			this.ModelSelector_selector_cases_0_uses_B[19] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gamma>(this.CommonWeightPrecision_rep_B, this.CommonWeightPrecision_F, this.CommonWeightPrecision_rep_F));
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][0] = Bernoulli.FromLogOdds(GaussianOp.LogEvidenceRatio(this.Weights_use_B[FeatureRange], 0.0, this.WeightPrecisions_F[FeatureRange], this.Weights_F[FeatureRange], this.WeightPrecisions_B[FeatureRange]));
 				this.Weights_uses_F[FeatureRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gaussian>(this.Weights_uses_B[FeatureRange], this.Weights_F[FeatureRange], 0, this.Weights_uses_F[FeatureRange][0]);
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][2] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gaussian>(this.Weights_uses_B[FeatureRange], this.Weights_F[FeatureRange], this.Weights_uses_F[FeatureRange]));
@@ -507,40 +507,40 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Weights_depth0_F[FeatureRange] = ArrayHelper.SetTo<Gaussian>(this.Weights_depth0_F[FeatureRange], this.Weights_uses_F[FeatureRange][0]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[20] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep4_B, this.ModelSelector_selector_cases_0_uses_B[20]);
-			this.ModelSelector_selector_cases_0_uses_B[26] = Bernoulli.FromLogOdds(ConstrainEqualRandomOp<double[]>.LogEvidenceRatio<DistributionStructArray<Gaussian,double>>(this.Weights_depth0_F, this.weightConstraints));
+			this.ModelSelector_selector_cases_0_uses_B[26] = Bernoulli.FromLogOdds(ConstrainEqualRandomOp<double[]>.LogEvidenceRatio<DistributionStructArray<Gaussian,double>>(this.Weights_depth0_F, this.WeightConstraints));
 			this.ModelSelector_selector_cases_0_uses_B[27] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep5_B, this.ModelSelector_selector_cases_0_uses_B[27]);
-			this.ModelSelector_selector_cases_0_uses_B[33] = Bernoulli.FromLogOdds(ConstrainEqualRandomOp<double[]>.LogEvidenceRatio<DistributionStructArray<Gamma,double>>(this.WeightPrecisionRates_depth0_F, this.weightPrecisionRateConstraints));
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			this.ModelSelector_selector_cases_0_uses_B[33] = Bernoulli.FromLogOdds(ConstrainEqualRandomOp<double[]>.LogEvidenceRatio<DistributionStructArray<Gamma,double>>(this.WeightPrecisionRates_depth0_F, this.WeightPrecisionRateConstraints));
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.Marginal<Gamma>(this.WeightPrecisionRates_rep_B_toDef[FeatureRange], this.WeightPrecisionRates_uses_F[FeatureRange][1], this.WeightPrecisionRates_rep_F_marginal[FeatureRange]);
 			}
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange] = ReplicateOp_Divide.UsesAverageConditional<Gamma>(this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange], this.WeightPrecisionRates_rep_F_marginal[FeatureRange], InstanceRange, this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange]);
 					this.WeightPrecisionRates_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.MarginalIncrement<Gamma>(this.WeightPrecisionRates_rep_F_marginal[FeatureRange], this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange], this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange]);
-					this.ModelSelector_selector_cases_0_rep6_rep_B[InstanceRange][FeatureRange] = Bernoulli.FromLogOdds(GaussianOpBase.LogEvidenceRatio(this.featureValues[InstanceRange][FeatureRange], 0.0, this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange]));
+					this.ModelSelector_selector_cases_0_rep6_rep_B[InstanceRange][FeatureRange] = Bernoulli.FromLogOdds(GaussianOpBase.LogEvidenceRatio(this.FeatureValues[InstanceRange][FeatureRange], 0.0, this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange]));
 				}
 				this.ModelSelector_selector_cases_0_rep6_B[InstanceRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep6_rep_B[InstanceRange], this.ModelSelector_selector_cases_0_rep6_B[InstanceRange]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[34] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep6_B, this.ModelSelector_selector_cases_0_uses_B[34]);
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep7_uses_B[FeatureRange][1] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gamma>(this.WeightPrecisionRates_rep_B[FeatureRange], this.WeightPrecisionRates_uses_F[FeatureRange][1], this.WeightPrecisionRates_rep_F[FeatureRange]));
 				this.ModelSelector_selector_cases_0_rep7_B[FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep7_uses_B[FeatureRange], this.ModelSelector_selector_cases_0_rep7_B[FeatureRange]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[35] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep7_B, this.ModelSelector_selector_cases_0_uses_B[35]);
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep10_uses_B[FeatureRange][1] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gaussian>(this.Weights_rep_B[FeatureRange], this.Weights_uses_F[FeatureRange][1], this.Weights_rep_F[FeatureRange]));
 				this.ModelSelector_selector_cases_0_rep10_B[FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep10_uses_B[FeatureRange], this.ModelSelector_selector_cases_0_rep10_B[FeatureRange]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[38] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep10_B, this.ModelSelector_selector_cases_0_uses_B[38]);
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				this.ModelSelector_selector_cases_0_rep15_B[InstanceRange] = Bernoulli.FromLogOdds(IsPositiveOp.LogEvidenceRatio(this.labels[InstanceRange], this.NoisyScore_F[InstanceRange]));
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				this.ModelSelector_selector_cases_0_rep15_B[InstanceRange] = Bernoulli.FromLogOdds(IsPositiveOp.LogEvidenceRatio(this.Labels[InstanceRange], this.NoisyScore_F[InstanceRange]));
 			}
 			this.ModelSelector_selector_cases_0_uses_B[43] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep15_B, this.ModelSelector_selector_cases_0_uses_B[43]);
 			this.ModelSelector_selector_cases_0_B = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_uses_B, this.ModelSelector_selector_cases_0_B);
 			this.ModelSelector_selector_cases_B[0] = ArrayHelper.SetTo<Bernoulli>(this.ModelSelector_selector_cases_B[0], this.ModelSelector_selector_cases_0_B);
 			this.ModelSelector_selector_B = CasesOp.BAverageConditional(this.ModelSelector_selector_cases_B);
 			this.ModelSelector_marginal_F = VariableOp.MarginalAverageConditional<Bernoulli>(this.ModelSelector_selector_B, this.vBernoulli4, this.ModelSelector_marginal_F);
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.Weights_marginal_F[FeatureRange] = VariableOp.MarginalAverageConditional<Gaussian>(this.Weights_use_B[FeatureRange], this.Weights_F[FeatureRange], this.Weights_marginal_F[FeatureRange]);
 			}
 			this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = true;
@@ -553,7 +553,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone&&((!initialise)||this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isInitialised)) {
 				return ;
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.SharedWeightPrecisionRates_uses_F[FeatureRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_F[FeatureRange], 0, this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 				this.WeightPrecisions_F[FeatureRange] = GammaRatioOp_Laplace.RatioAverageConditional(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 				this.Weights_F[FeatureRange] = GaussianOp.SampleAverageConditional(this.Weights_use_B[FeatureRange], 0.0, this.WeightPrecisions_F[FeatureRange], this.WeightPrecisions_B[FeatureRange]);
@@ -568,7 +568,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints_isDone) {
 				return ;
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_use_B[FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Gamma>(this.WeightPrecisionRates_uses_B[FeatureRange], this.WeightPrecisionRates_use_B[FeatureRange]);
 				this.SharedWeightPrecisionRates_uses_B[FeatureRange][1] = ArrayHelper.SetTo<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange][1], this.WeightPrecisionRates_use_B[FeatureRange]);
 			}
@@ -581,44 +581,44 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_InstanceCount_isDone) {
 				return ;
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.WeightPrecisionRates_rep_B[FeatureRange] = new Gamma[this.instanceCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.WeightPrecisionRates_rep_B[FeatureRange] = new Gamma[this.InstanceCount];
 			}
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.WeightPrecisionRates_rep_B[FeatureRange][InstanceRange] = Gamma.Uniform();
 				}
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.Weights_rep_F[FeatureRange] = new Gaussian[this.instanceCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.Weights_rep_F[FeatureRange] = new Gaussian[this.InstanceCount];
 			}
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.Weights_rep_F[FeatureRange][InstanceRange] = Gaussian.Uniform();
 				}
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.Weights_rep_B[FeatureRange] = new Gaussian[this.instanceCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.Weights_rep_B[FeatureRange] = new Gaussian[this.InstanceCount];
 			}
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				this.FeatureScores_F[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.featureCount);
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				this.FeatureScores_F[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.FeatureScores_F[InstanceRange][FeatureRange] = Gaussian.Uniform();
 				}
-				this.FeatureScores_B[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.featureCount);
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+				this.FeatureScores_B[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.FeatureScores_B[InstanceRange][FeatureRange] = Gaussian.Uniform();
 				}
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.WeightPrecisionRates_rep_F[FeatureRange] = new Gamma[this.instanceCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.WeightPrecisionRates_rep_F[FeatureRange] = new Gamma[this.InstanceCount];
 			}
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.WeightPrecisionRates_rep_F[FeatureRange][InstanceRange] = Gamma.Uniform();
 				}
-				this.ModelSelector_selector_cases_0_rep6_rep_B[InstanceRange] = new Bernoulli[this.featureCount];
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+				this.ModelSelector_selector_cases_0_rep6_rep_B[InstanceRange] = new Bernoulli[this.FeatureCount];
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.ModelSelector_selector_cases_0_rep6_rep_B[InstanceRange][FeatureRange] = Bernoulli.Uniform();
 				}
 			}
@@ -632,8 +632,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isDone&&((!initialise)||this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised)) {
 				return ;
 			}
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.Weights_rep_B[FeatureRange][InstanceRange] = Gaussian.Uniform();
 				}
 			}
@@ -648,7 +648,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isDone&&((!initialise)||this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised)) {
 				return ;
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.Weights_F[FeatureRange] = Gaussian.Uniform();
 				this.WeightPrecisions_B[FeatureRange] = Gamma.Uniform();
 				this.WeightPrecisions_F[FeatureRange] = Gamma.Uniform();
@@ -676,8 +676,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_WeightConstraints_isDone) {
 				return ;
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.Weights_uses_B[FeatureRange][0] = ArrayHelper.SetTo<Gaussian>(this.Weights_uses_B[FeatureRange][0], this.weightConstraints[FeatureRange]);
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.Weights_uses_B[FeatureRange][0] = ArrayHelper.SetTo<Gaussian>(this.Weights_uses_B[FeatureRange][0], this.WeightConstraints[FeatureRange]);
 			}
 			this.Changed_FeatureCount_WeightConstraints_isDone = true;
 		}
@@ -688,8 +688,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_FeatureCount_WeightPrecisionRateConstraints_isDone) {
 				return ;
 			}
-			for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
-				this.WeightPrecisionRates_uses_B[FeatureRange][0] = ArrayHelper.SetTo<Gamma>(this.WeightPrecisionRates_uses_B[FeatureRange][0], this.weightPrecisionRateConstraints[FeatureRange]);
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.WeightPrecisionRates_uses_B[FeatureRange][0] = ArrayHelper.SetTo<Gamma>(this.WeightPrecisionRates_uses_B[FeatureRange][0], this.WeightPrecisionRateConstraints[FeatureRange]);
 			}
 			this.Changed_FeatureCount_WeightPrecisionRateConstraints_isDone = true;
 		}
@@ -700,31 +700,31 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_InstanceCount_isDone) {
 				return ;
 			}
-			this.FeatureScores_F = new DistributionStructArray<Gaussian,double>[this.instanceCount];
-			this.Score_F = new Gaussian[this.instanceCount];
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
+			this.FeatureScores_F = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
+			this.Score_F = new Gaussian[this.InstanceCount];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.Score_F[InstanceRange] = Gaussian.Uniform();
 			}
-			this.NoisyScore_F = new Gaussian[this.instanceCount];
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
+			this.NoisyScore_F = new Gaussian[this.InstanceCount];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.NoisyScore_F[InstanceRange] = Gaussian.Uniform();
 			}
-			this.NoisyScore_use_B = new Gaussian[this.instanceCount];
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
+			this.NoisyScore_use_B = new Gaussian[this.InstanceCount];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.NoisyScore_use_B[InstanceRange] = Gaussian.Uniform();
 			}
-			this.Score_B = new Gaussian[this.instanceCount];
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
+			this.Score_B = new Gaussian[this.InstanceCount];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.Score_B[InstanceRange] = Gaussian.Uniform();
 			}
-			this.FeatureScores_B = new DistributionStructArray<Gaussian,double>[this.instanceCount];
-			this.ModelSelector_selector_cases_0_rep6_rep_B = new Bernoulli[this.instanceCount][];
-			this.ModelSelector_selector_cases_0_rep6_B = new Bernoulli[this.instanceCount];
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
+			this.FeatureScores_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
+			this.ModelSelector_selector_cases_0_rep6_rep_B = new Bernoulli[this.InstanceCount][];
+			this.ModelSelector_selector_cases_0_rep6_B = new Bernoulli[this.InstanceCount];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep6_B[InstanceRange] = Bernoulli.Uniform();
 			}
-			this.ModelSelector_selector_cases_0_rep15_B = new Bernoulli[this.instanceCount];
-			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
+			this.ModelSelector_selector_cases_0_rep15_B = new Bernoulli[this.InstanceCount];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep15_B[InstanceRange] = Bernoulli.Uniform();
 			}
 			this.Changed_InstanceCount_isDone = true;

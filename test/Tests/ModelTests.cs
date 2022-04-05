@@ -3652,6 +3652,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var z = (x + y).Named("z");
             InferenceEngine engine = new InferenceEngine();
             engine.Infer(z);
+            engine.Infer(x);
+            engine.Infer(y);
         }
 
         [Fact]
@@ -3670,14 +3672,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void InferredVariableNameCapitalisationClash()
         {
-            Assert.Throws<CompilationFailedException>(() =>
-            {
-                Variable<double> x = Variable.Beta(1, 1).Named("x");
-                Variable<bool> x2 = Variable.Bernoulli(x).Named("X");
-                InferenceEngine engine = new InferenceEngine();
-                engine.Infer(x);
-                engine.Infer(x2);
-            });
+            Variable<double> x = Variable.Beta(1, 1).Named("x");
+            Variable<bool> x2 = Variable.Bernoulli(x).Named("X");
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(x);
+            engine.Infer(x2);
         }
 
         [Fact]

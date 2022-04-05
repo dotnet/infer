@@ -58,7 +58,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         private readonly Set<string> reallocatedVariables = new Set<string>();
 
-        private readonly Set<string> inferredVariableNames = new Set<string>();
         private readonly Dictionary<object, IFieldDeclaration> fieldDeclarations = new Dictionary<object, IFieldDeclaration>();
         private readonly Dictionary<object, IExpression> propertyReferences = new Dictionary<object, IExpression>();
         private readonly Dictionary<IParameterDeclaration, IList<IStatement>> propertySetterStatements = new Dictionary<IParameterDeclaration, IList<IStatement>>();
@@ -1655,13 +1654,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private IExpression ConvertInfer(IMethodInvokeExpression imie)
         {
             string varName = (string)((ILiteralExpression)imie.Arguments[1]).Value;
-            if (inferredVariableNames.Contains(varName))
-            {
-                Error($"Cannot infer {varName} since it clashes with another inferred variable name when capitalised");
-                return imie;
-            }
-            inferredVariableNames.Add(varName);
-            inferredVariableNames.Add(FactorManager.FlipCapitalization(varName));
             ExpressionEvaluator eval = new ExpressionEvaluator();
             QueryType query = (imie.Arguments.Count < 3) ? null : (QueryType)eval.Evaluate(imie.Arguments[2]);
 
@@ -1755,16 +1747,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 );
         }
 
-        private bool HasMethod(ITypeDeclaration td, string name)
-        {
-            foreach (IMethodDeclaration imd in td.Methods)
-            {
-                if (imd.Name == name)
-                    return true;
-            }
-            return false;
-        }
-
         protected void AddMarginalMethod(string varName, IMethodDeclaration md)
         {
             IExpression variableName = marginalVariableName;
@@ -1816,9 +1798,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
 
             // Create marginal method and add return statement.
-            string name = CodeBuilder.MakeValid(CodeBuilder.Capitalise(varName + query));
-            if (HasMethod(td, name))
-                return;
+            string name = GetUniqueMethodName(td, CodeBuilder.Capitalise(varName + query));
             IMethodDeclaration md = Builder.MethodDecl(MethodVisibility.Public, name, type, td);
             string queryDoc = query.ToString();
             if (queryDoc == QueryTypes.Marginal.Name) queryDoc = "marginal distribution";
@@ -1903,7 +1883,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             basename = CodeBuilder.MakeValid(basename);
             string s = basename;
             int i = 1;
-            while (IsFieldOfName(td, s))
+            while (HasField(td, s))
             {
                 s = basename + "_" + i;
                 i++;
@@ -1911,11 +1891,37 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return s;
         }
 
-        protected bool IsFieldOfName(ITypeDeclaration td, string name)
+        protected bool HasField(ITypeDeclaration td, string name)
         {
             foreach (IFieldDeclaration fd in td.Fields)
                 if (fd.Name.Equals(name))
                     return true;
+            return false;
+        }
+
+        protected string GetUniqueMethodName(ITypeDeclaration td, string basename)
+        {
+            int k = basename.IndexOf('`');
+            if (k != -1)
+                basename = basename.Substring(0, k);
+            basename = CodeBuilder.MakeValid(basename);
+            string s = basename;
+            int i = 1;
+            while (HasMethod(td, s))
+            {
+                s = basename + "_" + i;
+                i++;
+            }
+            return s;
+        }
+
+        private bool HasMethod(ITypeDeclaration td, string name)
+        {
+            foreach (IMethodDeclaration imd in td.Methods)
+            {
+                if (imd.Name == name)
+                    return true;
+            }
             return false;
         }
     }

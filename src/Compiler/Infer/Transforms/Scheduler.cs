@@ -167,7 +167,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 foreach (EdgeIndex edge in forcedBackEdges)
                 {
                     if (direction[edge] == Direction.Forward)
+                    {
                         throw new Exception($"Internal: {EdgeToString(edge)} was not forced backward");
+                    }
                     // no need to Debug.WriteLine the edge here since it was already printed when added to forcedBackEdges.
                     direction[edge] = Direction.Backward;
                     newBackEdges.Push(edge);
@@ -401,11 +403,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     continue;
                 foreach (EdgeIndex edgeOrig in dg.dependencyGraph.EdgesOutOf(node))
                 {
+                    NodeIndex targetOrig = dg.dependencyGraph.TargetOf(edgeOrig);
+                    if (targetOrig == node) continue;
+                    if (dg.initializedEdges.Contains(edgeOrig)) continue;
                     if (dg.isRequired[edgeOrig])
                     {
                         foreach (NodeIndex source in newNodes[node])
                         {
-                            foreach (NodeIndex target in newNodes[dg.dependencyGraph.TargetOf(edgeOrig)])
+                            foreach (NodeIndex target in newNodes[targetOrig])
                             {
                                 EdgeIndex edge;
                                 if (!g.TryGetEdge(source, target, out edge))
@@ -424,11 +429,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     {
                         foreach (NodeIndex source in newNodes[node])
                         {
-                            foreach (NodeIndex target in newNodes[dg.dependencyGraph.TargetOf(edgeOrig)])
+                            foreach (NodeIndex target in newNodes[targetOrig])
                             {
                                 EdgeIndex edge;
                                 if (!g.TryGetEdge(source, target, out edge))
                                     continue;
+                                if (verbose)
+                                {
+                                    Debug.WriteLine($"mustNotInit incremented edgeCost[{EdgeToString(edge)}] by 10 because {source} must not init");
+                                }
                                 edgeCost[edge] += 10f;
                             }
                         }
@@ -464,7 +473,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             if (float.IsPositiveInfinity(edgeCostInit[edge]) && (direction[edge] == Direction.Unknown))
                             {
                                 if (debug)
-                                    Debug.WriteLine($"mustNotInit forced edge {EdgeToString(edge)} Forward");
+                                    Debug.WriteLine($"mustNotInit forced edge {EdgeToString(edge)} Forward due to Any dependency");
                                 direction[edge] = Direction.Forward;
                                 forcedForwardEdges.Add(edge);
                                 todo.Push(edge);
@@ -774,6 +783,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 bool notInitialized = (useFakeGraph || !dg.initializedNodes.Contains(originalNode[source]));
                 //if (!notInitialized && !initsCanBeStale)
                 if (!notInitialized)
+                    continue;
+                if (dg.initializedEdges.Contains(originalEdge[edge]))
                     continue;
                 if (IsOffsetEdge(originalEdge[edge]))
                     continue;
@@ -1933,6 +1944,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         NodeIndex target = g.TargetOf(edge);
                         NodeIndex originalTarget = originalNode[target];
                         EdgeIndex edgeOrig = originalEdge[edge];
+                        // TODO: exclude initializedEdges
                         if (dg.isRequired[edgeOrig])
                             requiredCount++;
                     }
@@ -2220,7 +2232,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             EdgeIndex edgeOrig = originalEdge[edge];
             if (edgeOrig == -1)
                 return 0.1f * scale;
-            if (dg.initializedNodes.Contains(source))
+            if (dg.initializedNodes.Contains(source) || dg.initializedEdges.Contains(edgeOrig))
                 return 0.001f;
             if (!dg.hasNonUniformInitializer.Contains(source))
             {
@@ -3154,6 +3166,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return satisfiable;
         }
 
+        // Called when edge has infinite reversal cost and yet was chosen to be reversed
         private void ShowConflict(EdgeIndex edge)
         {
             Debug.WriteLine("conflict at " + EdgeToString(edge));

@@ -13,7 +13,6 @@ using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Utilities;
 using NodeIndex = System.Int32;
 using EdgeIndex = System.Int32;
-using Microsoft.ML.Probabilistic.Compiler;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 {
@@ -411,6 +410,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                         source = target;
                     }
                     Debug.WriteLine("");
+                    // To debug this exception, set SchedulingTransform.debug = true
+                    // and check if any edge on this cycle was forced forward.
                     throw new InferCompilerException("Cycle of forward edges");
                 };
                 dfsScheduleWithGroups.FinishNode += node => groupSchedule.Add(node);

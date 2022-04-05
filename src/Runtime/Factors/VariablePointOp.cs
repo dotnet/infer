@@ -144,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         int previousUpdateCount = 0;
         public double nextPoint;
         double scaleUp = 2;
-        int boundScaleUp = 2;
+        const int boundScaleUp = 2;
         double stepsize;
         double stepsizeUpperBound = double.PositiveInfinity;
         public double lowerBound = double.NegativeInfinity, upperBound = double.PositiveInfinity;

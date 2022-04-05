@@ -129,6 +129,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         ///   if(b) x = 0;
         ///   if(!b) x = 1;
         /// </code>
+        /// Examples of non-overlapping mutations:
+        /// IfExitObservedConditionTest2
         /// Examples of overlapping mutations:
         /// ArrayConstraintsTest
         /// ConstrainBetweenTest
@@ -960,7 +962,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (anySt.Statements.Count == 0)
                         dependencyInformation.IsUniform = true;
                     else
+                    {
                         AddDependencyOn(anySt);
+                    }
                 }
                 return imie;
             }
@@ -1241,55 +1245,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return base.ConvertArgumentRef(iare);
         }
 
-        private void ForEachExpressionDependency(IEnumerable<IStatement> stmts, Action<ExpressionDependency> action)
-        {
-            foreach (IStatement ist in stmts)
-            {
-                if (ist is ExpressionDependency)
-                    action((ExpressionDependency)ist);
-                else if (ist is AnyStatement)
-                {
-                    AnyStatement anySt = (AnyStatement)ist;
-                    ForEachExpressionDependency(anySt.Statements, action);
-                }
-                else
-                    throw new Exception("unexpected dependency");
-            }
-        }
-
-        static IEnumerable<IStatement> LiftNestedAll(AnyStatement anySt)
-        {
-            // Convert Any(x,All(y,z)) to All(Any(x,y),Any(x,z))
-            // Convert Any(All(x,y),All(z,w)) to All(Any(x,z),Any(x,w),Any(y,z),Any(y,w))
-            List<AnyStatement> results = new List<AnyStatement>();
-            IEnumerable<AnyStatement> CopyAndAdd(IStatement newSt)
-            {
-                IStatement[] newSequence = new IStatement[] { newSt };
-                if (results.Count == 0) return new[] { new AnyStatement(newSequence) };
-                else return results.Select(a => new AnyStatement(a.Statements.Concat(newSequence).ToArray()));
-            }
-            foreach(var stmt in anySt.Statements)
-            {
-                if(stmt is AllStatement allSt)
-                {
-                    results = allSt.Statements.SelectMany(CopyAndAdd).ToList();
-                }
-                else if(results.Count > 0)
-                {
-                    // Add this stmt to all clauses
-                    foreach(var clause in results)
-                    {
-                        clause.Statements.Add(stmt);
-                    }
-                }
-                else
-                {
-                    results.Add(new AnyStatement(stmt));
-                }
-            }
-            return results.Select(a => (a.Statements.Count == 1) ? a.Statements[0] : a);
-        }
-
         // same as GetMutations but handles AnyStatements
         internal IEnumerable<IStatement> GetStatementsThatMutate(
             IStatement exclude,
@@ -1301,7 +1256,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             Dictionary<IStatement, IOffsetInfo> offsetInfos,
             Dictionary<IStatement, Set<IVariableDeclaration>> extraIndicesOfStmt)
         {
-            if (mustMutate && exprStmt is ExpressionDependency) exprStmt = new AnyStatement(exprStmt);
+            if (mustMutate && exprStmt is ExpressionDependency)
+            {
+                // mustMutate indicates that we are processing SkipIfUniform dependencies.
+                // variables that are defined by multiple statements, e.g. arrays defined per element, should only be assumed uniform
+                // when all of the source statements are uniform.  Wrapping the sources in an AnyStatement achieves this.
+                // Without this wrapping, we will prune away variables that are not actually uniform, e.g. the evidence variable in BayesPointEvidence2.
+                exprStmt = new AnyStatement(exprStmt);
+            }
             if (exprStmt is AllStatement allSt)
             {
                 List<ExpressionDependency> exprDeps = new List<ExpressionDependency>();
@@ -1312,9 +1274,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression expr = ies.Expression;
                     List<MutationInformation.Mutation> mutations = GetMutations(exclude, expr, allocationsOnly, mustMutate, bindings, bounds, offsetInfos, extraIndicesOfStmt);
                     IExpression prefixExpr = expr;
-                    while (prefixExpr is IMethodInvokeExpression)
+                    while (prefixExpr is IMethodInvokeExpression imie)
                     {
-                        IMethodInvokeExpression imie = (IMethodInvokeExpression)prefixExpr;
                         prefixExpr = imie.Arguments[0];
                     }
                     var prefixes = Recognizer.GetAllPrefixes(prefixExpr);
@@ -1376,29 +1337,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 foreach (ExpressionDependency ies in exprDeps)
                 {
                     IExpression expr = ies.Expression;
-                    AllStatement allBlock = new AllStatement();
-                    AnyStatement anyBlock = new AnyStatement();
                     List<MutationInformation.Mutation> mutations = GetMutations(exclude, expr, allocationsOnly, mustMutate, bindings, bounds, offsetInfos, extraIndicesOfStmt);
                     foreach (MutationInformation.Mutation m in mutations)
                     {
-                        anyBlock.Statements.Add(m.stmt);
-                    }
-                    if (anyBlock.Statements.Count > 0)
-                        allBlock.Statements.Add(anyBlock);
-
-                    // add groups to results
-                    if (allBlock.Statements.Count == 1)
-                    {
-                        IStatement ist = allBlock.Statements[0];
-                        if (ist is AnyStatement)
-                        {
-                            AnyStatement group = (AnyStatement)ist;
-                            newSt.Statements.AddRange(group.Statements);
-                        }
-                        else
-                        {
-                            newSt.Statements.Add(ist);
-                        }
+                        newSt.Statements.Add(m.stmt);
                     }
                 }
                 if (newSt.Statements.Count == 1)
@@ -1419,6 +1361,56 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 yield return exprStmt;
             }
+        }
+
+        private void ForEachExpressionDependency(IEnumerable<IStatement> stmts, Action<ExpressionDependency> action)
+        {
+            foreach (IStatement ist in stmts)
+            {
+                if (ist is ExpressionDependency ies)
+                {
+                    action(ies);
+                }
+                else if (ist is AnyStatement anySt)
+                {
+                    ForEachExpressionDependency(anySt.Statements, action);
+                }
+                else
+                    throw new Exception("unexpected dependency");
+            }
+        }
+
+        static IEnumerable<IStatement> LiftNestedAll(AnyStatement anySt)
+        {
+            // Convert Any(x,All(y,z)) to All(Any(x,y),Any(x,z))
+            // Convert Any(All(x,y),All(z,w)) to All(Any(x,z),Any(x,w),Any(y,z),Any(y,w))
+            List<AnyStatement> results = new List<AnyStatement>();
+            IEnumerable<AnyStatement> CopyAndAdd(IStatement newSt)
+            {
+                IStatement[] newSequence = new IStatement[] { newSt };
+                if (results.Count == 0) return new[] { new AnyStatement(newSequence) };
+                else return results.Select(a => new AnyStatement(a.Statements.Concat(newSequence).ToArray()));
+            }
+            foreach (var stmt in anySt.Statements)
+            {
+                if (stmt is AllStatement allSt)
+                {
+                    results = allSt.Statements.SelectMany(CopyAndAdd).ToList();
+                }
+                else if (results.Count > 0)
+                {
+                    // Add this stmt to all clauses
+                    foreach (var clause in results)
+                    {
+                        clause.Statements.Add(stmt);
+                    }
+                }
+                else
+                {
+                    results.Add(new AnyStatement(stmt));
+                }
+            }
+            return results.Select(a => (a.Statements.Count == 1) ? a.Statements[0] : a);
         }
 
         private void AddCliques(List<KeyValuePair<MutationInformation.Mutation, IExpression>> mutationsToCheck, IList<IReadOnlyList<IStatement>> groups)
