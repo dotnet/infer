@@ -648,10 +648,28 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.vdouble87_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 					}
 				}
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+							if (ClassMaxNoisyScore!=ClassRange) {
+								this.vdouble87_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+							}
+						}
+					}
+				}
 				this.MaxNoisyScore_0__B[InstanceRange] = new Gaussian[this.ClassCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 						this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
+					}
+				}
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+							if (ClassMaxNoisyScore!=ClassRange) {
+								this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+							}
+						}
 					}
 				}
 				this.MaxNoisyScore_rep_B[InstanceRange] = new Gaussian[this.ClassCount][];
@@ -725,21 +743,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
-							if (ClassMaxNoisyScore!=ClassRange) {
-								this.vdouble87_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
-								this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
-							}
 							this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
-							if (ClassMaxNoisyScore!=ClassRange) {
-								this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = LowPriorityBackwardOp.ValueAverageConditional<Gaussian>(this.vdouble87_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
-								this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
-							}
 						}
-					}
-				}
-				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
-					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
-						this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.ToDef<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore]);
 					}
 				}
 			}

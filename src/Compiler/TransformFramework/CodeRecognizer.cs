@@ -258,12 +258,15 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         // helper for MutatingFirstAffectsSecond
         // offsets and extraIndices only need to be modified on a match (though they can be modified in any case)
-        private bool IndicesOverlap(IList<IExpression> mutated_indices, IList<IExpression> affected_indices, bool mutatesWithinOnly,
-                                    IReadOnlyDictionary<IVariableDeclaration, Bounds> boundsInMutated,
-                                    IReadOnlyDictionary<IVariableDeclaration, Bounds> boundsInAffected,
-                                    OffsetInfo offsets,
-                                    ICollection<IVariableDeclaration> extraIndices,
-                                    ICollection<IVariableDeclaration> matchedIndices)
+        private bool IndicesOverlap(
+            IList<IExpression> mutated_indices,
+            IList<IExpression> affected_indices,
+            bool mutatesWithinOnly,
+            IReadOnlyDictionary<IVariableDeclaration, Bounds> boundsInMutated,
+            IReadOnlyDictionary<IVariableDeclaration, Bounds> boundsInAffected,
+            OffsetInfo offsets,
+            ICollection<IVariableDeclaration> extraIndices,
+            ICollection<IVariableDeclaration> matchedIndices)
         {
             // if mutatesWithinOnly = false, then return false on mismatched literals
             // if mutatesWithinOnly = true, then return false also if mutated index is wildcard and affected index is literal
@@ -493,7 +496,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 return false;
             }
-            if(affectedStatement != null && mutatedStatement != null)
+            if (affectedStatement != null && mutatedStatement != null)
             {
                 Set<IVariableDeclaration> localVarsInMutated = new Set<IVariableDeclaration>();
                 var bindingsInMutated = GetBindings(mutatedStatement, localVarsInMutated);

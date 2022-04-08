@@ -2285,17 +2285,21 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 Discrete indexActual = engine.Infer<Discrete>(index);
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Variable<int> index = Variable.Discrete(new Range(3), Vector.FromArray(new double[] { 0.2, 0.8 })).Named("index");
 
+                InferenceEngine engine = new InferenceEngine();
+                Discrete indexActual = engine.Infer<Discrete>(index);
             });
         }
 
         [Fact]
         public void DiscreteValueRangeError()
-
         {
             Assert.Throws<ArgumentException>(() =>
             {
-
                 Range i = new Range(2);
                 Variable<Vector> probs = Variable.Dirichlet(i, new double[] { 1, 1 }).Named("probs");
                 Range j = new Range(2);
@@ -2303,7 +2307,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 Discrete indexActual = engine.Infer<Discrete>(index);
-
             });
         }
 
@@ -2324,11 +2327,9 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         [Fact]
         public void DiscreteSizeError()
-
         {
             Assert.Throws<ArgumentException>(() =>
             {
-
                 Variable<int> index = Variable.Discrete(6).Named("index");
 
                 InferenceEngine engine = new InferenceEngine();
@@ -2336,7 +2337,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Discrete indexExpected = Discrete.Uniform(6);
                 Console.WriteLine("index = {0} should be {1}", indexActual, indexExpected);
                 Assert.True(indexExpected.MaxDiff(indexActual) < 1e-10);
-
             });
         }
 
@@ -2353,6 +2353,30 @@ namespace Microsoft.ML.Probabilistic.Tests
             Dirichlet probsExpected = Dirichlet.Uniform(size.ObservedValue);
             Console.WriteLine("probs = {0} should be {1}", probsActual, probsExpected);
             Assert.True(probsExpected.MaxDiff(probsActual) < 1e-10);
+        }
+
+        [Fact]
+        public void DirichletSizeError()
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+
+                Range i = new Range(3);
+                Variable<Vector> probs = Variable.Dirichlet(i, new double[] { 1, 1 }).Named("probs");
+
+                InferenceEngine engine = new InferenceEngine();
+                Dirichlet probsActual = engine.Infer<Dirichlet>(probs);
+
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Range i = new Range(3);
+                Variable<Vector> probs = Variable.Dirichlet(i, Vector.FromArray(new double[] { 1, 1 })).Named("probs");
+
+                InferenceEngine engine = new InferenceEngine();
+                Dirichlet probsActual = engine.Infer<Dirichlet>(probs);
+
+            });
         }
 
         [Fact]
