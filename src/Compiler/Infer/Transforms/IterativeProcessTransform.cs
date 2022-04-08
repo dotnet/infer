@@ -7,17 +7,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
+using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Compiler.Graphs;
 using Microsoft.ML.Probabilistic.Distributions;
-using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
-using Microsoft.ML.Probabilistic.Compiler.CodeModel;
-using Microsoft.ML.Probabilistic.Collections;
+using Microsoft.ML.Probabilistic.Models.Attributes;
+using Microsoft.ML.Probabilistic.Utilities;
 using NodeIndex = System.Int32;
 using EdgeIndex = System.Int32;
-using Microsoft.ML.Probabilistic.Models.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -60,6 +59,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private readonly Set<string> reallocatedVariables = new Set<string>();
 
         private readonly Dictionary<object, IFieldDeclaration> fieldDeclarations = new Dictionary<object, IFieldDeclaration>();
+        private readonly Dictionary<object, IExpression> propertyReferences = new Dictionary<object, IExpression>();
         private readonly Dictionary<IParameterDeclaration, IList<IStatement>> propertySetterStatements = new Dictionary<IParameterDeclaration, IList<IStatement>>();
         private IList<IStatement> marginalMethodStmts, marginalQueryMethodStmts;
         private IList<IStatement> marginalTMethodStmts, marginalQueryTMethodStmts;
@@ -188,12 +188,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return ipd;
             VariableInformation vi = VariableInformation.GetVariableInformation(context, ipd);
             ITypeDeclaration td = context.FindOutputForAncestor<ITypeDeclaration, ITypeDeclaration>();
-            IFieldDeclaration fd = Builder.FieldDecl(FactorManager.FlipCapitalization(ipd.Name), ipd.ParameterType.DotNetType, td);
+            IFieldDeclaration fd = Builder.FieldDecl(ipd.Name + "_field", ipd.ParameterType.DotNetType, td);
             fd.Documentation = "Field backing the " + ipd.Name + " property";
             context.OutputAttributes.Set(fd, vi);
             context.AddMember(fd);
             td.Fields.Add(fd);
-            fieldDeclarations[ipd] = fd;
             IFieldReferenceExpression fre = Builder.FieldRefExpr(fd);
             IPropertyDeclaration prop = Builder.PropDecl(ipd.Name, ipd.ParameterType.DotNetType, td, MethodVisibility.Public, MethodVisibility.Public, out IExpression value);
             prop.Documentation = "The externally-specified value of '" + ipd.Name + "'";
@@ -286,6 +285,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             // add lines to SetObservedValue()
             IExpression pre = Builder.PropRefExpr(Builder.ThisRefExpr(), prop);
+            propertyReferences[ipd] = pre;
             IConditionStatement cs2 = Builder.CondStmt(Builder.BinaryExpr(setObservedVariableName, BinaryOperator.ValueEquality, Builder.LiteralExpr(ipd.Name)),
                                                        Builder.BlockStmt());
             cs2.Then.Statements.Add(Builder.AssignStmt(pre, Builder.CastExpr(setObservedValue, ipd.ParameterType)));
@@ -1563,6 +1563,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IParameterDeclaration ipd = iare.Parameter.Resolve();
             if (fieldDeclarations.TryGetValue(ipd, out IFieldDeclaration ifd))
                 return Builder.FieldRefExpr(ifd);
+            else if (propertyReferences.TryGetValue(ipd, out IExpression expr))
+                return expr;
             else
                 return iare;
         }
@@ -1664,7 +1666,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             if (query == null)
             {
-                CreateOutputMethod(varName, "Marginal", targetExpr);
+                CreateOutputMethod("Marginal", targetExpr);
             }
             else
             {
@@ -1674,9 +1676,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     CreateOutputMethodWithPath(varName, query.Name, path, targetExpr, query == QueryTypes.Marginal);
                 }
                 else
-                    CreateOutputMethod(varName, query.Name, targetExpr);
+                    CreateOutputMethod(query.Name, targetExpr);
             }
             return null;
+
+            void CreateOutputMethod(string suffix, IExpression expr)
+            {
+                bool isMarginal = (suffix != QueryTypes.MarginalDividedByPrior.Name);
+                CreateOutputMethodWithPath(varName, suffix, null, expr, isMarginal);
+            }
         }
 
         /// <summary>
@@ -1739,23 +1747,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 );
         }
 
-
-        protected void CreateOutputMethod(string varName, string suffix, IExpression expr)
-        {
-            bool isMarginal = (suffix != QueryTypes.MarginalDividedByPrior.Name);
-            CreateOutputMethodWithPath(varName, suffix, null, expr, isMarginal);
-        }
-
-        private bool HasMethod(ITypeDeclaration td, string name)
-        {
-            foreach (IMethodDeclaration imd in td.Methods)
-            {
-                if (imd.Name == name)
-                    return true;
-            }
-            return false;
-        }
-
         protected void AddMarginalMethod(string varName, IMethodDeclaration md)
         {
             IExpression variableName = marginalVariableName;
@@ -1807,9 +1798,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
 
             // Create marginal method and add return statement.
-            string name = CodeBuilder.MakeValid(CodeBuilder.Capitalise(varName + query));
-            if (HasMethod(td, name))
-                return;
+            string name = GetUniqueMethodName(td, CodeBuilder.Capitalise(varName + query));
             IMethodDeclaration md = Builder.MethodDecl(MethodVisibility.Public, name, type, td);
             string queryDoc = query.ToString();
             if (queryDoc == QueryTypes.Marginal.Name) queryDoc = "marginal distribution";
@@ -1894,7 +1883,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             basename = CodeBuilder.MakeValid(basename);
             string s = basename;
             int i = 1;
-            while (IsFieldOfName(td, s))
+            while (HasField(td, s))
             {
                 s = basename + "_" + i;
                 i++;
@@ -1902,11 +1891,37 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return s;
         }
 
-        protected bool IsFieldOfName(ITypeDeclaration td, string name)
+        protected bool HasField(ITypeDeclaration td, string name)
         {
             foreach (IFieldDeclaration fd in td.Fields)
                 if (fd.Name.Equals(name))
                     return true;
+            return false;
+        }
+
+        protected string GetUniqueMethodName(ITypeDeclaration td, string basename)
+        {
+            int k = basename.IndexOf('`');
+            if (k != -1)
+                basename = basename.Substring(0, k);
+            basename = CodeBuilder.MakeValid(basename);
+            string s = basename;
+            int i = 1;
+            while (HasMethod(td, s))
+            {
+                s = basename + "_" + i;
+                i++;
+            }
+            return s;
+        }
+
+        private bool HasMethod(ITypeDeclaration td, string name)
+        {
+            foreach (IMethodDeclaration imd in td.Methods)
+            {
+                if (imd.Name == name)
+                    return true;
+            }
             return false;
         }
     }

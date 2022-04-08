@@ -292,7 +292,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="CasesOp"]/message_doc[@name="BAverageConditional(IList{Bernoulli})"]/*'/>
-        public static Bernoulli BAverageConditional([SkipIfUniform] IList<Bernoulli> cases)
+        public static Bernoulli BAverageConditional([SkipIfAllUniform] IList<Bernoulli> cases)
         {
             // result = p(b=true) / (p(b=true) + p(b=false))
             //        = 1 / (1 + p(b=false)/p(b=true))
@@ -312,7 +312,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="CasesOp"]/message_doc[@name="LogEvidenceRatio(IList{Bernoulli}, Bernoulli)"]/*'/>
-        public static double LogEvidenceRatio(IList<Bernoulli> cases, Bernoulli b)
+        public static double LogEvidenceRatio([SkipIfAllUniform] IList<Bernoulli> cases, Bernoulli b)
         {
             // result = log (p(data|b=true) p(b=true) + p(data|b=false) p(b=false))
             //          log (p(data|b=true) p(b=true) + p(data|b=false) (1-p(b=true))
@@ -377,13 +377,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="CasesOp"]/message_doc[@name="BAverageLogarithm(IList{Bernoulli})"]/*'/>
-        public static Bernoulli BAverageLogarithm([SkipIfUniform] IList<Bernoulli> cases) // TM: SkipIfAny (rather than SkipIfAll) is important for getting good schedules
+        public static Bernoulli BAverageLogarithm([SkipIfAllUniform] IList<Bernoulli> cases)
         {
             return BAverageConditional(cases);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="CasesOp"]/message_doc[@name="AverageLogFactor(IList{Bernoulli}, Bernoulli)"]/*'/>
-        public static double AverageLogFactor([SkipIfUniform] IList<Bernoulli> cases, Bernoulli b)
+        public static double AverageLogFactor([SkipIfAllUniform] IList<Bernoulli> cases, Bernoulli b)
         {
             double probTrue = b.GetProbTrue();
             return probTrue * cases[0].LogOdds + (1 - probTrue) * cases[1].LogOdds;
@@ -483,7 +483,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntCasesOp"]/message_doc[@name="IAverageConditional(IList{Bernoulli}, Discrete)"]/*'/>
-        public static Discrete IAverageConditional([SkipIfUniform] IList<Bernoulli> cases, Discrete result)
+        public static Discrete IAverageConditional([SkipIfAllUniform] IList<Bernoulli> cases, Discrete result)
         {
             Vector probs = result.GetWorkspace();
             double max = cases[0].LogOdds;
@@ -518,7 +518,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntCasesOp"]/message_doc[@name="LogEvidenceRatio(IList{Bernoulli}, Discrete)"]/*'/>
-        public static double LogEvidenceRatio([SkipIfUniform] IList<Bernoulli> cases, Discrete i)
+        public static double LogEvidenceRatio([SkipIfAllUniform] IList<Bernoulli> cases, Discrete i)
         {
             if (i.IsPointMass)
                 return cases[i.Point].LogOdds;
@@ -534,7 +534,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntCasesOp"]/message_doc[@name="LogEvidenceRatio(IList{Bernoulli}, int)"]/*'/>
-        public static double LogEvidenceRatio(IList<Bernoulli> cases, int i)
+        public static double LogEvidenceRatio([SkipIfAllUniform] IList<Bernoulli> cases, int i)
         {
             return cases[i].LogOdds;
         }
@@ -555,7 +555,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="IntCasesOp"]/message_doc[@name="IAverageLogarithm(IList{Bernoulli}, Discrete)"]/*'/>
-        public static Discrete IAverageLogarithm([SkipIfUniform] IList<Bernoulli> cases, Discrete result)
+        public static Discrete IAverageLogarithm([SkipIfAllUniform] IList<Bernoulli> cases, Discrete result)
         {
             return IAverageConditional(cases, result);
         }

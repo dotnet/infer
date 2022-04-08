@@ -4,13 +4,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Microsoft.ML.Probabilistic.Algorithms;
+using Microsoft.ML.Probabilistic.Models.Attributes;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Factors;
+using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
 using Xunit;
-using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -21,10 +24,6 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
     using BernoulliArray = DistributionStructArray<Bernoulli, bool>;
     using BernoulliArrayArray = DistributionRefArray<DistributionStructArray<Bernoulli, bool>, bool[]>;
-    using Microsoft.ML.Probabilistic.Compiler;
-    using System.Diagnostics;
-    using Microsoft.ML.Probabilistic.Algorithms;
-    using Microsoft.ML.Probabilistic.Models.Attributes;
     using Range = Microsoft.ML.Probabilistic.Models.Range;
 
     public class GateModelTests
@@ -56,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void ForEachIfObservedTest()
+        public void ForEachIfObservedConstrainTrueTest()
         {
             Range item = new Range(2).Named("item");
             VariableArray<bool> array1 = Variable.Observed(new[] { false, true }, item).Named("array1");
@@ -2337,7 +2336,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void IfObservedConditionTest4()
+        public void ForEachIfObservedConstrainEqualRandomTest()
         {
             double pT = 0.1;
             double pF = 0.5;
@@ -4574,6 +4573,41 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void IfExitObservedConditionTest2()
+        {
+            Variable<bool> b = Variable.New<bool>().Named("b");
+            Variable<bool> c = Variable.New<bool>().Named("c");
+            using (Variable.If(b))
+            {
+                c.SetTo(Variable.Bernoulli(0.125));
+            }
+            using (Variable.IfNot(b))
+            {
+                c.SetTo(Variable.Bernoulli(0.25));
+            }
+            var d = !c;
+            d.Name = nameof(d);
+            InferenceEngine engine = new InferenceEngine();
+            Bernoulli dExpected;
+            for (int trial = 0; trial < 2; trial++)
+            {
+                if (trial % 2 == 0)
+                {
+                    b.ObservedValue = true;
+                    dExpected = new Bernoulli(1 - 0.125);
+                }
+                else
+                {
+                    b.ObservedValue = false;
+                    dExpected = new Bernoulli(1 - 0.25);
+                }
+                Bernoulli dActual = engine.Infer<Bernoulli>(d);
+                Console.WriteLine("d = {0} should be {1}", dActual, dExpected);
+                Assert.True(dExpected.MaxDiff(dActual) < 1e-10);
+            }
+        }
+
+        [Fact]
         public void IfRandomIfObservedIfRandomConditionTest()
         {
             Variable<bool> a = Variable.Bernoulli(0.2).Named("a");
@@ -5116,7 +5150,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void IfObservedConditionTest()
+        public void IfObservedConstrainTrueTest()
         {
             Variable<bool> b = Variable.New<bool>().Named("b");
             Variable<bool> c = Variable.Bernoulli(0.1).Named("c");
@@ -5190,7 +5224,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void IfObservedConditionTest2()
+        public void IfObservedConstrainTrueElseTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             IfBlock block = Variable.If(evidence);
@@ -5232,7 +5266,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void IfObservedConditionTest3()
+        public void IfObservedConstrainEqualRandomTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             IfBlock block = Variable.If(evidence);

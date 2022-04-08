@@ -307,8 +307,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IStatement source = nodes[sourceIndex];
                     if (context.InputAttributes.Has<InitialiseBackward>(source) && targetIsIncrement)
                         initializedEdges.Add(edge);
-                    IOffsetInfo offsetIndices;
-                    if (di.offsetIndexOf.TryGetValue(source, out offsetIndices))
+                    if (di.offsetIndexOf.TryGetValue(source, out IOffsetInfo offsetIndices))
                     {
                         OffsetIndices[edge] = offsetIndices;
                     }
@@ -316,8 +315,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 deps.Clear();
                 foreach (IStatement source in di.DeclDependencies)
                 {
-                    int sourceIndex;
-                    if (indexOfNode.TryGetValue(source, out sourceIndex))
+                    if (indexOfNode.TryGetValue(source, out int sourceIndex))
                     {
                         if (!sources.Contains(sourceIndex))
                         {
@@ -367,8 +365,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     bool targetIsInitializer = context.InputAttributes.Has<Initializer>(ist);
                     foreach (IStatement source in di.Overwrites)
                     {
-                        int sourceIndex;
-                        if (indexOfNode.TryGetValue(source, out sourceIndex))
+                        if (indexOfNode.TryGetValue(source, out int sourceIndex))
                         {
                             // write-after-write dependency
                             newEdges.Add(new Edge<NodeIndex>(sourceIndex, targetIndex));
@@ -435,8 +432,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // label 'trigger' edges
                 foreach (IStatement source in di.Triggers.Where(dep => ignoreRequirements || !di.HasDependency(DependencyType.NoInit, dep)))
                 {
-                    int sourceIndex;
-                    if (indexOfNode.TryGetValue(source, out sourceIndex))
+                    if (indexOfNode.TryGetValue(source, out int sourceIndex))
                     {
                         try
                         {
@@ -467,8 +463,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     // this is necessary until RepairSchedule is aware of offsets
                     if (di.offsetIndexOf.ContainsKey(source))
                         continue;
-                    int sourceIndex;
-                    if (indexOfNode.TryGetValue(source, out sourceIndex))
+                    if (indexOfNode.TryGetValue(source, out int sourceIndex))
                     {
                         try
                         {
@@ -489,8 +484,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // label 'noInit' edges
                 foreach (IStatement source in di.GetDependenciesOfType(DependencyType.NoInit))
                 {
-                    int sourceIndex;
-                    if (indexOfNode.TryGetValue(source, out sourceIndex))
+                    if (indexOfNode.TryGetValue(source, out int sourceIndex))
                     {
                         try
                         {
@@ -669,9 +663,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             bool topLevel = (anyCounter == 0);
             foreach (IStatement source in sources)
             {
-                if (source is AnyStatement)
+                if (source is AnyStatement anyBlock)
                 {
-                    AnyStatement anyBlock = (AnyStatement)source;
                     List<IStatement> children = new List<IStatement>();
                     children.AddRange(anyBlock.Statements);
                     if (children.Count == 1)
@@ -691,14 +684,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 else
                 {
-                    int sourceIndex;
-                    if (indexOfNode.TryGetValue(source, out sourceIndex))
+                    if (indexOfNode.TryGetValue(source, out int sourceIndex))
                     {
                         try
                         {
                             int edge = dependencyGraph.GetEdge(sourceIndex, targetIndex);
                             if (topLevel)
+                            {
                                 isRequired[edge] = true;
+                            }
                             else
                             {
                                 // inside an AnyStatement

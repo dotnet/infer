@@ -119,255 +119,82 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         /// <summary>
-        /// Find expressions that have overlapping mutations, and replace these mutations with a dummy statement that depends on all of them.
+        /// Register the mutation represented by expression expr - this expression might be a
+        /// target of an assignment or of a non-static method, or it might be a variable declaration
+        /// expression. The expression and its top level statement are added to the registry of
+        /// mutating expressions for the associated variable declaration.
+        /// In addition, previous mutations are marked as 'allocations'
         /// </summary>
-        /// <param name="newStatement">Invoked on each new statement</param>
-        /// <remarks>
-        /// Statements with non-overlapping conditionals are not considered overlapping, 
-        /// so these two statements will not create a dummy statement:
-        /// <code>
-        ///   if(b) x = 0;
-        ///   if(!b) x = 1;
-        /// </code>
-        /// Examples of overlapping mutations:
-        /// ArrayConstraintsTest
-        /// ConstrainBetweenTest
-        /// </remarks>
-        private void CreateDummyStatements(Action<IStatement> newStatement)
+        /// <param name="topLevelStatement"></param>
+        /// <param name="expr">An lvalue or assignment (in the case of initialization).</param>
+        /// <param name="bindings">Bindings of loop variables in expr</param>
+        /// <param name="bounds">Bounds on loop variables in expr</param>
+        private void RegisterMutation(
+            IStatement topLevelStatement,
+            IExpression expr,
+            IStatement bindings,
+            IReadOnlyDictionary<IVariableDeclaration, CodeRecognizer.Bounds> bounds)
         {
-            foreach (MutationInformation mutInfo in mutInfos.Values)
-            {
-                // find overlapping mutations
-                Dictionary<int, List<int>> overlappingMutations = new Dictionary<int, List<int>>();
-                HashSet<int> candidates = new HashSet<int>();
-                for (int i = 0; i < mutInfo.mutations.Count; i++)
-                {
-                    candidates.Add(i);
-                    List<int> overlap = new List<int>();
-                    MutationInformation.Mutation mut = mutInfo.mutations[i];
-                    bool isIncrement = context.InputAttributes.Has<IncrementStatement>(mut.stmt);
-                    IExpression expr = mut.expr;
-                    for (int j = 0; j < mutInfo.mutations.Count; j++)
-                    {
-                        if (j == i)
-                            continue;
-                        MutationInformation.Mutation mut2 = mutInfo.mutations[j];
-                        if (mut2.isAllocation != mut.isAllocation)
-                            continue;
-                        if (mut2.isAllocation)
-                            continue;
-                        // only statements with the same increment status are considered overlapping
-                        if (isIncrement != context.InputAttributes.Has<IncrementStatement>(mut2.stmt))
-                            continue;
-                        if (isIncrement)
-                            continue;
-                        IExpression expr2 = mut2.expr;
-                        if (Recognizer.MutatingFirstAffectsSecond(context, expr, expr2, false, mut.stmt, mut2.stmt))
-                        {
-                            overlap.Add(j);
-                        }
-                    }
-                    overlappingMutations[i] = overlap;
-                }
-                List<MutationInformation.Mutation> newMutations = new List<MutationInformation.Mutation>();
-                var cliqueFinder = new CliqueFinder<int>(node => overlappingMutations[node]);
-                cliqueFinder.ForEachClique(candidates, c =>
-                    CreateDummyStatement(GetMutationInfos(mutInfo, c), newStatement, newMutations.Add));
-                mutInfo.mutations = newMutations;
-            }
-        }
+            // Extract the variable declaration from a, possibly indexed, reference or declaration expression.
+            IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(expr);
 
-        /// <summary>
-        /// Create a new statement that represents all of the given mutations
-        /// </summary>
-        /// <param name="mutations"></param>
-        /// <param name="newStatement"></param>
-        /// <param name="newMutation"></param>
-        private void CreateDummyStatement(ICollection<MutationInformation.Mutation> mutations, Action<IStatement> newStatement, Action<MutationInformation.Mutation> newMutation)
-        {
-            if (mutations.Count == 1)
-            {
-                foreach (var mut2 in mutations)
-                {
-                    newMutation(mut2);
-                }
+            // This case arises for targets of static methods where the target is a type reference expression
+            // rather than a variable reference expression. In this case, no mutation occurs, so just return
+            if (ivd == null)
                 return;
-            }
-            bool allAllocations = true;
-            bool anyAllocations = false;
-            foreach (var mut2 in mutations)
+            // Ignore mutations of loop variables
+            if (context.InputAttributes.Has<LoopCounterAttribute>(ivd))
+                return;
+
+            // Get the MutationInformation instance that stores the list of mutating expressions for this variable declaration.
+            // Create if this is the first time we have seen this variable
+            MutationInformation mutInfo;
+            if (!mutInfos.TryGetValue(ivd, out mutInfo))
             {
-                if (mut2.isAllocation)
-                    anyAllocations = true;
-                else
-                    allAllocations = false;
+                mutInfo = new MutationInformation();
+                mutInfos[ivd] = mutInfo;
             }
-            if (anyAllocations && !allAllocations)
-                throw new Exception("Invalid clique");
-            MutationInformation.Mutation mut = new MutationInformation.Mutation();
-            mut.isAllocation = anyAllocations;
-            mut.expr = GetCommonParent(mutations);
-            StringBuilder sb = new StringBuilder();
-            sb.Append(mut.expr);
-            sb.Append(" is now updated in all contexts");
-            Containers containers = null;
-            // TODO: these dependencies should include offsets and extraIndices
-            DependencyInformation di = new DependencyInformation();
-            di.IsFresh = true;
-            AnyStatement skipSt = new AnyStatement();
-            foreach (var mut2 in mutations)
+
+            // Register the current expression 
+            bool isAllocation = IsAllocationStatement(context, topLevelStatement);
+            mutInfo.RegisterMutationStatement(expr, topLevelStatement, isAllocation);
+
+            // Find earlier allocations
+            bool isIncrement = context.InputAttributes.Has<IncrementStatement>(topLevelStatement);
+            bool allocationsOnly = !isIncrement;
+            try
             {
-                IStatement required = mut2.stmt;
-                if (required is AnyStatement)
+                IList<IStatement> allocations = mutInfo.GetMutations(context, topLevelStatement, expr, allocationsOnly, false, bindings, bounds).ListSelect(m => m.stmt);
+
+                foreach (IStatement alloc in allocations)
                 {
-                    AnyStatement requiredAny = (AnyStatement)required;
-                    foreach (IStatement required2 in requiredAny.Statements)
-                    {
-                        di.Add(DependencyType.Dependency | DependencyType.Fresh | DependencyType.Trigger | DependencyType.Overwrite, required2);
-                        if (!(required2 is AnyStatement))
-                        {
-                            Containers c = Containers.GetContainers(required2);
-                            if (containers == null)
-                                containers = c;
-                            else
-                                containers = Containers.Intersect(containers, c);
-                        }
-                    }
-                    di.Add(DependencyType.Requirement, required);
+                    dependencyInformation.Add(DependencyType.Overwrite, alloc);
+                    dependencyInformation.Add(DependencyType.Declaration, alloc);
                 }
-                else
-                {
-                    di.Add(DependencyType.Dependency | DependencyType.Requirement | DependencyType.Fresh | DependencyType.Trigger | DependencyType.Overwrite, required);
-                    Containers c = Containers.GetContainers(required);
-                    if (containers == null)
-                        containers = c;
-                    else
-                        containers = Containers.Intersect(containers, c);
-                }
-                skipSt.Statements.Add(required);
             }
-            di.Add(DependencyType.SkipIfUniform, skipSt);
-            IStatement dummySt = Builder.CommentStmt(sb.ToString());
-            // wrap with containers for ForwardBackwardTransform and LoopMerging
-            dummySt = Containers.WrapWithContainers(dummySt, containers.inputs);
-            context.OutputAttributes.Set(dummySt, di);
-            newStatement(dummySt);
-            mut.stmt = dummySt;
-            newMutation(mut);
+            catch (Exception ex)
+            {
+                Error(ex.Message, ex);
+            }
         }
 
-
-        private ICollection<MutationInformation.Mutation> GetMutationInfos(MutationInformation mutInfo, IEnumerable<int> indices)
+        private static bool IsAllocationStatement(BasicTransformContext context, IStatement stmt)
         {
-            var list = new List<MutationInformation.Mutation>();
-            foreach (int i in indices)
-            {
-                list.Add(mutInfo.mutations[i]);
-            }
-            return list;
-        }
-
-        /// <summary>
-        /// Get an expression whose assignment would change the value of all the given expressions
-        /// </summary>
-        /// <param name="mutations"></param>
-        /// <returns></returns>
-        private IExpression GetCommonParent(ICollection<MutationInformation.Mutation> mutations)
-        {
-            bool useAny = true;
-            if (useAny)
-            {
-                List<IExpression> exprs = new List<IExpression>();
-                foreach (MutationInformation.Mutation m in mutations)
-                {
-                    if (Recognizer.IsStaticMethod(m.expr, new Func<object[], object>(FactorManager.Any)))
-                    {
-                        IMethodInvokeExpression imie = (IMethodInvokeExpression)m.expr;
-                        exprs.AddRange(imie.Arguments);
-                    }
-                    else
-                    {
-                        exprs.Add(m.expr);
-                    }
-                }
-                IExpression anyExpr = Builder.StaticMethod(new Func<object[], object>(FactorManager.Any), exprs.ToArray());
-                return anyExpr;
-            }
-
-            int minCount = int.MaxValue;
-            var allPrefixes = new List<List<IExpression>>();
-            var allBindings = new List<ICollection<ConditionBinding>>();
-            foreach (var mut in mutations)
-            {
-                List<IExpression> prefixes = Recognizer.GetAllPrefixes(mut.expr);
-                allPrefixes.Add(prefixes);
-                if (prefixes.Count < minCount)
-                    minCount = prefixes.Count;
-                allBindings.Add(Recognizer.GetBindings(mut.stmt));
-            }
-            IExpression parent = allPrefixes[0][0];
-            for (int i = 1; i < minCount; i++)
-            {
-                int bracketSize = -1;
-                for (int j = 0; j < allPrefixes.Count; j++)
-                {
-                    var prefix = allPrefixes[j][i];
-                    if (!(prefix is IArrayIndexerExpression))
-                        throw new Exception("Unhandled expression type: " + prefix.GetType());
-                    IArrayIndexerExpression iaie = (IArrayIndexerExpression)prefix;
-                    if (bracketSize == -1)
-                        bracketSize = iaie.Indices.Count;
-                    else if (bracketSize != iaie.Indices.Count)
-                        throw new Exception("inconsistent bracket sizes: " + prefix);
-                }
-                IExpression[] indices = new IExpression[bracketSize];
-                for (int k = 0; k < bracketSize; k++)
-                {
-                    List<IExpression> exprsToUnify = new List<IExpression>();
-                    for (int j = 0; j < allPrefixes.Count; j++)
-                    {
-                        var prefix = allPrefixes[j][i];
-                        IArrayIndexerExpression iaie = (IArrayIndexerExpression)prefix;
-                        exprsToUnify.Add(iaie.Indices[k]);
-                    }
-                    IExpression index = Unify(exprsToUnify, allBindings);
-                    indices[k] = index;
-                }
-                parent = Builder.ArrayIndex(parent, indices);
-            }
-            return parent;
-        }
-
-        private IExpression Unify(IList<IExpression> exprs, IList<ICollection<ConditionBinding>> bindingsOfExpr)
-        {
-            // for each expr, check if it could be the unifier
-            // if not, use AnyIndex
-            for (int i = 0; i < exprs.Count; i++)
-            {
-                IExpression parent = exprs[i];
-                bool allMatch = true;
-                for (int j = 0; j < exprs.Count; j++)
-                {
-                    if (j == i)
-                        continue;
-                    IExpression replacedParent = GateAnalysisTransform.ReplaceExpression(bindingsOfExpr[j], parent);
-                    if (!exprs[j].Equals(replacedParent))
-                    {
-                        allMatch = false;
-                        break;
-                    }
-                }
-                if (allMatch)
-                    return parent;
-            }
-            return Builder.StaticMethod(new Func<int>(GateAnalysisTransform.AnyIndex));
+            if (stmt is IConditionStatement ics)
+                return IsAllocationStatement(context, ics.Then);
+            else if (stmt is IForStatement ifs)
+                return IsAllocationStatement(context, ifs.Body);
+            else if (stmt is IBlockStatement ibs)
+                return IsAllocationStatement(context, ibs.Statements[0]);
+            else // TODO: should use an attribute for AllocationStatement
+                return !context.InputAttributes.Has<OperatorStatement>(stmt);
         }
 
         /// <summary>
         /// Post-process dependencies replacing message expressions with the operator
         /// blocks that compute them.
         /// </summary>
-        internal void PostProcessDependencies(IList<IStatement> stmts)
+        private void PostProcessDependencies(IList<IStatement> stmts)
         {
             List<IStatement> dummyStatements = new List<IStatement>();
             CreateDummyStatements(dummyStatements.Add);
@@ -445,7 +272,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     {
                         // Process SkipIfUniform dependencies specially
                         // Stmts with the same offsetInfo are put into Any
-                        var mutatingStmtsSkip = GetStatementsThatMutate(ist, exprStmt, allocationsOnly, true, ist, bounds, di2.offsetIndexOf, extraIndicesOfStmt);
+                        var mutatingStmtsSkip = GetStatementsThatMutate(ist, exprStmt, allocationsOnly, true, ist, bounds, di2.offsetIndexOf, extraIndicesOfStmt, st => di2.Add(DependencyType.Requirement, st));
                         foreach (IStatement mutatingStmt in mutatingStmtsSkip)
                         {
                             di2.Add(DependencyType.SkipIfUniform, mutatingStmt);
@@ -562,18 +389,240 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             stmts.AddRange(dummyStatements);
         }
 
-        class OffsetInfoComparer : IEqualityComparer<OffsetInfo>
+        /// <summary>
+        /// Find expressions that have overlapping mutations, and replace these mutations with a dummy statement that depends on all of them.
+        /// </summary>
+        /// <param name="newStatement">Invoked on each new statement</param>
+        /// <remarks>
+        /// Statements with non-overlapping conditionals are not considered overlapping, 
+        /// so these two statements will not create a dummy statement:
+        /// <code>
+        ///   if(b) x = 0;
+        ///   if(!b) x = 1;
+        /// </code>
+        /// Examples of non-overlapping mutations:
+        /// IfExitObservedConditionTest2
+        /// IfObservedArrayExitTest
+        /// Examples of overlapping mutations:
+        /// ArrayConstraintsTest
+        /// ConstrainBetweenTest
+        /// </remarks>
+        private void CreateDummyStatements(Action<IStatement> newStatement)
         {
-            public bool Equals(OffsetInfo x, OffsetInfo y)
+            foreach (MutationInformation mutInfo in mutInfos.Values)
             {
-                if (x == null) return (y == null);
-                else if (y == null) return false;
-                else return x.Any(offset => y.ContainsKey(offset.loopVar));
+                // find overlapping mutations
+                Dictionary<int, List<int>> overlappingMutations = new Dictionary<int, List<int>>();
+                HashSet<int> candidates = new HashSet<int>();
+                for (int i = 0; i < mutInfo.mutations.Count; i++)
+                {
+                    candidates.Add(i);
+                    List<int> overlap = new List<int>();
+                    MutationInformation.Mutation mut = mutInfo.mutations[i];
+                    bool isIncrement = context.InputAttributes.Has<IncrementStatement>(mut.stmt);
+                    IExpression expr = mut.expr;
+                    for (int j = 0; j < mutInfo.mutations.Count; j++)
+                    {
+                        if (j == i)
+                            continue;
+                        MutationInformation.Mutation mut2 = mutInfo.mutations[j];
+                        if (mut2.isAllocation != mut.isAllocation)
+                            continue;
+                        if (mut2.isAllocation)
+                            continue;
+                        // only statements with the same increment status are considered overlapping
+                        if (isIncrement != context.InputAttributes.Has<IncrementStatement>(mut2.stmt))
+                            continue;
+                        if (isIncrement)
+                            continue;
+                        IExpression expr2 = mut2.expr;
+                        if (Recognizer.MutatingFirstAffectsSecond(context, expr, expr2, false, mut.stmt, mut2.stmt))
+                        {
+                            overlap.Add(j);
+                        }
+                    }
+                    overlappingMutations[i] = overlap;
+                }
+                List<MutationInformation.Mutation> newMutations = new List<MutationInformation.Mutation>();
+                var cliqueFinder = new CliqueFinder<int>(node => overlappingMutations[node]);
+                cliqueFinder.ForEachClique(candidates, c =>
+                    CreateDummyStatement(GetMutationInfos(mutInfo, c), newMutations.Add));
+                mutInfo.mutations = newMutations;
             }
 
-            public int GetHashCode(OffsetInfo obj)
+            // Create a new statement that represents all of the given mutations
+            void CreateDummyStatement(ICollection<MutationInformation.Mutation> mutations, Action<MutationInformation.Mutation> newMutation)
             {
-                return 0;
+                if (mutations.Count == 1)
+                {
+                    foreach (var mut2 in mutations)
+                    {
+                        newMutation(mut2);
+                    }
+                    return;
+                }
+                bool allAllocations = true;
+                bool anyAllocations = false;
+                foreach (var mut2 in mutations)
+                {
+                    if (mut2.isAllocation)
+                        anyAllocations = true;
+                    else
+                        allAllocations = false;
+                }
+                if (anyAllocations && !allAllocations)
+                    throw new Exception("Invalid clique");
+                MutationInformation.Mutation mut = new MutationInformation.Mutation();
+                mut.isAllocation = anyAllocations;
+                mut.expr = GetCommonParent();
+                StringBuilder sb = new StringBuilder();
+                sb.Append(mut.expr);
+                sb.Append(" is now updated in all contexts");
+                Containers containers = null;
+                // TODO: these dependencies should include offsets and extraIndices
+                DependencyInformation di = new DependencyInformation();
+                di.IsFresh = true;
+                AnyStatement skipSt = new AnyStatement();
+                foreach (var mut2 in mutations)
+                {
+                    IStatement required = mut2.stmt;
+                    if (required is AnyStatement requiredAny)
+                    {
+                        foreach (IStatement required2 in requiredAny.Statements)
+                        {
+                            di.Add(DependencyType.Dependency | DependencyType.Fresh | DependencyType.Trigger | DependencyType.Overwrite, required2);
+                            if (!(required2 is AnyStatement))
+                            {
+                                Containers c = Containers.GetContainers(required2);
+                                if (containers == null)
+                                    containers = c;
+                                else
+                                    containers = Containers.Intersect(containers, c);
+                            }
+                        }
+                        di.Add(DependencyType.Requirement, required);
+                    }
+                    else
+                    {
+                        di.Add(DependencyType.Dependency | DependencyType.Requirement | DependencyType.Fresh | DependencyType.Trigger | DependencyType.Overwrite, required);
+                        Containers c = Containers.GetContainers(required);
+                        if (containers == null)
+                            containers = c;
+                        else
+                            containers = Containers.Intersect(containers, c);
+                    }
+                    skipSt.Statements.Add(required);
+                }
+                di.Add(DependencyType.SkipIfUniform, skipSt);
+                IStatement dummySt = Builder.CommentStmt(sb.ToString());
+                // wrap with containers for ForwardBackwardTransform and LoopMerging
+                dummySt = Containers.WrapWithContainers(dummySt, containers.inputs);
+                context.OutputAttributes.Set(dummySt, di);
+                newStatement(dummySt);
+                mut.stmt = dummySt;
+                newMutation(mut);
+
+                // Get an expression whose assignment would change the value of all the given expressions
+                IExpression GetCommonParent()
+                {
+                    bool useAny = true;
+                    if (useAny)
+                    {
+                        List<IExpression> exprs = new List<IExpression>();
+                        foreach (MutationInformation.Mutation m in mutations)
+                        {
+                            if (Recognizer.IsStaticMethod(m.expr, new Func<object[], object>(FactorManager.Any)))
+                            {
+                                IMethodInvokeExpression imie = (IMethodInvokeExpression)m.expr;
+                                exprs.AddRange(imie.Arguments);
+                            }
+                            else
+                            {
+                                exprs.Add(m.expr);
+                            }
+                        }
+                        IExpression anyExpr = Builder.StaticMethod(new Func<object[], object>(FactorManager.Any), exprs.ToArray());
+                        return anyExpr;
+                    }
+
+                    int minCount = int.MaxValue;
+                    var allPrefixes = new List<List<IExpression>>();
+                    var allBindings = new List<ICollection<ConditionBinding>>();
+                    foreach (var mutation in mutations)
+                    {
+                        List<IExpression> prefixes = Recognizer.GetAllPrefixes(mutation.expr);
+                        allPrefixes.Add(prefixes);
+                        if (prefixes.Count < minCount)
+                            minCount = prefixes.Count;
+                        allBindings.Add(Recognizer.GetBindings(mutation.stmt));
+                    }
+                    IExpression parent = allPrefixes[0][0];
+                    for (int i = 1; i < minCount; i++)
+                    {
+                        int bracketSize = -1;
+                        for (int j = 0; j < allPrefixes.Count; j++)
+                        {
+                            var prefix = allPrefixes[j][i];
+                            if (!(prefix is IArrayIndexerExpression))
+                                throw new Exception("Unhandled expression type: " + prefix.GetType());
+                            IArrayIndexerExpression iaie = (IArrayIndexerExpression)prefix;
+                            if (bracketSize == -1)
+                                bracketSize = iaie.Indices.Count;
+                            else if (bracketSize != iaie.Indices.Count)
+                                throw new Exception("inconsistent bracket sizes: " + prefix);
+                        }
+                        IExpression[] indices = new IExpression[bracketSize];
+                        for (int k = 0; k < bracketSize; k++)
+                        {
+                            List<IExpression> exprsToUnify = new List<IExpression>();
+                            for (int j = 0; j < allPrefixes.Count; j++)
+                            {
+                                var prefix = allPrefixes[j][i];
+                                IArrayIndexerExpression iaie = (IArrayIndexerExpression)prefix;
+                                exprsToUnify.Add(iaie.Indices[k]);
+                            }
+                            IExpression index = Unify(exprsToUnify, allBindings);
+                            indices[k] = index;
+                        }
+                        parent = Builder.ArrayIndex(parent, indices);
+                    }
+                    return parent;
+
+                    IExpression Unify(IList<IExpression> exprs, IList<ICollection<ConditionBinding>> bindingsOfExpr)
+                    {
+                        // for each expr, check if it could be the unifier
+                        // if not, use AnyIndex
+                        for (int i = 0; i < exprs.Count; i++)
+                        {
+                            IExpression expr = exprs[i];
+                            bool allMatch = true;
+                            for (int j = 0; j < exprs.Count; j++)
+                            {
+                                if (j == i)
+                                    continue;
+                                IExpression replaced = GateAnalysisTransform.ReplaceExpression(bindingsOfExpr[j], expr);
+                                if (!exprs[j].Equals(replaced))
+                                {
+                                    allMatch = false;
+                                    break;
+                                }
+                            }
+                            if (allMatch)
+                                return expr;
+                        }
+                        return Builder.StaticMethod(new Func<int>(GateAnalysisTransform.AnyIndex));
+                    }
+                }
+            }
+
+            ICollection<MutationInformation.Mutation> GetMutationInfos(MutationInformation mutInfo, IEnumerable<int> indices)
+            {
+                var list = new List<MutationInformation.Mutation>();
+                foreach (int i in indices)
+                {
+                    list.Add(mutInfo.mutations[i]);
+                }
+                return list;
             }
         }
 
@@ -642,78 +691,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (ics.Else != null)
                 ConvertBlock(ics.Else);
             return ics;
-        }
-
-        /// <summary>
-        /// Register the mutation represented by expression expr - this expression might be a
-        /// target of an assignment or of a non-static method, or it might be a variable declaration
-        /// expression. The expression and its top level statement are added to the registry of
-        /// mutating expressions for the associated variable declaration.
-        /// In addition, previous mutations are marked as 'allocations'
-        /// </summary>
-        /// <param name="topLevelStatement"></param>
-        /// <param name="expr">An lvalue or assignment (in the case of initialization).</param>
-        /// <param name="bindings">Bindings of loop variables in expr</param>
-        /// <param name="bounds">Bounds on loop variables in expr</param>
-        internal void RegisterMutation(
-            IStatement topLevelStatement,
-            IExpression expr,
-            IStatement bindings,
-            IReadOnlyDictionary<IVariableDeclaration, CodeRecognizer.Bounds> bounds)
-        {
-            // Extract the variable declaration from a, possibly indexed, reference or declaration expression.
-            IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(expr);
-
-            // This case arises for targets of static methods where the target is a type reference expression
-            // rather than a variable reference expression. In this case, no mutation occurs, so just return
-            if (ivd == null)
-                return;
-            // Ignore mutations of loop variables
-            if (context.InputAttributes.Has<LoopCounterAttribute>(ivd))
-                return;
-
-            // Get the MutationInformation instance that stores the list of mutating expressions for this variable declaration.
-            // Create if this is the first time we have seen this variable
-            MutationInformation mutInfo;
-            if (!mutInfos.TryGetValue(ivd, out mutInfo))
-            {
-                mutInfo = new MutationInformation();
-                mutInfos[ivd] = mutInfo;
-            }
-
-            // Register the current expression 
-            bool isAllocation = IsAllocationStatement(context, topLevelStatement);
-            mutInfo.RegisterMutationStatement(expr, topLevelStatement, isAllocation);
-
-            // Find earlier allocations
-            bool isIncrement = context.InputAttributes.Has<IncrementStatement>(topLevelStatement);
-            bool allocationsOnly = !isIncrement;
-            try
-            {
-                IList<IStatement> allocations = mutInfo.GetMutations(context, topLevelStatement, expr, allocationsOnly, false, bindings, bounds).ListSelect(m => m.stmt);
-
-                foreach (IStatement alloc in allocations)
-                {
-                    dependencyInformation.Add(DependencyType.Overwrite, alloc);
-                    dependencyInformation.Add(DependencyType.Declaration, alloc);
-                }
-            }
-            catch (Exception ex)
-            {
-                Error(ex.Message, ex);
-            }
-        }
-
-        private static bool IsAllocationStatement(BasicTransformContext context, IStatement stmt)
-        {
-            if (stmt is IConditionStatement)
-                return IsAllocationStatement(context, ((IConditionStatement)stmt).Then);
-            else if (stmt is IForStatement)
-                return IsAllocationStatement(context, ((IForStatement)stmt).Body);
-            else if (stmt is IBlockStatement)
-                return IsAllocationStatement(context, ((IBlockStatement)stmt).Statements[0]);
-            else // TODO: should use an attribute for AllocationStatement
-                return !context.InputAttributes.Has<OperatorStatement>(stmt);
         }
 
         private bool IsBeingMutated(IExpression expr)
@@ -960,7 +937,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (anySt.Statements.Count == 0)
                         dependencyInformation.IsUniform = true;
                     else
+                    {
                         AddDependencyOn(anySt);
+                    }
                 }
                 return imie;
             }
@@ -1054,7 +1033,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // If 'all trigger' is set, all dependencies are also triggers
                 if (!treatTriggersAsFresh && allTriggers && (type & DependencyType.Dependency) > 0)
                     type |= DependencyType.Trigger;
-                IExpression arg = MapDependency(entry.Key, parameterToExpressionMap);
+                IExpression arg = MapDependency(entry.Key);
                 IVariableDeclaration argVar = Recognizer.GetVariableDeclaration(arg);
                 if (argVar != null && context.InputAttributes.Has<DoesNotHaveInitializer>(argVar) && !IsBeingMutated(arg))
                 {
@@ -1076,31 +1055,31 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 dependencyInformation.IsFresh = false;
             }
             return imie;
-        }
 
-        // This takes a list of dependencies, which are in the form of expression statements.
-        // These dependencies are created by the factor manager which analyses message
-        // function attributes and creates the expressions statements using the inbuilt parameter
-        // names and types. The parameterToExpressionMap maps parameter expressions to the corresponding
-        // argument expressions in the model. This method uses this map, to replace all
-        // arguments in all dependencies with the correct model expressions.
-        internal IExpression MapDependency(IStatement ist, Dictionary<IExpression, IExpression> parameterToExpressionMap)
-        {
-            return ReplaceArgs(((IExpressionStatement)ist).Expression, parameterToExpressionMap);
-        }
-
-        // Replace the parameter expressions in an expression with the corresponding model expressions 
-        private IExpression ReplaceArgs(IExpression iExpression, Dictionary<IExpression, IExpression> parameterToExpressionMap)
-        {
-            foreach (KeyValuePair<IExpression, IExpression> kvp in parameterToExpressionMap)
+            // This takes a list of dependencies, which are in the form of expression statements.
+            // These dependencies are created by the factor manager which analyses message
+            // function attributes and creates the expressions statements using the inbuilt parameter
+            // names and types. The parameterToExpressionMap maps parameter expressions to the corresponding
+            // argument expressions in the model. This method uses this map, to replace all
+            // arguments in all dependencies with the correct model expressions.
+            IExpression MapDependency(IStatement ist)
             {
-                int repCount = 0;
-                iExpression = Builder.ReplaceExpression(iExpression, kvp.Key, kvp.Value, ref repCount);
+                return ReplaceArgs(((IExpressionStatement)ist).Expression);
+
+                // Replace the parameter expressions in an expression with the corresponding model expressions 
+                IExpression ReplaceArgs(IExpression iExpression)
+                {
+                    foreach (KeyValuePair<IExpression, IExpression> kvp in parameterToExpressionMap)
+                    {
+                        int repCount = 0;
+                        iExpression = Builder.ReplaceExpression(iExpression, kvp.Key, kvp.Value, ref repCount);
+                    }
+                    return iExpression;
+                }
             }
-            return iExpression;
         }
 
-#region Expression types on which a statement can have dependencies 
+        #region Expression types on which a statement can have dependencies 
 
         // Add dependencies on this property reference
         // We cannot use base.ConvertPropertyRefExpr because we want the dependency to be on the entire expression,
@@ -1160,7 +1139,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return iaie;
         }
 
-#endregion
+        protected override IParameterDeclaration ConvertMethodParameter(IParameterDeclaration ipd, int index)
+        {
+            if (context.FindAncestor<IAnonymousMethodExpression>() == null)
+                topLevelParameters.Add(ipd);
+            return ipd;
+        }
+
+        protected override IExpression ConvertArgumentRef(IArgumentReferenceExpression iare)
+        {
+            IParameterDeclaration ipd = iare.Parameter.Resolve();
+            // only add dependencies on top-level parameters, not anonymous method parameters
+            if (topLevelParameters.Contains(ipd))
+                AddParameterDependency(ipd);
+            return base.ConvertArgumentRef(iare);
+        }
+
+        #endregion
 
         /// <summary>
         /// Converts the indices in all brackets of expr, but not the innermost target.
@@ -1220,78 +1215,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             dependencyInformation.Add(type, st);
         }
 
-        internal void AddParameterDependency(IParameterDeclaration ipd)
+        private void AddParameterDependency(IParameterDeclaration ipd)
         {
             dependencyInformation.ParameterDependencies.Add(ipd);
         }
 
-        protected override IParameterDeclaration ConvertMethodParameter(IParameterDeclaration ipd, int index)
-        {
-            if (context.FindAncestor<IAnonymousMethodExpression>() == null)
-                topLevelParameters.Add(ipd);
-            return ipd;
-        }
-
-        protected override IExpression ConvertArgumentRef(IArgumentReferenceExpression iare)
-        {
-            IParameterDeclaration ipd = iare.Parameter.Resolve();
-            // only add dependencies on top-level parameters, not anonymous method parameters
-            if (topLevelParameters.Contains(ipd))
-                AddParameterDependency(ipd);
-            return base.ConvertArgumentRef(iare);
-        }
-
-        private void ForEachExpressionDependency(IEnumerable<IStatement> stmts, Action<ExpressionDependency> action)
-        {
-            foreach (IStatement ist in stmts)
-            {
-                if (ist is ExpressionDependency)
-                    action((ExpressionDependency)ist);
-                else if (ist is AnyStatement)
-                {
-                    AnyStatement anySt = (AnyStatement)ist;
-                    ForEachExpressionDependency(anySt.Statements, action);
-                }
-                else
-                    throw new Exception("unexpected dependency");
-            }
-        }
-
-        static IEnumerable<IStatement> LiftNestedAll(AnyStatement anySt)
-        {
-            // Convert Any(x,All(y,z)) to All(Any(x,y),Any(x,z))
-            // Convert Any(All(x,y),All(z,w)) to All(Any(x,z),Any(x,w),Any(y,z),Any(y,w))
-            List<AnyStatement> results = new List<AnyStatement>();
-            IEnumerable<AnyStatement> CopyAndAdd(IStatement newSt)
-            {
-                IStatement[] newSequence = new IStatement[] { newSt };
-                if (results.Count == 0) return new[] { new AnyStatement(newSequence) };
-                else return results.Select(a => new AnyStatement(a.Statements.Concat(newSequence).ToArray()));
-            }
-            foreach(var stmt in anySt.Statements)
-            {
-                if(stmt is AllStatement allSt)
-                {
-                    results = allSt.Statements.SelectMany(CopyAndAdd).ToList();
-                }
-                else if(results.Count > 0)
-                {
-                    // Add this stmt to all clauses
-                    foreach(var clause in results)
-                    {
-                        clause.Statements.Add(stmt);
-                    }
-                }
-                else
-                {
-                    results.Add(new AnyStatement(stmt));
-                }
-            }
-            return results.Select(a => (a.Statements.Count == 1) ? a.Statements[0] : a);
-        }
-
         // same as GetMutations but handles AnyStatements
-        internal IEnumerable<IStatement> GetStatementsThatMutate(
+        private IEnumerable<IStatement> GetStatementsThatMutate(
             IStatement exclude,
             IStatement exprStmt,
             bool allocationsOnly,
@@ -1299,9 +1229,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IStatement bindings,
             IReadOnlyDictionary<IVariableDeclaration, CodeRecognizer.Bounds> bounds,
             Dictionary<IStatement, IOffsetInfo> offsetInfos,
-            Dictionary<IStatement, Set<IVariableDeclaration>> extraIndicesOfStmt)
+            Dictionary<IStatement, Set<IVariableDeclaration>> extraIndicesOfStmt,
+            Action<IStatement> requirementAction = null)
         {
-            if (mustMutate && exprStmt is ExpressionDependency) exprStmt = new AnyStatement(exprStmt);
+            bool wasExpression = false;
+            if (mustMutate && exprStmt is ExpressionDependency)
+            {
+                // mustMutate indicates that we are processing SkipIfUniform dependencies.
+                // variables that are defined by multiple statements, e.g. arrays defined per element, should only be assumed uniform
+                // when all of the source statements are uniform.  Wrapping the sources in an AnyStatement achieves this.
+                // Without this wrapping, we will prune away variables that are not actually uniform, e.g. the evidence variable in BayesPointEvidence2.
+                exprStmt = new AnyStatement(exprStmt);
+                wasExpression = true;
+            }
             if (exprStmt is AllStatement allSt)
             {
                 List<ExpressionDependency> exprDeps = new List<ExpressionDependency>();
@@ -1312,9 +1252,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression expr = ies.Expression;
                     List<MutationInformation.Mutation> mutations = GetMutations(exclude, expr, allocationsOnly, mustMutate, bindings, bounds, offsetInfos, extraIndicesOfStmt);
                     IExpression prefixExpr = expr;
-                    while (prefixExpr is IMethodInvokeExpression)
+                    while (prefixExpr is IMethodInvokeExpression imie)
                     {
-                        IMethodInvokeExpression imie = (IMethodInvokeExpression)prefixExpr;
                         prefixExpr = imie.Arguments[0];
                     }
                     var prefixes = Recognizer.GetAllPrefixes(prefixExpr);
@@ -1376,28 +1315,35 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 foreach (ExpressionDependency ies in exprDeps)
                 {
                     IExpression expr = ies.Expression;
-                    AllStatement allBlock = new AllStatement();
-                    AnyStatement anyBlock = new AnyStatement();
+                    int depth = Recognizer.GetIndexingDepth(expr);
                     List<MutationInformation.Mutation> mutations = GetMutations(exclude, expr, allocationsOnly, mustMutate, bindings, bounds, offsetInfos, extraIndicesOfStmt);
                     foreach (MutationInformation.Mutation m in mutations)
                     {
-                        anyBlock.Statements.Add(m.stmt);
-                    }
-                    if (anyBlock.Statements.Count > 0)
-                        allBlock.Statements.Add(anyBlock);
+                        newSt.Statements.Add(m.stmt);
+                        if (wasExpression)
+                        {
+                            // This is needed because GateTransform does not emit Enter/Exit statements for deterministic gates.
+                            // Example: CasesOp.BAverageConditional(cases_B) has a [SkipIfUniform] attribute.
+                            // If cases_B is filled in by element, the dependencies should be Any(cases_B[0], cases_B[1]).
+                            // If cases_B has two different definitions (due to deterministic gates), the dependencies should be Any(def1, def2)
+                            // plus individual requirements on def1 and def2, since all definitions must precede the first use in the schedule.
+                            // These cases are distinguished by their indexing depth.
+                            // Do not create requirements on increments and available offsets.
+                            bool isIncrement = context.InputAttributes.Has<IncrementStatement>(m.stmt);
+                            if (!isIncrement && !IsAvailable(m.stmt) && Recognizer.GetIndexingDepth(m.expr) <= depth)
+                            {
+                                requirementAction(m.stmt);
+                            }
 
-                    // add groups to results
-                    if (allBlock.Statements.Count == 1)
-                    {
-                        IStatement ist = allBlock.Statements[0];
-                        if (ist is AnyStatement)
-                        {
-                            AnyStatement group = (AnyStatement)ist;
-                            newSt.Statements.AddRange(group.Statements);
-                        }
-                        else
-                        {
-                            newSt.Statements.Add(ist);
+                            bool IsAvailable(IStatement st)
+                            {
+                                if (offsetInfos.TryGetValue(st, out IOffsetInfo offsetIndices))
+                                {
+                                    OffsetInfo offsets = (OffsetInfo)offsetIndices;
+                                    return offsets.All(offset => offset.isAvailable);
+                                }
+                                return false;
+                            }
                         }
                     }
                 }
@@ -1419,51 +1365,101 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 yield return exprStmt;
             }
-        }
 
-        private void AddCliques(List<KeyValuePair<MutationInformation.Mutation, IExpression>> mutationsToCheck, IList<IReadOnlyList<IStatement>> groups)
-        {
-            // find overlapping mutations
-            Dictionary<int, List<int>> overlappingMutations = new Dictionary<int, List<int>>();
-            Set<int> candidates = new Set<int>();
-            for (int i = 0; i < mutationsToCheck.Count; i++)
+            void ForEachExpressionDependency(IEnumerable<IStatement> stmts, Action<ExpressionDependency> action)
             {
-                candidates.Add(i);
-                List<int> overlap = new List<int>();
-                MutationInformation.Mutation mut = mutationsToCheck[i].Key;
-                IExpression expr1 = mutationsToCheck[i].Value;
-                bool isIncrement = context.InputAttributes.Has<IncrementStatement>(mut.stmt);
-                for (int j = 0; j < mutationsToCheck.Count; j++)
+                foreach (IStatement ist in stmts)
                 {
-                    if (j == i)
-                        continue;
-                    MutationInformation.Mutation mut2 = mutationsToCheck[j].Key;
-                    IExpression expr2 = mutationsToCheck[j].Value;
-                    //if (mut2.isAllocation != mut.isAllocation)
-                    //    continue;
-                    //if (mut2.isAllocation)
-                    //    continue;
-                    // only statements with the same increment status are considered overlapping
-                    //if (isIncrement != context.InputAttributes.Has<IncrementStatement>(mut2.stmt))
-                    //    continue;
-                    //if (Recognizer.MutatingFirstAffectsSecond(context, expr1, expr2, false, mut.stmt, mut2.stmt))
-                    if (Recognizer.MutatingFirstAffectsSecond(context, expr1, expr2, false))
+                    if (ist is ExpressionDependency ies)
                     {
-                        overlap.Add(j);
+                        action(ies);
+                    }
+                    else if (ist is AnyStatement anySt)
+                    {
+                        ForEachExpressionDependency(anySt.Statements, action);
+                    }
+                    else
+                        throw new Exception("unexpected dependency");
+                }
+            }
+
+            void AddCliques(List<KeyValuePair<MutationInformation.Mutation, IExpression>> mutationsToCheck, IList<IReadOnlyList<IStatement>> groups)
+            {
+                // find overlapping mutations
+                Dictionary<int, List<int>> overlappingMutations = new Dictionary<int, List<int>>();
+                Set<int> candidates = new Set<int>();
+                for (int i = 0; i < mutationsToCheck.Count; i++)
+                {
+                    candidates.Add(i);
+                    List<int> overlap = new List<int>();
+                    MutationInformation.Mutation mut = mutationsToCheck[i].Key;
+                    IExpression expr1 = mutationsToCheck[i].Value;
+                    bool isIncrement = context.InputAttributes.Has<IncrementStatement>(mut.stmt);
+                    for (int j = 0; j < mutationsToCheck.Count; j++)
+                    {
+                        if (j == i)
+                            continue;
+                        MutationInformation.Mutation mut2 = mutationsToCheck[j].Key;
+                        IExpression expr2 = mutationsToCheck[j].Value;
+                        //if (mut2.isAllocation != mut.isAllocation)
+                        //    continue;
+                        //if (mut2.isAllocation)
+                        //    continue;
+                        // only statements with the same increment status are considered overlapping
+                        //if (isIncrement != context.InputAttributes.Has<IncrementStatement>(mut2.stmt))
+                        //    continue;
+                        //if (Recognizer.MutatingFirstAffectsSecond(context, expr1, expr2, false, mut.stmt, mut2.stmt))
+                        if (Recognizer.MutatingFirstAffectsSecond(context, expr1, expr2, false))
+                        {
+                            overlap.Add(j);
+                        }
+                    }
+                    overlappingMutations[i] = overlap;
+                }
+                var cliqueFinder = new CliqueFinder<int>(i => overlappingMutations[i]);
+                cliqueFinder.ForEachClique(candidates, delegate (Stack<int> c)
+                {
+                    List<IStatement> group = new List<IStatement>();
+                    foreach (int i in c)
+                    {
+                        group.Add(mutationsToCheck[i].Key.stmt);
+                    }
+                    groups.Add(group);
+                });
+            }
+
+            IEnumerable<IStatement> LiftNestedAll(AnyStatement anySt)
+            {
+                // Convert Any(x,All(y,z)) to All(Any(x,y),Any(x,z))
+                // Convert Any(All(x,y),All(z,w)) to All(Any(x,z),Any(x,w),Any(y,z),Any(y,w))
+                List<AnyStatement> results = new List<AnyStatement>();
+                IEnumerable<AnyStatement> CopyAndAdd(IStatement newSt)
+                {
+                    IStatement[] newSequence = new IStatement[] { newSt };
+                    if (results.Count == 0) return new[] { new AnyStatement(newSequence) };
+                    else return results.Select(a => new AnyStatement(a.Statements.Concat(newSequence).ToArray()));
+                }
+                foreach (var stmt in anySt.Statements)
+                {
+                    if (stmt is AllStatement allStatement)
+                    {
+                        results = allStatement.Statements.SelectMany(CopyAndAdd).ToList();
+                    }
+                    else if (results.Count > 0)
+                    {
+                        // Add this stmt to all clauses
+                        foreach (var clause in results)
+                        {
+                            clause.Statements.Add(stmt);
+                        }
+                    }
+                    else
+                    {
+                        results.Add(new AnyStatement(stmt));
                     }
                 }
-                overlappingMutations[i] = overlap;
+                return results.Select(a => (a.Statements.Count == 1) ? a.Statements[0] : a);
             }
-            var cliqueFinder = new CliqueFinder<int>(i => overlappingMutations[i]);
-            cliqueFinder.ForEachClique(candidates, delegate (Stack<int> c)
-            {
-                List<IStatement> group = new List<IStatement>();
-                foreach (int i in c)
-                {
-                    group.Add(mutationsToCheck[i].Key.stmt);
-                }
-                groups.Add(group);
-            });
         }
 
         /// <summary>
@@ -1489,8 +1485,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             Dictionary<IStatement, Set<IVariableDeclaration>> extraIndicesOfStmt)
         {
             IExpression varExpr = expr;
-            while (varExpr is IMethodInvokeExpression)
-                varExpr = ((IMethodInvokeExpression)varExpr).Arguments[0];
+            while (varExpr is IMethodInvokeExpression imie)
+                varExpr = imie.Arguments[0];
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(varExpr);
             if (ivd == null)
             {
@@ -1603,7 +1599,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             /// <param name="offsetInfos">Modified on exit</param>
             /// <param name="extraIndicesOfStmt">Modified on exit</param>
             /// <returns></returns>
-            internal List<Mutation> GetMutations(BasicTransformContext context, IStatement exclude, IExpression expr, bool allocationsOnly,
+            internal List<Mutation> GetMutations(
+                BasicTransformContext context, 
+                IStatement exclude, 
+                IExpression expr, 
+                bool allocationsOnly,
                 bool mustMutate = false,
                 IStatement bindingsInExpr = null,
                 IReadOnlyDictionary<IVariableDeclaration, CodeRecognizer.Bounds> boundsInExpr = null,

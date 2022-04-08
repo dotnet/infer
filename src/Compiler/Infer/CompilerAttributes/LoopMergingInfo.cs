@@ -156,10 +156,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         public void PreventLoopMerging(IStatement mutated, IStatement affected, ICollection<IVariableDeclaration> loopVars)
         {
-            int edge;
             int source = indexOf[mutated];
             int target = indexOf[affected];
-            if (!graph.TryGetEdge(source, target, out edge))
+            if (!graph.TryGetEdge(source, target, out int edge))
             {
                 edge = graph.AddEdge(source, target);
                 prohibitedLoopVars[edge] = loopVars;
@@ -178,19 +177,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         public void SetOffsetInfo(IStatement mutated, IStatement affected, IOffsetInfo offsetInfo)
         {
-            int edge;
             int source = indexOf[mutated];
             int target = indexOf[affected];
-            if (!graph.TryGetEdge(source, target, out edge))
+            if (!graph.TryGetEdge(source, target, out int edge))
             {
                 edge = graph.AddEdge(source, target);
                 prohibitedLoopVars[edge] = null;
-                offsetInfos[edge] = offsetInfo;
             }
-            else
-            {
-                offsetInfos[edge] = offsetInfo;
-            }
+            offsetInfos[edge] = offsetInfo;
         }
 
         public IStatement GetStatement(int index)

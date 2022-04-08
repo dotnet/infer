@@ -26,18 +26,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             lhs = condition;
             rhs = Builder.LiteralExpr(true);
-            if (condition is IBinaryExpression)
+            if (condition is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression) condition;
                 if ((ibe.Operator == BinaryOperator.IdentityEquality) || (ibe.Operator == BinaryOperator.ValueEquality))
                 {
                     lhs = ibe.Left;
                     rhs = ibe.Right;
                 }
             }
-            else if (condition is IUnaryExpression)
+            else if (condition is IUnaryExpression iue)
             {
-                IUnaryExpression iue = (IUnaryExpression) condition;
                 if (iue.Operator == UnaryOperator.BooleanNot)
                 {
                     lhs = iue.Expression;
@@ -48,9 +46,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public IExpression GetExpression()
         {
-            if (rhs is ILiteralExpression && rhs.GetExpressionType().Equals(typeof (bool)))
+            if (rhs is ILiteralExpression ile && ile.GetExpressionType().Equals(typeof (bool)))
             {
-                bool value = (bool) ((ILiteralExpression) rhs).Value;
+                bool value = (bool) ile.Value;
                 if (value) return lhs;
                 else return Builder.UnaryExpr(UnaryOperator.BooleanNot, lhs);
             }
@@ -62,9 +60,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public ConditionBinding FlipCondition()
         {
-            if (rhs.GetExpressionType().Equals(typeof (bool)) && (rhs is ILiteralExpression))
+            if (rhs is ILiteralExpression ile && ile.GetExpressionType().Equals(typeof (bool)))
             {
-                IExpression rhs2 = Builder.LiteralExpr(!(bool) ((ILiteralExpression) rhs).Value);
+                IExpression rhs2 = Builder.LiteralExpr(!(bool) ile.Value);
                 return new ConditionBinding(lhs, rhs2);
             }
             else
@@ -93,10 +91,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public override string ToString()
         {
-            if (rhs is ILiteralExpression && rhs.GetExpressionType().Equals(typeof (bool)))
+            if (rhs is ILiteralExpression ile && ile.GetExpressionType().Equals(typeof (bool)))
             {
                 string lhsString = lhs.ToString();
-                bool value = (bool) ((ILiteralExpression) rhs).Value;
+                bool value = (bool) ile.Value;
                 if (value)
                     return lhsString;
                 else
