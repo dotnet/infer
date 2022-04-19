@@ -1712,7 +1712,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public void AddEvent(NodeIndex node, string message)
         {
-            if (EventHistory.Get != null)
+            if (EventHistory != null)
             {
                 EventHistory[node].Add(String.Format("[{0}] {1}", EventCounter++, message));
             }

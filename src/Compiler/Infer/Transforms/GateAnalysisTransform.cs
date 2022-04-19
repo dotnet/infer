@@ -70,12 +70,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             bool isStochastic = CodeRecognizer.IsStochastic(context, binding.lhs);
             IExpression gateBlockKey;
-            if (isStochastic)
+            if (isStochastic || GateTransform.DeterministicEnterExit)
+            {
                 gateBlockKey = binding.lhs;
+            }
             else
+            {
                 // definitions must not be unified across deterministic gate conditions
                 gateBlockKey = binding.GetExpression();
-            GateBlock gateBlock = null;
+            }
+            GateBlock gateBlock;
             Set<ConditionBinding> bindings = ConditionBinding.Copy(conditionContext);
             Dictionary<IExpression, GateBlock> blockMap;
             if (!gateBlocks.TryGetValue(bindings, out blockMap))
@@ -220,34 +224,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             GateBlock gateBlockOfVar = context.InputAttributes.Get<GateBlock>(ivd);
             if (gateBlockOfVar == currentBlock) return; // local variable of the gateBlock
 
-            ExpressionWithBindings eb = new ExpressionWithBindings();
-            eb.Expression = ReplaceLocalIndices(currentBlock, expr);
-            List<ConditionBinding> bindings = FilterConditionContext(currentBlock, conditionContext);
-            if (bindings.Count > 0) eb.Bindings.Add(bindings);
-            //eb.Containers = Containers.InsideOf(context, GetAncestorIndexOfGateBlock(currentBlock));
+            ExpressionWithBindings eb = new ExpressionWithBindings(ReplaceLocalIndices(currentBlock, expr), FilterConditionContext(currentBlock));
             if (isDef)
             {
-                ExpressionWithBindings eb2;
-                if (!currentBlock.variablesDefined.TryGetValue(ivd, out eb2))
-                {
-                    currentBlock.variablesDefined[ivd] = eb;
-                }
-                else
+                if (currentBlock.variablesDefined.TryGetValue(ivd, out ExpressionWithBindings eb2))
                 {
                     // all definitions of the same variable must have a common parent
                     currentBlock.variablesDefined[ivd] = GetCommonParent(eb, eb2);
                 }
+                else
+                {
+                    currentBlock.variablesDefined[ivd] = eb;
+                }
             }
             else
             {
-                List<ExpressionWithBindings> ebs;
-                if (!currentBlock.variablesUsed.TryGetValue(ivd, out ebs))
-                {
-                    ebs = new List<ExpressionWithBindings>();
-                    ebs.Add(eb);
-                    currentBlock.variablesUsed[ivd] = ebs;
-                }
-                else
+                if (currentBlock.variablesUsed.TryGetValue(ivd, out List<ExpressionWithBindings> ebs))
                 {
                     // collect all uses that overlap with eb, and replace with their common parent
                     List<ExpressionWithBindings> notOverlapping = new List<ExpressionWithBindings>();
@@ -255,8 +247,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     {
                         foreach (ExpressionWithBindings eb2 in ebs)
                         {
-                            ExpressionWithBindings parent = GetCommonParent(eb, eb2);
-                            if (CouldOverlap(eb, eb2)) eb = parent;
+                            if (CouldOverlap(eb, eb2, ignoreBindings: GateTransform.DeterministicEnterExit))
+                            {
+                                eb = GetCommonParent(eb, eb2);
+                            }
                             else notOverlapping.Add(eb2);
                         }
                         if (notOverlapping.Count == ebs.Count) break; // nothing overlaps
@@ -268,6 +262,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     ebs.Add(eb);
                     currentBlock.variablesUsed[ivd] = ebs;
                 }
+                else
+                {
+                    currentBlock.variablesUsed[ivd] = new List<ExpressionWithBindings> { eb };
+                }
+            }
+
+            List<ConditionBinding> FilterConditionContext(GateBlock gateBlock)
+            {
+                return conditionContext
+                    .Where(binding => !CodeRecognizer.IsStochastic(context, binding.lhs) &&
+                                      !ContainsLocalVars(gateBlock, binding.lhs) &&
+                                      !ContainsLocalVars(gateBlock, binding.rhs))
+                    .ToList();
             }
         }
 
@@ -514,15 +521,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return -1;
         }
 
-        private List<ConditionBinding> FilterConditionContext(GateBlock gateBlock, List<ConditionBinding> conditionContext)
-        {
-            return conditionContext
-                .Where(binding => !CodeRecognizer.IsStochastic(context, binding.lhs) &&
-                                  !ContainsLocalVars(gateBlock, binding.lhs) && 
-                                  !ContainsLocalVars(gateBlock, binding.rhs))
-                .ToList();
-        }
-
         /// <summary>
         /// Use wildcards to replace any indices in expr which involve local variables of the gateBlock
         /// </summary>
@@ -600,12 +598,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             throw new Exception("This function should never be called");
         }
 
-        internal static bool CouldOverlap(ExpressionWithBindings eb1, ExpressionWithBindings eb2)
+        internal static bool CouldOverlap(ExpressionWithBindings eb1, ExpressionWithBindings eb2, bool ignoreBindings = false)
         {
             var emptyBindings = (IEnumerable<IReadOnlyCollection<ConditionBinding>>)new[] { new ConditionBinding[0] };
-            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings1 = (eb1.Bindings.Count > 0) ?
+            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings1 = (eb1.Bindings.Count > 0 && !ignoreBindings) ?
                 eb1.Bindings : emptyBindings;
-            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings2 = (eb2.Bindings.Count > 0) ?
+            IEnumerable<IReadOnlyCollection<ConditionBinding>> bindings2 = (eb2.Bindings.Count > 0 && !ignoreBindings) ?
                 eb2.Bindings : emptyBindings;
             foreach (IReadOnlyCollection<ConditionBinding> binding1 in bindings1)
             {
@@ -673,14 +671,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 else throw new Exception("Unhandled expression type: " + prefix1);
             }
-            ExpressionWithBindings result = new ExpressionWithBindings();
-            result.Expression = parent;
-            if (eb1.Bindings.Count > 0 && eb2.Bindings.Count > 0)
-            {
-                result.Bindings.AddRange(eb1.Bindings);
-                result.Bindings.AddRange(eb2.Bindings);
-            }
-            return result;
+            return new ExpressionWithBindings(parent, eb1.Bindings, eb2.Bindings);
 
             // Returns an expression equal to expr1 and expr2 under their respective bindings, or null if the expressions are not equal.  
             IExpression Unify(
@@ -793,6 +784,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// A set of condition contexts.  An empty set means the expression has an empty condition context.
         /// </summary>
         public Set<IReadOnlyCollection<ConditionBinding>> Bindings = new Set<IReadOnlyCollection<ConditionBinding>>(new EnumerableComparer<ConditionBinding>());
+
+        public ExpressionWithBindings(IExpression expression, IReadOnlyCollection<ConditionBinding> bindings)
+        {
+            this.Expression = expression;
+            if (bindings.Count > 0)
+                this.Bindings.Add(bindings);
+        }
+
+        public ExpressionWithBindings(IExpression expression, IReadOnlyCollection<IReadOnlyCollection<ConditionBinding>> bindings1, IReadOnlyCollection<IReadOnlyCollection<ConditionBinding>> bindings2)
+        {
+            this.Expression = expression;
+            if (bindings1.Count > 0 && bindings2.Count > 0)
+            {
+                this.Bindings.AddRange(bindings1);
+                this.Bindings.AddRange(bindings2);
+            }
+        }
 
         public override string ToString()
         {

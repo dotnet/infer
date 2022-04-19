@@ -4,17 +4,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
-using Microsoft.ML.Probabilistic.Factors;
-using Microsoft.ML.Probabilistic.Compiler.CodeModel;
-using Microsoft.ML.Probabilistic.Collections;
-using Microsoft.ML.Probabilistic.Utilities;
 using System.Linq;
+using System.Text;
 using Microsoft.ML.Probabilistic.Algorithms;
+using Microsoft.ML.Probabilistic.Collections;
+using Microsoft.ML.Probabilistic.Compiler.Attributes;
+using Microsoft.ML.Probabilistic.Compiler.CodeModel;
+using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 using Microsoft.ML.Probabilistic.Models;
+using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -42,6 +41,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             get { return "GateTransform"; }
         }
 
+        internal static readonly bool DeterministicEnterExit = true;
+
         public override ITypeDeclaration Transform(ITypeDeclaration itd)
         {
             GateAnalysisTransform analysis = new GateAnalysisTransform();
@@ -65,7 +66,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             PostProcess();
         }
 
-        internal void PostProcess()
+        private void PostProcess()
         {
             foreach (Dictionary<IExpression, ConditionInformation> entry in condDict.Values)
             {
@@ -147,8 +148,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             Set<ConditionBinding> conditionCaseContext = new Set<ConditionBinding>();
             conditionCaseContext.AddRange(bindings);
-            IForStatement loop = null;
-            ConditionBinding binding = GetConditionBinding(ics.Condition, context, out loop);
+            ConditionBinding binding = GetConditionBinding(ics.Condition, context, out IForStatement loop);
             IExpression caseValue = binding.rhs;
             if (!IsLiteralOrLoopVar(context, caseValue, out loop))
             {
@@ -162,10 +162,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (caseValue.GetExpressionType().Equals(typeof(bool)))
             {
                 isBinaryCondition = true;
-                if (caseValue is ILiteralExpression)
+                if (caseValue is ILiteralExpression ile)
                 {
-                    bool value = (bool) ((ILiteralExpression) caseValue).Value;
-                    caseNumber = value ? Builder.LiteralExpr(0) : Builder.LiteralExpr(1);
+                    bool value = (bool) ile.Value;
+                    caseNumber = Builder.LiteralExpr(value ? 0 : 1);
                 }
                 else
                     throw new Exception($"Can\'t compute {nameof(caseNumber)} of {nameof(caseValue)}={caseValue}");
@@ -178,7 +178,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             IExpression conditionLhs = binding.lhs;
             IExpression transformedLhs = ConvertExpression(conditionLhs);
-            IExpression gateBlockKey = isStochastic ? binding.lhs : ics.Condition;
+            IExpression gateBlockKey = isStochastic || DeterministicEnterExit ? binding.lhs : ics.Condition;
             if (isStochastic)
             {
                 IVariableDeclaration missingLoopVar = GetMissingLoopVar(conditionCaseContext, ics.Condition);
@@ -212,8 +212,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 bindings.Add(binding);
                 if (!isBinaryCondition)
                     Error($"Else clause not allowed for integer condition: {ics.Condition}.");
-                ILiteralExpression ile = caseNumber as ILiteralExpression;
-                if (ile == null)
+                if (!(caseNumber is ILiteralExpression ile))
                 {
                     Error($"Else clause not allowed for non-literal condition: {ics.Condition}.");
                     return ics;
@@ -265,9 +264,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             context.AddStatementsBeforeCurrent(tempBlock.Statements);
         }
 
-        private ConditionInformation GetConditionInfo(Set<ConditionBinding> conditionCaseContext,
+        private ConditionInformation GetConditionInfo(
+            Set<ConditionBinding> conditionCaseContext,
             IConditionStatement conditionStmt,
-            IExpression conditionLhs, IExpression transformedLhs, IExpression gateBlockKey, bool isBinaryCondition,
+            IExpression conditionLhs,
+            IExpression transformedLhs,
+            IExpression gateBlockKey,
+            bool isBinaryCondition,
             IForStatement loop)
         {
             //if (!context.OutputAttributes.Has<Stochastic>(condvd)) Error("Conditions must be stochastic, was : " + condition);
@@ -285,14 +288,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     isStochastic ? GetNumberOfCases(conditionLhs, isBinaryCondition, loop, gateBlock) : null;
                 ConditionInformation parent =
                     (conditionContext.Count == 0) ? null : conditionContext[conditionContext.Count - 1];
-                conditionInfo = new ConditionInformation(algorithm, conditionLhs, numberOfCases);
-                conditionInfo.gateBlock = gateBlock;
-                conditionInfo.parent = parent;
-                conditionInfo.isStochastic = isStochastic;
+                conditionInfo = new ConditionInformation(algorithm, conditionLhs, numberOfCases)
+                {
+                    gateBlock = gateBlock,
+                    parent = parent,
+                    isStochastic = isStochastic,
+                    conditionStmt = conditionStmt,
+                    switchLoop = loop
+                };
                 dict[gateBlockKey] = conditionInfo;
-                // must set these before Build
-                conditionInfo.conditionStmt = conditionStmt;
-                conditionInfo.switchLoop = loop;
                 IVariableDeclaration conditionVar = Recognizer.GetVariableDeclaration(transformedLhs);
                 if (isStochastic)
                 {
@@ -325,7 +329,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return conditionInfo;
         }
 
-        private IExpression GetNumberOfCases(IExpression expr, bool isBinaryCondition, IForStatement loop,
+        private IExpression GetNumberOfCases(
+            IExpression expr,
+            bool isBinaryCondition,
+            IForStatement loop,
             GateBlock gateBlock)
         {
             if (isBinaryCondition)
@@ -484,7 +491,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// For example, if expr = a[0,j][1,k] and the gateBlock has a pattern a[*,j][*,k] then this function
         /// returns clone[0][1][caseNumber].
         /// </remarks>
-        internal IExpression ReplaceWithClone(IExpression expr, bool isDef, IVariableDeclaration ivd, int start,
+        internal IExpression ReplaceWithClone(
+            IExpression expr,
+            bool isDef,
+            IVariableDeclaration ivd,
+            int start,
             int conditionContextIndex)
         {
             if (conditionContextIndex < start)
@@ -498,11 +509,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return expr;
             }
 
-            ExpressionWithBindings eb = new ExpressionWithBindings()
-            {
-                Expression = expr,
-                Bindings = Set<IReadOnlyCollection<ConditionBinding>>.FromEnumerable(new[] {bindings}),
-            };
+            ExpressionWithBindings eb = new ExpressionWithBindings(expr, bindings);
             if (ci.gateBlock.variablesDefined.TryGetValue(ivd, out var definedExpression) &&
                 GateAnalysisTransform.CouldOverlap(definedExpression, eb))
             {
@@ -824,7 +831,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     stmts.Add(Builder.ExprStatement(Builder.VarDeclExpr(casesVar)));
                     args.Add(Builder.VarRefExpr(casesVar));
                 }
-                IMethodInvokeExpression imie = Builder.StaticMethod(new Models.ActionOut2<bool, bool, bool>(Gate.CasesBool), args.ToArray());
+                IMethodInvokeExpression imie = Builder.StaticMethod(new ActionOut2<bool, bool, bool>(Gate.CasesBool), args.ToArray());
                 //context.OutputAttributes.Set(imie, new Stochastic()); // for IfCuttingTransform
                 stmts.Add(Builder.ExprStatement(imie));
             }
@@ -901,7 +908,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (cvi.arrayDecl == null)
             {
                 var extraBindings = IndexingTransform.FilterBindingSet(eb.Bindings, 
-                    binding => !currentBindings.Contains(binding) && !CodeRecognizer.IsStochastic(context, binding.lhs)
+                    binding => /*!currentBindings.Contains(binding) &&*/ !CodeRecognizer.IsStochastic(context, binding.lhs)
                 );
                 CreateCloneArray(cvi, context, transform, start, conditionContextIndex, extraBindings);
             }
@@ -931,9 +938,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="context"></param>
         /// <param name="expr"></param>
         /// <param name="indices"></param>
-        /// 
         /// <returns></returns>
-        public IExpression ReplaceAnyItem(BasicTransformContext context, IExpression expr, List<IList<IExpression>> indices)
+        private IExpression ReplaceAnyItem(BasicTransformContext context, IExpression expr, List<IList<IExpression>> indices)
         {
             if (expr is IArrayIndexerExpression iaie)
             {
@@ -945,7 +951,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression index = iaie.Indices[i];
                     if (Recognizer.IsStaticMethod(index, new Func<int>(GateAnalysisTransform.AnyIndex)))
                     {
-                        IExpression newIndex = GetIndexVar(context, result, i);
+                        IExpression newIndex = GetIndexVar(result, i);
                         newIndices.Add(newIndex);
                         allIndices.Add(newIndex);
                     }
@@ -955,25 +961,25 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return Builder.ArrayIndex(result, allIndices);
             }
             else return expr;
-        }
 
-        public IVariableReferenceExpression GetIndexVar(BasicTransformContext context, IExpression expr, int i)
-        {
-            IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(expr);
-            if (ivd == null) throw new Exception($"Could not get variable declaration for {expr}");
-            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
-            int d = Recognizer.GetIndexingDepth(expr);
-            while (vi.indexVars.Count <= d)
+            IVariableReferenceExpression GetIndexVar(IExpression result, int i)
             {
-                vi.indexVars.Add(new IVariableDeclaration[vi.sizes[vi.indexVars.Count].Length]);
+                IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(result);
+                if (ivd == null) throw new Exception($"Could not get variable declaration for {result}");
+                VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
+                int d = Recognizer.GetIndexingDepth(result);
+                while (vi.indexVars.Count <= d)
+                {
+                    vi.indexVars.Add(new IVariableDeclaration[vi.sizes[vi.indexVars.Count].Length]);
+                }
+                IVariableDeclaration v = vi.indexVars[d][i];
+                if (v == null || Recognizer.GetLoopForVariable(context, v, conditionStmt) != null)
+                {
+                    v = VariableInformation.GenerateLoopVar(context, "_gi");
+                    if (vi.indexVars[d][i] == null) vi.indexVars[d][i] = v;
+                }
+                return Builder.VarRefExpr(v);
             }
-            IVariableDeclaration v = vi.indexVars[d][i];
-            if (v == null || Recognizer.GetLoopForVariable(context, v, conditionStmt) != null)
-            {
-                v = VariableInformation.GenerateLoopVar(context, "_gi");
-                if (vi.indexVars[d][i] == null) vi.indexVars[d][i] = v;
-            }
-            return Builder.VarRefExpr(v);
         }
 
         /// <summary>
@@ -983,11 +989,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="context"></param>
         /// <param name="transform"></param>
         /// <param name="start"></param>
-        /// <param name="bindingSet"></param>
+        /// <param name="bindingSet">Bindings used to construct containers in which the clone array (and elements thereof) are declared.</param>
         /// <param name="conditionContextIndex">An index into the conditionContext array.</param>
         /// <returns></returns>
-        private void CreateCloneArray(ClonedVarInfo cvi, BasicTransformContext context, GateTransform transform, int start, int conditionContextIndex,
-                                      Set<IReadOnlyCollection<ConditionBinding>> bindingSet)
+        private void CreateCloneArray(
+            ClonedVarInfo cvi,
+            BasicTransformContext context,
+            GateTransform transform,
+            int start,
+            int conditionContextIndex,
+            Set<IReadOnlyCollection<ConditionBinding>> bindingSet)
         {
             IExpression expr = cvi.expr;
             Type exprType = cvi.exprType;
@@ -1015,10 +1026,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // if cloning outside the loop, must treat the loop variable as a local variable and exclude it from conditions
             bool cloneOutsideLoop = (isSwitch && !isIndexedByCondition);
             IStatement bindingContainer = IndexingTransform.GetBindingSetContainer(IndexingTransform.FilterBindingSet(bindingSet,
-                    binding => !cloneOutsideLoop || !Builder.ContainsExpression(binding.GetExpression(), caseNumber)));
+                    binding => !(cloneOutsideLoop && Builder.ContainsExpression(binding.GetExpression(), caseNumber))));
             if (bindingContainer != null) cvi.containers.Add(bindingContainer);
 
-            if (!isStochastic)
+            if (!isStochastic && !GateTransform.DeterministicEnterExit)
             {
                 cvi.arrayDecl = transformedVar;
                 cvi.arrayRef = transformedExpr; //indexedExpr;
@@ -1034,16 +1045,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // An array of all the uses of this variable in each case
             IExpression arraySize;
             if (isExitVar) arraySize = numberOfCases; // exit variables must be defined in all cases of the condition.
-            else if (isIndexedByCondition) arraySize = null; // used in exactly one case.
+            else if (isIndexedByCondition || !isStochastic) arraySize = null; // used in exactly one case.
             else if (isFixedSize) arraySize = cvi.caseCount; // used in some cases.
             else arraySize = numberOfCases; // used in all cases.
-            cvi.IsEnterOne = (arraySize == null);
+            cvi.IsEnterOne = !isExitVar && isIndexedByCondition;
 
-            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
-
-            List<IList<IExpression>> exprIndices = Recognizer.GetIndices(expr);
             IList<IStatement> stBefore = Builder.StmtCollection();
             IList<IStatement> stAfter = Builder.StmtCollection();
+            VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
+            List<IList<IExpression>> exprIndices = Recognizer.GetIndices(expr);
             string name = ToString(transformedExpr);
             name = vi.Name + "_";
             foreach (IList<IExpression> bracket in exprIndices)
@@ -1067,7 +1077,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IVariableDeclaration[][] indexVars = new IVariableDeclaration[][] { new[] { indexVar } };
             // Cannot set useLiteralIndices=true because arraySize is initially zero and gets incremented later.
             cvi.arrayDecl = vi.DeriveArrayVariable(stBefore, context,
-                                                   name, arraySizes, indexVars, exprIndices, cvi.wildcardVars, useArrays: true);
+                                                    name, arraySizes, indexVars, exprIndices, cvi.wildcardVars, useArrays: true);
             context.InputAttributes.Remove<ConditionInformation>(cvi.arrayDecl);
             context.InputAttributes.Set(cvi.arrayDecl, this);
             if (!context.InputAttributes.Has<DerivedVariable>(cvi.arrayDecl))
@@ -1080,7 +1090,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (isExitVar)
             {
                 // *************** Gate Exit case ***********************
-                if (isFixedSize)
+                if (isFixedSize && isStochastic)
                 {
                     // keep track of which cases the variable is defined in.
                     IArrayCreateExpression ace = Builder.ArrayCreateExpr(typeof (int), arraySize);
@@ -1105,7 +1115,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // TODO: insert argument types
                 Delegate d;
                 IExpression exitMethod;
-                if (casesArray == null)
+                if (!isStochastic)
+                {
+                    exitMethod = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy), new Type[] { exprType }, arrayRef);
+                }
+                else if (casesArray == null)
                 {
                     if (useExitRandom)
                     {
@@ -1151,7 +1165,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // 4. Therefore can use EnterOne to enter this variable.
                 IExpression enterMethod;
                 Type selectorType = selector.GetExpressionType();
-                if (isIndexedByCondition)
+                if (!isStochastic)
+                {
+                    enterMethod = Builder.StaticGenericMethod(new Func<PlaceHolder, PlaceHolder>(Clone.Copy), new Type[] { exprType }, transformedExpr);
+                }
+                else if (isIndexedByCondition)
                 {
                     // used in exactly one case.
                     enterMethod = Builder.StaticGenericMethod(new Func<int, PlaceHolder, int, PlaceHolder>(Gate.EnterOne),
@@ -1495,18 +1513,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 return Builder.VarRefExpr(arrayDecl);
             }
             IExpression item;
-            if (condInfo.isStochastic)
+            if (GateTransform.DeterministicEnterExit || condInfo.isStochastic)
             {
-                // for a switch/default statement, caseNumber is the loop index, 
-                // and AddCase returns -1.
-                int index = AddCase(isDef, caseNumber);
-                // when expr is a use of an EnterPartial variable, use the count as the index, otherwise use the case number.
-                IExpression indexExpr = (index == -1 || IsExitVar) ? caseNumber : Builder.LiteralExpr(index);
                 List<IList<IExpression>> indices2 = new List<IList<IExpression>>();
                 indices2.AddRange(wildcardVars);
-                IList<IExpression> lastIndex = Builder.ExprCollection();
-                lastIndex.Add(indexExpr);
-                indices2.Add(lastIndex);
+                if (condInfo.isStochastic)
+                {
+                    // for a switch/default statement, caseNumber is the loop index, 
+                    // and AddCase returns -1.
+                    int index = AddCase(isDef, caseNumber);
+                    // when expr is a use of an EnterPartial variable, use the count as the index, otherwise use the case number.
+                    IExpression indexExpr = (index == -1 || IsExitVar) ? caseNumber : Builder.LiteralExpr(index);
+                    IList<IExpression> lastIndex = Builder.ExprCollection();
+                    lastIndex.Add(indexExpr);
+                    indices2.Add(lastIndex);
+                }
                 item = Builder.JaggedArrayIndex(arrayRef, indices2);
             }
             else

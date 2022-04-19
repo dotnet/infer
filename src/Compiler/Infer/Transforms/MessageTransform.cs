@@ -895,11 +895,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     string msgText = msg.ToString();
                     // Look for TraceMessages attribute that matches this message
-                    var trace = context.InputAttributes.Get<TraceMessages>(channelDecl);
+                    var trace = channelDecl is null ? null : context.InputAttributes.Get<TraceMessages>(channelDecl);
                     if (trace != null && trace.Containing != null && !msgText.Contains(trace.Containing)) trace = null;
 
                     // Look for ListenToMessages attribute that matches this message
-                    var listenTo = context.InputAttributes.Get<ListenToMessages>(channelDecl);
+                    var listenTo = channelDecl is null ? null : context.InputAttributes.Get<ListenToMessages>(channelDecl);
                     if (listenTo != null && listenTo.Containing != null && !msgText.Contains(listenTo.Containing)) listenTo = null;
 
 

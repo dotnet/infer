@@ -3820,6 +3820,24 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="array">Array to copy.</param>
         /// <param name="second">The second copy.</param>
         /// <returns>The first copy.</returns>
+        public static VariableArray<T> ParallelCopy<T>(VariableArray<T> array, out VariableArray<T> second)
+        {
+            var range = array.Range;
+            var first = Variable.Array<T>(range);
+            CreateVariableArray(first, array);
+            second = Variable.Array<T>(range);
+            CreateVariableArray(second, array);
+            first[range] = Variable<T>.Factor(LowPriority.ParallelCopy<T>, array[range], second[range]);
+            return first;
+        }
+
+        /// <summary>
+        /// Creates two copies of the argument, that will be updated in order during inference.
+        /// </summary>
+        /// <typeparam name="T">The domain type of an array element.</typeparam>
+        /// <param name="array">Array to copy.</param>
+        /// <param name="second">The second copy.</param>
+        /// <returns>The first copy.</returns>
         public static VariableArray<VariableArray<T>, T[][]> SequentialCopy<T>(VariableArray<VariableArray<T>, T[][]> array, out VariableArray<VariableArray<T>, T[][]> second)
         {
             var range1 = array.Range;

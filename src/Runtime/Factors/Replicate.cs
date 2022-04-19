@@ -54,7 +54,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [SkipIfAllUniform]
         [MultiplyAll]
         [Fresh]
-        public static T Marginal<T>(T toDef, T Def, T result)
+        public static T Marginal<T>([NoInit] T toDef, T Def, T result)
             where T : SettableToProduct<T>
         {
             result.SetToProduct(Def, toDef);

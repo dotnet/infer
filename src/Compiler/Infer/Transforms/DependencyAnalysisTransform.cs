@@ -9,7 +9,6 @@ using System.Text;
 using System.Linq;
 using System.Reflection;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Collections;
@@ -1317,6 +1316,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression expr = ies.Expression;
                     int depth = Recognizer.GetIndexingDepth(expr);
                     List<MutationInformation.Mutation> mutations = GetMutations(exclude, expr, allocationsOnly, mustMutate, bindings, bounds, offsetInfos, extraIndicesOfStmt);
+                    List<MutationInformation.Mutation> requirements = new List<MutationInformation.Mutation>();
                     foreach (MutationInformation.Mutation m in mutations)
                     {
                         newSt.Statements.Add(m.stmt);
@@ -1330,9 +1330,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             // These cases are distinguished by their indexing depth.
                             // Do not create requirements on increments and available offsets.
                             bool isIncrement = context.InputAttributes.Has<IncrementStatement>(m.stmt);
-                            if (!isIncrement && !IsAvailable(m.stmt) && Recognizer.GetIndexingDepth(m.expr) <= depth)
+                            if (!isIncrement && !IsAvailable(m.stmt))// && 
                             {
-                                requirementAction(m.stmt);
+                                if (Recognizer.GetIndexingDepth(m.expr) <= depth)
+                                    requirementAction(m.stmt);
+                                else 
+                                    requirements.Add(m);
                             }
 
                             bool IsAvailable(IStatement st)
@@ -1343,6 +1346,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                     return offsets.All(offset => offset.isAvailable);
                                 }
                                 return false;
+                            }
+                        }
+                    }
+                    for (int i = 0; i < requirements.Count; i++)
+                    {
+                        MutationInformation.Mutation mut = requirements[i];
+                        List<int> overlap = new List<int>();
+                        if (HasAnyLoopIndicesAtDepth(mut.expr, depth)) continue;
+                        for (int j = 0; j < requirements.Count; j++)
+                        {
+                            if (j == i) continue;
+                            MutationInformation.Mutation mut2 = requirements[j];
+                            if (mut.expr.Equals(mut2.expr) && !HasAnyLoopIndicesAtDepth(mut2.expr, depth))
+                            {
+                                overlap.Add(j);
                             }
                         }
                     }
@@ -1459,6 +1477,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                 }
                 return results.Select(a => (a.Statements.Count == 1) ? a.Statements[0] : a);
+            }
+
+            bool HasAnyLoopIndicesAtDepth(IExpression expr, int depth)
+            {
+                return Recognizer.GetIndices(expr).Skip(depth).Any(bracket =>
+                {
+                    return bracket.Any(index => index is IVariableReferenceExpression ivre);
+                });
             }
         }
 

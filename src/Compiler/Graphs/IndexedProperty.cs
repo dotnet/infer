@@ -7,17 +7,17 @@ using System.Collections.Generic;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 {
-    internal struct IndexedProperty<KeyType, ValueType>
+    internal class IndexedProperty<KeyType, ValueType>
     {
         /// <summary>
         /// Delegate for retrieving data at an index.
         /// </summary>
-        public Converter<KeyType, ValueType> Get;
+        public readonly Converter<KeyType, ValueType> Get;
 
         /// <summary>
         /// Delegate for setting data at an index.
         /// </summary>
-        public Action<KeyType, ValueType> Set;
+        public readonly Action<KeyType, ValueType> Set;
 
         /// <summary>
         /// Delegate for clearing the mapping.
@@ -26,7 +26,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
         /// If the mapping has a default value, this sets all data to that value.
         /// Otherwise the mapping is undefined at all values.
         /// </remarks>
-        public Action Clear;
+        public readonly Action Clear;
 
         /// <summary>
         /// Get or set data at an index.

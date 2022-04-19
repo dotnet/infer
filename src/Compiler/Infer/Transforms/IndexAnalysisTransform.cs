@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Collections;
+using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -55,7 +55,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 StringBuilder sb = new StringBuilder("IndexInfo");
                 sb.Append("(");
                 sb.Append(count);
-                sb.AppendLine(")");
+                sb.Append(")");
+                foreach (IReadOnlyCollection<ConditionBinding> binding in bindings)
+                {
+                    if (binding.Count > 0)
+                    {
+                        sb.Append(" (");
+                        sb.Append(StringUtil.CollectionToString(binding, ","));
+                        sb.Append(")");
+                    }
+                }
                 sb.Append("  containers = ");
                 sb.AppendLine(containers.ToString());
                 return sb.ToString();
@@ -104,9 +113,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             var indices = Recognizer.GetIndices(iaie);
             bool allLoopIndices = indices.All(bracket => bracket.All(indexExpr =>
             {
-                if (indexExpr is IVariableReferenceExpression)
+                if (indexExpr is IVariableReferenceExpression ivre)
                 {
-                    IVariableReferenceExpression ivre = (IVariableReferenceExpression)indexExpr;
                     return (Recognizer.GetLoopForVariable(context, ivre) != null);
                 }
                 else
@@ -124,40 +132,35 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             info.IsAssignedTo = isDef;
             indexInfoOf[iaie] = info;
             return iaie;
-        }
 
-        internal static List<ConditionBinding> GetBindings(BasicTransformContext context, IEnumerable<IStatement> containers)
-        {
-            List<ConditionBinding> bindings = new List<ConditionBinding>();
-            foreach (IStatement st in containers)
+            List<ConditionBinding> GetBindings(BasicTransformContext context, IEnumerable<IStatement> containers)
             {
-                if (st is IConditionStatement)
+                List<ConditionBinding> bindings = new List<ConditionBinding>();
+                foreach (IStatement st in containers)
                 {
-                    IConditionStatement ics = (IConditionStatement) st;
-                    if (!CodeRecognizer.IsStochastic(context, ics.Condition))
+                    if (st is IConditionStatement ics)
                     {
-                        ConditionBinding binding = new ConditionBinding(ics.Condition);
-                        bindings.Add(binding);
+                        if (!CodeRecognizer.IsStochastic(context, ics.Condition))
+                        {
+                            ConditionBinding binding = new ConditionBinding(ics.Condition);
+                            bindings.Add(binding);
+                        }
                     }
                 }
+                return bindings;
             }
-            return bindings;
-        }
 
-        /// <summary>
-        /// Raise an error if any expression is stochastic.
-        /// </summary>
-        /// <param name="exprs"></param>
-        private void CheckIndicesAreNotStochastic(IList<IExpression> exprs)
-        {
-            foreach (IExpression index in exprs)
+            void CheckIndicesAreNotStochastic(IList<IExpression> exprs)
             {
-                foreach (var ivd in Recognizer.GetVariables(index))
+                foreach (IExpression index in exprs)
                 {
-                    if (CodeRecognizer.IsStochastic(context, ivd))
+                    foreach (var ivd in Recognizer.GetVariables(index))
                     {
-                        string msg = "Indexing by a random variable '" + ivd.Name + "'.  You must wrap this statement with Variable.Switch(" + index + ")";
-                        Error(msg);
+                        if (CodeRecognizer.IsStochastic(context, ivd))
+                        {
+                            string msg = "Indexing by a random variable '" + ivd.Name + "'.  You must wrap this statement with Variable.Switch(" + index + ")";
+                            Error(msg);
+                        }
                     }
                 }
             }
