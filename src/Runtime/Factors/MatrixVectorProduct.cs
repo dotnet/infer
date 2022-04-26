@@ -308,7 +308,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (!A.IsPointMass) throw new ArgumentException("A is not a point mass");
             // logZ = log N(mProduct; A*BMean, vProduct + A*BVariance*A')
             //      = -0.5 (mProduct - A*BMean)' inv(vProduct + A*BVariance*A') (mProduct - A*BMean) - 0.5 logdet(vProduct + A*BVariance*A')
-            //      = -0.5 (mProduct - A*BMean)' pPrec inv(pProduct + pProduct*A*BVariance*A'*pProduct) pProduct (mProduct - A*BMean) 
+            //      = -0.5 (mProduct - A*BMean)' pProduct inv(pProduct + pProduct*A*BVariance*A'*pProduct) pProduct (mProduct - A*BMean) 
             //        - 0.5 logdet(pProduct + pProduct*A*BVariance*A'*pProduct) + logdet(pProduct)
             // dlogZ   = 0.5 (dA*BMean)' pProduct inv(pProduct + pProduct*A*BVariance*A'*pProduct) pProduct (mProduct - A*BMean) 
             //         +0.5 (mProduct - A*BMean)' pProduct inv(pProduct + pProduct*A*BVariance*A'*pProduct) pProduct (dA*BMean) 
@@ -352,6 +352,21 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // for now, we don't compute the second derivative.
                     double ddlogp = -1;
                     result[i, j] = Gaussian.FromDerivatives(A[i, j].Point, dlogp, ddlogp, false);
+
+                    bool check = false;
+                    if (check)
+                    {
+                        double logZ(Matrix m)
+                        {
+                            var vgm = ProductAverageConditional(m, BMean, BVariance, new VectorGaussianMoments(m.Rows));
+                            return VectorGaussian.GetLogProb(product.GetMean(), vgm.Mean, product.GetVariance() + vgm.Variance);
+                        }
+                        var Amatrix2 = (Matrix)Amatrix.Clone();
+                        double delta = 1e-4;
+                        Amatrix2[i, j] += delta;
+                        double dlogp2 = (logZ(Amatrix2) - logZ(Amatrix)) / delta;
+                        if (MMath.AbsDiff(dlogp, dlogp2, 1e-10) > 1e-5) throw new Exception();
+                    }
                 }
             }
             return result;
