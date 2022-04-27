@@ -103,6 +103,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogAverageFactor(product, A, B, BMean, BVariance);
         }
 
+        // Modifies mean and variance
+        // If BVariance is infinity, results may contain NaN
         private static void GetProductMoments(Matrix A, Vector BMean, PositiveDefiniteMatrix BVariance, Vector mean, PositiveDefiniteMatrix variance)
         {
             // P.mean = A*B.mean

@@ -70,7 +70,7 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.ShowProgress = true;
             //InferenceEngine.DefaultEngine.ShowMsl = true;
             //InferenceEngine.DefaultEngine.ShowSchedule = true;
-            //InferenceEngine.DefaultEngine.Compiler.CatchExceptions = true;
+            InferenceEngine.DefaultEngine.Compiler.CatchExceptions = true;
             //InferenceEngine.DefaultEngine.Compiler.UseSerialSchedules = false;
             //InferenceEngine.DefaultEngine.Compiler.UseExperimentalSerialSchedules = true;
             //InferenceEngine.DefaultEngine.Compiler.AllowSerialInitialisers = true;
@@ -84,7 +84,11 @@ namespace TestApp
             watch.Start();
 
             //new GateModelTests().GateEnterOnePointMassTest3(); // bad schedule
-            new GateModelTests().CaseObservedConditionTest();
+            //new GateModelTests().CaseObservedConditionTest();
+            //new InferTests().PointMassAnalysisTest();
+            //new SerialTests().OffsetByTwoChainTest();
+            //new TutorialTests().MixtureOfGaussians();
+            new DiscreteTests().BallCountingNoisy2();
 
             bool runAllTests = false;
             if (runAllTests)

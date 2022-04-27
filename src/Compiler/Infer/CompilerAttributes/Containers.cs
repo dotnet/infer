@@ -899,7 +899,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             if (containers.Count == 0) return stmts;
             else
             {
-                IList<IStatement> result = Builder.StmtCollection();
+                List<IStatement> result = new List<IStatement>();
                 AddStatementWithContainers(result, stmts, containers);
                 return result;
             }
@@ -961,8 +961,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
 
         internal static void AddStatementWithContainers(IList<IStatement> statementsDest, IStatement statement, ICollection<IStatement> containers)
         {
-            IList<IStatement> statementsSource = Builder.StmtCollection();
-            statementsSource.Add(statement);
+            List<IStatement> statementsSource = new List<IStatement>() { statement };
             AddStatementWithContainers(statementsDest, statementsSource, containers);
         }
 
@@ -1001,7 +1000,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             Statements(container).Add(statement);
         }
 
-        internal static void AddToContainer(IStatement container, IList<IStatement> statements)
+        internal static void AddToContainer(IStatement container, IEnumerable<IStatement> statements)
         {
             Statements(container).AddRange(statements);
         }

@@ -107,8 +107,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		private int[] InstanceFeatureCounts_field;
 		/// <summary>Field backing the Labels property</summary>
 		private int[] Labels_field;
+<<<<<<< HEAD
 		public Gaussian[][][] MaxNoisyScore__0__B;
 		public Gaussian[][][] MaxNoisyScore__B;
+=======
+		public Gaussian[][][] MaxNoisyScore_0__B;
+		public Gaussian[][][] MaxNoisyScore_rep_B;
+>>>>>>> Deterministic gates track the number of cases
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gaussian&gt;</summary>
 		public Gaussian[][] MaxNoisyScore_rep_B_toDef;
 		public Gaussian[][][] MaxNoisyScore_rep_F;
@@ -137,6 +142,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep23'</summary>
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep23_uses_B;
 		public Bernoulli[] ModelSelector_selector_cases_0_rep28_B;
+<<<<<<< HEAD
 		public Bernoulli[] ModelSelector_selector_cases_0_rep33_B;
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep33_rep_B;
 		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep33_rep'</summary>
@@ -156,6 +162,23 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Bernoulli[] ModelSelector_selector_cases_0_rep47_B;
 		public Bernoulli[] ModelSelector_selector_cases_0_rep48_B;
 		public Bernoulli ModelSelector_selector_cases_0_rep48_B_reduced;
+=======
+		public Bernoulli[] ModelSelector_selector_cases_0_rep35_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep35'</summary>
+		public Bernoulli[][] ModelSelector_selector_cases_0_rep35_uses_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep39_B;
+		public Bernoulli[][] ModelSelector_selector_cases_0_rep39_rep_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep39_rep'</summary>
+		public Bernoulli[][][] ModelSelector_selector_cases_0_rep39_rep_uses_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep4_B;
+		/// <summary>Messages from uses of 'ModelSelector_selector_cases_0_rep4'</summary>
+		public Bernoulli[][] ModelSelector_selector_cases_0_rep4_uses_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep40_B;
+		public Bernoulli[][] ModelSelector_selector_cases_0_rep40_rep_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep43_B;
+		public Bernoulli[] ModelSelector_selector_cases_0_rep44_B;
+		public Bernoulli ModelSelector_selector_cases_0_rep44_B_reduced;
+>>>>>>> Deterministic gates track the number of cases
 		public Bernoulli[] ModelSelector_selector_cases_0_rep5_B;
 		public Bernoulli[] ModelSelector_selector_cases_0_rep6_B;
 		public Bernoulli[][] ModelSelector_selector_cases_0_rep6_rep_B;
@@ -169,6 +192,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Bernoulli,bool> ModelSelector_selector_cases_B;
 		public Gaussian[][][] NoisyScoreDeltas_B;
 		public Gaussian[][][] NoisyScoreDeltas_F;
+<<<<<<< HEAD
 		public DistributionStructArray<Gaussian,double>[] NoisyScores__B;
 		public DistributionStructArray<Gaussian,double>[][] NoisyScores__ClassMaxNoisyScore_B;
 		/// <summary>Messages from uses of 'NoisyScores__ClassMaxNoisyScore'</summary>
@@ -177,7 +201,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Gaussian[][][][] NoisyScores__ClassMaxNoisyScore_uses_F;
 		public Gaussian[][][] NoisyScores_ClassRange__0__B;
 		public Gaussian[][][] NoisyScores_ClassRange__B;
+=======
+		public DistributionStructArray<Gaussian,double>[][] NoisyScores_ClassRange_ClassMaxNoisyScore_B;
+		public Gaussian[][][] NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B;
+>>>>>>> Deterministic gates track the number of cases
 		public DistributionStructArray<Gaussian,double>[] NoisyScores_F;
+		/// <summary>Message from use of 'NoisyScores'</summary>
+		public DistributionStructArray<Gaussian,double>[] NoisyScores_use_B;
 		/// <summary>Field backing the NumberOfIterationsDone property</summary>
 		private int numberOfIterationsDone;
 		public DistributionStructArray<Gaussian,double>[] Scores_B;
@@ -573,8 +603,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.ModelSelector_selector_cases_0_rep10_rep_uses_B = new Bernoulli[this.ClassCount][][];
 			this.ModelSelector_selector_cases_0_rep10_rep_B = new Bernoulli[this.ClassCount][];
+<<<<<<< HEAD
 			this.Weights_depth0_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ClassCount);
 			this.ModelSelector_selector_cases_0_rep10_B = new Bernoulli[this.ClassCount];
+=======
+			this.ModelSelector_selector_cases_0_rep10_B = new Bernoulli[this.ClassCount];
+			this.Weights_depth0_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ClassCount);
+>>>>>>> Deterministic gates track the number of cases
 			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				this.ModelSelector_selector_cases_0_rep10_B[ClassRange] = Bernoulli.Uniform();
 			}
@@ -598,6 +633,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisions_rep_F[FeatureRange] = new Gamma[this.ClassCount];
+<<<<<<< HEAD
 				this.WeightPrecisions_rep_B[FeatureRange] = new Gamma[this.ClassCount];
 			}
 			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
@@ -609,23 +645,59 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.TransposedWeights_B[FeatureRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
 			}
 			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+=======
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.WeightPrecisions_rep_F[FeatureRange][ClassRange] = Gamma.Uniform();
+				}
+				this.WeightPrecisions_rep_B[FeatureRange] = new Gamma[this.ClassCount];
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+				this.SharedWeights_F[ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+			}
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.SharedWeights_F[ClassRange][FeatureRange] = Gaussian.Uniform();
+				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+				this.SharedWeights_use_B[ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+>>>>>>> Deterministic gates track the number of cases
 				this.SharedWeightsFirst_F[ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+			}
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.SharedWeightsFirst_F[ClassRange][FeatureRange] = Gaussian.Uniform();
 				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				this.Weights_use_B[ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
 			}
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.TransposedWeights_F[FeatureRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
-			}
-			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.TransposedWeights_F[FeatureRange][ClassRange] = Gaussian.Uniform();
 				}
+<<<<<<< HEAD
 				this.Weights_uses_F[ClassRange] = new Gaussian[this.FeatureCount][];
 				for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
 					this.Weights_uses_F[ClassRange][_iv] = new Gaussian[2];
 					this.Weights_uses_F[ClassRange][_iv][0] = Gaussian.Uniform();
+=======
+				this.TransposedWeights_B[FeatureRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.TransposedWeights_B[FeatureRange][ClassRange] = Gaussian.Uniform();
+				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+				this.Weights_F[ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+				for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
+					this.Weights_F[ClassRange][_iv] = Gaussian.Uniform();
+				}
+				this.Weights_uses_F[ClassRange] = new Gaussian[this.FeatureCount][];
+				for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
+					this.Weights_uses_F[ClassRange][_iv] = new Gaussian[2];
+					this.Weights_uses_F[ClassRange][_iv][1] = Gaussian.Uniform();
+>>>>>>> Deterministic gates track the number of cases
 				}
 				this.Weights_uses_B[ClassRange] = new Gaussian[this.FeatureCount][];
 				for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
@@ -640,21 +712,32 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.ModelSelector_selector_cases_0_rep6_rep_uses_B[ClassRange] = new Bernoulli[this.FeatureCount][];
 				this.ModelSelector_selector_cases_0_rep6_rep_B[ClassRange] = new Bernoulli[this.FeatureCount];
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+			}
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.ModelSelector_selector_cases_0_rep6_rep_uses_B[ClassRange][FeatureRange] = new Bernoulli[2];
 					this.ModelSelector_selector_cases_0_rep6_rep_uses_B[ClassRange][FeatureRange][1] = Bernoulli.Uniform();
 					this.ModelSelector_selector_cases_0_rep6_rep_uses_B[ClassRange][FeatureRange][0] = Bernoulli.Uniform();
 					this.ModelSelector_selector_cases_0_rep6_rep_B[ClassRange][FeatureRange] = Bernoulli.Uniform();
 				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				this.ModelSelector_selector_cases_0_rep10_rep_uses_B[ClassRange] = new Bernoulli[this.FeatureCount][];
+				for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
+					this.Weights_uses_F[ClassRange][_iv][0] = Gaussian.Uniform();
+				}
 				this.ModelSelector_selector_cases_0_rep10_rep_B[ClassRange] = new Bernoulli[this.FeatureCount];
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+			}
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.ModelSelector_selector_cases_0_rep10_rep_uses_B[ClassRange][FeatureRange] = new Bernoulli[3];
 					this.ModelSelector_selector_cases_0_rep10_rep_uses_B[ClassRange][FeatureRange][1] = Bernoulli.Uniform();
 					this.ModelSelector_selector_cases_0_rep10_rep_uses_B[ClassRange][FeatureRange][0] = Bernoulli.Uniform();
 					this.ModelSelector_selector_cases_0_rep10_rep_uses_B[ClassRange][FeatureRange][2] = Bernoulli.Uniform();
 					this.ModelSelector_selector_cases_0_rep10_rep_B[ClassRange][FeatureRange] = Bernoulli.Uniform();
 				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				this.Weights_depth0_F[ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
 				for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
 					this.Weights_depth0_F[ClassRange][_iv] = Gaussian.Uniform();
@@ -721,23 +804,19 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.SharedWeightPrecisionRates_uses_F[FeatureRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_F[FeatureRange], 0, this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 					this.WeightPrecisions_F[FeatureRange] = GammaRatioOp_Laplace.RatioAverageConditional(this.WeightPrecisions_rep_B_toDef[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 					this.WeightPrecisions_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.Marginal<Gamma>(this.WeightPrecisions_rep_B_toDef[FeatureRange], this.WeightPrecisions_F[FeatureRange], this.WeightPrecisions_rep_F_marginal[FeatureRange]);
-				}
-				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
-					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+					for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 						this.WeightPrecisions_rep_F[FeatureRange][ClassRange] = ReplicateOp_Divide.UsesAverageConditional<Gamma>(this.WeightPrecisions_rep_B[FeatureRange][ClassRange], this.WeightPrecisions_rep_F_marginal[FeatureRange], ClassRange, this.WeightPrecisions_rep_F[FeatureRange][ClassRange]);
 						this.SharedWeights_F[ClassRange][FeatureRange] = GaussianOp.SampleAverageConditional(this.SharedWeights_use_B[ClassRange][FeatureRange], 0.0, this.WeightPrecisions_rep_F[FeatureRange][ClassRange], this.WeightPrecisions_rep_B[FeatureRange][ClassRange]);
 						this.SharedWeightsFirst_F[ClassRange][FeatureRange] = SequentialCopyOp.FirstAverageConditional<Gaussian>(this.SharedWeights_F[ClassRange][FeatureRange], this.Weights_use_B[ClassRange][FeatureRange], this.SharedWeightsFirst_F[ClassRange][FeatureRange]);
 						this.TransposedWeights_F[FeatureRange][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.TransposedWeights_F[FeatureRange][ClassRange], this.SharedWeightsFirst_F[ClassRange][FeatureRange]);
 					}
-				}
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.TransposedWeights_B[FeatureRange] = FastSumOp.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(0.0, this.TransposedWeights_F[FeatureRange], this.TransposedWeights_B[FeatureRange]);
-				}
-				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
-					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+					for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 						this.Weights_F[ClassRange][FeatureRange] = SequentialCopyOp.SecondAverageConditional<Gaussian>(this.SharedWeights_F[ClassRange][FeatureRange], this.TransposedWeights_B[FeatureRange][ClassRange], this.Weights_F[ClassRange][FeatureRange]);
 						this.Weights_uses_F[ClassRange][FeatureRange][1] = ReplicateOp_NoDivide.UsesAverageConditional<Gaussian>(this.Weights_uses_B[ClassRange][FeatureRange], this.Weights_F[ClassRange][FeatureRange], 1, this.Weights_uses_F[ClassRange][FeatureRange][1]);
 					}
+				}
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
 						this.Weights_depth1_F[ClassRange][_iv] = ArrayHelper.SetTo<Gaussian>(this.Weights_depth1_F[ClassRange][_iv], this.Weights_uses_F[ClassRange][_iv][1]);
 					}
@@ -761,20 +840,39 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.NoisyScores_F[InstanceRange][ClassRange] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.Scores_F[InstanceRange][ClassRange], 1.0);
 						for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 							if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+<<<<<<< HEAD
 								this.NoisyScores__ClassMaxNoisyScore_uses_F[InstanceRange][ClassMaxNoisyScore][ClassRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gaussian>(this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange], 0, this.NoisyScores__ClassMaxNoisyScore_uses_F[InstanceRange][ClassMaxNoisyScore][ClassRange][0]);
+=======
+								this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange] = ReplicateOp_Divide.UsesAverageConditional<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore], ClassRange, this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+								if (ClassMaxNoisyScore!=ClassRange) {
+									this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.AAverageConditional(this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange]);
+									this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = IsPositiveOp_Proper.XAverageConditional(Bernoulli.PointMass(true), this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+									this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.SumAverageConditional(this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange]);
+									this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = LowPriorityBackwardOp.ValueAverageConditional<Gaussian>(this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+									this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+									this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.BAverageConditional(this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+									this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+								}
+>>>>>>> Deterministic gates track the number of cases
 							}
 						}
 					}
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+<<<<<<< HEAD
 							this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.ToDef<Gaussian>(this.MaxNoisyScore__B[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore]);
 							this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange][ClassMaxNoisyScore][ClassMaxNoisyScore][0] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange][ClassMaxNoisyScore][ClassMaxNoisyScore][0], this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore]);
 							this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.Marginal<Gaussian>(this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore], this.NoisyScores__ClassMaxNoisyScore_uses_F[InstanceRange][ClassMaxNoisyScore][ClassMaxNoisyScore][0], this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore]);
+=======
+							this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.ToDef<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore]);
+							this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassMaxNoisyScore] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassMaxNoisyScore], this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore]);
+>>>>>>> Deterministic gates track the number of cases
 						}
 					}
 					for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 						for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 							if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+<<<<<<< HEAD
 								this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange] = ReplicateOp_Divide.UsesAverageConditional<Gaussian>(this.MaxNoisyScore__B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore], ClassRange, this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 								this.NoisyScores__ClassMaxNoisyScore_uses_F[InstanceRange][ClassMaxNoisyScore][ClassRange][1] = ReplicateOp_NoDivide.UsesAverageConditional<Gaussian>(this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange], 1, this.NoisyScores__ClassMaxNoisyScore_uses_F[InstanceRange][ClassMaxNoisyScore][ClassRange][1]);
 								if (ClassMaxNoisyScore!=ClassRange) {
@@ -787,9 +885,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 								this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange][ClassMaxNoisyScore][ClassRange][1] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange][ClassMaxNoisyScore][ClassRange][1], this.NoisyScores_ClassRange__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 								this.NoisyScores__ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ReplicateOp_NoDivide.DefAverageConditional<Gaussian>(this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores__ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 								this.NoisyScores__B[InstanceRange][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores__B[InstanceRange][ClassRange], this.NoisyScores__ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+=======
+								this.NoisyScores_use_B[InstanceRange][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores_use_B[InstanceRange][ClassRange], this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+>>>>>>> Deterministic gates track the number of cases
 							}
 						}
-						this.Scores_B[InstanceRange][ClassRange] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.NoisyScores__B[InstanceRange][ClassRange], 1.0);
+						this.Scores_B[InstanceRange][ClassRange] = GaussianFromMeanAndVarianceOp.MeanAverageConditional(this.NoisyScores_use_B[InstanceRange][ClassRange], 1.0);
 						this.FeatureScores_B[InstanceRange][ClassRange] = FastSumOp.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(this.Scores_B[InstanceRange][ClassRange], this.Scores_F[InstanceRange][ClassRange], this.FeatureScores_F[InstanceRange][ClassRange], this.FeatureScores_B[InstanceRange][ClassRange]);
 						for(int InstanceFeatureRanges = 0; InstanceFeatureRanges<this.InstanceFeatureCounts[InstanceRange]; InstanceFeatureRanges++) {
 							this.IndexedWeights_B[InstanceRange][ClassRange][InstanceFeatureRanges] = GaussianProductOpBase.BAverageConditional(this.FeatureScores_B[InstanceRange][ClassRange][InstanceFeatureRanges], this.FeatureValues[InstanceRange][InstanceFeatureRanges]);
@@ -803,13 +904,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
 						this.Weights_uses_B[ClassRange][_iv][1] = ArrayHelper.SetTo<Gaussian>(this.Weights_uses_B[ClassRange][_iv][1], this.Weights_depth1_B[ClassRange][_iv]);
 					}
-					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				}
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+					for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 						this.Weights_use_B[ClassRange][FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Gaussian>(this.Weights_uses_B[ClassRange][FeatureRange], this.Weights_use_B[ClassRange][FeatureRange]);
 						this.SharedWeights_use_B[ClassRange][FeatureRange] = SequentialCopyOp.ValueAverageConditional<Gaussian>(this.TransposedWeights_B[FeatureRange][ClassRange], this.Weights_use_B[ClassRange][FeatureRange], this.SharedWeights_use_B[ClassRange][FeatureRange]);
 						this.WeightPrecisions_rep_B[FeatureRange][ClassRange] = GaussianOp.PrecisionAverageConditional(this.SharedWeights_use_B[ClassRange][FeatureRange], Gaussian.PointMass(0.0), this.WeightPrecisions_rep_F[FeatureRange][ClassRange]);
 					}
-				}
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.WeightPrecisions_rep_B_toDef[FeatureRange] = ReplicateOp_Divide.ToDef<Gamma>(this.WeightPrecisions_rep_B[FeatureRange], this.WeightPrecisions_rep_B_toDef[FeatureRange]);
 					this.WeightPrecisions_B_FeatureRange__Q[FeatureRange] = GammaRatioOp_Laplace.Q(this.WeightPrecisions_rep_B_toDef[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 					this.SharedWeightPrecisionRates_uses_B[FeatureRange][0] = GammaRatioOp_Laplace.BAverageConditional(this.WeightPrecisions_rep_B_toDef[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0], this.WeightPrecisions_B_FeatureRange__Q[FeatureRange]);
@@ -843,11 +944,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.ModelSelector_selector_cases_0_uses_B[20] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep5_B, this.ModelSelector_selector_cases_0_uses_B[20]);
 			this.ModelSelector_selector_cases_0_uses_B[22] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gamma>(this.CommonWeightPrecision_rep_B, this.CommonWeightPrecision_F, this.CommonWeightPrecision_rep_F));
-			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.ModelSelector_selector_cases_0_rep6_rep_uses_B[ClassRange][FeatureRange][0] = Bernoulli.FromLogOdds(GaussianOp.LogEvidenceRatio(this.SharedWeights_use_B[ClassRange][FeatureRange], 0.0, this.WeightPrecisions_rep_F[FeatureRange][ClassRange], this.SharedWeights_F[ClassRange][FeatureRange], this.WeightPrecisions_rep_B[FeatureRange][ClassRange]));
 					this.ModelSelector_selector_cases_0_rep6_rep_B[ClassRange][FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep6_rep_uses_B[ClassRange][FeatureRange], this.ModelSelector_selector_cases_0_rep6_rep_B[ClassRange][FeatureRange]);
 				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				this.ModelSelector_selector_cases_0_rep6_B[ClassRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep6_rep_B[ClassRange], this.ModelSelector_selector_cases_0_rep6_B[ClassRange]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[23] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep6_B, this.ModelSelector_selector_cases_0_uses_B[23]);
@@ -856,13 +959,15 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep7_B[FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep7_uses_B[FeatureRange], this.ModelSelector_selector_cases_0_rep7_B[FeatureRange]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[24] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep7_B, this.ModelSelector_selector_cases_0_uses_B[24]);
-			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.Weights_uses_F[ClassRange][FeatureRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gaussian>(this.Weights_uses_B[ClassRange][FeatureRange], this.Weights_F[ClassRange][FeatureRange], 0, this.Weights_uses_F[ClassRange][FeatureRange][0]);
 					this.ModelSelector_selector_cases_0_rep10_rep_uses_B[ClassRange][FeatureRange][0] = Bernoulli.FromLogOdds(SequentialCopyOp.LogEvidenceRatio<Gaussian>(this.SharedWeights_F[ClassRange][FeatureRange], this.TransposedWeights_B[FeatureRange][ClassRange], this.Weights_use_B[ClassRange][FeatureRange]));
 					this.ModelSelector_selector_cases_0_rep10_rep_uses_B[ClassRange][FeatureRange][2] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gaussian>(this.Weights_uses_B[ClassRange][FeatureRange], this.Weights_F[ClassRange][FeatureRange], this.Weights_uses_F[ClassRange][FeatureRange]));
 					this.ModelSelector_selector_cases_0_rep10_rep_B[ClassRange][FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep10_rep_uses_B[ClassRange][FeatureRange], this.ModelSelector_selector_cases_0_rep10_rep_B[ClassRange][FeatureRange]);
 				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				this.ModelSelector_selector_cases_0_rep10_B[ClassRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep10_rep_B[ClassRange], this.ModelSelector_selector_cases_0_rep10_B[ClassRange]);
 				for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
 					this.Weights_depth0_F[ClassRange][_iv] = ArrayHelper.SetTo<Gaussian>(this.Weights_depth0_F[ClassRange][_iv], this.Weights_uses_F[ClassRange][_iv][0]);
@@ -916,17 +1021,27 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+<<<<<<< HEAD
 						this.ModelSelector_selector_cases_0_rep38_uses_B[InstanceRange][1] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gaussian>(this.MaxNoisyScore__B[InstanceRange][ClassMaxNoisyScore], this.NoisyScores__ClassMaxNoisyScore_uses_F[InstanceRange][ClassMaxNoisyScore][ClassMaxNoisyScore][0], this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore]));
 					}
 				}
 				this.ModelSelector_selector_cases_0_rep38_B[InstanceRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep38_uses_B[InstanceRange], this.ModelSelector_selector_cases_0_rep38_B[InstanceRange]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[78] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep38_B, this.ModelSelector_selector_cases_0_uses_B[78]);
+=======
+						this.ModelSelector_selector_cases_0_rep35_uses_B[InstanceRange][1] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore], this.NoisyScores_F[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore]));
+					}
+				}
+				this.ModelSelector_selector_cases_0_rep35_B[InstanceRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep35_uses_B[InstanceRange], this.ModelSelector_selector_cases_0_rep35_B[InstanceRange]);
+			}
+			this.ModelSelector_selector_cases_0_uses_B[75] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep35_B, this.ModelSelector_selector_cases_0_uses_B[75]);
+>>>>>>> Deterministic gates track the number of cases
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 							if (ClassMaxNoisyScore!=ClassRange) {
+<<<<<<< HEAD
 								this.ModelSelector_selector_cases_0_rep43_rep_uses_B[InstanceRange][ClassRange][0] = Bernoulli.FromLogOdds(IsPositiveOp.LogEvidenceRatio(true, this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange]));
 							}
 						}
@@ -940,16 +1055,29 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep47_B[FeatureRange] = Bernoulli.FromLogOdds(FastSumOp.LogEvidenceRatio(0.0, this.TransposedWeights_F[FeatureRange]));
 			}
 			this.ModelSelector_selector_cases_0_uses_B[88] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep47_B, this.ModelSelector_selector_cases_0_uses_B[88]);
+=======
+								this.ModelSelector_selector_cases_0_rep39_rep_uses_B[InstanceRange][ClassRange][0] = Bernoulli.FromLogOdds(IsPositiveOp.LogEvidenceRatio(true, this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange]));
+							}
+						}
+					}
+					this.ModelSelector_selector_cases_0_rep39_rep_B[InstanceRange][ClassRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep39_rep_uses_B[InstanceRange][ClassRange], this.ModelSelector_selector_cases_0_rep39_rep_B[InstanceRange][ClassRange]);
+				}
+				this.ModelSelector_selector_cases_0_rep39_B[InstanceRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep39_rep_B[InstanceRange], this.ModelSelector_selector_cases_0_rep39_B[InstanceRange]);
+			}
+			this.ModelSelector_selector_cases_0_uses_B[79] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep39_B, this.ModelSelector_selector_cases_0_uses_B[79]);
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.ModelSelector_selector_cases_0_rep43_B[FeatureRange] = Bernoulli.FromLogOdds(FastSumOp.LogEvidenceRatio(0.0, this.TransposedWeights_F[FeatureRange]));
+			}
+			this.ModelSelector_selector_cases_0_uses_B[84] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep43_B, this.ModelSelector_selector_cases_0_uses_B[84]);
+>>>>>>> Deterministic gates track the number of cases
 			this.ModelSelector_selector_cases_0_B = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_uses_B, this.ModelSelector_selector_cases_0_B);
 			this.ModelSelector_selector_cases_B[0] = ArrayHelper.SetTo<Bernoulli>(this.ModelSelector_selector_cases_B[0], this.ModelSelector_selector_cases_0_B);
 			this.ModelSelector_selector_B = CasesOp.BAverageConditional(this.ModelSelector_selector_cases_B);
 			this.ModelSelector_marginal_F = VariableOp.MarginalAverageConditional<Bernoulli>(this.ModelSelector_selector_B, this.vBernoulli7, this.ModelSelector_marginal_F);
-			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.Weights_marginal_F[ClassRange][FeatureRange] = DerivedVariableOp.MarginalAverageConditional<Gaussian>(this.Weights_use_B[ClassRange][FeatureRange], this.Weights_F[ClassRange][FeatureRange], this.Weights_marginal_F[ClassRange][FeatureRange]);
 				}
-			}
-			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_marginal_F[FeatureRange] = DerivedVariableOp.MarginalAverageConditional<Gamma>(this.WeightPrecisionRates_use_B[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][1], this.WeightPrecisionRates_marginal_F[FeatureRange]);
 			}
 			this.Changed_ClassCount_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_InstanceFeatureCounts_Lab23_isDone = true;
@@ -1001,9 +1129,14 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureIndexes_FeatureValues_Instan5_isDone&&((!initialise)||this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureIndexes_FeatureValues_Instan5_isInitialised)) {
 				return ;
 			}
+<<<<<<< HEAD
 			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.WeightPrecisions_rep_F[FeatureRange][ClassRange] = Gamma.Uniform();
+=======
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+>>>>>>> Deterministic gates track the number of cases
 					this.WeightPrecisions_rep_B[FeatureRange][ClassRange] = Gamma.Uniform();
 					this.WeightPrecisions_rep_F[FeatureRange][ClassRange] = ReplicateOp_Divide.UsesAverageConditional<Gamma>(this.WeightPrecisions_rep_B[FeatureRange][ClassRange], this.WeightPrecisions_rep_F_marginal[FeatureRange], ClassRange, this.WeightPrecisions_rep_F[FeatureRange][ClassRange]);
 					this.SharedWeights_F[ClassRange][FeatureRange] = Gaussian.Uniform();
@@ -1017,6 +1150,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.TransposedWeights_B[FeatureRange][ClassRange] = Gaussian.Uniform();
 					this.Weights_F[ClassRange][FeatureRange] = SequentialCopyOp.SecondAverageConditional<Gaussian>(this.SharedWeights_F[ClassRange][FeatureRange], this.TransposedWeights_B[FeatureRange][ClassRange], this.Weights_F[ClassRange][FeatureRange]);
 				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				for(int _iv = 0; _iv<this.FeatureCount; _iv++) {
 					this.Weights_use_B[ClassRange][_iv] = Gaussian.Uniform();
 					this.Weights_uses_F[ClassRange][_iv][1] = Gaussian.Uniform();
@@ -1076,12 +1211,20 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.FeatureScores_F[InstanceRange] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ClassCount);
 				this.Scores_F[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
 				this.NoisyScores_F[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
+<<<<<<< HEAD
 				this.NoisyScores__B[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
+=======
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.NoisyScores_F[InstanceRange][ClassRange] = Gaussian.Uniform();
+				}
+				this.NoisyScores_use_B[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
+>>>>>>> Deterministic gates track the number of cases
 				this.Scores_B[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.Scores_B[InstanceRange][ClassRange] = Gaussian.Uniform();
 				}
 				this.FeatureScores_B[InstanceRange] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ClassCount);
+<<<<<<< HEAD
 				this.ModelSelector_selector_cases_0_rep33_rep_uses_B[InstanceRange] = new Bernoulli[this.ClassCount][];
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.ModelSelector_selector_cases_0_rep33_rep_uses_B[InstanceRange][ClassRange] = new Bernoulli[2];
@@ -1101,6 +1244,18 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.ModelSelector_selector_cases_0_rep43_rep_B[InstanceRange][ClassRange] = Bernoulli.Uniform();
 				}
 				this.ModelSelector_selector_cases_0_rep44_rep_B[InstanceRange] = new Bernoulli[this.ClassCount];
+=======
+				this.ModelSelector_selector_cases_0_rep39_rep_uses_B[InstanceRange] = new Bernoulli[this.ClassCount][];
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.ModelSelector_selector_cases_0_rep39_rep_uses_B[InstanceRange][ClassRange] = new Bernoulli[2];
+					this.ModelSelector_selector_cases_0_rep39_rep_uses_B[InstanceRange][ClassRange][1] = Bernoulli.Uniform();
+				}
+				this.ModelSelector_selector_cases_0_rep39_rep_B[InstanceRange] = new Bernoulli[this.ClassCount];
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.ModelSelector_selector_cases_0_rep39_rep_B[InstanceRange][ClassRange] = Bernoulli.Uniform();
+				}
+				this.ModelSelector_selector_cases_0_rep40_rep_B[InstanceRange] = new Bernoulli[this.ClassCount];
+>>>>>>> Deterministic gates track the number of cases
 			}
 			this.Changed_ClassCount_InstanceCount_isDone = true;
 		}
@@ -1170,6 +1325,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange] = new Gaussian[this.ClassCount][][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+<<<<<<< HEAD
 						this.NoisyScores__ClassMaxNoisyScore_uses_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount][];
 					}
 				}
@@ -1192,6 +1348,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 						this.MaxNoisyScore__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
+=======
+						this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
+>>>>>>> Deterministic gates track the number of cases
 					}
 				}
 				this.NoisyScoreDeltas_F[InstanceRange] = new Gaussian[this.ClassCount][];
@@ -1212,30 +1371,55 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.vdouble650_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 					}
 				}
+<<<<<<< HEAD
 				this.MaxNoisyScore__0__B[InstanceRange] = new Gaussian[this.ClassCount][];
+=======
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+							if (ClassMaxNoisyScore!=ClassRange) {
+								this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+							}
+						}
+					}
+				}
+				this.MaxNoisyScore_0__B[InstanceRange] = new Gaussian[this.ClassCount][];
+>>>>>>> Deterministic gates track the number of cases
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
-						this.MaxNoisyScore__0__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
+						this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 					}
 				}
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 							if (ClassMaxNoisyScore!=ClassRange) {
+<<<<<<< HEAD
 								this.MaxNoisyScore__0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+=======
+								this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+>>>>>>> Deterministic gates track the number of cases
 							}
 						}
 					}
 				}
+<<<<<<< HEAD
 				this.NoisyScores_ClassRange__0__B[InstanceRange] = new Gaussian[this.ClassCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 						this.NoisyScores_ClassRange__0__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
+=======
+				this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange] = new DistributionStructArray<Gaussian,double>[this.ClassCount];
+				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+						this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
+>>>>>>> Deterministic gates track the number of cases
 					}
 				}
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+<<<<<<< HEAD
 							if (ClassMaxNoisyScore!=ClassRange) {
 								this.NoisyScores_ClassRange__0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
 							}
@@ -1246,11 +1430,22 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 						this.NoisyScores_ClassRange__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
+=======
+							this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+						}
+					}
+				}
+				this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B[InstanceRange] = new Gaussian[this.ClassCount][];
+				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+						this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
+>>>>>>> Deterministic gates track the number of cases
 					}
 				}
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+<<<<<<< HEAD
 							this.NoisyScores_ClassRange__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
 						}
 					}
@@ -1265,21 +1460,34 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 							this.NoisyScores__ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+=======
+							if (ClassMaxNoisyScore!=ClassRange) {
+								this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+							}
+>>>>>>> Deterministic gates track the number of cases
 						}
 					}
-					this.NoisyScores__B[InstanceRange][ClassRange] = Gaussian.Uniform();
+					this.NoisyScores_use_B[InstanceRange][ClassRange] = Gaussian.Uniform();
 				}
 				this.ModelSelector_selector_cases_0_rep28_B[InstanceRange] = Bernoulli.FromLogOdds(DiscreteUniform.LogEvidenceRatio(this.Labels[InstanceRange], this.ClassCount));
 			}
 			this.ModelSelector_selector_cases_0_uses_B[68] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep28_B, this.ModelSelector_selector_cases_0_uses_B[68]);
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+<<<<<<< HEAD
 					this.ModelSelector_selector_cases_0_rep33_rep_uses_B[InstanceRange][ClassRange][1] = Bernoulli.Uniform();
 					this.ModelSelector_selector_cases_0_rep43_rep_uses_B[InstanceRange][ClassRange][0] = Bernoulli.Uniform();
 				}
 				this.vbool62[InstanceRange] = new bool[this.ClassCount][];
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.ModelSelector_selector_cases_0_rep44_rep_B[InstanceRange][ClassRange] = Bernoulli.Uniform();
+=======
+					this.ModelSelector_selector_cases_0_rep39_rep_uses_B[InstanceRange][ClassRange][0] = Bernoulli.Uniform();
+				}
+				this.vbool62[InstanceRange] = new bool[this.ClassCount][];
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.ModelSelector_selector_cases_0_rep40_rep_B[InstanceRange][ClassRange] = Bernoulli.Uniform();
+>>>>>>> Deterministic gates track the number of cases
 				}
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
@@ -1291,14 +1499,24 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 							if (ClassMaxNoisyScore!=ClassRange) {
 								this.vbool62[InstanceRange][ClassMaxNoisyScore][ClassRange] = true;
+<<<<<<< HEAD
 								this.ModelSelector_selector_cases_0_rep44_rep_B[InstanceRange][ClassRange] = Bernoulli.FromLogOdds(ConstrainEqualOp<bool>.LogEvidenceRatio(true, this.vbool62[InstanceRange][ClassMaxNoisyScore][ClassRange]));
+=======
+								this.ModelSelector_selector_cases_0_rep40_rep_B[InstanceRange][ClassRange] = Bernoulli.FromLogOdds(ConstrainEqualOp<bool>.LogEvidenceRatio(true, this.vbool62[InstanceRange][ClassMaxNoisyScore][ClassRange]));
+>>>>>>> Deterministic gates track the number of cases
 							}
 						}
 					}
 				}
+<<<<<<< HEAD
 				this.ModelSelector_selector_cases_0_rep44_B[InstanceRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep44_rep_B[InstanceRange], this.ModelSelector_selector_cases_0_rep44_B[InstanceRange]);
 			}
 			this.ModelSelector_selector_cases_0_uses_B[84] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep44_B, this.ModelSelector_selector_cases_0_uses_B[84]);
+=======
+				this.ModelSelector_selector_cases_0_rep40_B[InstanceRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep40_rep_B[InstanceRange], this.ModelSelector_selector_cases_0_rep40_B[InstanceRange]);
+			}
+			this.ModelSelector_selector_cases_0_uses_B[80] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep40_B, this.ModelSelector_selector_cases_0_uses_B[80]);
+>>>>>>> Deterministic gates track the number of cases
 			this.Changed_ClassCount_InstanceCount_Labels_isDone = true;
 		}
 
@@ -1368,6 +1586,20 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			this.ModelSelector_selector_cases_0_rep4_uses_B = new Bernoulli[this.FeatureCount][];
+<<<<<<< HEAD
+=======
+			this.ModelSelector_selector_cases_0_rep4_B = new Bernoulli[this.FeatureCount];
+			this.CommonWeightPrecision_rep_F = new Gamma[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.CommonWeightPrecision_rep_F[FeatureRange] = Gamma.Uniform();
+			}
+			this.CommonWeightPrecision_rep_B = new Gamma[this.FeatureCount];
+			this.SharedWeightPrecisionRates_B_FeatureRange__Q = new Gamma[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange] = default(Gamma);
+			}
+			this.SharedWeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+>>>>>>> Deterministic gates track the number of cases
 			this.WeightPrecisionRateRates_F_reduced = default(Gamma);
 			if (this.FeatureCount>0) {
 				this.WeightPrecisionRateRates_F_reduced = GammaFromShapeAndRateOpBase.SampleAverageConditional(1.0, 1.0);
@@ -1441,8 +1673,27 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_use_B[FeatureRange] = Gamma.Uniform();
 			}
+<<<<<<< HEAD
 			this.ModelSelector_selector_cases_0_rep4_B = new Bernoulli[this.FeatureCount];
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+=======
+			this.WeightPrecisions_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.WeightPrecisions_F[FeatureRange] = Gamma.Uniform();
+			}
+			this.WeightPrecisions_rep_B_toDef = new Gamma[this.FeatureCount];
+			this.WeightPrecisions_rep_F_marginal = new Gamma[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.WeightPrecisions_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.MarginalInit<Gamma>(this.WeightPrecisions_F[FeatureRange]);
+			}
+			this.WeightPrecisions_rep_F = new Gamma[this.FeatureCount][];
+			this.WeightPrecisions_rep_B = new Gamma[this.FeatureCount][];
+			this.TransposedWeights_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.FeatureCount);
+			this.TransposedWeights_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.FeatureCount);
+			this.WeightPrecisions_B_FeatureRange__Q = new Gamma[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.WeightPrecisions_B_FeatureRange__Q[FeatureRange] = default(Gamma);
+>>>>>>> Deterministic gates track the number of cases
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange] = new Bernoulli[3];
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][1] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][0] = Bernoulli.Uniform();
@@ -1462,9 +1713,16 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep7_B[FeatureRange] = Bernoulli.Uniform();
 			}
 			this.ModelSelector_selector_cases_0_rep11_uses_B = new Bernoulli[this.FeatureCount][];
+<<<<<<< HEAD
 			this.ModelSelector_selector_cases_0_rep15_uses_B = new Bernoulli[this.FeatureCount][];
 			this.WeightPrecisionRates_rpt_F = new Gamma[this.FeatureCount];
 			this.ModelSelector_selector_cases_0_rep15_B = new Bernoulli[this.FeatureCount];
+=======
+			this.ModelSelector_selector_cases_0_rep15_B = new Bernoulli[this.FeatureCount];
+			this.ModelSelector_selector_cases_0_rep15_uses_B = new Bernoulli[this.FeatureCount][];
+			this.WeightPrecisionRates_rpt_F = new Gamma[this.FeatureCount];
+			this.ModelSelector_selector_cases_0_rep15_rpt_B = new Bernoulli[this.FeatureCount];
+>>>>>>> Deterministic gates track the number of cases
 			this.ModelSelector_selector_cases_0_rep11_B = new Bernoulli[this.FeatureCount];
 			this.ModelSelector_selector_cases_0_rep15_rpt_B = new Bernoulli[this.FeatureCount];
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
@@ -1498,14 +1756,21 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep16_B[FeatureRange] = Bernoulli.Uniform();
 			}
+<<<<<<< HEAD
 			this.ModelSelector_selector_cases_0_rep47_B = new Bernoulli[this.FeatureCount];
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep47_B[FeatureRange] = Bernoulli.Uniform();
+=======
+			this.ModelSelector_selector_cases_0_rep43_B = new Bernoulli[this.FeatureCount];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.ModelSelector_selector_cases_0_rep43_B[FeatureRange] = Bernoulli.Uniform();
+>>>>>>> Deterministic gates track the number of cases
 			}
 			this.TransposedWeightSums_reduced = default(double);
 			if (this.FeatureCount>0) {
 				this.TransposedWeightSums_reduced = 0.0;
 			}
+<<<<<<< HEAD
 			this.ModelSelector_selector_cases_0_rep48_B_reduced = default(Bernoulli);
 			if (this.FeatureCount>0) {
 				this.ModelSelector_selector_cases_0_rep48_B_reduced = Bernoulli.Uniform();
@@ -1519,6 +1784,21 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep48_B[FeatureRange] = this.ModelSelector_selector_cases_0_rep48_B_reduced;
 			}
 			this.ModelSelector_selector_cases_0_uses_B[89] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep48_B, this.ModelSelector_selector_cases_0_uses_B[89]);
+=======
+			this.ModelSelector_selector_cases_0_rep44_B_reduced = default(Bernoulli);
+			if (this.FeatureCount>0) {
+				this.ModelSelector_selector_cases_0_rep44_B_reduced = Bernoulli.Uniform();
+			}
+			this.ModelSelector_selector_cases_0_rep44_B = new Bernoulli[this.FeatureCount];
+			if (this.FeatureCount>0) {
+				this.ModelSelector_selector_cases_0_rep44_B_reduced = Bernoulli.FromLogOdds(ConstrainEqualOp<double>.LogEvidenceRatio(this.TransposedWeightSums_reduced, 0.0));
+			}
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.ModelSelector_selector_cases_0_rep44_B[FeatureRange] = this.ModelSelector_selector_cases_0_rep44_B_reduced;
+				this.ModelSelector_selector_cases_0_rep44_B[FeatureRange] = this.ModelSelector_selector_cases_0_rep44_B_reduced;
+			}
+			this.ModelSelector_selector_cases_0_uses_B[85] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_rep44_B, this.ModelSelector_selector_cases_0_uses_B[85]);
+>>>>>>> Deterministic gates track the number of cases
 			this.WeightPrecisionRates_marginal_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.WeightPrecisionRates_marginal_F[FeatureRange] = Gamma.Uniform();
@@ -1608,6 +1888,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.MaxNoisyScore_rep_F_marginal = new Gaussian[this.InstanceCount][];
 			this.MaxNoisyScore_rep_B_toDef = new Gaussian[this.InstanceCount][];
 			this.MaxNoisyScore_rep_F = new Gaussian[this.InstanceCount][][];
+<<<<<<< HEAD
 			this.MaxNoisyScore__B = new Gaussian[this.InstanceCount][][];
 			this.NoisyScoreDeltas_F = new Gaussian[this.InstanceCount][][];
 			this.NoisyScoreDeltas_B = new Gaussian[this.InstanceCount][][];
@@ -1617,6 +1898,16 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.NoisyScores_ClassRange__B = new Gaussian[this.InstanceCount][][];
 			this.NoisyScores__ClassMaxNoisyScore_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount][];
 			this.NoisyScores__B = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
+=======
+			this.MaxNoisyScore_rep_B = new Gaussian[this.InstanceCount][][];
+			this.NoisyScoreDeltas_F = new Gaussian[this.InstanceCount][][];
+			this.NoisyScoreDeltas_B = new Gaussian[this.InstanceCount][][];
+			this.vdouble650_B = new Gaussian[this.InstanceCount][][];
+			this.MaxNoisyScore_0__B = new Gaussian[this.InstanceCount][][];
+			this.NoisyScores_ClassRange_ClassMaxNoisyScore_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount][];
+			this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B = new Gaussian[this.InstanceCount][][];
+			this.NoisyScores_use_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
+>>>>>>> Deterministic gates track the number of cases
 			this.Scores_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
 			this.FeatureScores_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[this.InstanceCount];
 			this.IndexedWeightPrecisionRates_B = new DistributionRefArray<DistributionStructArray<Gamma,double>,double[]>(this.InstanceCount);
@@ -1630,6 +1921,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep28_B[InstanceRange] = Bernoulli.Uniform();
 			}
+<<<<<<< HEAD
 			this.ModelSelector_selector_cases_0_rep33_rep_uses_B = new Bernoulli[this.InstanceCount][][];
 			this.ModelSelector_selector_cases_0_rep33_rep_B = new Bernoulli[this.InstanceCount][];
 			this.ModelSelector_selector_cases_0_rep33_B = new Bernoulli[this.InstanceCount];
@@ -1654,6 +1946,26 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.ModelSelector_selector_cases_0_rep44_rep_B = new Bernoulli[this.InstanceCount][];
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep44_B[InstanceRange] = Bernoulli.Uniform();
+=======
+			this.ModelSelector_selector_cases_0_rep35_uses_B = new Bernoulli[this.InstanceCount][];
+			this.ModelSelector_selector_cases_0_rep35_B = new Bernoulli[this.InstanceCount];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				this.ModelSelector_selector_cases_0_rep35_uses_B[InstanceRange] = new Bernoulli[2];
+				this.ModelSelector_selector_cases_0_rep35_uses_B[InstanceRange][0] = Bernoulli.Uniform();
+				this.ModelSelector_selector_cases_0_rep35_B[InstanceRange] = Bernoulli.Uniform();
+			}
+			this.ModelSelector_selector_cases_0_rep39_rep_uses_B = new Bernoulli[this.InstanceCount][][];
+			this.ModelSelector_selector_cases_0_rep39_B = new Bernoulli[this.InstanceCount];
+			this.ModelSelector_selector_cases_0_rep39_rep_B = new Bernoulli[this.InstanceCount][];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				this.ModelSelector_selector_cases_0_rep39_B[InstanceRange] = Bernoulli.Uniform();
+			}
+			this.vbool62 = new bool[this.InstanceCount][][];
+			this.ModelSelector_selector_cases_0_rep40_B = new Bernoulli[this.InstanceCount];
+			this.ModelSelector_selector_cases_0_rep40_rep_B = new Bernoulli[this.InstanceCount][];
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				this.ModelSelector_selector_cases_0_rep40_B[InstanceRange] = Bernoulli.Uniform();
+>>>>>>> Deterministic gates track the number of cases
 			}
 			this.Changed_InstanceCount_isDone = true;
 		}
@@ -1688,7 +2000,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+<<<<<<< HEAD
 				this.ModelSelector_selector_cases_0_rep38_uses_B[InstanceRange][1] = Bernoulli.Uniform();
+=======
+				this.ModelSelector_selector_cases_0_rep35_uses_B[InstanceRange][1] = Bernoulli.Uniform();
+>>>>>>> Deterministic gates track the number of cases
 			}
 			this.Changed_InstanceCount_Labels_isDone = true;
 		}
@@ -1719,6 +2035,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int _ind0 = 0; _ind0<2; _ind0++) {
 				this.ModelSelector_selector_cases_B[_ind0] = Bernoulli.Uniform();
 			}
+<<<<<<< HEAD
 			this.ModelSelector_selector_cases_0_uses_B = new Bernoulli[90];
 			this.ModelSelector_selector_cases_0_uses_B[87] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[86] = Bernoulli.Uniform();
@@ -1727,9 +2044,15 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.ModelSelector_selector_cases_0_uses_B[81] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[80] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[79] = Bernoulli.Uniform();
+=======
+			this.ModelSelector_selector_cases_0_uses_B = new Bernoulli[86];
+			this.ModelSelector_selector_cases_0_uses_B[83] = Bernoulli.Uniform();
+			this.ModelSelector_selector_cases_0_uses_B[82] = Bernoulli.Uniform();
+			this.ModelSelector_selector_cases_0_uses_B[81] = Bernoulli.Uniform();
+			this.ModelSelector_selector_cases_0_uses_B[78] = Bernoulli.Uniform();
+>>>>>>> Deterministic gates track the number of cases
 			this.ModelSelector_selector_cases_0_uses_B[77] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[76] = Bernoulli.Uniform();
-			this.ModelSelector_selector_cases_0_uses_B[75] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[74] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[72] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[71] = Bernoulli.Uniform();
@@ -1807,12 +2130,20 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.ModelSelector_selector_cases_0_uses_B[54] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[63] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[68] = Bernoulli.Uniform();
+<<<<<<< HEAD
 			this.ModelSelector_selector_cases_0_uses_B[73] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[78] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[83] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[84] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[88] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[89] = Bernoulli.Uniform();
+=======
+			this.ModelSelector_selector_cases_0_uses_B[75] = Bernoulli.Uniform();
+			this.ModelSelector_selector_cases_0_uses_B[79] = Bernoulli.Uniform();
+			this.ModelSelector_selector_cases_0_uses_B[80] = Bernoulli.Uniform();
+			this.ModelSelector_selector_cases_0_uses_B[84] = Bernoulli.Uniform();
+			this.ModelSelector_selector_cases_0_uses_B[85] = Bernoulli.Uniform();
+>>>>>>> Deterministic gates track the number of cases
 			this.ModelSelector_selector_cases_0_B = Bernoulli.Uniform();
 			this.Constant_isDone = true;
 		}

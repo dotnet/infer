@@ -621,8 +621,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     foreach (var target in newNodes[dg.dependencyGraph.TargetOf(edgeInDg)])
                     {
-                        EdgeIndex edgeInG;
-                        if (g.TryGetEdge(source, target, out edgeInG))
+                        if (g.TryGetEdge(source, target, out int edgeInG))
                         {
                             action(edgeInG);
                         }
@@ -2903,22 +2902,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 edgesOnCycle.Clear();
                 foreach (var deletedEdge in deletedGraph.Edges)
                 {
+                    sinkNode = deletedGraph.SourceOf(deletedEdge);
+                    NodeIndex sourceNode = deletedGraph.TargetOf(deletedEdge);
+                    if (verbose)
+                        Debug.WriteLine("UpdateCostsFromOffsetEdges searching from {0} to {1}", sourceNode, sinkNode);
                     // newMethod can be very slow for some graphs, so we leave the option of the old fast method.
                     bool newMethod = false;
                     if (newMethod)
                     {
-                        sinkNode = deletedGraph.SourceOf(deletedEdge);
-                        if (verbose)
-                            Debug.WriteLine("UpdateCostsFromOffsetEdges searching from {0} to {1}", deletedGraph.TargetOf(deletedEdge), sinkNode);
                         // This modifies onPath and therefore edgesOnCycle
-                        finder.SearchFrom(deletedGraph.TargetOf(deletedEdge));
+                        finder.SearchFrom(sourceNode);
                     }
                     else
                     {
                         nodesOnCycle.Clear();
-                        nodesOnCycle.Add(deletedGraph.SourceOf(deletedEdge));
+                        nodesOnCycle.Add(sinkNode);
                         dfs.Clear();
-                        dfs.SearchFrom(deletedGraph.TargetOf(deletedEdge));
+                        dfs.SearchFrom(sourceNode);
                     }
                 }
                 foreach (var edge in edgesOnCycle)
@@ -2966,9 +2966,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             foreach (EdgeIndex edge in g.EdgesOutOf(node))
             {
                 // do not traverse NoInit edges
-                if (IsNoInit(edge) || !IsRequired(edge, includeAny: true))
+                if (IsNoInit(edge) || !(IsRequired(edge, includeAny: true) || IsFreshEdge(edge)))
                 {
-                    //Trace.WriteLine($"Blocked at {EdgeToString(edge)}");
+                    if (verbose)
+                        Debug.WriteLine($"Blocked at {EdgeToString(edge)}");
                     continue;
                 }
                 NodeIndex target = g.TargetOf(edge);
@@ -2990,10 +2991,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             foreach (EdgeIndex edge in g.EdgesOutOf(node))
             {
                 // do not traverse NoInit edges
-                if (IsNoInit(edge) || !IsRequired(edge, includeAny: true))
+                if (IsNoInit(edge) || !(IsRequired(edge, includeAny: true) || IsFreshEdge(edge)))
                 {
-                    //if (verbose)
-                    //    Debug.WriteLine($"Blocked at {EdgeToString(edge)}");
+                    if (verbose)
+                        Debug.WriteLine($"Blocked at {EdgeToString(edge)}");
                     continue;
                 }
                 NodeIndex target = g.TargetOf(edge);
@@ -3008,10 +3009,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 foreach (EdgeIndex edge in g.EdgesOutOf(target2))
                 {
                     // do not traverse NoInit edges
-                    if (IsNoInit(edge) || !IsRequired(edge, includeAny: true))
+                    if (IsNoInit(edge) || !(IsRequired(edge, includeAny: true) || IsFreshEdge(edge)))
                     {
-                        //if (verbose)
-                        //    Debug.WriteLine($"Blocked at {EdgeToString(edge)}");
+                        if (verbose)
+                            Debug.WriteLine($"Blocked at {EdgeToString(edge)}");
                         continue;
                     }
                     NodeIndex target = g.TargetOf(edge);

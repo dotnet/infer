@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             get { return "GateTransform"; }
         }
 
-        internal static readonly bool DeterministicEnterExit = true;
+        internal static readonly bool DeterministicEnterExit = false;
 
         public override ITypeDeclaration Transform(ITypeDeclaration itd)
         {
@@ -284,8 +284,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 bool isStochastic = CodeRecognizer.IsStochastic(context, conditionLhs);
                 var gateBlock = context.InputAttributes.Get<GateBlock>(conditionStmt);
-                IExpression numberOfCases =
-                    isStochastic ? GetNumberOfCases(conditionLhs, isBinaryCondition, loop, gateBlock) : null;
+                IExpression numberOfCases = GetNumberOfCases(conditionLhs, isBinaryCondition, loop, gateBlock);
                 ConditionInformation parent =
                     (conditionContext.Count == 0) ? null : conditionContext[conditionContext.Count - 1];
                 conditionInfo = new ConditionInformation(algorithm, conditionLhs, numberOfCases)
@@ -894,12 +893,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="conditionContextIndex">An index into the conditionContext array.</param>
         /// <param name="isDef"></param>
         /// <returns></returns>
-        internal IExpression GetClone(BasicTransformContext context, ExpressionWithBindings eb, ICollection<ConditionBinding> currentBindings, GateTransform transform, int start, int conditionContextIndex, bool isDef)
+        internal IExpression GetClone(
+            BasicTransformContext context,
+            ExpressionWithBindings eb,
+            ICollection<ConditionBinding> currentBindings,
+            GateTransform transform,
+            int start,
+            int conditionContextIndex,
+            bool isDef)
         {
             IExpression expr = eb.Expression;
             // expr should not contain the conditionLhs
-            if (Builder.ContainsExpression(expr, conditionLhs))
-                context.Error($"Internal: expr ({expr}) contains the conditionLhs ({conditionLhs})");
+            //if (Builder.ContainsExpression(expr, conditionLhs))
+            //    context.Error($"Internal: expr ({expr}) contains the conditionLhs ({conditionLhs})");
             ClonedVarInfo cvi = GetClonedVarInfo(context, eb, isDef);
             if (cvi == null)
             {
@@ -908,7 +914,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (cvi.arrayDecl == null)
             {
                 var extraBindings = IndexingTransform.FilterBindingSet(eb.Bindings, 
-                    binding => /*!currentBindings.Contains(binding) &&*/ !CodeRecognizer.IsStochastic(context, binding.lhs)
+                    binding => (GateTransform.DeterministicEnterExit || !currentBindings.Contains(binding)) && 
+                               !CodeRecognizer.IsStochastic(context, binding.lhs)
                 );
                 CreateCloneArray(cvi, context, transform, start, conditionContextIndex, extraBindings);
             }
@@ -927,7 +934,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 context.Error($"Could not determine type of expression: {expr}");
                 return null;
             }
-            cvi = new ClonedVarInfo(expr, exprType, isDef);
+            cvi = new ClonedVarInfo(expr, exprType, isDef, eb.Bindings.Count);
             cloneMap[eb] = cvi;
             return cvi;
         }
@@ -937,7 +944,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         /// <param name="context"></param>
         /// <param name="expr"></param>
-        /// <param name="indices"></param>
+        /// <param name="indices">Modified</param>
         /// <returns></returns>
         private IExpression ReplaceAnyItem(BasicTransformContext context, IExpression expr, List<IList<IExpression>> indices)
         {
@@ -1005,7 +1012,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             bool isExitVar = cvi.IsExitVar;
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(expr);
 
-            // this statement fills in cvi.indices
+            // this statement fills in cvi.wildcardVars
             IExpression indexedExpr = ReplaceAnyItem(context, expr, cvi.wildcardVars);
             IExpression transformedExpr;
             IVariableDeclaration transformedVar;
@@ -1023,6 +1030,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             bool isIndexedByCondition = (isSwitch && Builder.ContainsExpression(expr, caseNumber));
 
             // construct cvi.containers from eb.Bindings
+            // change keptContainers to be a single conditional stmt containing all bindings
+            // caseVars must have the same conditional stmt
             // if cloning outside the loop, must treat the loop variable as a local variable and exclude it from conditions
             bool cloneOutsideLoop = (isSwitch && !isIndexedByCondition);
             IStatement bindingContainer = IndexingTransform.GetBindingSetContainer(IndexingTransform.FilterBindingSet(bindingSet,
@@ -1044,14 +1053,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             // An array of all the uses of this variable in each case
             IExpression arraySize;
-            if (isExitVar) arraySize = numberOfCases; // exit variables must be defined in all cases of the condition.
-            else if (isIndexedByCondition || !isStochastic) arraySize = null; // used in exactly one case.
+            if (!isStochastic) arraySize = null;
+            else if (isExitVar) arraySize = numberOfCases; // exit variables must be defined in all cases of the condition.
+            else if (isIndexedByCondition) arraySize = null; // used in exactly one case.
             else if (isFixedSize) arraySize = cvi.caseCount; // used in some cases.
             else arraySize = numberOfCases; // used in all cases.
             cvi.IsEnterOne = !isExitVar && isIndexedByCondition;
 
-            IList<IStatement> stBefore = Builder.StmtCollection();
-            IList<IStatement> stAfter = Builder.StmtCollection();
+            List<IStatement> stBefore = new List<IStatement>();
             VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
             List<IList<IExpression>> exprIndices = Recognizer.GetIndices(expr);
             string name = ToString(transformedExpr);
@@ -1090,10 +1099,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (isExitVar)
             {
                 // *************** Gate Exit case ***********************
-                if (isFixedSize && isStochastic)
+                if (isFixedSize /*&& isStochastic*/)
                 {
                     // keep track of which cases the variable is defined in.
-                    IArrayCreateExpression ace = Builder.ArrayCreateExpr(typeof (int), arraySize);
+                    IArrayCreateExpression ace = Builder.ArrayCreateExpr(typeof (int), cvi.caseCount);
                     ace.Initializer = Builder.BlockExpr();
                     cvi.caseNumbers = ace;
                 }
@@ -1151,7 +1160,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
                 IStatement exit = Builder.AssignStmt(transformedExpr, exitMethod);
                 exit = Containers.WrapWithContainers(exit, wildcardLoops);
-                stAfter.Add(exit);
+                cvi.exitStatements = new List<IStatement>() { exit };
                 if (!useExitRandom && !context.InputAttributes.Has<DerivedVariable>(transformedVar))
                     context.OutputAttributes.Set(transformedVar, new DerivedVariable());
             }
@@ -1243,26 +1252,30 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 stBefore.Add(enter);
             }
 
+            var stBeforeWrapped = Containers.WrapWithContainers(stBefore, cvi.containers);
             int conditionStmtIndex = context.GetAncestorIndex(conditionStmt);
-            // change keptContainers to be a single conditional stmt containing all bindings
-            // caseVars must have the same conditional stmt
-            stBefore = Containers.WrapWithContainers(stBefore, cvi.containers);
-            stAfter = Containers.WrapWithContainers(stAfter, cvi.containers);
             int ancIndex = cloneOutsideLoop ? context.GetAncestorIndex(switchLoop) : conditionStmtIndex;
-            if (!isExitVar && isIndexedByCondition)
+            if (cvi.IsEnterOne)
             {
                 // define the clone array inside the condition statement.
                 // this is required when each array element can be used more than once.
-                AddCloneStatements(context, stBefore);
-                Assert.IsTrue(stAfter.Count == 0);
+                AddCloneStatements(context, stBeforeWrapped);
+                Assert.IsTrue(cvi.exitStatements == null);
             }
             else
             {
                 // this is required for exit vars and for switch enter vars that are not indexed by the switch loop.
                 // otherwise, this is only an optimization.  if each array element will be used once, then we know that the evidence message will be uniform,
                 // so we can place the declaration of the clone array outside the condition statement.
-                context.AddStatementsBeforeAncestorIndex(ancIndex, stBefore, false);
-                context.AddStatementsAfterAncestorIndex(ancIndex, stAfter, false);
+                context.AddStatementsBeforeAncestorIndex(ancIndex, stBeforeWrapped, false);
+                if ((cloneOutsideLoop || true) && cvi.exitStatements != null)
+                {
+                    var exitStatementsWrapped = Containers.WrapWithContainers(cvi.exitStatements, cvi.containers);
+                    context.AddStatementsAfterAncestorIndex(ancIndex, exitStatementsWrapped, false);
+                    cvi.exitStatements = null;
+                }
+                // When isExitVar and not a switch statement, GetCloneForCase will add the exit statements after the last condition statement.
+                // This ensures that the exit statement follows all of the definitions of the exiting variable.
             }
         }
 
@@ -1433,7 +1446,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// Type of expr.
         /// </summary>
-        internal Type exprType;
+        internal readonly Type exprType;
 
         /// <summary>
         /// Loop indices corresponding to the wildcards in expr.
@@ -1460,7 +1473,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// A map from case numbers to clone variables.
         /// </summary>
-        internal Dictionary<IExpression, IVariableDeclaration> caseVars = new Dictionary<IExpression, IVariableDeclaration>();
+        internal readonly Dictionary<IExpression, IVariableDeclaration> caseVars = new Dictionary<IExpression, IVariableDeclaration>();
 
         /// <summary>
         /// An array of integers, listing the condition branches in which the variable is used.
@@ -1474,7 +1487,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// The length of caseNumbers.
         /// </summary>
-        internal ILiteralExpression caseCount;
+        internal readonly ILiteralExpression caseCount;
 
         /// <summary>
         /// The number of distinct cases in which this variable is defined.
@@ -1484,14 +1497,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// Containers in which the clone array (and elements thereof) are declared.
         /// </summary>
-        internal List<IStatement> containers = new List<IStatement>();
+        internal readonly List<IStatement> containers = new List<IStatement>();
 
-        internal ClonedVarInfo(IExpression expr, Type exprType, bool isDef)
+        internal IList<IStatement> exitStatements;
+
+        internal ClonedVarInfo(IExpression expr, Type exprType, bool isDef, int caseCount)
         {
             this.expr = expr;
             this.exprType = exprType;
             IsExitVar = isDef;
-            caseCount = Builder.LiteralExpr(0); // will be mutated later in cvi.AddCase
+            this.caseCount = Builder.LiteralExpr(caseCount); // will be mutated later in cvi.AddCase
         }
 
         /// <summary>
@@ -1517,11 +1532,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 List<IList<IExpression>> indices2 = new List<IList<IExpression>>();
                 indices2.AddRange(wildcardVars);
+                int index = AddCase(isDef, caseNumber);
                 if (condInfo.isStochastic)
                 {
-                    // for a switch/default statement, caseNumber is the loop index, 
-                    // and AddCase returns -1.
-                    int index = AddCase(isDef, caseNumber);
                     // when expr is a use of an EnterPartial variable, use the count as the index, otherwise use the case number.
                     IExpression indexExpr = (index == -1 || IsExitVar) ? caseNumber : Builder.LiteralExpr(index);
                     IList<IExpression> lastIndex = Builder.ExprCollection();
@@ -1588,16 +1601,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // so we might benefit from caching them
             List<IStatement> wildcardLoops = VariableInformation.GetVariableInformation(context, caseVar).BuildWildcardLoops(wildcardVars);
             assignSt = Containers.WrapWithContainers(assignSt, wildcardLoops);
-            if (!isDef)
-            {
-                stmts.Add(assignSt);
-            }
-            else
+            if (isDef)
             {
                 assignSt = Containers.WrapWithContainers(assignSt, containers);
                 int conditionStmtIndex = context.GetAncestorIndex(condInfo.conditionStmt);
+                if (exitStatements != null && IsDefinedInAllCases())
+                {
+                    var exitStatementsWrapped = Containers.WrapWithContainers(exitStatements, containers);
+                    context.AddStatementsAfterAncestorIndex(conditionStmtIndex, exitStatementsWrapped, false);
+                }
                 conditionStmtIndex += 2;
                 context.AddStatementAfterAncestorIndex(conditionStmtIndex, assignSt);
+            }
+            else
+            {
+                stmts.Add(assignSt);
             }
             stmts = Containers.WrapWithContainers(stmts, containers);
             condInfo.AddCloneStatements(context, stmts);
@@ -1605,7 +1623,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         /// <summary>
-        /// Given a case number, get an index into the clones array.
+        /// Given a case number, get an index into the clones array. 
+        /// For a switch/default statement, caseNumber is the loop index, and AddCase returns -1.
         /// </summary>
         /// <param name="isDef">True if the expression to be cloned is on the lhs of an assignment.</param>
         /// <param name="caseNumber"></param>

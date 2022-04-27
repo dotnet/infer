@@ -68,19 +68,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         private DependencyType dependencyType;
 
-        private Set<IExpression> mutatedExpressions = new Set<IExpression>();
+        private readonly Set<IExpression> mutatedExpressions = new Set<IExpression>();
 
         /// <summary>
         /// The set of parameter declarations for the top-level method being transformed.
         /// </summary>
-        private Set<IParameterDeclaration> topLevelParameters = new Set<IParameterDeclaration>();
+        private readonly Set<IParameterDeclaration> topLevelParameters = new Set<IParameterDeclaration>();
 
         private LoopMergingInfo loopMergingInfo;
 
         /// <summary>
         /// Records all times that a variable is declared or assigned to
         /// </summary>
-        private Dictionary<IVariableDeclaration, MutationInformation> mutInfos =
+        private readonly Dictionary<IVariableDeclaration, MutationInformation> mutInfos =
             new Dictionary<IVariableDeclaration, MutationInformation>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         private bool convertingLoopInitializer;
