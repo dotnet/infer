@@ -66,7 +66,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 #else
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp{T}"]/message_doc[@name="UsesGibbs{TDist}(GibbsMarginal{TDist, T}, TDist, int, T)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
-        public static T UsesGibbs<TDist>([SkipIfUniform] GibbsMarginal<TDist, T> to_marginal, TDist def, int resultIndex, T result)
+        public static T UsesGibbs<TDist>([SkipIfUniform] GibbsMarginal<TDist, T> to_marginal, [IgnoreDependency] TDist def, [IgnoreDependency] int resultIndex, T result)
             where TDist : IDistribution<T>, Sampleable<T>
         {
             // This method must depend on Def, even though Def isn't used, in order to get the right triggers
@@ -74,7 +74,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp{T}"]/message_doc[@name="UsesGibbs(T, int, T)"]/*'/>
-        public static T UsesGibbs([IsReturned] T def, int resultIndex, T result)
+        public static T UsesGibbs([IsReturned] T def, [IgnoreDependency] int resultIndex, T result)
         {
             return def;
         }
@@ -84,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp{T}"]/message_doc[@name="UsesGibbs{TDist}(TDist, int, TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
         // until .NET 4
-        public static TDist UsesGibbs<TDist>([IsReturned] TDist def, int resultIndex, TDist result)
+        public static TDist UsesGibbs<TDist>([IsReturned] TDist def, [IgnoreDependency] int resultIndex, TDist result)
             where TDist : IDistribution<T>
         {
             return def;
@@ -321,14 +321,14 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp2{T}"]/message_doc[@name="UsesGibbs(T, int, T)"]/*'/>
-        public static T UsesGibbs([IsReturned] T def, int resultIndex, T result)
+        public static T UsesGibbs([IsReturned] T def, [IgnoreDependency] int resultIndex, T result)
         {
             return def;
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp2{T}"]/message_doc[@name="UsesGibbs{TDist}(TDist, T, int, T)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
-        public static T UsesGibbs<TDist>(TDist def, T sample, int resultIndex, T result)
+        public static T UsesGibbs<TDist>(TDist def, T sample, [IgnoreDependency] int resultIndex, T result)
             where TDist : IDistribution<T>
         {
             // This method must depend on Def, even though Def isn't used, in order to get the right triggers
@@ -340,7 +340,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static TDist UsesGibbs<TDist>(
             [IgnoreDependency] ICollection<TDist> Uses,
             [IsReturned] TDist Def,
-            int resultIndex, TDist result)
+            [IgnoreDependency] int resultIndex, TDist result)
             where TDist : IDistribution<T>, Sampleable<T>, SettableTo<TDist>, SettableToProduct<TDist>, SettableToRatio<TDist>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Count)
@@ -354,7 +354,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateGibbsOp2{T}"]/message_doc[@name="UsesGibbsInit{TDist}(TDist, int)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the replicated variable.</typeparam>
         [Skip]
-        public static TDist UsesGibbsInit<TDist>([IgnoreDependency] TDist Def, int resultIndex)
+        public static TDist UsesGibbsInit<TDist>([IgnoreDependency] TDist Def, [IgnoreDependency] int resultIndex)
             where TDist : ICloneable
         {
             return (TDist)Def.Clone();

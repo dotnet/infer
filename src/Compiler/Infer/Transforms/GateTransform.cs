@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             get { return "GateTransform"; }
         }
 
-        internal static readonly bool DeterministicEnterExit = false;
+        internal static readonly bool DeterministicEnterExit;
 
         public override ITypeDeclaration Transform(ITypeDeclaration itd)
         {

@@ -13,6 +13,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 	{
 		#region Fields
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/// <summary>True if Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei15 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei15</summary>
 		public bool Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei15_isDone;
 		/// <summary>True if Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr14 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr14</summary>
@@ -23,6 +24,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>True if Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13</summary>
 		public bool Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13_isDone;
 >>>>>>> Deterministic gates track the number of cases
+=======
+		/// <summary>True if Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12</summary>
+		public bool Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 		/// <summary>True if Changed_ClassCount_FeatureCount_InstanceCount has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_InstanceCount</summary>
 		public bool Changed_ClassCount_FeatureCount_InstanceCount_isDone;
 		/// <summary>True if Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_WeightC10 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_WeightC10</summary>
@@ -39,10 +44,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isDone;
 		/// <summary>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6</summary>
 		public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isInitialised;
-		/// <summary>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12</summary>
-		public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isDone;
-		/// <summary>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12</summary>
-		public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isInitialised;
 		/// <summary>True if Changed_ClassCount_FeatureCount_WeightConstraints has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_WeightConstraints</summary>
 		public bool Changed_ClassCount_FeatureCount_WeightConstraints_isDone;
 		/// <summary>True if Changed_ClassCount_FeatureCount_WeightConstraints_WeightPriors has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_WeightConstraints_WeightPriors</summary>
@@ -178,6 +179,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Changed_ClassCount_FeatureCount_WeightPriors_isDone = false;
 					this.Changed_ClassCount_FeatureCount_WeightConstraints_isDone = false;
 					this.Changed_ClassCount_FeatureCount_WeightConstraints_WeightPriors_isDone = false;
+<<<<<<< HEAD
 					this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isDone = false;
 <<<<<<< HEAD
 					this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr13_isDone = false;
@@ -187,6 +189,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13_isDone = false;
 					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone = false;
 >>>>>>> Deterministic gates track the number of cases
+=======
+					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone = false;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				}
 			}
 		}
@@ -209,6 +214,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Changed_ClassCount_FeatureCount_WeightPriors_isDone = false;
 					this.Changed_ClassCount_FeatureCount_WeightConstraints_isDone = false;
 					this.Changed_ClassCount_FeatureCount_WeightConstraints_WeightPriors_isDone = false;
+<<<<<<< HEAD
 					this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isDone = false;
 <<<<<<< HEAD
 					this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr13_isDone = false;
@@ -218,6 +224,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13_isDone = false;
 					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone = false;
 >>>>>>> Deterministic gates track the number of cases
+=======
+					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone = false;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				}
 			}
 		}
@@ -237,6 +246,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_WeightC11_isInitialised = false;
 				this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_WeightC10_isInitialised = false;
 				this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isInitialised = false;
+<<<<<<< HEAD
 				this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isInitialised = false;
 <<<<<<< HEAD
 				this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr13_isInitialised = false;
@@ -246,6 +256,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13_isDone = false;
 				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone = false;
 >>>>>>> Deterministic gates track the number of cases
+=======
+				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone = false;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 			}
 		}
 
@@ -265,6 +278,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Changed_ClassCount_FeatureCount_InstanceCount_isDone = false;
 					this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_WeightC10_isDone = false;
 					this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isInitialised = false;
+<<<<<<< HEAD
 					this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isInitialised = false;
 <<<<<<< HEAD
 					this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr13_isDone = false;
@@ -274,6 +288,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13_isDone = false;
 					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone = false;
 >>>>>>> Deterministic gates track the number of cases
+=======
+					this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone = false;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				}
 			}
 		}
@@ -300,6 +317,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isInitialised = false;
 				this.Changed_ClassCount_FeatureCount_WeightConstraints_isDone = false;
 				this.Changed_ClassCount_FeatureCount_WeightConstraints_WeightPriors_isDone = false;
+<<<<<<< HEAD
 				this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isDone = false;
 <<<<<<< HEAD
 				this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr13_isDone = false;
@@ -309,6 +327,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13_isDone = false;
 				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone = false;
 >>>>>>> Deterministic gates track the number of cases
+=======
+				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone = false;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 			}
 		}
 
@@ -326,6 +347,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isInitialised = false;
 				this.Changed_ClassCount_FeatureCount_WeightPriors_isDone = false;
 				this.Changed_ClassCount_FeatureCount_WeightConstraints_WeightPriors_isDone = false;
+<<<<<<< HEAD
 				this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isDone = false;
 <<<<<<< HEAD
 				this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr13_isDone = false;
@@ -335,6 +357,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13_isDone = false;
 				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone = false;
 >>>>>>> Deterministic gates track the number of cases
+=======
+				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone = false;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 			}
 		}
 
@@ -348,10 +373,14 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			this.Weights_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ClassCount);
+<<<<<<< HEAD
 			this.Weights_rep_B_toDef = new Gaussian[this.ClassCount][];
+=======
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 			this.Weights_uses_B = new Gaussian[this.ClassCount][][];
 			this.Weights_uses_F = new Gaussian[this.ClassCount][][];
 			this.Weights_rep_F_marginal = new Gaussian[this.ClassCount][];
+			this.Weights_rep_B_toDef = new Gaussian[this.ClassCount][];
 			this.Weights_rep_F = new Gaussian[this.ClassCount][][];
 			this.Weights_rep_B = new Gaussian[this.ClassCount][][];
 			this.Changed_ClassCount_isDone = true;
@@ -393,6 +422,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Computations that depend on the observed value of ClassCount and FeatureCount and FeatureValues and InstanceCount and numberOfIterations and WeightConstraints and WeightPriors</summary>
 		/// <param name="numberOfIterations">The number of times to iterate each loop</param>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		private void Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei15(int numberOfIterations)
 		{
 			if (this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei15_isDone) {
@@ -401,6 +431,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		{
 			if (this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone) {
 >>>>>>> Deterministic gates track the number of cases
+=======
+		private void Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12(int numberOfIterations)
+		{
+			if (this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone) {
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				return ;
 			}
 			for(int iteration = this.numberOfIterationsDone; iteration<numberOfIterations; iteration++) {
@@ -425,9 +460,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					}
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 						this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.ToDef<Gaussian>(this.MaxNoisyScore__B[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore]);
 =======
 						this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.ToDef<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore]);
+=======
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 						this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.Marginal<Gaussian>(this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore], this.NoisyScores_F[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore]);
 >>>>>>> Deterministic gates track the number of cases
 					}
@@ -498,7 +536,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 							this.Labels_InstanceRange__selector_cases_rep7_B[InstanceRange][ClassMaxNoisyScore][_a7] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.Labels_InstanceRange__selector_cases_rep7_uses_B[InstanceRange][ClassMaxNoisyScore][_a7], this.Labels_InstanceRange__selector_cases_rep7_B[InstanceRange][ClassMaxNoisyScore][_a7]);
 						}
 						this.Labels_InstanceRange__selector_cases_uses_B[InstanceRange][ClassMaxNoisyScore][11] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.Labels_InstanceRange__selector_cases_rep7_B[InstanceRange][ClassMaxNoisyScore], this.Labels_InstanceRange__selector_cases_uses_B[InstanceRange][ClassMaxNoisyScore][11]);
+<<<<<<< HEAD
 >>>>>>> Deterministic gates track the number of cases
+=======
+						this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.ToDef<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore]);
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 					}
 					for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 						this.Labels_InstanceRange__selector_cases_B[InstanceRange][ClassRange] = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.Labels_InstanceRange__selector_cases_uses_B[InstanceRange][ClassRange], this.Labels_InstanceRange__selector_cases_B[InstanceRange][ClassRange]);
@@ -531,6 +573,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_marginal_F[InstanceRange] = VariableOp.MarginalAverageConditional<Discrete>(this.Labels_use_B[InstanceRange], this.Labels_F_reduced, this.Labels_marginal_F[InstanceRange]);
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei15_isDone = true;
 		}
 
@@ -540,18 +583,27 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr14_isDone) {
 =======
 			this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone = true;
+=======
+			this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone = true;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 		}
 
-		/// <summary>Computations that depend on the observed value of ClassCount and FeatureCount and FeatureValues and InstanceCount and numberOfIterationsDecreased and WeightConstraints and WeightPriors</summary>
-		private void Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13()
+		/// <summary>Computations that depend on the observed value of ClassCount and FeatureCount and InstanceCount</summary>
+		private void Changed_ClassCount_FeatureCount_InstanceCount()
 		{
+<<<<<<< HEAD
 			if (this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13_isDone) {
 >>>>>>> Deterministic gates track the number of cases
+=======
+			if (this.Changed_ClassCount_FeatureCount_InstanceCount_isDone) {
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				return ;
 			}
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.FeatureScores_F[InstanceRange][ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
 					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 						this.Weights_rep_F[ClassRange][FeatureRange][InstanceRange] = ReplicateOp_Divide.UsesAverageConditional<Gaussian>(this.Weights_rep_B[ClassRange][FeatureRange][InstanceRange], this.Weights_rep_F_marginal[ClassRange][FeatureRange], InstanceRange, this.Weights_rep_F[ClassRange][FeatureRange][InstanceRange]);
@@ -616,10 +668,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		{
 			if (this.Changed_ClassCount_FeatureCount_InstanceCount_isDone) {
 				return ;
-			}
-			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
-				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
-					this.FeatureScores_F[InstanceRange][ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+=======
+						this.FeatureScores_F[InstanceRange][ClassRange][FeatureRange] = Gaussian.Uniform();
+					}
 					this.FeatureScores_B[InstanceRange][ClassRange] = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
 					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 						this.FeatureScores_B[InstanceRange][ClassRange][FeatureRange] = Gaussian.Uniform();
@@ -629,6 +680,18 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.Weights_rep_F[ClassRange][FeatureRange] = new Gaussian[this.InstanceCount];
+				}
+>>>>>>> Added ReplicateOp_Divide_NoInit.
+			}
+			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+						this.Weights_rep_F[ClassRange][FeatureRange][InstanceRange] = Gaussian.Uniform();
+					}
+				}
+			}
+			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 					this.Weights_rep_B[ClassRange][FeatureRange] = new Gaussian[this.InstanceCount];
 				}
 			}
@@ -645,8 +708,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
-						this.FeatureScores_F[InstanceRange][ClassRange][FeatureRange] = Gaussian.Uniform();
-						this.Weights_rep_F[ClassRange][FeatureRange][InstanceRange] = Gaussian.Uniform();
 						this.Weights_rep_B[ClassRange][FeatureRange][InstanceRange] = Gaussian.Uniform();
 					}
 				}
@@ -688,22 +749,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isDone = true;
 			this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isInitialised = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of ClassCount and FeatureCount and numberOfIterationsDecreased and WeightConstraints and WeightPriors and must reset on changes to FeatureValues and InstanceCount</summary>
-		/// <param name="initialise">If true, reset messages that initialise loops</param>
-		private void Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12(bool initialise)
-		{
-			if (this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isDone&&((!initialise)||this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isInitialised)) {
-				return ;
-			}
-			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
-				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
-					this.Weights_rep_F_marginal[ClassRange][FeatureRange] = ReplicateOp_Divide.Marginal<Gaussian>(this.Weights_rep_B_toDef[ClassRange][FeatureRange], this.Weights_uses_F[ClassRange][FeatureRange][1], this.Weights_rep_F_marginal[ClassRange][FeatureRange]);
-				}
-			}
-			this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isDone = true;
-			this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isInitialised = true;
 		}
 
 		/// <summary>Computations that depend on the observed value of ClassCount and FeatureCount and WeightConstraints</summary>
@@ -761,13 +806,22 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.FeatureScores_F[InstanceRange] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ClassCount);
 				this.FeatureScores_B[InstanceRange] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ClassCount);
 				this.Scores_F[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.Scores_F[InstanceRange][ClassRange] = Gaussian.Uniform();
+				}
 				this.Scores_B[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.Scores_B[InstanceRange][ClassRange] = Gaussian.Uniform();
 				}
 				this.NoisyScores_F[InstanceRange] = new DistributionStructArray<Gaussian,double>(this.ClassCount);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					this.NoisyScores_F[InstanceRange][ClassRange] = Gaussian.Uniform();
+				}
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				this.MaxNoisyScore_rep_F_marginal[InstanceRange] = new Gaussian[this.ClassCount];
 				this.MaxNoisyScore_rep_B_toDef[InstanceRange] = new Gaussian[this.ClassCount];
 >>>>>>> Deterministic gates track the number of cases
@@ -897,22 +951,61 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 				}
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+						if (ClassMaxNoisyScore!=ClassRange) {
+							this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+						}
+					}
+				}
 				this.NoisyScoreDeltas_B[InstanceRange] = new Gaussian[this.ClassCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 				}
+<<<<<<< HEAD
 =======
 >>>>>>> Deterministic gates track the number of cases
+=======
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+						if (ClassMaxNoisyScore!=ClassRange) {
+							this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+						}
+					}
+				}
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				this.vdouble710_B[InstanceRange] = new Gaussian[this.ClassCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					this.vdouble710_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				this.MaxNoisyScore__0__B[InstanceRange] = new Gaussian[this.ClassCount][];
+=======
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+						if (ClassMaxNoisyScore!=ClassRange) {
+							this.vdouble710_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+						}
+					}
+				}
+				this.MaxNoisyScore_0__B[InstanceRange] = new Gaussian[this.ClassCount][];
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					this.MaxNoisyScore__0__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 				}
+<<<<<<< HEAD
 				this.MaxNoisyScore__B[InstanceRange] = new Gaussian[this.ClassCount][];
+=======
+				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+						if (ClassMaxNoisyScore!=ClassRange) {
+							this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+						}
+					}
+				}
+				this.MaxNoisyScore_rep_B[InstanceRange] = new Gaussian[this.ClassCount][];
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					this.MaxNoisyScore__B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 				}
@@ -992,6 +1085,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Labels_InstanceRange__selector_cases_B[InstanceRange][ClassRange] = Bernoulli.Uniform();
 				}
 				this.Labels_InstanceRange__selector_uses_B[InstanceRange][0] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
+				this.Labels_InstanceRange__selector_uses_B[InstanceRange][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
 				this.Labels_InstanceRange__selector_uses_F[InstanceRange][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
 				this.Labels_InstanceRange__selector_rep_F_marginal[InstanceRange] = ReplicateOp_Divide.MarginalInit<Discrete>(this.Labels_InstanceRange__selector_uses_F[InstanceRange][1]);
 				this.Labels_InstanceRange__selector_rep_B_toDef[InstanceRange] = ReplicateOp_Divide.ToDefInit<Discrete>(this.Labels_InstanceRange__selector_uses_F[InstanceRange][1]);
@@ -1023,7 +1117,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_use_B[InstanceRange] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
 				this.Labels_uses_B[InstanceRange][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
 				this.Labels_uses_B[InstanceRange][0] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
-				this.Labels_InstanceRange__selector_uses_B[InstanceRange][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
 				this.Labels_InstanceRange__selector_B[InstanceRange] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
 			}
 			this.Changed_ClassCount_InstanceCount_isDone = true;
@@ -1037,6 +1130,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
+<<<<<<< HEAD
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.Scores_F[InstanceRange][ClassRange] = Gaussian.Uniform();
 					this.NoisyScores_F[InstanceRange][ClassRange] = Gaussian.Uniform();
@@ -1057,12 +1151,15 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 =======
 >>>>>>> Deterministic gates track the number of cases
 				}
+=======
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.ToDefInit<Gaussian>(this.NoisyScores__ClassMaxNoisyScore_uses_F[InstanceRange][ClassMaxNoisyScore][ClassMaxNoisyScore][0]);
 					this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.MarginalInit<Gaussian>(this.NoisyScores__ClassMaxNoisyScore_uses_F[InstanceRange][ClassMaxNoisyScore][ClassMaxNoisyScore][0]);
 				}
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 						if (ClassMaxNoisyScore!=ClassRange) {
@@ -1071,6 +1168,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 							this.vdouble710_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
 							this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
 						}
+=======
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 						this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
 >>>>>>> Deterministic gates track the number of cases
 						this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
@@ -1145,8 +1244,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.NoisyScores_use_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
 			this.Labels_marginal_F = new DistributionRefArray<Discrete,int>(this.InstanceCount);
 			this.Labels_uses_B = new Discrete[this.InstanceCount][];
-			this.Labels_use_B = new DistributionRefArray<Discrete,int>(this.InstanceCount);
 			this.Labels_InstanceRange__selector_B = new Discrete[this.InstanceCount];
+			this.Labels_use_B = new DistributionRefArray<Discrete,int>(this.InstanceCount);
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.Labels_uses_B[InstanceRange] = new Discrete[2];
 			}
@@ -1173,6 +1272,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_WeightC11_isDone = false;
 					this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_WeightC10_isDone = false;
 					this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_WeightC6_isDone = false;
+<<<<<<< HEAD
 					this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12_isDone = false;
 <<<<<<< HEAD
 					this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr13_isDone = false;
@@ -1184,6 +1284,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14_isDone = false;
 >>>>>>> Deterministic gates track the number of cases
+=======
+				}
+				this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12_isDone = false;
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 			}
 			this.Constant();
 			this.Changed_InstanceCount();
@@ -1197,6 +1301,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.Changed_ClassCount_FeatureCount_WeightPriors();
 			this.Changed_ClassCount_FeatureCount_WeightConstraints();
 			this.Changed_ClassCount_FeatureCount_WeightConstraints_WeightPriors();
+<<<<<<< HEAD
 			this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat12(initialise);
 <<<<<<< HEAD
 			this.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr13(initialise);
@@ -1206,6 +1311,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr13();
 			this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei14(numberOfIterations);
 >>>>>>> Deterministic gates track the number of cases
+=======
+			this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterations_WeightConstraints_Wei12(numberOfIterations);
+>>>>>>> Added ReplicateOp_Divide_NoInit.
 			this.numberOfIterationsDone = numberOfIterations;
 		}
 

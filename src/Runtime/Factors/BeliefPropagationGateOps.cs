@@ -181,8 +181,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             double logWeightSum = logProbSum;
             if (!double.IsNegativeInfinity(logWeightSum))
             {
-                logWeightSum -= enterPartial[0].GetLogAverageOf(value);
-                result.SetTo(enterPartial[0]);
+                // Subtract to avoid double-counting since selector already contains this quantity
+                // See IntCasesOp.IAverageConditional
+                double logAverage = enterPartial[0].GetLogAverageOf(value);
+                if (!double.IsNegativeInfinity(logAverage))
+                {
+                    logWeightSum -= logAverage;
+                    result.SetTo(enterPartial[0]);
+                }
             }
 
             if (indices.Length > 1)
@@ -208,9 +214,13 @@ namespace Microsoft.ML.Probabilistic.Factors
                         double logWeightShifted = logProb - shift;
                         if (!double.IsNegativeInfinity(logWeightShifted))
                         {
-                            logWeightShifted -= enterPartial[i].GetLogAverageOf(value);
-                            result.SetToSum(Math.Exp(logWeightSum - shift), result, Math.Exp(logWeightShifted), enterPartial[i]);
-                            logWeightSum = MMath.LogSumExp(logWeightSum, logWeightShifted + shift);
+                            double logAverage = enterPartial[i].GetLogAverageOf(value);
+                            if (!double.IsNegativeInfinity(logAverage))
+                            {
+                                logWeightShifted -= logAverage;
+                                result.SetToSum(Math.Exp(logWeightSum - shift), result, Math.Exp(logWeightShifted), enterPartial[i]);
+                                logWeightSum = MMath.LogSumExp(logWeightSum, logWeightShifted + shift);
+                            }
                         }
                     }
                 }

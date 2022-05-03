@@ -70,25 +70,20 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.ShowProgress = true;
             //InferenceEngine.DefaultEngine.ShowMsl = true;
             //InferenceEngine.DefaultEngine.ShowSchedule = true;
-            InferenceEngine.DefaultEngine.Compiler.CatchExceptions = true;
+            //InferenceEngine.DefaultEngine.Compiler.CatchExceptions = true;
             //InferenceEngine.DefaultEngine.Compiler.UseSerialSchedules = false;
             //InferenceEngine.DefaultEngine.Compiler.UseExperimentalSerialSchedules = true;
             //InferenceEngine.DefaultEngine.Compiler.AllowSerialInitialisers = true;
             //InferenceEngine.DefaultEngine.Compiler.UseLocals = false;
             TestUtils.SetDebugOptions();
             TestUtils.SetBrowserMode(BrowserMode.OnError);
-            TestUtils.SetBrowserMode(BrowserMode.Always);
+            //TestUtils.SetBrowserMode(BrowserMode.Always);
             //TestUtils.SetBrowserMode(BrowserMode.WriteFiles);
 
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            //new GateModelTests().GateEnterOnePointMassTest3(); // bad schedule
-            //new GateModelTests().CaseObservedConditionTest();
-            //new InferTests().PointMassAnalysisTest();
-            //new SerialTests().OffsetByTwoChainTest();
-            //new TutorialTests().MixtureOfGaussians();
-            new DiscreteTests().BallCountingNoisy2();
+            new LaplaceTests().PlusProductHierarchyTest();
 
             bool runAllTests = false;
             if (runAllTests)
