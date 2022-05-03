@@ -15,24 +15,14 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		#region Fields
 		/// <summary>Field backing the AffinityNoiseVariance property</summary>
 		private double AffinityNoiseVariance_field;
-<<<<<<< HEAD
-		/// <summary>True if Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24 has executed. Set this to false to force re-execution of Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24</summary>
-		public bool Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone;
-=======
 		/// <summary>True if Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27 has executed. Set this to false to force re-execution of Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27</summary>
 		public bool Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone;
->>>>>>> Deterministic gates track the number of cases
 		/// <summary>True if Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29 has executed. Set this to false to force re-execution of Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29</summary>
 		public bool Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone;
 		/// <summary>True if Changed_ItemBiasPrior has executed. Set this to false to force re-execution of Changed_ItemBiasPrior</summary>
 		public bool Changed_ItemBiasPrior_isDone;
-<<<<<<< HEAD
-		/// <summary>True if Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23 has executed. Set this to false to force re-execution of Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23</summary>
-		public bool Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone;
-=======
 		/// <summary>True if Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26 has executed. Set this to false to force re-execution of Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26</summary>
 		public bool Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone;
->>>>>>> Deterministic gates track the number of cases
 		/// <summary>True if Changed_ItemBiasPrior_ItemIds_ObservationCount has executed. Set this to false to force re-execution of Changed_ItemBiasPrior_ItemIds_ObservationCount</summary>
 		public bool Changed_ItemBiasPrior_ItemIds_ObservationCount_isDone;
 		/// <summary>True if Changed_ItemBiasPrior_ItemIds_ObservationCount_UserBiasPrior_UserIds has executed. Set this to false to force re-execution of Changed_ItemBiasPrior_ItemIds_ObservationCount_UserBiasPrior_UserIds</summary>
@@ -53,25 +43,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public bool Changed_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone;
 		/// <summary>True if Changed_ObservationCount_UserBiasPrior_UserIds has executed. Set this to false to force re-execution of Changed_ObservationCount_UserBiasPrior_UserIds</summary>
 		public bool Changed_ObservationCount_UserBiasPrior_UserIds_isDone;
-<<<<<<< HEAD
-		/// <summary>True if Changed_ObservationCount_UserCount has executed. Set this to false to force re-execution of Changed_ObservationCount_UserCount</summary>
-		public bool Changed_ObservationCount_UserCount_isDone;
-		/// <summary>True if Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28 has executed. Set this to false to force re-execution of Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28</summary>
-		public bool Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone;
-		/// <summary>True if Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27 has executed. Set this to false to force re-execution of Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27</summary>
-		public bool Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone;
-		/// <summary>True if Changed_ObservationCount_UserCount_UserThresholdCount has executed. Set this to false to force re-execution of Changed_ObservationCount_UserCount_UserThresholdCount</summary>
-		public bool Changed_ObservationCount_UserCount_UserThresholdCount_isDone;
-		/// <summary>True if Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior has executed. Set this to false to force re-execution of Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior</summary>
-		public bool Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_isDone;
-		/// <summary>True if Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds has executed. Set this to false to force re-execution of Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds</summary>
-		public bool Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone;
-=======
 		/// <summary>True if Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28 has executed. Set this to false to force re-execution of Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28</summary>
 		public bool Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone;
 		/// <summary>True if Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds has executed. Set this to false to force re-execution of Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds</summary>
 		public bool Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone;
->>>>>>> Deterministic gates track the number of cases
 		/// <summary>True if Changed_ObservationCount_UserIds_UserTraitsPrior has executed. Set this to false to force re-execution of Changed_ObservationCount_UserIds_UserTraitsPrior</summary>
 		public bool Changed_ObservationCount_UserIds_UserTraitsPrior_isDone;
 		/// <summary>True if Changed_ObservationCount_UserThresholdCount has executed. Set this to false to force re-execution of Changed_ObservationCount_UserThresholdCount</summary>
@@ -80,17 +55,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public bool Changed_ObservationCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone;
 		/// <summary>True if Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds has executed. Set this to false to force re-execution of Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds</summary>
 		public bool Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds_isDone;
+		/// <summary>True if Changed_ObservationCount_UseSharedUserThresholds has executed. Set this to false to force re-execution of Changed_ObservationCount_UseSharedUserThresholds</summary>
+		public bool Changed_ObservationCount_UseSharedUserThresholds_isDone;
 		/// <summary>True if Changed_UserBiasPrior has executed. Set this to false to force re-execution of Changed_UserBiasPrior</summary>
 		public bool Changed_UserBiasPrior_isDone;
-<<<<<<< HEAD
-		/// <summary>True if Changed_UserCount has executed. Set this to false to force re-execution of Changed_UserCount</summary>
-		public bool Changed_UserCount_isDone;
-		/// <summary>True if Changed_UserCount_UserThresholdCount has executed. Set this to false to force re-execution of Changed_UserCount_UserThresholdCount</summary>
-		public bool Changed_UserCount_UserThresholdCount_isDone;
-		/// <summary>True if Changed_UserCount_UserThresholdCount_UserThresholdsPrior has executed. Set this to false to force re-execution of Changed_UserCount_UserThresholdCount_UserThresholdsPrior</summary>
-		public bool Changed_UserCount_UserThresholdCount_UserThresholdsPrior_isDone;
-=======
->>>>>>> Deterministic gates track the number of cases
 		/// <summary>True if Changed_UserThresholdCount has executed. Set this to false to force re-execution of Changed_UserThresholdCount</summary>
 		public bool Changed_UserThresholdCount_isDone;
 		/// <summary>True if Changed_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds has executed. Set this to false to force re-execution of Changed_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds</summary>
@@ -103,6 +71,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public bool Changed_UserThresholdsPrior_UseSharedUserThresholds_isDone;
 		/// <summary>True if Changed_UserTraitsPrior has executed. Set this to false to force re-execution of Changed_UserTraitsPrior</summary>
 		public bool Changed_UserTraitsPrior_isDone;
+		/// <summary>True if Changed_UseSharedUserThresholds has executed. Set this to false to force re-execution of Changed_UseSharedUserThresholds</summary>
+		public bool Changed_UseSharedUserThresholds_isDone;
 		/// <summary>True if Constant has executed. Set this to false to force re-execution of Constant</summary>
 		public bool Constant_isDone;
 		public int[] CurrentRating_reduced;
@@ -174,6 +144,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_use_F_marginal;
 		public DistributionStructArray<Gaussian,double>[] UserThresholdsObs_B;
 		public Gaussian UserThresholdsObs_B_reduced;
+		public DistributionStructArray<Gaussian,double>[] UserThresholdsObs_F;
 		/// <summary>Field backing the UserThresholdsPrior property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholdsPrior_field;
 		public DistributionStructArray<Gaussian,double>[] userTrait_B;
@@ -211,11 +182,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				if (this.AffinityNoiseVariance_field!=value) {
 					this.AffinityNoiseVariance_field = value;
 					this.numberOfIterationsDone = 0;
-<<<<<<< HEAD
-					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-=======
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 				}
 			}
@@ -233,13 +200,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_ItemBiasPrior_isDone = false;
 				this.Changed_ItemBiasPrior_ItemIds_ObservationCount_isDone = false;
 				this.Changed_ItemBiasPrior_ItemIds_ObservationCount_UserBiasPrior_UserIds_isDone = false;
-<<<<<<< HEAD
-				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = false;
-				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-=======
 				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = false;
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 			}
 		}
@@ -275,13 +237,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_isDone = false;
 				this.Changed_ItemBiasPrior_ItemIds_ObservationCount_UserBiasPrior_UserIds_isDone = false;
 				this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
-<<<<<<< HEAD
-				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = false;
-				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-=======
 				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = false;
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 			}
 		}
@@ -299,13 +256,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_ItemTraitsPrior_isDone = false;
 				this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_isDone = false;
 				this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
-<<<<<<< HEAD
-				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = false;
-				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-=======
 				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = false;
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 			}
 		}
@@ -328,32 +280,17 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				if (this.ObservationCount_field!=value) {
 					this.ObservationCount_field = value;
 					this.numberOfIterationsDone = 0;
-<<<<<<< HEAD
-=======
 					this.Changed_ObservationCount_UseSharedUserThresholds_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 					this.Changed_ObservationCount_isDone = false;
 					this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_isDone = false;
 					this.Changed_ObservationCount_UserIds_UserTraitsPrior_isDone = false;
 					this.Changed_ObservationCount_TraitCount_isDone = false;
-					this.Changed_ObservationCount_UserCount_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = false;
 					this.Changed_ItemBiasPrior_ItemIds_ObservationCount_isDone = false;
 					this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_isDone = false;
 					this.Changed_ObservationCount_UserBiasPrior_UserIds_isDone = false;
 					this.Changed_ItemBiasPrior_ItemIds_ObservationCount_UserBiasPrior_UserIds_isDone = false;
 					this.Changed_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
 					this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
-<<<<<<< HEAD
-					this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = false;
-					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-					this.Changed_ObservationCount_UserThresholdCount_isDone = false;
-					this.Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone = false;
-=======
 					this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = false;
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
 					this.Changed_ObservationCount_UserThresholdCount_isDone = false;
@@ -361,7 +298,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_ObservationCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 					this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 					this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 				}
 			}
@@ -381,13 +317,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_isDone = false;
 					this.Changed_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
 					this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
-<<<<<<< HEAD
-					this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = false;
-					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-=======
 					this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = false;
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 				}
 			}
@@ -405,13 +336,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_UserBiasPrior_isDone = false;
 				this.Changed_ObservationCount_UserBiasPrior_UserIds_isDone = false;
 				this.Changed_ItemBiasPrior_ItemIds_ObservationCount_UserBiasPrior_UserIds_isDone = false;
-<<<<<<< HEAD
-				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = false;
-				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-=======
 				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = false;
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 			}
 		}
@@ -426,19 +352,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				if (this.UserCount_field!=value) {
 					this.UserCount_field = value;
 					this.numberOfIterationsDone = 0;
-<<<<<<< HEAD
-					this.Changed_UserCount_isDone = false;
-					this.Changed_UserCount_UserThresholdCount_isDone = false;
-					this.Changed_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = false;
-					this.Changed_ObservationCount_UserCount_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone = false;
-					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
-=======
->>>>>>> Deterministic gates track the number of cases
 				}
 			}
 		}
@@ -460,17 +373,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_ItemBiasPrior_ItemIds_ObservationCount_UserBiasPrior_UserIds_isDone = false;
 				this.Changed_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
 				this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
-<<<<<<< HEAD
-				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = false;
-				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-				this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone = false;
-				this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone = false;
-=======
 				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = false;
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
 				this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 				this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 			}
 		}
@@ -485,18 +391,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				if (this.UserThresholdCount_field!=value) {
 					this.UserThresholdCount_field = value;
 					this.numberOfIterationsDone = 0;
-<<<<<<< HEAD
-					this.Changed_UserCount_UserThresholdCount_isDone = false;
-					this.Changed_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = false;
-					this.Changed_UserThresholdCount_isDone = false;
-					this.Changed_ObservationCount_UserThresholdCount_isDone = false;
-					this.Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone = false;
-=======
 					this.Changed_UserThresholdCount_UseSharedUserThresholds_isDone = false;
 					this.Changed_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 					this.Changed_UserThresholdCount_isDone = false;
@@ -505,7 +399,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_ObservationCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 					this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 					this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 				}
 			}
@@ -521,11 +414,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				if (this.UserThresholdNoiseVariance_field!=value) {
 					this.UserThresholdNoiseVariance_field = value;
 					this.numberOfIterationsDone = 0;
-<<<<<<< HEAD
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone = false;
-=======
 					this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 				}
 			}
@@ -540,20 +429,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			set {
 				this.UserThresholdsPrior_field = value;
 				this.numberOfIterationsDone = 0;
-<<<<<<< HEAD
-				this.Changed_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = false;
-				this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = false;
-				this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
-				this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone = false;
-				this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone = false;
-=======
 				this.Changed_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 				this.Changed_UserThresholdsPrior_isDone = false;
 				this.Changed_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 				this.Changed_ObservationCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 				this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 				this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 			}
 		}
@@ -571,13 +452,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Changed_UserTraitsPrior_isDone = false;
 				this.Changed_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
 				this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserIds_UserTraitsPrior_isDone = false;
-<<<<<<< HEAD
-				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = false;
-				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = false;
-=======
 				this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = false;
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 				this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 			}
 		}
@@ -592,12 +468,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				if (this.UseSharedUserThresholds_field!=value) {
 					this.UseSharedUserThresholds_field = value;
 					this.numberOfIterationsDone = 0;
-<<<<<<< HEAD
-					this.Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone = false;
-					this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone = false;
-=======
 					this.Changed_UseSharedUserThresholds_isDone = false;
 					this.Changed_UserThresholdCount_UseSharedUserThresholds_isDone = false;
 					this.Changed_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
@@ -607,7 +477,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.Changed_ObservationCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 					this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = false;
 					this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone = false;
->>>>>>> Deterministic gates track the number of cases
 					this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone = false;
 				}
 			}
@@ -617,31 +486,18 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
 		#region Methods
 		/// <summary>Computations that depend on the observed value of AffinityNoiseVariance and ItemBiasPrior and ItemIds and ItemTraitsPrior and ObservationCount and TraitCount and UserBiasPrior and UserIds and UserTraitsPrior</summary>
-<<<<<<< HEAD
-		private void Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24()
-		{
-			if (this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone) {
-=======
 		private void Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27()
 		{
 			if (this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone) {
->>>>>>> Deterministic gates track the number of cases
 				return ;
 			}
 			for(int observation = 0; observation<this.ObservationCount; observation++) {
 				this.vdouble169_F[observation] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.vdouble168_F[observation], this.AffinityNoiseVariance);
 			}
-<<<<<<< HEAD
-			this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of AffinityNoiseVariance and ItemBiasPrior and ItemIds and ItemTraitsPrior and ObservationCount and TraitCount and UserBiasPrior and UserCount and UserIds and UserThresholdCount and UserThresholdNoiseVariance and UserThresholdsPrior and UserTraitsPrior and UseSharedUserThresholds</summary>
-=======
 			this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27_isDone = true;
 		}
 
 		/// <summary>Computations that depend on the observed value of AffinityNoiseVariance and ItemBiasPrior and ItemIds and ItemTraitsPrior and ObservationCount and TraitCount and UserBiasPrior and UserIds and UserThresholdCount and UserThresholdNoiseVariance and UserThresholdsPrior and UserTraitsPrior and UseSharedUserThresholds</summary>
->>>>>>> Deterministic gates track the number of cases
 		private void Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29()
 		{
 			if (this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29_isDone) {
@@ -673,25 +529,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		}
 
 		/// <summary>Computations that depend on the observed value of ItemBiasPrior and ItemIds and ItemTraitsPrior and ObservationCount and TraitCount and UserBiasPrior and UserIds and UserTraitsPrior</summary>
-<<<<<<< HEAD
-		private void Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23()
-		{
-			if (this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone) {
-=======
 		private void Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26()
 		{
 			if (this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone) {
->>>>>>> Deterministic gates track the number of cases
 				return ;
 			}
 			for(int observation = 0; observation<this.ObservationCount; observation++) {
 				this.vdouble168_F[observation] = DoublePlusOp.SumAverageConditional(this.vdouble166_F[observation], this.vdouble167_F[observation]);
 			}
-<<<<<<< HEAD
-			this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23_isDone = true;
-=======
 			this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26_isDone = true;
->>>>>>> Deterministic gates track the number of cases
 		}
 
 		/// <summary>Computations that depend on the observed value of ItemBiasPrior and ItemIds and ObservationCount</summary>
@@ -778,42 +624,18 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			}
 			this.Ratings_F_reduced = default(Discrete);
 			this.Ratings_marginal_F = new DistributionRefArray<Discrete,int>(this.ObservationCount);
-<<<<<<< HEAD
-=======
 			this.vdouble__78_F = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
 			this.vdouble166_F = new Gaussian[this.ObservationCount];
->>>>>>> Deterministic gates track the number of cases
 			this.vdouble165_F = new Gaussian[this.ObservationCount];
 			this.ItemBias_itemItemIds_observation__F = new DistributionStructArray<Gaussian,double>(this.ObservationCount);
 			this.itemBiasObs_B = new Gaussian[this.ObservationCount];
-			this.vdouble166_F = new Gaussian[this.ObservationCount];
-			this.vdouble__89_F = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
 			this.vdouble163_F = new Gaussian[this.ObservationCount];
 			this.UserBias_itemUserIds_observation__F = new DistributionStructArray<Gaussian,double>(this.ObservationCount);
 			this.userBiasObs_B = new Gaussian[this.ObservationCount];
 			this.itemTrait_B = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
-<<<<<<< HEAD
-			this.Ratings_observation__selector_uses_B_toDef = new Discrete[this.ObservationCount];
-			this.Ratings_observation__selector_cases_B = new DistributionStructArray<Bernoulli,bool>[this.ObservationCount];
-=======
->>>>>>> Deterministic gates track the number of cases
 			this.Ratings_observation__selector_uses_B = new Discrete[this.ObservationCount][];
 			this.vdouble__88_F = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
 			this.Ratings_observation__selector_cases_uses_B = new Bernoulli[this.ObservationCount][][];
-<<<<<<< HEAD
-			this.true_logZ = new double[this.ObservationCount][];
-			this.vdouble__88_F = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
-			this.vdouble168_F = new Gaussian[this.ObservationCount];
-			this.vdouble167_F = new Gaussian[this.ObservationCount];
-			this.vdouble__78_F = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
-			this.UserTraits_itemUserIds_observation__F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ObservationCount);
-			this.ItemTraits_itemItemIds_observation__F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ObservationCount);
-			this.userTrait_B = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
-			this.vdouble169_F = new Gaussian[this.ObservationCount];
-			this.UserThresholds__F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[this.ObservationCount];
-			this.UserThresholdsObs__F = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
-			this.UserThresholds__B_reduced = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
-=======
 			this.vdouble__89_F = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
 			this.ItemTraits_itemItemIds_observation__F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.ObservationCount);
 			this.true_logZ = new double[this.ObservationCount][];
@@ -825,7 +647,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserThresholdsObs_F = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
 			this.Ratings_observation__selector_cases_B = new DistributionStructArray<Bernoulli,bool>[this.ObservationCount];
 			this.UserThresholdsObs_B = new DistributionStructArray<Gaussian,double>[this.ObservationCount];
->>>>>>> Deterministic gates track the number of cases
 			this.CurrentRating_reduced = default(int[]);
 			this.NextRating_reduced = default(int[]);
 			this.Ratings_observation__selector_uses_B_toDef = new Discrete[this.ObservationCount];
@@ -891,31 +712,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.Changed_ObservationCount_UserBiasPrior_UserIds_isDone = true;
 		}
 
-<<<<<<< HEAD
-		/// <summary>Computations that depend on the observed value of ObservationCount and UserCount</summary>
-		private void Changed_ObservationCount_UserCount()
-		{
-			if (this.Changed_ObservationCount_UserCount_isDone) {
-=======
 		/// <summary>Computations that depend on the observed value of ObservationCount and UserIds and UserThresholdCount and UserThresholdNoiseVariance and UserThresholdsPrior and UseSharedUserThresholds</summary>
 		private void Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28()
 		{
 			if (this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone) {
->>>>>>> Deterministic gates track the number of cases
-				return ;
-			}
-			for(int observation = 0; observation<this.ObservationCount; observation++) {
-				this.UserThresholds__B_reduced[observation] = new DistributionStructArray<Gaussian,double>(this.UserCount);
-				this.UserThresholds__F[observation] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.UserCount);
-			}
-<<<<<<< HEAD
-			this.Changed_ObservationCount_UserCount_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of ObservationCount and UserCount and UserIds and UserThresholdCount and UserThresholdNoiseVariance and UserThresholdsPrior and UseSharedUserThresholds</summary>
-		private void Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28()
-		{
-			if (this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone) {
 				return ;
 			}
 			for(int observation = 0; observation<this.ObservationCount; observation++) {
@@ -923,71 +723,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.vdouble__89_F[observation][userThreshold] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.vdouble__88_F[observation][userThreshold], this.UserThresholdNoiseVariance);
 				}
 			}
-			this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of ObservationCount and UserCount and UserIds and UserThresholdCount and UserThresholdsPrior and UseSharedUserThresholds</summary>
-		private void Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27()
-		{
-			if (this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone) {
-				return ;
-			}
-			for(int observation = 0; observation<this.ObservationCount; observation++) {
-				for(int userThreshold = 0; userThreshold<this.UserThresholdCount; userThreshold++) {
-					if (!this.UseSharedUserThresholds) {
-						this.UserThresholdsObs__F[observation][userThreshold] = ArrayHelper.SetTo<Gaussian>(this.UserThresholdsObs__F[observation][userThreshold], this.UserThresholds__F[observation][this.UserIds[observation]][userThreshold]);
-					}
-					this.vdouble__88_F[observation][userThreshold] = GaussianProductOp_SHG09.ProductAverageConditional(this.UserThresholdsObs__F[observation][userThreshold], 1.0, this.UserThresholdsObs_B_reduced);
-				}
-			}
-			this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of ObservationCount and UserCount and UserThresholdCount</summary>
-		private void Changed_ObservationCount_UserCount_UserThresholdCount()
-		{
-			if (this.Changed_ObservationCount_UserCount_UserThresholdCount_isDone) {
-				return ;
-			}
-			for(int observation = 0; observation<this.ObservationCount; observation++) {
-				for(int user = 0; user<this.UserCount; user++) {
-					this.UserThresholds__B_reduced[observation][user] = default(Gaussian);
-					if (this.UserThresholdCount>0) {
-						this.UserThresholds__B_reduced[observation][user] = Gaussian.Uniform();
-					}
-				}
-			}
-			for(int user = 0; user<this.UserCount; user++) {
-				for(int _gi = 0; _gi<this.UserThresholdCount; _gi++) {
-					this.UserThresholds_rep_F[user][_gi] = new Gaussian[this.ObservationCount];
-				}
-			}
-			for(int observation = 0; observation<this.ObservationCount; observation++) {
-				for(int user = 0; user<this.UserCount; user++) {
-					for(int _gi = 0; _gi<this.UserThresholdCount; _gi++) {
-						this.UserThresholds_rep_F[user][_gi][observation] = Gaussian.Uniform();
-					}
-					this.UserThresholds__F[observation][user] = new DistributionStructArray<Gaussian,double>(this.UserThresholdCount);
-					for(int _gi = 0; _gi<this.UserThresholdCount; _gi++) {
-						this.UserThresholds__F[observation][user][_gi] = Gaussian.Uniform();
-					}
-				}
-			}
-			this.Changed_ObservationCount_UserCount_UserThresholdCount_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of ObservationCount and UserCount and UserThresholdCount and UserThresholdsPrior</summary>
-		private void Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior()
-		{
-			if (this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_isDone) {
-				return ;
-			}
-			for(int observation = 0; observation<this.ObservationCount; observation++) {
-				for(int user = 0; user<this.UserCount; user++) {
-					for(int _gi = 0; _gi<this.UserThresholdCount; _gi++) {
-						this.UserThresholds_rep_F[user][_gi][observation] = ReplicateOp_Divide.UsesAverageConditional<Gaussian>(this.UserThresholds__B_reduced[observation][user], this.UserThresholds_rep_F_marginal[user][_gi], observation, this.UserThresholds_rep_F[user][_gi][observation]);
-						this.UserThresholds__F[observation][user][_gi] = ArrayHelper.SetTo<Gaussian>(this.UserThresholds__F[observation][user][_gi], this.UserThresholds_rep_F[user][_gi][observation]);
-=======
 			this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28_isDone = true;
 		}
 
@@ -1006,32 +741,11 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				for(int userThreshold = 0; userThreshold<this.UserThresholdCount; userThreshold++) {
 					if (!this.UseSharedUserThresholds) {
 						this.UserThresholdsObs_F[observation][userThreshold] = ArrayHelper.SetTo<Gaussian>(this.UserThresholdsObs_F[observation][userThreshold], this.UserThresholds_itemUserIds_observation__F[observation][userThreshold]);
->>>>>>> Deterministic gates track the number of cases
 					}
 					this.vdouble__88_F[observation][userThreshold] = GaussianProductOp_SHG09.ProductAverageConditional(this.UserThresholdsObs_F[observation][userThreshold], 1.0, this.UserThresholdsObs_B_reduced);
 				}
 			}
-<<<<<<< HEAD
-			this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of ObservationCount and UserCount and UserThresholdCount and UserThresholdsPrior and UseSharedUserThresholds</summary>
-		private void Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds()
-		{
-			if (this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone) {
-				return ;
-			}
-			for(int observation = 0; observation<this.ObservationCount; observation++) {
-				for(int userThreshold = 0; userThreshold<this.UserThresholdCount; userThreshold++) {
-					if (this.UseSharedUserThresholds) {
-						this.UserThresholdsObs__F[observation][userThreshold] = ArrayHelper.SetTo<Gaussian>(this.UserThresholdsObs__F[observation][userThreshold], this.UserThresholds__F[observation][0][userThreshold]);
-					}
-				}
-			}
-			this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = true;
-=======
 			this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds_isDone = true;
->>>>>>> Deterministic gates track the number of cases
 		}
 
 		/// <summary>Computations that depend on the observed value of ObservationCount and UserIds and UserTraitsPrior</summary>
@@ -1094,15 +808,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.Ratings_observation__selector_uses_B[observation][2] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.vint45));
 				this.Ratings_observation__selector_uses_B[observation][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.vint45));
 				this.Ratings_observation__selector_cases_uses_B[observation] = new Bernoulli[this.vint45][];
+				this.Ratings_observation__selector_cases_B[observation] = new DistributionStructArray<Bernoulli,bool>(this.vint45);
 				this.true_logZ[observation] = new double[this.vint45];
 				this.vdouble__88_F[observation] = new DistributionStructArray<Gaussian,double>(this.UserThresholdCount);
-				this.UserThresholdsObs__F[observation] = new DistributionStructArray<Gaussian,double>(this.UserThresholdCount);
+				this.UserThresholdsObs_F[observation] = new DistributionStructArray<Gaussian,double>(this.UserThresholdCount);
 				this.vdouble__89_F[observation] = new DistributionStructArray<Gaussian,double>(this.UserThresholdCount);
 				for(int userThreshold = 0; userThreshold<this.UserThresholdCount; userThreshold++) {
 					this.vdouble__88_F[observation][userThreshold] = Gaussian.Uniform();
 					this.vdouble__89_F[observation][userThreshold] = Gaussian.Uniform();
 				}
-				this.Ratings_observation__selector_cases_B[observation] = new DistributionStructArray<Bernoulli,bool>(this.vint45);
 				for(int ratingValue = 0; ratingValue<this.vint45; ratingValue++) {
 					this.Ratings_observation__selector_cases_uses_B[observation][ratingValue] = new Bernoulli[8];
 					this.Ratings_observation__selector_cases_uses_B[observation][ratingValue][5] = Bernoulli.Uniform();
@@ -1175,9 +889,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					}
 				}
 				for(int userThreshold = 0; userThreshold<this.UserThresholdCount; userThreshold++) {
-<<<<<<< HEAD
-					this.UserThresholdsObs__F[observation][userThreshold] = Gaussian.Uniform();
-=======
 					this.UserThresholdsObs_F[observation][userThreshold] = Gaussian.Uniform();
 				}
 				if (this.UseSharedUserThresholds) {
@@ -1187,14 +898,11 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					if (this.UseSharedUserThresholds) {
 						this.UserThresholds_0__gi_0__F[observation][_gi] = Gaussian.Uniform();
 					}
->>>>>>> Deterministic gates track the number of cases
 				}
 			}
 			this.Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds_isDone = true;
 		}
 
-<<<<<<< HEAD
-=======
 		/// <summary>Computations that depend on the observed value of ObservationCount and UseSharedUserThresholds</summary>
 		private void Changed_ObservationCount_UseSharedUserThresholds()
 		{
@@ -1210,7 +918,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.Changed_ObservationCount_UseSharedUserThresholds_isDone = true;
 		}
 
->>>>>>> Deterministic gates track the number of cases
 		/// <summary>Computations that depend on the observed value of UserBiasPrior</summary>
 		private void Changed_UserBiasPrior()
 		{
@@ -1223,48 +930,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.Changed_UserBiasPrior_isDone = true;
 		}
 
-<<<<<<< HEAD
-		/// <summary>Computations that depend on the observed value of UserCount</summary>
-		private void Changed_UserCount()
-		{
-			if (this.Changed_UserCount_isDone) {
-				return ;
-			}
-			this.UserThresholds_rep_B_toDef = new Gaussian[this.UserCount][];
-			this.UserThresholds_rep_F = new Gaussian[this.UserCount][][];
-			this.UserThresholds_rep_F_marginal = new Gaussian[this.UserCount][];
-			this.Changed_UserCount_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of UserCount and UserThresholdCount</summary>
-		private void Changed_UserCount_UserThresholdCount()
-		{
-			if (this.Changed_UserCount_UserThresholdCount_isDone) {
-				return ;
-			}
-			for(int user = 0; user<this.UserCount; user++) {
-				this.UserThresholds_rep_B_toDef[user] = new Gaussian[this.UserThresholdCount];
-				this.UserThresholds_rep_F[user] = new Gaussian[this.UserThresholdCount][];
-				this.UserThresholds_rep_F_marginal[user] = new Gaussian[this.UserThresholdCount];
-			}
-			this.Changed_UserCount_UserThresholdCount_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of UserCount and UserThresholdCount and UserThresholdsPrior</summary>
-		private void Changed_UserCount_UserThresholdCount_UserThresholdsPrior()
-		{
-			if (this.Changed_UserCount_UserThresholdCount_UserThresholdsPrior_isDone) {
-				return ;
-			}
-			for(int user = 0; user<this.UserCount; user++) {
-				for(int _gi = 0; _gi<this.UserThresholdCount; _gi++) {
-					this.UserThresholds_rep_B_toDef[user][_gi] = ReplicateOp_Divide.ToDefInit<Gaussian>(this.UserThresholdsPrior[user][_gi]);
-					this.UserThresholds_rep_F_marginal[user][_gi] = ReplicateOp_Divide.MarginalInit<Gaussian>(this.UserThresholdsPrior[user][_gi]);
-					this.UserThresholds_rep_F_marginal[user][_gi] = ReplicateOp_Divide.Marginal<Gaussian>(this.UserThresholds_rep_B_toDef[user][_gi], this.UserThresholdsPrior[user][_gi], this.UserThresholds_rep_F_marginal[user][_gi]);
-				}
-			}
-			this.Changed_UserCount_UserThresholdCount_UserThresholdsPrior_isDone = true;
-=======
 		/// <summary>Computations that depend on the observed value of UserThresholdCount</summary>
 		private void Changed_UserThresholdCount()
 		{
@@ -1303,7 +968,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				this.UserThresholds_depth2_rep_B_toDef = new Gaussian[this.UserThresholdCount];
 			}
 			this.Changed_UserThresholdCount_UseSharedUserThresholds_isDone = true;
->>>>>>> Deterministic gates track the number of cases
 		}
 
 		/// <summary>Computations that depend on the observed value of UserThresholdsPrior</summary>
@@ -1343,8 +1007,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.Changed_UserTraitsPrior_isDone = true;
 		}
 
-<<<<<<< HEAD
-=======
 		/// <summary>Computations that depend on the observed value of UseSharedUserThresholds</summary>
 		private void Changed_UseSharedUserThresholds()
 		{
@@ -1359,7 +1021,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.Changed_UseSharedUserThresholds_isDone = true;
 		}
 
->>>>>>> Deterministic gates track the number of cases
 		/// <summary>Computations that do not depend on observed values</summary>
 		private void Constant()
 		{
@@ -1374,24 +1035,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <param name="initialise">If true, messages that initialise loops are reset when observed values change</param>
 		private void Execute(int numberOfIterations, bool initialise)
 		{
-<<<<<<< HEAD
-			this.Changed_UserCount();
-			this.Changed_UserCount_UserThresholdCount();
-			this.Changed_UserCount_UserThresholdCount_UserThresholdsPrior();
-=======
 			this.Changed_UseSharedUserThresholds();
 			this.Changed_UserThresholdCount_UseSharedUserThresholds();
 			this.Changed_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds();
 			this.Changed_ObservationCount_UseSharedUserThresholds();
->>>>>>> Deterministic gates track the number of cases
 			this.Constant();
 			this.Changed_ObservationCount();
 			this.Changed_ItemIds_ItemTraitsPrior_ObservationCount();
 			this.Changed_ObservationCount_UserIds_UserTraitsPrior();
 			this.Changed_ObservationCount_TraitCount();
-			this.Changed_ObservationCount_UserCount();
-			this.Changed_ObservationCount_UserCount_UserThresholdCount();
-			this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior();
 			this.Changed_ItemBiasPrior();
 			this.Changed_ItemBiasPrior_ItemIds_ObservationCount();
 			this.Changed_ItemTraitsPrior();
@@ -1404,16 +1056,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.Changed_UserTraitsPrior();
 			this.Changed_ObservationCount_TraitCount_UserIds_UserTraitsPrior();
 			this.Changed_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserIds_UserTraitsPrior();
-<<<<<<< HEAD
-			this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User23();
-			this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User24();
-			this.Changed_UserThresholdCount();
-			this.Changed_ObservationCount_UserThresholdCount();
-			this.Changed_ObservationCount_UserThresholdCount_UseSharedUserThresholds();
-			this.Changed_ObservationCount_UserCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds();
-			this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThres27();
-			this.Changed_ObservationCount_UserCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresho28();
-=======
 			this.Changed_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_UserBiasPrior_UserIds_User26();
 			this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User27();
 			this.Changed_UserThresholdCount();
@@ -1422,7 +1064,6 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.Changed_ObservationCount_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds();
 			this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdsPrior_UseSharedUserThresholds();
 			this.Changed_ObservationCount_UserIds_UserThresholdCount_UserThresholdNoiseVariance_UserThresholdsPrior_U28();
->>>>>>> Deterministic gates track the number of cases
 			this.Changed_AffinityNoiseVariance_ItemBiasPrior_ItemIds_ItemTraitsPrior_ObservationCount_TraitCount_User29();
 			this.numberOfIterationsDone = numberOfIterations;
 		}
