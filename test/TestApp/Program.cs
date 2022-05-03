@@ -83,8 +83,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new LaplaceTests().PlusProductHierarchyTest();
-
             bool runAllTests = false;
             if (runAllTests)
             {
