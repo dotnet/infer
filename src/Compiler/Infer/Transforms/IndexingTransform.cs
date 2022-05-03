@@ -687,15 +687,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             for (int i = 0; i < containers.inputs.Count; i++)
             {
                 IStatement container = containers.inputs[i];
-                if (container is IForStatement)
+                if (container is IForStatement ifs)
                 {
-                    IForStatement ifs = container as IForStatement;
                     if (Builder.ContainsExpression(ifs.Condition, expr))
                         continue;
                 }
-                else if (container is IConditionStatement)
+                else if (container is IConditionStatement ics)
                 {
-                    IConditionStatement ics = (IConditionStatement)container;
                     if (Builder.ContainsExpression(ics.Condition, expr))
                         continue;
                 }

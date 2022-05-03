@@ -261,12 +261,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
     /// <typeparam name="EdgeType"></typeparam>
     internal class EdgeOnPathFinder<NodeType, EdgeType>
     {
-        private Converter<NodeType, IEnumerable<EdgeType>> edgesOutOf;
-        private Converter<EdgeType, NodeType> targetOf;
-        public IndexedProperty<NodeType, bool> isBlocked;
-        private IndexedProperty<NodeType, Set<NodeType>> blockedSources;
-        private IndexedProperty<EdgeType, bool> onPath;
-        private Predicate<NodeType> isSink;
+        private readonly Converter<NodeType, IEnumerable<EdgeType>> edgesOutOf;
+        private readonly Converter<EdgeType, NodeType> targetOf;
+        public readonly IndexedProperty<NodeType, bool> isBlocked;
+        private readonly IndexedProperty<NodeType, Set<NodeType>> blockedSources;
+        private readonly IndexedProperty<EdgeType, bool> onPath;
+        private readonly Predicate<NodeType> isSink;
 
         public EdgeOnPathFinder(
             Converter<NodeType, IEnumerable<EdgeType>> edgesOutOf,

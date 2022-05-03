@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        public static double LogEvidenceRatio<ItemType>(IReadOnlyList<ItemType> array, IReadOnlyList<T> head, int count, IReadOnlyList<T> tail)
+        public static double LogEvidenceRatio<ItemType>([SkipIfAllUniform] IReadOnlyList<ItemType> array, IReadOnlyList<T> head, int count, IReadOnlyList<T> tail)
             where ItemType : CanGetLogProb<T>
         {
             double sum = 0;
@@ -74,6 +74,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return sum;
         }
 
+        [SkipIfAllUniform]
         public static ArrayType ArrayAverageConditional<ArrayType, ItemType>(IReadOnlyList<ItemType> head, int count, IReadOnlyList<ItemType> tail, ArrayType result)
             where ArrayType : IList<ItemType>
             where ItemType : SettableTo<ItemType>
@@ -93,7 +94,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        public static ArrayType ArrayAverageConditional<ArrayType, ItemType>(IReadOnlyList<T> head, int count, IReadOnlyList<ItemType> tail, ArrayType result)
+        public static ArrayType ArrayAverageConditional<ArrayType, ItemType>(IReadOnlyList<T> head, int count, [SkipIfAllUniform] IReadOnlyList<ItemType> tail, ArrayType result)
             where ArrayType : IList<ItemType>
             where ItemType : SettableTo<ItemType>, HasPoint<T>
         {
@@ -112,7 +113,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        public static ArrayType ArrayAverageConditional<ArrayType, ItemType>(IReadOnlyList<ItemType> head, int count, IReadOnlyList<T> tail, ArrayType result)
+        public static ArrayType ArrayAverageConditional<ArrayType, ItemType>([SkipIfAllUniform] IReadOnlyList<ItemType> head, int count, IReadOnlyList<T> tail, ArrayType result)
             where ArrayType : IList<ItemType>
             where ItemType : SettableTo<ItemType>, HasPoint<T>
         {
@@ -150,7 +151,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        public static ArrayType HeadAverageConditional<ArrayType, ItemType>(IReadOnlyList<ItemType> array, int count, ArrayType result)
+        public static ArrayType HeadAverageConditional<ArrayType, ItemType>([SkipIfAllUniform] IReadOnlyList<ItemType> array, int count, ArrayType result)
             where ArrayType : IList<ItemType>
             where ItemType : SettableTo<ItemType>
         {
@@ -165,7 +166,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        public static ArrayType TailAverageConditional<ArrayType, ItemType>(IReadOnlyList<ItemType> array, int count, ArrayType result)
+        public static ArrayType TailAverageConditional<ArrayType, ItemType>([SkipIfAllUniform] IReadOnlyList<ItemType> array, int count, ArrayType result)
             where ArrayType : IList<ItemType>
             where ItemType : SettableTo<ItemType>
         {

@@ -1023,6 +1023,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_LaplaceProp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A)
         {
+            // The factor is N(mx; ahat * mb, vx + ahat * ahat * vb)
             Gaussian Apost = A * to_A;
             double mx, vx;
             Product.GetMeanAndVariance(out mx, out vx);

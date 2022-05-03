@@ -294,6 +294,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Dictionary<string, IExpression> dependencyExpr = new Dictionary<string, IExpression>();
                 foreach (ParameterInfo parameter in parameters)
                 {
+                    if (parameter.IsDefined(typeof(IgnoreDeclarationAttribute), false)) continue;
                     IExpression paramRef = Builder.ParamRef(Builder.Param(parameter.Name, parameter.ParameterType));
                     IExpression dependency = paramRef;
                     bool isConstant = false;
@@ -334,6 +335,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             FactorEdge edge = fcnInfo.factorEdgeOfParameter[parameter.Name];
                             string originalName = edge.ParameterName;
+                            // A buffer will appear in factorEdgeOfParameter but not factorInfo.ParameterTypes
                             if (factorInfo.ParameterTypes.ContainsKey(originalName))
                             {
                                 isConstant = factorInfo.ParameterTypes[originalName].IsAssignableFrom(parameter.ParameterType);
@@ -345,7 +347,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             }
                         }
                     }
-                    if (parameter.IsDefined(typeof(IgnoreDeclarationAttribute), false)) continue;
+                    else
+                    {
+                        // The method is not a message operator.
+                        // isConstant=false because the method may not require the argument to be updated, e.g. MakeUniform.
+                    }
                     IStatement dependencySt = Builder.ExprStatement(dependency);
                     if ((parameter.Name == "resultIndex") ||
                         (parameter.Name == "result") ||

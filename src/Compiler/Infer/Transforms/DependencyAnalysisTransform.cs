@@ -9,7 +9,6 @@ using System.Text;
 using System.Linq;
 using System.Reflection;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Collections;
@@ -69,19 +68,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// </summary>
         private DependencyType dependencyType;
 
-        private Set<IExpression> mutatedExpressions = new Set<IExpression>();
+        private readonly Set<IExpression> mutatedExpressions = new Set<IExpression>();
 
         /// <summary>
         /// The set of parameter declarations for the top-level method being transformed.
         /// </summary>
-        private Set<IParameterDeclaration> topLevelParameters = new Set<IParameterDeclaration>();
+        private readonly Set<IParameterDeclaration> topLevelParameters = new Set<IParameterDeclaration>();
 
         private LoopMergingInfo loopMergingInfo;
 
         /// <summary>
         /// Records all times that a variable is declared or assigned to
         /// </summary>
-        private Dictionary<IVariableDeclaration, MutationInformation> mutInfos =
+        private readonly Dictionary<IVariableDeclaration, MutationInformation> mutInfos =
             new Dictionary<IVariableDeclaration, MutationInformation>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         private bool convertingLoopInitializer;
@@ -670,7 +669,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         context.InputAttributes.Set(loopVar, new LoopCounterAttribute());
                     }
                 }
-                if ((ibe.Right is ILiteralExpression) && 0.Equals(((ILiteralExpression)ibe.Right).Value))
+                if ((ibe.Right is ILiteralExpression ile) && 0.Equals(ile.Value))
                 {
                     // loop of zero length
                     return null;
@@ -756,7 +755,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 bool isUniform = false;
                 foreach (IExpression dim in iace.Dimensions)
                 {
-                    if ((dim is ILiteralExpression) && 0.Equals(((ILiteralExpression)dim).Value))
+                    if ((dim is ILiteralExpression ile) && 0.Equals(ile.Value))
                     {
                         isUniform = true;
                     }

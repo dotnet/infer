@@ -61,8 +61,8 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = false;
             //InferenceEngine.DefaultEngine.Compiler.FreeMemory = false;
             //InferenceEngine.DefaultEngine.Compiler.ReturnCopies = false;
-            //InferenceEngine.DefaultEngine.Compiler.UnrollLoops = true;
-            //InferenceEngine.DefaultEngine.Compiler.UseParallelForLoops = true;
+            //InferenceEngine.DefaultEngine.Compiler.UnrollLoops = false;
+            //InferenceEngine.DefaultEngine.Compiler.UseParallelForLoops = false;
             //InferenceEngine.DefaultEngine.ShowTimings = true;
             //InferenceEngine.DefaultEngine.ShowProgress = false;
             //InferenceEngine.DefaultEngine.ShowFactorGraph = true;
@@ -83,13 +83,12 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-
             bool runAllTests = false;
             if (runAllTests)
             {
                 // Run all tests (need to run in 64-bit else OutOfMemory due to loading many DLLs)
                 // This is useful when looking for failures due to certain compiler options.
-                Console.WriteLine(StringUtil.VerboseToString(TestUtils.GetTestResultPaths()));
+                //Console.WriteLine(StringUtil.VerboseToString(TestUtils.GetTestResultPaths()));
                 //string path = @"C:\Users\minka\Depots\mlp\infernet\Infer2\TestResults\minka_MSRC-MINKA3 2013-04-11 14_36_55.trx";
                 InferenceEngine.DefaultEngine.Compiler.RecommendedQuality = QualityBand.Preview;
                 InferenceEngine.DefaultEngine.Compiler.GenerateInMemory = true;

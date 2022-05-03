@@ -726,6 +726,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             g = new VectorGaussian(Vector.FromArray(2, 3), new PositiveDefiniteMatrix(new double[,] { { 1, 0 }, { 0, 0 } }));
             Assert.True(Double.IsPositiveInfinity(g.Precision[1, 1]));
             Assert.Equal(3.0, g.Point[1]);
+
+            g = new VectorGaussian(Vector.FromArray(-15.01, 45.69), new PositiveDefiniteMatrix(new double[,] { { 9.067, -13.74 }, { -13.74, 26.56 } }));
+            g2 = new VectorGaussian(Vector.FromArray(-14.8, 45.78), new PositiveDefiniteMatrix(new double[,] { { 9.059, -13.69 }, { -13.69, 26.51 } }));
+            g.SetToRatio(g, g2, forceProper: true);
+            Assert.True(g.Precision.EqualsAll(0.0));
         }
 
         [Fact]

@@ -27,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <typeparam name="T">The type of the outgoing message.</typeparam>
         /// <typeparam name="TDef">The type of the incoming message from <c>Def</c>.</typeparam>
-        public static T UsesAverageConditional<T, TDef>([IsReturned] TDef Def, int resultIndex, T result)
+        public static T UsesAverageConditional<T, TDef>([IsReturned] TDef Def, [IgnoreDependency] int resultIndex, T result)
             where T : SettableTo<TDef>
         {
             // Def will always be a point mass, so no division is needed.

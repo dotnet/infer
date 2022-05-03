@@ -427,8 +427,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         protected override IExpression ConvertArrayIndexer(IArrayIndexerExpression iaie)
         {
-            IExpression target;
-            var indices = Recognizer.GetIndices(iaie, out target);
+            var indices = Recognizer.GetIndices(iaie, out IExpression target);
             if (target is IVariableReferenceExpression)
             {
                 // Only convert indices that could matter.
@@ -479,11 +478,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 foreach (var arg in imie.Arguments)
                 {
-                    if (arg is IAddressOutExpression)
+                    if (arg is IAddressOutExpression iaoe)
                     {
-                        IAddressOutExpression iaoe = (IAddressOutExpression)arg;
-                        IExpression target;
-                        var indices = Recognizer.GetIndices(iaoe.Expression, out target);
+                        var indices = Recognizer.GetIndices(iaoe.Expression, out IExpression target);
                         if (target is IVariableReferenceExpression || target is IVariableDeclarationExpression)
                         {
                             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(target);
@@ -547,8 +544,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     {
                         IMethodInvokeExpression imie = (IMethodInvokeExpression)iae.Expression;
                         var sourceExpr = imie.Arguments[1];
-                        IExpression source;
-                        var sourceIndices = Recognizer.GetIndices(sourceExpr, out source);
+                        var sourceIndices = Recognizer.GetIndices(sourceExpr, out IExpression source);
                         if (source is IVariableDeclaration)
                         {
                             IVariableDeclaration sourceVar = Recognizer.GetVariableDeclaration(source);

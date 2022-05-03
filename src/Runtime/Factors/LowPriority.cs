@@ -30,6 +30,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         [ParameterNames("first", "value", "second")]
+        public static T ParallelCopy<T>(T value, out T second)
+        {
+            second = value;
+            return value;
+        }
+
+        [ParameterNames("first", "value", "second")]
         public static T SequentialCut<T>(T value, out T second)
         {
             second = value;
@@ -88,6 +95,44 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         [SkipIfAllUniform]
         public static T SecondAverageConditional<T>(T value, [RequiredArgument] T first, T result)
+            where T : SettableToProduct<T>
+        {
+            result.SetToProduct(value, first);
+            return result;
+        }
+
+        [SkipIfAllUniform]
+        public static T ValueAverageConditional<T>(T first, T second, T result)
+            where T : SettableToProduct<T>
+        {
+            result.SetToProduct(first, second);
+            return result;
+        }
+    }
+
+    [FactorMethod(typeof(LowPriority), "ParallelCopy<>")]
+    [Quality(QualityBand.Preview)]
+    public static class ParallelCopyOp
+    {
+        [SkipIfAllUniform]
+        public static double LogEvidenceRatio<T>(T value, T first, T second)
+            where T : CanGetLogAverageOf<T>, SettableToProduct<T>, ICloneable
+        {
+            T valueTimesFirst = (T)value.Clone();
+            valueTimesFirst.SetToProduct(value, first);
+            return value.GetLogAverageOf(second) - valueTimesFirst.GetLogAverageOf(second);
+        }
+
+        [SkipIfAllUniform]
+        public static T FirstAverageConditional<T>(T value, [NoInit] T second, T result)
+            where T : SettableToProduct<T>
+        {
+            result.SetToProduct(value, second);
+            return result;
+        }
+
+        [SkipIfAllUniform]
+        public static T SecondAverageConditional<T>(T value, [NoInit] T first, T result)
             where T : SettableToProduct<T>
         {
             result.SetToProduct(value, first);

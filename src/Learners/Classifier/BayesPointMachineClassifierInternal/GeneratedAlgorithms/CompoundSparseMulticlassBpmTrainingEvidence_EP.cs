@@ -757,6 +757,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 					for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
+						for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
+							if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
+								if (ClassMaxNoisyScore!=ClassRange) {
+									this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+								}
+							}
+						}
 						this.Weights_FeatureIndexes_F[ClassRange][InstanceRange] = JaggedSubarrayOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.IndexedWeights_B[InstanceRange][ClassRange], this.Weights_depth1_F[ClassRange], this.Weights_depth1_F_ClassRange__marginal[ClassRange], this.FeatureIndexes, InstanceRange, this.Weights_FeatureIndexes_F[ClassRange][InstanceRange]);
 						for(int InstanceFeatureRanges = 0; InstanceFeatureRanges<this.InstanceFeatureCounts[InstanceRange]; InstanceFeatureRanges++) {
 							this.FeatureScores_F[InstanceRange][ClassRange][InstanceFeatureRanges] = GaussianProductOpBase.ProductAverageConditional(this.FeatureValues[InstanceRange][InstanceFeatureRanges], this.Weights_FeatureIndexes_F[ClassRange][InstanceRange][InstanceFeatureRanges]);
@@ -782,7 +789,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 									this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 									this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.SumAverageConditional(this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange]);
 									this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = LowPriorityBackwardOp.ValueAverageConditional<Gaussian>(this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
-									this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 								}
 								this.NoisyScores_use_B[InstanceRange][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores_use_B[InstanceRange][ClassRange], this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 							}

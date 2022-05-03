@@ -621,8 +621,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     foreach (var target in newNodes[dg.dependencyGraph.TargetOf(edgeInDg)])
                     {
-                        EdgeIndex edgeInG;
-                        if (g.TryGetEdge(source, target, out edgeInG))
+                        if (g.TryGetEdge(source, target, out int edgeInG))
                         {
                             action(edgeInG);
                         }
@@ -2846,55 +2845,29 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         // increase the cost of reversing edges on offset cycles, since these will correspond to many more reversed edges in the unrolled graph.
         private void UpdateCostsFromOffsetEdges(float[] edgeCost)
         {
-            // collect the set of offset edges
-            Dictionary<NodeIndex, IndexedGraph> offsetEdgesInGroup = new Dictionary<EdgeIndex, IndexedGraph>();
-            foreach (NodeIndex source in dg.dependencyGraph.Nodes)
-            {
-                Set<NodeIndex> sourceGroups = null;
-                if (groupGraph != null)
-                    sourceGroups = groupGraph.GetGroupSet(source);
-                foreach (EdgeIndex edge in dg.dependencyGraph.EdgesOutOf(source))
-                {
-                    //if (IsAvailableOffsetEdge(edge)) // TODO: make this work
-                    if (IsOffsetEdge(edge))
-                    {
-                        NodeIndex target = dg.dependencyGraph.TargetOf(edge);
-                        NodeIndex sharedGroup = -1;
-                        if (sourceGroups != null)
-                            sharedGroup = groupGraph.GetSmallestGroup(target, sourceGroups.Contains);
-                        IndexedGraph offsetGraph;
-                        if (!offsetEdgesInGroup.TryGetValue(sharedGroup, out offsetGraph))
-                        {
-                            offsetGraph = new IndexedGraph(g.Nodes.Count);
-                            offsetEdgesInGroup[sharedGroup] = offsetGraph;
-                        }
-                        offsetGraph.AddEdge(source, target);
-                    }
-                }
-            }
+            Dictionary<int, IndexedGraph> offsetEdgesByGroup = GetOffsetEdgesByGroup();
             // for each group, find all edges on a path from offset target to source
-            NodeIndex group = default(NodeIndex);
-            IndexedGraph deletedGraph = null;
+            NodeIndex group = default(NodeIndex); // modified prior to each search
+            IndexedGraph deletedGraph = null; // modified prior to each search
             Set<EdgeIndex> edgesOnCycle = new Set<EdgeIndex>();
             Set<NodeIndex> nodesOnCycle = new Set<EdgeIndex>();
             DepthFirstSearch<NodeIndex> dfs = new DepthFirstSearch<NodeIndex>(node => TargetsInGroup(node, group, deletedGraph), g);
-            Action<Edge<NodeIndex>> finishEdge = delegate (Edge<NodeIndex> edge)
+            void finishEdge(Edge<NodeIndex> edge)
             {
                 if (nodesOnCycle.Contains(edge.Target))
                 {
                     nodesOnCycle.Add(edge.Source);
-                    EdgeIndex edge2;
-                    if (g.TryGetEdge(edge.Source, edge.Target, out edge2))
+                    if (g.TryGetEdge(edge.Source, edge.Target, out int edge2))
                     {
                         edgesOnCycle.Add(edge2);
                     }
                 }
-            };
+            }
             dfs.FinishTreeEdge += finishEdge;
             dfs.CrossEdge += finishEdge;
             if (debug)
             {
-                dfs.BackEdge += delegate (Edge<NodeIndex> edge)
+                void backEdge(Edge<NodeIndex> edge)
                 {
                     if (edge.Source != edge.Target && dg.mustNotInit.Contains(originalNode[edge.Source]))
                     {
@@ -2915,34 +2888,37 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             Debug.WriteLine(NodeToString(node));
                         }
                     }
-                };
+                }
+                dfs.BackEdge += backEdge;
             }
             var onPath = MakeIndexedProperty.FromSet(edgesOnCycle);
-            NodeIndex sinkNode = default(NodeIndex);
+            NodeIndex sinkNode = default(NodeIndex); // modified prior to each search
             var finder = new EdgeOnPathFinder<NodeIndex, EdgeIndex>(node => EdgesInGroup(node, group, deletedGraph),
                 g.TargetOf, g, onPath, node => (node == sinkNode));
-            foreach (var entry in offsetEdgesInGroup)
+            foreach (var entry in offsetEdgesByGroup)
             {
                 deletedGraph = entry.Value;
                 group = entry.Key;
                 edgesOnCycle.Clear();
                 foreach (var deletedEdge in deletedGraph.Edges)
                 {
+                    sinkNode = deletedGraph.SourceOf(deletedEdge);
+                    NodeIndex sourceNode = deletedGraph.TargetOf(deletedEdge);
+                    if (verbose)
+                        Debug.WriteLine("UpdateCostsFromOffsetEdges searching from {0} to {1}", sourceNode, sinkNode);
                     // newMethod can be very slow for some graphs, so we leave the option of the old fast method.
                     bool newMethod = false;
                     if (newMethod)
                     {
-                        if (verbose)
-                            Debug.WriteLine("UpdateCostsFromOffsetEdges searching from {0}", deletedGraph.TargetOf(deletedEdge));
-                        sinkNode = deletedGraph.SourceOf(deletedEdge);
-                        finder.SearchFrom(deletedGraph.TargetOf(deletedEdge));
+                        // This modifies onPath and therefore edgesOnCycle
+                        finder.SearchFrom(sourceNode);
                     }
                     else
                     {
                         nodesOnCycle.Clear();
-                        nodesOnCycle.Add(deletedGraph.SourceOf(deletedEdge));
+                        nodesOnCycle.Add(sinkNode);
                         dfs.Clear();
-                        dfs.SearchFrom(deletedGraph.TargetOf(deletedEdge));
+                        dfs.SearchFrom(sourceNode);
                     }
                 }
                 foreach (var edge in edgesOnCycle)
@@ -2952,6 +2928,37 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         Debug.WriteLine($"UpdateCostsFromOffsetEdges incrementing {EdgeToString(edge)}");
                 }
             }
+
+            Dictionary<int, IndexedGraph> GetOffsetEdgesByGroup()
+            {
+                Dictionary<NodeIndex, IndexedGraph> offsetEdgesByGroup2 = new Dictionary<EdgeIndex, IndexedGraph>();
+                foreach (NodeIndex source in dg.dependencyGraph.Nodes)
+                {
+                    Set<NodeIndex> sourceGroups = null;
+                    if (groupGraph != null)
+                        sourceGroups = groupGraph.GetGroupSet(source);
+                    foreach (EdgeIndex edge in dg.dependencyGraph.EdgesOutOf(source))
+                    {
+                        //if (IsAvailableOffsetEdge(edge)) // TODO: make this work
+                        if (IsOffsetEdge(edge))
+                        {
+                            NodeIndex target = dg.dependencyGraph.TargetOf(edge);
+                            NodeIndex sharedGroup = -1;
+                            if (sourceGroups != null)
+                                sharedGroup = groupGraph.GetSmallestGroup(target, sourceGroups.Contains);
+                            IndexedGraph offsetGraph;
+                            if (!offsetEdgesByGroup2.TryGetValue(sharedGroup, out offsetGraph))
+                            {
+                                offsetGraph = new IndexedGraph(g.Nodes.Count);
+                                offsetEdgesByGroup2[sharedGroup] = offsetGraph;
+                            }
+                            offsetGraph.AddEdge(source, target);
+                        }
+                    }
+                }
+
+                return offsetEdgesByGroup2;
+            }
         }
         // only used by UpdateCostsFromOffsetEdges
         private IEnumerable<NodeIndex> TargetsInGroup(NodeIndex node, NodeIndex group, IDirectedGraph<NodeIndex> deletedGraph)
@@ -2959,8 +2966,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             foreach (EdgeIndex edge in g.EdgesOutOf(node))
             {
                 // do not traverse NoInit edges
-                if (IsNoInit(edge))
+                if (IsNoInit(edge) || !(IsRequired(edge, includeAny: true) || IsFreshEdge(edge)))
+                {
+                    if (verbose)
+                        Debug.WriteLine($"Blocked at {EdgeToString(edge)}");
                     continue;
+                }
                 NodeIndex target = g.TargetOf(edge);
                 if (groupGraph != null)
                 {
@@ -2980,8 +2991,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             foreach (EdgeIndex edge in g.EdgesOutOf(node))
             {
                 // do not traverse NoInit edges
-                if (IsNoInit(edge))
+                if (IsNoInit(edge) || !(IsRequired(edge, includeAny: true) || IsFreshEdge(edge)))
+                {
+                    if (verbose)
+                        Debug.WriteLine($"Blocked at {EdgeToString(edge)}");
                     continue;
+                }
                 NodeIndex target = g.TargetOf(edge);
                 var targetGroups = groupGraph.GetGroupSet(target);
                 if (targetGroups.Contains(group))
@@ -2994,8 +3009,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 foreach (EdgeIndex edge in g.EdgesOutOf(target2))
                 {
                     // do not traverse NoInit edges
-                    if (IsNoInit(edge))
+                    if (IsNoInit(edge) || !(IsRequired(edge, includeAny: true) || IsFreshEdge(edge)))
+                    {
+                        if (verbose)
+                            Debug.WriteLine($"Blocked at {EdgeToString(edge)}");
                         continue;
+                    }
                     NodeIndex target = g.TargetOf(edge);
                     var targetGroups = groupGraph.GetGroupSet(target);
                     if (targetGroups.Contains(group))

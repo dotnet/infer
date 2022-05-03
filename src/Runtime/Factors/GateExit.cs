@@ -97,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateExitingOp"]/message_doc[@name="UsesAverageLogarithmInit{T}(T, int)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
         [Skip]
-        public static T UsesAverageLogarithmInit<T>(T Def, int resultIndex)
+        public static T UsesAverageLogarithmInit<T>(T Def, [IgnoreDependency] int resultIndex)
             where T : ICloneable
         {
             return (T)Def.Clone();
