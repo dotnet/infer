@@ -586,8 +586,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }));
                 RecordReplacement(expr, toClone, !isSubset);
 
-                int replaceCount = 0;
-                expr = Builder.ReplaceExpression(expr, toReplace, clone, ref replaceCount);
+                expr = Builder.ReplaceExpression(expr, toReplace, clone);
                 replaced = true;
             }
 

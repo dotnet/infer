@@ -148,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         private static void AddCopyStatements(ICollection<IStatement> stmts, VariableInformation varInfo, int indexingDepth, IExpression lhs, IExpression rhs, 
-            int bracket = 0, Dictionary<IExpression,IExpression> replacements = null)
+            int bracket = 0, Dictionary<IExpression, IExpression> replacements = null)
         {
             if (indexingDepth == bracket)
             {
@@ -164,7 +164,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 int[] sizes = Util.ArrayInit(varInfo.sizes[bracket].Length, i => (int)((ILiteralExpression)varInfo.sizes[bracket][i]).Value);
                 ForEachLiteralIndex(sizes, index =>
                 {
-                    IExpression[] bracketIndices = Util.ArrayInit(index.Length, i => Builder.LiteralExpr(index[i]));
+                    ILiteralExpression[] bracketIndices = Util.ArrayInit(index.Length, i => Builder.LiteralExpr(index[i]));
                     var newLhs = Builder.ArrayIndex(lhs, bracketIndices);
                     var newRhs = Builder.ArrayIndex(rhs, bracketIndices);
                     for (int dim = 0; dim < index.Length; dim++)
@@ -180,7 +180,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IReadOnlyList<IExpression> replacedSizes = varInfo.sizes[bracket];
                 if(replacements != null)
                 {
-                    replacedSizes = Util.ArrayInit(replacedSizes.Count, i => Replace(replacedSizes[i], replacements));
+                    replacedSizes = Util.ArrayInit(replacedSizes.Count, i => Builder.ReplaceSubexpressions(replacedSizes[i], replacements));
                 }
                 IForStatement innerForStatement;
                 var fs = Builder.NestedForStmt(varInfo.indexVars[bracket], replacedSizes, out innerForStatement);
@@ -192,15 +192,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 AddCopyStatements(innerForStatement.Body.Statements, varInfo, indexingDepth, newLhs, newRhs, bracket + 1, replacements);
                 stmts.Add(fs);
             }
-        }
-
-        private static IExpression Replace(IExpression expr, IReadOnlyDictionary<IExpression,IExpression> replacements)
-        {
-            foreach(var entry in replacements)
-            {
-                expr = Builder.ReplaceExpression(expr, entry.Key, entry.Value);
-            }
-            return expr;
         }
 
         private static void ForEachLiteralIndex(int[] sizes, Action<int[]> action)

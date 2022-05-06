@@ -1589,7 +1589,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         }
 
         /// <summary>
-        /// Finds and replaces one expression with another expression in a given expression
+        /// Finds and replaces one expression with another expression, everywhere it occurs
         /// </summary>
         /// <param name="expr">The expression</param>
         /// <param name="exprFind">The expression to be found</param>
@@ -1598,58 +1598,97 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns>The resulting expression</returns>
         public IExpression ReplaceExpression(IExpression expr, IExpression exprFind, IExpression exprReplace, ref int replaceCount)
         {
-            if (expr == null) return expr;
-            else if (expr.Equals(exprFind))
+            int localReplaceCount = 0;
+            IExpression result = ReplaceSubexpressions(expr, e =>
             {
-                replaceCount++;
-                return exprReplace;
+                if (e.Equals(exprFind))
+                {
+                    localReplaceCount++;
+                    return exprReplace;
+                }
+                else
+                {
+                    return null;
+                }
+            });
+            replaceCount = localReplaceCount;
+            return result;
+        }
+
+        /// <summary>
+        /// Replaces all subexpressions of an expression
+        /// </summary>
+        /// <param name="expr">The expression</param>
+        /// <param name="replacements">Subexpressions to find and replace</param>
+        /// <returns>The replaced expression</returns>
+        public IExpression ReplaceSubexpressions(IExpression expr, IReadOnlyDictionary<IExpression, IExpression> replacements)
+        {
+            return ReplaceSubexpressions(expr, e =>
+            {
+                replacements.TryGetValue(e, out IExpression replacement);
+                return replacement;
+            });
+        }
+
+        /// <summary>
+        /// Replaces all subexpressions of an expression
+        /// </summary>
+        /// <param name="expr">The expression</param>
+        /// <param name="replace">Returns a new expression or null for no replacement</param>
+        /// <returns>The replaced expression</returns>
+        public IExpression ReplaceSubexpressions(IExpression expr, Func<IExpression, IExpression> replace)
+        {
+            if (expr == null) return expr;
+            var replaced = replace(expr);
+            if (replaced != null)
+            {
+                return replaced;
             }
+            else if ((expr is IVariableDeclarationExpression) ||
+                     (expr is IVariableReferenceExpression) ||
+                     (expr is ILiteralExpression) ||
+                     (expr is IDefaultExpression) ||
+                     (expr is IArgumentReferenceExpression) ||
+                     (expr is IThisReferenceExpression)) return expr;
             else if (expr is IArrayIndexerExpression iaie)
             {
                 IArrayIndexerExpression aie = ArrayIndxrExpr();
-                foreach (IExpression ind in iaie.Indices) aie.Indices.Add(ReplaceExpression(ind, exprFind, exprReplace, ref replaceCount));
-                aie.Target = ReplaceExpression(iaie.Target, exprFind, exprReplace, ref replaceCount);
+                foreach (IExpression ind in iaie.Indices) aie.Indices.Add(ReplaceSubexpressions(ind, replace));
+                aie.Target = ReplaceSubexpressions(iaie.Target, replace);
                 return aie;
             }
             else if (expr is IPropertyIndexerExpression ipie)
             {
                 IPropertyIndexerExpression pie = PropIndxrExpr();
-                foreach (IExpression ind in ipie.Indices) pie.Indices.Add(ReplaceExpression(ind, exprFind, exprReplace, ref replaceCount));
-                pie.Target = (IPropertyReferenceExpression)ReplaceExpression(ipie.Target, exprFind, exprReplace, ref replaceCount);
+                foreach (IExpression ind in ipie.Indices) pie.Indices.Add(ReplaceSubexpressions(ind, replace));
+                pie.Target = (IPropertyReferenceExpression)ReplaceSubexpressions(ipie.Target, replace);
                 return pie;
             }
             else if (expr is ICastExpression ice)
             {
-                return CastExpr(ReplaceExpression(ice.Expression, exprFind, exprReplace, ref replaceCount), ice.TargetType);
+                return CastExpr(ReplaceSubexpressions(ice.Expression, replace), ice.TargetType);
             }
             else if (expr is ICheckedExpression iche)
             {
-                return CheckedExpr(ReplaceExpression(iche.Expression, exprFind, exprReplace, ref replaceCount));
+                return CheckedExpr(ReplaceSubexpressions(iche.Expression, replace));
             }
-            else if (
-                (expr is IVariableDeclarationExpression) ||
-                (expr is IVariableReferenceExpression) ||
-                (expr is ILiteralExpression) ||
-                (expr is IDefaultExpression) ||
-                (expr is IArgumentReferenceExpression)) return expr;
             else if (expr is IPropertyReferenceExpression ipre)
             {
-                IExpression target = ReplaceExpression(ipre.Target, exprFind, exprReplace, ref replaceCount);
+                IExpression target = ReplaceSubexpressions(ipre.Target, replace);
                 if (target == ipre.Target) return ipre;
                 IPropertyReferenceExpression pre = PropRefExpr();
                 pre.Property = ipre.Property;
                 pre.Target = target;
                 return pre;
             }
-            else if (expr is IArrayCreateExpression)
+            else if (expr is IArrayCreateExpression iace)
             {
-                IArrayCreateExpression iace = expr as IArrayCreateExpression;
                 var ace = ArrayCreateExpr();
                 ace.Type = iace.Type;
-                ace.Initializer = ReplaceExpression(iace.Initializer, exprFind, exprReplace, ref replaceCount) as IBlockExpression;
+                ace.Initializer = ReplaceSubexpressions(iace.Initializer, replace) as IBlockExpression;
                 foreach (IExpression dim in iace.Dimensions)
                 {
-                    ace.Dimensions.Add(ReplaceExpression(dim, exprFind, exprReplace, ref replaceCount));
+                    ace.Dimensions.Add(ReplaceSubexpressions(dim, replace));
                 }
                 return ace;
             }
@@ -1658,7 +1697,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 IBlockExpression be = BlockExpr();
                 foreach (IExpression e in ible.Expressions)
                 {
-                    be.Expressions.Add(ReplaceExpression(e, exprFind, exprReplace, ref replaceCount));
+                    be.Expressions.Add(ReplaceSubexpressions(e, replace));
                 }
                 return be;
             }
@@ -1668,7 +1707,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 mie.Method = imie.Method;
                 foreach (IExpression arg in imie.Arguments)
                 {
-                    mie.Arguments.Add(ReplaceExpression(arg, exprFind, exprReplace, ref replaceCount));
+                    mie.Arguments.Add(ReplaceSubexpressions(arg, replace));
                 }
                 return mie;
             }
@@ -1679,9 +1718,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 oce.Type = ioce.Type;
                 foreach (IExpression arg in ioce.Arguments)
                 {
-                    oce.Arguments.Add(ReplaceExpression(arg, exprFind, exprReplace, ref replaceCount));
+                    oce.Arguments.Add(ReplaceSubexpressions(arg, replace));
                 }
-                oce.Initializer = (IBlockExpression)ReplaceExpression(ioce.Initializer, exprFind, exprReplace, ref replaceCount);
+                oce.Initializer = (IBlockExpression)ReplaceSubexpressions(ioce.Initializer, replace);
                 return oce;
             }
             else if (expr is IAnonymousMethodExpression iame)
@@ -1695,11 +1734,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     IStatement st = ist;
                     if (ist is IExpressionStatement ies)
                     {
-                        st = ExprStatement(ReplaceExpression(ies.Expression, exprFind, exprReplace, ref replaceCount));
+                        st = ExprStatement(ReplaceSubexpressions(ies.Expression, replace));
                     }
                     else if (ist is IMethodReturnStatement imrs)
                     {
-                        st = Return(ReplaceExpression(imrs.Expression, exprFind, exprReplace, ref replaceCount));
+                        st = Return(ReplaceSubexpressions(imrs.Expression, replace));
                     }
                     ame.Body.Statements.Add(st);
                 }
@@ -1709,33 +1748,29 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 IUnaryExpression ue = UnaryExpr();
                 ue.Operator = iue.Operator;
-                ue.Expression = ReplaceExpression(iue.Expression, exprFind, exprReplace, ref replaceCount);
+                ue.Expression = ReplaceSubexpressions(iue.Expression, replace);
                 return ue;
             }
             else if (expr is IBinaryExpression ibe)
             {
                 IBinaryExpression be = BinaryExpr();
                 be.Operator = ibe.Operator;
-                be.Left = ReplaceExpression(ibe.Left, exprFind, exprReplace, ref replaceCount);
-                be.Right = ReplaceExpression(ibe.Right, exprFind, exprReplace, ref replaceCount);
+                be.Left = ReplaceSubexpressions(ibe.Left, replace);
+                be.Right = ReplaceSubexpressions(ibe.Right, replace);
                 return be;
             }
             else if (expr is IMethodReferenceExpression imre)
             {
-                var target = ReplaceExpression(imre.Target, exprFind, exprReplace, ref replaceCount);
+                var target = ReplaceSubexpressions(imre.Target, replace);
                 return MethodRefExpr(imre.Method, target);
-            }
-            else if (expr is IThisReferenceExpression)
-            {
-                return expr;
             }
             else if (expr is IAddressOutExpression iaoe)
             {
                 IAddressOutExpression aoe = AddrOutExpr();
-                aoe.Expression = ReplaceExpression(iaoe.Expression, exprFind, exprReplace, ref replaceCount);
+                aoe.Expression = ReplaceSubexpressions(iaoe.Expression, replace);
                 return aoe;
             }
-            else throw new NotImplementedException("Unhandled expression type in ReplaceExpression(): " + expr.GetType());
+            else throw new NotImplementedException("Unhandled expression type in ReplaceSubexpressions(): " + expr.GetType());
         }
 
         /// <summary>

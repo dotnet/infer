@@ -583,8 +583,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             foreach (ConditionBinding binding in bindings)
             {
-                int replaceCount = 0;
-                expr = Builder.ReplaceExpression(expr, binding.lhs, binding.rhs, ref replaceCount);
+                // TODO: check for chaining
+                expr = Builder.ReplaceExpression(expr, binding.lhs, binding.rhs);
             }
             return expr;
         }

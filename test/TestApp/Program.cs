@@ -58,7 +58,7 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.GenerateInMemory = false;
             InferenceEngine.DefaultEngine.Compiler.WriteSourceFiles = true;
             InferenceEngine.DefaultEngine.Compiler.IncludeDebugInformation = true;
-            //InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = false;
+            InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = false;
             //InferenceEngine.DefaultEngine.Compiler.FreeMemory = false;
             //InferenceEngine.DefaultEngine.Compiler.ReturnCopies = false;
             //InferenceEngine.DefaultEngine.Compiler.UnrollLoops = false;
@@ -77,11 +77,14 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.UseLocals = false;
             TestUtils.SetDebugOptions();
             TestUtils.SetBrowserMode(BrowserMode.OnError);
-            //TestUtils.SetBrowserMode(BrowserMode.Always);
+            TestUtils.SetBrowserMode(BrowserMode.Always);
             //TestUtils.SetBrowserMode(BrowserMode.WriteFiles);
 
             Stopwatch watch = new Stopwatch();
             watch.Start();
+
+            new TrueSkillTests().TrueSkillChainTest3();
+            //new GateModelTests().CaseLoopIndexTest3();
 
             bool runAllTests = false;
             if (runAllTests)

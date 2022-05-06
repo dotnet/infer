@@ -836,9 +836,10 @@ namespace Microsoft.ML.Probabilistic.Models
                             for (int i = 0; i < indexVars.Length; i++)
                             {
                                 IModelExpression expr = parent.indices[i];
-                                if (!(expr is Range))
+                                if (expr is Range range)
+                                    indexVars[i] = range.GetIndexDeclaration();
+                                else
                                     throw new Exception(parent + ".InitializeTo is not allowed since the indices are not ranges");
-                                indexVars[i] = ((Range)expr).GetIndexDeclaration();
                             }
                             initExpr = VariableInformation.MakePlaceHolderArrayCreate(initExpr, indexVars);
                             parent = (Variable)parent.ArrayVariable;
