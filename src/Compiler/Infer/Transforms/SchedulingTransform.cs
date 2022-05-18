@@ -238,10 +238,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // this will fill in groupOf and loopInfoOfGroup
                 BuildGroups(inputStmts, -1);
                 g = new DependencyGraph(context, flatStmts, ignoreMissingNodes: true, ignoreRequirements: false, deleteCancels: true);
-                g.getTargetIndex = delegate (NodeIndex node)
-                {
-                    return new DependencyGraph.TargetIndex(loopMergingInfo.GetIndexOf(flatStmts[node]));
-                };
+                //g.getTargetIndex = delegate (NodeIndex node)
+                //{
+                //    return new DependencyGraph.TargetIndex(loopMergingInfo.GetIndexOf(flatStmts[node]));
+                //};
                 if (compiler.UseSerialSchedules && !compiler.UseExperimentalSerialSchedules)
                 {
                     bool anyDeleted;
