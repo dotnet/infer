@@ -166,10 +166,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             foreach (var stmt in outputBlock)
             {
-                if (stmt is IWhileStatement)
+                // recursively collect the child block
+                if (stmt is IWhileStatement iws)
                 {
-                    // recursively collect the child block
-                    IWhileStatement iws = (IWhileStatement)stmt;
                     CollectTransformedStmts(iws.Body.Statements, replacementsInContext);
                     // merge the child replacements into this block's replacements
                     var childReplacements = replacementsInContext[iws.Body.Statements];
@@ -208,9 +207,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             var replacements = replacementsInContext[outputBlock];
             foreach (var stmt in outputBlock)
             {
-                if (stmt is IWhileStatement)
+                if (stmt is IWhileStatement iws)
                 {
-                    IWhileStatement iws = (IWhileStatement)stmt;
                     // merge this block's replacements into the child's replacements
                     var childReplacements = replacementsInContext[iws.Body.Statements];
                     foreach (var entry in replacements)
@@ -314,7 +312,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 OffsetInfo newOffsetInfo = new OffsetInfo();
                 foreach (var offset in offsetInfo)
                 {
-                    if (CanKeepOffsetDependency(ssinfo, reversedLoopVars, reversedLoopVarsOther, offset))
+                    if (CanKeepOffsetDependency(reversedLoopVarsOther, offset))
                         newOffsetInfo.Add(offset);
                     else
                         changed = true;
@@ -334,19 +332,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 di.offsetIndexOf.Add(pair.Key, pair.Value);
             }
-        }
 
-        private bool CanKeepOffsetDependency(SerialSchedulingInfo ssinfo, Set<IVariableDeclaration> reversedLoopVars, Set<IVariableDeclaration> reversedLoopVarsOther, Offset offset)
-        {
-            foreach (var loopVar in ssinfo.loopInfos.Select(info => info.loopVar))
+            bool CanKeepOffsetDependency(Set<IVariableDeclaration> reversedLoopVarsOther, Offset offset)
             {
-                bool compatible = (reversedLoopVars.Contains(loopVar) == reversedLoopVarsOther.Contains(loopVar));
-                if (!compatible)
-                    return false;
-                if (offset.loopVar == loopVar)
-                    break;
+                foreach (var loopVar in ssinfo.loopInfos.Select(info => info.loopVar))
+                {
+                    bool compatible = (reversedLoopVars.Contains(loopVar) == reversedLoopVarsOther.Contains(loopVar));
+                    if (!compatible)
+                        return false;
+                    if (offset.loopVar == loopVar)
+                        break;
+                }
+                return true;
             }
-            return true;
         }
 
         /// <summary>

@@ -3848,8 +3848,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private void LabelEdgesWithOffsets(NodeIndex node)
         {
-            var obc = descendantOffset[node];
-            var keys = this.loopVarsOfNode[node];
             foreach (EdgeIndex edge in g.EdgesInto(node))
             {
                 if (direction[edge] == Direction.Unknown && !deletedEdges.Contains(edge))

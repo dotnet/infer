@@ -411,8 +411,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             IList<IList<IExpression>> indices, IList<IList<IExpression>> wildcardVars = null)
         {
             IExpression original = prototypeExpression;
-            int replaceCount = 0;
-            prototypeExpression = ReplaceIndexVars(context, prototypeExpression, indices, wildcardVars, ref replaceCount);
+            prototypeExpression = ReplaceIndexVars(context, prototypeExpression, indices, wildcardVars, out int replaceCount);
             int mpDepth = Util.GetArrayDepth(varType, Distribution.GetDomainType(prototypeExpression.GetExpressionType()));
             int indexingDepth = indices.Count;
             int wildcardBracket = 0;
@@ -504,8 +503,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                         IExpression index = indices[i][j];
                         if (Recognizer.IsStaticMethod(index, new Func<int>(GateAnalysisTransform.AnyIndex)))
                         {
-                            int replaceCount = 0;
-                            sizeBracket.Add(ReplaceIndexVars(context, sizes[i][j], indices, wildcardVars, ref replaceCount));
+                            sizeBracket.Add(ReplaceIndexVars(context, sizes[i][j], indices, wildcardVars, out int replaceCount));
                             IVariableDeclaration v = indexVars[i][j];
                             if (wildcardVars != null) v = Recognizer.GetVariableDeclaration(wildcardVars[newIndexVars.Count][indexVarsBracket.Count]);
                             else if (Recognizer.GetLoopForVariable(context, v) != null)
@@ -556,8 +554,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                     IList<IExpression> replacementBracket = Builder.ExprCollection();
                     for (int j = 0; j < sizeBracket.Length; j++)
                     {
-                        int replaceCount = 0;
-                        sizeBracket[j] = ReplaceIndexVars(context, sizes[i][j], replacements, wildcardVars, ref replaceCount);
+                        sizeBracket[j] = ReplaceIndexVars(context, sizes[i][j], replacements, wildcardVars, out int replaceCount);
                         if (replaceCount > 0) indexVarBracket[j] = GenerateLoopVar(context, "_a");
                         else if (indexVars.Count > i) indexVarBracket[j] = indexVars[i][j];
                         if (indexVarBracket[j] != null) replacementBracket.Add(Builder.VarRefExpr(indexVarBracket[j]));
@@ -598,9 +595,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 // substitute indices in the marginal prototype expression
                 vi.marginalPrototypeExpression = GetMarginalPrototypeExpression(context, marginalPrototypeExpression, replacements, wildcardVars);
             }
-            InitialiseTo it = context.InputAttributes.Get<InitialiseTo>(declaration);
-            if (it != null && copyInitializer)
+            if (copyInitializer) CopyInitialiser();
+            ChannelTransform.setAllGroupRoots(context, arrayvd, false);
+            return arrayvd;
+
+            void CopyInitialiser()
             {
+                InitialiseTo it = context.InputAttributes.Get<InitialiseTo>(declaration);
+                if (it == null)
+                {
+                    return;
+                }
                 // if original array is indexed [i,j][k,l][m,n] and indices = [*,*][3,*] then
                 // initExpr2 = new PlaceHolder[wildcard0,wildcard1] { new PlaceHolder[wildcard2] { new PlaceHolder[newIndexVar] { initExpr[wildcard0,wildcard1][3,wildcard2] } } }
                 IExpression initExpr = it.initialMessagesExpression;
@@ -643,8 +648,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                 }
                 context.OutputAttributes.Set(arrayvd, new InitialiseTo(initExpr));
             }
-            ChannelTransform.setAllGroupRoots(context, arrayvd, false);
-            return arrayvd;
         }
 
         internal static IExpression MakePlaceHolderArrayCreate(IExpression expr, IList<IVariableDeclaration[]> indexVars)
@@ -693,11 +696,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
         /// <param name="expr">Any expression</param>
         /// <param name="indices">A list of lists of index expressions (one list for each indexing bracket).</param>
         /// <param name="wildcardIndices">Expressions used to replace wildcards.  May be null if there are no wildcards.</param>
-        /// <param name="replaceCount">Incremented for each replacement.</param>
+        /// <param name="replaceCount">The number of replacements.</param>
         /// <returns>A new expression.</returns>
         internal IExpression ReplaceIndexVars(BasicTransformContext context, IExpression expr, IList<IList<IExpression>> indices,
-                                              IList<IList<IExpression>> wildcardIndices, ref int replaceCount)
+                                              IList<IList<IExpression>> wildcardIndices, out int replaceCount)
         {
+            replaceCount = 0;
             Dictionary<IVariableDeclaration, IExpression> replacedIndexVars = new Dictionary<IVariableDeclaration, IExpression>();
             int wildcardBracket = 0;
             for (int depth = 0; depth < indices.Count; depth++)

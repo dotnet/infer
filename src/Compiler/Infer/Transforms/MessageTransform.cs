@@ -1864,8 +1864,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 List<IList<IExpression>> indices = Recognizer.GetIndices(outputLhs);
                 if (indices.Count > 0)
                 {
-                    int replaceCount = 0;
-                    mpe = channelVarInfo.ReplaceIndexVars(context, mpe, indices, null, ref replaceCount);
+                    mpe = channelVarInfo.ReplaceIndexVars(context, mpe, indices, null, out int replaceCount);
                 }
                 if (mai.isDistribution)
                 {
@@ -2122,13 +2121,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     if (iace.Type.DotNetType.Equals(typeof(PlaceHolder)) && iace.Initializer != null && iace.Initializer.Expressions.Count == 1)
                     {
+                        // VariableInformation.DeriveArrayVariable has created an initializer expression of the form:
+                        // new PlaceHolder[wildcard0,wildcard1] { initExpr[wildcard0,wildcard1] }
                         IExpression initExpr = iace.Initializer.Expressions[0];
                         // replace index variables with the given indices
+                        Dictionary<IExpression, IExpression> replacements = new Dictionary<IExpression, IExpression>();
                         for (int dim = 0; dim < iace.Dimensions.Count; dim++)
                         {
-                            initExpr = Builder.ReplaceExpression(initExpr, iace.Dimensions[dim], iaie.Indices[dim]);
+                            replacements.Add(iace.Dimensions[dim], iaie.Indices[dim]);
                         }
-                        return initExpr;
+                        return Builder.ReplaceSubexpressions(initExpr, replacements);
                     }
                 }
                 return Builder.ArrayIndex(target, iaie.Indices);
@@ -2275,8 +2277,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IVariableDeclaration indexVar = indexVars[i];
                 IParameterDeclaration param = Builder.Param(indexVar.Name, typeof(int));
                 iame.Parameters.Add(param);
-                int replaceCount = 0;
-                elementInit = Builder.ReplaceExpression(elementInit, Builder.VarRefExpr(indexVar), Builder.ParamRef(param), ref replaceCount);
+                elementInit = Builder.ReplaceExpression(elementInit, Builder.VarRefExpr(indexVar), Builder.ParamRef(param));
             }
             iame.Body.Statements.Add(Builder.Return(elementInit));
             return iame;

@@ -565,8 +565,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         int depth = Recognizer.GetIndexingDepth(index);
                         IExpression resultSize = indexInfo.sizes[depth][0];
                         var indices = Recognizer.GetIndices(index);
-                        int replaceCount = 0;
-                        resultSize = indexInfo.ReplaceIndexVars(context, resultSize, indices, null, ref replaceCount);
+                        resultSize = indexInfo.ReplaceIndexVars(context, resultSize, indices, null, out int replaceCount);
                         indexInfo.DefineIndexVarsUpToDepth(context, depth + 1);
                         IVariableDeclaration resultIndex = indexInfo.indexVars[depth][0];
                         Type arrayType = arrayExpr.GetExpressionType();

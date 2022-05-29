@@ -946,7 +946,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             var lct2 = new LoopCuttingTransform(true);
             tc.AddTransform(lct2);
             tc.AddTransform(lct2); // run again to catch uses before declaration
-            if(OptimiseInferenceCode)
+            if (OptimiseInferenceCode)
             {
                 // must run after HoistingTransform
                 tc.AddTransform(new LoopRemovalTransform());

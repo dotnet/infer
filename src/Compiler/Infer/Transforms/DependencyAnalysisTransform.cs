@@ -810,10 +810,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         if (parameter.Name == "length")
                         {
                             IExpression arg = ioce.Arguments[argIndex];
-                            if (arg is ILiteralExpression)
+                            if (arg is ILiteralExpression ile)
                             {
-                                object argValue = ((ILiteralExpression)arg).Value;
-                                if (argValue is int && (int)argValue == 0)
+                                object argValue = ile.Value;
+                                if (argValue is int i && i == 0)
                                     dependencyInformation.IsUniform = true;
                             }
                             break;
@@ -1063,18 +1063,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // arguments in all dependencies with the correct model expressions.
             IExpression MapDependency(IStatement ist)
             {
-                return ReplaceArgs(((IExpressionStatement)ist).Expression);
-
-                // Replace the parameter expressions in an expression with the corresponding model expressions 
-                IExpression ReplaceArgs(IExpression iExpression)
-                {
-                    foreach (KeyValuePair<IExpression, IExpression> kvp in parameterToExpressionMap)
-                    {
-                        int repCount = 0;
-                        iExpression = Builder.ReplaceExpression(iExpression, kvp.Key, kvp.Value, ref repCount);
-                    }
-                    return iExpression;
-                }
+                return Builder.ReplaceSubexpressions(((IExpressionStatement)ist).Expression, parameterToExpressionMap);
             }
         }
 
