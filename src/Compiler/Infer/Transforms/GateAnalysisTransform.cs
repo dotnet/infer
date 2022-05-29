@@ -574,16 +574,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         /// <summary>
-        /// Apply all bindings to expr, in order.
+        /// Apply all bindings to expr.
         /// </summary>
-        /// <param name="bindings"></param>
+        /// <param name="bindings">Must not chain, i.e. no lhs appears in any rhs.</param>
         /// <param name="expr"></param>
         /// <returns></returns>
         internal static IExpression ReplaceExpression(IEnumerable<ConditionBinding> bindings, IExpression expr)
         {
             foreach (ConditionBinding binding in bindings)
             {
-                // TODO: check for chaining
                 expr = Builder.ReplaceExpression(expr, binding.lhs, binding.rhs);
             }
             return expr;

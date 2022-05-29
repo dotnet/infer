@@ -516,6 +516,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     out replaced);
                 if (isDef && !replaced)
                 {
+                    // This call is valid because bindings is formed from condition expressions and these have been fully replaced by ConstantFoldingTransform.
                     IExpression boundDef =
                         GateAnalysisTransform.ReplaceExpression(bindings, definedExpression.Expression);
                     Error($"{expr} doesn\'t match bound GateBlock def: {boundDef}");
