@@ -216,23 +216,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
             Replace(ist => predicate(ist) ? null : ist);
         }
 
-        public void Replace(IDictionary<IStatement, IStatement> replacements, IDictionary<IStatement, IStatement> replacements2 = null)
+        public void Replace(IDictionary<IStatement, IStatement> replacements)
         {
-            if (replacements2 == null)
-                Replace(ist => ReplaceStatement(ist, replacements));
-            else
-                Replace(ist => ReplaceStatement(ist, replacements), ist => ReplaceStatement(ist, replacements2));
-
-            IStatement ReplaceStatement(IStatement ist, IDictionary<IStatement, IStatement> replacements3)
+            Replace(delegate (IStatement ist)
             {
-                if (replacements3.TryGetValue(ist, out IStatement newStmt))
+                if (replacements.TryGetValue(ist, out IStatement newStmt))
                     return newStmt;
                 else
                     return ist;
-            }
+            });
         }
 
-        public void Replace(Converter<IStatement, IStatement> converter, Converter<IStatement, IStatement> converter2 = null)
+        public void Replace(Converter<IStatement, IStatement> converter)
         {
             List<IStatement> toRemove = new List<IStatement>();
             Dictionary<IStatement, DependencyType> toAdd = new Dictionary<IStatement, DependencyType>(ReferenceEqualityComparer<IStatement>.Instance);
@@ -250,44 +245,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Attributes
                         offsetIndexOf.TryGetValue(stmt, out IOffsetInfo offsetIndices);
                         if (newStmt is AnyStatement anySt)
                         {
-                            DependencyType splitType = type & DependencyType.Dependency;
-                            if (splitType > 0)
-                            {
-                                // must split Any for these types
-                                ForEachStatement(anySt, ist =>
-                                {
-                                    Add(toAdd, splitType, ist);
-                                    if (offsetIndices != default(OffsetInfo))
-                                        AddOffsetIndices(toAddOffset, offsetIndices, ist);
-                                });
-                                type &= ~DependencyType.Dependency;
-                            }
                             DependencyType anyTypes = DependencyType.Requirement | DependencyType.SkipIfUniform;
                             DependencyType otherType = type & ~anyTypes;
                             if (otherType > 0)
                             {
-                                IStatement newStmt2;
-                                if (converter2 != null)
+                                // must split Any for these types
+                                ForEachStatement(anySt, ist =>
                                 {
-                                    newStmt2 = Replace(stmt, converter2);
-                                }
-                                else newStmt2 = newStmt;
-                                if (newStmt2 is AnyStatement anySt2)
-                                {
-                                    // must split Any for these types
-                                    ForEachStatement(anySt2, ist =>
-                                    {
-                                        Add(toAdd, otherType, ist);
-                                        if (offsetIndices != default(OffsetInfo))
-                                            AddOffsetIndices(toAddOffset, offsetIndices, ist);
-                                    });
-                                }
-                                else
-                                {
-                                    Add(toAdd, otherType, newStmt2);
+                                    Add(toAdd, otherType, ist);
                                     if (offsetIndices != default(OffsetInfo))
-                                        AddOffsetIndices(toAddOffset, offsetIndices, newStmt2);
-                                }
+                                        AddOffsetIndices(toAddOffset, offsetIndices, ist);
+                                });
                                 type &= anyTypes;
                             }
                         }

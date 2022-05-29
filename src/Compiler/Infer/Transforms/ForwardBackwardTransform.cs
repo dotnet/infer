@@ -276,7 +276,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                               // must make a clone since this statement may appear in multiple contexts
                               DependencyInformation di2 = (DependencyInformation)di.Clone();
                               di2.Replace(replacements);
-                              //di2.Replace(replacementsInContext[rootContext], replacements);
                               FilterOffsetDependencies(ssinfo, ist, di2);
                               context.OutputAttributes.Remove<DependencyInformation>(ist);
                               context.OutputAttributes.Set(ist, di2);
