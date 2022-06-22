@@ -24,30 +24,6 @@ namespace Microsoft.ML.Probabilistic.Learners
         #region Save
 
         /// <summary>
-        /// Persists a learner to a file.
-        /// </summary>
-        /// <param name="learner">The learner to serialize.</param>
-        /// <param name="fileName">The name of the file.</param>
-        public static void Save(this ILearner learner, string fileName)
-        {
-            if (learner == null)
-            {
-                throw new ArgumentNullException(nameof(learner));
-            }
-
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-
-            using (Stream stream = File.Open(fileName, FileMode.Create))
-            {
-                var formatter = new BinaryFormatter();
-                learner.Save(stream, formatter);
-            }
-        }
-
-        /// <summary>
         /// Serializes a learner to a given stream using a given formatter.
         /// </summary>
         /// <param name="learner">The learner.</param>
@@ -179,26 +155,6 @@ namespace Microsoft.ML.Probabilistic.Learners
 
             CheckVersion(stream, formatter);
             return (TLearner)formatter.Deserialize(stream);
-        }
-
-        /// <summary>
-        /// Deserializes a learner from a file.
-        /// </summary>
-        /// <typeparam name="TLearner">The type of a learner.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized learner object.</returns>
-        public static TLearner Load<TLearner>(string fileName)
-        {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-
-            using (Stream stream = File.Open(fileName, FileMode.Open))
-            {
-                var formatter = new BinaryFormatter();
-                return Load<TLearner>(stream, formatter);
-            }
         }
 
         #endregion

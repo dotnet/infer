@@ -179,7 +179,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             #region Serialization
 
             /// <summary>
-            /// Constructor used by Json and BinaryFormatter serializers. Informally needed to be
+            /// Constructor used by Json serializer. Informally needed to be
             /// implemented for <see cref="ISerializable"/> interface.
             /// </summary>
             internal DataContainer(SerializationInfo info, StreamingContext context)

@@ -136,21 +136,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
             writer.Dispose();
-#if NETFRAMEWORK
-            // In the .NET 5.0 BinaryFormatter is obsolete
-            // and would produce errors. This test code should be migrated. 
-            // See https://aka.ms/binaryformatter
-
-            if (true)
-            {
-                BinaryFormatter serializer = new BinaryFormatter();
-                using (Stream stream = File.Create(Path.Combine(dataFolder, "weights.bin")))
-                {
-                    serializer.Serialize(stream, train.wPost);
-                    serializer.Serialize(stream, train.biasPost);
-                }
-            }
-#endif
         }
 
         // (0.5,0.5):
@@ -168,37 +153,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS
 #pragma warning restore 162
-#endif
-
-#if NETFRAMEWORK
-        public static void Rcv1Test2()
-        {
-            GaussianArray wPost;
-            Gaussian biasPost;
-            BinaryFormatter serializer = new BinaryFormatter();
-            using (Stream stream = File.OpenRead(Path.Combine(dataFolder, "weights.bin")))
-            {
-                wPost = (GaussianArray)serializer.Deserialize(stream);
-                biasPost = (Gaussian)serializer.Deserialize(stream);
-            }
-            if (true)
-            {
-                GaussianEstimator est = new GaussianEstimator();
-                foreach (Gaussian item in wPost) est.Add(item.GetMean());
-                Console.WriteLine("weight distribution = {0}", est.GetDistribution(new Gaussian()));
-            }
-            var predict = new BpmPredict2();
-            predict.SetPriors(wPost, biasPost);
-            int count = 0;
-            int errors = 0;
-            foreach (Instance instance in new VwReader(Path.Combine(dataFolder, "rcv1.test.vw.gz")))
-            {
-                bool yPred = predict.Predict(instance);
-                if (yPred != instance.label) errors++;
-                count++;
-            }
-            Console.WriteLine("error rate = {0} = {1}/{2}", (double) errors/count, errors, count);
-        }
 #endif
 
         public static void Rcv1Test3()

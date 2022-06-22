@@ -679,21 +679,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
 
-#if NETFRAMEWORK
-                if (false)
-                {
-                    BinaryFormatter serializer = new BinaryFormatter();
-                    using (var writer = new FileStream("userTraits.bin", FileMode.Create))
-                    {
-                        serializer.Serialize(writer, engine.Infer(userTraits));
-                    }
-                    using (var writer = new FileStream("itemTraits.bin", FileMode.Create))
-                    {
-                        serializer.Serialize(writer, engine.Infer(itemTraits));
-                    }
-                }
-#endif
-
                 // test resetting inference
                 if (engine.Compiler.ReturnCopies)
                 {

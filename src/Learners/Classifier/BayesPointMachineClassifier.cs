@@ -110,26 +110,6 @@ namespace Microsoft.ML.Probabilistic.Learners
         #region .Net binary deserialization
 
         /// <summary>
-        /// Deserializes a Bayes point machine classifier from a file.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TInstance">The type of an instance.</typeparam>
-        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
-        /// <typeparam name="TLabel">The type of a label.</typeparam>
-        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
-        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
-        /// <typeparam name="TPredictionSettings">The type of the settings for prediction.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized Bayes point machine classifier object.</returns>
-        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>
-            Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>(string fileName)
-            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
-            where TPredictionSettings : IBayesPointMachineClassifierPredictionSettings<TLabel>
-        {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>>(fileName);
-        }
-
-        /// <summary>
         /// Deserializes a Bayes point machine classifier from a stream and formatter.
         /// </summary>
         /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
@@ -148,24 +128,6 @@ namespace Microsoft.ML.Probabilistic.Learners
             where TPredictionSettings : IBayesPointMachineClassifierPredictionSettings<TLabel>
         {
             return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>>(stream, formatter);
-        }
-
-        /// <summary>
-        /// Deserializes a binary Bayes point machine classifier from a file.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TInstance">The type of an instance.</typeparam>
-        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
-        /// <typeparam name="TLabel">The type of a label.</typeparam>
-        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
-        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized binary Bayes point machine classifier object.</returns>
-        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(string fileName)
-            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
-        {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
         }
 
         /// <summary>
@@ -188,24 +150,6 @@ namespace Microsoft.ML.Probabilistic.Learners
         }
 
         /// <summary>
-        /// Deserializes a multi-class Bayes point machine classifier from a file.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TInstance">The type of an instance.</typeparam>
-        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
-        /// <typeparam name="TLabel">The type of a label.</typeparam>
-        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
-        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized multi-class Bayes point machine classifier object.</returns>
-        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(string fileName)
-            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
-        {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
-        }
-
-        /// <summary>
         /// Deserializes a multi-class Bayes point machine classifier from a stream and a formatter.
         /// </summary>
         /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
@@ -225,22 +169,6 @@ namespace Microsoft.ML.Probabilistic.Learners
         }
 
         /// <summary>
-        /// Deserializes a binary Bayes point machine classifier from a file.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TInstance">The type of an instance.</typeparam>
-        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
-        /// <typeparam name="TLabel">The type of a label.</typeparam>
-        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized binary Bayes point machine classifier object.</returns>
-        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
-        {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
-        }
-
-        /// <summary>
         /// Deserializes a binary Bayes point machine classifier from a stream and format.
         /// </summary>
         /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
@@ -255,22 +183,6 @@ namespace Microsoft.ML.Probabilistic.Learners
             LoadBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(Stream stream, IFormatter formatter)
         {
             return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(stream, formatter);
-        }
-
-        /// <summary>
-        /// Deserializes a multi-class Bayes point machine classifier from a file.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TInstance">The type of an instance.</typeparam>
-        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
-        /// <typeparam name="TLabel">The type of a label.</typeparam>
-        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized multi-class Bayes point machine classifier object.</returns>
-        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
-        {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
         }
 
         /// <summary>
@@ -594,23 +506,6 @@ namespace Microsoft.ML.Probabilistic.Learners
 
         /// <summary>
         /// Deserializes a binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions
-        /// over factorized weights from a file.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TInstance">The type of an instance.</typeparam>
-        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
-        /// <typeparam name="TLabel">The type of a label.</typeparam>
-        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized binary Bayes point machine classifier object.</returns>
-        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
-        {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
-        }
-
-        /// <summary>
-        /// Deserializes a binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions
         /// over factorized weights from a stream and formatter.
         /// </summary>
         /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
@@ -625,23 +520,6 @@ namespace Microsoft.ML.Probabilistic.Learners
             LoadGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(Stream stream, IFormatter formatter)
         {
             return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(stream, formatter);
-        }
-
-        /// <summary>
-        /// Deserializes a multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions
-        /// over factorized weights from a file.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TInstance">The type of an instance.</typeparam>
-        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
-        /// <typeparam name="TLabel">The type of a label.</typeparam>
-        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized multi-class Bayes point machine classifier object.</returns>
-        public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
-        {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
         }
 
         /// <summary>

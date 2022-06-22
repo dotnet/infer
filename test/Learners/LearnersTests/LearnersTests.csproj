@@ -60,7 +60,6 @@
     <ProjectReference Include="..\..\..\src\Learners\Classifier\Classifier.csproj" />
     <ProjectReference Include="..\..\..\src\Learners\Core\Core.csproj" />
     <ProjectReference Include="..\..\..\src\Learners\Recommender\Recommender.csproj" />
-    <ProjectReference Include="..\..\..\src\Learners\Runners\CommandLine\CommandLine.csproj" />
     <ProjectReference Include="..\..\..\src\Learners\Runners\Common\Common.csproj" />
   </ItemGroup>
   <ItemGroup>

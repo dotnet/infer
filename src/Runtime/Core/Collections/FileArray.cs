@@ -147,7 +147,7 @@ namespace Microsoft.ML.Probabilistic.Collections
                 FileStats.AddRead();
                 string path = prefix + index.ToString(CultureInfo.InvariantCulture) + ".bin";
                 if (!File.Exists(path)) return default(T);
-                IFormatter formatter = new BinaryFormatter();
+                IFormatter formatter = new BinaryFormatter(); // This is only used within the runtime for caching temporary files -- it is not used to persist data and no untrusted data is read.
                 using (var stream = new FileStream(prefix + index.ToString(CultureInfo.InvariantCulture) + ".bin", FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     return (T) formatter.Deserialize(stream);
@@ -163,7 +163,7 @@ namespace Microsoft.ML.Probabilistic.Collections
             if (object.ReferenceEquals(value, null) || value.Equals(default(T))) File.Delete(path);
             else
             {
-                IFormatter formatter = new BinaryFormatter();
+                IFormatter formatter = new BinaryFormatter(); // This is only used within the runtime for caching temporary files -- it is not used to persist data and no untrusted data is read.
                 using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     formatter.Serialize(stream, value);

@@ -521,22 +521,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
-        /// Tests serialization and deserialization of the binary Bayes point machine classifier for data in native format and
-        /// features in a dense representation.
-        /// </summary>
-        [Fact]
-        public void DenseBinaryNativeSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping),
-                this.denseNativeTrainingData, 
-                this.denseNativePredictionData,
-                this.expectedPredictiveBernoulliDistributions,
-                this.expectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
-        }
-
-        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier for data in native format and
         /// features in a dense representation.
         /// </summary>
@@ -821,22 +805,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
-        /// Tests serialization and deserialization of the binary Bayes point machine classifier for data in native format and
-        /// features in a sparse representation.
-        /// </summary>
-        [Fact]
-        public void SparseBinaryNativeSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping),
-                this.sparseNativeTrainingData,
-                this.sparseNativePredictionData,
-                this.expectedPredictiveBernoulliDistributions,
-                this.expectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
-        }
-
-        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier for data in native format and
         /// features in a sparse representation.
         /// </summary>
@@ -1072,22 +1040,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             CheckMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
                 serializedClassifiers,
                 this.multiclassNativeMapping,
-                this.denseNativeTrainingData,
-                this.denseNativePredictionData,
-                this.expectedPredictiveDiscreteDistributions,
-                this.expectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
-        }
-
-        /// <summary>
-        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier for data in native format and
-        /// features in a dense representation.
-        /// </summary>
-        [Fact]
-        public void DenseMulticlassNativeSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.expectedPredictiveDiscreteDistributions,
@@ -1362,22 +1314,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
-        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier for data in native format and
-        /// features in a sparse representation.
-        /// </summary>
-        [Fact]
-        public void SparseMulticlassNativeSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping),
-                this.sparseNativeTrainingData,
-                this.sparseNativePredictionData,
-                this.expectedPredictiveDiscreteDistributions,
-                this.expectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
-        }
-
-        /// <summary>
         /// Tests correctness of training of the multi-class Bayes point machine classifier for data in native format and
         /// features in a sparse representation.
         /// </summary>
@@ -1620,22 +1556,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
-        /// Tests serialization and deserialization of the binary Bayes point machine classifier for data in standard format and
-        /// features in a dense representation.
-        /// </summary>
-        [Fact]
-        public void DenseBinaryStandardSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
-                this.denseStandardTrainingData,
-                this.denseStandardPredictionData,
-                this.expectedPredictiveBernoulliStandardDistributions,
-                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
-        }
-
-        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier for data in standard format and
         /// features in a dense representation.
         /// </summary>
@@ -1852,22 +1772,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
-        /// Tests serialization and deserialization of the binary Bayes point machine classifier for data in standard format and
-        /// features in a sparse representation.
-        /// </summary>
-        [Fact]
-        public void SparseBinaryStandardSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
-                this.sparseStandardTrainingData,
-                this.sparseStandardPredictionData,
-                this.expectedPredictiveBernoulliStandardDistributions,
-                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
-        }
-
-        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier for data in standard format and
         /// features in a sparse representation.
         /// </summary>
@@ -2067,22 +1971,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             CheckMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
                 serializedClassifiers,
                 this.multiclassStandardMapping,
-                this.denseStandardTrainingData,
-                this.denseStandardPredictionData,
-                this.expectedPredictiveDiscreteStandardDistributions,
-                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
-        }
-
-        /// <summary>
-        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier for data in standard format and
-        /// features in a dense representation.
-        /// </summary>
-        [Fact]
-        public void DenseMulticlassStandardSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.expectedPredictiveDiscreteStandardDistributions,
@@ -2309,22 +2197,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             CheckMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
                 serializedClassifiers,
                 this.multiclassStandardMapping,
-                this.sparseStandardTrainingData,
-                this.sparseStandardPredictionData,
-                this.expectedPredictiveDiscreteStandardDistributions,
-                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
-        }
-
-        /// <summary>
-        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier for data in standard format and
-        /// features in a sparse representation.
-        /// </summary>
-        [Fact]
-        public void SparseMulticlassStandardSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.expectedPredictiveDiscreteStandardDistributions,
@@ -2562,22 +2434,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             CheckGaussianPriorBinaryNativeClassiferCustomSerializationBackwardCompatibility(
                 serializedClassifiers,
                 this.binaryNativeMapping,
-                this.denseNativeTrainingData,
-                this.denseNativePredictionData,
-                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
-        }
-
-        /// <summary>
-        /// Tests serialization and deserialization of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
-        /// over weights for data in native format and features in a dense representation.
-        /// </summary>
-        [Fact]
-        public void GaussianDenseBinaryNativeSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliDistributions,
@@ -2840,22 +2696,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
-        /// Tests serialization and deserialization of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
-        /// over weights for data in native format and features in a sparse representation.
-        /// </summary>
-        [Fact]
-        public void GaussianSparseBinaryNativeSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping),
-                this.sparseNativeTrainingData,
-                this.sparseNativePredictionData,
-                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
-        }
-
-        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
         /// over weights for data in native format and features in a sparse representation.
         /// </summary>
@@ -3092,22 +2932,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             CheckGaussianPriorMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
                 serializedClassifiers,
                 this.multiclassNativeMapping,
-                this.denseNativeTrainingData,
-                this.denseNativePredictionData,
-                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
-        }
-
-        /// <summary>
-        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
-        /// over weights for data in native format and features in a dense representation.
-        /// </summary>
-        [Fact]
-        public void GaussianDenseMulticlassNativeSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteDistributions,
@@ -3383,22 +3207,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
-        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
-        /// over weights for data in native format and features in a sparse representation.
-        /// </summary>
-        [Fact]
-        public void GaussianSparseMulticlassNativeSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping),
-                this.sparseNativeTrainingData,
-                this.sparseNativePredictionData,
-                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
-        }
-
-        /// <summary>
         /// Tests correctness of training of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
         /// over weights for data in native format and features in a sparse representation.
         /// </summary>
@@ -3586,22 +3394,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             CheckGaussianPriorBinaryStandardClassiferCustomSerializationBackwardCompatibility(
                 serializedClassifiers,
                 this.binaryStandardMapping,
-                this.denseStandardTrainingData,
-                this.denseStandardPredictionData,
-                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
-        }
-
-        /// <summary>
-        /// Tests serialization and deserialization of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
-        /// over weights for data in standard format and features in a dense representation.
-        /// </summary>
-        [Fact]
-        public void GaussianDenseBinaryStandardSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
@@ -3827,22 +3619,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
-        /// Tests serialization and deserialization of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
-        /// over weights for data in standard format and features in a sparse representation.
-        /// </summary>
-        [Fact]
-        public void GaussianSparseBinaryStandardSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
-                this.sparseStandardTrainingData,
-                this.sparseStandardPredictionData,
-                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
-        }
-
-        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
         /// over weights for data in standard format and features in a sparse representation.
         /// </summary>
@@ -4043,22 +3819,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             CheckGaussianPriorMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
                 serializedClassifiers,
                 this.multiclassStandardMapping,
-                this.denseStandardTrainingData,
-                this.denseStandardPredictionData,
-                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
-        }
-
-        /// <summary>
-        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
-        /// over weights for data in standard format and features in a dense representation.
-        /// </summary>
-        [Fact]
-        public void GaussianDenseMulticlassStandardSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
@@ -4286,22 +4046,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             CheckGaussianPriorMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
                 serializedClassifiers,
                 this.multiclassStandardMapping,
-                this.sparseStandardTrainingData,
-                this.sparseStandardPredictionData,
-                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
-        }
-
-        /// <summary>
-        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
-        /// over weights for data in standard format and features in a sparse representation.
-        /// </summary>
-        [Fact]
-        public void GaussianSparseMulticlassStandardSerializationRegressionTest()
-        {
-            TestRegressionSerialization(
-                BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
@@ -4986,57 +4730,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 classifier.Train(instanceSource);
                 Assert.True(classifier.LogModelEvidence <= 0.0);
             });
-        }
-
-        /// <summary>
-        /// Tests .NET serialization and deserialization of the Bayes point machine classifier.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TInstance">The type of an instance.</typeparam>
-        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
-        /// <typeparam name="TLabel">The type of a label.</typeparam>
-        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
-        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
-        /// <param name="classifier">The Bayes point machine classifier.</param>
-        /// <param name="trainingData">The training data.</param>
-        /// <param name="testData">The prediction data.</param>
-        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
-        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
-        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
-        private static void TestRegressionSerialization<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(
-            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier,
-            TInstanceSource trainingData,
-            TInstanceSource testData,
-            IEnumerable<TLabelDistribution> expectedLabelDistributions,
-            IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
-            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction)
-            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
-        {
-            const string TrainedFileName = "trainedClassifier.bin";
-            const string UntrainedFileName = "untrainedClassifier.bin";
-
-            // Train and serialize
-            classifier.Settings.Training.IterationCount = IterationCount;
-
-            classifier.Save(UntrainedFileName);
-            classifier.Train(trainingData);
-            classifier.Save(TrainedFileName);
-
-            // Deserialize and test
-            var trainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(TrainedFileName);
-            var untrainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(UntrainedFileName);
-
-            untrainedClassifier.Train(trainingData);
-
-            checkPrediction(expectedLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
-            checkPrediction(expectedLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
-
-            // Incremental training
-            trainedClassifier.TrainIncremental(trainingData);
-            untrainedClassifier.TrainIncremental(trainingData);
-
-            checkPrediction(expectedIncrementalLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
-            checkPrediction(expectedIncrementalLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
         }
 
         #region Custom binary serialization

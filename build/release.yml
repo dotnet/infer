@@ -4,7 +4,7 @@
 
 # Official signed build
 
-name: 0.4.$(Date:yyMM).$(Date:dd)$(Rev:rr)
+name: 0.5.$(Date:yyMM).$(Date:dd)$(Rev:rr)
 
 resources:
 - repo: self
