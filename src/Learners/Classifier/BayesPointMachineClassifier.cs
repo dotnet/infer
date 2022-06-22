@@ -762,19 +762,9 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             using (var stream = File.Open(fileName, FileMode.Open))
             {
-                if (fileName.EndsWith(".bin"))
+                using (var reader = new WrappedTextReader(new StreamReader(stream)))
                 {
-                    using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                    {
-                        return action(reader);
-                    }
-                }
-                else
-                {
-                    using (var reader = new WrappedTextReader(new StreamReader(stream)))
-                    {
-                        return action(reader);
-                    }
+                    return action(reader);
                 }
             }
         }

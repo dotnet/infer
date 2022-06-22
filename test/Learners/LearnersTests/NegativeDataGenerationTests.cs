@@ -102,40 +102,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             }
         }
 
-        /// <summary>
-        /// Tests custom binary serialization and deserialization of a negative data generator mapping.
-        /// </summary>
-        [Fact]
-        public void BinaryRecommendationCustomSerializationRegressionTest()
-        {
-            // TODO: We need a static class which implements mapping chainings
-            Rand.Restart(12347);
-            var positiveOnlyMapping = new PositiveOnlyDataMapping();
-            var negativeDataGeneratorMapping = positiveOnlyMapping.WithGeneratedNegativeData(1.0);
-            using (Stream stream = new MemoryStream())
-            {
-                negativeDataGeneratorMapping.SaveForwardCompatibleAsBinary(stream);
-
-                stream.Seek(0, SeekOrigin.Begin);
-
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
-                {
-                    var deserializedMapping =
-                        new NegativeDataGeneratorMapping<PositiveOnlyDataset, Tuple<string, string>, string, string, FeatureProvider, Vector>(reader, positiveOnlyMapping);
-                    var recommender = MatchboxRecommender.Create(deserializedMapping);
-                    recommender.Train(this.positiveOnlyDataset, this.featureProvider); // must not throw
-
-                    foreach (var instance in positiveOnlyMapping.GetInstances(this.positiveOnlyDataset))
-                    {
-                        var user = positiveOnlyMapping.GetUser(this.positiveOnlyDataset, instance);
-                        var item = positiveOnlyMapping.GetItem(this.positiveOnlyDataset, instance);
-
-                        Assert.Equal(1, recommender.Predict(user, item, this.featureProvider));
-                    }
-                }
-            }
-        }
-
         #region Helper methods
 
         /// <summary>
