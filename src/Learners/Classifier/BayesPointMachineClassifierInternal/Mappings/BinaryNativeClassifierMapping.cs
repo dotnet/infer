@@ -82,8 +82,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                     }
                     else
                     {
-                        this.positiveClassLabel = reader.ReadObject<TLabel>();
-                        this.negativeClassLabel = reader.ReadObject<TLabel>();
+                        throw new InvalidOperationException("Cannot deserialize version < 2");
                     }
                 }
             }
@@ -166,8 +165,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                     }
                     else
                     {
-                        writer.WriteObject(this.positiveClassLabel);
-                        writer.WriteObject(this.negativeClassLabel);
+                        throw new InvalidOperationException("Cannot deserialize version < 2");
                     }
                 }
             }

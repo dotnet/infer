@@ -24,12 +24,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <summary>
         /// The positive only training dataset.
         /// </summary>
-        private PositiveOnlyDataset positiveOnlyDataset;
+        private MatchboxRecommender.PositiveOnlyDataset positiveOnlyDataset;
 
         /// <summary>
         /// The feature provider for the positive only dataset.
         /// </summary>
-        private FeatureProvider featureProvider;
+        private MatchboxRecommender.FeatureProvider featureProvider;
 
         /// <summary>
         /// Prepares environment (datasets etc) before each test.
@@ -88,9 +88,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             // TODO: We need a static class which implements mapping chainings
             Rand.Restart(12347);
-            var positiveOnlyMapping = new PositiveOnlyDataMapping();
+            var positiveOnlyMapping = new MatchboxRecommender.PositiveOnlyDataMapping();
             var negativeDataGeneratorMapping = positiveOnlyMapping.WithGeneratedNegativeData(1.0);
-            var recommender = MatchboxRecommender.Create(negativeDataGeneratorMapping);
+            var recommender = MatchboxRecommender.Create(
+                negativeDataGeneratorMapping,
+                writeUser: (writer, x) => writer.Write(x),
+                writeItem: (writer, x) => writer.Write(x));
             recommender.Train(this.positiveOnlyDataset, this.featureProvider); // must not throw
 
             foreach (var instance in positiveOnlyMapping.GetInstances(this.positiveOnlyDataset))
@@ -99,6 +102,43 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 var item = positiveOnlyMapping.GetItem(this.positiveOnlyDataset, instance);
 
                 Assert.Equal(1, recommender.Predict(user, item, this.featureProvider));
+            }
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of a negative data generator mapping.
+        /// </summary>
+        [Fact]
+        public void BinaryRecommendationCustomSerializationRegressionTest()
+        {
+            // TODO: We need a static class which implements mapping chainings
+            Rand.Restart(12347);
+            var positiveOnlyMapping = new MatchboxRecommender.PositiveOnlyDataMapping();
+            var negativeDataGeneratorMapping = positiveOnlyMapping.WithGeneratedNegativeData(1.0);
+            using (Stream stream = new MemoryStream())
+            {
+                negativeDataGeneratorMapping.SaveForwardCompatibleAsText(stream);
+
+                stream.Seek(0, SeekOrigin.Begin);
+
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                {
+                    var deserializedMapping =
+                        new NegativeDataGeneratorMapping<PositiveOnlyDataset, Tuple<string, string>, string, string, FeatureProvider, Vector>(reader, positiveOnlyMapping);
+                    var recommender = MatchboxRecommender.Create(
+                        deserializedMapping,
+                        writeUser: (writer, x) => writer.Write(x),
+                        writeItem: (writer, x) => writer.Write(x));
+                    recommender.Train(this.positiveOnlyDataset, this.featureProvider); // must not throw
+
+                    foreach (var instance in positiveOnlyMapping.GetInstances(this.positiveOnlyDataset))
+                    {
+                        var user = positiveOnlyMapping.GetUser(this.positiveOnlyDataset, instance);
+                        var item = positiveOnlyMapping.GetItem(this.positiveOnlyDataset, instance);
+
+                        Assert.Equal(1, recommender.Predict(user, item, this.featureProvider));
+                    }
+                }
             }
         }
 
@@ -157,7 +197,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             out IDictionary<string, RatingCounts> itemRatingCounts)
         {
             Rand.Restart(12347);
-            var positiveOnlyMapping = new PositiveOnlyDataMapping();
+            var positiveOnlyMapping = new MatchboxRecommender.PositiveOnlyDataMapping();
             var negativeDataGeneratorMapping = positiveOnlyMapping.WithGeneratedNegativeData(1.0);
 
             userRatingCounts = new Dictionary<string, RatingCounts>();
@@ -278,70 +318,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Gets or sets the mapping from item to features.
             /// </summary>
             public IDictionary<string, Vector> ItemFeatures { get; set; }
-        }
-
-        /// <summary>
-        /// An implementation of
-        /// <see cref="IRecommenderMapping{TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues}"/>
-        /// for the positive only test data.
-        /// </summary>
-        [Serializable]
-        private class PositiveOnlyDataMapping
-            : IRecommenderMapping<PositiveOnlyDataset, Tuple<string, string>, string, string, FeatureProvider, Vector>
-        {
-            /// <summary>
-            /// Retrieves a list of instances from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source to retrieve instances from.</param>
-            /// <returns>The list of retrieved instances.</returns>
-            public IEnumerable<Tuple<string, string>> GetInstances(PositiveOnlyDataset instanceSource)
-            {
-                return instanceSource.Observations;
-            }
-
-            /// <summary>
-            /// Extracts a user from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The instance source providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract the user from.</param>
-            /// <returns>The extracted user.</returns>
-            public string GetUser(PositiveOnlyDataset instanceSource, Tuple<string, string> instance)
-            {
-                return instance.Item1;
-            }
-
-            /// <summary>
-            /// Extracts an item from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The instance source providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract the item from.</param>
-            /// <returns>The extracted item.</returns>
-            public string GetItem(PositiveOnlyDataset instanceSource, Tuple<string, string> instance)
-            {
-                return instance.Item2;
-            }
-
-            /// <summary>
-            /// Provides a vector of features for a given user.
-            /// </summary>
-            /// <param name="featureSource">The source of the feature vector.</param>
-            /// <param name="user">The user to provide the feature vector for.</param>
-            /// <returns>The feature vector for <paramref name="user"/>.</returns>
-            public Vector GetUserFeatures(FeatureProvider featureSource, string user)
-            {
-                return featureSource.UserFeatures[user];
-            }
-
-            /// <summary>
-            /// Provides a vector of features for a given item.
-            /// </summary>
-            /// <param name="featureSource">The source of the feature vector.</param>
-            /// <param name="item">The item to provide the feature vector for.</param>
-            /// <returns>The feature vector for <paramref name="item"/>.</returns>
-            public Vector GetItemFeatures(FeatureProvider featureSource, string item)
-            {
-                return featureSource.ItemFeatures[item];
-            }
         }
 
         /// <summary>

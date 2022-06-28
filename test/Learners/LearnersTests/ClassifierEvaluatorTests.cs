@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.predictions[4] = new Dictionary<string, double> { { LabelSet[0], 1 / 8.0 }, { LabelSet[1], 1 / 8.0 }, { LabelSet[2], 3 / 4.0 } };
 
             // Classifier evaluator
-            var classifierMapping = new ClassifierMapping();
+            var classifierMapping = new BayesPointMachineClassifier.InternalClassifierMapping();
             var evaluatorMapping = classifierMapping.ForEvaluation();
 
             this.evaluator = new ClassifierEvaluator<IEnumerable<LabelDistribution>, LabelDistribution, IEnumerable<LabelDistribution>, string>(evaluatorMapping);
@@ -366,90 +366,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Positive and negative class labels are identical
             Assert.Throws<ArgumentException>(() => this.evaluator.ReceiverOperatingCharacteristicCurve(LabelSet[0], LabelSet[0], actualLabelDistribution, actualLabelDistribution));
-        }
-
-        #endregion
-
-        #region IClassifierMapping implementation
-
-        /// <summary>
-        /// The classifier mapping.
-        /// </summary>
-        private class ClassifierMapping : ClassifierMapping<IEnumerable<LabelDistribution>, LabelDistribution, IEnumerable<LabelDistribution>, string, Vector>
-        {
-            /// <summary>
-            /// Provides the instances for a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances.</param>
-            /// <returns>The instances provided by the instance source.</returns>
-            /// <remarks>Assumes that the same instance source always provides the same instances.</remarks>
-            public override IEnumerable<LabelDistribution> GetInstances(IEnumerable<LabelDistribution> instanceSource)
-            {
-                if (instanceSource == null)
-                {
-                    throw new ArgumentNullException(nameof(instanceSource));
-                }
-
-                return instanceSource;
-            }
-
-            /// <summary>
-            /// Provides the features for a given instance.
-            /// </summary>
-            /// <param name="instance">The instance to provide features for.</param>
-            /// <param name="instanceSource">An optional source of instances.</param>
-            /// <returns>The features for the given instance.</returns>
-            /// <remarks>Assumes that the same instance source always provides the same features for a given instance.</remarks>
-            public override Vector GetFeatures(LabelDistribution instance, IEnumerable<LabelDistribution> instanceSource = null)
-            {
-                throw new NotImplementedException("Features are not required in evaluation.");
-            }
-
-            /// <summary>
-            /// Provides the label for a given instance.
-            /// </summary>
-            /// <param name="instance">The instance to provide the label for.</param>
-            /// <param name="instanceSource">An optional source of instances.</param>
-            /// <param name="labelSource">An optional source of labels.</param>
-            /// <returns>The label of the given instance.</returns>
-            /// <remarks>Assumes that the same sources always provide the same label for a given instance.</remarks>
-            public override string GetLabel(LabelDistribution instance, IEnumerable<LabelDistribution> instanceSource = null, IEnumerable<LabelDistribution> labelSource = null)
-            {
-                if (instance == null)
-                {
-                    throw new ArgumentNullException(nameof(instance));
-                }
-
-                // Use zero-one loss function to determine point estimate (mode of distribution)
-                string mode = string.Empty;
-                double maximum = double.NegativeInfinity;
-                foreach (var element in instance)
-                {
-                    if (element.Value > maximum)
-                    {
-                        maximum = element.Value;
-                        mode = element.Key;
-                    }
-                }
-
-                return mode;
-            }
-
-            /// <summary>
-            /// Gets all class labels.
-            /// </summary>
-            /// <param name="instanceSource">An optional instance source.</param>
-            /// <param name="labelSource">An optional label source.</param>
-            /// <returns>All possible values of a label.</returns>
-            public override IEnumerable<string> GetClassLabels(IEnumerable<LabelDistribution> instanceSource = null, IEnumerable<LabelDistribution> labelSource = null)
-            {
-                if (instanceSource == null)
-                {
-                    throw new ArgumentNullException(nameof(instanceSource));
-                }
-
-                return new HashSet<string>(instanceSource.SelectMany(instance => instance.Keys));
-            }
         }
 
         #endregion

@@ -13,6 +13,5 @@ namespace Microsoft.ML.Probabilistic.Serialization
         void Write(string value);
         void Write(double value);
         void Write(Guid value);
-        void WriteObject(object value);
     }
 }

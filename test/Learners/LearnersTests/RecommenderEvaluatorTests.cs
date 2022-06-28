@@ -78,7 +78,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                     "B", "c", 2, new SortedDictionary<int, double> { { 0, 0.0 }, { 1, 0.0 }, { 2, 0.8 }, { 3, 0.2 }, { 4, 0.0 }, { 5, 0.0 } }, 3.1)
             };
 
-            var recommenderMapping = new StarRatingRecommenderMapping();
+            var recommenderMapping = new MatchboxRecommender.TestStarRatingRecommenderMapping();
             var evaluatorMapping = recommenderMapping.ForEvaluation();
 
             this.starRatingInfo = recommenderMapping.GetRatingInfo(null);
@@ -712,91 +712,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                                     .OrderByDescending(itemRating => itemRating.Item2)
                                     .Take(recommendationCount)
                                     .Select(itemRating => itemRating.Item1));
-        }
-
-        #endregion
-
-        #region StarRatingRecommenderMapping implementation
-
-        /// <summary>
-        /// Represents a testing star rating recommender mapping
-        /// </summary>
-        private class StarRatingRecommenderMapping : IStarRatingRecommenderMapping<IEnumerable<Instance>, Instance, string, string, double, DummyFeatureStorage, double[]>
-        {
-            /// <summary>
-            /// Retrieves a list of instances from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source to retrieve instances from.</param>
-            /// <returns>The list of retrieved instances.</returns>
-            public IEnumerable<Instance> GetInstances(IEnumerable<Instance> instanceSource)
-            {
-                return instanceSource;
-            }
-
-            /// <summary>
-            /// Extracts a user from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The instance source providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract user from.</param>
-            /// <returns>The extracted user.</returns>
-            public string GetUser(IEnumerable<Instance> instanceSource, Instance instance)
-            {
-                return instance.Item1;
-            }
-
-            /// <summary>
-            /// Extracts an item from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The instance source providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract item from.</param>
-            /// <returns>The extracted item.</returns>
-            public string GetItem(IEnumerable<Instance> instanceSource, Instance instance)
-            {
-                return instance.Item2;
-            }
-
-            /// <summary>
-            /// Extracts a rating from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The instance source providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract rating from.</param>
-            /// <returns>The extracted rating.</returns>
-            public double GetRating(IEnumerable<Instance> instanceSource, Instance instance)
-            {
-                return instance.Item5;
-            }
-
-            /// <summary>
-            /// Provides an array of feature values for a given user.
-            /// </summary>
-            /// <param name="featureSource">The source of features.</param>
-            /// <param name="user">The user to provide features for.</param>
-            /// <returns>The array of features for <paramref name="user"/>.</returns>
-            public double[] GetUserFeatures(short featureSource, string user)
-            {
-                return null;
-            }
-
-            /// <summary>
-            /// Provides an array of feature values for a given item.
-            /// </summary>
-            /// <param name="featureSource">The source of features.</param>
-            /// <param name="item">The item to provide features for.</param>
-            /// <returns>The array of features for <paramref name="item"/>.</returns>
-            public double[] GetItemFeatures(short featureSource, string item)
-            {
-                return null;
-            }
-
-            /// <summary>
-            /// Provides the object describing how ratings provided by the instance source map to stars.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <returns>The object describing how ratings provided by the instance source map to stars.</returns>
-            public IStarRatingInfo<double> GetRatingInfo(IEnumerable<Instance> instanceSource)
-            {
-                return new RoundingStarRatingInfo(1, 5);
-            }
         }
 
         #endregion

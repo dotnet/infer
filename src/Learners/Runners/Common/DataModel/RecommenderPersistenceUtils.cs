@@ -72,7 +72,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                         (itemId = parts[1].Trim()).Length == 0 ||
                         !int.TryParse(parts[2], out rating))
                     {
-                        throw new InvalidFileFormatException(string.Format("Rating prediction file '{0}' has invalid format.", fileName));
+                        throw new InvalidRecommenderFileFormatException(string.Format("Rating prediction file '{0}' has invalid format.", fileName));
                     }
 
                     var user = new User(userId, null);
@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
                     if (itemToRating.ContainsKey(item))
                     {
-                        throw new InvalidFileFormatException(
+                        throw new InvalidRecommenderFileFormatException(
                             string.Format("More than one rating for user {0} and item {1} in rating prediction file '{2}'.", userId, itemId, fileName));
                     }
 
@@ -279,14 +279,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                         (entityId = lineParts[0].Trim()).Length == 0 ||
                         (listString = lineParts[1].Trim()).Length == 0)
                     {
-                        throw new InvalidFileFormatException(
+                        throw new InvalidRecommenderFileFormatException(
                             string.Format("Each line in the file '{0}' should contain a non-empty identifier and a list of identifiers separated by colon.", fileName));
                     }
 
                     var entity = entityFactory(entityId);
                     if (result.ContainsKey(entity))
                     {
-                        throw new InvalidFileFormatException(
+                        throw new InvalidRecommenderFileFormatException(
                             string.Format("More than one set of list for {0} in the file '{1}'", entity, fileName));
                     }
 
@@ -298,14 +298,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                         string entityInListId = listStringParts[i].Trim();
                         if (entityInListId.Length == 0)
                         {
-                            throw new InvalidFileFormatException(
+                            throw new InvalidRecommenderFileFormatException(
                                 string.Format("Empty identifier found in one of the lists in the file '{0}'", fileName));
                         }
                         
                         var entityInList = entityInListFactory(entityInListId);
                         if (entityInListSet.Contains(entityInList))
                         {
-                            throw new InvalidFileFormatException(
+                            throw new InvalidRecommenderFileFormatException(
                                 string.Format("{0} occured more than once in the list for {1} in the file '{2}'", entityInListId, entityId, fileName));
                         }
 

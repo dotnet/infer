@@ -11,41 +11,41 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
     /// The exception that is thrown for invalid file formats.
     /// </summary>
     [Serializable]
-    public class InvalidFileFormatException : Exception
+    public class InvalidRecommenderFileFormatException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidFileFormatException"/> class.
+        /// Initializes a new instance of the <see cref="InvalidRecommenderFileFormatException"/> class.
         /// </summary>
-        public InvalidFileFormatException()
+        public InvalidRecommenderFileFormatException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidFileFormatException"/> class with a specified error message.
+        /// Initializes a new instance of the <see cref="InvalidRecommenderFileFormatException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">The error message.</param>
-        public InvalidFileFormatException(string message)
+        public InvalidRecommenderFileFormatException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidFileFormatException"/> class
+        /// Initializes a new instance of the <see cref="InvalidRecommenderFileFormatException"/> class
         /// with a specified error message and a reference to the inner exception that is the cause of this exception. 
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="inner">The exception that is the cause of the current exception.</param>
-        public InvalidFileFormatException(string message, Exception inner)
+        public InvalidRecommenderFileFormatException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidFileFormatException"/> class.
+        /// Initializes a new instance of the <see cref="InvalidRecommenderFileFormatException"/> class.
         /// </summary>
         /// <param name="info">The object that holds the serialized object data.</param>
         /// <param name="context">The contextual information about the source or destination.</param>
-        protected InvalidFileFormatException(SerializationInfo info, StreamingContext context)
+        protected InvalidRecommenderFileFormatException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

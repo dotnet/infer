@@ -13,6 +13,5 @@ namespace Microsoft.ML.Probabilistic.Serialization
         double ReadDouble();
         string ReadString();
         Guid ReadGuid();
-        T ReadObject<T>();
     }
 }

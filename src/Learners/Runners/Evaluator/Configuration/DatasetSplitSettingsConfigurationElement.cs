@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <returns>The created splitting mapping.</returns>
         public TrainTestSplittingStarRatingRecommenderMapping<RecommenderDataset, RatedUserItem, User, Item, int, DummyFeatureSource, Vector> CreateSplittingMapping()
         {
-            return Mappings.StarRatingRecommender.SplitToTrainTest(
+            return RecommenderMappings.StarRatingRecommender.SplitToTrainTest(
                 this.TrainingOnlyUserFraction.Value,
                 this.TestUserRatingTrainingFraction.Value,
                 this.ColdUserFraction.Value,

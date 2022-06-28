@@ -88,7 +88,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         public override IRecommender<SplitInstanceSource<RecommenderDataset>, User, Item, int, RatingDistribution, DummyFeatureSource> Create(
             IStarRatingRecommenderMapping<SplitInstanceSource<RecommenderDataset>, RatedUserItem, User, Item, int, DummyFeatureSource, Vector> mapping)
         {
-            var inferNetRecommender = MatchboxRecommender.Create(mapping);
+            var inferNetRecommender = MatchboxRecommender.Create(
+                mapping,
+                writeUser: (writer, x) => writer.Write(x.Id),
+                writeItem: (writer, x) => writer.Write(x.Id));
             this.SetupMatchboxModel(inferNetRecommender.Settings);
             return inferNetRecommender;
         }

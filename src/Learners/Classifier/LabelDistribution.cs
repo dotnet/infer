@@ -85,7 +85,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// </summary>
         /// <param name="specification">The string to be parsed for a label distribution.</param>
         /// <param name="labelSet">A bidirectional mapping from labels to label indexes.</param>
-        /// <returns>A label distribution that is equivalent to the given string <see cref="specification"/>.</returns>
+        /// <returns>A label distribution that is equivalent to the given string <paramref name="specification"/>.</returns>
         public static LabelDistribution Parse(string specification, IndexedSet<string> labelSet = null)
         {
             string unparsedSpecification;
@@ -97,8 +97,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// </summary>
         /// <param name="specification">The string to be parsed for a label distribution.</param>
         /// <param name="labelSet">A bidirectional mapping from labels to label indexes.</param>
-        /// <param name="unparsedSpecification">The unparsed part of <see cref="specification"/>.</param>
-        /// <returns>A label distribution that is equivalent to the given string <see cref="specification"/>.</returns>
+        /// <param name="unparsedSpecification">The unparsed part of <paramref name="specification"/>.</param>
+        /// <returns>A label distribution that is equivalent to the given string <paramref name="specification"/>.</returns>
         public static LabelDistribution Parse(string specification, IndexedSet<string> labelSet, out string unparsedSpecification)
         {
             var labelDistribution = new LabelDistribution();
@@ -277,7 +277,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
             if (this.probabilities.ContainsKey(labelIndex))
             {
-                throw new InvalidFileFormatException("The class label '" + label + "' must not be specified multiple times.");
+                throw new InvalidClassifierFileFormatException("The class label '" + label + "' must not be specified multiple times.");
             }
             
             if (probability > 0.0)
@@ -296,7 +296,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             string parsedLabel = label.Trim();
             if (string.IsNullOrEmpty(parsedLabel))
             {
-                throw new InvalidFileFormatException("The class label must not be null, empty or whitespace.");
+                throw new InvalidClassifierFileFormatException("The class label must not be null, empty or whitespace.");
             }
 
             return parsedLabel;
@@ -312,7 +312,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             double parsedProbability;
             if (!double.TryParse(probability.Trim(), out parsedProbability))
             {
-                throw new InvalidFileFormatException("Unable to parse class label probability '" + probability.Trim() + "'."); 
+                throw new InvalidClassifierFileFormatException("Unable to parse class label probability '" + probability.Trim() + "'."); 
             }
 
             return parsedProbability;

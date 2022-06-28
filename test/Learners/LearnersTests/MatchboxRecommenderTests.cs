@@ -45,12 +45,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <summary>
         /// The minimum star rating for data in standard format.
         /// </summary>
-        private const int MinStarRating = -2;
+        private const int MinStarRating = MatchboxRecommender.StandardRecommenderTestMapping.MinStarRating;
 
         /// <summary>
         /// The maximum star rating for data in standard format.
         /// </summary>
-        private const int MaxStarRating = 3;
+        private const int MaxStarRating = MatchboxRecommender.StandardRecommenderTestMapping.MaxStarRating;
 
          /// <summary>
         /// The training set in the standard format.
@@ -65,17 +65,17 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <summary>
         /// The training set in the native format.
         /// </summary>
-        private NativeDataset nativeTrainingData;
+        private MatchboxRecommender.NativeDataset nativeTrainingData;
 
         /// <summary>
         /// The mapping to native Matchbox data format.
         /// </summary>
-        private NativeRecommenderTestMapping nativeMapping;
+        private MatchboxRecommender.NativeRecommenderTestMapping nativeMapping;
 
         /// <summary>
         /// The mapping to standard recommender data format.
         /// </summary>
-        private StandardRecommenderTestMapping standardMapping;
+        private MatchboxRecommender.StandardRecommenderTestMapping standardMapping;
 
         /// <summary>
         /// Prepares environment (datasets etc) before each test.
@@ -496,37 +496,37 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void InconsistentDataCheckTest()
         {
-            var data = new NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
+            var data = new MatchboxRecommender.NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, false); // Must not throw
 
-            data = new NativeDataset { UserIds = null, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = null, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Null user ids
 
-            data = new NativeDataset { UserIds = new[] { 0 }, ItemIds = null, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = new[] { 0 }, ItemIds = null, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Null item ids
 
-            data = new NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { 0 }, Ratings = null, UserCount = 1, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { 0 }, Ratings = null, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Null data representations
 
-            data = new NativeDataset { UserIds = new[] { 0, 1 }, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 2, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = new[] { 0, 1 }, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 2, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Inconsistent array length 1
 
-            data = new NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { 0 }, Ratings = new[] { 1, 0 }, UserCount = 1, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { 0 }, Ratings = new[] { 1, 0 }, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Inconsistent array length 2
             
-            data = new NativeDataset { UserIds = new[] { 2 }, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = new[] { 2 }, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Incorrect user id 1
 
-            data = new NativeDataset { UserIds = new[] { -1 }, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = new[] { -1 }, ItemIds = new[] { 0 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Incorrect user id 2
 
-            data = new NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { 2 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { 2 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Incorrect item id 1
 
-            data = new NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { -1 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
+            data = new MatchboxRecommender.NativeDataset { UserIds = new[] { 0 }, ItemIds = new[] { -1 }, Ratings = new[] { 1 }, UserCount = 1, ItemCount = 1 };
             this.TestDataConsistency(data, false, true); // Incorrect item id 2
 
-            data = new NativeDataset
+            data = new MatchboxRecommender.NativeDataset
             {
                 UserIds = new[] { 0, 1 },
                 ItemIds = new[] { 1, 0 },
@@ -643,6 +643,232 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests serialization/deserialization of the recommender operating on the native Matchbox data format.
+        /// </summary>
+        [Fact]
+        public void NativeDataFormatSerializationTest()
+        {
+            const string TrainedFileName = "trainedNativeRecommender.bin";
+            const string NotTrainedFileName = "notTrainedNativeRecommender.bin";
+
+            // Train and serialize
+            {
+                var recommender = this.CreateNativeDataFormatMatchboxRecommender();
+                recommender.Save(NotTrainedFileName);
+                recommender.Train(this.nativeTrainingData, this.nativeTrainingData);
+                recommender.Save(TrainedFileName);
+            }
+
+            // Deserialize and test
+            {
+                var trainedRecommender = MatchboxRecommender.Load<MatchboxRecommender.NativeDataset, int, int, Discrete, MatchboxRecommender.NativeDataset>(TrainedFileName);
+                var notTrainedRecommender = MatchboxRecommender.Load<MatchboxRecommender.NativeDataset, int, int, Discrete, MatchboxRecommender.NativeDataset>(NotTrainedFileName);
+
+                notTrainedRecommender.Train(this.nativeTrainingData, this.nativeTrainingData);
+
+                this.VerifyNativeRatingDistributionOfUserOneAndItemThree(trainedRecommender.PredictDistribution(1, 3, this.nativeTrainingData));
+                Assert.Equal(MaxStarRating - MinStarRating, trainedRecommender.Predict(1, 3, this.nativeTrainingData));
+
+                this.VerifyNativeRatingDistributionOfUserOneAndItemThree(notTrainedRecommender.PredictDistribution(1, 3, this.nativeTrainingData));
+                Assert.Equal(MaxStarRating - MinStarRating, notTrainedRecommender.Predict(1, 3, this.nativeTrainingData));
+            }
+        }
+
+        /// <summary>
+        /// Tests serialization/deserialization of the recommender operating on the standard data format.
+        /// </summary>
+        [Fact]
+        public void StandardDataFormatSerializationTest()
+        {
+            const int BatchCount = 2;
+            const string TrainedFileName = "trainedStandardRecommender.bin";
+            const string NotTrainedFileName = "notTrainedStandardRecommender.bin";
+
+            // Add features for cold test set user and item
+            this.standardTrainingDataFeatures.UserFeatures.Add(User.WithId("u2"), Vector.FromArray(4, 2, 1.3, 1.2, 2));
+            this.standardTrainingDataFeatures.ItemFeatures.Add(Item.WithId("i4"), Vector.FromArray(6.3, 0.5));
+
+            // Train and serialize
+            {
+                var recommender = this.CreateStandardDataFormatMatchboxRecommender();
+                recommender.Settings.Training.BatchCount = BatchCount;
+                recommender.Save(NotTrainedFileName);
+                recommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
+                recommender.Save(TrainedFileName);
+
+                CheckStandardRatingPrediction(recommender, this.standardTrainingDataFeatures);
+            }
+
+            // Deserialize and test
+            {
+                var trainedRecommender = MatchboxRecommender.Load<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(TrainedFileName);
+                var notTrainedRecommender = MatchboxRecommender.Load<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(NotTrainedFileName);
+
+                notTrainedRecommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
+
+                CheckStandardRatingPrediction(trainedRecommender, this.standardTrainingDataFeatures);
+                CheckStandardRatingPrediction(notTrainedRecommender, this.standardTrainingDataFeatures);
+            }
+        }
+
+        /// <summary>
+        /// Tests binary custom serialization/deserialization of the recommender operating on the native data format.
+        /// </summary>
+        [Fact]
+        public void NativeDataFormatCustomSerializationTest()
+        {
+            const string TrainedFileName = "trainedCustomNativeRecommender.bin";
+            const string NotTrainedFileName = "notTrainedCustomNativeRecommender.bin";
+
+            // Train and serialize
+            {
+                var recommender = this.CreateNativeDataFormatMatchboxRecommender();
+
+                this.nativeMapping.SaveForwardCompatible(NotTrainedFileName);
+                recommender.SaveForwardCompatible(NotTrainedFileName, FileMode.Append);
+                
+                recommender.Train(this.nativeTrainingData, this.nativeTrainingData);
+                recommender.SaveForwardCompatible(TrainedFileName);
+            }
+
+            // Deserialize and test
+            {
+                // Check wrong versions throw a serialization exception
+                CheckCustomSerializationVersionException(reader => MatchboxRecommender.LoadBackwardCompatible(reader, this.nativeMapping));
+
+                var trainedRecommender = MatchboxRecommender.LoadBackwardCompatible(TrainedFileName, this.nativeMapping);
+
+                IMatchboxRecommender<MatchboxRecommender.NativeDataset, int, int, Discrete, MatchboxRecommender.NativeDataset> notTrainedRecommender;
+                using (var stream = File.Open(NotTrainedFileName, FileMode.Open))
+                {
+                    using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                    {
+                        var deserializedMapping = new MatchboxRecommender.NativeRecommenderTestMapping(reader);
+                        notTrainedRecommender = MatchboxRecommender.LoadBackwardCompatible(reader, deserializedMapping);
+                    }
+                }
+
+                notTrainedRecommender.Train(this.nativeTrainingData, this.nativeTrainingData);
+
+                this.VerifyNativeRatingDistributionOfUserOneAndItemThree(trainedRecommender.PredictDistribution(1, 3, this.nativeTrainingData));
+                Assert.Equal(MaxStarRating - MinStarRating, trainedRecommender.Predict(1, 3, this.nativeTrainingData));
+
+                this.VerifyNativeRatingDistributionOfUserOneAndItemThree(notTrainedRecommender.PredictDistribution(1, 3, this.nativeTrainingData));
+                Assert.Equal(MaxStarRating - MinStarRating, notTrainedRecommender.Predict(1, 3, this.nativeTrainingData));
+
+                // Check that trained classifier still protects settings
+                Assert.Throws<InvalidOperationException>(() => { trainedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
+            }
+
+            {
+                // Ensure backward compatibility for all recommender versions
+                string[] serializedRecommenderFileNames =
+                    {
+                        Path.Combine(
+#if NETCOREAPP
+                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                            "CustomSerializedLearners", "2015-11-20", "NativeRecommender-2015-11-20.bin"),
+                        Path.Combine(
+#if NETCOREAPP
+                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                            "CustomSerializedLearners", "2018-07-27", "NativeRecommender-2018-07-27.bin")
+                    };
+                foreach (var recommenderFileName in serializedRecommenderFileNames)
+                {
+                    var deserializedRecommender = MatchboxRecommender.LoadBackwardCompatible(recommenderFileName, this.nativeMapping);
+
+                    this.VerifyNativeRatingDistributionOfUserOneAndItemThree(deserializedRecommender.PredictDistribution(1, 3, this.nativeTrainingData));
+                    Assert.Equal(MaxStarRating - MinStarRating, deserializedRecommender.Predict(1, 3, this.nativeTrainingData));
+
+                    Assert.Throws<InvalidOperationException>(() => { deserializedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tests binary custom serialization/deserialization of the recommender operating on the standard data format.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "OpenBug")] // Fails with SerializationException : Unable to find assembly 'Infer.Learners.Tests'
+        public void StandardDataFormatCustomSerializationTest()
+        {
+            const int BatchCount = 2;
+            const string TrainedFileName = "trainedCustomStandardRecommender.bin";
+            const string NotTrainedFileName = "notTrainedCustomStandardRecommender.bin";
+
+            // Add features for cold test set user and item
+            this.standardTrainingDataFeatures.UserFeatures.Add(User.WithId("u2"), Vector.FromArray(4, 2, 1.3, 1.2, 2));
+            this.standardTrainingDataFeatures.ItemFeatures.Add(Item.WithId("i4"), Vector.FromArray(6.3, 0.5));
+
+            // Train and serialize
+            {
+                var recommender = this.CreateStandardDataFormatMatchboxRecommender();
+
+                recommender.Settings.Training.BatchCount = BatchCount;
+                this.standardMapping.SaveForwardCompatible(NotTrainedFileName);
+                recommender.SaveForwardCompatible(NotTrainedFileName, FileMode.Append);
+
+                recommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
+                recommender.SaveForwardCompatible(TrainedFileName);
+
+                CheckStandardRatingPrediction(recommender, this.standardTrainingDataFeatures);
+            }
+
+            // Deserialize and test
+            {
+                // Check wrong versions throw a serialization exception
+                CheckCustomSerializationVersionException(reader => MatchboxRecommender.LoadBackwardCompatible(reader, this.standardMapping));
+
+                var trainedRecommender = MatchboxRecommender.LoadBackwardCompatible(TrainedFileName, this.standardMapping);
+
+                IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider> notTrainedRecommender;
+                using (var stream = File.Open(NotTrainedFileName, FileMode.Open))
+                {
+                    using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                    {
+                        var deserializedMapping = new MatchboxRecommender.StandardRecommenderTestMapping(reader);
+                        notTrainedRecommender = MatchboxRecommender.LoadBackwardCompatible(reader, deserializedMapping);
+                    }
+                }
+
+                Assert.Equal(BatchCount, notTrainedRecommender.Settings.Training.BatchCount);
+                notTrainedRecommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
+
+                CheckStandardRatingPrediction(trainedRecommender, this.standardTrainingDataFeatures);
+                CheckStandardRatingPrediction(notTrainedRecommender, this.standardTrainingDataFeatures);
+
+                // Check that trained classifier still protects settings
+                Assert.Throws<InvalidOperationException>(() => { trainedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
+            }
+
+            {
+                // Ensure backward compatibility for all recommender versions
+                string[] serializedRecommenderFileNames =
+                    {
+                        Path.Combine(
+#if NETCOREAPP
+                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                            "CustomSerializedLearners", "2015-11-20", "StandardRecommender-2015-11-20.bin"),
+                        Path.Combine(
+#if NETCOREAPP
+                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                            "CustomSerializedLearners", "2018-07-27", "StandardRecommender-2018-07-27.bin")
+                    };
+                foreach (var recommenderFileName in serializedRecommenderFileNames)
+                {
+                    var deserializedRecommender = MatchboxRecommender.LoadBackwardCompatible(recommenderFileName, this.standardMapping);
+                    CheckStandardRatingPrediction(deserializedRecommender, this.standardTrainingDataFeatures);
+
+                    Assert.Throws<InvalidOperationException>(() => { deserializedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
+                }
+            }
+        }
+
+        /// <summary>
         /// Tests the support for negative user and item identifiers in prediction.
         /// </summary>
         [Fact]
@@ -705,7 +931,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             var randomRecommender =
                 new RandomStarRatingRecommender<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider, Vector>(
-                    new StandardRecommenderTestMapping());
+                    new MatchboxRecommender.StandardRecommenderTestMapping());
             Assert.True(randomRecommender.Capabilities.SupportsColdStartUsers);
             Assert.False(randomRecommender.Capabilities.IsResistantToShilling);
         }
@@ -918,6 +1144,26 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Checks that the specified deserialization action throws a serialization exception for invalid versions.
+        /// </summary>
+        /// <param name="deserialize">The action which deserializes from a binary reader.</param>
+        private static void CheckCustomSerializationVersionException(Action<IReader> deserialize)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
+                writer.Write(new Guid("2317C228-3BB2-423C-B299-33A64A1BC1F3")); // Invalid serialization version
+
+                stream.Seek(0, SeekOrigin.Begin);
+
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                {
+                    Assert.Throws<SerializationException>(() => deserialize(reader));
+                }
+            }
+        }
+
+        /// <summary>
         /// Verifies the correctness of the predicted rating distribution for user 1 and item 3.
         /// </summary>
         /// <param name="actualRatingDistribution">The predicted distribution of the rating user 1 gave to the item 3.</param>
@@ -933,11 +1179,31 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Checks rating prediction.
+        /// </summary>
+        /// <param name="recommender">The recommender to test.</param>
+        /// <param name="features">The features to use.</param>
+        private static void CheckStandardRatingPrediction(
+            IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider> recommender,
+            FeatureProvider features)
+        {
+            VerifyStandardRatingDistributionOfUserOneAndItemThree(
+                recommender.PredictDistribution(User.WithId("u1"), Item.WithId("i3"), features));
+            Assert.Equal(MaxStarRating, recommender.Predict(User.WithId("u1"), Item.WithId("i3"), features));
+
+            // Test cold users and items
+            Assert.Equal(MaxStarRating, recommender.Predict(User.WithId("u2"), Item.WithId("i3"), features));
+            Assert.Throws<KeyNotFoundException>(() => recommender.Predict(User.WithId("u3"), Item.WithId("i3"), features));
+            Assert.Equal(MaxStarRating, recommender.Predict(User.WithId("u1"), Item.WithId("i4"), features));
+            Assert.Throws<KeyNotFoundException>(() => recommender.Predict(User.WithId("u1"), Item.WithId("i5"), features));
+        }
+
+        /// <summary>
         /// Creates a dataset in the native Matchbox format.
         /// </summary>
         private void InitializeNativeTrainingData()
         {
-            this.nativeTrainingData = new NativeDataset
+            this.nativeTrainingData = new MatchboxRecommender.NativeDataset
             {
                 UserIds = new[] { 1, 0, 1, 0, 0, 1 },
                 ItemIds = new[] { 1, 0, 2, 3, 2, 3 },
@@ -970,7 +1236,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 }
             };
 
-            this.nativeMapping = new NativeRecommenderTestMapping();
+            this.nativeMapping = new MatchboxRecommender.NativeRecommenderTestMapping();
         }
 
         /// <summary>
@@ -1007,7 +1273,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                     }
                 };
 
-            this.standardMapping = new StandardRecommenderTestMapping();
+            this.standardMapping = new MatchboxRecommender.StandardRecommenderTestMapping();
         }
 
         /// <summary>
@@ -1029,7 +1295,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// Creates a native data format recommender with 3 traits and feature support.
         /// </summary>
         /// <returns>The created recommender.</returns>
-        private IMatchboxRecommender<NativeDataset, int, int, Discrete, NativeDataset> CreateNativeDataFormatMatchboxRecommender()
+        private IMatchboxRecommender<MatchboxRecommender.NativeDataset, int, int, Discrete, MatchboxRecommender.NativeDataset> CreateNativeDataFormatMatchboxRecommender()
         {
             var recommender = MatchboxRecommender.Create(this.nativeMapping);
             recommender.Settings.Training.UseUserFeatures = true;
@@ -1091,7 +1357,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="data">The data to test.</param>
         /// <param name="useFeatures">Indicates whether to use user and item features.</param>
         /// <param name="mustThrow">Indicates whether the tested code must throw a <see cref="MatchboxRecommenderException"/>.</param>
-        private void TestDataConsistency(NativeDataset data, bool useFeatures, bool mustThrow)
+        private void TestDataConsistency(MatchboxRecommender.NativeDataset data, bool useFeatures, bool mustThrow)
         {
             var recommender = MatchboxRecommender.Create(this.nativeMapping);
 
@@ -1222,449 +1488,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             /// Gets or sets the mapping from item to features.
             /// </summary>
             public IDictionary<Item, Vector> ItemFeatures { get; set; }
-        }
-
-        /// <summary>
-        /// Represents a dataset in the native Matchbox format.
-        /// </summary>
-        private class NativeDataset
-        {
-            /// <summary>
-            /// Gets or sets the observed user ids.
-            /// </summary>
-            public int[] UserIds { get; set; }
-
-            /// <summary>
-            /// Gets or sets the observed item ids.
-            /// </summary>
-            public int[] ItemIds { get; set; }
-
-            /// <summary>
-            /// Gets or sets the observed ratings.
-            /// </summary>
-            public int[] Ratings { get; set; }
-
-            /// <summary>
-            /// Gets or sets the total number of users.
-            /// </summary>
-            public int UserCount { get; set; }
-
-            /// <summary>
-            /// Gets or sets the total number of items.
-            /// </summary>
-            public int ItemCount { get; set; }
-
-            /// <summary>
-            /// Gets or sets the array of non-zero user feature values.
-            /// </summary>
-            public double[][] NonZeroUserFeatureValues { get; set; }
-
-            /// <summary>
-            /// Gets or sets the array of non-zero user feature indices.
-            /// </summary>
-            public int[][] NonZeroUserFeatureIndices { get; set; }
-
-            /// <summary>
-            /// Gets or sets the array of non-zero item feature values.
-            /// </summary>
-            public double[][] NonZeroItemFeatureValues { get; set; }
-
-            /// <summary>
-            /// Gets or sets the array of non-zero item feature indices.
-            /// </summary>
-            public int[][] NonZeroItemFeatureIndices { get; set; }
-        }
-
-        #endregion
-
-        #region Mapping implementations
-
-        /// <summary>
-        /// An implementation of <see cref="IMatchboxRecommenderMapping{TInstanceSource, TFeatureSource}"/> for <see cref="NativeDataset"/>.
-        /// </summary>
-        /// <remarks>This mapping doesn't support batching.</remarks>
-        [Serializable]
-        private class NativeRecommenderTestMapping : IMatchboxRecommenderMapping<NativeDataset, NativeDataset>, ICustomSerializable
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="NativeRecommenderTestMapping"/> class.
-            /// </summary>
-            public NativeRecommenderTestMapping()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="NativeRecommenderTestMapping"/> class.
-            /// </summary>
-            /// <param name="reader">The reader to load the mapping from.</param>
-            public NativeRecommenderTestMapping(IReader reader)
-            {
-                if (reader == null)
-                {
-                    throw new ArgumentNullException(nameof(reader));
-                }
-
-                // Nothing to deserialize
-            }
-
-            /// <summary>
-            /// Gets the list of user identifiers from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances to get the user identifiers from.</param>
-            /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
-            /// <returns>The list of user identifiers.</returns>
-            public IReadOnlyList<int> GetUserIds(NativeDataset instanceSource, int batchNumber = 0)
-            {
-                if (batchNumber != 0)
-                {
-                    throw new NotSupportedException("This mapping does not support data batching.");
-                }
-
-                return instanceSource.UserIds;
-            }
-
-            /// <summary>
-            /// Gets the list of item identifiers from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances to get the item identifiers from.</param>
-            /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
-            /// <returns>The list of item identifiers.</returns>
-            public IReadOnlyList<int> GetItemIds(NativeDataset instanceSource, int batchNumber = 0)
-            {
-                if (batchNumber != 0)
-                {
-                    throw new NotSupportedException("This mapping does not support data batching.");
-                }
-
-                return instanceSource.ItemIds;
-            }
-
-            /// <summary>
-            /// Gets the list of ratings from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances to get the ratings from.</param>
-            /// <param name="batchNumber">The number of the current batch (used only if the data is divided into batches).</param>
-            /// <returns>The list of ratings</returns>
-            public IReadOnlyList<int> GetRatings(NativeDataset instanceSource, int batchNumber = 0)
-            {
-                if (batchNumber != 0)
-                {
-                    throw new NotSupportedException("This mapping does not support data batching.");
-                }
-
-                return instanceSource.Ratings;
-            }
-
-            /// <summary>
-            /// Gets the number of users from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances to get number of users from.</param>
-            /// <returns>The number of users.</returns>
-            public int GetUserCount(NativeDataset instanceSource)
-            {
-                return instanceSource.UserCount;
-            }
-
-            /// <summary>
-            /// Gets the number of items from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances to get number of items from.</param>
-            /// <returns>The number of items.</returns>
-            public int GetItemCount(NativeDataset instanceSource)
-            {
-                return instanceSource.ItemCount;
-            }
-
-            /// <summary>
-            /// Gets the number of star ratings.
-            /// This is equal to one plus the difference between the maximum and the minimum rating.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances to get number of items from.</param>
-            /// <returns>The number of ratings.</returns>
-            public int GetRatingCount(NativeDataset instanceSource)
-            {
-                return 6;
-            }
-
-            /// <summary>
-            /// Gets the number of user features.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain features from.</param>
-            /// <returns>The number of user features.</returns>
-            public int GetUserFeatureCount(NativeDataset featureSource)
-            {
-                return featureSource.NonZeroUserFeatureIndices.Max(
-                    indices => indices == null || indices.Length == 0 ? 0 : indices.Max() + 1);
-            }
-
-            /// <summary>
-            /// Gets the number of item features.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain features from.</param>
-            /// <returns>The number of item features.</returns>
-            public int GetItemFeatureCount(NativeDataset featureSource)
-            {
-                return featureSource.NonZeroItemFeatureIndices.Max(
-                    indices => indices == null || indices.Length == 0 ? 0 : indices.Max() + 1);
-            }
-
-            /// <summary>
-            /// Gets non-zero feature values for all users present in a given feature source.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain features from.</param>
-            /// <returns>An array of non-zero user feature arrays where the outer array is indexed by user id.</returns>
-            /// <remarks>This function will be called during training if the user feature support is enabled.</remarks>
-            public IReadOnlyList<IReadOnlyList<double>> GetAllUserNonZeroFeatureValues(NativeDataset featureSource)
-            {
-                return featureSource.NonZeroUserFeatureValues;
-            }
-
-            /// <summary>
-            /// Gets non-zero feature indices for all users present in a given feature source.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain feature indices from.</param>
-            /// <returns>An array of non-zero user feature index arrays where the outer array is indexed by user id.</returns>
-            /// <remarks>This function will be called during training if the user feature support is enabled.</remarks>
-            public IReadOnlyList<IReadOnlyList<int>> GetAllUserNonZeroFeatureIndices(NativeDataset featureSource)
-            {
-                return featureSource.NonZeroUserFeatureIndices;
-            }
-
-            /// <summary>
-            /// Gets non-zero feature values for all items present in a given feature source.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain features from.</param>
-            /// <returns>An array of non-zero item feature arrays where the outer array is indexed by item id</returns>
-            /// <remarks>This function will be called during training if the item feature support is enabled.</remarks>
-            public IReadOnlyList<IReadOnlyList<double>> GetAllItemNonZeroFeatureValues(NativeDataset featureSource)
-            {
-                return featureSource.NonZeroItemFeatureValues;
-            }
-
-            /// <summary>
-            /// Gets non-zero feature indices for all items present in a given feature source.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain feature indices from.</param>
-            /// <returns>An array of non-zero item feature index arrays where the outer array is indexed by item id</returns>
-            /// <remarks>This function will be called during training if the item feature support is enabled.</remarks>
-            public IReadOnlyList<IReadOnlyList<int>> GetAllItemNonZeroFeatureIndices(NativeDataset featureSource)
-            {
-                return featureSource.NonZeroItemFeatureIndices;
-            }
-
-            /// <summary>
-            /// Gets non-zero feature values for a given user.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain features from.</param>
-            /// <param name="userId">The user identifier.</param>
-            /// <returns>Non-zero feature values for the user.</returns>
-            /// <remarks>This function will be called during prediction for cold users if the user feature support is enabled.</remarks>
-            public IReadOnlyList<double> GetSingleUserNonZeroFeatureValues(NativeDataset featureSource, int userId)
-            {
-                return featureSource.NonZeroUserFeatureValues[userId];
-            }
-
-            /// <summary>
-            /// Gets non-zero feature indices for a given user.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain feature indices from.</param>
-            /// <param name="userId">The user identifier.</param>
-            /// <returns>Non-zero feature indices for the user.</returns>
-            /// <remarks>This function will be called during prediction for cold users if the user feature support is enabled.</remarks>
-            public IReadOnlyList<int> GetSingleUserNonZeroFeatureIndices(NativeDataset featureSource, int userId)
-            {
-                return featureSource.NonZeroUserFeatureIndices[userId];
-            }
-
-            /// <summary>
-            /// Gets non-zero feature values for a given item.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain features from.</param>
-            /// <param name="itemId">The item identifier.</param>
-            /// <returns>Non-zero feature values for the item.</returns>
-            /// <remarks>This function will be called during prediction for cold items if the item feature support is enabled.</remarks>
-            public IReadOnlyList<double> GetSingleItemNonZeroFeatureValues(NativeDataset featureSource, int itemId)
-            {
-                return featureSource.NonZeroItemFeatureValues[itemId];
-            }
-
-            /// <summary>
-            /// Gets non-zero feature indices for a given item.
-            /// </summary>
-            /// <param name="featureSource">The source to obtain feature indices from.</param>
-            /// <param name="itemId">The item identifier.</param>
-            /// <returns>Non-zero feature values for the item.</returns>
-            /// <remarks>This function will be called during prediction for cold items if the item feature support is enabled.</remarks>
-            public IReadOnlyList<int> GetSingleItemNonZeroFeatureIndices(NativeDataset featureSource, int itemId)
-            {
-                return featureSource.NonZeroItemFeatureIndices[itemId];
-            }
-
-            /// <summary>
-            /// Saves the state of the native data mapping using a writer to a binary stream.
-            /// </summary>
-            /// <param name="writer">The writer to save the state of the native data mapping to.</param>
-            public void SaveForwardCompatible(IWriter writer)
-            {
-                // Nothing to serialize
-            }
-        }
-
-        /// <summary>
-        /// An implementation of
-        /// <see cref="IStarRatingRecommenderMapping{TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues}"/>
-        /// for the data format used in tests.
-        /// </summary>
-        [Serializable]
-        private class StandardRecommenderTestMapping :
-            IStarRatingRecommenderMapping<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider, Vector>, ICustomSerializable
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="StandardRecommenderTestMapping"/> class.
-            /// </summary>
-            public StandardRecommenderTestMapping()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="StandardRecommenderTestMapping"/> class.
-            /// </summary>
-            /// <param name="reader">The reader to load the mapping from.</param>
-            public StandardRecommenderTestMapping(IReader reader)
-            {
-                reader.ReadSerializationVersion(4);
-
-                // Nothing to deserialize
-            }
-
-            /// <summary>
-            /// Retrieves a list of instances from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source to retrieve instances from.</param>
-            /// <returns>The list of retrieved instances.</returns>
-            public IEnumerable<Tuple<User, Item, int?>> GetInstances(StandardDataset instanceSource)
-            {
-                return instanceSource.Observations;
-            }
-
-            /// <summary>
-            /// Extracts a user from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract user from.</param>
-            /// <returns>The extracted user.</returns>
-            public User GetUser(StandardDataset instanceSource, Tuple<User, Item, int?> instance)
-            {
-                return instance.Item1;
-            }
-
-            /// <summary>
-            /// Extracts an item from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract item from.</param>
-            /// <returns>The extracted item.</returns>
-            public Item GetItem(StandardDataset instanceSource, Tuple<User, Item, int?> instance)
-            {
-                return instance.Item2;
-            }
-
-            /// <summary>
-            /// Extracts a rating from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract rating from.</param>
-            /// <returns>The extracted rating.</returns>
-            public int GetRating(StandardDataset instanceSource, Tuple<User, Item, int?> instance)
-            {
-                if (instance.Item3 == null)
-                {
-                    throw new ArgumentException("Rating is not contained in the given instance", nameof(instance));
-                }
-
-                return instance.Item3.Value + MinStarRating;
-            }
-
-            /// <summary>
-            /// Provides a vector of features for a given user.
-            /// </summary>
-            /// <param name="featureSource">The source of features.</param>
-            /// <param name="user">The user to provide features for.</param>
-            /// <returns>The feature vector for <paramref name="user"/>.</returns>
-            public virtual Vector GetUserFeatures(FeatureProvider featureSource, User user)
-            {
-                return featureSource.UserFeatures[user];
-            }
-
-            /// <summary>
-            /// Provides a vector of features for a given item.
-            /// </summary>
-            /// <param name="featureSource">The source of features.</param>
-            /// <param name="item">The item to provide features for.</param>
-            /// <returns>The feature vector for <paramref name="item"/>.</returns>
-            public virtual Vector GetItemFeatures(FeatureProvider featureSource, Item item)
-            {
-                return featureSource.ItemFeatures[item];
-            }
-
-            /// <summary>
-            /// Provides the object describing how ratings provided by the instance source map to stars.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances.</param>
-            /// <returns>The object describing how ratings in the dataset map to the stars.</returns>
-            public IStarRatingInfo<int> GetRatingInfo(StandardDataset instanceSource)
-            {
-                return new StarRatingInfo(MinStarRating, MaxStarRating);
-            }
-
-            /// <summary>
-            /// Saves the state of the standard data mapping using a writer to a binary stream.
-            /// </summary>
-            /// <param name="writer">The writer to save the state of the standard data mapping to.</param>
-            public void SaveForwardCompatible(IWriter writer)
-            {
-                writer.Write(3); // Fake serialization version
-            }
-        }
-
-        /// <summary>
-        /// An implementation of
-        /// <see cref="IStarRatingRecommenderMapping{TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues}"/>
-        /// for the data format used in tests. Throws when user features are accessed.
-        /// </summary>
-        [Serializable]
-        private class StandardRecommenderTestMappingItemFeaturesOnly : StandardRecommenderTestMapping
-        {
-            /// <summary>
-            /// Provides a vector of features for a given user.
-            /// </summary>
-            /// <param name="featureSource">The source of features.</param>
-            /// <param name="user">The user to provide features for.</param>
-            /// <returns>The feature vector for <paramref name="user"/>.</returns>
-            public override Vector GetUserFeatures(FeatureProvider featureSource, User user)
-            {
-                throw new NotImplementedException();
-            }            
-        }
-
-        /// <summary>
-        /// An implementation of
-        /// <see cref="IStarRatingRecommenderMapping{TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues}"/>
-        /// for the data format used in tests. Throws when item features are accessed.
-        /// </summary>
-        [Serializable]
-        private class StandardRecommenderTestMappingUserFeaturesOnly : StandardRecommenderTestMapping
-        {
-            /// <summary>
-            /// Provides a vector of features for a given item.
-            /// </summary>
-            /// <param name="featureSource">The source of features.</param>
-            /// <param name="item">The item to provide features for.</param>
-            /// <returns>The feature vector for <paramref name="item"/>.</returns>
-            public override Vector GetItemFeatures(FeatureProvider featureSource, Item item)
-            {
-                throw new NotImplementedException();
-            }
         }
 
         #endregion

@@ -48,11 +48,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         }
 
         /// <summary>
-        /// Throws <see cref="InvalidFileFormatException"/> with given message and details about the current line of the file being parsed.
+        /// Throws <see cref="InvalidRecommenderFileFormatException"/> with given message and details about the current line of the file being parsed.
         /// </summary>
         /// <param name="format">The format string.</param>
         /// <param name="args">The arguments for the format string.</param>
-        /// <exception cref="InvalidFileFormatException">Always thrown.</exception>
+        /// <exception cref="InvalidRecommenderFileFormatException">Always thrown.</exception>
         public void RaiseError(string format, params object[] args)
         {
             Debug.Assert(this.lineNumber != 0, "File parsing must have started.");
@@ -60,20 +60,20 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             string errorMessage = string.Format(format, args);
             string fullErrorMessage = string.Format(
                 "Error parsing line '{0}' at {1}:{2}. {3}", this.line, this.fileName, this.lineNumber, errorMessage);
-            throw new InvalidFileFormatException(fullErrorMessage);
+            throw new InvalidRecommenderFileFormatException(fullErrorMessage);
         }
 
         /// <summary>
-        /// Throws <see cref="InvalidFileFormatException"/> with given message and details about the files being parsed.
+        /// Throws <see cref="InvalidRecommenderFileFormatException"/> with given message and details about the files being parsed.
         /// </summary>
         /// <param name="format">The format string.</param>
         /// <param name="args">The arguments for the format string.</param>
-        /// <exception cref="InvalidFileFormatException">Always thrown.</exception>
+        /// <exception cref="InvalidRecommenderFileFormatException">Always thrown.</exception>
         public void RaiseGlobalError(string format, params object[] args)
         {
             string errorMessage = string.Format(format, args);
             string fullErrorMessage = string.Format("Error parsing file {0}. {1}", this.fileName, errorMessage);
-            throw new InvalidFileFormatException(fullErrorMessage);
+            throw new InvalidRecommenderFileFormatException(fullErrorMessage);
         }
     }
 }

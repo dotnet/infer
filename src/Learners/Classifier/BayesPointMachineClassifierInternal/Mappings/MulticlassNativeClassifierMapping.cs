@@ -46,6 +46,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             : base(standardMapping)
         {
             this.classLabelSet = new IndexedSet<TLabel>();
+
         }
 
         /// <summary>
@@ -70,7 +71,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             }
             else
             {
-                this.classLabelSet = new IndexedSet<TLabel>(reader);
+                this.classLabelSet = new IndexedSet<TLabel>(
+                    reader,
+                    localReader => standardMapping.ParseLabel(localReader.ReadString()));
             }
         }
 
@@ -145,17 +148,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             base.SaveForwardCompatible(writer);
 
             writer.Write(CustomSerializationVersion);
-            if (CustomSerializationVersion >= 2 && string.Empty.Length == 0)
+            writer.Write(this.classLabelSet.Count);
+            foreach (var item in this.classLabelSet.Elements)
             {
-                writer.Write(this.classLabelSet.Count);
-                foreach (var item in this.classLabelSet.Elements)
-                {
-                    writer.Write(this.StandardMapping.LabelToString(item));
-                }
-            }
-            else
-            {
-                this.classLabelSet.SaveForwardCompatible(writer);
+                writer.Write(this.StandardMapping.LabelToString(item));
             }
         }
         

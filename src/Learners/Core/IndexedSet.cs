@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <summary>
         /// The current custom binary serialization version of the <see cref="IndexedSet{T}"/> class.
         /// </summary>
-        private const int CustomSerializationVersion = 1;
+        private const int CustomSerializationVersion = 2;
 
         /// <summary>
         /// A mapping from an element to its index.
@@ -66,7 +66,8 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The reader to load the indexed set from.</param>
-        public IndexedSet(IReader reader) : this()
+        /// <param name="readObject">A reader for the items.</param>
+        public IndexedSet(IReader reader, Func<IReader, T> readObject) : this()
         {
             if (reader == null)
             {
@@ -80,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Collections
                 int elementCount = reader.ReadInt32();
                 for (int index = 0; index < elementCount; index++)
                 {
-                    var element = reader.ReadObject<T>();
+                    var element = readObject(reader);
                     this.Add(element, false);
                 }
             }
@@ -219,7 +220,8 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// Saves the elements of the indexed set to a binary writer.
         /// </summary>
         /// <param name="writer">The writer to save the elements of the indexed set to.</param>
-        public void SaveForwardCompatible(IWriter writer)
+        /// <param name="writeItem">A writer for individual items.</param>
+        public void SaveForwardCompatible(IWriter writer, Action<IWriter, T> writeItem)
         {
             if (writer == null)
             {
@@ -230,7 +232,7 @@ namespace Microsoft.ML.Probabilistic.Collections
             writer.Write(this.Count);
             for (int index = 0; index < this.Count; index++)
             {
-                writer.WriteObject(this.indexToElement[index]);
+                writeItem(writer, this.indexToElement[index]);
             }
         }
 

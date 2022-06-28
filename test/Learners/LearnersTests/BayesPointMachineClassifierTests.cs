@@ -36,54 +36,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         //[DeploymentItem(@"Data\W5ANormalized.csv.gz")]
         public void W5Test()
         {
-            var bpm = BayesPointMachineClassifier.CreateBinaryClassifier(new CsvGzipMapping());
+            var bpm = BayesPointMachineClassifier.CreateBinaryClassifier(new BayesPointMachineClassifier.CsvGzipMapping());
             bpm.Train(Path.Combine(
 #if NETCOREAPP
                 Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
 #endif
                 "Data", "W5ANormalized.csv.gz"));
-        }
-
-        private class CsvGzipMapping : ClassifierMapping<string, string, string, string, Vector>
-        {
-            public static IEnumerable<string> ReadLinesGzip(string fileName)
-            {
-                using (Stream stream = File.Open(fileName, FileMode.Open))
-                {
-                    var gz = new GZipStream(stream, CompressionMode.Decompress);
-                    using (var streamReader = new StreamReader(gz))
-                    {
-                        while(true)
-                        {
-                            string line = streamReader.ReadLine();
-                            if (line == null)
-                                break;
-                            yield return line;
-                        }
-                    }
-                }
-            }
-
-            public override IEnumerable<string> GetInstances(string instanceSource)
-            {
-                return ReadLinesGzip(instanceSource);
-            }
-
-            public override Vector GetFeatures(string instance, string instanceSource = null)
-            {
-                var array = instance.Split(",".ToCharArray()).Skip(1).Select(Convert.ToDouble).ToArray();
-                return Vector.FromArray(array);
-            }
-
-            public override string GetLabel(string instance, string instanceSource = null, string labelSource = null)
-            {
-                return instance.Split(",".ToCharArray()).First();
-            }
-
-            public override IEnumerable<string> GetClassLabels(string instanceSource, string labelSource = null)
-            {
-                return ReadLinesGzip(instanceSource).Select(l => l.Split(",".ToCharArray()).First()).Distinct();
-            }
         }
 
         #region Test initialization
@@ -269,22 +227,22 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <summary>
         /// The training dataset in dense native format.
         /// </summary>
-        private NativeDataset denseNativeTrainingData;
+        private BayesPointMachineClassifier.NativeDataset denseNativeTrainingData;
 
         /// <summary>
         /// The training dataset in sparse native format.
         /// </summary>
-        private NativeDataset sparseNativeTrainingData;
+        private BayesPointMachineClassifier.NativeDataset sparseNativeTrainingData;
 
         /// <summary>
         /// The testing dataset in dense native format.
         /// </summary>
-        private NativeDataset denseNativePredictionData;
+        private BayesPointMachineClassifier.NativeDataset denseNativePredictionData;
 
         /// <summary>
         /// The testing dataset in sparse native format.
         /// </summary>
-        private NativeDataset sparseNativePredictionData;
+        private BayesPointMachineClassifier.NativeDataset sparseNativePredictionData;
 
         /// <summary>
         /// The training dataset in dense simple format.
@@ -302,22 +260,22 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <summary>
         /// The training dataset in dense standard format.
         /// </summary>
-        private StandardDataset denseStandardTrainingData;
+        private BayesPointMachineClassifier.StandardDataset denseStandardTrainingData;
 
         /// <summary>
         /// The testing dataset in dense standard format.
         /// </summary>
-        private StandardDataset denseStandardPredictionData;
+        private BayesPointMachineClassifier.StandardDataset denseStandardPredictionData;
 
         /// <summary>
         /// The training dataset in sparse standard format.
         /// </summary>
-        private StandardDataset sparseStandardTrainingData;
+        private BayesPointMachineClassifier.StandardDataset sparseStandardTrainingData;
 
         /// <summary>
         /// The testing dataset in sparse standard format.
         /// </summary>
-        private StandardDataset sparseStandardPredictionData;
+        private BayesPointMachineClassifier.StandardDataset sparseStandardPredictionData;
 
         #endregion
 
@@ -326,35 +284,24 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <summary>
         /// The mapping to the native data format of the binary Bayes point machine classifier.
         /// </summary>
-        private BinaryNativeBayesPointMachineClassifierTestMapping binaryNativeMapping;
+        private BayesPointMachineClassifier.BinaryNativeBayesPointMachineClassifierTestMapping binaryNativeMapping;
 
         /// <summary>
         /// The mapping to the native data format of the multi-class Bayes point machine classifier.
         /// </summary>
-        private MulticlassNativeBayesPointMachineClassifierTestMapping multiclassNativeMapping;
+        private BayesPointMachineClassifier.MulticlassNativeBayesPointMachineClassifierTestMapping multiclassNativeMapping;
 
         /// <summary>
         /// The mapping to the native data format of the binary Bayes point machine classifier.
         /// </summary>
-        private BinaryStandardBayesPointMachineClassifierTestMapping binaryStandardMapping;
+        private BayesPointMachineClassifier.BinaryStandardBayesPointMachineClassifierTestMapping binaryStandardMapping;
 
         /// <summary>
         /// The mapping to the native data format of the multi-class Bayes point machine classifier.
         /// </summary>
-        private MulticlassStandardBayesPointMachineClassifierTestMapping multiclassStandardMapping;
+        private BayesPointMachineClassifier.MulticlassStandardBayesPointMachineClassifierTestMapping multiclassStandardMapping;
 
         #endregion
-
-        /// <summary>
-        /// Interface to a dataset.
-        /// </summary>
-        private interface IDataset
-        {
-            /// <summary>
-            /// Gets the number of instances of the dataset.
-            /// </summary>
-            int InstanceCount { get; }
-        }
 
         /// <summary>
         /// Prepares environment (datasets and expected predictive distributions) before each test.
@@ -491,6 +438,52 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in native format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseBinaryNativeCustomSerializationRegressionTest()
+        {
+            TestBinaryNativeClassifierCustomSerializationRegression(
+                this.denseNativeTrainingData, 
+                this.denseNativePredictionData,
+                this.expectedPredictiveBernoulliDistributions,
+                this.expectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "DenseBinaryNativeClassifier-2015-03-20.bin") };
+            CheckBinaryNativeClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.binaryNativeMapping,
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.expectedPredictiveBernoulliDistributions,
+                this.expectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the binary Bayes point machine classifier for data in native format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseBinaryNativeSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping),
+                this.denseNativeTrainingData, 
+                this.denseNativePredictionData,
+                this.expectedPredictiveBernoulliDistributions,
+                this.expectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier for data in native format and
         /// features in a dense representation.
         /// </summary>
@@ -519,14 +512,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, this.denseNativePredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, this.denseNativePredictionData, 0, true);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, null, 0, true);
         }
 
@@ -583,7 +576,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void BinaryNativeNullMappingTest()
         {
-            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateBinaryClassifier<NativeDataset, int, NativeDataset>(null));
+            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateBinaryClassifier<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset>(null));
         }
 
         #endregion
@@ -745,6 +738,52 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in native format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void SparseBinaryNativeCustomSerializationRegressionTest()
+        {
+            TestBinaryNativeClassifierCustomSerializationRegression(
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.expectedPredictiveBernoulliDistributions,
+                this.expectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "SparseBinaryNativeClassifier-2015-03-20.bin") };
+            CheckBinaryNativeClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.binaryNativeMapping,
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.expectedPredictiveBernoulliDistributions,
+                this.expectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the binary Bayes point machine classifier for data in native format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void SparseBinaryNativeSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping),
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.expectedPredictiveBernoulliDistributions,
+                this.expectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier for data in native format and
         /// features in a sparse representation.
         /// </summary>
@@ -773,14 +812,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping);
             
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, this.sparseNativePredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, this.sparseNativePredictionData, 0, true);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, null, 0, true);
         }
 
@@ -895,7 +934,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.TestDenseNativeIncrementalTraining(classifier);
 
             // Check different labels: Throw
-            var nativeData = new NativeDataset
+            var nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 2,
@@ -958,6 +997,52 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier for data in native format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseMulticlassNativeCustomSerializationRegressionTest()
+        {
+            TestMulticlassNativeClassifierCustomSerializationRegression(
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.expectedPredictiveDiscreteDistributions,
+                this.expectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "DenseMulticlassNativeClassifier-2015-03-20.bin") };
+            CheckMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.multiclassNativeMapping,
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.expectedPredictiveDiscreteDistributions,
+                this.expectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier for data in native format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseMulticlassNativeSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping),
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.expectedPredictiveDiscreteDistributions,
+                this.expectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
         /// Tests correctness of training of the multi-class Bayes point machine classifier for data in native format and
         /// features in a dense representation.
         /// </summary>
@@ -986,14 +1071,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, this.denseNativePredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, this.denseNativePredictionData, 0, true);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, null, 0, true);
         }
 
@@ -1050,7 +1135,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void MulticlassNativeNullMappingTest()
         {
-            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateMulticlassClassifier<NativeDataset, int, NativeDataset>(null));
+            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateMulticlassClassifier<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset>(null));
         }
 
         #endregion
@@ -1131,7 +1216,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.TestSparseNativeIncrementalTraining(classifier);
 
             // Check different labels: Throw
-            var nativeData = new NativeDataset
+            var nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -1194,6 +1279,52 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier for data in native format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void SparseMulticlassNativeCustomSerializationRegressionTest()
+        {
+            TestMulticlassNativeClassifierCustomSerializationRegression(
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.expectedPredictiveDiscreteDistributions,
+                this.expectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "SparseMulticlassNativeClassifier-2015-03-20.bin") };
+            CheckMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.multiclassNativeMapping,
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.expectedPredictiveDiscreteDistributions,
+                this.expectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier for data in native format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void SparseMulticlassNativeSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping),
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.expectedPredictiveDiscreteDistributions,
+                this.expectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
         /// Tests correctness of training of the multi-class Bayes point machine classifier for data in native format and
         /// features in a sparse representation.
         /// </summary>
@@ -1222,14 +1353,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping);
             
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, this.sparseNativePredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, this.sparseNativePredictionData, 0, true);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, null, 0, true);
         }
 
@@ -1337,7 +1468,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             for (int batchCount = 1; batchCount < 4; batchCount++)
             {
-                TestRegressionEvidence<StandardDataset, string, StandardDataset, bool, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
+                TestRegressionEvidence<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, bool, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                     BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                     this.denseStandardTrainingData,
                     BinaryExpectedLogEvidence,
@@ -1355,6 +1486,100 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TestUnsupportedEvidence(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in standard format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseBinaryStandardCustomSerializationRegressionTest()
+        {
+            TestBinaryStandardClassifierCustomSerializationRegression(
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.expectedPredictiveBernoulliStandardDistributions,
+                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "DenseBinaryStandardClassifier-2015-03-20.bin") };
+            CheckBinaryStandardClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.binaryStandardMapping,
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.expectedPredictiveBernoulliStandardDistributions,
+                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in simple format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseBinarySimpleCustomSerializationRegressionTest()
+        {
+            TestBinarySimpleClassifierCustomSerializationRegression(
+                this.denseSimpleTrainingData,
+                this.denseSimpleTrainingLabels,
+                this.denseSimplePredictionData,
+                this.expectedPredictiveBernoulliSimpleDistributions,
+                this.expectedIncrementalPredictiveBernoulliSimpleDistributions,
+                CheckPredictedBernoulliDistributionSimpleTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in simple format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseBinarySimpleIntCustomSerializationRegressionTest()
+        {
+            TestBinarySimpleClassifierCustomSerializationRegression(
+                this.denseSimpleTrainingData,
+                this.denseSimpleIntTrainingLabels,
+                this.denseSimplePredictionData,
+                this.expectedPredictiveBernoulliSimpleIntDistributions,
+                this.expectedIncrementalPredictiveBernoulliSimpleIntDistributions,
+                CheckPredictedBernoulliDistributionSimpleTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in simple format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseMulticlassSimpleCustomSerializationRegressionTest()
+        {
+            TestMulticlassSimpleClassifierCustomSerializationRegression(
+                this.denseSimpleTrainingData,
+                this.denseSimpleMulticlassTrainingLabels,
+                this.denseSimplePredictionData,
+                this.expectedPredictiveDiscreteIntDistributions,
+                this.expectedIncrementalPredictiveDiscreteIntDistributions,
+                CheckPredictedBernoulliDistributionSimpleTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the binary Bayes point machine classifier for data in standard format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseBinaryStandardSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.expectedPredictiveBernoulliStandardDistributions,
+                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -1386,18 +1611,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, "First", true);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, "First", true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, null, true);
         }
 
@@ -1437,7 +1662,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void BinaryStandardNullMappingTest()
         {
-            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateBinaryClassifier<StandardDataset, int, StandardDataset>(null));
+            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateBinaryClassifier<BayesPointMachineClassifier.StandardDataset, int, BayesPointMachineClassifier.StandardDataset>(null));
         }
 
         /// <summary>
@@ -1447,7 +1672,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseBinaryStandardBatchingRegressionTest()
         {
-            TestRegressionBatching<StandardDataset, string, StandardDataset, bool, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
+            TestRegressionBatching<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, bool, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
@@ -1523,7 +1748,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             for (int batchCount = 1; batchCount < 4; batchCount++)
             {
-                TestRegressionEvidence<StandardDataset, string, StandardDataset, bool, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
+                TestRegressionEvidence<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, bool, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                     BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                     this.sparseStandardTrainingData,
                     BinaryExpectedLogEvidence,
@@ -1541,6 +1766,52 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TestUnsupportedEvidence(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                 this.sparseStandardTrainingData);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier for data in standard format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void SparseBinaryStandardCustomSerializationRegressionTest()
+        {
+            TestBinaryStandardClassifierCustomSerializationRegression(
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.expectedPredictiveBernoulliStandardDistributions,
+                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "SparseBinaryStandardClassifier-2015-03-20.bin") };
+            CheckBinaryStandardClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.binaryStandardMapping,
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.expectedPredictiveBernoulliStandardDistributions,
+                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the binary Bayes point machine classifier for data in standard format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void SparseBinaryStandardSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.expectedPredictiveBernoulliStandardDistributions,
+                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -1572,18 +1843,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, "First", true);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, "First", true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, null, true);
         }
 
@@ -1614,7 +1885,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseBinaryStandardBatchingRegressionTest()
         {
-            TestRegressionBatching<StandardDataset, string, StandardDataset, bool, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
+            TestRegressionBatching<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, bool, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
@@ -1662,7 +1933,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.TestDenseStandardIncrementalTraining(classifier);
 
             // Check different labels: Throw
-            var standardData = new StandardDataset
+            var standardData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 1) } },
                 Labels = new Dictionary<string, string> { { "First", "D" } },
@@ -1700,7 +1971,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             for (int batchCount = 1; batchCount < 4; batchCount++)
             {
-                TestRegressionEvidence<StandardDataset, string, StandardDataset, int, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
+                TestRegressionEvidence<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, int, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                     BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                     this.denseStandardTrainingData,
                     MulticlassExpectedLogEvidence,
@@ -1718,6 +1989,52 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TestUnsupportedEvidence(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier for data in standard format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseMulticlassStandardCustomSerializationRegressionTest()
+        {
+            TestMulticlassStandardClassifierCustomSerializationRegression(
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.expectedPredictiveDiscreteStandardDistributions,
+                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "DenseMulticlassStandardClassifier-2015-03-20.bin") };
+            CheckMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.multiclassStandardMapping,
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.expectedPredictiveDiscreteStandardDistributions,
+                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier for data in standard format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void DenseMulticlassStandardSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.expectedPredictiveDiscreteStandardDistributions,
+                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -1749,18 +2066,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, "First", true);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, "First", true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, null, true);
         }
 
@@ -1791,7 +2108,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseMulticlassStandardBatchingRegressionTest()
         {
-            TestRegressionBatching<StandardDataset, string, StandardDataset, int, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
+            TestRegressionBatching<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, int, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
@@ -1816,7 +2133,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void MulticlassStandardNullMappingTest()
         {
-            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateMulticlassClassifier<StandardDataset, int, StandardDataset>(null));
+            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateMulticlassClassifier<BayesPointMachineClassifier.StandardDataset, int, BayesPointMachineClassifier.StandardDataset>(null));
         }
 
         #endregion
@@ -1858,7 +2175,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.TestSparseStandardIncrementalTraining(classifier);
 
             // Check different labels: Throw
-            var standardData = new StandardDataset
+            var standardData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 1) } },
                 Labels = new Dictionary<string, string> { { "First", "D" } },
@@ -1896,7 +2213,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             for (int batchCount = 1; batchCount < 4; batchCount++)
             {
-                TestRegressionEvidence<StandardDataset, string, StandardDataset, int, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
+                TestRegressionEvidence<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, int, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                     BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                     this.sparseStandardTrainingData,
                     MulticlassExpectedLogEvidence,
@@ -1914,6 +2231,52 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TestUnsupportedEvidence(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier for data in standard format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void SparseMulticlassStandardCustomSerializationRegressionTest()
+        {
+            TestMulticlassStandardClassifierCustomSerializationRegression(
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.expectedPredictiveDiscreteStandardDistributions,
+                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "SparseMulticlassStandardClassifier-2015-03-20.bin") };
+            CheckMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.multiclassStandardMapping,
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.expectedPredictiveDiscreteStandardDistributions,
+                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier for data in standard format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void SparseMulticlassStandardSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.expectedPredictiveDiscreteStandardDistributions,
+                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -1945,18 +2308,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, "First", true);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, "First", true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, null, true);
         }
 
@@ -1987,7 +2350,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseMulticlassStandardBatchingRegressionTest()
         {
-            TestRegressionBatching<StandardDataset, string, StandardDataset, int, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
+            TestRegressionBatching<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, int, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
@@ -2123,6 +2486,53 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights for data in native format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void GaussianDenseBinaryNativeCustomSerializationRegressionTest()
+        {
+            TestGaussianPriorBinaryNativeClassifierCustomSerializationRegression(
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseBinaryNativeClassifier-2015-03-20.bin") };
+            CheckGaussianPriorBinaryNativeClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.binaryNativeMapping,
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
+        /// over weights for data in native format and features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void GaussianDenseBinaryNativeSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping),
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
         /// over weights for data in native format and features in a dense representation.
         /// </summary>
@@ -2151,14 +2561,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, this.denseNativePredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, this.denseNativePredictionData, 0, true);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, null, 0, true);
         }
 
@@ -2216,7 +2626,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianBinaryNativeNullMappingTest()
         {
-            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier<NativeDataset, int, NativeDataset>(null));
+            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset>(null));
         }
 
         #endregion
@@ -2346,6 +2756,53 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights for data in native format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void GaussianSparseBinaryNativeCustomSerializationRegressionTest()
+        {
+            TestGaussianPriorBinaryNativeClassifierCustomSerializationRegression(
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseBinaryNativeClassifier-2015-03-20.bin") };
+            CheckGaussianPriorBinaryNativeClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.binaryNativeMapping,
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
+        /// over weights for data in native format and features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void GaussianSparseBinaryNativeSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping),
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
+                CheckPredictedBernoulliDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
         /// Tests correctness of training of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
         /// over weights for data in native format and features in a sparse representation.
         /// </summary>
@@ -2374,14 +2831,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, this.sparseNativePredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, this.sparseNativePredictionData, 0, true);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, bool, Bernoulli>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli>(
                 classifier, null, 0, true);
         }
 
@@ -2496,7 +2953,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.TestDenseNativeIncrementalTraining(classifier);
 
             // Check different labels: Throw
-            var nativeData = new NativeDataset
+            var nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 2,
@@ -2559,6 +3016,53 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights for data in native format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void GaussianDenseMulticlassNativeCustomSerializationRegressionTest()
+        {
+            TestGaussianPriorMulticlassNativeClassifierCustomSerializationRegression(
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseMulticlassNativeClassifier-2015-03-20.bin") };
+            CheckGaussianPriorMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.multiclassNativeMapping,
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
+        /// over weights for data in native format and features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void GaussianDenseMulticlassNativeSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping),
+                this.denseNativeTrainingData,
+                this.denseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
         /// Tests correctness of training of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
         /// over weights for data in native format and features in a dense representation.
         /// </summary>
@@ -2587,14 +3091,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, this.denseNativePredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, this.denseNativePredictionData, 0, true);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, null, 0, true);
         }
 
@@ -2651,7 +3155,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianMulticlassNativeNullMappingTest()
         {
-            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier<NativeDataset, int, NativeDataset>(null));
+            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset>(null));
         }
 
         #endregion
@@ -2732,7 +3236,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.TestSparseNativeIncrementalTraining(classifier);
 
             // Check different labels: Throw
-            var nativeData = new NativeDataset
+            var nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -2795,6 +3299,53 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights for data in native format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void GaussianSparseMulticlassNativeCustomSerializationRegressionTest()
+        {
+            TestGaussianPriorMulticlassNativeClassifierCustomSerializationRegression(
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseMulticlassNativeClassifier-2015-03-20.bin") };
+            CheckGaussianPriorMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.multiclassNativeMapping,
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
+        /// over weights for data in native format and features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void GaussianSparseMulticlassNativeSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping),
+                this.sparseNativeTrainingData,
+                this.sparseNativePredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
+                CheckPredictedDiscreteDistributionNativeTestingDataset);
+        }
+
+        /// <summary>
         /// Tests correctness of training of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
         /// over weights for data in native format and features in a sparse representation.
         /// </summary>
@@ -2823,14 +3374,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, this.sparseNativePredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, this.sparseNativePredictionData, 0, true);
 
-            CheckPredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, NativeDataset, int, NativeDataset, int, Discrete>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete>(
                 classifier, null, 0, true);
         }
 
@@ -2938,7 +3489,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             for (int batchCount = 1; batchCount < 4; batchCount++)
             {
-                TestRegressionEvidence<StandardDataset, string, StandardDataset, bool, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
+                TestRegressionEvidence<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, bool, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                     BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                     this.denseStandardTrainingData,
                     GaussianPriorBinaryExpectedLogEvidence,
@@ -2956,6 +3507,53 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TestUnsupportedEvidence(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights for data in standard format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void GaussianDenseBinaryStandardCustomSerializationRegressionTest()
+        {
+            TestGaussianPriorBinaryStandardClassifierCustomSerializationRegression(
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseBinaryStandardClassifier-2015-03-20.bin") };
+            CheckGaussianPriorBinaryStandardClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.binaryStandardMapping,
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
+        /// over weights for data in standard format and features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void GaussianDenseBinaryStandardSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -2987,18 +3585,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, "First", true);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, "First", true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, null, true);
         }
 
@@ -3038,7 +3636,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianBinaryStandardNullMappingTest()
         {
-            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier<StandardDataset, int, StandardDataset>(null));
+            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier<BayesPointMachineClassifier.StandardDataset, int, BayesPointMachineClassifier.StandardDataset>(null));
         }
 
         /// <summary>
@@ -3048,7 +3646,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseBinaryStandardBatchingRegressionTest()
         {
-            TestRegressionBatching<StandardDataset, string, StandardDataset, bool, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
+            TestRegressionBatching<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, bool, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
@@ -3124,7 +3722,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             for (int batchCount = 1; batchCount < 4; batchCount++)
             {
-                TestRegressionEvidence<StandardDataset, string, StandardDataset, bool, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
+                TestRegressionEvidence<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, bool, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                     BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                     this.sparseStandardTrainingData,
                     GaussianPriorBinaryExpectedLogEvidence,
@@ -3142,6 +3740,53 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TestUnsupportedEvidence(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.sparseStandardTrainingData);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights for data in standard format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void GaussianSparseBinaryStandardCustomSerializationRegressionTest()
+        {
+            TestGaussianPriorBinaryStandardClassifierCustomSerializationRegression(
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseBinaryStandardClassifier-2015-03-20.bin") };
+            CheckGaussianPriorBinaryStandardClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.binaryStandardMapping,
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the binary Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
+        /// over weights for data in standard format and features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void GaussianSparseBinaryStandardSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
+                CheckPredictedBernoulliDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -3173,18 +3818,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, "First", true);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, "First", true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, null, true);
         }
 
@@ -3215,7 +3860,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseBinaryStandardBatchingRegressionTest()
         {
-            TestRegressionBatching<StandardDataset, string, StandardDataset, bool, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
+            TestRegressionBatching<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, bool, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
@@ -3263,7 +3908,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.TestDenseStandardIncrementalTraining(classifier);
 
             // Check different labels: Throw
-            var standardData = new StandardDataset
+            var standardData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 1) } },
                 Labels = new Dictionary<string, string> { { "First", "D" } },
@@ -3301,7 +3946,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             for (int batchCount = 1; batchCount < 4; batchCount++)
             {
-                TestRegressionEvidence<StandardDataset, string, StandardDataset, int, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
+                TestRegressionEvidence<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, int, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                     BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                     this.denseStandardTrainingData,
                     GaussianPriorMulticlassExpectedLogEvidence,
@@ -3319,6 +3964,53 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TestUnsupportedEvidence(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights for data in standard format and
+        /// features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void GaussianDenseMulticlassStandardCustomSerializationRegressionTest()
+        {
+            TestGaussianPriorMulticlassStandardClassifierCustomSerializationRegression(
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseMulticlassStandardClassifier-2015-03-20.bin") };
+            CheckGaussianPriorMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.multiclassStandardMapping,
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
+        /// over weights for data in standard format and features in a dense representation.
+        /// </summary>
+        [Fact]
+        public void GaussianDenseMulticlassStandardSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
+                this.denseStandardTrainingData,
+                this.denseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -3350,18 +4042,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, "First", true);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, "First", true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.denseStandardPredictionData, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, null, true);
         }
 
@@ -3392,7 +4084,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseMulticlassStandardBatchingRegressionTest()
         {
-            TestRegressionBatching<StandardDataset, string, StandardDataset, int, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
+            TestRegressionBatching<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, int, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
@@ -3417,7 +4109,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianMulticlassStandardNullMappingTest()
         {
-            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier<StandardDataset, int, StandardDataset>(null));
+            Assert.Throws<ArgumentNullException>(() => BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier<BayesPointMachineClassifier.StandardDataset, int, BayesPointMachineClassifier.StandardDataset>(null));
         }
 
         #endregion
@@ -3459,7 +4151,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.TestSparseStandardIncrementalTraining(classifier);
 
             // Check different labels: Throw
-            var standardData = new StandardDataset
+            var standardData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 1) } },
                 Labels = new Dictionary<string, string> { { "First", "D" } },
@@ -3497,7 +4189,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             for (int batchCount = 1; batchCount < 4; batchCount++)
             {
-                TestRegressionEvidence<StandardDataset, string, StandardDataset, int, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
+                TestRegressionEvidence<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, int, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                     BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                     this.sparseStandardTrainingData,
                     GaussianPriorMulticlassExpectedLogEvidence,
@@ -3515,6 +4207,53 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TestUnsupportedEvidence(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights for data in standard format and
+        /// features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void GaussianSparseMulticlassStandardCustomSerializationRegressionTest()
+        {
+            TestGaussianPriorMulticlassStandardClassifierCustomSerializationRegression(
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
+
+            // Ensure backward compatibility for all classifier versions
+            string[] serializedClassifiers = { Path.Combine(
+#if NETCOREAPP
+                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
+#endif
+                "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseMulticlassStandardClassifier-2015-03-20.bin") };
+            CheckGaussianPriorMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
+                serializedClassifiers,
+                this.multiclassStandardMapping,
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
+        }
+
+        /// <summary>
+        /// Tests serialization and deserialization of the multi-class Bayes point machine classifier with <see cref="Gaussian"/> prior distributions 
+        /// over weights for data in standard format and features in a sparse representation.
+        /// </summary>
+        [Fact]
+        public void GaussianSparseMulticlassStandardSerializationRegressionTest()
+        {
+            TestRegressionSerialization(
+                BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
+                this.sparseStandardTrainingData,
+                this.sparseStandardPredictionData,
+                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
+                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
+                CheckPredictedDiscreteDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -3546,18 +4285,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             var classifier = BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, "First", true);
 
-            CheckPredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckPredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, "First", true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, this.sparseStandardPredictionData, null, true);
-            CheckSinglePredictionException<InvalidOperationException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(
+            CheckSinglePredictionException<InvalidOperationException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(
                 classifier, null, null, true);
         }
 
@@ -3588,7 +4327,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseMulticlassStandardBatchingRegressionTest()
         {
-            TestRegressionBatching<StandardDataset, string, StandardDataset, int, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
+            TestRegressionBatching<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, int, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
@@ -3740,7 +4479,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="classCount">An optional number of classes. Defaults to 3.</param>
         /// <param name="featureCount">An optional number of features. Defaults to 10.</param>
         /// <returns>The created dataset.</returns>
-        private static NativeDataset CreateConstantZeroFeatureDenseNativeDataset(int instanceCount = 200, int classCount = 3, int featureCount = 10)
+        private static BayesPointMachineClassifier.NativeDataset CreateConstantZeroFeatureDenseNativeDataset(int instanceCount = 200, int classCount = 3, int featureCount = 10)
         {
             Rand.Restart(728);
 
@@ -3754,7 +4493,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 }
             }
 
-            return new NativeDataset
+            return new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = featureCount,
@@ -3778,7 +4517,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </param>
         /// <param name="addBias">If true, a constant feature is added for each instance. Defaults to false.</param>
         /// <returns>The created dataset.</returns>
-        private static NativeDataset CreateConstantZeroFeatureSparseNativeDataset(int instanceCount = 200, int classCount = 3, int featureCount = 10, double sparsity = 0.333, bool addBias = false)
+        private static BayesPointMachineClassifier.NativeDataset CreateConstantZeroFeatureSparseNativeDataset(int instanceCount = 200, int classCount = 3, int featureCount = 10, double sparsity = 0.333, bool addBias = false)
         {
             Rand.Restart(728);
 
@@ -3809,7 +4548,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 }
             }
 
-            return new NativeDataset
+            return new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = featureCount,
@@ -4147,7 +4886,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             TInstanceSource instanceSource,
             double expectedLogEvidence,
             int batchCount = 1,
-            NativeBayesPointMachineClassifierTestMapping<TNativeLabel> mapping = null)
+            BayesPointMachineClassifier.NativeBayesPointMachineClassifierTestMapping<TNativeLabel> mapping = null)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             classifier.Settings.Training.ComputeModelEvidence = true;
@@ -4197,6 +4936,977 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         }
 
         /// <summary>
+        /// Tests .NET serialization and deserialization of the Bayes point machine classifier.
+        /// </summary>
+        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
+        /// <typeparam name="TInstance">The type of an instance.</typeparam>
+        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
+        /// <typeparam name="TLabel">The type of a label.</typeparam>
+        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
+        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
+        /// <param name="classifier">The Bayes point machine classifier.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestRegressionSerialization<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier,
+            TInstanceSource trainingData,
+            TInstanceSource testData,
+            IEnumerable<TLabelDistribution> expectedLabelDistributions,
+            IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction)
+            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
+        {
+            const string TrainedFileName = "trainedClassifier.bin";
+            const string UntrainedFileName = "untrainedClassifier.bin";
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            classifier.Save(UntrainedFileName);
+            classifier.Train(trainingData);
+            classifier.Save(TrainedFileName);
+
+            // Deserialize and test
+            var trainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(TrainedFileName);
+            var untrainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(UntrainedFileName);
+
+            untrainedClassifier.Train(trainingData);
+
+            checkPrediction(expectedLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+            checkPrediction(expectedLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
+
+            // Incremental training
+            trainedClassifier.TrainIncremental(trainingData);
+            untrainedClassifier.TrainIncremental(trainingData);
+
+            checkPrediction(expectedIncrementalLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+            checkPrediction(expectedIncrementalLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
+        }
+
+        #region Custom binary serialization
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier and data in native format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestBinaryNativeClassifierCustomSerializationRegression(
+            BayesPointMachineClassifier.NativeDataset trainingData,
+            BayesPointMachineClassifier.NativeDataset testData,
+            IEnumerable<Bernoulli> expectedLabelDistributions,
+            IEnumerable<Bernoulli> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<Bernoulli>, IEnumerable<Bernoulli>, double> checkPrediction)
+        {
+            var mapping = new BayesPointMachineClassifier.BinaryNativeBayesPointMachineClassifierTestMapping();
+            var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(mapping);
+
+            const string TrainedFileName = "trainedBinaryNativeClassifier" + extension;
+            const string UntrainedFileName = "untrainedBinaryNativeClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier together with its mapping
+            mapping.SaveForwardCompatible(UntrainedFileName); 
+            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+
+            classifier.Train(trainingData);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                var deserializedMapping1 = new BayesPointMachineClassifier.BinaryNativeBayesPointMachineClassifierTestMapping(reader);
+                var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping1);
+                return (untrainedClassifier1, deserializedMapping1);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+        }
+
+        /// <summary>
+        /// Checks that all files with the specified names contain binary Bayes point machine classifiers  
+        /// which are backward compatible with data in native format.
+        /// </summary>
+        /// <param name="fileNames">The file names of the serialized classifiers to test.</param>
+        /// <param name="binaryNativeMapping">The mapping to native data format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckBinaryNativeClassiferCustomSerializationBackwardCompatibility(
+            IEnumerable<string> fileNames,
+            BayesPointMachineClassifier.NativeBayesPointMachineClassifierTestMapping<bool> binaryNativeMapping,
+            BayesPointMachineClassifier.NativeDataset trainingData,
+            BayesPointMachineClassifier.NativeDataset testData,
+            IEnumerable<Bernoulli> expectedLabelDistributions,
+            IEnumerable<Bernoulli> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<Bernoulli>, IEnumerable<Bernoulli>, double> checkPrediction)
+        {
+            foreach (string fileName in fileNames)
+            {
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(fileName, binaryNativeMapping);
+                CheckDeserializedNativePrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+            }
+        }
+
+        const string extension = ".txt";
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier and data in native format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestMulticlassNativeClassifierCustomSerializationRegression(
+            BayesPointMachineClassifier.NativeDataset trainingData,
+            BayesPointMachineClassifier.NativeDataset testData,
+            IEnumerable<Discrete> expectedLabelDistributions,
+            IEnumerable<Discrete> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<Discrete>, IEnumerable<Discrete>, double> checkPrediction)
+        {
+            var mapping = new BayesPointMachineClassifier.MulticlassNativeBayesPointMachineClassifierTestMapping();
+            var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(mapping);
+
+            const string TrainedFileName = "trainedMulticlassNativeClassifier" + extension;
+            const string UntrainedFileName = "untrainedMulticlassNativeClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier together with its mapping
+            mapping.SaveForwardCompatible(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+
+            classifier.Train(trainingData);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                var deserializedMapping1 = new BayesPointMachineClassifier.MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
+                var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping1);
+                return (untrainedClassifier1, deserializedMapping1);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+        }
+
+        /// <summary>
+        /// Checks that all files with the specified names contain multi-class Bayes point machine classifiers  
+        /// which are backward compatible with data in native format.
+        /// </summary>
+        /// <param name="fileNames">The file names of the serialized classifiers to test.</param>
+        /// <param name="multiclassNativeMapping">The mapping to native data format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
+            IEnumerable<string> fileNames,
+            BayesPointMachineClassifier.NativeBayesPointMachineClassifierTestMapping<int> multiclassNativeMapping,
+            BayesPointMachineClassifier.NativeDataset trainingData,
+            BayesPointMachineClassifier.NativeDataset testData,
+            IEnumerable<Discrete> expectedLabelDistributions,
+            IEnumerable<Discrete> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<Discrete>, IEnumerable<Discrete>, double> checkPrediction)
+        {
+            foreach (string fileName in fileNames)
+            {
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(fileName, multiclassNativeMapping);
+                CheckDeserializedNativePrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+            }
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier and data in standard format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestBinarySimpleClassifierCustomSerializationRegression<TLabel>(
+            IReadOnlyList<Vector> trainingData,
+            IReadOnlyList<TLabel> trainingLabels,
+            IReadOnlyList<Vector> testData,
+            IEnumerable<IDictionary<TLabel, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<TLabel, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<TLabel, double>>, IEnumerable<IDictionary<TLabel, double>>, double> checkPrediction)
+        {
+            var mapping = new BinarySimpleTestMapping<TLabel>();
+            var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(mapping);
+
+            const string TrainedFileName = "trainedBinarySimpleClassifier" + extension;
+            const string UntrainedFileName = "untrainedBinarySimpleClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier
+            classifier.SaveForwardCompatible(UntrainedFileName);
+
+            classifier.Train(trainingData, trainingLabels);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                return BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction, trainingLabels);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier and data in standard format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestBinaryStandardClassifierCustomSerializationRegression(
+            BayesPointMachineClassifier.StandardDataset trainingData,
+            BayesPointMachineClassifier.StandardDataset testData,
+            IEnumerable<IDictionary<string, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
+        {
+            var mapping = new BayesPointMachineClassifier.BinaryStandardBayesPointMachineClassifierTestMapping();
+            var classifier = BayesPointMachineClassifier.CreateBinaryClassifier(mapping);
+
+            const string TrainedFileName = "trainedBinaryStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedBinaryStandardClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier together with its mapping
+            mapping.SaveForwardCompatible(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+
+            classifier.Train(trainingData);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                var deserializedMapping = new BayesPointMachineClassifier.BinaryStandardBayesPointMachineClassifierTestMapping(reader);
+                return BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+        }
+
+        /// <summary>
+        /// Checks that all files with the specified names contain binary Bayes point machine classifiers  
+        /// which are backward compatible with data in standard format.
+        /// </summary>
+        /// <param name="fileNames">The file names of the serialized classifiers to test.</param>
+        /// <param name="binaryStandardMapping">The mapping to standard data format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckBinaryStandardClassiferCustomSerializationBackwardCompatibility(
+            IEnumerable<string> fileNames,
+            BayesPointMachineClassifier.BinaryStandardBayesPointMachineClassifierTestMapping binaryStandardMapping,
+            BayesPointMachineClassifier.StandardDataset trainingData,
+            BayesPointMachineClassifier.StandardDataset testData,
+            IEnumerable<IDictionary<string, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
+        {
+            foreach (string fileName in fileNames)
+            {
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(fileName, binaryStandardMapping);
+                CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+            }
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier and data in native format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestMulticlassSimpleClassifierCustomSerializationRegression<TLabel>(
+            IReadOnlyList<Vector> trainingData,
+            IReadOnlyList<TLabel> trainingLabels,
+            IReadOnlyList<Vector> testData,
+            IEnumerable<IDictionary<TLabel, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<TLabel, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<TLabel, double>>, IEnumerable<IDictionary<TLabel, double>>, double> checkPrediction)
+        {
+            var mapping = new MulticlassSimpleBayesPointMachineClassifierTestMapping<TLabel>();
+            var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(mapping);
+
+            const string TrainedFileName = "trainedMulticlassStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedMulticlassStandardClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier
+            classifier.SaveForwardCompatible(UntrainedFileName);
+
+            classifier.Train(trainingData, trainingLabels);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                return BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction, trainingLabels);
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier and data in native format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestMulticlassStandardClassifierCustomSerializationRegression(
+            BayesPointMachineClassifier.StandardDataset trainingData,
+            BayesPointMachineClassifier.StandardDataset testData,
+            IEnumerable<IDictionary<string, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
+        {
+            var mapping = new BayesPointMachineClassifier.MulticlassStandardBayesPointMachineClassifierTestMapping();
+            var classifier = BayesPointMachineClassifier.CreateMulticlassClassifier(mapping);
+
+            const string TrainedFileName = "trainedMulticlassStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedMulticlassStandardClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier together with its mapping
+            mapping.SaveForwardCompatible(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+
+            classifier.Train(trainingData);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                var deserializedMapping = new BayesPointMachineClassifier.MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
+                return BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+        }
+
+        /// <summary>
+        /// Checks that all files with the specified names contain multi-class Bayes point machine classifiers  
+        /// which are backward compatible with data in standard format.
+        /// </summary>
+        /// <param name="fileNames">The file names of the serialized classifiers to test.</param>
+        /// <param name="multiclassStandardMapping">The mapping to standard data format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
+            IEnumerable<string> fileNames,
+            BayesPointMachineClassifier.MulticlassStandardBayesPointMachineClassifierTestMapping multiclassStandardMapping,
+            BayesPointMachineClassifier.StandardDataset trainingData,
+            BayesPointMachineClassifier.StandardDataset testData,
+            IEnumerable<IDictionary<string, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
+        {
+            foreach (string fileName in fileNames)
+            {
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(fileName, multiclassStandardMapping);
+                CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+            }
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier
+        /// with <see cref="Gaussian"/> prior distributions over weights and data in native format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestGaussianPriorBinaryNativeClassifierCustomSerializationRegression(
+            BayesPointMachineClassifier.NativeDataset trainingData,
+            BayesPointMachineClassifier.NativeDataset testData,
+            IEnumerable<Bernoulli> expectedLabelDistributions,
+            IEnumerable<Bernoulli> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<Bernoulli>, IEnumerable<Bernoulli>, double> checkPrediction)
+        {
+            var mapping = new BayesPointMachineClassifier.BinaryNativeBayesPointMachineClassifierTestMapping();
+            var classifier = BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(mapping);
+
+            const string TrainedFileName = "trainedGaussianPriorBinaryNativeClassifier" + extension;
+            const string UntrainedFileName = "untrainedGaussianPriorBinaryNativeClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier together with its mapping
+            mapping.SaveForwardCompatible(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+
+            classifier.Train(trainingData);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                var deserializedMapping1 = new BayesPointMachineClassifier.BinaryNativeBayesPointMachineClassifierTestMapping(reader);
+                var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping1);
+                return (untrainedClassifier1, deserializedMapping1);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+        }
+
+        /// <summary>
+        /// Checks that all files with the specified names contain binary Bayes point machine classifiers  
+        /// with <see cref="Gaussian"/> prior distributions over weights which are backward compatible with data in native format.
+        /// </summary>
+        /// <param name="fileNames">The file names of the serialized classifiers to test.</param>
+        /// <param name="binaryNativeMapping">The mapping to native data format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckGaussianPriorBinaryNativeClassiferCustomSerializationBackwardCompatibility(
+            IEnumerable<string> fileNames,
+            BayesPointMachineClassifier.NativeBayesPointMachineClassifierTestMapping<bool> binaryNativeMapping,
+            BayesPointMachineClassifier.NativeDataset trainingData,
+            BayesPointMachineClassifier.NativeDataset testData,
+            IEnumerable<Bernoulli> expectedLabelDistributions,
+            IEnumerable<Bernoulli> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<Bernoulli>, IEnumerable<Bernoulli>, double> checkPrediction)
+        {
+            foreach (string fileName in fileNames)
+            {
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(fileName, binaryNativeMapping);
+                CheckDeserializedNativePrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+            }
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights and data in native format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestGaussianPriorMulticlassNativeClassifierCustomSerializationRegression(
+            BayesPointMachineClassifier.NativeDataset trainingData,
+            BayesPointMachineClassifier.NativeDataset testData,
+            IEnumerable<Discrete> expectedLabelDistributions,
+            IEnumerable<Discrete> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<Discrete>, IEnumerable<Discrete>, double> checkPrediction)
+        {
+            var mapping = new BayesPointMachineClassifier.MulticlassNativeBayesPointMachineClassifierTestMapping();
+            var classifier = BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(mapping);
+
+            const string TrainedFileName = "trainedGaussianPriorMulticlassNativeClassifier" + extension;
+            const string UntrainedFileName = "untrainedGaussianPriorMulticlassNativeClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier together with its mapping
+            mapping.SaveForwardCompatible(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+
+            classifier.Train(trainingData);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                var deserializedMapping1 = new BayesPointMachineClassifier.MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
+                var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping1);
+                return (untrainedClassifier1, deserializedMapping1);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+        }
+
+        /// <summary>
+        /// Checks that all files with the specified names contain multi-class Bayes point machine classifiers  
+        /// with <see cref="Gaussian"/> prior distributions over weights which are backward compatible with data in native format.
+        /// </summary>
+        /// <param name="fileNames">The file names of the serialized classifiers to test.</param>
+        /// <param name="multiclassNativeMapping">The mapping to native data format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckGaussianPriorMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
+            IEnumerable<string> fileNames,
+            BayesPointMachineClassifier.NativeBayesPointMachineClassifierTestMapping<int> multiclassNativeMapping,
+            BayesPointMachineClassifier.NativeDataset trainingData,
+            BayesPointMachineClassifier.NativeDataset testData,
+            IEnumerable<Discrete> expectedLabelDistributions,
+            IEnumerable<Discrete> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<Discrete>, IEnumerable<Discrete>, double> checkPrediction)
+        {
+            foreach (string fileName in fileNames)
+            {
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(fileName, multiclassNativeMapping);
+                CheckDeserializedNativePrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+            }
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the binary Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights and data in standard format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestGaussianPriorBinaryStandardClassifierCustomSerializationRegression(
+            BayesPointMachineClassifier.StandardDataset trainingData,
+            BayesPointMachineClassifier.StandardDataset testData,
+            IEnumerable<IDictionary<string, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
+        {
+            var mapping = new BayesPointMachineClassifier.BinaryStandardBayesPointMachineClassifierTestMapping();
+            var classifier = BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(mapping);
+
+            const string TrainedFileName = "trainedGaussianPriorBinaryStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedGaussianPriorBinaryStandardClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier together with its mapping
+            mapping.SaveForwardCompatible(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+
+            classifier.Train(trainingData);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                var deserializedMapping = new BayesPointMachineClassifier.BinaryStandardBayesPointMachineClassifierTestMapping(reader);
+                return BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+        }
+
+        /// <summary>
+        /// Checks that all files with the specified names contain binary Bayes point machine classifiers  
+        /// with <see cref="Gaussian"/> prior distributions over weights which are backward compatible with data in standard format.
+        /// </summary>
+        /// <param name="fileNames">The file names of the serialized classifiers to test.</param>
+        /// <param name="binaryStandardMapping">The mapping to standard data format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckGaussianPriorBinaryStandardClassiferCustomSerializationBackwardCompatibility(
+            IEnumerable<string> fileNames,
+            BayesPointMachineClassifier.BinaryStandardBayesPointMachineClassifierTestMapping binaryStandardMapping,
+            BayesPointMachineClassifier.StandardDataset trainingData,
+            BayesPointMachineClassifier.StandardDataset testData,
+            IEnumerable<IDictionary<string, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
+        {
+            foreach (string fileName in fileNames)
+            {
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(fileName, binaryStandardMapping);
+                CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+            }
+        }
+
+        /// <summary>
+        /// Tests custom binary serialization and deserialization of the multi-class Bayes point machine classifier 
+        /// with <see cref="Gaussian"/> prior distributions over weights and data in native format.
+        /// </summary>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void TestGaussianPriorMulticlassStandardClassifierCustomSerializationRegression(
+            BayesPointMachineClassifier.StandardDataset trainingData,
+            BayesPointMachineClassifier.StandardDataset testData,
+            IEnumerable<IDictionary<string, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
+        {
+            var mapping = new BayesPointMachineClassifier.MulticlassStandardBayesPointMachineClassifierTestMapping();
+            var classifier = BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(mapping);
+
+            const string TrainedFileName = "trainedGaussianPriorMulticlassStandardClassifier" + extension;
+            const string UntrainedFileName = "untrainedGaussianPriorMulticlassStandardClassifier" + extension;
+
+            // Train and serialize
+            classifier.Settings.Training.IterationCount = IterationCount;
+
+            // Save untrained classifier together with its mapping
+            mapping.SaveForwardCompatible(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+
+            classifier.Train(trainingData);
+
+            // Save trained classifier without its mapping
+            classifier.SaveForwardCompatible(TrainedFileName);
+
+            // Check wrong versions throw a serialization exception
+            CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, mapping));
+
+            // Deserialize classifier alone
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(TrainedFileName, mapping);
+
+            // Deserialize both classifier and mapping
+            var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
+            {
+                var deserializedMapping = new BayesPointMachineClassifier.MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
+                return BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping);
+            });
+
+            // Check predictions of deserialized classifiers
+            CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+        }
+
+        /// <summary>
+        /// Checks that all files with the specified names contain multi-class Bayes point machine classifiers  
+        /// with <see cref="Gaussian"/> prior distributions over weights which are backward compatible with data in standard format.
+        /// </summary>
+        /// <param name="fileNames">The file names of the serialized classifiers to test.</param>
+        /// <param name="multiclassStandardMapping">The mapping to standard data format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckGaussianPriorMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
+            IEnumerable<string> fileNames,
+            BayesPointMachineClassifier.MulticlassStandardBayesPointMachineClassifierTestMapping multiclassStandardMapping,
+            BayesPointMachineClassifier.StandardDataset trainingData,
+            BayesPointMachineClassifier.StandardDataset testData,
+            IEnumerable<IDictionary<string, double>> expectedLabelDistributions,
+            IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
+        {
+            foreach (string fileName in fileNames)
+            {
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(fileName, multiclassStandardMapping);
+                CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
+            }
+        }
+
+        /// <summary>
+        /// Checks the predictions on data in native format after custom binary deserialization of Bayes point machine classifiers.
+        /// </summary>
+        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
+        /// <typeparam name="TInstance">The type of an instance.</typeparam>
+        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
+        /// <typeparam name="TLabel">The type of a label.</typeparam>
+        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
+        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
+        /// <param name="trainedClassifier">A trained Bayes point machine classifier.</param>
+        /// <param name="untrainedClassifier">An untrained Bayes point machine classifier.</param>
+        /// <param name="deserializedMapping">The deserialized mapping to data in native format.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckDeserializedNativePrediction<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> trainedClassifier,
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> untrainedClassifier,
+            BayesPointMachineClassifier.NativeBayesPointMachineClassifierTestMapping<TLabel> deserializedMapping,
+            TInstanceSource trainingData,
+            TInstanceSource testData,
+            IEnumerable<TLabelDistribution> expectedLabelDistributions,
+            IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction)
+            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
+        {
+            // Check that trained classifier still protects settings
+            Assert.Equal(IterationCount, trainedClassifier.Settings.Training.IterationCount);
+            Assert.Equal(IterationCount, untrainedClassifier.Settings.Training.IterationCount);
+            Assert.Throws<InvalidOperationException>(() => { trainedClassifier.Settings.Training.ComputeModelEvidence = false; }); // Guarded: Throw
+            untrainedClassifier.Settings.Training.ComputeModelEvidence = false;
+
+            // Batched training for untrained classifier
+            untrainedClassifier.Settings.Training.BatchCount = 2;
+            deserializedMapping.BatchCount = untrainedClassifier.Settings.Training.BatchCount;
+            untrainedClassifier.Train(trainingData);
+            untrainedClassifier.Settings.Training.BatchCount = 1;
+            deserializedMapping.BatchCount = untrainedClassifier.Settings.Training.BatchCount;
+
+            checkPrediction(expectedLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+            checkPrediction(expectedLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
+
+            // Incremental training
+            trainedClassifier.TrainIncremental(trainingData);
+            untrainedClassifier.TrainIncremental(trainingData);
+
+            checkPrediction(expectedIncrementalLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+            checkPrediction(expectedIncrementalLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
+        }
+
+        /// <summary>
+        /// Checks the predictions on data in native format after custom binary deserialization of Bayes point machine classifiers.
+        /// </summary>
+        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
+        /// <typeparam name="TInstance">The type of an instance.</typeparam>
+        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
+        /// <typeparam name="TLabel">The type of a label.</typeparam>
+        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
+        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
+        /// <param name="trainedClassifier">A trained Bayes point machine classifier.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckDeserializedNativePrediction<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> trainedClassifier,
+            TInstanceSource trainingData,
+            TInstanceSource testData,
+            IEnumerable<TLabelDistribution> expectedLabelDistributions,
+            IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction)
+            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
+        {
+            // Check that trained classifier still protects settings
+            Assert.Equal(IterationCount, trainedClassifier.Settings.Training.IterationCount);
+            Assert.Throws<InvalidOperationException>(() => { trainedClassifier.Settings.Training.ComputeModelEvidence = false; }); // Guarded: Throw
+
+            checkPrediction(expectedLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+
+            // Incremental training
+            trainedClassifier.TrainIncremental(trainingData);
+
+            checkPrediction(expectedIncrementalLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+        }
+
+        /// <summary>
+        /// Checks the predictions on data in standard format after custom binary deserialization of Bayes point machine classifiers.
+        /// </summary>
+        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
+        /// <typeparam name="TInstance">The type of an instance.</typeparam>
+        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
+        /// <typeparam name="TLabel">The type of a label.</typeparam>
+        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
+        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
+        /// <param name="trainedClassifier">A trained Bayes point machine classifier.</param>
+        /// <param name="untrainedClassifier">An untrained Bayes point machine classifier.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckDeserializedStandardPrediction<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> trainedClassifier,
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> untrainedClassifier,
+            TInstanceSource trainingData,
+            TInstanceSource testData,
+            IEnumerable<TLabelDistribution> expectedLabelDistributions,
+            IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction, 
+            TLabelSource labelSource = default)
+            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
+        {
+            // Check that trained classifier still protects settings
+            Assert.Equal(IterationCount, trainedClassifier.Settings.Training.IterationCount);
+            Assert.Equal(IterationCount, untrainedClassifier.Settings.Training.IterationCount);
+            Assert.Throws<InvalidOperationException>(() => { trainedClassifier.Settings.Training.ComputeModelEvidence = false; }); // Guarded: Throw
+            untrainedClassifier.Settings.Training.ComputeModelEvidence = false;
+
+            // Batched training for untrained classifier
+            untrainedClassifier.Settings.Training.BatchCount = 2;
+            untrainedClassifier.Train(trainingData, labelSource);
+
+            checkPrediction(expectedLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+            checkPrediction(expectedLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
+
+            // Incremental training
+            trainedClassifier.TrainIncremental(trainingData, labelSource);
+            untrainedClassifier.TrainIncremental(trainingData, labelSource);
+
+            checkPrediction(expectedIncrementalLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+            checkPrediction(expectedIncrementalLabelDistributions, untrainedClassifier.PredictDistribution(testData), Tolerance);
+        }
+
+        /// <summary>
+        /// Checks the predictions on data in standard format after custom binary deserialization of Bayes point machine classifiers.
+        /// </summary>
+        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
+        /// <typeparam name="TInstance">The type of an instance.</typeparam>
+        /// <typeparam name="TLabelSource">The type of a source of labels.</typeparam>
+        /// <typeparam name="TLabel">The type of a label.</typeparam>
+        /// <typeparam name="TLabelDistribution">The type of a distribution over labels.</typeparam>
+        /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
+        /// <param name="trainedClassifier">A trained Bayes point machine classifier.</param>
+        /// <param name="trainingData">The training data.</param>
+        /// <param name="testData">The prediction data.</param>
+        /// <param name="expectedLabelDistributions">The expected label distributions.</param>
+        /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
+        /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
+        private static void CheckDeserializedStandardPrediction<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> trainedClassifier,
+            TInstanceSource trainingData,
+            TInstanceSource testData,
+            IEnumerable<TLabelDistribution> expectedLabelDistributions,
+            IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
+            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction)
+            where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
+        {
+            // Check that trained classifier still protects settings
+            Assert.Equal(IterationCount, trainedClassifier.Settings.Training.IterationCount);
+            Assert.Throws<InvalidOperationException>(() => { trainedClassifier.Settings.Training.ComputeModelEvidence = false; }); // Guarded: Throw
+
+            checkPrediction(expectedLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+
+            // Incremental training
+            trainedClassifier.TrainIncremental(trainingData);
+
+            checkPrediction(expectedIncrementalLabelDistributions, trainedClassifier.PredictDistribution(testData), Tolerance);
+        }
+
+        /// <summary>
+        /// Checks that the specified deserialization action throws a serialization exception for invalid versions.
+        /// </summary>
+        /// <param name="deserialize">The action which deserializes from a binary reader.</param>
+        private static void CheckCustomSerializationVersionException(Action<IReader> deserialize)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
+                writer.Write(new Guid("57CB3182-7C83-49F3-B56D-C3C7661439F5")); // Invalid serialization guid
+                
+                stream.Seek(0, SeekOrigin.Begin);
+
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                {
+                    Assert.Throws<SerializationException>(() => deserialize(reader));
+                }
+            }
+        }
+
+        #endregion
+
+        /// <summary>
         /// Tests batching of the Bayes point machine classifier.
         /// </summary>
         /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
@@ -4220,8 +5930,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<TStandardLabelDistribution> expectedLabelDistributions,
             IEnumerable<TStandardLabelDistribution> expectedIncrementalLabelDistributions,
             Action<IEnumerable<TStandardLabelDistribution>, IEnumerable<TStandardLabelDistribution>, double> checkPrediction,
-            NativeBayesPointMachineClassifierTestMapping<TNativeLabel> mapping = null)
-            where TInstanceSource : IDataset
+            BayesPointMachineClassifier.NativeBayesPointMachineClassifierTestMapping<TNativeLabel> mapping = null)
+            where TInstanceSource : BayesPointMachineClassifier.IDataset
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             // Train and serialize
@@ -4342,10 +6052,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TLabelDistribution">The type of the distribution over labels in native data format.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private static void TestDenseNativePredictionEmptyFeatures<TLabel, TLabelDistribution>(
-            IPredictor<NativeDataset, int, NativeDataset, TLabel, TLabelDistribution> classifier)
+            IPredictor<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution> classifier)
         {
             // Train on empty feature vectors
-            var data = new NativeDataset
+            var data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 0,
@@ -4357,7 +6067,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Train(data);
 
             // Prediction on empty feature values: OK
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
         }
 
         /// <summary>
@@ -4367,10 +6077,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TLabelDistribution">The type of the distribution over labels in native data format.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private static void TestSparseNativePredictionEmptyFeatures<TLabel, TLabelDistribution>(
-            IPredictor<NativeDataset, int, NativeDataset, TLabel, TLabelDistribution> classifier)
+            IPredictor<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution> classifier)
         {
             // Train on empty feature vectors
-            var data = new NativeDataset
+            var data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 0,
@@ -4382,7 +6092,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Train(data);
 
             // Prediction on empty feature values: OK
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
         }
 
         /// <summary>
@@ -4390,10 +6100,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private static void TestDenseStandardPredictionEmptyFeatures(
-            IPredictor<StandardDataset, string, StandardDataset, string, IDictionary<string, double>> classifier)
+            IPredictor<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>> classifier)
         {
             // Train on empty feature vectors
-            var data = new StandardDataset
+            var data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray() }, { "Second", DenseVector.FromArray() } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "B" } },
@@ -4402,7 +6112,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Train(data);
 
             // Prediction on empty feature values: OK
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
         }
 
         /// <summary>
@@ -4410,10 +6120,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private static void TestSparseStandardPredictionEmptyFeatures(
-            IPredictor<StandardDataset, string, StandardDataset, string, IDictionary<string, double>> classifier)
+            IPredictor<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>> classifier)
         {
             // Train on empty feature vectors
-            var data = new StandardDataset
+            var data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray() }, { "Second", SparseVector.FromArray() } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "B" } },
@@ -4422,7 +6132,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Train(data);
 
             // Prediction on empty feature values: OK
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
         }
 
         /// <summary>
@@ -4672,7 +6382,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private void TestDenseNativeIncrementalTraining<TLabel, TLabelDistribution, TTrainingSettings>(
-            IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier)
+            IBayesPointMachineClassifier<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -4689,7 +6399,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Throws<InvalidOperationException>(() => trainedClassifier.Train(this.denseNativeTrainingData));
 
             // Check different number of instances: OK
-            var nativeData = new NativeDataset
+            var nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 2,
@@ -4701,7 +6411,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.TrainIncremental(nativeData);
 
             // Check different number of features: Throw
-            nativeData = new NativeDataset
+            nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -4722,7 +6432,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private void TestSparseNativeIncrementalTraining<TLabel, TLabelDistribution, TTrainingSettings>(
-            IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier)
+            IBayesPointMachineClassifier<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -4739,7 +6449,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Throws<InvalidOperationException>(() => trainedClassifier.Train(this.sparseNativeTrainingData));
 
             // Check different number of instances: OK
-            var nativeData = new NativeDataset
+            var nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -4751,7 +6461,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.TrainIncremental(nativeData);
 
             // Check different labels: Throw
-            nativeData = new NativeDataset
+            nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -4763,7 +6473,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Throws<BayesPointMachineClassifierException>(() => classifier.TrainIncremental(nativeData));
 
             // Check different number of features: Throw
-            nativeData = new NativeDataset
+            nativeData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -4782,7 +6492,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private void TestDenseStandardIncrementalTraining<TTrainingSettings>(
-            IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier)
+            IBayesPointMachineClassifier<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -4799,7 +6509,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Throws<InvalidOperationException>(() => trainedClassifier.Train(this.denseStandardTrainingData));
 
             // Check different number of instances: OK
-            var standardData = new StandardDataset
+            var standardData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 1) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -4808,7 +6518,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.TrainIncremental(standardData);
 
             // Check different number of features: Throw
-            standardData = new StandardDataset
+            standardData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -4824,7 +6534,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private void TestSparseStandardIncrementalTraining<TTrainingSettings>(
-            IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier)
+            IBayesPointMachineClassifier<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             classifier.Settings.Training.IterationCount = IterationCount;
@@ -4841,7 +6551,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Throws<InvalidOperationException>(() => trainedClassifier.Train(this.sparseStandardTrainingData));
 
             // Check different number of instances: OK
-            var standardData = new StandardDataset
+            var standardData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 1) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -4850,7 +6560,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.TrainIncremental(standardData);
 
             // Check different number of features: Throw
-            standardData = new StandardDataset
+            standardData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -4865,7 +6575,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="nativeTrainingData">The training set in native data format.</param>
         /// <param name="nativePredictionData">The prediction data set in native data format.</param>
         /// <param name="useCompoundWeightPriorDistribution">If true, a classifier with compound prior distribution over weights is used. Defaults to true.</param>
-        private void TestRegressionBinaryNativePrediction(NativeDataset nativeTrainingData, NativeDataset nativePredictionData, bool useCompoundWeightPriorDistribution = true)
+        private void TestRegressionBinaryNativePrediction(BayesPointMachineClassifier.NativeDataset nativeTrainingData, BayesPointMachineClassifier.NativeDataset nativePredictionData, bool useCompoundWeightPriorDistribution = true)
         {
             var classifier = useCompoundWeightPriorDistribution
                                  ? BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping)
@@ -4932,7 +6642,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="nativeTrainingData">The training set in native data format.</param>
         /// <param name="nativePredictionData">The prediction data set in native data format.</param>
         /// <param name="useCompoundWeightPriorDistribution">If true, a classifier with compound prior distribution over weights is used. Defaults to true.</param>
-        private void TestRegressionMulticlassNativePrediction(NativeDataset nativeTrainingData, NativeDataset nativePredictionData, bool useCompoundWeightPriorDistribution = true)
+        private void TestRegressionMulticlassNativePrediction(BayesPointMachineClassifier.NativeDataset nativeTrainingData, BayesPointMachineClassifier.NativeDataset nativePredictionData, bool useCompoundWeightPriorDistribution = true)
         {
             var classifier = useCompoundWeightPriorDistribution
                                  ? BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping)
@@ -4993,7 +6703,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="standardTrainingData">The training set in standard data format.</param>
         /// <param name="standardPredictionData">The prediction data set in standard data format.</param>
         /// <param name="useCompoundWeightPriorDistribution">If true, a classifier with compound prior distribution over weights is used. Defaults to true.</param>
-        private void TestRegressionBinaryStandardPrediction(StandardDataset standardTrainingData, StandardDataset standardPredictionData, bool useCompoundWeightPriorDistribution = true)
+        private void TestRegressionBinaryStandardPrediction(BayesPointMachineClassifier.StandardDataset standardTrainingData, BayesPointMachineClassifier.StandardDataset standardPredictionData, bool useCompoundWeightPriorDistribution = true)
         {
             var classifier = useCompoundWeightPriorDistribution
                                  ? BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping)
@@ -5042,7 +6752,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="standardTrainingData">The training set in standard data format.</param>
         /// <param name="standardPredictionData">The prediction data set in standard data format.</param>
         /// <param name="useCompoundWeightPriorDistribution">If true, a classifier with compound prior distribution over weights is used. Defaults to true.</param>
-        private void TestRegressionMulticlassStandardPrediction(StandardDataset standardTrainingData, StandardDataset standardPredictionData, bool useCompoundWeightPriorDistribution = true)
+        private void TestRegressionMulticlassStandardPrediction(BayesPointMachineClassifier.StandardDataset standardTrainingData, BayesPointMachineClassifier.StandardDataset standardPredictionData, bool useCompoundWeightPriorDistribution = true)
         {
             var classifier = useCompoundWeightPriorDistribution
                                  ? BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping)
@@ -5100,7 +6810,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution);
 
             // Feature values of dimensionality 0: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 0,
@@ -5117,7 +6827,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution); 
 
             // Feature values and labels have inconsistent lengths: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5129,7 +6839,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Label out of range: OK (impossible for bool)
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5141,7 +6851,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution);
 
             // Model for a single class: OK (ignored)
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5153,7 +6863,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, false, useCompoundWeightPriorDistribution);
 
             // All feature values null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5165,7 +6875,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5177,7 +6887,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty feature values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5189,7 +6899,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty labels: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5201,7 +6911,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Negative labels: OK (ignored)
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5213,7 +6923,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, false, useCompoundWeightPriorDistribution); 
 
             // Inconsistent number of feature values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 2,
@@ -5225,7 +6935,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values of a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5237,7 +6947,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution); 
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5249,7 +6959,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5261,7 +6971,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution); 
 
             // The feature values must not contain NaNs: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5291,7 +7001,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution);
 
             // Feature values of dimensionality 0: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 0,
@@ -5308,7 +7018,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution); 
 
             // Feature values and labels have inconsistent lengths: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5320,7 +7030,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Label out of range: OK (impossible for bool)
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5332,7 +7042,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution);
 
             // Model for a single class: OK (ignored)
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5344,7 +7054,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, false, useCompoundWeightPriorDistribution);
 
             // All feature values null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5356,7 +7066,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // All feature indexes null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5368,7 +7078,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5380,7 +7090,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty feature values and indexes: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 0,
@@ -5392,7 +7102,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, false, useCompoundWeightPriorDistribution);
 
             // Empty labels: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5404,7 +7114,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Negative labels: OK (impossible)
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5416,7 +7126,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution);
 
             // Inconsistent number of features: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -5428,7 +7138,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values for a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5440,7 +7150,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature indexes for a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5452,7 +7162,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5464,7 +7174,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5476,7 +7186,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values contain NaNs: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5506,7 +7216,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution); 
 
             // Feature values of dimensionality 0: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 0,
@@ -5523,7 +7233,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution); 
 
             // Feature values and labels have inconsistent lengths: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5535,7 +7245,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Label out of range: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5547,7 +7257,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Model for a single class: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5559,7 +7269,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // All feature values are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5571,7 +7281,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5583,7 +7293,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty feature values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5595,7 +7305,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty labels: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5607,7 +7317,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Negative labels: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5619,7 +7329,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Inconsistent number of feature values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 2,
@@ -5631,7 +7341,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values of a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5643,7 +7353,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5655,7 +7365,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5667,7 +7377,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution); 
 
             // The feature values contain NaNs: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 1,
@@ -5697,7 +7407,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution);
 
             // Feature values of dimensionality 0: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 0,
@@ -5714,7 +7424,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution); 
 
             // Feature values and labels have inconsistent lengths: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5726,7 +7436,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Label out of range: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5738,7 +7448,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Model for a single class: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5750,7 +7460,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // All feature values are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5762,7 +7472,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // All feature indexes are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5774,7 +7484,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5786,7 +7496,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty feature values: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 0,
@@ -5798,7 +7508,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, false, useCompoundWeightPriorDistribution);
 
             // Empty labels: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5810,7 +7520,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Negative labels: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5822,7 +7532,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // Inconsistent number of features: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -5834,7 +7544,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values of a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5846,7 +7556,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature indexes of a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5858,7 +7568,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5870,7 +7580,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5882,7 +7592,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassNativeTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution); 
 
             // The feature values contain NaNs: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -5904,7 +7614,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         private void TestDenseBinaryStandardTraining(bool useCompoundWeightPriorDistribution = true)
         {
             // Feature vector of dimensionality 0: OK
-            var data = new StandardDataset
+            var data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray() } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -5949,7 +7659,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Model for a single class: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -5958,7 +7668,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -5967,7 +7677,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -5976,7 +7686,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = null,
@@ -5985,7 +7695,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", null } },
@@ -5994,7 +7704,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Instances null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = null,
@@ -6003,7 +7713,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6012,7 +7722,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string>(),
@@ -6021,7 +7731,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty feature vectors (and labels): Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string>(),
@@ -6030,7 +7740,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // More labels than feature vectors: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6039,7 +7749,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // More feature vectors than labels: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) }, { "Second", DenseVector.FromArray(1.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6048,7 +7758,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Inconsistent number of features: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) }, { "Second", DenseVector.FromArray(0, 1) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6057,7 +7767,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(double.NegativeInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6066,7 +7776,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(double.PositiveInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6075,7 +7785,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain NaNs: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(double.NaN) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6084,7 +7794,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not be null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) }, { "Second", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6103,7 +7813,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         private void TestSparseBinaryStandardTraining(bool useCompoundWeightPriorDistribution = true)
         {
             // Feature vector of dimensionality 0: OK
-            var data = new StandardDataset
+            var data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray() } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6148,7 +7858,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Model for a single class: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6157,7 +7867,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6166,7 +7876,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6175,7 +7885,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = null,
@@ -6184,7 +7894,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", null } },
@@ -6193,7 +7903,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Instances null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = null,
@@ -6202,7 +7912,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6211,7 +7921,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string>(),
@@ -6220,7 +7930,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty feature vectors (and labels): Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string>(),
@@ -6229,7 +7939,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // More labels than feature vectors: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6238,7 +7948,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // More feature vectors than labels: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) }, { "Second", SparseVector.FromArray(1.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6247,7 +7957,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Inconsistent number of features: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) }, { "Second", SparseVector.FromArray(0, 1, 2) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6256,7 +7966,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(double.NegativeInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6265,7 +7975,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(double.PositiveInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6274,7 +7984,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain NaNs: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(double.NaN) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6283,7 +7993,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckBinaryStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not be null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) }, { "Second", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6302,7 +8012,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         private void TestDenseMulticlassStandardTraining(bool useCompoundWeightPriorDistribution = true)
         {
             // Feature vector of dimensionality 0: OK
-            var data = new StandardDataset
+            var data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray() } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6343,7 +8053,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Model for a single class: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6352,7 +8062,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6361,7 +8071,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6370,7 +8080,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = null,
@@ -6379,7 +8089,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", null } },
@@ -6388,7 +8098,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Instances null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = null,
@@ -6397,7 +8107,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6406,7 +8116,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string>(),
@@ -6415,7 +8125,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty feature vectors (and labels): Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string>(),
@@ -6424,7 +8134,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // More labels than feature vectors: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6433,7 +8143,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // More feature vectors than labels: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) }, { "Second", DenseVector.FromArray(1.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6442,7 +8152,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Inconsistent number of features: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) }, { "Second", DenseVector.FromArray(0, 1) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6451,7 +8161,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(double.NegativeInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6460,7 +8170,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(double.PositiveInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6469,7 +8179,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain NaNs: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(double.NaN) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6478,7 +8188,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not be null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) }, { "Second", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6497,7 +8207,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         private void TestSparseMulticlassStandardTraining(bool useCompoundWeightPriorDistribution = true)
         {
             // Feature vector of dimensionality 0: OK
-            var data = new StandardDataset
+            var data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray() } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6538,7 +8248,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Model for a single class: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6547,7 +8257,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6556,7 +8266,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6565,7 +8275,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = null,
@@ -6574,7 +8284,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", null } },
@@ -6583,7 +8293,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Instances null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = null,
@@ -6592,7 +8302,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Feature vectors null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6601,7 +8311,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Labels null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string>(),
@@ -6610,7 +8320,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Empty feature vectors (and labels): Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string>(),
@@ -6619,7 +8329,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // More labels than feature vectors: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6628,7 +8338,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // More feature vectors than labels: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) }, { "Second", SparseVector.FromArray(1.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6637,7 +8347,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // Inconsistent number of features: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) }, { "Second", SparseVector.FromArray(0, 1, 2) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6646,7 +8356,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<BayesPointMachineClassifierException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(double.NegativeInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6655,7 +8365,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(double.PositiveInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6664,7 +8374,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not contain NaNs: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(double.NaN) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
@@ -6673,7 +8383,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.CheckMulticlassStandardTrainException<MappingException>(data, true, useCompoundWeightPriorDistribution);
 
             // A feature vector must not be null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) }, { "Second", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
@@ -6692,14 +8402,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="data">The data to test in native format.</param>
         /// <param name="mustThrow">Indicates whether the tested code must throw an exception of type <typeparamref name="TException"/>.</param>
         /// <param name="useCompoundWeightPriorDistribution">If true, a classifier with compound prior distribution over weights is used. Defaults to true.</param>
-        private void CheckBinaryNativeTrainException<TException>(NativeDataset data, bool mustThrow, bool useCompoundWeightPriorDistribution = true) 
+        private void CheckBinaryNativeTrainException<TException>(BayesPointMachineClassifier.NativeDataset data, bool mustThrow, bool useCompoundWeightPriorDistribution = true) 
             where TException : Exception
         {
             var classifier = useCompoundWeightPriorDistribution
                                  ? BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping)
                                  : BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping);
 
-            CheckTrainException<TException, NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings>(classifier, data, mustThrow);
+            CheckTrainException<TException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings>(classifier, data, mustThrow);
         }
 
         /// <summary>
@@ -6709,14 +8419,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="data">The data to test in native format.</param>
         /// <param name="mustThrow">Indicates whether the tested code must throw an exception of type <typeparamref name="TException"/>.</param>
         /// <param name="useCompoundWeightPriorDistribution">If true, a classifier with compound prior distribution over weights is used. Defaults to true.</param>
-        private void CheckMulticlassNativeTrainException<TException>(NativeDataset data, bool mustThrow, bool useCompoundWeightPriorDistribution = true) 
+        private void CheckMulticlassNativeTrainException<TException>(BayesPointMachineClassifier.NativeDataset data, bool mustThrow, bool useCompoundWeightPriorDistribution = true) 
             where TException : Exception
         {
             var classifier = useCompoundWeightPriorDistribution
                                  ? BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping)
                                  : BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping);
 
-            CheckTrainException<TException, NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings>(classifier, data, mustThrow);
+            CheckTrainException<TException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings>(classifier, data, mustThrow);
         }
 
         /// <summary>
@@ -6726,14 +8436,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="data">The data to test in standard format.</param>
         /// <param name="mustThrow">Indicates whether the tested code must throw an exception of type <typeparamref name="TException"/>.</param>
         /// <param name="useCompoundWeightPriorDistribution">If true, a classifier with compound prior distribution over weights is used. Defaults to true.</param>
-        private void CheckBinaryStandardTrainException<TException>(StandardDataset data, bool mustThrow, bool useCompoundWeightPriorDistribution = true) 
+        private void CheckBinaryStandardTrainException<TException>(BayesPointMachineClassifier.StandardDataset data, bool mustThrow, bool useCompoundWeightPriorDistribution = true) 
             where TException : Exception
         {
             var classifier = useCompoundWeightPriorDistribution
                                  ? BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping)
                                  : BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping);
 
-            CheckTrainException<TException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(classifier, data, mustThrow);
+            CheckTrainException<TException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(classifier, data, mustThrow);
         }
 
         /// <summary>
@@ -6743,14 +8453,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="data">The data to test in standard format.</param>
         /// <param name="mustThrow">Indicates whether the tested code must throw an exception of type <typeparamref name="TException"/>.</param>
         /// <param name="useCompoundWeightPriorDistribution">If true, a classifier with compound prior distribution over weights is used. Defaults to true.</param>
-        private void CheckMulticlassStandardTrainException<TException>(StandardDataset data, bool mustThrow, bool useCompoundWeightPriorDistribution = true) 
+        private void CheckMulticlassStandardTrainException<TException>(BayesPointMachineClassifier.StandardDataset data, bool mustThrow, bool useCompoundWeightPriorDistribution = true) 
             where TException : Exception
         {
             var classifier = useCompoundWeightPriorDistribution
                                  ? BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping)
                                  : BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping);
 
-            CheckTrainException<TException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(classifier, data, mustThrow);
+            CheckTrainException<TException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(classifier, data, mustThrow);
         }
 
         /// <summary>
@@ -6761,7 +8471,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private void TestDenseNativePrediction<TLabel, TLabelDistribution, TTrainingSettings>(
-            IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier)
+            IBayesPointMachineClassifier<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             // Train classifier
@@ -6770,18 +8480,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var data = this.denseNativePredictionData;
 
             // Default prediction data: OK
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // Wrong number of classes: OK
             data.ClassCount = 0;
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
             data.ClassCount = 1;
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
             data.ClassCount = 2;
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // Labels null: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6790,10 +8500,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = null
                        };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // New labels in test set: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6802,10 +8512,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 666 }
                        };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // Empty labels: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6814,10 +8524,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new int[] { }
                        };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // Feature values and labels have inconsistent lengths: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6826,10 +8536,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0, 0 }
                        };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // The number of features is inconsistent with training: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 0,
@@ -6838,10 +8548,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0 }
                        };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The number of features is inconsistent with training: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 1,
@@ -6850,10 +8560,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0 }
                        };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // All feature values null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6862,10 +8572,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0 }
                        };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // Empty feature values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6874,10 +8584,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0 }
                        };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // Inconsistent feature value dimensions: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6886,10 +8596,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0, 0 }
                        };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6898,10 +8608,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0, 0 }
                        };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6910,10 +8620,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0, 0 }
                        };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature values contain NaNs: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6922,10 +8632,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0, 0 }
                        };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature values of a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
                        {
                            IsSparse = false,
                            FeatureCount = 2,
@@ -6934,11 +8644,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                            ClassCount = 3,
                            Labels = new[] { 0, 0 }
                        };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // Data is null: Throw (in user code/user data mapping)
-            CheckPredictionException<ArgumentNullException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, null, true);
-            CheckSinglePredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, null, 0, true);
+            CheckPredictionException<ArgumentNullException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, null, true);
+            CheckSinglePredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, null, 0, true);
         }
 
         /// <summary>
@@ -6949,7 +8659,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private void TestSparseNativePrediction<TLabel, TLabelDistribution, TTrainingSettings>(
-            IBayesPointMachineClassifier<NativeDataset, int, NativeDataset, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier)
+            IBayesPointMachineClassifier<BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             // Train classifier
@@ -6958,18 +8668,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var data = this.sparseNativePredictionData;
 
             // Default prediction data: OK
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // Wrong number of classes: OK
             data.ClassCount = 0;
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false); 
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false); 
             data.ClassCount = 1;
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false); 
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false); 
             data.ClassCount = 2;
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // Labels null: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -6978,10 +8688,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = null
             };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // New labels in test set: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -6990,10 +8700,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 666 }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // Empty labels: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7002,10 +8712,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new int[] { }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false);
 
             // Feature values and labels have inconsistent lengths: OK
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7014,10 +8724,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0, 0 }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, false); 
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, false); 
 
             // The number of features is inconsistent with training: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 0,
@@ -7026,10 +8736,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0 }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true); 
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true); 
 
              // The number of features is inconsistent with training: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 1,
@@ -7038,10 +8748,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0 }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // All feature values are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7050,10 +8760,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0 }
             };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // Empty feature values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7062,10 +8772,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0 }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // Inconsistent feature (index) dimensions: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7074,10 +8784,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0, 0 }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7086,10 +8796,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0, 0 }
             };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature values contain infinite values: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7098,10 +8808,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0, 0 }
             };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature values contain NaNs: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7110,10 +8820,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0, 0 }
             };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature values of a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7122,10 +8832,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0, 0 }
             };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // The feature indexes of a single instance are null: Throw
-            data = new NativeDataset
+            data = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7134,11 +8844,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassCount = 3,
                 Labels = new[] { 0, 0 }
             };
-            CheckPredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, data, true);
 
             // Data is null: Throw (in user code/user data mapping)
-            CheckPredictionException<ArgumentNullException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, null, true);
-            CheckSinglePredictionException<MappingException, NativeDataset, int, NativeDataset, TLabel, TLabelDistribution>(classifier, null, 0, true);
+            CheckPredictionException<ArgumentNullException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, null, true);
+            CheckSinglePredictionException<MappingException, BayesPointMachineClassifier.NativeDataset, int, BayesPointMachineClassifier.NativeDataset, TLabel, TLabelDistribution>(classifier, null, 0, true);
         }
 
         /// <summary>
@@ -7147,7 +8857,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private void TestDenseStandardPrediction<TTrainingSettings>(
-            IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier)
+            IBayesPointMachineClassifier<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             // Train classifier
@@ -7156,177 +8866,177 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Default prediction data: OK
             var data = this.denseStandardPredictionData;
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // Wrong number of classes: OK
             data.ClassLabels = new string[] { };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false); 
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false); 
             data.ClassLabels = new[] { "A" };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false); 
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false); 
             data.ClassLabels = new[] { "A", "B" };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // A single label is null: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) } },
                 Labels = new Dictionary<string, string> { { "First", null } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // All labels are null: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) } },
                 Labels = null,
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // The labels are empty: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) } },
                 Labels = new Dictionary<string, string>(),
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // New label in test set: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) } },
                 Labels = new Dictionary<string, string> { { "First", "D" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // More labels than feature vectors: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0, 0.0) }, { "Second", DenseVector.FromArray(0.0, 1.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // The number of features is inconsistent with training: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray() } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // The number of features is inconsistent with training: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // More instances / labels than feature vectors: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0.0, 2.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A single feature vector is null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // All feature vectors are null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // All feature vectors are null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // Instances / labels are null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string>(),
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // Unknown instance: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "FortyTwo", DenseVector.FromArray(0, 2) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // Inconsistent feature vector dimensions: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) }, { "Second", DenseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A feature vector contains infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) }, { "Second", DenseVector.FromArray(0, double.NegativeInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A feature vector contains infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) }, { "Second", DenseVector.FromArray(0, double.PositiveInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A feature vector contains NaNs: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) }, { "Second", DenseVector.FromArray(0, double.NaN) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A single feature vector is null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", DenseVector.FromArray(0, 2) }, { "Second", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true); 
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true); 
 
             // Instance or instance source are null: Throw
             Assert.Throws<ArgumentNullException>(() => classifier.PredictDistribution(null));
@@ -7344,7 +9054,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <typeparam name="TTrainingSettings">The type of the settings for training.</typeparam>
         /// <param name="classifier">The Bayes point machine classifier.</param>
         private void TestSparseStandardPrediction<TTrainingSettings>(
-            IBayesPointMachineClassifier<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier)
+            IBayesPointMachineClassifier<BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             // Train classifier
@@ -7353,177 +9063,177 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Default prediction data: OK
             var data = this.sparseStandardPredictionData;
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // Wrong number of classes: OK
             data.ClassLabels = new string[] { };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
             data.ClassLabels = new[] { "A" };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
             data.ClassLabels = new[] { "A", "B" };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // A single label is null: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) } },
                 Labels = new Dictionary<string, string> { { "First", null } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // All labels are null: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) } },
                 Labels = null,
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // The labels are empty: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) } },
                 Labels = new Dictionary<string, string>(),
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // New label in test set: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) } },
                 Labels = new Dictionary<string, string> { { "First", "D" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // More labels than feature vectors: OK
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0, 0.0) }, { "Second", SparseVector.FromArray(0.0, 1.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, false);
 
             // The number of features is inconsistent with training: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray() } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // The number of features is inconsistent with training: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // More instances / labels than feature vectors: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0.0, 2.0) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A single feature vector is null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // All feature vectors are null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = null,
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // All feature vectors are null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // Instances / labels are null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>(),
                 Labels = new Dictionary<string, string>(),
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // Unknown instance: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "FortyTwo", SparseVector.FromArray(0, 2) } },
                 Labels = new Dictionary<string, string> { { "First", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // Inconsistent feature vector dimensions: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) }, { "Second", SparseVector.FromArray(0, 1, 2) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<BayesPointMachineClassifierException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<BayesPointMachineClassifierException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A feature vector contains infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) }, { "Second", SparseVector.FromArray(0, double.NegativeInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A feature vector contains infinite values: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) }, { "Second", SparseVector.FromArray(0, double.PositiveInfinity) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A feature vector contains NaNs: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) }, { "Second", SparseVector.FromArray(0, double.NaN) } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // A single feature vector is null: Throw
-            data = new StandardDataset
+            data = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector> { { "First", SparseVector.FromArray(0, 2) }, { "Second", null } },
                 Labels = new Dictionary<string, string> { { "First", "A" }, { "Second", "A" } },
                 ClassLabels = new[] { "A", "B", "C" }
             };
-            CheckPredictionException<MappingException, StandardDataset, string, StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
+            CheckPredictionException<MappingException, BayesPointMachineClassifier.StandardDataset, string, BayesPointMachineClassifier.StandardDataset, string, IDictionary<string, double>>(classifier, data, true);
 
             // Instance or instance source are null: Throw
             Assert.Throws<ArgumentNullException>(() => classifier.PredictDistribution(null));
@@ -7617,7 +9327,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         private void InitializeNativeData()
         {
-            this.denseNativeTrainingData = new NativeDataset
+            this.denseNativeTrainingData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 2,
@@ -7627,7 +9337,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 Labels = new[] { 0, 1, 2 }
             };
 
-            this.sparseNativeTrainingData = new NativeDataset
+            this.sparseNativeTrainingData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7637,7 +9347,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 Labels = new[] { 0, 1, 2 }
             };
 
-            this.denseNativePredictionData = new NativeDataset
+            this.denseNativePredictionData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = false,
                 FeatureCount = 2,
@@ -7647,7 +9357,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 Labels = new[] { 2, 1 }
             };
 
-            this.sparseNativePredictionData = new NativeDataset
+            this.sparseNativePredictionData = new BayesPointMachineClassifier.NativeDataset
             {
                 IsSparse = true,
                 FeatureCount = 2,
@@ -7657,8 +9367,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 Labels = new[] { 2, 1 }
             };
 
-            this.binaryNativeMapping = new BinaryNativeBayesPointMachineClassifierTestMapping();
-            this.multiclassNativeMapping = new MulticlassNativeBayesPointMachineClassifierTestMapping();
+            this.binaryNativeMapping = new BayesPointMachineClassifier.BinaryNativeBayesPointMachineClassifierTestMapping();
+            this.multiclassNativeMapping = new BayesPointMachineClassifier.MulticlassNativeBayesPointMachineClassifierTestMapping();
         }
 
         /// <summary>
@@ -7695,7 +9405,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 2
             };
 
-            this.denseStandardTrainingData = new StandardDataset
+            this.denseStandardTrainingData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>
                 {
@@ -7709,7 +9419,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassLabels = classLabels
             };
 
-            this.sparseStandardTrainingData = new StandardDataset
+            this.sparseStandardTrainingData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>
                 {
@@ -7729,7 +9439,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 DenseVector.FromArray(4, 0)
             };
 
-            this.denseStandardPredictionData = new StandardDataset
+            this.denseStandardPredictionData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>
                 {
@@ -7742,7 +9452,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassLabels = classLabels
             };
 
-            this.sparseStandardPredictionData = new StandardDataset
+            this.sparseStandardPredictionData = new BayesPointMachineClassifier.StandardDataset
             {
                 FeatureVectors = new Dictionary<string, Vector>
                 {
@@ -7755,702 +9465,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 ClassLabels = classLabels
             };
 
-            this.binaryStandardMapping = new BinaryStandardBayesPointMachineClassifierTestMapping();
-            this.multiclassStandardMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping();
-        }
-
-        #endregion
-
-        #region Datasets
-
-        /// <summary>
-        /// Represents a dataset in the native format of the Bayes point machine classifier.
-        /// </summary>
-        private class NativeDataset : IDataset
-        {
-            /// <summary>
-            /// The label of the negative class.
-            /// </summary>
-            private const int NegativeClassLabel = 0;
-
-            /// <summary>
-            /// The multi-class labels.
-            /// </summary>
-            private int[] multiclassLabels;
-
-            /// <summary>
-            /// Gets or sets a value indicating whether the features are in a sparse or a dense representation.
-            /// </summary>
-            public bool IsSparse { get; set; }
-
-            /// <summary>
-            /// Gets the number of instances.
-            /// </summary>
-            public int InstanceCount 
-            {
-                get
-                {
-                    Assert.Equal(this.FeatureValues.Length, this.Labels.Length);
-                    return this.FeatureValues.Length;
-                }
-            }
-
-            /// <summary>
-            /// Gets or sets the total number of features.
-            /// </summary>
-            public int FeatureCount { get; set; }
-
-            /// <summary>
-            /// Gets or sets the number of classes of the classifier.
-            /// </summary>
-            public int ClassCount { get; set; }
-
-            /// <summary>
-            /// Gets or sets the feature values.
-            /// </summary>
-            public double[][] FeatureValues { get; set; }
-
-            /// <summary>
-            /// Gets or sets the feature indexes.
-            /// </summary>
-            public int[][] FeatureIndexes { get; set; }
-
-            /// <summary>
-            /// Gets or sets the multi-class labels.
-            /// </summary>
-            public int[] Labels 
-            {
-                get
-                {
-                    return this.multiclassLabels;
-                }
-
-                set
-                {
-                    this.SetLabels(value);
-                }
-            }
-
-            /// <summary>
-            /// Gets the binary labels.
-            /// </summary>
-            public bool[] BinaryLabels { get; private set; }
-
-            /// <summary>
-            /// Sets both multi-class and binary labels.
-            /// </summary>
-            /// <param name="labels">The multi-class labels.</param>
-            /// <remarks>
-            /// The binary labels are created from the multi-class labels 
-            /// where the value 0 is interpreted as false and everything else as true.
-            /// </remarks>
-            private void SetLabels(int[] labels)
-            {
-                this.multiclassLabels = labels;
-
-                if (labels == null)
-                {
-                    this.BinaryLabels = null;
-                }
-                else
-                {
-                    this.BinaryLabels = new bool[labels.Length];
-                    for (int i = 0; i < labels.Length; i++)
-                    {
-                        if (labels[i] != NegativeClassLabel)
-                        {
-                            this.BinaryLabels[i] = true;
-                        }
-                        else
-                        {
-                            this.BinaryLabels[i] = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Represents a dataset in the standard format of the Bayes point machine classifier.
-        /// </summary>
-        private class StandardDataset : IDataset
-        {
-            /// <summary>
-            /// The label of the negative class.
-            /// </summary>
-            private const string NegativeClassLabel = "A";
-
-            /// <summary>
-            /// The multi-class labels.
-            /// </summary>
-            private Dictionary<string, string> multiclassLabels;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="StandardDataset"/> class.
-            /// </summary>
-            public StandardDataset()
-            {
-                this.BinaryClassLabels = new[] { "False", "True" };
-            }
-
-            /// <summary>
-            /// Gets the number of instances.
-            /// </summary>
-            public int InstanceCount
-            {
-                get
-                {
-                    Assert.Equal(this.FeatureVectors.Count, this.Labels.Count);
-                    return this.FeatureVectors.Count;
-                }
-            }
-
-            /// <summary>
-            /// Gets or sets the feature vectors for instances.
-            /// </summary>
-            public Dictionary<string, Vector> FeatureVectors { get; set; }
-
-            /// <summary>
-            /// Gets or sets the multi-class labels.
-            /// </summary>
-            public Dictionary<string, string> Labels
-            {
-                get
-                {
-                    return this.multiclassLabels;
-                }
-
-                set
-                {
-                    this.SetLabels(value);
-                }
-            }
-
-            /// <summary>
-            /// Gets the binary labels.
-            /// </summary>
-            public Dictionary<string, string> BinaryLabels { get; private set; }
-
-            /// <summary>
-            /// Gets or sets the class labels of the multi-class classifier.
-            /// </summary>
-            public string[] ClassLabels { get; set; }
-
-            /// <summary>
-            /// Gets or sets the class labels of the binary classifier.
-            /// </summary>
-            public string[] BinaryClassLabels { get; set; }
-
-            /// <summary>
-            /// Sets both multi-class and binary labels.
-            /// </summary>
-            /// <param name="labels">The multi-class labels.</param>
-            /// <remarks>
-            /// The binary labels are created from the multi-class labels where
-            /// the string "A" is interpreted as false and everything else as true.
-            /// </remarks>
-            private void SetLabels(Dictionary<string, string> labels)
-            {
-                this.multiclassLabels = labels;
-
-                if (labels == null)
-                {
-                    this.BinaryLabels = null;
-                }
-                else
-                {
-                    this.BinaryLabels = new Dictionary<string, string>();
-                    foreach (KeyValuePair<string, string> label in labels)
-                    {
-                        string binaryLabel = null;
-                        if (label.Value != null)
-                        {
-                            binaryLabel = label.Value.Equals(NegativeClassLabel) ? this.BinaryClassLabels[0] : this.BinaryClassLabels[1];
-                        }
-
-                        this.BinaryLabels.Add(label.Key, binaryLabel);
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region Mappings
-
-        /// <summary>
-        /// An abstract base class implementation of <see cref="IBayesPointMachineClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel}"/> 
-        /// for <see cref="NativeDataset"/>.
-        /// </summary>
-        /// <typeparam name="TLabel">The type of a label in native data format.</typeparam>
-        [Serializable]
-        private abstract class NativeBayesPointMachineClassifierTestMapping<TLabel> 
-            : IBayesPointMachineClassifierMapping<NativeDataset, int, NativeDataset, TLabel>, ICustomSerializable
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="NativeBayesPointMachineClassifierTestMapping{TLabel}"/> class.
-            /// </summary>
-            protected NativeBayesPointMachineClassifierTestMapping()
-            {
-                this.BatchCount = 1;
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="NativeBayesPointMachineClassifierTestMapping{TLabel}"/> class.
-            /// </summary>
-            /// <param name="reader">The reader to load the mapping from.</param>
-            protected NativeBayesPointMachineClassifierTestMapping(IReader reader)
-            {
-                this.BatchCount = reader.ReadInt32();
-            }
-
-            /// <summary>
-            /// Gets or sets the number of batches.
-            /// </summary>
-            public int BatchCount { get; set; }
-
-            /// <summary>
-            /// Indicates whether the feature representation provided by the instance source is sparse or dense.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <returns>True, if the feature representation is sparse and false if it is dense.</returns>
-            public bool IsSparse(NativeDataset instanceSource)
-            {
-                return instanceSource.IsSparse;
-            }
-
-            /// <summary>
-            /// Provides the total number of features for the specified instance source.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <returns>The total number of features.</returns>
-            public int GetFeatureCount(NativeDataset instanceSource)
-            {
-                return instanceSource.FeatureCount;
-            }
-
-            /// <summary>
-            /// Provides the number of classes that the Bayes point machine classifier is used for.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="labelSource">The label source.</param>
-            /// <returns>The number of classes that the Bayes point machine classifier is used for.</returns>
-            public int GetClassCount(NativeDataset instanceSource, NativeDataset labelSource)
-            {
-                return instanceSource.ClassCount;
-            }
-
-            /// <summary>
-            /// Provides the feature values for a specified instance.
-            /// </summary>
-            /// <param name="instance">The instance.</param>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <returns>The feature values for the specified instance.</returns>
-            public double[] GetFeatureValues(int instance, NativeDataset instanceSource)
-            {
-                if (instanceSource == null || instanceSource.FeatureValues == null)
-                {
-                    return null;
-                }
-
-                return instanceSource.FeatureValues[instance];
-            }
-
-            /// <summary>
-            /// Provides the feature indexes for a specified instance.
-            /// </summary>
-            /// <param name="instance">The instance.</param>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <returns>The feature indexes for the specified instance. Null if feature values are in a dense representation.</returns>
-            public int[] GetFeatureIndexes(int instance, NativeDataset instanceSource)
-            {
-                if (instanceSource == null || instanceSource.FeatureIndexes == null)
-                {
-                    return null;
-                }
-
-                return instanceSource.FeatureIndexes[instance];
-            }
-
-            /// <summary>
-            /// Provides the feature values of all instances from the specified batch of the instance source.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="batchNumber">An optional batch number. Defaults to 0 and is used only if the instance source is divided into batches.</param>
-            /// <returns>The feature values provided by the specified batch of the instance source.</returns>
-            public double[][] GetFeatureValues(NativeDataset instanceSource, int batchNumber = 0)
-            {
-                return instanceSource == null || instanceSource.FeatureValues == null ? null : Utilities.GetBatch(batchNumber, instanceSource.FeatureValues, this.BatchCount).ToArray();
-            }
-
-            /// <summary>
-            /// Provides the feature indexes of all instances from the specified batch of the instance source.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="batchNumber">An optional batch number. Defaults to 0 and is used only if the instance source is divided into batches.</param>
-            /// <returns>
-            /// The feature indexes provided by the specified batch of the instance source. Null if feature values are in a dense representation.
-            /// </returns>
-            public int[][] GetFeatureIndexes(NativeDataset instanceSource, int batchNumber = 0)
-            {
-                return instanceSource == null || instanceSource.FeatureIndexes == null ? null : Utilities.GetBatch(batchNumber, instanceSource.FeatureIndexes, this.BatchCount).ToArray();
-            }
-
-            /// <summary>
-            /// Provides the labels of all instances from the specified batch of the instance source.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="labelSource">A label source.</param>
-            /// <param name="batchNumber">An optional batch number. Defaults to 0 and is used only if the instance and label sources are divided into batches.</param>
-            /// <returns>The labels provided by the specified batch of the sources.</returns>
-            public abstract TLabel[] GetLabels(NativeDataset instanceSource, NativeDataset labelSource, int batchNumber = 0);
-
-            /// <summary>
-            /// Saves the state of the native data mapping using a writer to a binary stream.
-            /// </summary>
-            /// <param name="writer">The writer to save the state of the native data mapping to.</param>
-            public void SaveForwardCompatible(IWriter writer)
-            {
-                writer.Write(this.BatchCount);
-            }
-        }
-
-        /// <summary>
-        /// An implementation of <see cref="IBayesPointMachineClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel}"/> 
-        /// for <see cref="NativeDataset"/> and <see cref="bool"/> labels.
-        /// </summary>
-        [Serializable]
-        private class BinaryNativeBayesPointMachineClassifierTestMapping :
-            NativeBayesPointMachineClassifierTestMapping<bool>
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="BinaryNativeBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            public BinaryNativeBayesPointMachineClassifierTestMapping()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="BinaryNativeBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            /// <param name="reader">The reader to load the mapping from.</param>
-            public BinaryNativeBayesPointMachineClassifierTestMapping(IReader reader) : base(reader)
-            {
-            }
-
-            /// <summary>
-            /// Provides the labels of all instances from the specified batch of the instance source.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="labelSource">A label source.</param>
-            /// <param name="batchNumber">An optional batch number. Defaults to 0 and is used only if the instance and label sources are divided into batches.</param>
-            /// <returns>The labels provided by the specified batch of the sources.</returns>
-            public override bool[] GetLabels(NativeDataset instanceSource, NativeDataset labelSource, int batchNumber = 0)
-            {
-                return instanceSource == null || instanceSource.BinaryLabels == null ? null : Utilities.GetBatch(batchNumber, instanceSource.BinaryLabels, this.BatchCount).ToArray();
-            }
-        }
-
-        /// <summary>
-        /// An implementation of <see cref="IBayesPointMachineClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel}"/> 
-        /// for <see cref="NativeDataset"/> and <see cref="int"/> labels.
-        /// </summary>
-        [Serializable]
-        private class MulticlassNativeBayesPointMachineClassifierTestMapping :
-            NativeBayesPointMachineClassifierTestMapping<int>
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MulticlassNativeBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            public MulticlassNativeBayesPointMachineClassifierTestMapping()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MulticlassNativeBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            /// <param name="reader">The reader to load the mapping from.</param>
-            public MulticlassNativeBayesPointMachineClassifierTestMapping(IReader reader) : base(reader)
-            {
-            }
-
-            /// <summary>
-            /// Provides the labels of all instances from the specified batch of the instance source.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="labelSource">A label source.</param>
-            /// <param name="batchNumber">An optional batch number. Defaults to 0 and is used only if the instance and label sources are divided into batches.</param>
-            /// <returns>The labels provided by the specified batch of the sources.</returns>
-            public override int[] GetLabels(NativeDataset instanceSource, NativeDataset labelSource, int batchNumber = 0)
-            {
-                return instanceSource == null || instanceSource.Labels == null ? null : Utilities.GetBatch(batchNumber, instanceSource.Labels, this.BatchCount).ToArray();
-            }
-        }
-
-        private class BinarySimpleTestMapping<TLabel> : ClassifierMapping<IReadOnlyList<Vector>, int, IReadOnlyList<TLabel>, TLabel, Vector>
-        {
-            public override IEnumerable<int> GetInstances(IReadOnlyList<Vector> featureVectors)
-            {
-                for (int instance = 0; instance < featureVectors.Count; instance++)
-                {
-                    yield return instance;
-                }
-            }
-
-            public override Vector GetFeatures(int instance, IReadOnlyList<Vector> featureVectors)
-            {
-                return featureVectors[instance];
-            }
-
-            public override TLabel GetLabel(int instance, IReadOnlyList<Vector> featureVectors, IReadOnlyList<TLabel> labels)
-            {
-                return labels[instance];
-            }
-
-            public override IEnumerable<TLabel> GetClassLabels(
-                IReadOnlyList<Vector> featureVectors = null, IReadOnlyList<TLabel> labels = null)
-            {
-                if (true is TLabel t && false is TLabel f)
-                {
-                    // This array is intentionally out of order
-                    return new[] { t, f };
-                }
-                else if (0 is TLabel zero && 1 is TLabel one)
-                {
-                    // This array is intentionally out of order
-                    return new[] { one, zero };
-                }
-                else throw new NotImplementedException();
-            }
-        }
-
-        /// <summary>
-        /// An implementation of <see cref="IClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel, TFeatureValues}"/> 
-        /// for <see cref="StandardDataset"/> and multiple class labels.
-        /// </summary>
-        [Serializable]
-        private class MulticlassSimpleBayesPointMachineClassifierTestMapping<TLabel> : BinarySimpleTestMapping<TLabel>
-        {
-            public override IEnumerable<TLabel> GetClassLabels(
-                IReadOnlyList<Vector> featureVectors = null, IReadOnlyList<TLabel> labels = null)
-            {
-                if (0 is TLabel zero && 1 is TLabel one && 2 is TLabel two)
-                {
-                    // This array is intentionally out of order
-                    return new[] { one, two, zero };
-                }
-                else throw new NotImplementedException();
-            }
-        }
-
-        /// <summary>
-        /// An abstract base class implementation of <see cref="IClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel, TFeatureValues}"/> 
-        /// for <see cref="StandardDataset"/>.
-        /// </summary>
-        [Serializable]
-        private abstract class StandardBayesPointMachineClassifierTestMapping :
-            ClassifierMapping<StandardDataset, string, StandardDataset, string, Vector>, ICustomSerializable
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="StandardBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            protected StandardBayesPointMachineClassifierTestMapping()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="StandardBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            /// <param name="reader">The reader to load the mapping from.</param>
-            protected StandardBayesPointMachineClassifierTestMapping(IReader reader)
-            {
-            }
-
-            /// <summary>
-            /// Retrieves a list of instances from a given source.
-            /// </summary>
-            /// <param name="instanceSource">The source of instances.</param>
-            /// <returns>The retrieved list of instances.</returns>
-            public override IEnumerable<string> GetInstances(StandardDataset instanceSource)
-            {
-                if (instanceSource == null)
-                {
-                    return null;
-                }
-
-                if (instanceSource.FeatureVectors == null)
-                {
-                    return instanceSource.Labels == null ? null : instanceSource.Labels.Keys;
-                }
-
-                if (instanceSource.Labels == null)
-                {
-                    return instanceSource.FeatureVectors.Keys;
-                }
-
-                return instanceSource.FeatureVectors.Keys.Count > instanceSource.Labels.Keys.Count
-                           ? (IEnumerable<string>)instanceSource.FeatureVectors.Keys
-                           : instanceSource.Labels.Keys;
-            }
-
-            /// <summary>
-            /// Provides the features for a given instance.
-            /// </summary>
-            /// <param name="instance">The instance to provide features for.</param>
-            /// <param name="instanceSource">The source of instances.</param>
-            /// <returns>The features for the given instance.</returns>
-            public override Vector GetFeatures(string instance, StandardDataset instanceSource)
-            {
-                if (instance == null || instanceSource == null || instanceSource.FeatureVectors == null)
-                {
-                    return null;
-                }
-
-                Vector featureVector;
-
-                if (!instanceSource.FeatureVectors.TryGetValue(instance, out featureVector))
-                {
-                    // Return null for test purposes
-                    return null;
-                }
-
-                return featureVector;
-            }
-
-            /// <summary>
-            /// Saves the state of the standard data mapping using a writer to a binary stream.
-            /// </summary>
-            /// <param name="writer">The writer to save the state of the standard data mapping to.</param>
-            public void SaveForwardCompatible(IWriter writer)
-            {
-                // Nothing to serialize.
-            }
-        }
-
-        /// <summary>
-        /// An implementation of <see cref="IClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel, TFeatureValues}"/> 
-        /// for <see cref="StandardDataset"/> and binary class labels.
-        /// </summary>
-        [Serializable]
-        private class BinaryStandardBayesPointMachineClassifierTestMapping : StandardBayesPointMachineClassifierTestMapping
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="BinaryStandardBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            public BinaryStandardBayesPointMachineClassifierTestMapping()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="BinaryStandardBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            /// <param name="reader">The reader to load the mapping from.</param>
-            public BinaryStandardBayesPointMachineClassifierTestMapping(IReader reader) : base(reader)
-            {
-            }
-
-            /// <summary>
-            /// Gets all class labels.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="labelSource">The label source.</param>
-            /// <returns>All possible values of a label.</returns>
-            public override IEnumerable<string> GetClassLabels(StandardDataset instanceSource, StandardDataset labelSource)
-            {
-                if (instanceSource == null)
-                {
-                    return null;
-                }
-
-                return instanceSource.BinaryClassLabels;
-            }
-
-            /// <summary>
-            /// Provides the label for a given instance.
-            /// </summary>
-            /// <param name="instance">The instance to provide the label for.</param>
-            /// <param name="instanceSource">The source of instances.</param>
-            /// <param name="labelSource">The source of labels.</param>
-            /// <returns>The label of the given instance.</returns>
-            public override string GetLabel(string instance, StandardDataset instanceSource, StandardDataset labelSource)
-            {
-                if (instance == null || instanceSource == null || instanceSource.Labels == null)
-                {
-                    return null;
-                }
-
-                string label;
-                if (!instanceSource.BinaryLabels.TryGetValue(instance, out label))
-                {
-                    // Return null for test purposes
-                    return null;
-                }
-
-                return label;
-            }
-        }
-
-        /// <summary>
-        /// An implementation of <see cref="IClassifierMapping{TInstanceSource, TInstance, TLabelSource, TLabel, TFeatureValues}"/> 
-        /// for <see cref="StandardDataset"/> and multiple class labels.
-        /// </summary>
-        [Serializable]
-        private class MulticlassStandardBayesPointMachineClassifierTestMapping : StandardBayesPointMachineClassifierTestMapping
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MulticlassStandardBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            public MulticlassStandardBayesPointMachineClassifierTestMapping()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MulticlassStandardBayesPointMachineClassifierTestMapping"/> class.
-            /// </summary>
-            /// <param name="reader">The reader to load the mapping from.</param>
-            public MulticlassStandardBayesPointMachineClassifierTestMapping(IReader reader) : base(reader)
-            {
-            }
-
-            /// <summary>
-            /// Gets all class labels.
-            /// </summary>
-            /// <param name="instanceSource">The instance source.</param>
-            /// <param name="labelSource">The label source.</param>
-            /// <returns>All possible values of a label.</returns>
-            public override IEnumerable<string> GetClassLabels(StandardDataset instanceSource, StandardDataset labelSource)
-            {
-                if (instanceSource == null)
-                {
-                    return null;
-                }
-
-                return instanceSource.ClassLabels;
-            }
-
-            /// <summary>
-            /// Provides the label for a given instance.
-            /// </summary>
-            /// <param name="instance">The instance to provide the label for.</param>
-            /// <param name="instanceSource">The source of instances.</param>
-            /// <param name="labelSource">The source of labels.</param>
-            /// <returns>The label of the given instance.</returns>
-            public override string GetLabel(string instance, StandardDataset instanceSource, StandardDataset labelSource)
-            {
-                if (instance == null || instanceSource == null || instanceSource.Labels == null)
-                {
-                    return null;
-                }
-
-                string label;
-                if (!instanceSource.Labels.TryGetValue(instance, out label))
-                {
-                    // Return null for test purposes
-                    return null;
-                }
-
-                return label;
-            }
+            this.binaryStandardMapping = new BayesPointMachineClassifier.BinaryStandardBayesPointMachineClassifierTestMapping();
+            this.multiclassStandardMapping = new BayesPointMachineClassifier.MulticlassStandardBayesPointMachineClassifierTestMapping();
         }
 
         #endregion

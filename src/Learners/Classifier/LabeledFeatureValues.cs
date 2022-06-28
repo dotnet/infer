@@ -327,7 +327,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
             if (this.featureValues.ContainsKey(index))
             {
-                throw new InvalidFileFormatException("The feature name '" + name + "' must not be specified multiple times.");
+                throw new InvalidClassifierFileFormatException("The feature name '" + name + "' must not be specified multiple times.");
             }
 
             if (Math.Abs(value) > Tolerance || double.IsNaN(value))
@@ -346,7 +346,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             string featureName = name.Trim();
             if (string.IsNullOrEmpty(featureName))
             {
-                throw new InvalidFileFormatException("The feature name must not be null, empty or whitespace.");
+                throw new InvalidClassifierFileFormatException("The feature name must not be null, empty or whitespace.");
             }
 
             return featureName;
@@ -362,7 +362,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             double featureValue;
             if (!double.TryParse(value.Trim(), out featureValue))
             {
-                throw new InvalidFileFormatException("Unable to parse feature value '" + value.Trim() + "'.");
+                throw new InvalidClassifierFileFormatException("Unable to parse feature value '" + value.Trim() + "'.");
             }
 
             return featureValue;

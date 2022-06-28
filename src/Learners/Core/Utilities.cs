@@ -23,32 +23,32 @@ namespace Microsoft.ML.Probabilistic.Learners
 
         #region Save
 
-        /// <summary>
-        /// Serializes a learner to a given stream using a given formatter.
-        /// </summary>
-        /// <param name="learner">The learner.</param>
-        /// <param name="stream">The serialization stream.</param>
-        /// <param name="formatter">The formatter.</param>
-        public static void Save(this ILearner learner, Stream stream, IFormatter formatter)
-        {
-            if (learner == null)
-            {
-                throw new ArgumentNullException(nameof(learner));
-            }
+        ///// <summary>
+        ///// Serializes a learner to a given stream using a given formatter.
+        ///// </summary>
+        ///// <param name="learner">The learner.</param>
+        ///// <param name="stream">The serialization stream.</param>
+        ///// <param name="formatter">The formatter.</param>
+        //public static void Save(this ILearner learner, Stream stream, IFormatter formatter)
+        //{
+        //    if (learner == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(learner));
+        //    }
 
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+        //    if (stream == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(stream));
+        //    }
 
-            if (formatter == null)
-            {
-                throw new ArgumentNullException(nameof(formatter));
-            }
+        //    if (formatter == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(formatter));
+        //    }
 
-            AppendVersionMetadata(learner.GetType(), stream, formatter);
-            formatter.Serialize(stream, learner);
-        }
+        //    AppendVersionMetadata(learner.GetType(), stream, formatter);
+        //    formatter.Serialize(stream, learner);
+        //}
 
         /// <summary>
         /// Persists an object that controls its binary serialization to a file with the specified name.

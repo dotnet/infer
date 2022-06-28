@@ -87,13 +87,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// class.
         /// </summary>
         /// <param name="topLevelMapping">The mapping used for accessing data.</param>
-        internal StandardDataFormatMatchboxRecommender(IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, Vector> topLevelMapping)
+        /// <param name="writeUser">Write a user.</param>
+        /// <param name="writeItem">Write an item.</param>
+        internal StandardDataFormatMatchboxRecommender(IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, Vector> topLevelMapping, Action<IWriter, TUser> writeUser, Action<IWriter, TItem> writeItem)
         {
             this.topLevelMapping = topLevelMapping;
             this.nativeMapping = new NativeRecommenderMapping(topLevelMapping);
             this.recommender = new NativeDataFormatMatchboxRecommender<TInstanceSource, TFeatureSource>(this.nativeMapping);
-            this.indexedUserSet = new IndexedEntitySet<TUser>();
-            this.indexedItemSet = new IndexedEntitySet<TItem>();
+            this.indexedUserSet = new IndexedEntitySet<TUser>(writeUser);
+            this.indexedItemSet = new IndexedEntitySet<TItem>(writeItem);
         }
 
         /// <summary>
@@ -103,8 +105,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// </summary>
         /// <param name="reader">The binary reader to read the Matchbox recommender from.</param>
         /// <param name="topLevelMapping">The mapping used for accessing data.</param>
+        /// <param name="readUser">Read a user.</param>
+        /// <param name="writeUser">Write a user.</param>
+        /// <param name="readItem">Read an item.</param>
+        /// <param name="writeItem">Write an item.</param>
         internal StandardDataFormatMatchboxRecommender(
-            IReader reader, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, Vector> topLevelMapping)
+            IReader reader, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, Vector> topLevelMapping, Func<IReader, TUser> readUser, Action<IWriter, TUser> writeUser, Func<IReader, TItem> readItem, Action<IWriter, TItem> writeItem)
         {
             Debug.Assert(reader != null, "The reader must not be null.");
             Debug.Assert(topLevelMapping != null, "The mapping must not be null.");
@@ -118,8 +124,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             {
                 this.nativeMapping = new NativeRecommenderMapping(reader, topLevelMapping);
                 this.recommender = new NativeDataFormatMatchboxRecommender<TInstanceSource, TFeatureSource>(reader, this.nativeMapping);
-                this.indexedUserSet = new IndexedEntitySet<TUser>(reader);
-                this.indexedItemSet = new IndexedEntitySet<TItem>(reader);
+                this.indexedUserSet = new IndexedEntitySet<TUser>(reader, readUser, writeUser);
+                this.indexedItemSet = new IndexedEntitySet<TItem>(reader, readItem, writeItem);
                 this.minStarRating = reader.ReadInt32();
 
                 // Set user and item sets on mapping
@@ -523,7 +529,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// Represents the mapping of the wrapped Matchbox recommender. Used for chaining with the top level mapping.
         /// </summary>
         [Serializable]
-        private class NativeRecommenderMapping : IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource>, ICustomSerializable
+        internal class NativeRecommenderMapping : IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource>, ICustomSerializable
         {
             #region Fields, constructors, properties
 
@@ -1107,7 +1113,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity (TUser or TItem).</typeparam>
         [Serializable]
-        private class IndexedEntitySet<TEntity> : ICustomSerializable
+        internal class IndexedEntitySet<TEntity> : ICustomSerializable
         {
             /// <summary>
             /// The current custom binary serialization version of the <see cref="IndexedEntitySet{TEntity}"/> class.
@@ -1119,12 +1125,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// </summary>
             private readonly IndexedSet<TEntity> indexedEntitySet;
 
+            private readonly Action<IWriter, TEntity> writeObject;
+
             /// <summary>
             /// Initializes a new instance of the <see cref="IndexedEntitySet{TEntity}"/> class.
             /// </summary>
-            public IndexedEntitySet()
+            public IndexedEntitySet(Action<IWriter, TEntity> writeObject)
             {
                 this.indexedEntitySet = new IndexedSet<TEntity>();
+                this.writeObject = writeObject;
             }
 
             /// <summary>
@@ -1132,7 +1141,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             /// from a reader of a binary stream.
             /// </summary>
             /// <param name="reader">The binary reader to read the mapping from entity identifiers to entity objects from.</param>
-            public IndexedEntitySet(IReader reader)
+            /// <param name="readObject">Reads an item.</param>
+            /// <param name="writeObject">Write an item.</param>
+            public IndexedEntitySet(IReader reader, Func<IReader, TEntity> readObject, Action<IWriter, TEntity> writeObject)
             {
                 Debug.Assert(reader != null, "The reader must not be null.");
 
@@ -1140,8 +1151,10 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
                 if (deserializedVersion == CustomSerializationVersion)
                 {
-                    this.indexedEntitySet = new IndexedSet<TEntity>(reader);
+                    this.indexedEntitySet = new IndexedSet<TEntity>(reader, readObject);
                 }
+
+                this.writeObject = writeObject;
             }
 
             /// <summary>
@@ -1206,7 +1219,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             public void SaveForwardCompatible(IWriter writer)
             {
                 writer.Write(CustomSerializationVersion);
-                this.indexedEntitySet.SaveForwardCompatible(writer);
+                this.indexedEntitySet.SaveForwardCompatible(writer, this.writeObject);
             }
         }
 

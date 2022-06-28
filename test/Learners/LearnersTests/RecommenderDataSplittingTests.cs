@@ -205,7 +205,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             Dataset dataset = GenerateDataset(userCount, itemCount, sparsity);
             
-            var mapping = new Mapping();
+            var mapping = new TestMapping();
             var splittingMapping = mapping.SplitToTrainTest(
                 trainingOnlyUserFraction,
                 testUserTrainingRatingFraction,
@@ -304,81 +304,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Mapping for the simple data model used in tests.
-        /// TODO: expression-based mappings should be resurrected at least for tests
-        /// </summary>
-        private class Mapping : IRecommenderMapping<Dataset, Tuple<int, int, int>, int, int, NoFeatureSource, int>
-        {
-            /// <summary>
-            /// Retrieves a list of instances from a given instance source.
-            /// </summary>
-            /// <param name="instanceSource">The source to retrieve instances from.</param>
-            /// <returns>The list of retrieved instances.</returns>
-            public Dataset GetInstances(Dataset instanceSource)
-            {
-                return instanceSource;
-            }
-
-            /// <summary>
-            /// Extracts a user from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The instance source providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract user from.</param>
-            /// <returns>The extracted user.</returns>
-            public int GetUser(Dataset instanceSource, Tuple<int, int, int> instance)
-            {
-                return instance.Item1;
-            }
-
-            /// <summary>
-            /// Extracts an item from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The instance source providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract item from.</param>
-            /// <returns>The extracted item.</returns>
-            public int GetItem(Dataset instanceSource, Tuple<int, int, int> instance)
-            {
-                return instance.Item2;
-            }
-
-            /// <summary>
-            /// Extracts a rating from a given instance.
-            /// </summary>
-            /// <param name="instanceSource">The instance source providing the <paramref name="instance"/>.</param>
-            /// <param name="instance">The instance to extract rating from.</param>
-            /// <returns>The extracted rating.</returns>
-            public int GetRating(Dataset instanceSource, Tuple<int, int, int> instance)
-            {
-                // This method should not be called by the data splitter
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// Provides a vector of features for a given user.
-            /// </summary>
-            /// <param name="featureSource">The storage of features.</param>
-            /// <param name="user">The user to provide features for.</param>
-            /// <returns>The feature vector for <paramref name="user"/>.</returns>
-            public int GetUserFeatures(NoFeatureSource featureSource, int user)
-            {
-                // This method should not be called by the data splitter
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// Provides a vector of features for a given item.
-            /// </summary>
-            /// <param name="featureSource">The storage of features.</param>
-            /// <param name="item">The item to provide features for.</param>
-            /// <returns>The feature vector for <paramref name="item"/>.</returns>
-            public int GetItemFeatures(NoFeatureSource featureSource, int item)
-            {
-                // This method should not be called by the data splitter
-                throw new NotImplementedException();
-            }
         }
     }
 }
