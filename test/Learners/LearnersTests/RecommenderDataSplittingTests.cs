@@ -205,7 +205,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             Dataset dataset = GenerateDataset(userCount, itemCount, sparsity);
             
-            var mapping = new TestMapping();
+            var mapping = new MatchboxRecommender.TestMapping();
             var splittingMapping = mapping.SplitToTrainTest(
                 trainingOnlyUserFraction,
                 testUserTrainingRatingFraction,

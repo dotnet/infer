@@ -654,15 +654,25 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // Train and serialize
             {
                 var recommender = this.CreateNativeDataFormatMatchboxRecommender();
-                recommender.Save(NotTrainedFileName);
+                recommender.SaveForwardCompatible(NotTrainedFileName);
                 recommender.Train(this.nativeTrainingData, this.nativeTrainingData);
-                recommender.Save(TrainedFileName);
+                recommender.SaveForwardCompatible(TrainedFileName);
             }
 
             // Deserialize and test
             {
-                var trainedRecommender = MatchboxRecommender.Load<MatchboxRecommender.NativeDataset, int, int, Discrete, MatchboxRecommender.NativeDataset>(TrainedFileName);
-                var notTrainedRecommender = MatchboxRecommender.Load<MatchboxRecommender.NativeDataset, int, int, Discrete, MatchboxRecommender.NativeDataset>(NotTrainedFileName);
+                var trainedRecommender = MatchboxRecommender.Load<MatchboxRecommender.NativeDataset, int /* NOT SURE */, int, int, Discrete, MatchboxRecommender.NativeDataset, int, int /* NOT SURE */>(
+                    TrainedFileName,
+                    readUser: reader => reader.ReadInt32(),
+                    readItem: reader => reader.ReadInt32(),
+                    writeUser: (writer, user) => writer.Write(user),
+                    writeItem: (writer, item) => writer.Write(item));
+                var notTrainedRecommender = MatchboxRecommender.Load<MatchboxRecommender.NativeDataset, int /* NOT SURE */, int, int, Discrete, MatchboxRecommender.NativeDataset, int, int /* NOT SURE */>(
+                    NotTrainedFileName,
+                    readUser: reader => reader.ReadInt32(),
+                    readItem: reader => reader.ReadInt32(),
+                    writeUser: (writer, user) => writer.Write(user),
+                    writeItem: (writer, item) => writer.Write(item));
 
                 notTrainedRecommender.Train(this.nativeTrainingData, this.nativeTrainingData);
 

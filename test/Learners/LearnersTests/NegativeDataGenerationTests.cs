@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
                 {
                     var deserializedMapping =
-                        new NegativeDataGeneratorMapping<PositiveOnlyDataset, Tuple<string, string>, string, string, FeatureProvider, Vector>(reader, positiveOnlyMapping);
+                        new NegativeDataGeneratorMapping<MatchboxRecommender.PositiveOnlyDataset, Tuple<string, string>, string, string, MatchboxRecommender.FeatureProvider, Vector>(reader, (IRecommenderMapping<MatchboxRecommender.PositiveOnlyDataset, Tuple<string, string>, string, string, MatchboxRecommender.FeatureProvider, Vector>)positiveOnlyMapping);
                     var recommender = MatchboxRecommender.Create(
                         deserializedMapping,
                         writeUser: (writer, x) => writer.Write(x),
@@ -149,7 +149,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         private void InitializePositiveOnlyDataset()
         {
-            this.positiveOnlyDataset = new PositiveOnlyDataset
+            this.positiveOnlyDataset = new MatchboxRecommender.PositiveOnlyDataset
                 {
                     Observations = new List<Tuple<string, string>>
                         {
@@ -168,7 +168,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         private void InitializeFeatureProvider()
         {
-            this.featureProvider = new FeatureProvider
+            this.featureProvider = new MatchboxRecommender.FeatureProvider
             {
                 UserFeatures = new Dictionary<string, Vector>
                     {
@@ -292,33 +292,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         #endregion
 
         #region Helper classes
-
-        /// <summary>
-        /// Represents a positive only dataset.
-        /// </summary>
-        private class PositiveOnlyDataset
-        {
-            /// <summary>
-            /// Gets or sets the list of observations.
-            /// </summary>
-            public List<Tuple<string, string>> Observations { get; set; }
-        }
-
-        /// <summary>
-        /// Provides features for the positive only dataset.
-        /// </summary>
-        private class FeatureProvider
-        {
-            /// <summary>
-            /// Gets or sets the mapping from user to features.
-            /// </summary>
-            public IDictionary<string, Vector> UserFeatures { get; set; }
-
-            /// <summary>
-            /// Gets or sets the mapping from item to features.
-            /// </summary>
-            public IDictionary<string, Vector> ItemFeatures { get; set; }
-        }
 
         /// <summary>
         /// Holds the original observations count and the number of positive and negative ratings.
