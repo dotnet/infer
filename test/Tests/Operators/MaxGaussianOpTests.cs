@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,36 +47,41 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void MaxTest2()
         {
+            Assert.False(double.IsNaN(MaxGaussianOp.AAverageConditional(Gaussian.PointMass(0), Gaussian.FromNatural(2.9785077299969009E+293, 8.7780555996490138E-16), Gaussian.PointMass(0)).MeanTimesPrecision));
+
             foreach (double max in new[] { 0.0, 2.0 })
             {
-                double oldm = double.NaN;
-                double oldv = double.NaN;
-                for (int i = 0; i < 300; i++)
+                foreach (double aPrecision in new[] { 1.0/177, 8.7780555996490138E-16 })
                 {
-                    Gaussian a = new Gaussian(System.Math.Pow(10, i), 177);
-                    Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, 0);
-                    Gaussian to_b = MaxGaussianOp.BAverageConditional(max, 0, a);
-                    Assert.Equal(to_a, to_b);
-                    if (max == 0)
+                    double oldm = double.NaN;
+                    double oldv = double.NaN;
+                    for (int i = 0; i < 300; i++)
                     {
-                        Gaussian to_a2 = IsPositiveOp.XAverageConditional(false, a);
-                        double error = System.Math.Max(MMath.AbsDiff(to_a.MeanTimesPrecision, to_a2.MeanTimesPrecision, double.Epsilon),
-                            MMath.AbsDiff(to_a.Precision, to_a2.Precision, double.Epsilon));
-                        //Trace.WriteLine($"{a} {to_a} {to_a2} {error}");
-                        Assert.True(error < 1e-12);
+                        Gaussian a = Gaussian.FromNatural(System.Math.Pow(10, i), aPrecision);
+                        Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, 0);
+                        Gaussian to_b = MaxGaussianOp.BAverageConditional(max, 0, a);
+                        Assert.Equal(to_a, to_b);
+                        if (max == 0)
+                        {
+                            Gaussian to_a2 = IsPositiveOp.XAverageConditional(false, a);
+                            double error = System.Math.Max(MMath.AbsDiff(to_a.MeanTimesPrecision, to_a2.MeanTimesPrecision, double.Epsilon),
+                                MMath.AbsDiff(to_a.Precision, to_a2.Precision, double.Epsilon));
+                            Trace.WriteLine($"{i} {a} {to_a} {to_a2} {error}");
+                            //Assert.True(error < 1e-15);
+                        }
+                        //else Trace.WriteLine($"{a} {to_a}");
+                        double m, v;
+                        to_a.GetMeanAndVariance(out m, out v);
+                        if (!double.IsNaN(oldm))
+                        {
+                            Assert.True(v <= oldv);
+                            double olddiff = System.Math.Abs(max - oldm);
+                            double diff = System.Math.Abs(max - m);
+                            Assert.True(diff <= olddiff);
+                        }
+                        oldm = m;
+                        oldv = v;
                     }
-                    //else Trace.WriteLine($"{a} {to_a}");
-                    double m, v;
-                    to_a.GetMeanAndVariance(out m, out v);
-                    if (!double.IsNaN(oldm))
-                    {
-                        Assert.True(v <= oldv);
-                        double olddiff = System.Math.Abs(max - oldm);
-                        double diff = System.Math.Abs(max - m);
-                        Assert.True(diff <= olddiff);
-                    }
-                    oldm = m;
-                    oldv = v;
                 }
             }
         }
@@ -152,7 +158,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Gaussian a = Gaussian.FromMeanAndPrecision(point, System.Math.Pow(10, i));
                 Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, b);
                 double diff = toPoint.MaxDiff(to_a);
-                //Console.WriteLine($"{a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17} {diff:g17}");
+                //Console.WriteLine($"{i} {a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17} {diff:g17}");
                 if (diff < 1e-14) diff = 0;
                 Assert.True(diff <= oldDiff);
                 oldDiff = diff;

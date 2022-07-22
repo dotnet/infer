@@ -587,11 +587,28 @@ namespace Microsoft.ML.Probabilistic.Factors
                     {
                         return max;
                     }
+                    // vx -> 0 so vx1 -> vx
                     z = max.Point * a.Precision - a.MeanTimesPrecision;
                     alpha = z * w1 - w2 * alpha2;
                     beta =  - z * alpha2 * w2 - alpha * alpha;
-                    if (w1 != 0) // avoid 0 * inf
+                    if (w1 == 0)
+                    {
+                        beta = -w2 * alpha2 * (z + w2 * alpha2);
+                        if (w2 == 1 && alpha2 == -z && a.Precision != 0)
+                        {
+                            // alpha2 = sqrtAPrec/R(z2) = sqrtAPrec*z2/(r1-1) = z/(r1-1)
+                            // z+alpha2 = z*r1/(r1-1)
+                            // r1 =approx 1/z2^2 = a.Precision/z^2
+                            // beta = -a.Precision;
+                            // (a.MeanTimesPrecision + alpha)/a.Precision = max.Point
+                            return Gaussian.PointMass(max.Point);
+                        }
+                    }
+                    else
+                    {
+                        // only do this when w1 != 0 to avoid 0 * inf
                         beta += (z * z - a.Precision) * w1;
+                    }
                 }
                 else
                 {
@@ -660,11 +677,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                 if (alpha2 != 0) // avoid 0*infinity
                     mc2 += alpha2 * v1;
                 double z2 = 0, Y = 0, dY = 0, d2YiY = 0;
-                const double z2small = 0;
+                const double z2small = -1;
                 if (vx2 == 0)
                 {
                     double sqrtPrec = Math.Sqrt(a.Precision);
-                    z2 = (mx2 - m1) * sqrtPrec;
+                    z2 = (mx2 * a.Precision - a.MeanTimesPrecision) / sqrtPrec;
                     // When max.IsPointMass, logw2 <= -100 implies NormalCdfLn(z2) <= -100 implies z2 < -13
                     if (z2 < z2small)
                     {
@@ -684,6 +701,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                         // Y = (d2Y - z2)/(1 + z2^2)
                         Y = (dY - 1) / z2;
                         d2YiY = d2Y / Y;
+                        // d3Y = 2*dY + z2*d2Y
+                        // d2Y = (d3Y - 2 * dY) / z2
+                        double d3Y = 6 * MMath.NormalCdfMomentRatio(3, z2);
+                        d2YiY = (d3Y - 2 * dY) / (dY - 1);
                         // logw2 = MMath.NormalCdfLn(z2);
                         // alpha2 = -Math.Exp(Gaussian.GetLogProb(mx2, m1, vx2 + v1) - logw2);
                         //        = -1/sqrt(vx2+v1)/NormalCdfRatio(z2)
@@ -732,7 +753,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     //                  = v + v*z*dY/Y 
                     //                  = v * (1 + z*dY/Y)
                     //                  = v * d2Y/Y
-                    if (z2 < -1e8)
+                    if (z2 < -1e108)
                     {
                         // Y =approx -1/z2
                         // dY =approx 1/z2^2
@@ -752,7 +773,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         // d2Y/Y - (dY/Y)^2 = d3Y/Y/z - 2 d2Y/Y/z^2 + 2/z^2 - (d2Y^2/Y^2/z^2 - 2 d2Y/Y/z^2 + 1/z^2)
                         //                  = d3Y/Y/z - d2Y^2/Y^2/z^2 + 1/z^2
                         // Could rewrite using the method of NormalCdfRatioSqrMinusDerivative
-                        vc2 = dY / a.Precision;
+                        vc2 = 1 / z2 / a.Precision / z2;
                     }
                     else
                     {
