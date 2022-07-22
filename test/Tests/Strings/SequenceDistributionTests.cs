@@ -597,7 +597,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             void AddCharToModel(ImmutableDiscreteChar c, double ratio)
             {
-                var realCharProb = c.Ranges.First().Probability;
+                var realCharProb = c.Ranges[0].Probability;
                 var weight = Weight.FromValue(ratio) * Weight.Inverse(realCharProb);
                 state = state.AddTransition(c, weight);
                 state.SetEndWeight(Weight.One);
