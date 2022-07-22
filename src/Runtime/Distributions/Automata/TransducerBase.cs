@@ -456,9 +456,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Unfortunately, it's not clear how to avoid the duplication in the current design.
         /// </remarks>
         /// <remarks>
-        /// This method intentionally does not use higher-level APIs like <see cref="State"/>,
-        /// and <see cref="StateCollection"/> because it is a part of very hot loops and
-        /// overhead from those is tens of percents.
+        /// This method intentionally does not use higher-level APIs like <see cref="Automaton{TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis}.State"/>,
+        /// and <see cref="Automaton{TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis}.StateCollection"/>
+        /// because it is a part of very hot loops and overhead from those is tens of percents.
         /// </remarks>
         public TDestAutomaton ProjectSource(TSrcSequence srcSequence)
         {
