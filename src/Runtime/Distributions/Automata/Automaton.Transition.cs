@@ -76,7 +76,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public Transition With(Option<TElementDistribution>? elementDistribution = null, Weight? weight = null, int? destinationStateIndex = null, int? group = null) =>
                 new Transition(
-                    elementDistribution ?? this.ElementDistribution,
+                    elementDistribution ?? this.OptionalElementDistribution,
                     weight ?? this.Weight,
                     destinationStateIndex ?? this.DestinationStateIndex,
                     group ?? this.Group);
@@ -98,12 +98,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             /// <summary>
-            /// Gets the element distribution for this transition.
+            /// Gets the element distribution for this transition. <see cref="Option.None"/> is
+            /// returned if it is an epsilon transition.
             /// </summary>
-            public Option<TElementDistribution> ElementDistribution
+            public Option<TElementDistribution> OptionalElementDistribution
             {
                 get => this.hasElementDistribution == 0 ? Option.None : Option.Some(this.elementDistribution);
             }
+
+            /// <summary>
+            /// Returns element distribution for this transition. If transitio is epsilon,
+            /// default(TElementDistribution) is returned.
+            /// </summary>
+            public TElementDistribution ElementDistribution => this.elementDistribution;
 
             /// <summary>
             /// Gets a value indicating whether this transition is an epsilon transition.
@@ -132,7 +139,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 sb.Append('[');
-                sb.Append(this.ElementDistribution.HasValue ? this.ElementDistribution.ToString() : "eps");
+                sb.Append(this.IsEpsilon ? "eps" : this.ElementDistribution.ToString());
                 sb.Append(']');
                 sb.Append(" " + this.Weight.Value);
                 sb.Append(" -> " + this.DestinationStateIndex);

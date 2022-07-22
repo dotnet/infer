@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Stores the product of distributions over the first and the the second element
         /// when the equality constraint is enabled.
         /// </summary>
-        private Option<TElementDistribution> firstTimesSecond;
+        private TElementDistribution firstTimesSecond;
 
         /// <summary>
         /// Gets a value indicating whether the equality constraint is set on the distribution.
@@ -146,9 +146,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Debug.Assert(
                     this.First.HasValue && this.Second.HasValue,
                     "Cannot have a constrained pair distribution with a missing element distribution.");
-                Debug.Assert(this.firstTimesSecond.HasValue, "Must have been computed.");
 
-                double logAverageOf = this.firstTimesSecond.Value.GetLogProb(first);
+                double logAverageOf = this.firstTimesSecond.GetLogProb(first);
                 if (double.IsNegativeInfinity(logAverageOf))
                 {
                     result = default(TElementDistribution);
@@ -177,9 +176,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Debug.Assert(
                     this.First.HasValue && this.Second.HasValue,
                     "Cannot have a constrained pair distribution with a missing element distribution.");
-                Debug.Assert(this.firstTimesSecond.HasValue, "Must have been computed.");
 
-                double logAverageOf = firstTimesSecond.Value.GetLogAverageOf(first);
+                double logAverageOf = firstTimesSecond.GetLogAverageOf(first);
                 
                 if (double.IsNegativeInfinity(logAverageOf))
                 {
@@ -187,7 +185,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return double.NegativeInfinity;
                 }
                 
-                result = firstTimesSecond.Value.Multiply(first);
+                result = firstTimesSecond.Multiply(first);
                 return logAverageOf;    
             }
 
@@ -237,7 +235,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     "Cannot have a constrained pair distribution with a missing element distribution.");
 
                 double result = 0;
-                var product = firstTimesSecond.Value;
+                var product = firstTimesSecond;
                 result += product.GetLogAverageOf(that.First.Value);
                 product = product.Multiply(that.First.Value);
                 result += product.GetLogAverageOf(that.Second.Value);

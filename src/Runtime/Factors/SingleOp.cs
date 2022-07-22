@@ -55,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         if (!destStateClosure.EndWeight.IsZero)
                         {
                             Weight weight = Weight.Product(stateLogWeight, transition.Weight, destStateClosure.EndWeight);
-                            var logProbs = transition.ElementDistribution.Value.GetProbs();
+                            var logProbs = transition.ElementDistribution.GetProbs();
                             logProbs.SetToFunction(logProbs, Math.Log);
                             resultLogProb = LogSumExp(resultLogProb, logProbs, weight);
                         }

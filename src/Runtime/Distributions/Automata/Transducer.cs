@@ -204,9 +204,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 for (var iterator = builder[stateIndex].TransitionIterator; iterator.Ok; iterator.Next())
                 {
                     var transition = iterator.Value;
-                    if (transition.ElementDistribution.HasValue)
+                    if (!transition.IsEpsilon)
                     {
-                        transition = transition.With(elementDistribution: transition.ElementDistribution.Value.Transpose());
+                        transition = transition.With(elementDistribution: transition.ElementDistribution.Transpose());
                         iterator.Value = transition;
                     }
                 }

@@ -197,20 +197,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         TElementDistribution newElementDistribution;
                         if (transition1.Weight.IsInfinity && transition2.Weight.IsInfinity)
                         {
-                            newElementDistribution = transition1.ElementDistribution.Value.Sum(1.0,
-                                transition2.ElementDistribution.Value,
+                            newElementDistribution = transition1.ElementDistribution.Sum(1.0,
+                                transition2.ElementDistribution,
                                 1.0);
                         }
                         else if (transition1.Weight > transition2.Weight)
                         {
-                            newElementDistribution = transition1.ElementDistribution.Value.Sum(1.0,
-                                transition2.ElementDistribution.Value,
+                            newElementDistribution = transition1.ElementDistribution.Sum(1.0,
+                                transition2.ElementDistribution,
                                 (transition2.Weight / transition1.Weight).Value);
                         }
                         else
                         {
-                            newElementDistribution = transition1.ElementDistribution.Value.Sum((transition1.Weight / transition2.Weight).Value,
-                                transition2.ElementDistribution.Value,
+                            newElementDistribution = transition1.ElementDistribution.Sum((transition1.Weight / transition2.Weight).Value,
+                                transition2.ElementDistribution,
                                 1.0);
                         }
 
@@ -349,14 +349,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             selfLoop2.HasValue &&
                             selfLoop1.Value.Group == selfLoop2.Value.Group &&
                             selfLoop1.Value.Weight == selfLoop2.Value.Weight &&
-                            EqualDistributions(selfLoop1.Value.ElementDistribution, selfLoop2.Value.ElementDistribution));
+                            EqualDistributions(selfLoop1.Value.OptionalElementDistribution, selfLoop2.Value.OptionalElementDistribution));
                 }
 
                 bool CanMergeDestinations(Transition transition1, Transition transition2)
                 {
                     // Check that group and element distribution match
                     if (transition1.Group != transition2.Group ||
-                        !EqualDistributions(transition1.ElementDistribution, transition2.ElementDistribution))
+                        !EqualDistributions(transition1.OptionalElementDistribution, transition2.OptionalElementDistribution))
                     {
                         return false;
                     }

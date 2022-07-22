@@ -54,9 +54,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         transitionLabel = "eps";
                     }
-                    else if (transition.ElementDistribution.Value.IsPointMass)
+                    else if (transition.ElementDistribution.IsPointMass)
                     {
-                        transitionLabel = EscapeLabel(transition.ElementDistribution.Value.Point.ToString());
+                        transitionLabel = EscapeLabel(transition.ElementDistribution.Point.ToString());
                     }
                     else
                     {

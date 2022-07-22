@@ -855,7 +855,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 transitionsToMerge.Add(currentState.Index, stateDict);
                             }
                             var distr = new List<(char character, Weight weight)>();
-                            distr.Add((currentTransition.ElementDistribution.Value.Point, currentTransition.Weight));
+                            distr.Add((currentTransition.ElementDistribution.Point, currentTransition.Weight));
                             distr.Add((transitionChar, weight));
                             stateDict.Add(destinationStateIndex, distr);
                             iterator.Remove();

@@ -12,10 +12,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// Provides the ability to manipulate strings.
     /// </summary>
     [Serializable]
-    public class StringManipulator : ISequenceManipulator<string, char>
+    public struct StringManipulator : ISequenceManipulator<string, char>
     {
-        public IEqualityComparer<string> SequenceEqualityComparer { get; } =
-            StringComparer.Ordinal;
+        public IEqualityComparer<string> SequenceEqualityComparer => StringComparer.Ordinal;
 
         /// <summary>
         /// Converts a given sequence of characters to a string.

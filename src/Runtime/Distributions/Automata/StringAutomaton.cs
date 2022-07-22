@@ -94,7 +94,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static void AddTransitionCharSegmentBounds(
             Transition transition, Weight sourceStateResidualWeight, List<TransitionCharSegmentBound> segmentBounds)
         {
-            var distribution = transition.ElementDistribution.Value;
+            var distribution = transition.ElementDistribution;
             var ranges = distribution.Ranges;
             var weightBase = transition.Weight * sourceStateResidualWeight;
 

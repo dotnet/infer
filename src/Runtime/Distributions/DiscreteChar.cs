@@ -1856,7 +1856,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 this.CharClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
                 this.symbolRepresentation = symbolRepresentation;
-                var supportCount = this.Ranges.Where(range => !range.Probability.IsZero).Sum(range => range.EndExclusive - range.StartInclusive);
             }
 
             public static Storage CreateUncached(
@@ -2015,7 +2014,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public void Write(Action<int> writeInt32, Action<double> writeDouble)
             {
                 writeInt32(this.Ranges.Count);
-                this.Ranges.ForEach(range => range.Write(writeInt32, writeDouble));
+                foreach (var range in this.Ranges)
+                {
+                    range.Write(writeInt32, writeDouble);
+                }
                 writeInt32((int)this.CharClasses);
             }
 
