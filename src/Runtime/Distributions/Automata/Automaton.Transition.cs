@@ -57,7 +57,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="weight">The weight associated with the transition.</param>
             /// <param name="destinationStateIndex">The index of the destination state of the transition.</param>
             /// <param name="group">The group this transition belongs to.</param>
-            [Construction("ElementDistribution", "Weight", "DestinationStateIndex", "Group")]
+            [Construction("OptionalElementDistribution", "Weight", "DestinationStateIndex", "Group")]
             public Transition(Option<TElementDistribution> elementDistribution, Weight weight, int destinationStateIndex, int group = 0)
                 : this()
             {
