@@ -47,7 +47,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                         hasNoIncomingTransitions.Remove(transition.DestinationStateIndex);
                         newSourceState.AddTransition(
-                            transition.ElementDistribution,
+                            transition.OptionalElementDistribution,
                             transition.Weight,
                             stateMapping[transition.DestinationStateIndex].Index);
                     }

@@ -489,7 +489,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                     else
                     {
-                        var elementDistribution = transition.ElementDistribution.Value;
+                        var elementDistribution = transition.ElementDistribution;
                         if (elementDistribution.IsPointMass)
                         {
                             nextElement = elementDistribution.Point;
@@ -563,7 +563,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return currentStateIndex;
                     }
 
-                    var dist = transition.ElementDistribution.Value;
+                    var dist = transition.ElementDistribution;
 
                     if (!dist.IsPointMass)
                     {

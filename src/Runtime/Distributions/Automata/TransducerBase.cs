@@ -9,7 +9,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Diagnostics;
     using System.Linq;
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
@@ -364,12 +363,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.State srcState)
             {
                 var destPair = new IntPair(mappingState.Index, srcState.Index);
-                if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
+                ref var destStateIndex = ref destStateCache.GetOrAdd(destPair, -1);
+                if (destStateIndex == -1)
                 {
                     var destState = result.AddState();
                     destState.SetEndWeight(mappingState.EndWeight * srcState.EndWeight);
                     stack.Push((mappingState.Index, srcState.Index, destState.Index));
-                    destStateCache.Add(destPair, destState.Index);
                     destStateIndex = destState.Index;
                 }
 
@@ -397,9 +396,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (IsSrcEpsilon(mappingTransition))
                     {
                         var destElementDistribution =
-                            mappingTransition.ElementDistribution.HasValue
-                                ? mappingTransition.ElementDistribution.Value.Second
-                                : Option.None;
+                            mappingTransition.IsEpsilon
+                                ? Option.None
+                                : mappingTransition.ElementDistribution.Second;
                         var childDestStateIndex = CreateDestState(childMappingState, srcState);
                         destState.AddTransition(destElementDistribution, mappingTransition.Weight, childDestStateIndex, mappingTransition.Group);
                         continue;
@@ -412,8 +411,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         
                         var srcChildState = srcAutomaton.States[srcTransition.DestinationStateIndex];
 
-                        var projectionLogScale = mappingTransition.ElementDistribution.Value.ProjectFirst(
-                            srcTransition.ElementDistribution.Value, out var destElementDistribution);
+                        var projectionLogScale = mappingTransition.ElementDistribution.ProjectFirst(
+                            srcTransition.ElementDistribution, out var destElementDistribution);
                         if (double.IsNegativeInfinity(projectionLogScale))
                         {
                             continue;
@@ -456,6 +455,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// The code of this method has a lot in common with the code of Automaton.SetToProduct.
         /// Unfortunately, it's not clear how to avoid the duplication in the current design.
         /// </remarks>
+        /// <remarks>
+        /// This method intentionally does not use higher-level APIs like <see cref="Automaton{TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis}.State"/>,
+        /// and <see cref="Automaton{TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis}.StateCollection"/>
+        /// because it is a part of very hot loops and overhead from those is tens of percents.
+        /// </remarks>
         public TDestAutomaton ProjectSource(TSrcSequence srcSequence)
         {
             Argument.CheckIfNotNull(srcSequence, "srcSequence");
@@ -473,20 +477,23 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
             var (destStateCache, stack) = PreallocatedAutomataObjects.LeaseProductState();
 
+            var mappingStates = mappingAutomaton.Data.States;
+            var mappingTransitions = mappingAutomaton.Data.Transitions;
+
             // Creates destination state and schedules projection computation for it.
             // If computation is already scheduled or done the state index is simply taken from cache
-            int CreateDestState(PairListAutomaton.State mappingState, int srcSequenceIndex)
+            int CreateDestState(int mappingStateIndex, int srcSequenceIndex)
             {
-                var destPair = new IntPair(mappingState.Index, srcSequenceIndex);
-                if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
+                var destPair = new IntPair(mappingStateIndex, srcSequenceIndex);
+                ref var destStateIndex = ref destStateCache.GetOrAdd(destPair, -1);
+                if (destStateIndex == -1)
                 {
                     var destState = result.AddState();
                     destState.SetEndWeight(
                         srcSequenceIndex == srcSequenceLength
-                            ? mappingState.EndWeight
+                            ? mappingStates[mappingStateIndex].EndWeight
                             : Weight.Zero);
-                    stack.Push((mappingState.Index, srcSequenceIndex, destState.Index));
-                    destStateCache.Add(destPair, destState.Index);
+                    stack.Push((mappingStateIndex, srcSequenceIndex, destState.Index));
                     destStateIndex = destState.Index;
                 }
 
@@ -494,38 +501,39 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             // Populate the stack with start destination state
-            result.StartStateIndex = CreateDestState(mappingAutomaton.Start, 0);
+            result.StartStateIndex = CreateDestState(mappingAutomaton.Data.StartStateIndex, 0);
 
             while (stack.Count > 0)
             {
                 var (mappingStateIndex, srcSequenceIndex, destStateIndex) = stack.Pop();
 
-                var mappingState = mappingAutomaton.States[mappingStateIndex];
                 var destState = result[destStateIndex];
+                var transitionsBegin = mappingStates[mappingStateIndex].FirstTransitionIndex;
+                var transitionsEnd = transitionsBegin + mappingStates[mappingStateIndex].TransitionsCount;
 
                 // Enumerate transitions from the current mapping state
-                foreach (var mappingTransition in mappingState.Transitions)
+                for (var i = transitionsBegin; i < transitionsEnd; ++i)
                 {
-                    var destMappingState = mappingAutomaton.States[mappingTransition.DestinationStateIndex];
+                    var mappingTransition = mappingTransitions[i];
+                    var destMappingState = mappingTransition.DestinationStateIndex;
 
                     // Epsilon transition case
-                    if (IsSrcEpsilon(mappingTransition))
+                    if (mappingTransition.IsEpsilon)
                     {
-                        var destElementWeights =
-                            mappingTransition.ElementDistribution.HasValue
-                                ? mappingTransition.ElementDistribution.Value.Second
-                                : Option.None;
                         var childDestStateIndex = CreateDestState(destMappingState, srcSequenceIndex);
-                        destState.AddTransition(destElementWeights, mappingTransition.Weight, childDestStateIndex, mappingTransition.Group);
-                        continue;
+                        destState.AddEpsilonTransition(mappingTransition.Weight, childDestStateIndex, mappingTransition.Group);
                     }
-
-                    // Normal transition case - Find epsilon-reachable states
-                    if (srcSequenceIndex < srcSequenceLength)
+                    else if (mappingTransition.ElementDistribution.First.HasNoValue)
+                    {
+                        var destElementDist = mappingTransition.ElementDistribution.Second;
+                        var childDestStateIndex = CreateDestState(destMappingState, srcSequenceIndex);
+                        destState.AddTransition(destElementDist, mappingTransition.Weight, childDestStateIndex, mappingTransition.Group);
+                    }
+                    else if (srcSequenceIndex < srcSequenceLength)
                     {
                         var srcSequenceElement = sourceSequenceManipulator.GetElement(srcSequence, srcSequenceIndex);
 
-                        var projectionLogScale = mappingTransition.ElementDistribution.Value.ProjectFirst(
+                        var projectionLogScale = mappingTransition.ElementDistribution.ProjectFirst(
                             srcSequenceElement, out var destElementDistribution);
                         if (double.IsNegativeInfinity(projectionLogScale))
                         {
@@ -578,7 +586,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="transition">The transition to check.</param>
         /// <returns>A value indicating whether a given transducer transition is either epsilon of has epsilon source element.</returns>
         private static bool IsSrcEpsilon(PairListAutomaton.Transition transition) =>
-            !transition.ElementDistribution.HasValue || !transition.ElementDistribution.Value.First.HasValue;
+            transition.IsEpsilon || !transition.ElementDistribution.First.HasValue;
 
         #endregion
 

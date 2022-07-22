@@ -1441,7 +1441,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     {
                         if (!transition.IsEpsilon)
                         {
-                            sampledElements.Add(transition.ElementDistribution.Value.Sample());
+                            sampledElements.Add(transition.ElementDistribution.Sample());
                         }
 
                         currentState = automaton.States[transition.DestinationStateIndex];

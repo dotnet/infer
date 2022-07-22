@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             {
                                 var destStateRegexp = transition.IsEpsilon
                                     ? RegexpTreeNode<TElement, TElementDistribution>.Empty()
-                                    : RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.ElementDistribution);
+                                    : RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.OptionalElementDistribution);
                                 stateDownwardRegexp = RegexpTreeNode<TElement, TElementDistribution>.Or(
                                     stateDownwardRegexp,
                                     RegexpTreeNode<TElement, TElementDistribution>.Concat(destStateRegexp, stateRegexps[transition.DestinationStateIndex]));
@@ -250,7 +250,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 var regex =
                                     transition.IsEpsilon
                                         ? RegexpTreeNode<TElement, TElementDistribution>.Empty()
-                                        : RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.ElementDistribution);
+                                        : RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.OptionalElementDistribution);
 
                                 var destinationNodeIndex = stateIndexToNodeIndex[transition.DestinationStateIndex];
                                 if (outgoingRegexes.ContainsKey(destinationNodeIndex))
@@ -397,7 +397,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         var destStateRegexp = transition.IsEpsilon
                                 ? RegexpTreeNode<TElement, TElementDistribution>.Empty()
-                                : RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.ElementDistribution);
+                                : RegexpTreeNode<TElement, TElementDistribution>.FromElementSet(transition.OptionalElementDistribution);
                         regexps[stateIndex, destStateIndex] = RegexpTreeNode<TElement, TElementDistribution>.Or(
                             regexps[stateIndex, destStateIndex], destStateRegexp);
                     }

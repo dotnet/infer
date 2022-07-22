@@ -161,8 +161,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         #region Factory methods
 
         /// <inheritdoc cref="ImmutableDiscreteChar.Create(IEnumerable{ImmutableDiscreteChar.CharRange})"/>
-        [Construction("Ranges")]
         public static DiscreteChar Create(IEnumerable<ImmutableDiscreteChar.CharRange> ranges) =>
+            new DiscreteChar(ImmutableDiscreteChar.Create(ranges));
+
+        /// <inheritdoc cref="ImmutableDiscreteChar.Create(ReadOnlyArray{ImmutableDiscreteChar.CharRange})"/>
+        public static DiscreteChar Create(ReadOnlyArray<ImmutableDiscreteChar.CharRange> ranges) =>
             new DiscreteChar(ImmutableDiscreteChar.Create(ranges));
 
         /// <inheritdoc cref="ImmutableDiscreteChar.Uniform"/>
@@ -713,6 +716,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <remarks>The probabilities do not need to be normalized. The character ranges do not need to be sorted.</remarks>
         /// <returns>The created distribution.</returns>
         [Construction("Ranges")]
+        public static ImmutableDiscreteChar Create(ReadOnlyArray<CharRange> ranges)
+        {
+            Argument.CheckIfNotNull(ranges, "ranges");
+
+            var builder = StorageBuilder.Create();
+            foreach (var range in ranges)
+            {
+                builder.AddRange(range);
+            }
+            builder.SortAndCheckRanges();
+            return new ImmutableDiscreteChar(builder.GetResult());
+        }
+
+        /// <summary>
+        /// Creates a distribution given a list of constant probability character ranges.
+        /// </summary>
+        /// <param name="ranges">The constant-probability character ranges.</param>
+        /// <remarks>The probabilities do not need to be normalized. The character ranges do not need to be sorted.</remarks>
+        /// <returns>The created distribution.</returns>
         public static ImmutableDiscreteChar Create(IEnumerable<CharRange> ranges)
         {
             Argument.CheckIfNotNull(ranges, "ranges");
@@ -1856,7 +1878,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 this.CharClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
                 this.symbolRepresentation = symbolRepresentation;
-                var supportCount = this.Ranges.Where(range => !range.Probability.IsZero).Sum(range => range.EndExclusive - range.StartInclusive);
             }
 
             public static Storage CreateUncached(
@@ -2015,7 +2036,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public void Write(Action<int> writeInt32, Action<double> writeDouble)
             {
                 writeInt32(this.Ranges.Count);
-                this.Ranges.ForEach(range => range.Write(writeInt32, writeDouble));
+                foreach (var range in this.Ranges)
+                {
+                    range.Write(writeInt32, writeDouble);
+                }
                 writeInt32((int)this.CharClasses);
             }
 

@@ -310,12 +310,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (ranges.Count > 1)
             {
                 resultBuilder.Append('[');
-                ranges.ForEach(range => AppendCharacterRange(resultBuilder, range));
+                foreach (var range in ranges)
+                {
+                    AppendCharacterRange(resultBuilder, range);
+                }
                 resultBuilder.Append(']');
             }
             else if (ranges.Count == 1)
             {
-                AppendCharacterRange(resultBuilder, ranges.Single());
+                AppendCharacterRange(resultBuilder, ranges[0]);
             }
         }
 

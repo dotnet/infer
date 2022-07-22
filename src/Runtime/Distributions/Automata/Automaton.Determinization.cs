@@ -130,7 +130,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         var destinationStates = new Determinization.WeightedStateSet(transition.DestinationStateIndex);
                         var outgoingTransitionInfo = new Determinization.OutgoingTransition(
-                            transition.ElementDistribution.Value, transition.Weight, destinationStates);
+                            transition.ElementDistribution, transition.Weight, destinationStates);
                         if (!TryAddTransition(enqueuedWeightedStateSetStack, outgoingTransitionInfo, currentState))
                         {
                             return false;

@@ -5,9 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
-
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -29,12 +27,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// This field can't go into that class because it depends on generic parameters.
             /// </remarks>
             [ThreadStatic]
-            private static (List<LinkedStateData>, List<LinkedTransitionNode>) preallocatedContainers;
+            private static (LinkedStateData[], LinkedTransitionNode[]) preallocatedContainers;
 
             /// <summary>
             /// States created so far.
             /// </summary>
-            private List<LinkedStateData> states;
+            private LinkedStateData[] states;
 
             /// <summary>
             /// Transitions created so far.
@@ -45,7 +43,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// list. It is done this way, because transitions can be added at any moment and inserting
             /// transition into a middle of array is not feasible.
             /// </remarks>
-            private List<LinkedTransitionNode> transitions;
+            private LinkedTransitionNode[] transitions;
+
+            private int statesCount;
+            private int transitionsCount;
 
             /// <summary>
             /// Number of transitions marked as removed. We maintain this count to calculate finaly transitions
@@ -67,9 +68,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 var preallocated = preallocatedContainers;
 
-                this.states = preallocated.Item1 ?? new List<LinkedStateData>();
-                this.transitions = preallocated.Item2 ?? new List<LinkedTransitionNode>();
-
+                this.states = preallocated.Item1 ?? new LinkedStateData[1024];
+                this.transitions = preallocated.Item2 ?? new LinkedTransitionNode[1024];
 
                 // Generally only one builder is used at once.
                 // In case two builders are created, ensure that another builder won't use
@@ -90,12 +90,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Number of states which were created so far.
             /// </summary>
-            public int StatesCount => this.states.Count;
+            public int StatesCount => this.statesCount;
 
             /// <summary>
             /// Number of transitions which were created so far.
             /// </summary>
-            public int TransitionsCount => this.transitions.Count - this.numRemovedTransitions;
+            public int TransitionsCount => this.transitionsCount - this.numRemovedTransitions;
 
             /// <summary>
             /// Returns <see cref="StateBuilder"/> object for specified state.
@@ -143,19 +143,31 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public StateBuilder AddState()
             {
-                if (this.states.Count >= this.maxStateCount)
+                if (this.statesCount >= this.maxStateCount)
                 {
                     throw new AutomatonTooLargeException(this.maxStateCount);
                 }
 
-                var index = this.states.Count;
-                this.states.Add(
+                var index = this.statesCount;
+
+                if (index >= this.states.Length)
+                {
+                    var newStates = new LinkedStateData[this.states.Length * 2];
+                    Array.Copy(this.states, newStates, this.statesCount);
+                    this.states = newStates;
+                }
+
+
+                this.states[index] =
                     new LinkedStateData
                     {
                         FirstTransitionIndex = -1,
                         LastTransitionIndex = -1,
                         EndWeight = Weight.Zero,
-                    });
+                    };
+
+                ++this.statesCount;
+
                 return new StateBuilder(this, index);
             }
 
@@ -175,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public void AddStates(StateCollection states)
             {
-                var oldStateCount = this.states.Count;
+                var oldStateCount = this.statesCount;
                 foreach (var state in states)
                 {
                     var stateBuilder = this.AddState();
@@ -203,17 +215,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     iterator.Remove();
                 }
 
-                this.states.RemoveAt(stateIndex);
+                --this.statesCount;
+                for (var i = stateIndex; i < this.statesCount; ++i)
+                {
+                    this.states[i] = this.states[i + 1];
+                }
 
-                for (var i = 0; i < this.states.Count; ++i)
+                for (var i = 0; i < this.statesCount; ++i)
                 {
                     for (var iterator = this[i].TransitionIterator; iterator.Ok; iterator.Next())
                     {
-                        var transition = iterator.Value;
+                        ref var transition = ref iterator.Value;
                         if (transition.DestinationStateIndex > stateIndex)
                         {
                             transition = transition.With(destinationStateIndex: transition.DestinationStateIndex - 1);
-                            iterator.Value = transition;
                         }
                         else if (transition.DestinationStateIndex == stateIndex)
                         {
@@ -231,11 +246,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="removeLabel">Label which marks states which should be deleted</param>
             public int RemoveStates(bool[] labels, bool removeLabel)
             {
-                var oldToNewStateIdMapping = PreallocatedAutomataObjects.LeaseRemoveStatesState(this.states.Count);
+                var oldToNewStateIdMapping = PreallocatedAutomataObjects.LeaseRemoveStatesState(this.statesCount);
 
                 var newStateId = 0;
                 var deadStateCount = 0;
-                for (var stateId = 0; stateId < this.states.Count; ++stateId)
+                for (var stateId = 0; stateId < this.statesCount; ++stateId)
                 {
                     if (labels[stateId] != removeLabel)
                     {
@@ -259,7 +274,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // invalid automaton.
                 Debug.Assert(this.StartStateIndex != -1);
 
-                for (var i = 0; i < this.states.Count; ++i)
+                for (var i = 0; i < this.statesCount; ++i)
                 {
                     var newId = oldToNewStateIdMapping[i];
                     if (newId == -1)
@@ -280,7 +295,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // Remap transitions
                     for (var iterator = this[newId].TransitionIterator; iterator.Ok; iterator.Next())
                     {
-                        var transition = iterator.Value;
+                        ref var transition = ref iterator.Value;
                         var destinationStateIndex = oldToNewStateIdMapping[transition.DestinationStateIndex];
                         if (destinationStateIndex == -1)
                         {
@@ -288,12 +303,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                         else
                         {
-                            iterator.Value = transition.With(destinationStateIndex: destinationStateIndex);
+                            transition = transition.With(destinationStateIndex: destinationStateIndex);
                         }
                     }
                 }
 
-                this.states.RemoveRange(newStateId, this.states.Count - newStateId);
+                this.statesCount = newStateId;
 
                 return deadStateCount;
             }
@@ -324,7 +339,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 int group = 0,
                 bool avoidEpsilonTransitions = true)
             {
-                var oldStateCount = this.states.Count;
+                var oldStateCount = this.statesCount;
 
                 foreach (var state in automaton.States)
                 {
@@ -398,7 +413,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     for (var i = 0; i < oldStateCount; ++i)
                     {
-                        var state = this.states[i];
+                        ref var state = ref this.states[i];
                         if (!state.EndWeight.IsZero && state.FirstTransitionIndex != -1)
                         {
                             return false;
@@ -444,11 +459,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </remarks>
             public DataContainer GetData(bool? isDeterminized = null)
             {
-                if (this.StartStateIndex < 0 || this.StartStateIndex >= this.states.Count)
+                if (this.StartStateIndex < 0 || this.StartStateIndex >= this.statesCount)
                 {
                     throw new InvalidOperationException(
                         $"Built automaton must have a valid start state. " +
-                        $"StartStateIndex = {this.StartStateIndex}, states.Count = {this.states.Count}");
+                        $"StartStateIndex = {this.StartStateIndex}, states.Count = {this.statesCount}");
                 }
 
                 if (this.states == null)
@@ -460,8 +475,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var usesGroups = false;
                 var hasOnlyForwardTransitions = true;
 
-                var resultStates = ReadOnlyArray.CreateBuilder<StateData>(this.states.Count);
-                var resultTransitions = ReadOnlyArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
+                var resultStates = ReadOnlyArray.CreateBuilder<StateData>(this.statesCount);
+                var resultTransitions = ReadOnlyArray.CreateBuilder<Transition>(this.transitionsCount - this.numRemovedTransitions);
                 var nextResultTransitionIndex = 0;
 
                 for (var i = 0; i < resultStates.Count; ++i)
@@ -503,8 +518,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 // Return lists into the preallocated cache. This will make this object unusable
                 // from now on.
-                this.states.Clear();
-                this.transitions.Clear();
+                Array.Clear(this.transitions, 0, this.transitionsCount);
                 preallocatedContainers = (this.states, this.transitions);
                 this.states = null;
                 this.transitions = null;
@@ -529,8 +543,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public void Clear()
             {
-                this.states.Clear();
-                this.transitions.Clear();
+                Array.Clear(this.transitions, 0, this.transitionsCount);
+                this.statesCount = 0;
+                this.transitionsCount = 0;
                 this.numRemovedTransitions = 0;
                 this.StartStateIndex = 0;
             }
@@ -590,9 +605,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// </summary>
                 public StateBuilder SetEndWeight(Weight weight)
                 {
-                    var state = this.builder.states[this.Index];
+                    ref var state = ref this.builder.states[this.Index];
                     state.EndWeight = weight;
-                    this.builder.states[this.Index] = state;
                     return this;
                 }
 
@@ -607,15 +621,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// </remarks>
                 public StateBuilder AddTransition(Transition transition)
                 {
-                    var state = this.builder.states[this.Index];
-                    var transitionIndex = this.builder.transitions.Count;
-                    this.builder.transitions.Add(
+                    ref var state = ref this.builder.states[this.Index];
+                    var transitionIndex = this.builder.transitionsCount;
+
+                    if (transitionIndex >= this.builder.transitions.Length)
+                    {
+                        var newTransitions = new LinkedTransitionNode[this.builder.transitions.Length * 2];
+                        Array.Copy(this.builder.transitions, newTransitions, this.builder.transitionsCount);
+                        this.builder.transitions = newTransitions;
+                    }
+
+                    this.builder.transitions[transitionIndex] =
                         new LinkedTransitionNode
                         {
                             Transition = transition,
                             Next = -1,
                             Prev = state.LastTransitionIndex,
-                        });
+                        };
+
+                    ++this.builder.transitionsCount;
 
                     if (state.LastTransitionIndex != -1)
                     {
@@ -630,7 +654,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     state.LastTransitionIndex = transitionIndex;
-                    this.builder.states[this.Index] = state;
 
                     return new StateBuilder(this.builder, transition.DestinationStateIndex);
                 }
@@ -807,16 +830,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets or sets current transition value.
                 /// </summary>
-                public Transition Value
-                {
-                    get => this.builder.transitions[this.index].Transition;
-                    set
-                    {
-                        var node = this.builder.transitions[this.index];
-                        node.Transition = value;
-                        this.builder.transitions[this.index] = node;
-                    }
-                }
+                public ref Transition Value => ref this.builder.transitions[this.index].Transition;
 
                 /// <summary>
                 /// Marks current transition as removed. This transition will not be visible during further
@@ -827,23 +841,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// </remarks>
                 public void Remove()
                 {
-                    var state = this.builder.states[this.stateIndex];
-                    var node = this.builder.transitions[this.index];
+                    ref var state = ref this.builder.states[this.stateIndex];
+                    ref var node = ref this.builder.transitions[this.index];
 
                     // unlink from previous node
                     if (node.Prev != -1)
                     {
-                        var prevNode = this.builder.transitions[node.Prev];
+                        ref var prevNode = ref this.builder.transitions[node.Prev];
                         prevNode.Next = node.Next;
-                        this.builder.transitions[node.Prev] = prevNode;
                     }
 
                     // unlink from next node
                     if (node.Next != -1)
                     {
-                        var nextNode = this.builder.transitions[node.Next];
+                        ref var nextNode = ref this.builder.transitions[node.Next];
                         nextNode.Prev = node.Prev;
-                        this.builder.transitions[node.Next] = nextNode;
                     }
 
                     // update references in state
@@ -858,8 +870,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             state.LastTransitionIndex = node.Prev;
                         }
-
-                        this.builder.states[this.stateIndex] = state;
                     }
 
                     ++this.builder.numRemovedTransitions;
