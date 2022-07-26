@@ -1976,7 +1976,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     elementInit = ConvertInitialiser(elementInit);
                     elementInit = ConvertInitialiser(elementInit, arrayType, channelVarInfo, 0, false);
                     Type outputLhsType = outputLhs.GetExpressionType();
-                    // TODO: test this - initialize a constrained variable
                     if (Distribution.IsSettableTo(outputLhsType, outputLhsType))
                     {
                         elementInit = Builder.StaticGenericMethod(
