@@ -26,15 +26,6 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class OperatorTests
     {
         [Fact]
-        public void InnerProductArrayOp_WhenInnerProductNearUniform_DoesNotThrow()
-        {
-            Gaussian innerProduct = Gaussian.FromNatural(-7.3097118076958154E-10, 1.542967011962213E-320);
-            Gaussian[] A = new[] { new Gaussian(78.56, 2.234), new Gaussian(78.4, 2.234) };
-            double[] B = new double[] { 0.25, 0 };
-            var result = InnerProductArrayOp.AAverageConditional(innerProduct, A, B, new Gaussian(0, 1), new Gaussian[A.Length]);
-        }
-
-        [Fact]
         public void GaussianGetDerivativesTest()
         {
             Gaussian g = Gaussian.FromNatural(double.MaxValue, double.MaxValue);
