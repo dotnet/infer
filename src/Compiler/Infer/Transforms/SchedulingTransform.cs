@@ -238,6 +238,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // this will fill in groupOf and loopInfoOfGroup
                 BuildGroups(inputStmts, -1);
                 g = new DependencyGraph(context, flatStmts, ignoreMissingNodes: true, ignoreRequirements: false, deleteCancels: true);
+                // If replaceTargetIndex is true then TrueSkillChainTest3 fails when OptimiseInferenceCode=False
+                // A required statement is not added to the init schedule by repair because it is believed to be fresh
+                // due to another statement that updates the same target.  For repair to work correctly, required and fresh
+                // constraints must be kept consistent.
                 bool replaceTargetIndex = false;
                 if (replaceTargetIndex)
                 {

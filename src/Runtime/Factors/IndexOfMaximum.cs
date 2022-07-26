@@ -289,7 +289,15 @@ namespace Microsoft.ML.Probabilistic.Factors
                 throw new ArgumentException("Incoming message from maxOfOthers is not uniform.  The child of this factor must be barren.");
             if (array.Count != result.Count)
                 throw new ArgumentException($"array.Count ({array.Count}) != result.Count ({result.Count})");
-            MaxOfOthers(array, result);
+            bool useMonteCarlo = false;
+            if (useMonteCarlo)
+            {
+                MaxOfOthers_MonteCarlo(array, result);
+            }
+            else
+            {
+                MaxOfOthers(array, result);
+            }
             return result;
         }
 
@@ -338,7 +346,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 result[0] = Gaussian.Uniform();
                 return;
             }
-            int iterCount = 1000000;
+            int iterCount = 100000;
             double[] x = new double[array.Count];
             var est = new ArrayEstimator<GaussianEstimator, IList<Gaussian>, Gaussian, double>(array.Count, i => new GaussianEstimator());
             for (int iter = 0; iter < iterCount; iter++)

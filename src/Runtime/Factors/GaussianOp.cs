@@ -209,7 +209,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double prec = prior.Precision;
             if (prec == beta && prec != 0)
             {
-                return Gaussian.PointMass(prior.GetMean() + alpha / prec);
+                return Gaussian.PointMass((prior.MeanTimesPrecision + alpha) / prec);
             }
             double tau = prior.MeanTimesPrecision;
             double weight = beta / (prec - beta);

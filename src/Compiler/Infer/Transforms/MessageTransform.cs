@@ -1975,9 +1975,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     elementInit = ConvertInitialiser(elementInit);
                     elementInit = ConvertInitialiser(elementInit, arrayType, channelVarInfo, 0, false);
-                    elementInit = Builder.StaticGenericMethod(
-                        new Func<PlaceHolder, PlaceHolder, PlaceHolder>(ArrayHelper.SetTo<PlaceHolder>),
-                        new Type[] { outputLhs.GetExpressionType() }, outputLhs, elementInit);
+                    Type outputLhsType = outputLhs.GetExpressionType();
+                    if (Distribution.IsSettableTo(outputLhsType, outputLhsType))
+                    {
+                        elementInit = Builder.StaticGenericMethod(
+                            new Func<PlaceHolder, PlaceHolder, PlaceHolder>(ArrayHelper.SetTo<PlaceHolder>),
+                            new Type[] { outputLhsType }, outputLhs, elementInit);
+                    }
                     IStatement init = Builder.AssignStmt(outputLhs, elementInit);
                     context.OutputAttributes.Set(init, new Initializer()
                     {

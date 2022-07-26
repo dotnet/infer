@@ -34,6 +34,44 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class ModelTests
     {
         [Fact]
+        public void InitializeConstrainedVariableArray()
+        {
+            Range item = new Range(1);
+            VariableArray<double> x = Variable.Array<double>(item);
+            x[item] = Variable.GaussianFromMeanAndVariance(1, 2).ForEach(item);
+            x.Name = nameof(x);
+            double value = 1.5;
+            Variable.ConstrainEqual(x[item], value);
+            var xInit = Variable.Observed(default(IDistribution<double[]>));
+            x.InitialiseTo(xInit);
+            Variable.ConstrainPositive(x[item]);
+
+            InferenceEngine engine = new InferenceEngine();
+            xInit.ObservedValue = new GaussianArray(item.SizeAsInt, i => new Gaussian(0, 1));
+            var xActual = engine.Infer<IList<Gaussian>>(x);
+            var xExpected = new GaussianArray(Gaussian.PointMass(value), item.SizeAsInt);
+            Assert.Equal(xExpected, xActual);
+        }
+
+        [Fact]
+        public void InitializeConstrainedVariable()
+        {
+            Variable<double> x = Variable.GaussianFromMeanAndVariance(1, 2);
+            x.Name = nameof(x);
+            double value = 1.5;
+            Variable.ConstrainEqual(x, value);
+            var xInit = Variable.Observed(default(IDistribution<double>));
+            x.InitialiseTo(xInit);
+            Variable.ConstrainPositive(x);
+
+            InferenceEngine engine = new InferenceEngine();
+            xInit.ObservedValue = new Gaussian(0, 1);
+            var xActual = engine.Infer<Gaussian>(x);
+            var xExpected = Gaussian.PointMass(value);
+            Assert.Equal(xExpected, xActual);
+        }
+
+        [Fact]
         public void MarginalDividedByPriorTest()
         {
             Variable<double> parameter = Variable.GaussianFromMeanAndVariance(0.2, 0.1);

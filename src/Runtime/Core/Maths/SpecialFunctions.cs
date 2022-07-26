@@ -4276,7 +4276,7 @@ rr = mpf('-0.99999824265582826');
         {
             IEnumerator<double> iter = list.GetEnumerator();
             if (!iter.MoveNext())
-                return Double.NaN;
+                throw new InvalidOperationException("Sequence contains no elements");
             double Z = iter.Current;
             while (iter.MoveNext())
             {
@@ -4294,7 +4294,7 @@ rr = mpf('-0.99999824265582826');
         {
             IEnumerator<double> iter = list.GetEnumerator();
             if (!iter.MoveNext())
-                return Double.NaN;
+                throw new InvalidOperationException("Sequence contains no elements");
             double Z = iter.Current;
             while (iter.MoveNext())
             {
@@ -4387,7 +4387,7 @@ rr = mpf('-0.99999824265582826');
         public static double Median(double[] array, int start, int length)
         {
             if (length <= 0)
-                return Double.NaN;
+                throw new InvalidOperationException("Sequence contains no elements");
             // this can be done in O(n) time, but here we take a slower shortcut.
             // Array.Sort does not sort NaNs reliably, so we must extract them first.
             double[] a = RemoveNaNs(array, start, length);
