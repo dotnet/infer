@@ -363,9 +363,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return result;
             }
 
-            double xMean, xVariance;
-            innerProduct.GetMeanAndVariance(out xMean, out xVariance);
-
             double aMean, aVariance;
             double toXVariance, toXMean;
             to_innerProduct.GetMeanAndVariance(out toXMean, out toXVariance);
@@ -374,7 +371,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 A[k].GetMeanAndVariance(out aMean, out aVariance);
 
-                Gaussian msg = new Gaussian(xMean - (toXMean - B[k] * aMean), xVariance + toXVariance - B[k] * B[k] * aVariance);
+                double denom = 1 + (toXVariance - B[k] * B[k] * aVariance) * innerProduct.Precision;
+                double meanTimesPrecision = (innerProduct.MeanTimesPrecision - (toXMean - B[k] * aMean) * innerProduct.Precision) / denom;
+                double precision = innerProduct.Precision / denom;
+                Gaussian msg = Gaussian.FromNatural(meanTimesPrecision, precision);
+                //Gaussian msg = new Gaussian(xMean - (toXMean - B[k] * aMean), xVariance + toXVariance - B[k] * B[k] * aVariance);
                 msg = GaussianProductOpBase.AAverageConditional(msg, B[k]);
                 bool damp = false;
                 if (damp)
