@@ -309,17 +309,39 @@ namespace Microsoft.ML.Probabilistic
                     timingInfo = new TimingInfo();
                     MultiplyAllTimingInfos.Add(key, timingInfo);
                 }
+                timingInfo.watch.Start();
+                T reduced;
+                bool useGather = false;
+                if (useGather)
+                {
+                    T[] values = comm.Gather(value, 0);
+                    if (values != null)
+                    {
+                        reduced = (T)value.Clone();
+                        foreach (var otherValue in values.Skip(1))
+                        {
+                            reduced.SetToProduct(reduced, otherValue);
+                        }
+                    }
+                    else
+                    {
+                        reduced = default;
+                    }
+                    comm.Broadcast(ref reduced, 0);
+                }
+                else
+                {
+                    reduced = comm.Allreduce(value, (a, b) =>
+                    {
+                        T result = (T)a.Clone();
+                        result.SetToProduct(a, b);
+                        return result;
+                    });
+                }
+                timingInfo.watch.Stop();
+                timingInfo.ItemsTransmitted++;
+                return reduced;
             }
-            timingInfo.watch.Start();
-            var reduced = comm.Allreduce(value, (a, b) =>
-            {
-                T result = (T)a.Clone();
-                result.SetToProduct(a, b);
-                return result;
-            });
-            timingInfo.watch.Stop();
-            timingInfo.ItemsTransmitted++;
-            return reduced;
         }
     }
 }
