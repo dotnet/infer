@@ -22,11 +22,12 @@ layout: default
 | **Repeat blocks / raising model to power** | Yes                       | No | No | | |		
 | **Arrays of arrays (jagged arrays)**       | Yes                       | No | No | | |		
 | **Increment log density**                  | Yes                       | Yes | Yes | | |		
-| **Turing complete**                        | No                        | No | Yes? | | |		
+| **Turing complete**                        | No                        | No<sup>3</sup> | Yes? | | |		
 | **Model evidence computation**             | Yes                       | No |	No | | |		
 | **Non-parametric models**                  | GP only                   | No | No | | |		
 
 1. Support for Csoft (Probabilistic C#) is still experimental.
 2. Has an extensibility mechanism for adding new user-defined factors, message operators, distributions and constraints.
+3. "Turing complete" here means any computable random variable can be expressed in the modelling language.  Stan is "Turing complete" in the sense that the user can specify any computable posterior density.  Converting a computation that generates a random variable into a computation for the posterior density is a non-trivial task (and arguably the job of a probabilistic programming language).  See [On the computability of conditional probability](https://arxiv.org/abs/1005.3014).
 
 For a comparison to Bayesian network software, see [https://www.cs.ubc.ca/~murphyk/Software/bnsoft.html](https://www.cs.ubc.ca/~murphyk/Software/bnsoft.html).
