@@ -455,6 +455,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 CompactBuffer(bufferIndex);
                 count = 0;
             }
+            if (double.IsNaN(item)) throw new ArgumentOutOfRangeException(nameof(item), item, "item is NaN");
             buffer[count] = item;
             count++;
             countInBuffer[bufferIndex] = count;
