@@ -1498,7 +1498,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             Letter = 1 << 4,
             LetterOrDigit = 1 << 5,
             WordChar = 1 << 6,
-            Uniform = 1 << 7,
+            CompleteWordChar = 1 << 7,
+            Uniform = 1 << 8,
         }
 
         public static CharClasses GetImpliedCharClasses(CharClasses charClass)
@@ -1519,6 +1520,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     return CharClasses.LetterOrDigit | GetImpliedCharClasses(CharClasses.WordChar);
                 case CharClasses.WordChar:
                     return CharClasses.WordChar | GetImpliedCharClasses(CharClasses.Uniform);
+                case CharClasses.CompleteWordChar:
+                    return CharClasses.CompleteWordChar | GetImpliedCharClasses(CharClasses.Uniform);
                 case CharClasses.Uniform:
                     return CharClasses.Uniform;
                 default:
