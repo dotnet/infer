@@ -35,7 +35,7 @@
     <RunPostBuildNetCore Condition="$(IgnorePostBuildNetCore) != 'true'">true</RunPostBuildNetCore>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net462'">
     <RunPostBuildNetFull>true</RunPostBuildNetFull>
   </PropertyGroup>
 
