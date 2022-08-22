@@ -9,7 +9,6 @@ namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.ML.Probabilistic;
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
@@ -55,6 +54,86 @@ namespace Microsoft.ML.Probabilistic.Factors
         [MultiplyAll]
         [Fresh]
         public static T Marginal<T>(T toDef, T Def, T result)
+            where T : SettableToProduct<T>
+        {
+            result.SetToProduct(Def, toDef);
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_Divide"]/message_doc[@name="MarginalIncrement{T}(T, T, T)"]/*'/>
+        /// <typeparam name="T">The type of the messages.</typeparam>
+        // SkipIfUniform on 'use' causes this line to be pruned when the backward message isn't changing
+        [SkipIfAllUniform]
+        [MultiplyAll]
+        [Fresh]
+        public static T MarginalIncrement<T>(T result, [InducedSource] T def, [SkipIfUniform, InducedTarget] T use)
+            where T : SettableToProduct<T>
+        {
+            result.SetToProduct(use, def);
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_Divide"]/message_doc[@name="ToDefInit{T}(T)"]/*'/>
+        /// <typeparam name="T">The type of the messages.</typeparam>
+        [Skip] // this is needed to instruct the scheduler to treat the buffer as uninitialized
+        public static T ToDefInit<T>(T Def)
+            where T : ICloneable, SettableToUniform
+        {
+            // must construct from Def instead of Uses because Uses array may be empty
+            return ArrayHelper.MakeUniform(Def);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_Divide"]/message_doc[@name="ToDef{T}(IList{T}, T)"]/*'/>
+        /// <typeparam name="T">The type of the messages.</typeparam>
+        [SkipIfAllUniform]
+        [MultiplyAll]
+        [Fresh]
+        public static T ToDef<T>(IReadOnlyList<T> Uses, T result)
+            where T : SettableToProduct<T>, SettableTo<T>, SettableToUniform
+        {
+            return Distribution.SetToProductOfAll(result, Uses);
+        }
+    }
+
+    [FactorMethod(typeof(Clone), "Replicate<>", Default = false)]
+    [Buffers("marginal", "toDef")]
+    [Quality(QualityBand.Mature)]
+    public static class ReplicateOp_Divide_NoInit
+    {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_Divide"]/message_doc[@name="DefAverageConditional{T}(T, T)"]/*'/>
+        /// <typeparam name="T">The type of the messages.</typeparam>
+        public static T DefAverageConditional<T>([IsReturned] T toDef, T result)
+            where T : SettableTo<T>
+        {
+            result.SetTo(toDef);
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_Divide"]/message_doc[@name="UsesAverageConditional{T}(T, T, int, T)"]/*'/>
+        /// <typeparam name="T">The type of the messages.</typeparam>
+        // Uses is marked Cancels because the forward message does not really depend on the backward message
+        public static T UsesAverageConditional<T>([Indexed, Cancels] T Uses, [SkipIfUniform] T marginal, [IgnoreDependency] int resultIndex, T result)
+            where T : SettableToRatio<T>
+        {
+            result.SetToRatio(marginal, Uses);
+            return result;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_Divide"]/message_doc[@name="MarginalInit{T}(T)"]/*'/>
+        /// <typeparam name="T">The type of the messages.</typeparam>
+        [Skip]  // must have Skip since marginal is Fresh
+        public static T MarginalInit<T>([SkipIfUniform] T Def)
+            where T : ICloneable
+        {
+            return (T)Def.Clone();
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_Divide"]/message_doc[@name="Marginal{T}(T, T, T)"]/*'/>
+        /// <typeparam name="T">The type of the messages.</typeparam>
+        [SkipIfAllUniform]
+        [MultiplyAll]
+        [Fresh]
+        public static T Marginal<T>([NoInit] T toDef, T Def, T result)
             where T : SettableToProduct<T>
         {
             result.SetToProduct(Def, toDef);
@@ -475,7 +554,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp"]/message_doc[@name="UsesAverageLogarithm{T, TDef}(TDef, int, T)"]/*'/>
         /// <typeparam name="T">The type of the outgoing message.</typeparam>
         /// <typeparam name="TDef">The type of the incoming message from <c>Def</c>.</typeparam>
-        public static T UsesAverageLogarithm<T, TDef>([IsReturned] TDef Def, int resultIndex, T result)
+        public static T UsesAverageLogarithm<T, TDef>([IsReturned] TDef Def, [IgnoreDependency] int resultIndex, T result)
             where T : SettableTo<TDef>
         {
             result.SetTo(Def);
@@ -578,7 +657,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateMaxOp"]/message_doc[@name="UsesMaxConditionalInit{T}(T, int)"]/*'/>
         /// <typeparam name="T">The type of the distribution o0ver the replicated variable.</typeparam>
         [Skip]
-        public static T UsesMaxConditionalInit<T>([IgnoreDependency] T Def, int resultIndex)
+        public static T UsesMaxConditionalInit<T>([IgnoreDependency] T Def, [IgnoreDependency] int resultIndex)
             where T : ICloneable
         {
             return (T)Def.Clone();

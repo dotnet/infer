@@ -6,12 +6,12 @@
 To build from source, you must first clone the repository.
 Next decide whether you want to use a code editor like Visual Studio (recommended) or the command line.
 When building, you must select a configuration.
-All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.1, .NET Core 3.1, or both depending on build configuration:
+All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.2, .NET Core 3.1, or both depending on build configuration:
 
 | Configurations | Targeted Frameworks |
 |:---|---:|
-| Debug, Release | both .NET Framework 4.6.1 and .NET Core 3.1 |
-| DebugFull, ReleaseFull | .NET Framework 4.6.1 only |
+| Debug, Release | both .NET Framework 4.6.2 and .NET Core 3.1 |
+| DebugFull, ReleaseFull | .NET Framework 4.6.2 only |
 | DebugCore, ReleaseCore | .NET Core 3.1 only |
 
 
@@ -76,7 +76,7 @@ There are three test assemblies in the solution:
 - **TestPublic.dll** in the folder `test/TestPublic`.
 - **Microsoft.ML.Probabilistic.Learners.Tests.dll** in the folder `test/Learners/LearnersTests`. 
 
-Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<net6.0|net461>` or `bin/Release<Core|Full>/<net6.0|net461>` subdirectories
+Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<net6.0|net462>` or `bin/Release<Core|Full>/<net6.0|net462>` subdirectories
 of the test project.
 
 Runner executes tests in parallel by default. However, some test category must be run

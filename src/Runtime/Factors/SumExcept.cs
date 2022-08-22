@@ -65,8 +65,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 return result;
             }
-            double sumMean, sumVariance;
-            sumExcept.GetMeanAndVarianceImproper(out sumMean, out sumVariance);
+            sumExcept.GetMeanAndVarianceImproper(out double sumMean, out double sumVariance);
             double[] means = new double[array.Count];
             double[] variances = new double[array.Count];
             for (int i = 0; i < array.Count; i++)
@@ -74,8 +73,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // could generalize this to be predicate(i)
                 if (i == index)
                     continue;
-                double mean1, variance1;
-                array[i].GetMeanAndVarianceImproper(out mean1, out variance1);
+                array[i].GetMeanAndVarianceImproper(out double mean1, out double variance1);
                 means[i] = mean1;
                 variances[i] = variance1;
             }

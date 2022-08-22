@@ -16687,48 +16687,48 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Collection.GetItemsFromJagged{T}(IReadOnlyList{IReadOnlyList{T}}, IReadOnlyList{int}, IReadOnlyList{int})" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="LogAverageFactor(IList{T}, IList{IList{T}}, IList{int}, IList{int})">
+    <message_doc name="LogAverageFactor(IList{T}, IList{IList{T}}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices,indices2) p(items,array,indices,indices2) factor(items,array,indices,indices2))</c>.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices,indices2))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogEvidenceRatio(IList{T}, IList{IList{T}}, IList{int}, IList{int})">
+    <message_doc name="LogEvidenceRatio(IList{T}, IList{IList{T}}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices,indices2) p(items,array,indices,indices2) factor(items,array,indices,indices2) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices,indices2) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="AverageLogFactor(IList{T}, IList{IList{T}}, IList{int}, IList{int})">
+    <message_doc name="AverageLogFactor(IList{T}, IList{IList{T}}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary>Evidence message for VMP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns>Zero.</returns>
       <remarks>
         <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor{DistributionArrayType, DistributionType}(IList{DistributionType}, IList{DistributionArrayType}, IList{int}, IList{int})">
+    <message_doc name="LogAverageFactor{DistributionArrayType, DistributionType}(IList{DistributionType}, IList{DistributionArrayType}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices,indices2) p(items,array,indices,indices2) factor(items,array,indices,indices2))</c>.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices,indices2))</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="AverageLogFactor{DistributionArrayType, DistributionType}(IList{DistributionType}, IList{DistributionArrayType})">
@@ -16740,26 +16740,26 @@
         <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor{DistributionArrayType, DistributionType}(IList{T}, IList{DistributionArrayType}, IList{int}, IList{int})">
+    <message_doc name="LogAverageFactor{DistributionArrayType, DistributionType}(IList{T}, IList{DistributionArrayType}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices,indices2) p(items,array,indices,indices2) factor(items,array,indices,indices2))</c>.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices,indices2))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogEvidenceRatio{DistributionArrayType, DistributionType}(IList{T}, IList{DistributionArrayType}, IList{int}, IList{int})">
+    <message_doc name="LogEvidenceRatio{DistributionArrayType, DistributionType}(IList{T}, IList{DistributionArrayType}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices,indices2) p(items,array,indices,indices2) factor(items,array,indices,indices2) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices,indices2) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="AverageLogFactor{DistributionArrayType, DistributionType}(IList{T}, IList{DistributionArrayType})">
@@ -16771,26 +16771,26 @@
         <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor{DistributionType}(IList{DistributionType}, IList{IList{T}}, IList{int}, IList{int})">
+    <message_doc name="LogAverageFactor{DistributionType}(IList{DistributionType}, IList{IList{T}}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices,indices2) p(items,array,indices,indices2) factor(items,array,indices,indices2))</c>.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices,indices2))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogEvidenceRatio{DistributionType}(IList{DistributionType}, IList{IList{T}}, IList{int}, IList{int})">
+    <message_doc name="LogEvidenceRatio{DistributionType}(IList{DistributionType}, IList{IList{T}}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices,indices2) p(items,array,indices,indices2) factor(items,array,indices,indices2) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices,indices2) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="AverageLogFactor{DistributionType}(IList{DistributionType}, IList{IList{T}})">
@@ -16802,16 +16802,16 @@
         <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogEvidenceRatio{DistributionArrayType, DistributionType}(IList{DistributionType}, IList{DistributionArrayType}, IList{int}, IList{int}, IList{DistributionType})">
+    <message_doc name="LogEvidenceRatio{DistributionArrayType, DistributionType}(IList{DistributionType}, IList{DistributionArrayType}, IReadOnlyList{int}, IReadOnlyList{int}, IList{DistributionType})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <param name="to_items">Previous outgoing message to <c>items</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices,indices2) p(items,array,indices,indices2) factor(items,array,indices,indices2) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices,indices2) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="MarginalInit{ArrayType}(ArrayType)">
@@ -16836,13 +16836,13 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="MarginalIncrement{ArrayType, DistributionArrayType, DistributionType}(ArrayType, DistributionType, DistributionType, IList{int}, IList{int}, int)">
+    <message_doc name="MarginalIncrement{ArrayType, DistributionArrayType, DistributionType}(ArrayType, DistributionType, DistributionType, IReadOnlyList{int}, IReadOnlyList{int}, int)">
       <summary />
       <param name="result">Modified to contain the outgoing message.</param>
       <param name="to_item" />
       <param name="item" />
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <param name="resultIndex">Index of the <c>marginal</c> for which a message is desired.</param>
       <returns>
         <paramref name="result" />
@@ -16851,114 +16851,114 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="ItemsAverageConditional{ArrayType, DistributionArrayType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, IList{int}, int, DistributionType)">
+    <message_doc name="ItemsAverageConditional{ArrayType, DistributionArrayType, DistributionType}(DistributionType, ArrayType, ArrayType, IReadOnlyList{int}, IReadOnlyList{int}, int, DistributionType)">
       <summary>EP message to <c>items</c>.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
       <param name="marginal">Buffer <c>marginal</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <param name="resultIndex">Index of the <c>items</c> for which a message is desired.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>items</c> as the random arguments are varied. The formula is <c>proj[p(items) sum_(array,indices,indices2) p(array,indices,indices2) factor(items,array,indices,indices2)]/p(items)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>items</c> as the random arguments are varied. The formula is <c>proj[p(items) sum_(array) p(array) factor(items,array,indices,indices2)]/p(items)</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="ArrayAverageConditional{ArrayType, DistributionArrayType, DistributionType}(IList{DistributionType}, IList{int}, IList{int}, ArrayType)">
+    <message_doc name="ArrayAverageConditional{ArrayType, DistributionArrayType, DistributionType}(IList{DistributionType}, IReadOnlyList{int}, IReadOnlyList{int}, ArrayType)">
       <summary>EP message to <c>array</c>.</summary>
       <param name="items">Incoming message from <c>items</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(items,indices,indices2) p(items,indices,indices2) factor(items,array,indices,indices2)]/p(array)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(items) p(items) factor(items,array,indices,indices2)]/p(array)</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="items" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ArrayAverageConditional{ArrayType, DistributionArrayType, DistributionType}(IList{T}, IList{int}, IList{int}, ArrayType)">
+    <message_doc name="ArrayAverageConditional{ArrayType, DistributionArrayType, DistributionType}(IList{T}, IReadOnlyList{int}, IReadOnlyList{int}, ArrayType)">
       <summary>EP message to <c>array</c>.</summary>
       <param name="items">Incoming message from <c>items</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(items,indices,indices2) p(items,indices,indices2) factor(items,array,indices,indices2)]/p(array)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(items) p(items) factor(items,array,indices,indices2)]/p(array)</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="items" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ItemsAverageLogarithm{DistributionArrayType, DistributionType}(IList{DistributionArrayType}, IList{int}, IList{int}, int, DistributionType)">
+    <message_doc name="ItemsAverageLogarithm{DistributionArrayType, DistributionType}(IList{DistributionArrayType}, IReadOnlyList{int}, IReadOnlyList{int}, int, DistributionType)">
       <summary>VMP message to <c>items</c>.</summary>
       <param name="array">Incoming message from <c>array</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <param name="resultIndex">Index of the <c>items</c> for which a message is desired.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>items</c> as the random arguments are varied. The formula is <c>proj[sum_(array,indices,indices2) p(array,indices,indices2) factor(items,array,indices,indices2)]</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>items</c> as the random arguments are varied. The formula is <c>proj[sum_(array) p(array) factor(items,array,indices,indices2)]</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="array" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ItemsAverageLogarithmInit{TDist}(IList{DistributionStructArray{TDist, T}}, IList{int}, IList{int})">
+    <message_doc name="ItemsAverageLogarithmInit{TDist}(IList{DistributionStructArray{TDist, T}}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary />
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns />
       <remarks>
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="ItemsAverageLogarithmInit{TDist}(IList{DistributionRefArray{TDist, T}}, IList{int}, IList{int})">
+    <message_doc name="ItemsAverageLogarithmInit{TDist}(IList{DistributionRefArray{TDist, T}}, IReadOnlyList{int}, IReadOnlyList{int})">
       <summary />
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <returns />
       <remarks>
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="ArrayAverageLogarithm{DistributionArrayType, DistributionType, ArrayType}(IList{DistributionType}, IList{int}, IList{int}, ArrayType)">
+    <message_doc name="ArrayAverageLogarithm{DistributionArrayType, DistributionType, ArrayType}(IList{DistributionType}, IReadOnlyList{int}, IReadOnlyList{int}, ArrayType)">
       <summary>VMP message to <c>array</c>.</summary>
       <param name="items">Incoming message from <c>items</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>array</c>. Because the factor is deterministic, <c>items</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(indices,indices2) p(indices,indices2) log(sum_items p(items) factor(items,array,indices,indices2)))</c>.</para>
+        <para>The outgoing message is the factor viewed as a function of <c>array</c> with <c>items</c> integrated out. The formula is <c>sum_items p(items) factor(items,array,indices,indices2)</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="items" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ArrayAverageLogarithm{ArrayType, DistributionArrayType, DistributionType}(IList{T}, IList{int}, IList{int}, ArrayType)">
+    <message_doc name="ArrayAverageLogarithm{ArrayType, DistributionArrayType, DistributionType}(IList{T}, IReadOnlyList{int}, IReadOnlyList{int}, ArrayType)">
       <summary>VMP message to <c>array</c>.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
-      <param name="indices2">Incoming message from <c>indices2</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
+      <param name="indices2">Constant value for <c>indices2</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>array</c>. Because the factor is deterministic, <c>items</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(indices,indices2) p(indices,indices2) log(sum_items p(items) factor(items,array,indices,indices2)))</c>.</para>
+        <para>The outgoing message is the factor viewed as a function of <c>array</c> with <c>items</c> integrated out. The formula is <c>sum_items p(items) factor(items,array,indices,indices2)</c>.</para>
       </remarks>
     </message_doc>
   </message_op_class>
@@ -17007,44 +17007,44 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Collection.GetJaggedItems{T}(IReadOnlyList{T}, IReadOnlyList{IReadOnlyList{int}})" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="LogAverageFactor(IList{IList{T}}, IList{T}, IList{IList{int}})">
+    <message_doc name="LogAverageFactor(IList{IList{T}}, IList{T}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices))</c>.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogEvidenceRatio(IList{IList{T}}, IList{T}, IList{IList{int}})">
+    <message_doc name="LogEvidenceRatio(IList{IList{T}}, IList{T}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="AverageLogFactor(IList{IList{T}}, IList{T}, IList{IList{int}})">
+    <message_doc name="AverageLogFactor(IList{IList{T}}, IList{T}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for VMP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <returns>Zero.</returns>
       <remarks>
         <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor{ItemType, DistributionType}(IList{ItemType}, IList{DistributionType}, IList{IList{int}})">
+    <message_doc name="LogAverageFactor{ItemType, DistributionType}(IList{ItemType}, IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices))</c>.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices))</c>.</para>
       </remarks>
     </message_doc>
     <message_doc name="AverageLogFactor{ItemType, DistributionType}(IList{ItemType}, IList{DistributionType})">
@@ -17056,24 +17056,24 @@
         <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor{DistributionType}(IList{IList{T}}, IList{DistributionType}, IList{IList{int}})">
+    <message_doc name="LogAverageFactor{DistributionType}(IList{IList{T}}, IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices))</c>.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogEvidenceRatio{DistributionType}(IList{IList{T}}, IList{DistributionType}, IList{IList{int}})">
+    <message_doc name="LogEvidenceRatio{DistributionType}(IList{IList{T}}, IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="AverageLogFactor{DistributionType}(IList{IList{T}}, IList{DistributionType})">
@@ -17085,24 +17085,24 @@
         <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogAverageFactor{ItemType, DistributionType}(IList{ItemType}, IList{T}, IList{IList{int}})">
+    <message_doc name="LogAverageFactor{ItemType, DistributionType}(IList{ItemType}, IList{T}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <returns>Logarithm of the factor's average value across the given argument distributions.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices))</c>.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices))</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogEvidenceRatio{ItemType, DistributionType}(IList{ItemType}, IList{T}, IList{IList{int}})">
+    <message_doc name="LogEvidenceRatio{ItemType, DistributionType}(IList{ItemType}, IList{T}, IReadOnlyList{IReadOnlyList{int}})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="AverageLogFactor{ItemType, DistributionType}(IList{ItemType}, IList{T})">
@@ -17114,15 +17114,15 @@
         <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
-    <message_doc name="LogEvidenceRatio{ItemType, DistributionType}(IList{ItemType}, IList{DistributionType}, IList{IList{int}}, IList{ItemType})">
+    <message_doc name="LogEvidenceRatio{ItemType, DistributionType}(IList{ItemType}, IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}}, IList{ItemType})">
       <summary>Evidence message for EP.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <param name="to_items">Previous outgoing message to <c>items</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(items,array) p(items,array) factor(items,array,indices) / sum_items p(items) messageTo(items))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="MarginalInit{ArrayType}(ArrayType)">
@@ -17147,12 +17147,12 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="MarginalIncrement{ArrayType, ItemType, DistributionType}(ArrayType, ItemType, ItemType, IList{IList{int}}, int)">
+    <message_doc name="MarginalIncrement{ArrayType, ItemType, DistributionType}(ArrayType, ItemType, ItemType, IReadOnlyList{IReadOnlyList{int}}, int)">
       <summary />
       <param name="result">Modified to contain the outgoing message.</param>
       <param name="to_item" />
       <param name="item" />
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <param name="resultIndex">Index of the <c>marginal</c> for which a message is desired.</param>
       <returns>
         <paramref name="result" />
@@ -17161,88 +17161,88 @@
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="ItemsAverageConditional{ArrayType, ItemType, DistributionType}(ItemType, ArrayType, ArrayType, IList{IList{int}}, int, ItemType)">
+    <message_doc name="ItemsAverageConditional{ArrayType, ItemType, DistributionType}(ItemType, ArrayType, ArrayType, IReadOnlyList{IReadOnlyList{int}}, int, ItemType)">
       <summary>EP message to <c>items</c>.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
       <param name="array">Incoming message from <c>array</c>.</param>
       <param name="marginal">Buffer <c>marginal</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <param name="resultIndex">Index of the <c>items</c> for which a message is desired.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>items</c> as the random arguments are varied. The formula is <c>proj[p(items) sum_(array,indices) p(array,indices) factor(items,array,indices)]/p(items)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>items</c> as the random arguments are varied. The formula is <c>proj[p(items) sum_(array) p(array) factor(items,array,indices)]/p(items)</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="ArrayAverageConditional{ItemType, DistributionType, ArrayType}(IList{ItemType}, IList{IList{int}}, ArrayType)">
+    <message_doc name="ArrayAverageConditional{ItemType, DistributionType, ArrayType}(IList{ItemType}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)">
       <summary>EP message to <c>array</c>.</summary>
       <param name="items">Incoming message from <c>items</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(items,indices) p(items,indices) factor(items,array,indices)]/p(array)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(items) p(items) factor(items,array,indices)]/p(array)</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="items" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ArrayAverageConditional{DistributionType, ArrayType}(IList{IList{T}}, IList{IList{int}}, ArrayType)">
+    <message_doc name="ArrayAverageConditional{DistributionType, ArrayType}(IList{IList{T}}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)">
       <summary>EP message to <c>array</c>.</summary>
       <param name="items">Incoming message from <c>items</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(items,indices) p(items,indices) factor(items,array,indices)]/p(array)</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(items) p(items) factor(items,array,indices)]/p(array)</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="items" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ItemsAverageLogarithm{ItemType, DistributionType}(IList{DistributionType}, IList{IList{int}}, int, ItemType)">
+    <message_doc name="ItemsAverageLogarithm{ItemType, DistributionType}(IList{DistributionType}, IReadOnlyList{IReadOnlyList{int}}, int, ItemType)">
       <summary>VMP message to <c>items</c>.</summary>
       <param name="array">Incoming message from <c>array</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <param name="resultIndex">Index of the <c>items</c> for which a message is desired.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>items</c> as the random arguments are varied. The formula is <c>proj[sum_(array,indices) p(array,indices) factor(items,array,indices)]</c>.</para>
+        <para>The outgoing message is a distribution matching the moments of <c>items</c> as the random arguments are varied. The formula is <c>proj[sum_(array) p(array) factor(items,array,indices)]</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="array" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ArrayAverageLogarithm{ItemType, DistributionType, ArrayType}(IList{ItemType}, IList{IList{int}}, ArrayType)">
+    <message_doc name="ArrayAverageLogarithm{ItemType, DistributionType, ArrayType}(IList{ItemType}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)">
       <summary>VMP message to <c>array</c>.</summary>
       <param name="items">Incoming message from <c>items</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>array</c>. Because the factor is deterministic, <c>items</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(indices) p(indices) log(sum_items p(items) factor(items,array,indices)))</c>.</para>
+        <para>The outgoing message is the factor viewed as a function of <c>array</c> with <c>items</c> integrated out. The formula is <c>sum_items p(items) factor(items,array,indices)</c>.</para>
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="items" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="ArrayAverageLogarithm{DistributionType, ArrayType}(IList{IList{T}}, IList{IList{int}}, ArrayType)">
+    <message_doc name="ArrayAverageLogarithm{DistributionType, ArrayType}(IList{IList{T}}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)">
       <summary>VMP message to <c>array</c>.</summary>
       <param name="items">Incoming message from <c>items</c>.</param>
-      <param name="indices">Incoming message from <c>indices</c>.</param>
+      <param name="indices">Constant value for <c>indices</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <c>array</c>. Because the factor is deterministic, <c>items</c> is integrated out before taking the logarithm. The formula is <c>exp(sum_(indices) p(indices) log(sum_items p(items) factor(items,array,indices)))</c>.</para>
+        <para>The outgoing message is the factor viewed as a function of <c>array</c> with <c>items</c> integrated out. The formula is <c>sum_items p(items) factor(items,array,indices)</c>.</para>
       </remarks>
     </message_doc>
   </message_op_class>

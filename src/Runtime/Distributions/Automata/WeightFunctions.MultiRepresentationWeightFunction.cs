@@ -350,7 +350,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                         + 2 * 24 // Headers of the states and transitions arrays
                                         + automaton.Data.States.Count * (2 * sizeof(int) + sizeof(double)) // states
                                         + automaton.Data.Transitions.Count * 24 // 24 is the size of one transition w/o storage for discrete char
-                                        + automaton.Data.Transitions.Count(tr => !tr.IsEpsilon) * 80;
+                                        + automaton.Data.Transitions.Enumerate().Count(tr => !tr.IsEpsilon) * 80;
                                     // 40 is the size of a DiscreteChar filled with nulls;
                                     // another 40 is the size of an array with a single char range.
                                     // Any specific DiscreteChar can be larger or can be cached.

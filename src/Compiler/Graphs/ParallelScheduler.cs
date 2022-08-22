@@ -508,6 +508,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
         public static double GetMedianMinBlockSize(int[][][] schedulePerThread)
         {
             int numStages = schedulePerThread[0].Length;
+            if (numStages == 0) return double.NaN;
             var minBlockSizes = Util.ArrayInit(numStages, stageIndex => schedulePerThread.Min(s => (double)s[stageIndex].Length));
             return MMath.Median(minBlockSizes);
         }
@@ -515,6 +516,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
         public static double GetMedianMinBlockSize(int[][][][] schedulePerThreadInProcess, out double medianThreadStages)
         {
             int distributedStageCount = schedulePerThreadInProcess.Length;
+            if (distributedStageCount == 0)
+            {
+                medianThreadStages = double.NaN;
+                return double.NaN;
+            }
             var minBlockSizes = Util.ArrayInit(distributedStageCount, distributedStageIndex =>
             {
                 var schedulePerThread = schedulePerThreadInProcess[distributedStageIndex];

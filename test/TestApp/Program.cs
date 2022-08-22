@@ -61,8 +61,8 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = false;
             //InferenceEngine.DefaultEngine.Compiler.FreeMemory = false;
             //InferenceEngine.DefaultEngine.Compiler.ReturnCopies = false;
-            //InferenceEngine.DefaultEngine.Compiler.UnrollLoops = true;
-            //InferenceEngine.DefaultEngine.Compiler.UseParallelForLoops = true;
+            //InferenceEngine.DefaultEngine.Compiler.UnrollLoops = false;
+            //InferenceEngine.DefaultEngine.Compiler.UseParallelForLoops = false;
             //InferenceEngine.DefaultEngine.ShowTimings = true;
             //InferenceEngine.DefaultEngine.ShowProgress = false;
             //InferenceEngine.DefaultEngine.ShowFactorGraph = true;
@@ -77,19 +77,20 @@ namespace TestApp
             //InferenceEngine.DefaultEngine.Compiler.UseLocals = false;
             TestUtils.SetDebugOptions();
             TestUtils.SetBrowserMode(BrowserMode.OnError);
-            TestUtils.SetBrowserMode(BrowserMode.Always);
+            //TestUtils.SetBrowserMode(BrowserMode.Always);
             //TestUtils.SetBrowserMode(BrowserMode.WriteFiles);
 
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
+            new MaxGaussianOpTests().MaxTest2();
 
             bool runAllTests = false;
             if (runAllTests)
             {
                 // Run all tests (need to run in 64-bit else OutOfMemory due to loading many DLLs)
                 // This is useful when looking for failures due to certain compiler options.
-                Console.WriteLine(StringUtil.VerboseToString(TestUtils.GetTestResultPaths()));
+                //Console.WriteLine(StringUtil.VerboseToString(TestUtils.GetTestResultPaths()));
                 //string path = @"C:\Users\minka\Depots\mlp\infernet\Infer2\TestResults\minka_MSRC-MINKA3 2013-04-11 14_36_55.trx";
                 InferenceEngine.DefaultEngine.Compiler.RecommendedQuality = QualityBand.Preview;
                 InferenceEngine.DefaultEngine.Compiler.GenerateInMemory = true;
@@ -113,7 +114,6 @@ namespace TestApp
             watch.Stop();
             Console.WriteLine("elapsed time = {0}ms", watch.ElapsedMilliseconds);
         }
-
     }
 }
 

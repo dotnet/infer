@@ -321,7 +321,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 foreach (ConditionBinding ci in conditionContext)
                 {
-                    // each lhs has already been replaced, so we only need to compare for equality
+                    // each subexpression has already been replaced, so we only need to compare for equality here
                     if (expr.Equals(ci.lhs)) return ci.rhs;
                 }
             }

@@ -51,6 +51,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (b.IsPointMass)
                 return SumAverageConditional(a, b.Point);
             if (a.IsUniform() || b.IsUniform()) return Gaussian.Uniform();
+            // E[sum] = E[a] + E[b]
+            // var(sum) = var(a) + var(b) = 1/aPrec + 1/bPrec
+            // E[sum]/var(sum) = E[a]/var(sum) + E[b]/var(sum)
+            //                 = E[a]/var(a)*var(a)/(1/aPrec + 1/bPrec) + E[b]/var(sum)
+            // var(a)/(1/aPrec + 1/bPrec) = 1/(1 + aPrec/bPrec) = bPrec/(aPrec + bPrec)
             double meanTimesPrec = MMath.WeightedAverage(b.Precision, a.MeanTimesPrecision, a.Precision, b.MeanTimesPrecision);
             return Gaussian.FromNatural(meanTimesPrec, GetPrecisionOfSum(a, b));
         }

@@ -15,7 +15,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net461</TargetFramework>
+        <TargetFramework>net462</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -28,10 +28,10 @@
     </When>
     <Otherwise>
     	<PropertyGroup Condition="'$(IsWindows)'=='true'">
-        <TargetFrameworks>net6.0-windows;net461</TargetFrameworks>
+        <TargetFrameworks>net6.0-windows;net462</TargetFrameworks>
       </PropertyGroup>
 		  <PropertyGroup Condition="'$(IsWindows)'!='true'">
-			  <TargetFramework>net6.0;net461</TargetFramework>
+			  <TargetFramework>net6.0;net462</TargetFramework>
 		  </PropertyGroup>
 	  </Otherwise>
   </Choose>

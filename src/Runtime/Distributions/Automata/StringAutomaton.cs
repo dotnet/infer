@@ -2,15 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML.Probabilistic.Collections;
-
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.IO;
-    using System.Linq;
+   
 
     /// <summary>
     /// Represents a weighted finite state automaton defined on <see cref="string"/>.
@@ -97,7 +94,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static void AddTransitionCharSegmentBounds(
             Transition transition, Weight sourceStateResidualWeight, List<TransitionCharSegmentBound> segmentBounds)
         {
-            var distribution = transition.ElementDistribution.Value;
+            var distribution = transition.ElementDistribution;
             var ranges = distribution.Ranges;
             var weightBase = transition.Weight * sourceStateResidualWeight;
 

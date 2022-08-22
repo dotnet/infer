@@ -274,10 +274,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else if (IsUniform()) result.SetAllElementsTo(0.0);
             else
             {
-                // TM: Don't need to check for PosDef because Inverse already does.
-                //if(!precision.IsPositiveDefinite()) throw new ArgumentException("Improper distribution", "this");
                 result.SetTo(meanTimesPrecision);
-                result.PredivideBy(this.Precision);
+                result.PredivideBy(this.Precision); // will throw if Precision is not posdef
                 for (int i = 0; i < Dimension; i++)
                 {
                     if (Double.IsPositiveInfinity(precision[i, i])) result[i] = meanTimesPrecision[i];
@@ -887,19 +885,42 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     if (numerator.precision[i, i] < denominator.precision[i, i])
                     {
+                        // Precision difference is not posdef.
                         isImproper = true;
                         break;
                     }
                 }
                 if (isImproper)
                 {
-                    //throw new NotImplementedException();
+                    // Act as though numerator.precision was changed to equal denominator.precision,
+                    // and numerator.MeanTimesPrecision was changed to tau.
                     tau = denominator.precision * numerator.GetMean();
                     Precision.SetAllElementsTo(0);
-                    // cannot access numerator.precision after this
+                    // Should not access numerator.precision after this point, since numerator could be the same object as this.
+                }
+                else if (IsDifferenceDiagonallyDominant())
+                {
+                    // Precision difference must be posdef
+                    precision.SetToDifference(numerator.precision, denominator.precision);
+                }
+                else
+                {
+                    // We can't easily tell if the precision difference is posdef or not.
+                    // Must use an expensive test.
+                    var mean = numerator.GetMean();
+                    precision.SetToDifference(numerator.precision, denominator.precision);
+                    isImproper = !precision.IsPositiveDefinite();
+                    if (isImproper)
+                    {
+                        tau = denominator.precision * mean;
+                        Precision.SetAllElementsTo(0);
+                    }
                 }
             }
-            if (tau == null) precision.SetToDifference(numerator.precision, denominator.precision);
+            else
+            {
+                precision.SetToDifference(numerator.precision, denominator.precision);
+            }
             for (int i = 0; i < Dimension; i++)
             {
                 if (Double.IsPositiveInfinity(precision[i, i]))
@@ -942,6 +963,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         }
                     }
                 }
+            }
+
+            bool IsDifferenceDiagonallyDominant()
+            {
+                for (int i = 0; i < Dimension; i++)
+                {
+                    double sum = 0;
+                    for (int j = 0; j < Dimension; j++)
+                    {
+                        double diff = numerator.precision[i, j] - denominator.precision[i, j];
+                        if (i == j) sum += diff;
+                        else sum -= Math.Abs(diff);
+                    }
+                    if (sum <= 0) return false;
+                }
+                return true;
             }
         }
 

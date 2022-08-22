@@ -24,7 +24,7 @@ namespace Microsoft.ML.Probabilistic.Collections
     /// </remarks>
     [Serializable]
     [DataContract]
-    public struct ReadOnlyArray<T> : IReadOnlyList<T>
+    public struct ReadOnlyArray<T>
     {
         /// <summary>
         /// Regular array that holds data.
@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         public static ReadOnlyArray<T> Empty => new ReadOnlyArray<T>(Array.Empty<T>());
 
         /// <inheritdoc/>
-        public T this[int index] => this.array[index];
+        public ref readonly T this[int index] => ref this.array[index];
 
         /// <inheritdoc/>
         public int Count => this.array.Length;
@@ -70,13 +70,13 @@ namespace Microsoft.ML.Probabilistic.Collections
         public ReadOnlyArraySegmentEnumerator<T> GetEnumerator() =>
             new ReadOnlyArraySegmentEnumerator<T>(this, 0, this.array.Length);
 
-        /// <inheritdoc/>
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
-            new ReadOnlyArraySegmentEnumerator<T>(this, 0, this.array.Length);
-
-        /// <inheritdoc/>
-        IEnumerator IEnumerable.GetEnumerator() =>
-            new ReadOnlyArraySegmentEnumerator<T>(this, 0, this.array.Length);
+        public IEnumerable<T> Enumerate()
+        {
+            foreach (var val in this)
+            {
+                yield return val;
+            }
+        }
 
         public override bool Equals(object o) => o is ReadOnlyArray<T> that && this == that;
 
@@ -115,7 +115,7 @@ namespace Microsoft.ML.Probabilistic.Collections
     /// <summary>
     /// A version if <see cref="ArraySegment{T}"/> which can not be mutated.
     /// </summary>
-    public struct ReadOnlyArraySegment<T> : IReadOnlyList<T>
+    public struct ReadOnlyArraySegment<T>
     {
         /// <summary>
         /// Underlying read-only array.
@@ -146,12 +146,12 @@ namespace Microsoft.ML.Probabilistic.Collections
         }
 
         /// <inheritdoc/>
-        public T this[int index]
+        public ref readonly T this[int index]
         {
             get
             {
                 Debug.Assert(index >= 0 && index < this.length);
-                return this.array[this.begin + index];
+                return ref this.array[this.begin + index];
             }
         }
 
@@ -167,29 +167,24 @@ namespace Microsoft.ML.Probabilistic.Collections
         public ReadOnlyArraySegmentEnumerator<T> GetEnumerator() =>
             new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.begin + this.length);
 
-        /// <inheritdoc/>
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
-            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.begin + this.length);
-
-        /// <inheritdoc/>
-        IEnumerator IEnumerable.GetEnumerator() =>
-            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.begin + this.length);
+        public IEnumerable<T> Enumerate()
+        {
+            foreach (var val in this)
+            {
+                yield return val;
+            }
+        }
     }
 
     /// <summary>
     /// Enumerator for immutable arrays and immutable array segments.
     /// </summary>
-    public struct ReadOnlyArraySegmentEnumerator<T> : IEnumerator<T>
+    public struct ReadOnlyArraySegmentEnumerator<T>
     {
         /// <summary>
         /// Underlying immutable array.
         /// </summary>
         private readonly ReadOnlyArray<T> array;
-
-        /// <summary>
-        /// Index of the first element which belongs segment begin enumerated.
-        /// </summary>
-        private readonly int begin;
 
         /// <summary>
         /// Index of the first element which does not belong segment begin enumerated.
@@ -207,7 +202,6 @@ namespace Microsoft.ML.Probabilistic.Collections
         internal ReadOnlyArraySegmentEnumerator(ReadOnlyArray<T> array, int begin, int end)
         {
             this.array = array;
-            this.begin = begin;
             this.end = end;
             this.pointer = begin - 1;
         }
@@ -225,16 +219,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         }
 
         /// <inheritdoc/>
-        public T Current => this.array[this.pointer];
-
-        /// <inheritdoc/>
-        object IEnumerator.Current => this.Current;
-
-        /// <inheritdoc/>
-        void IEnumerator.Reset()
-        {
-            this.pointer = this.begin - 1;
-        }
+        public ref readonly T Current => ref this.array[this.pointer];
     }
 
     public static class ReadOnlyArray

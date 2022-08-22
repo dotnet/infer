@@ -734,7 +734,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 .Scale(0.5);
 
             // Make sure it contains epsilon transitions
-            Assert.Contains(automaton.States, s => s.Transitions.Any(t => t.IsEpsilon));
+            Assert.Contains(automaton.States, s => s.Transitions.Enumerate().Any(t => t.IsEpsilon));
 
             // Test the original automaton, its epsilon closure and the closure of the closure
             for (int i = 0; i < 3; ++i)
@@ -745,7 +745,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 automaton = automaton.GetEpsilonClosure();
 
                 // Make sure it doesn't contain epsilon transitions
-                Assert.True(automaton.States.All(s => s.Transitions.All(t => !t.IsEpsilon)));
+                Assert.True(automaton.States.All(s => s.Transitions.Enumerate().All(t => !t.IsEpsilon)));
             }
         }
 

@@ -59,7 +59,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="sequenceWeightPairs">The collection of pairs of a sequence and the weight on that sequence.</param>
             public static TThis FromWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
             {
-                var result = new TThis();
+                var result = Util.New<TThis>();
                 result.SetWeights(sequenceWeightPairs);
                 return result;
 
@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             [Construction(nameof(Dictionary))]
             public static TThis FromDistinctWeights(IEnumerable<KeyValuePair<TSequence, Weight>> sequenceWeightPairs)
             {
-                var result = new TThis();
+                var result = Util.New<TThis>();
                 result.SetDistinctWeights(sequenceWeightPairs);
                 return result;
             }
@@ -100,7 +100,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="point">The only sequence contained in the dictionary.</param>
             public static TThis FromPoint(TSequence point)
             {
-                var result = new TThis();
+                var result = Util.New<TThis>();
                 result.SetDistinctWeights(new[] { new KeyValuePair<TSequence, Weight>(point, Weight.One) });
                 return result;
             }
@@ -855,7 +855,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 transitionsToMerge.Add(currentState.Index, stateDict);
                             }
                             var distr = new List<(char character, Weight weight)>();
-                            distr.Add((currentTransition.ElementDistribution.Value.Point, currentTransition.Weight));
+                            distr.Add((currentTransition.ElementDistribution.Point, currentTransition.Weight));
                             distr.Add((transitionChar, weight));
                             stateDict.Add(destinationStateIndex, distr);
                             iterator.Remove();

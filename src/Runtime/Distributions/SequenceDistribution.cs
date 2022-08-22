@@ -65,7 +65,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// A function mapping sequences to weights (non-normalized probabilities).
         /// </summary>
         [DataMember]
-        private TWeightFunction sequenceToWeight = new TWeightFunction();
+        private TWeightFunction sequenceToWeight = default;
 
         /// <summary>
         /// Specifies whether the <see cref="sequenceToWeight"/> is normalized.
@@ -142,7 +142,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(point, "point", "Point mass must not be null.");
 
-            return new TThis { Point = point };
+            var result = Util.New<TThis>();
+            result.Point = point;
+            return result;
         }
 
         /// <summary>
@@ -153,7 +155,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [Skip]
         public static TThis Uniform()
         {
-            var result = new TThis();
+            var result = Util.New<TThis>();
             result.SetToUniform();
             return result;
         }
@@ -165,7 +167,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [Construction(UseWhen = "IsZero")]
         public static TThis Zero()
         {
-            var result = new TThis();
+            var result = Util.New<TThis>();
             result.SetToZero();
             return result;
         }
@@ -180,7 +182,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(weightFunction, nameof(weightFunction));
 
-            var result = new TThis();
+            var result = Util.New<TThis>();
             result.SetWeightFunction(weightFunction);
             return result;
         }
@@ -293,7 +295,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             var probFunctions = enumerable.Select(d => d.sequenceToWeight);
-            var result = new TThis();
+            var result = Util.New<TThis>();
             result.sequenceToWeight = WeightFunctionFactory.Sum(probFunctions).NormalizeStructure();
             return result;
         }
@@ -318,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created mixture distribution.</returns>
         public static TThis OneOf(double weight1, TThis dist1, double weight2, TThis dist2)
         {
-            var result = new TThis();
+            var result = Util.New<TThis>();
             result.SetToSum(weight1, dist1, weight2, dist2);
             return result;
         }
@@ -331,7 +333,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static TThis OneOf(IEnumerable<KeyValuePair<TSequence, double>> sequenceProbPairs)
         {
-            var result = new TThis();
+            var result = Util.New<TThis>();
             result.sequenceToWeight = WeightFunctionFactory.FromValues(sequenceProbPairs).NormalizeStructure();
             return result;
         }
@@ -1110,10 +1112,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public TThis Product(TThis that)
         {
             Argument.CheckIfNotNull(that, "that");
-            
-            var auto = new TThis();
-            auto.SetToProduct((TThis)this, that);
-            return auto;
+
+            var result = Util.New<TThis>();
+            result.SetToProduct((TThis)this, that);
+            return result;
         }
 
         /// <summary>
@@ -1157,8 +1159,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(that, nameof(that));
 
-            var temp = new TThis();
-            return temp.SetToProductAndReturnLogNormalizer((TThis)this, that, false);
+            var result = Util.New<TThis>();
+            return result.SetToProductAndReturnLogNormalizer((TThis)this, that, false);
         }
 
         /// <summary>
@@ -1319,7 +1321,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created copy.</returns>
         public TThis Clone()
         {
-            var result = new TThis();
+            var result = Util.New<TThis>();
             result.SetTo((TThis)this);
             return result;
         }
@@ -1439,7 +1441,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     {
                         if (!transition.IsEpsilon)
                         {
-                            sampledElements.Add(transition.ElementDistribution.Value.Sample());
+                            sampledElements.Add(transition.ElementDistribution.Sample());
                         }
 
                         currentState = automaton.States[transition.DestinationStateIndex];
@@ -1619,7 +1621,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         protected static TThis UniformOf(TElementDistribution allowedElements, double uniformLogProb)
         {
-            var result = new TThis();
+            var result = Util.New<TThis>();
             result.SetToUniformOf(allowedElements, uniformLogProb);
             return result;
         }

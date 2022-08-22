@@ -136,7 +136,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         bool hasPrevious;
         double prevPoint;
         double prevSign2 = double.NaN, prevSign3 = double.NaN;
-        public static bool EnsureConvergence = true;
+        public static bool EnsureConvergence = false;
         int updateCount = 0;
         int updateLimit = int.MaxValue;
         int recoveryCount = 10;
@@ -144,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         int previousUpdateCount = 0;
         public double nextPoint;
         double scaleUp = 2;
-        int boundScaleUp = 2;
+        const int boundScaleUp = 2;
         double stepsize;
         double stepsizeUpperBound = double.PositiveInfinity;
         public double lowerBound = double.NegativeInfinity, upperBound = double.PositiveInfinity;
@@ -205,29 +205,38 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             else
             {
-                if (currPoint != 0)
-                    stepsize = Math.Abs(currPoint) * 1e-4;
-                //else if (currDeriv != 0)
-                //    stepsize = Math.Abs(currDeriv);  // this is too unstable in practice
-                else
-                    stepsize = 1e-4;
+                stepsize = StepsizeLowerBound(currPoint);
             }
             prevPoint = currPoint;
             hasPrevious = true;
-            currPoint = Math.Max(currPoint, lowerBound);
-            currPoint = Math.Min(currPoint, upperBound);
-            while (stepsize > 0)
+            currPoint = Math.Min(Math.Max(currPoint, lowerBound), upperBound);
+            while (true)
             {
                 nextPoint = currPoint + Math.Sign(currDeriv) * stepsize;
                 if (nextPoint >= lowerBound && nextPoint <= upperBound)
+                {
+                    // Valid update
                     break;
-                stepsize /= 2;
+                }
+                // Shrink stepsize and try again
+                double nextStepsize = stepsize / 2;
+                // If stepsize is too small, currPoint will never move in the future
+                if (nextStepsize < StepsizeLowerBound(currPoint))
+                {
+                    nextPoint = Math.Min(Math.Max(nextPoint, lowerBound), upperBound);
+                    break;
+                }
+                stepsize = nextStepsize;
             }
-            if (stepsize <= 0) nextPoint = currPoint;
             if (debug)
             {
                 Trace.WriteLine($"nextPoint = {nextPoint}, currPoint = {currPoint}, currDeriv = {currDeriv}, stepsize = {stepsize}, lowerBound = {lowerBound}, upperBound = {upperBound}");
                 Trace.WriteLine($"bounce count = {bounceCount} out of {updateCount} updates");
+            }
+
+            double StepsizeLowerBound(double x)
+            {
+                return (x == 0) ? 1e-4 : Math.Max(double.Epsilon, Math.Abs(x) * 1e-4);
             }
         }
     }

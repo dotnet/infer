@@ -2450,7 +2450,7 @@ namespace Microsoft.ML.Probabilistic.Models
             if (probs.Length == 0) return DiscreteUniform(valueRange);
             else
             {
-                if (valueRange.SizeAsInt != probs.Length) throw new ArgumentException("probs.Length (" + probs.Length + ") != range.Size (" + valueRange.SizeAsInt + ")");
+                if (valueRange.SizeAsInt != probs.Length) throw new ArgumentException($"probs.Length ({probs.Length}) != range.Size ({valueRange.SizeAsInt})");
                 return Variable<int>.Random(Constant(new Discrete(probs)))
                                     .Attrib(new ValueRange(valueRange));
             }
@@ -2481,6 +2481,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>Returns a random variable that is statistically defined by the specified Discrete distribution.</returns>
         public static Variable<int> Discrete(Range valueRange, Vector v)
         {
+            if (valueRange.SizeAsInt != v.Count) throw new ArgumentException($"Vector length ({v.Count}) != range.Size ({valueRange.SizeAsInt})");
             var rv = Discrete(v.ToArray()).Attrib(new ValueRange(valueRange));
             if (!v.Sparsity.IsDense)
                 rv.SetSparsity(v.Sparsity);
@@ -2870,12 +2871,16 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Creates a Dirichlet-distributed random variable with the dimensionality specified by
         /// a <c>Range</c> object and a specified set of pseudo-counts.
         /// </summary>
-        /// <param name="valueRange">A <c>Range</c> object that is initialized to the  Dirichlet
+        /// <param name="valueRange">A <c>Range</c> object that is initialized to the Dirichlet
         /// distribution's dimensionality.</param>
         /// <param name="u">An array containing the pseudo-counts.</param>
         /// <returns>Returns a Dirichlet-distributed random variable of dimension <paramref name="u"/></returns>
         public static Variable<Vector> Dirichlet(Range valueRange, double[] u)
         {
+            if (valueRange.SizeAsInt != u.Length)
+            {
+                throw new ArgumentException($"The range size ({valueRange.SizeAsInt}) does not match the array length ({u.Length})");
+            }
             return Dirichlet(u).Attrib(new ValueRange(valueRange));
         }
 
@@ -2922,6 +2927,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// by <paramref name="v"/>.</returns>
         public static Variable<Vector> Dirichlet(Range valueRange, Vector v)
         {
+            if (valueRange.SizeAsInt != v.Count)
+            {
+                throw new ArgumentException($"The range size ({valueRange.SizeAsInt}) does not match the vector length ({v.Count})");
+            }
             return Dirichlet(v).Attrib(new ValueRange(valueRange));
         }
 
@@ -3801,6 +3810,24 @@ namespace Microsoft.ML.Probabilistic.Models
             second = Variable.Array<T>(range);
             CreateVariableArray(second, array);
             first[range] = Variable<T>.Factor(LowPriority.SequentialCopy<T>, array[range], second[range]);
+            return first;
+        }
+
+        /// <summary>
+        /// Creates two copies of the argument, that will be updated in order during inference.
+        /// </summary>
+        /// <typeparam name="T">The domain type of an array element.</typeparam>
+        /// <param name="array">Array to copy.</param>
+        /// <param name="second">The second copy.</param>
+        /// <returns>The first copy.</returns>
+        public static VariableArray<T> ParallelCopy<T>(VariableArray<T> array, out VariableArray<T> second)
+        {
+            var range = array.Range;
+            var first = Variable.Array<T>(range);
+            CreateVariableArray(first, array);
+            second = Variable.Array<T>(range);
+            CreateVariableArray(second, array);
+            first[range] = Variable<T>.Factor(LowPriority.ParallelCopy<T>, array[range], second[range]);
             return first;
         }
 

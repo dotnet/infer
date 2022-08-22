@@ -4503,7 +4503,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             evBlock.CloseBlock();
             InferenceEngine engine = new InferenceEngine();
 
-            for (int trial = 0; trial <= 2; trial++)
+            for (int trial = 0; trial <= 3; trial++)
             {
                 if (trial == 0)
                 {
@@ -4515,10 +4515,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                     b.ObservedValue = new[] { 0.0, 0.0 };
                     cLike.ObservedValue = Gaussian.PointMass(0);
                 }
-                else
+                else if (trial == 2)
                 {
                     b.ObservedValue = new[] { 0.0, 2.0 };
                     cLike.ObservedValue = Gaussian.PointMass(2.3);
+                }
+                else 
+                {
+                    b.ObservedValue = new[] { 0.0, 2.0 };
+                    cLike.ObservedValue = Gaussian.FromNatural(-7.3097118076958154E-10, 1.542967011962213E-320);
                 }
 
                 var aActual = engine.Infer<IList<Gaussian>>(a);

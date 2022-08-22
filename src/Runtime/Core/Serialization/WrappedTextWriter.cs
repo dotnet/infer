@@ -31,6 +31,10 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
         public void Write(string value)
         {
+            if (value.Contains(Environment.NewLine))
+            {
+                throw new ArgumentException("string contains newline", value);
+            }
             writer.WriteLine(value);
         }
 

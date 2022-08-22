@@ -5,9 +5,6 @@
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
 
     using Microsoft.ML.Probabilistic.Collections;
@@ -63,7 +60,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.Data.FirstTransitionIndex,
                     this.Data.TransitionsCount);
 
-            internal StateData Data => this.states[this.Index];
+            internal ref readonly StateData Data => ref this.states[this.Index];
 
             /// <summary>
             /// Compares 2 states for equality.

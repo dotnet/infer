@@ -306,6 +306,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        /// <summary>
+        /// Tests that PointMassAnalysisTransform does not mark x as a ForwardPointMass
+        /// </summary>
         [Fact]
         public void PointMassAnalysisTest()
         {

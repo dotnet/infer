@@ -30,12 +30,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        List<IStatement> containers = new List<IStatement>();
-        List<IStatement> cloneDecls = new List<IStatement>();
-        List<IStatement> cloneUpdates = new List<IStatement>();
+        readonly List<IStatement> containers = new List<IStatement>();
+        readonly List<IStatement> cloneDecls = new List<IStatement>();
+        readonly List<IStatement> cloneUpdates = new List<IStatement>();
         private LoopMergingInfo loopMergingInfo;
         internal static bool debug = false;
-        private ModelCompiler compiler;
+        private readonly ModelCompiler compiler;
 
         internal InitializerTransform(ModelCompiler compiler)
         {

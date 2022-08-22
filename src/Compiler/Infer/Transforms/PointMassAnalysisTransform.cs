@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Factors;
 
@@ -13,6 +12,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
     /// <summary>
     /// Attach ForwardPointMass attributes to variables.  Must be done after GateTransform and before MessageTransform.
+    /// Assumes that each use of a variable follows the definitions that reach it.
     /// </summary>
     internal class PointMassAnalysisTransform : ShallowCopyTransform
     {
@@ -52,11 +52,30 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
+        protected override IExpression ConvertAssign(IAssignExpression iae)
+        {
+            // if all args to a deterministic method are non-stoch or ForwardPointMass, the output is ForwardPointMass
+            IVariableDeclaration targetVar = Recognizer.GetVariableDeclaration(iae.Target);
+            if (targetVar == null || variablesDefinedNonPointMass.Contains(targetVar))
+                return base.ConvertAssign(iae);
+            ProcessDefinition(iae.Expression, targetVar, isLhs: true);
+            return base.ConvertAssign(iae);
+        }
+
+        protected override IExpression ConvertAddressOut(IAddressOutExpression iaoe)
+        {
+            IVariableDeclaration targetVar = Recognizer.GetVariableDeclaration(iaoe.Expression);
+            if (targetVar == null || variablesDefinedNonPointMass.Contains(targetVar))
+                return base.ConvertAddressOut(iaoe);
+            IMethodInvokeExpression imie = context.FindAncestor<IMethodInvokeExpression>();
+            ProcessDefinition(imie, targetVar, isLhs: false);
+            return base.ConvertAddressOut(iaoe);
+        }
+
         protected void ProcessDefinition(IExpression expr, IVariableDeclaration targetVar, bool isLhs)
         {
             bool targetIsPointMass = false;
-            IMethodInvokeExpression imie = expr as IMethodInvokeExpression;
-            if (imie != null)
+            if (expr is IMethodInvokeExpression imie)
             {
                 // TODO: consider using a method attribute for this
                 if (Recognizer.IsStaticGenericMethod(imie, new Models.FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Clone.VariablePoint))
@@ -107,40 +126,20 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     context.OutputAttributes.Remove<ForwardPointMass>(targetVar);
                 }
             }
-        }
 
-        private bool ArgumentIsPointMass(IExpression arg)
-        {
-            bool IsOut = (arg is IAddressOutExpression);
-            if (CodeRecognizer.IsStochastic(context, arg) && !IsOut)
+            bool ArgumentIsPointMass(IExpression arg)
             {
-                IVariableDeclaration argVar = Recognizer.GetVariableDeclaration(arg);
-                return (argVar != null) && context.InputAttributes.Has<ForwardPointMass>(argVar);
+                bool IsOut = (arg is IAddressOutExpression);
+                if (CodeRecognizer.IsStochastic(context, arg) && !IsOut)
+                {
+                    IVariableDeclaration argVar = Recognizer.GetVariableDeclaration(arg);
+                    return (argVar != null) && context.InputAttributes.Has<ForwardPointMass>(argVar);
+                }
+                else
+                {
+                    return true;
+                }
             }
-            else
-            {
-                return true;
-            }
-        }
-
-        protected override IExpression ConvertAssign(IAssignExpression iae)
-        {
-            // if all args to a deterministic method are non-stoch or ForwardPointMass, the output is ForwardPointMass
-            IVariableDeclaration targetVar = Recognizer.GetVariableDeclaration(iae.Target);
-            if (targetVar == null || variablesDefinedNonPointMass.Contains(targetVar))
-                return base.ConvertAssign(iae);
-            ProcessDefinition(iae.Expression, targetVar, isLhs: true);
-            return base.ConvertAssign(iae);
-        }
-
-        protected override IExpression ConvertAddressOut(IAddressOutExpression iaoe)
-        {
-            IVariableDeclaration targetVar = Recognizer.GetVariableDeclaration(iaoe.Expression);
-            if (targetVar == null || variablesDefinedNonPointMass.Contains(targetVar))
-                return base.ConvertAddressOut(iaoe);
-            IMethodInvokeExpression imie = context.FindAncestor<IMethodInvokeExpression>();
-            ProcessDefinition(imie, targetVar, isLhs: false);
-            return base.ConvertAddressOut(iaoe);
         }
     }
 }

@@ -6,8 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Models;
+
 using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
@@ -85,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                     using (Variable.IfNot(doB[N]))
                     {
                         // Set B to a noisy version of A
-                        B[N] = A[N] != (Variable.Bernoulli(q));
+                        B[N] = A[N] != Variable.Bernoulli(q);
                     }
                 }
             }
@@ -103,7 +105,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                         B[N] = Variable.Bernoulli(0.5);
                     }
                     // Set A to a noisy version of B
-                    A[N] = B[N] != (Variable.Bernoulli(q));
+                    A[N] = B[N] != Variable.Bernoulli(q);
                 }
             }
 
@@ -113,56 +115,66 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             var engine = new InferenceEngine();
             Console.WriteLine("Causal inference using gates in Infer.NET");
             Console.WriteLine("=========================================\r\n");
-            Console.WriteLine("Data set of " + numberOfDataPoints + " data points with noise " + q + "\r\n");
+            Console.WriteLine("Data set of " + numberOfDataPoints + " data points with noise " + q);
 
-
-            // *** Data without interventions ***
-            // Generate data set
-            var dataWithoutInterventions = GenerateFromTrueModel(numberOfDataPoints, q, false, probBIntervention);
-
-            // Attach the data without interventions
-            A.ObservedValue = dataWithoutInterventions.A;
-            B.ObservedValue = dataWithoutInterventions.B;
-            doB.ObservedValue = dataWithoutInterventions.doB;
-
-            // Infer probability that A causes B (rather than B causes A)
-            Bernoulli AcausesBdist = engine.Infer<Bernoulli>(AcausesB);
-            Console.WriteLine("P(A causes B), without interventions=" + AcausesBdist.GetProbTrue() + "\r\n");
-
-            // *** Data WITH interventions ***
-            // Number of inference runs to average over (each with a different generated data set)
-            int numberOfRuns = 10;
-
-            Console.WriteLine("Executing " + numberOfRuns + " runs with interventions:");
-            double tot = 0;
-            for (int i = 0; i < numberOfRuns; i++)
+            foreach (bool generateFromAcausesB in new bool[] { true, false })
             {
-                // Generate data with interventions
-                var dataWithInterventions = GenerateFromTrueModel(numberOfDataPoints, q, true, probBIntervention);
+                Console.WriteLine();
+                Console.WriteLine("Generating data where " + (generateFromAcausesB ? "A causes B" : "B causes A"));
+                // *** Data without interventions ***
+                // Generate data set
+                var dataWithoutInterventions = GenerateFromTrueModel(numberOfDataPoints, q, false, probBIntervention, generateFromAcausesB);
 
-                // Attach the data with interventions (this replaces any previously attached data)
-                A.ObservedValue = dataWithInterventions.A;
-                B.ObservedValue = dataWithInterventions.B;
-                doB.ObservedValue = dataWithInterventions.doB;
+                // Attach the data without interventions
+                A.ObservedValue = dataWithoutInterventions.A;
+                B.ObservedValue = dataWithoutInterventions.B;
+                doB.ObservedValue = dataWithoutInterventions.doB;
 
                 // Infer probability that A causes B (rather than B causes A)
-                Bernoulli AcausesBdist2 = engine.Infer<Bernoulli>(AcausesB);
-                tot += AcausesBdist2.GetProbTrue();
-                Console.WriteLine("{0,4}. P(A causes B)={1}", i + 1, (float)AcausesBdist2.GetProbTrue());
-            }
-            Console.WriteLine("Average P(A causes B), with interventions=" + (float)(tot / numberOfRuns));
+                Bernoulli AcausesBdist = engine.Infer<Bernoulli>(AcausesB);
+                Console.WriteLine("P(A causes B), without interventions=" + AcausesBdist.GetProbTrue());
 
+                // *** Data WITH interventions ***
+                // Number of inference runs to average over (each with a different generated data set)
+                int numberOfRuns = 10;
+
+                Console.WriteLine("Executing " + numberOfRuns + " runs with interventions:");
+                double tot = 0;
+                for (int i = 0; i < numberOfRuns; i++)
+                {
+                    // Generate data with interventions
+                    var dataWithInterventions = GenerateFromTrueModel(numberOfDataPoints, q, true, probBIntervention, generateFromAcausesB);
+
+                    // Attach the data with interventions (this replaces any previously attached data)
+                    A.ObservedValue = dataWithInterventions.A;
+                    B.ObservedValue = dataWithInterventions.B;
+                    doB.ObservedValue = dataWithInterventions.doB;
+
+                    // Infer probability that A causes B (rather than B causes A)
+                    Bernoulli AcausesBdist2 = engine.Infer<Bernoulli>(AcausesB);
+                    tot += AcausesBdist2.GetProbTrue();
+                    Console.WriteLine("{0,4}. P(A causes B)={1}", i + 1, (float)AcausesBdist2.GetProbTrue());
+                }
+                Console.WriteLine("Average P(A causes B), with interventions=" + (float)(tot / numberOfRuns));
+            }
+        }
+
+        private static Data GenerateFromTrueModel(int N, double q, bool doB, double probBIntervention, bool AcausesB)
+        {
+            return AcausesB 
+                ? GenerateFromAcausesB(N, q, doB, probBIntervention)
+                : GenerateFromBcausesA(N, q, doB, probBIntervention);
         }
 
         /// <summary>
-        /// Generates data from the true model: A cause B
+        /// Generates data from the true model: A causes B
         /// </summary>
         /// <param name="N">Number of data points to generate</param>
         /// <param name="q">Noise (flip) probability</param>
         /// <param name="doB">Whether to intervene or not</param>
         /// <param name="probBIntervention">Prob of choosing B=true when intervening</param>
         /// <returns></returns>
-        private static Data GenerateFromTrueModel(int N, double q, bool doB, double probBIntervention)
+        private static Data GenerateFromAcausesB(int N, double q, bool doB, double probBIntervention)
         {
             // Create data object to fill with data.
             Data d = new Data { A = new bool[N], B = new bool[N], doB = new bool[N] };
@@ -198,16 +210,49 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             }
             return d;
         }
-    }
 
+        /// <summary>
+        /// Generates data from the true model: B causes A
+        /// </summary>
+        /// <param name="N">Number of data points to generate</param>
+        /// <param name="q">Noise (flip) probability</param>
+        /// <param name="doB">Whether to intervene or not</param>
+        /// <param name="probBIntervention">Prob of choosing B=true when intervening</param>
+        /// <returns></returns>
+        private static Data GenerateFromBcausesA(int N, double q, bool doB, double probBIntervention)
+        {
+            // Create data object to fill with data.
+            Data d = new Data { A = new bool[N], B = new bool[N], doB = new bool[N] };
 
-    /// <summary>
-    /// Class to store the data
-    /// </summary>
-    class Data
-    {
-        public bool[] A; // observations of A
-        public bool[] B; // observations of B
-        public bool[] doB; // whether we intervened to set B
+            var Bprior = new Bernoulli(0.5);
+            // Noise distribution
+            var flipDist = new Bernoulli(q);
+            // Distribution over the values of B when we intervene 
+            var interventionDist = new Bernoulli(probBIntervention);
+
+            // Loop over data
+            for (int i = 0; i < N; i++)
+            {
+                d.B[i] = doB ? interventionDist.Sample() : Bprior.Sample();
+
+                // Draw A from prior
+                d.A[i] = d.B[i] != flipDist.Sample();
+
+                // Whether we intervened on B 
+                // This is currently the same for all data points - but could easily be modified.
+                d.doB[i] = doB;
+            }
+            return d;
+        }
+
+        /// <summary>
+        /// Class to store the data
+        /// </summary>
+        class Data
+        {
+            public bool[] A; // observations of A
+            public bool[] B; // observations of B
+            public bool[] doB; // whether we intervened to set B
+        }
     }
 }

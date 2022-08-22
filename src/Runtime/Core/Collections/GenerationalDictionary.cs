@@ -47,16 +47,16 @@ namespace Microsoft.ML.Probabilistic.Collections
             var index = hash & this.mask;
             for (var probe = 1;; ++probe)
             {
-                if (this.entries[index].Generation != currentGeneration)
+                ref var entry = ref this.entries[index];
+                if (entry.Generation != currentGeneration)
                 {
                     value = default(TValue);
                     return false;
                 }
 
-                if (this.entries[index].Hash == hash &&
-                    this.entries[index].Key.Equals(key))
+                if (entry.Hash == hash && entry.Key.Equals(key))
                 {
-                    value = this.entries[index].Value;
+                    value = entry.Value;
                     return true;
                 }
 
@@ -65,6 +65,11 @@ namespace Microsoft.ML.Probabilistic.Collections
         }
 
         public void Add(TKey key, TValue value)
+        {
+            this.GetOrAdd(key, value) = value;
+        }
+
+        public ref TValue GetOrAdd(TKey key, TValue value)
         {
             if (this.filledEntriesCount >= this.growThreshold)
             {
@@ -76,11 +81,12 @@ namespace Microsoft.ML.Probabilistic.Collections
             var index = hash & this.mask;
             for (var probe = 1;; ++probe)
             {
-                if (this.entries[index].Generation != currentGeneration)
+                ref var entry = ref this.entries[index];
+                if (entry.Generation != currentGeneration)
                 {
                     ++this.filledEntriesCount;
 
-                    this.entries[index] = new Entry
+                    entry = new Entry
                     {
                         Key = key,
                         Hash = hash,
@@ -88,13 +94,12 @@ namespace Microsoft.ML.Probabilistic.Collections
                         Value = value,
                     };
 
-                    return;
+                    return ref entry.Value;
                 }
 
-                if (this.entries[index].Hash == hash &&
-                    this.entries[index].Key.Equals(key))
+                if (entry.Hash == hash && entry.Key.Equals(key))
                 {
-                    throw new ArgumentException("Element with given key already exists in the dictionary");
+                    return ref entry.Value;
                 }
 
                 index = (index + probe) & this.mask;
@@ -108,15 +113,15 @@ namespace Microsoft.ML.Probabilistic.Collections
             var index = hash & this.mask;
             for (var probe = 1;; ++probe)
             {
-                if (this.entries[index].Generation != currentGeneration)
+                ref var entry = ref this.entries[index];
+                if (entry.Generation != currentGeneration)
                 {
                     throw new ArgumentException("Element with given key already does not exist in the dictionary");
                 }
 
-                if (this.entries[index].Hash == hash &&
-                    this.entries[index].Key.Equals(key))
+                if (entry.Hash == hash && entry.Key.Equals(key))
                 {
-                    this.entries[index].Value = value;
+                    entry.Value = value;
                     return;
                 }
 

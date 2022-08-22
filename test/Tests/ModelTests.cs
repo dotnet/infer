@@ -34,6 +34,44 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class ModelTests
     {
         [Fact]
+        public void InitializeConstrainedVariableArray()
+        {
+            Range item = new Range(1);
+            VariableArray<double> x = Variable.Array<double>(item);
+            x[item] = Variable.GaussianFromMeanAndVariance(1, 2).ForEach(item);
+            x.Name = nameof(x);
+            double value = 1.5;
+            Variable.ConstrainEqual(x[item], value);
+            var xInit = Variable.Observed(default(IDistribution<double[]>));
+            x.InitialiseTo(xInit);
+            Variable.ConstrainPositive(x[item]);
+
+            InferenceEngine engine = new InferenceEngine();
+            xInit.ObservedValue = new GaussianArray(item.SizeAsInt, i => new Gaussian(0, 1));
+            var xActual = engine.Infer<IList<Gaussian>>(x);
+            var xExpected = new GaussianArray(Gaussian.PointMass(value), item.SizeAsInt);
+            Assert.Equal(xExpected, xActual);
+        }
+
+        [Fact]
+        public void InitializeConstrainedVariable()
+        {
+            Variable<double> x = Variable.GaussianFromMeanAndVariance(1, 2);
+            x.Name = nameof(x);
+            double value = 1.5;
+            Variable.ConstrainEqual(x, value);
+            var xInit = Variable.Observed(default(IDistribution<double>));
+            x.InitialiseTo(xInit);
+            Variable.ConstrainPositive(x);
+
+            InferenceEngine engine = new InferenceEngine();
+            xInit.ObservedValue = new Gaussian(0, 1);
+            var xActual = engine.Infer<Gaussian>(x);
+            var xExpected = Gaussian.PointMass(value);
+            Assert.Equal(xExpected, xActual);
+        }
+
+        [Fact]
         public void MarginalDividedByPriorTest()
         {
             Variable<double> parameter = Variable.GaussianFromMeanAndVariance(0.2, 0.1);
@@ -2285,17 +2323,21 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 Discrete indexActual = engine.Infer<Discrete>(index);
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Variable<int> index = Variable.Discrete(new Range(3), Vector.FromArray(new double[] { 0.2, 0.8 })).Named("index");
 
+                InferenceEngine engine = new InferenceEngine();
+                Discrete indexActual = engine.Infer<Discrete>(index);
             });
         }
 
         [Fact]
         public void DiscreteValueRangeError()
-
         {
             Assert.Throws<ArgumentException>(() =>
             {
-
                 Range i = new Range(2);
                 Variable<Vector> probs = Variable.Dirichlet(i, new double[] { 1, 1 }).Named("probs");
                 Range j = new Range(2);
@@ -2303,7 +2345,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 Discrete indexActual = engine.Infer<Discrete>(index);
-
             });
         }
 
@@ -2324,11 +2365,9 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         [Fact]
         public void DiscreteSizeError()
-
         {
             Assert.Throws<ArgumentException>(() =>
             {
-
                 Variable<int> index = Variable.Discrete(6).Named("index");
 
                 InferenceEngine engine = new InferenceEngine();
@@ -2336,7 +2375,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Discrete indexExpected = Discrete.Uniform(6);
                 Console.WriteLine("index = {0} should be {1}", indexActual, indexExpected);
                 Assert.True(indexExpected.MaxDiff(indexActual) < 1e-10);
-
             });
         }
 
@@ -2353,6 +2391,30 @@ namespace Microsoft.ML.Probabilistic.Tests
             Dirichlet probsExpected = Dirichlet.Uniform(size.ObservedValue);
             Console.WriteLine("probs = {0} should be {1}", probsActual, probsExpected);
             Assert.True(probsExpected.MaxDiff(probsActual) < 1e-10);
+        }
+
+        [Fact]
+        public void DirichletSizeError()
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+
+                Range i = new Range(3);
+                Variable<Vector> probs = Variable.Dirichlet(i, new double[] { 1, 1 }).Named("probs");
+
+                InferenceEngine engine = new InferenceEngine();
+                Dirichlet probsActual = engine.Infer<Dirichlet>(probs);
+
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Range i = new Range(3);
+                Variable<Vector> probs = Variable.Dirichlet(i, Vector.FromArray(new double[] { 1, 1 })).Named("probs");
+
+                InferenceEngine engine = new InferenceEngine();
+                Dirichlet probsActual = engine.Infer<Dirichlet>(probs);
+
+            });
         }
 
         [Fact]
@@ -3629,6 +3691,54 @@ namespace Microsoft.ML.Probabilistic.Tests
                 x[item] = Variable.Bernoulli(0.1).ForEach(item);
                 Console.WriteLine(engine.Infer(x));
             }
+        }
+
+        [Fact]
+        public void ObservedVariableNameClash()
+        {
+            Assert.Throws<InferCompilerException>(() =>
+            {
+                var x = Variable.Observed(1.0).Named("x");
+                var y = Variable.Observed(2.0).Named("x");
+                var z = (x + y).Named("z");
+                InferenceEngine engine = new InferenceEngine();
+                engine.Infer(z);
+            });
+        }
+
+        [Fact]
+        public void ObservedVariableNameCapitalisationClash()
+        {
+            var x = Variable.Observed(1.0).Named("x");
+            var y = Variable.Observed(2.0).Named("X");
+            var z = (x + y).Named("z");
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(z);
+            engine.Infer(x);
+            engine.Infer(y);
+        }
+
+        [Fact]
+        public void InferredVariableNameClash()
+        {
+            Assert.Throws<InferCompilerException>(() =>
+            {
+                Variable<double> x = Variable.Beta(1, 1).Named("x");
+                Variable<bool> y = Variable.Bernoulli(x).Named("x");
+                InferenceEngine engine = new InferenceEngine();
+                engine.Infer(x);
+                engine.Infer(y);
+            });
+        }
+
+        [Fact]
+        public void InferredVariableNameCapitalisationClash()
+        {
+            Variable<double> x = Variable.Beta(1, 1).Named("x");
+            Variable<bool> x2 = Variable.Bernoulli(x).Named("X");
+            InferenceEngine engine = new InferenceEngine();
+            engine.Infer(x);
+            engine.Infer(x2);
         }
 
         [Fact]
