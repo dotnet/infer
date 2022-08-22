@@ -16,7 +16,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         [STAThread]
         public static void Main()
         {
-            // When compiled with .NET 4.6.1 or higher, this will pop up a window for running examples, then exit.  
+            // When compiled with .NET 4.6.2 or higher, this will pop up a window for running examples, then exit.  
             // Otherwise it does nothing.
             ExamplesBrowser.RunBrowser();
 
