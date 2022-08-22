@@ -618,7 +618,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
                     try
                     {
                         //string rhs = ToString(prop.GetValue(o, null));
-                        string rhs = prop.GetValue(o, null).ToString();
+                        string rhs = prop.GetValue(o, null)?.ToString() ?? "null";
                         if (i > 0) s.Append(delimiter);
                         s.Append(JoinColumns(prop.Name, " = ", rhs));
                         i++;
