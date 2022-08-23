@@ -18,14 +18,16 @@ namespace Microsoft.ML.Probabilistic.Tests.Core
             Dictionary<string, object> dict = MatlabReader.Read(Path.Combine(TestUtils.DataFolderPath, "IRT2PL_10_250.mat"));
             Assert.Equal(5, dict.Count);
             Matrix m = (Matrix)dict["Y"];
-            Assert.True(m.Rows == 250);
-            Assert.True(m.Cols == 10);
-            Assert.True(m[0, 1] == 0.0);
-            Assert.True(m[1, 0] == 1.0);
+            Assert.Equal(250, m.Rows);
+            Assert.Equal(10, m.Cols);
+            Assert.Equal(0.0, m[0, 1]);
+            Assert.Equal(1.0, m[1, 0]);
             m = (Matrix)dict["difficulty"];
-            Assert.True(m.Rows == 10);
-            Assert.True(m.Cols == 1);
+            Assert.Equal(10, m.Rows);
+            Assert.Equal(1, m.Cols);
             Assert.True(MMath.AbsDiff(m[1], 0.7773) < 2e-4);
+            m = (Matrix)dict["p"];
+            Assert.Equal(0.68150001272133187, m[0, 7]);
         }
 
         [Fact]
