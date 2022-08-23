@@ -17,7 +17,7 @@ jobs:
 - job: Win64 # Hosted Windows agent, VS 2017, testing on x64
   timeoutInMinutes: 120
   pool:
-    vmImage: windows-2019
+    vmImage: windows-latest
   steps:
   - task: NuGetToolInstaller@1
     inputs:
@@ -41,7 +41,7 @@ jobs:
 - job: Win32 # Hosted Windows agent, VS 2017, testing on x86
   timeoutInMinutes: 120
   pool:
-    vmImage: windows-2019
+    vmImage: windows-latest
   steps:
   - task: NuGetToolInstaller@1
     inputs:
