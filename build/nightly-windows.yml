@@ -13,7 +13,7 @@ resources:
 trigger: none # disable CI build
 
 pool:
-  vmImage: 'windows-2019'
+  vmImage: 'windows-latest'
 
 # Cannot use matrix strategy to create jobs for different platforms, 
 # since then the platform is given as a variable which cannot be passed as a parameter to a template,

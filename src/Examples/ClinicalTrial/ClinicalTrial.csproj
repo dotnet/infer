@@ -18,12 +18,12 @@
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
       <PropertyGroup>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net5.0-windows;net462</TargetFrameworks>
+        <TargetFrameworks>net6.0-windows;net462</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
   </Choose>

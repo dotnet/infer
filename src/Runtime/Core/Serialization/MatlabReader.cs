@@ -96,7 +96,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             MatType dataType = (MatType) ReadInt();
             int numBytes = ReadInt();
             byte[] bytes = new byte[numBytes];
-            if (reader.Read(bytes, 0, numBytes) < numBytes) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, numBytes) < numBytes) throw new EndOfStreamException();
             if (dataType == MatType.COMPRESSED)
             {
                 // MAT file compression uses Zlib format, which is the same as Deflate but with an extra header and footer.
@@ -573,7 +573,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             string header = ReadString(124);
             byte[] bytes = new byte[4];
-            if (reader.Read(bytes, 0, 4) < 4) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 4) < 4) throw new EndOfStreamException();
             if ((bytes[0] != 0x00) || (bytes[1] != 0x01) || (bytes[2] != 'I') || (bytes[3] != 'M'))
                 throw new NotImplementedException("Unrecognized header");
             return header.TrimEnd(' ');
@@ -586,7 +586,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected int ReadInt()
         {
             byte[] bytes = new byte[4];
-            if (reader.Read(bytes, 0, 4) < 4) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 4) < 4) throw new EndOfStreamException();
             return BitConverter.ToInt32(bytes, 0);
         }
 
@@ -597,7 +597,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected uint ReadUInt()
         {
             byte[] bytes = new byte[4];
-            if (reader.Read(bytes, 0, 4) < 4) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 4) < 4) throw new EndOfStreamException();
             return BitConverter.ToUInt32(bytes, 0);
         }
 
@@ -608,7 +608,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected short ReadInt16()
         {
             byte[] bytes = new byte[2];
-            if (reader.Read(bytes, 0, 2) < 2) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 2) < 2) throw new EndOfStreamException();
             return BitConverter.ToInt16(bytes, 0);
         }
 
@@ -619,7 +619,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected ushort ReadUInt16()
         {
             byte[] bytes = new byte[2];
-            if (reader.Read(bytes, 0, 2) < 2) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 2) < 2) throw new EndOfStreamException();
             return BitConverter.ToUInt16(bytes, 0);
         }
 
@@ -630,7 +630,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected long ReadInt64()
         {
             byte[] bytes = new byte[8];
-            if (reader.Read(bytes, 0, 8) < 8) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 8) < 8) throw new EndOfStreamException();
             return BitConverter.ToInt64(bytes, 0);
         }
 
@@ -641,7 +641,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected ulong ReadUInt64()
         {
             byte[] bytes = new byte[8];
-            if (reader.Read(bytes, 0, 8) < 8) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 8) < 8) throw new EndOfStreamException();
             return BitConverter.ToUInt64(bytes, 0);
         }
 
@@ -652,7 +652,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected float ReadSingle()
         {
             byte[] bytes = new byte[4];
-            if (reader.Read(bytes, 0, 4) < 4) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 4) < 4) throw new EndOfStreamException();
             return BitConverter.ToSingle(bytes, 0);
         }
 
@@ -663,7 +663,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected double ReadDouble()
         {
             byte[] bytes = new byte[8];
-            if (reader.Read(bytes, 0, 8) < 8) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, 8) < 8) throw new EndOfStreamException();
             return BitConverter.ToDouble(bytes, 0);
         }
 
@@ -675,7 +675,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected string ReadString(int length)
         {
             byte[] bytes = new byte[length];
-            if (reader.Read(bytes, 0, length) < length) throw new EndOfStreamException();
+            if (Read(reader, bytes, 0, length) < length) throw new EndOfStreamException();
             return ParseString(bytes, 0, bytes.Length);
         }
 
@@ -765,6 +765,19 @@ namespace Microsoft.ML.Probabilistic.Serialization
             }
             if (row != matrix.GetLength(0)) throw new InferRuntimeException("Expected " + matrix.GetLength(0) + " rows, but were " + row + " rows.");
             return matrix;
+        }
+
+        protected int Read(Stream stream, byte[] bytes, int offset, int count)
+        {
+            // https://docs.microsoft.com/en-us/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams
+            var totalRead = 0;
+            while (totalRead < count)
+            {
+                var byteRead = stream.Read(bytes, offset + totalRead, count - totalRead);
+                if (byteRead == 0) break;
+                totalRead += byteRead;
+            }
+            return totalRead;
         }
     }
 }

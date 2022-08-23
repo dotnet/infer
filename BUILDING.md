@@ -1,23 +1,23 @@
 # Building Infer.NET from its source code
 
-- [Building with Visual Studio 2019](#building-with-visual-studio-2019)
+- [Building with Visual Studio](#building-with-visual-studio)
 - [Building from the command line](#building-from-the-command-line)
 
 To build from source, you must first clone the repository.
 Next decide whether you want to use a code editor like Visual Studio (recommended) or the command line.
 When building, you must select a configuration.
-All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.2, .NET Core 3.1, or both depending on build configuration:
+All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.2, .NET 6, or both depending on build configuration:
 
 | Configurations | Targeted Frameworks |
 |:---|---:|
-| Debug, Release | both .NET Framework 4.6.2 and .NET Core 3.1 |
+| Debug, Release | both .NET Framework 4.6.2 and .NET 6 |
 | DebugFull, ReleaseFull | .NET Framework 4.6.2 only |
-| DebugCore, ReleaseCore | .NET Core 3.1 only |
+| DebugCore, ReleaseCore | .NET 6 only |
 
 
-## Building with Visual Studio 2019
+## Building with Visual Studio
 
-1. If you don't have Visual Studio 2019, you can install the free [Visual Studio 2019 Community](https://visualstudio.microsoft.com/vs/community/).
+1. If you don't have Visual Studio, you can install the free [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/).
 1. Start Visual Studio.
 1. Select `File -> Open -> Project/Solution` and open the `Infer.sln` solution file located in your cloned repository.
 1. Select a build configuration using `Build -> Configuration Manager...`.  After switching between configurations that change the targeted frameworks, Visual Studio currently requires you to close and re-open the solution file using `File -> Close Solution` and `File -> Open`.
@@ -37,12 +37,12 @@ All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produ
 
 ## Building from the command line
 
-The core components of Infer&#46;NET run on .NET Core 3.1.  Some optional code, such as the [Examples Browser](https://dotnet.github.io/infer/userguide/The%20examples%20browser.html), use [Windows Forms](https://docs.microsoft.com/en-us/dotnet/framework/winforms/) and therefore require .NET framework or Mono. 
+The core components of Infer&#46;NET run on .NET Core.  Some optional code, such as the [Examples Browser](https://dotnet.github.io/infer/userguide/The%20examples%20browser.html), use [Windows Forms](https://docs.microsoft.com/en-us/dotnet/framework/winforms/) and therefore require .NET framework or Mono. 
 Some samples, such as the [Monty Hall problem](https://dotnet.github.io/infer/userguide/Monty%20Hall%20problem.html), use [WPF](https://docs.microsoft.com/en-us/visualstudio/designers/introduction-to-wpf) and therefore require Windows.
 
 ### Prerequisites
 
-* **[.NET Core 3.1 SDK](https://www.microsoft.com/net/download/)** to build and run .NET Standard and .NET Core projects.
+* **[.NET SDK](https://www.microsoft.com/net/download/)** to build and run .NET Standard and .NET Core projects.
 
 * (Optional) On Windows, the **[.NET framework developer pack](https://www.microsoft.com/net/download)**.  On other platforms, **[Mono](https://www.mono-project.com/download/stable/)** (version 5.0 and higher) and the **[NuGet](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools)** package manager.
 
@@ -76,7 +76,7 @@ There are three test assemblies in the solution:
 - **TestPublic.dll** in the folder `test/TestPublic`.
 - **Microsoft.ML.Probabilistic.Learners.Tests.dll** in the folder `test/Learners/LearnersTests`. 
 
-Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<net5.0|net462>` or `bin/Release<Core|Full>/<net5.0|net462>` subdirectories
+Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<net6.0|net462>` or `bin/Release<Core|Full>/<net6.0|net462>` subdirectories
 of the test project.
 
 Runner executes tests in parallel by default. However, some test category must be run
