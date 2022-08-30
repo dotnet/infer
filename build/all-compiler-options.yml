@@ -15,7 +15,7 @@ trigger: none # disable CI build
 pr: none # disable PR build
 
 variables:
-  Configuration: Release
+  Configuration: ReleaseFull
 
 schedules:
 - cron: "30 23 * * 3"
