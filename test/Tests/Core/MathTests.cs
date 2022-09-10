@@ -332,6 +332,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(3, MMath.Median(new[] { double.MaxValue, 3, double.MinValue }));
         }
 
+        [Fact]
+        public void LogSumExpEmptyTest()
+        {
+            double result = MMath.LogSumExp(Enumerable.Empty<double>());
+            Assert.True(double.IsNegativeInfinity(result));
+            
+            result = MMath.LogSumExpSparse(Enumerable.Empty<double>());
+            Assert.True(double.IsNegativeInfinity(result));
+        }
+
         internal static void GammaSpeedTest()
         {
             Stopwatch watch = new Stopwatch();

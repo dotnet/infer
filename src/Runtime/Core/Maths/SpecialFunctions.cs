@@ -3786,18 +3786,26 @@ rr = mpf('-0.99999824265582826');
         /// <returns></returns>
         public static double LogSumExp(IEnumerable<double> list)
         {
-            double max = Max(list);
-            IEnumerator<double> iter = list.GetEnumerator();
-            if (!iter.MoveNext() || Double.IsNegativeInfinity(max))
+            IReadOnlyCollection<double> items = list as IReadOnlyCollection<double> ?? list.ToReadOnlyList();
+
+            if (items.Count == 0)
+                return Double.NegativeInfinity; // log(0)
+
+            double max = Max(items);
+            if (Double.IsNegativeInfinity(max))
                 return Double.NegativeInfinity; // log(0)
             if (Double.IsPositiveInfinity(max))
                 return Double.PositiveInfinity;
+
             // at this point, max is finite
+            IEnumerator<double> iter = items.GetEnumerator();
+            iter.MoveNext();
             double Z = Math.Exp(iter.Current - max);
             while (iter.MoveNext())
             {
                 Z += Math.Exp(iter.Current - max);
             }
+
             return Math.Log(Z) + max;
         }
 
@@ -3808,11 +3816,17 @@ rr = mpf('-0.99999824265582826');
         /// <returns></returns>
         public static double LogSumExpSparse(IEnumerable<double> list)
         {
-            if (!(list is ISparseEnumerable<double>))
-                return LogSumExp(list);
-            double max = list.EnumerableReduce(double.NegativeInfinity,
+            IReadOnlyCollection<double> items = list as IReadOnlyCollection<double> ?? list.ToReadOnlyList();
+
+            if (items.Count == 0)
+                return Double.NegativeInfinity; // log(0)
+
+            if (!(items is ISparseEnumerable<double>))
+                return LogSumExp(items);
+
+            double max = items.EnumerableReduce(double.NegativeInfinity,
                                                (res, i) => Math.Max(res, i), (res, i, count) => Math.Max(res, i));
-            var iter = (list as ISparseEnumerable<double>).GetSparseEnumerator();
+            var iter = (items as ISparseEnumerable<double>).GetSparseEnumerator();
             if ((!iter.MoveNext() && iter.CommonValueCount == 0) || Double.IsNegativeInfinity(max))
                 return Double.NegativeInfinity; // log(0)
             if (Double.IsPositiveInfinity(max))
