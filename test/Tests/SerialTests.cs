@@ -4136,7 +4136,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             engine.Compiler.UnrollLoops = true;
             engine.NumberOfIterations = 1000;
-            Console.WriteLine("Unrolled:", engine.NumberOfIterations);
+            Console.WriteLine("Unrolled: {0}", engine.NumberOfIterations);
             var statesExpected = engine.Infer<IList<Gaussian>>(states);
             Console.WriteLine(statesExpected);
             double maxError = double.NegativeInfinity;

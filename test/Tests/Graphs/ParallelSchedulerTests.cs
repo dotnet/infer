@@ -466,7 +466,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 throw new NotImplementedException();
             }
 
-            public override double PercentTimeSpentWaiting => throw new NotImplementedException();
+            public override double PercentTimeSpentWaiting => 0;
         }
     }
 }

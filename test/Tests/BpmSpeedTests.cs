@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             public double[] featureValues;
         }
 
-        public class VwReader : IDisposable, IEnumerable<Instance>
+        public sealed class VwReader : IDisposable, IEnumerable<Instance>
         {
             private StreamReader reader;
 

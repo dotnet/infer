@@ -5,8 +5,10 @@
 using Microsoft.ML.Probabilistic.Compiler.Transforms;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
+[assembly: AssemblyVersion("1.0.0.0")]
 namespace Microsoft.ML.Probabilistic.Tools.BuildFactorDoc
 {
     /// <summary>
