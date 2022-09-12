@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Reflection;
+
+[assembly: AssemblyVersion("1.0.0.0")]
 namespace Microsoft.ML.Probabilistic.Tools.PrepareSource
 {
     using System;

@@ -1220,7 +1220,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             return func(arg);
         }
 
-        public class DistributedRegression_EP : IGeneratedAlgorithm
+        public sealed class DistributedRegression_EP : IGeneratedAlgorithm, IDisposable
         {
             #region Fields
 
@@ -1520,6 +1520,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             public DistributionStructArray<Gaussian, double> WMarginal()
             {
                 return this.w_marginal_F;
+            }
+
+            public void Dispose()
+            {
+                w_rep0_B?.Dispose();
             }
 
             #endregion

@@ -72,7 +72,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         for (int j = 0; j < 100; ++j)
                         {
                             TestItem item;
-                            lock (usedItems)
+                            lock (pool)
                             {
                                 item = pool.Acquire(i);
                                 Assert.True(item.Data < MaxThreads);
@@ -82,7 +82,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                             Thread.Sleep(1);
 
-                            lock (usedItems)
+                            lock (pool)
                             {
                                 Assert.True(usedItems[item.Data]);
                                 usedItems[item.Data] = false;

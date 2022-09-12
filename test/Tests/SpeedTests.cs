@@ -476,7 +476,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             public bool IsReadOnly
             {
-                get { throw new Exception("The method or operation is not implemented."); }
+                get { return false; }
             }
 
             public bool Remove(T item)

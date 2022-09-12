@@ -30,6 +30,7 @@ using Microsoft.ML.Probabilistic.Tests.CodeCompilerTests;
 #pragma warning disable 162
 #endif
 
+[assembly: AssemblyVersion("1.0.0.0")]
 namespace TestApp
 {
     internal static class Program

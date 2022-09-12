@@ -2563,7 +2563,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     {
                         xPrior.ObservedValue = xPriors[trial];
                         Gaussian xActual = engine.Infer<Gaussian>(x);
-                        Console.Write("x = {1}", xPrior.ObservedValue, xActual);
+                        Console.Write("prior = {0} x = {1}", xPrior.ObservedValue, xActual);
                         if (model == 0) xExpected[trial] = xActual;
                         else
                         {
@@ -2587,7 +2587,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 xPrior2.ObservedValue = xPriors[trial];
                 Gaussian xActual = engine.Infer<Gaussian>(x2);
-                Console.Write("x = {1}, error = {2}", xPrior2.ObservedValue, xActual, xExpected[trial].MaxDiff(xActual));
+                Console.Write("prior = {0}, x = {1}, error = {2}", xPrior2.ObservedValue, xActual, xExpected[trial].MaxDiff(xActual));
                 Console.WriteLine();
             }
 
@@ -2620,7 +2620,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     prior[1] = xPriors[trial];
                     arrayPrior.ObservedValue = (Gaussian[])prior.Clone();
                     Gaussian[] arrayActual = ie.Infer<Gaussian[]>(array);
-                    Console.WriteLine("x = {1}, error = {2}", arrayPrior.ObservedValue[1], arrayActual[1], xExpected[trial].MaxDiff(arrayActual[1]));
+                    Console.WriteLine("prior = {0}, x = {1}, error = {2}", arrayPrior.ObservedValue[1], arrayActual[1], xExpected[trial].MaxDiff(arrayActual[1]));
                 }
             }
         }
