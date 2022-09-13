@@ -140,7 +140,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <summary>
         /// The path (absolute or relative) where source code files will be generated.
         /// </summary>
-        public string GeneratedSourceFolder { get; set; } = "GeneratedSource"; // + Process.GetCurrentProcess().Id;
+        public string GeneratedSourceFolder { get; set; } = "GeneratedSource" + Process.GetCurrentProcess().Id;
 
         /// <summary>
         /// Selects the used compiler: Roslyn or CodeDom.Compiler. 

@@ -121,7 +121,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <summary>
         /// The absolute or relative path to the generated source code.
         /// </summary>
-        public string GeneratedSourceFolder = "GeneratedSource" + Process.GetCurrentProcess().Id;
+        public string GeneratedSourceFolder = "GeneratedSource"; // + Process.GetCurrentProcess().Id;
 
         /// <summary>
         /// If true, print messages about compilation progress.
