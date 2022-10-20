@@ -15,18 +15,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// </remarks>
     public class EstimatedDistribution : IEstimatedDistribution
     {
-        private readonly ITruncatableDistribution<double> distribution;
+        public readonly ITruncatableDistribution<double> Distribution;
 
         public EstimatedDistribution(CanGetProbLessThan<double> distribution)
         {
             if (distribution is EstimatedDistribution estimatedDistribution)
             {
                 // Avoids an extra layer of wrapping.
-                this.distribution = estimatedDistribution.distribution;
+                this.Distribution = estimatedDistribution.Distribution;
+            }
+            else if (distribution is ITruncatableDistribution<double> truncatableDistribution)
+            {
+                this.Distribution = truncatableDistribution;
             }
             else
             {
-                this.distribution = new TruncatableDistribution<double>(distribution);
+                this.Distribution = new TruncatableDistribution<double>(distribution);
             }
         }
 
@@ -52,21 +56,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <inheritdoc/>
-        public double GetProbBetween(double lowerBound, double upperBound) => distribution.GetProbBetween(lowerBound, upperBound);
+        public double GetProbBetween(double lowerBound, double upperBound) => Distribution.GetProbBetween(lowerBound, upperBound);
 
         /// <inheritdoc/>
-        public double GetProbLessThan(double x) => distribution.GetProbLessThan(x);
+        public double GetProbLessThan(double x) => Distribution.GetProbLessThan(x);
 
         /// <inheritdoc/>
-        public double GetQuantile(double probability) => distribution.GetQuantile(probability);
+        public double GetQuantile(double probability) => Distribution.GetQuantile(probability);
 
         /// <inheritdoc/>
-        public ITruncatableDistribution<double> Truncate(double lowerBound, double upperBound) => distribution.Truncate(lowerBound, upperBound);
+        public ITruncatableDistribution<double> Truncate(double lowerBound, double upperBound) => Distribution.Truncate(lowerBound, upperBound);
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return this.distribution.ToString();
+            return this.Distribution.ToString();
         }
     }
 }
