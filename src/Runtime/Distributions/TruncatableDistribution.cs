@@ -8,7 +8,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
     public class TruncatableDistribution<T> : ITruncatableDistribution<T>, CanGetLogProb<T>
     {
-        public CanGetProbLessThan<T> CanGetProbLessThan { get; }
+        public readonly CanGetProbLessThan<T> CanGetProbLessThan;
 
         public TruncatableDistribution(CanGetProbLessThan<T> canGetProbLessThan)
         {
