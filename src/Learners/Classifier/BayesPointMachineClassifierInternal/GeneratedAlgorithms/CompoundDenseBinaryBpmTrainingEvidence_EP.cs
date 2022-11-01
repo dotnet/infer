@@ -105,8 +105,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public Gamma[][] SharedWeightPrecisionRates_uses_B;
 		/// <summary>Messages to uses of 'SharedWeightPrecisionRates_use'</summary>
 		public Gamma[][] SharedWeightPrecisionRates_uses_F;
-		/// <summary>The constant 'vBernoulli4'</summary>
-		public Bernoulli vBernoulli4;
+		/// <summary>The constant 'vBernoulli6'</summary>
+		public Bernoulli vBernoulli6;
 		/// <summary>Field backing the WeightConstraints property</summary>
 		private DistributionStructArray<Gaussian,double> WeightConstraints_field;
 		/// <summary>Field backing the WeightPrecisionRateConstraints property</summary>
@@ -539,7 +539,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.ModelSelector_selector_cases_0_B = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_uses_B, this.ModelSelector_selector_cases_0_B);
 			this.ModelSelector_selector_cases_B[0] = ArrayHelper.SetTo<Bernoulli>(this.ModelSelector_selector_cases_B[0], this.ModelSelector_selector_cases_0_B);
 			this.ModelSelector_selector_B = CasesOp.BAverageConditional(this.ModelSelector_selector_cases_B);
-			this.ModelSelector_marginal_F = VariableOp.MarginalAverageConditional<Bernoulli>(this.ModelSelector_selector_B, this.vBernoulli4, this.ModelSelector_marginal_F);
+			this.ModelSelector_marginal_F = VariableOp.MarginalAverageConditional<Bernoulli>(this.ModelSelector_selector_B, this.vBernoulli6, this.ModelSelector_marginal_F);
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.Weights_marginal_F[FeatureRange] = VariableOp.MarginalAverageConditional<Gaussian>(this.Weights_use_B[FeatureRange], this.Weights_F[FeatureRange], this.Weights_marginal_F[FeatureRange]);
 			}
@@ -750,7 +750,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Constant_isDone) {
 				return ;
 			}
-			this.vBernoulli4 = Bernoulli.Uniform();
+			this.vBernoulli6 = Bernoulli.Uniform();
 			this.ModelSelector_marginal_F = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_B = new DistributionStructArray<Bernoulli,bool>(2);
 			for(int _ind0 = 0; _ind0<2; _ind0++) {

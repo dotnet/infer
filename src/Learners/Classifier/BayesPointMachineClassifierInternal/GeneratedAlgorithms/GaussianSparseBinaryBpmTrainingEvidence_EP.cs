@@ -62,8 +62,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		private int numberOfIterationsDone;
 		public Gaussian[] Score_B;
 		public Gaussian[] Score_F;
-		/// <summary>The constant 'vBernoulli1'</summary>
-		public Bernoulli vBernoulli1;
+		/// <summary>The constant 'vBernoulli2'</summary>
+		public Bernoulli vBernoulli2;
 		/// <summary>Field backing the WeightConstraints property</summary>
 		private DistributionStructArray<Gaussian,double> WeightConstraints_field;
 		/// <summary>Field backing the WeightPriors property</summary>
@@ -266,7 +266,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.ModelSelector_selector_cases_0_B = ReplicateOp_NoDivide.DefAverageConditional<Bernoulli>(this.ModelSelector_selector_cases_0_uses_B, this.ModelSelector_selector_cases_0_B);
 			this.ModelSelector_selector_cases_B[0] = ArrayHelper.SetTo<Bernoulli>(this.ModelSelector_selector_cases_B[0], this.ModelSelector_selector_cases_0_B);
 			this.ModelSelector_selector_B = CasesOp.BAverageConditional(this.ModelSelector_selector_cases_B);
-			this.ModelSelector_marginal_F = VariableOp.MarginalAverageConditional<Bernoulli>(this.ModelSelector_selector_B, this.vBernoulli1, this.ModelSelector_marginal_F);
+			this.ModelSelector_marginal_F = VariableOp.MarginalAverageConditional<Bernoulli>(this.ModelSelector_selector_B, this.vBernoulli2, this.ModelSelector_marginal_F);
 			this.Weights_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_uses_B, this.Weights_B);
 			this.Changed_FeatureIndexes_FeatureValues_InstanceCount_InstanceFeatureCounts_Labels_numberOfIterations_W7_isDone = true;
 		}
@@ -388,7 +388,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (this.Constant_isDone) {
 				return ;
 			}
-			this.vBernoulli1 = Bernoulli.Uniform();
+			this.vBernoulli2 = Bernoulli.Uniform();
 			this.ModelSelector_marginal_F = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_B = new DistributionStructArray<Bernoulli,bool>(2);
 			for(int _ind0 = 0; _ind0<2; _ind0++) {

@@ -22,6 +22,7 @@ namespace LDAExample
             Rand.Restart(5);
             Dictionary<int, string> vocabulary = null;
 #if blei_corpus
+            // Use the data at https://github.com/blei-lab/lda-c/tree/master/example
             Dictionary<int, int>[] trainWordsInTrainDoc = Utilities.LoadWordCounts(@"..\..\..\Data\ap.txt");
             vocabulary = Utilities.LoadVocabulary(@"..\..\..\Data\apvocab.txt");
             Dictionary<int, int>[] testWordsInTrainDoc = trainWordsInTrainDoc;

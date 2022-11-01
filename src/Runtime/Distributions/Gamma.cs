@@ -338,7 +338,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                a = -x * x * ddLogP;
+                a = -ddLogP * x * x;
                 if (a + 1 > double.MaxValue) return Gamma.PointMass(x);
             }
             if (forceProper)

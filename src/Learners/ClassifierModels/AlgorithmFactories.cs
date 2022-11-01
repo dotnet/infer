@@ -25,6 +25,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         public static readonly IEnumerable<Action<string, bool, bool>> TrainingAlgorithmFactories = 
             new Action<string, bool, bool>[]
                 {
+                    (generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution)
+                        => CreateDenseBinaryVectorTrainingAlgorithm(generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution),
                     (generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution) 
                         => CreateDenseBinaryTrainingAlgorithm(generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution),
                     (generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution) 
@@ -41,6 +43,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         public static readonly IEnumerable<Action<string>> PredictionAlgorithmFactories = 
             new Action<string>[]
                 {
+                    generatedSourceFolder => CreateDenseBinaryVectorPredictionAlgorithm(generatedSourceFolder),
                     generatedSourceFolder => CreateDenseBinaryPredictionAlgorithm(generatedSourceFolder),
                     generatedSourceFolder => CreateSparseBinaryPredictionAlgorithm(generatedSourceFolder),
                     generatedSourceFolder => CreateDenseMulticlassPredictionAlgorithm(generatedSourceFolder),
@@ -50,6 +53,60 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         #endregion
 
         #region Training algorithms
+
+        /// <summary>
+        /// Creates an Infer.NET inference algorithm which trains a binary Bayes point machine classifier 
+        /// with factorized weight distributions on features in a dense representation.
+        /// </summary>
+        /// <param name="generatedSourceFolder">The folder to drop the generated training algorithm to.</param>
+        /// <param name="computeModelEvidence">If true, the generated training algorithm computes evidence.</param>
+        /// <param name="useCompoundWeightPriorDistributions">
+        /// If true, the generated training algorithm uses compound prior distributions over weights. Otherwise
+        /// <see cref="Gaussian"/> prior distributions are used.
+        /// </param>
+        public static void CreateDenseBinaryVectorTrainingAlgorithm(
+            string generatedSourceFolder,
+            bool computeModelEvidence,
+            bool useCompoundWeightPriorDistributions)
+        {
+            useCompoundWeightPriorDistributions = false;
+            // Create the model
+            var model = new DenseBinaryVectorModel(computeModelEvidence, useCompoundWeightPriorDistributions);
+
+            // Add the observed variables
+            model.Labels.ObservedValue = default(bool[]);
+
+            // Add the inferred variables
+            var queryVariables = new List<IVariable> { model.Weights };
+            model.Weights.AddAttribute(QueryTypes.Marginal);
+            model.Weights.AddAttribute(QueryTypes.MarginalDividedByPrior);
+
+            if (useCompoundWeightPriorDistributions)
+            {
+                queryVariables.Add(model.WeightPrecisionRate);
+                model.WeightPrecisionRate.AddAttribute(QueryTypes.MarginalDividedByPrior);
+
+                if (computeModelEvidence)
+                {
+                    // This is required to compute evidence corrections
+                    model.WeightPrecisionRate.AddAttribute(QueryTypes.Marginal);
+                }
+            }
+
+            if (computeModelEvidence)
+            {
+                queryVariables.Add(model.ModelSelector);
+                model.ModelSelector.AddAttribute(QueryTypes.Marginal);
+            }
+
+            // Apply the query to the model and compile the inference algorithm
+            string queryName =
+                (useCompoundWeightPriorDistributions ? "Compound" : "Gaussian")
+                + "DenseBinaryVectorBpmTraining"
+                + (computeModelEvidence ? "Evidence" : string.Empty);
+
+            GetCompiledInferenceAlgorithm(queryName, generatedSourceFolder, queryVariables.ToArray());
+        }
 
         /// <summary>
         /// Creates an Infer.NET inference algorithm which trains a binary Bayes point machine classifier 
@@ -266,6 +323,23 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         #endregion
 
         #region Prediction algorithms
+
+        /// <summary>
+        /// Creates an Infer.NET inference algorithm for making predictions from a binary Bayes point machine classifier
+        /// with <see cref="Gaussian"/> prior distributions over factorized weights and features in a dense representation.
+        /// </summary>
+        /// <param name="generatedSourceFolder">The folder to drop the generated prediction algorithm to.</param>
+        public static void CreateDenseBinaryVectorPredictionAlgorithm(string generatedSourceFolder)
+        {
+            // Create the model
+            var model = new DenseBinaryVectorModel(computeModelEvidence: false, useCompoundWeightPriorDistributions: false);
+
+            // Add the inferred variables
+            model.Labels.AddAttribute(QueryTypes.Marginal);
+
+            // Apply the query to the model and compile the inference algorithm
+            GetCompiledInferenceAlgorithm("GaussianDenseBinaryVectorBpmPrediction", generatedSourceFolder, model.Labels);
+        }
 
         /// <summary>
         /// Creates an Infer.NET inference algorithm for making predictions from a binary Bayes point machine classifier
