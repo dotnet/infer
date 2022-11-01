@@ -12,6 +12,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 	public partial class CompoundSparseMulticlassBpmTrainingEvidence_EP : IGeneratedAlgorithm
 	{
 		#region Fields
+		public Gaussian[][][] argMaxScoreCopy_B;
 		/// <summary>True if Changed_ClassCount_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_InstanceFeatureCounts_Lab17 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_InstanceFeatureCounts_Lab17</summary>
 		public bool Changed_ClassCount_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_InstanceFeatureCounts_Lab17_isDone;
 		/// <summary>True if Changed_ClassCount_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_InstanceFeatureCounts_Lab17 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_InstanceFeatureCounts_Lab17</summary>
@@ -188,9 +189,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public double TransposedWeightSums_reduced;
 		/// <summary>The constant 'vBernoulli7'</summary>
 		public Bernoulli vBernoulli7;
-		/// <summary>The constant 'vbool62'</summary>
-		public bool[][][] vbool62;
-		public Gaussian[][][] vdouble650_B;
+		/// <summary>The constant 'vbool65'</summary>
+		public bool[][][] vbool65;
 		/// <summary>Field backing the WeightConstraints property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> WeightConstraints_field;
 		/// <summary>Field backing the WeightPrecisionRateConstraints property</summary>
@@ -667,8 +667,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 							if (ClassMaxNoisyScore!=ClassRange) {
 								this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.AAverageConditional(this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange]);
 								this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = IsPositiveOp_Proper.XAverageConditional(Bernoulli.PointMass(true), this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange]);
-								this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.SumAverageConditional(this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange]);
-								this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = LowPriorityBackwardOp.ValueAverageConditional<Gaussian>(this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+								this.argMaxScoreCopy_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.SumAverageConditional(this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange]);
+								this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = LowPriorityBackwardOp.ValueAverageConditional<Gaussian>(this.argMaxScoreCopy_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 								this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.MaxNoisyScore_rep_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 							}
 						}
@@ -787,8 +787,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 									this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = IsPositiveOp_Proper.XAverageConditional(Bernoulli.PointMass(true), this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 									this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.BAverageConditional(this.MaxNoisyScore_rep_F[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 									this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
-									this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.SumAverageConditional(this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange]);
-									this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = LowPriorityBackwardOp.ValueAverageConditional<Gaussian>(this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+									this.argMaxScoreCopy_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = DoublePlusOp.SumAverageConditional(this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange], this.NoisyScores_F[InstanceRange][ClassRange]);
+									this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = LowPriorityBackwardOp.ValueAverageConditional<Gaussian>(this.argMaxScoreCopy_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 								}
 								this.NoisyScores_use_B[InstanceRange][ClassRange] = ArrayHelper.SetTo<Gaussian>(this.NoisyScores_use_B[InstanceRange][ClassRange], this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 							}
@@ -1148,10 +1148,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 					}
 				}
-				this.vdouble650_B[InstanceRange] = new Gaussian[this.ClassCount][];
+				this.argMaxScoreCopy_B[InstanceRange] = new Gaussian[this.ClassCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
-						this.vdouble650_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
+						this.argMaxScoreCopy_B[InstanceRange][ClassMaxNoisyScore] = new Gaussian[this.ClassCount];
 					}
 				}
 				this.MaxNoisyScore_0__B[InstanceRange] = new Gaussian[this.ClassCount][];
@@ -1179,21 +1179,21 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.ModelSelector_selector_cases_0_rep39_rep_uses_B[InstanceRange][ClassRange][0] = Bernoulli.Uniform();
 				}
-				this.vbool62[InstanceRange] = new bool[this.ClassCount][];
+				this.vbool65[InstanceRange] = new bool[this.ClassCount][];
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					this.ModelSelector_selector_cases_0_rep40_rep_B[InstanceRange][ClassRange] = Bernoulli.Uniform();
 				}
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
-						this.vbool62[InstanceRange][ClassMaxNoisyScore] = new bool[this.ClassCount];
+						this.vbool65[InstanceRange][ClassMaxNoisyScore] = new bool[this.ClassCount];
 					}
 				}
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 							if (ClassMaxNoisyScore!=ClassRange) {
-								this.vbool62[InstanceRange][ClassMaxNoisyScore][ClassRange] = true;
-								this.ModelSelector_selector_cases_0_rep40_rep_B[InstanceRange][ClassRange] = Bernoulli.FromLogOdds(ConstrainEqualOp<bool>.LogEvidenceRatio(true, this.vbool62[InstanceRange][ClassMaxNoisyScore][ClassRange]));
+								this.vbool65[InstanceRange][ClassMaxNoisyScore][ClassRange] = true;
+								this.ModelSelector_selector_cases_0_rep40_rep_B[InstanceRange][ClassRange] = Bernoulli.FromLogOdds(ConstrainEqualOp<bool>.LogEvidenceRatio(true, this.vbool65[InstanceRange][ClassMaxNoisyScore][ClassRange]));
 							}
 						}
 					}
@@ -1226,7 +1226,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 							if (ClassMaxNoisyScore!=ClassRange) {
 								this.NoisyScoreDeltas_F[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
 								this.NoisyScoreDeltas_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
-								this.vdouble650_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
+								this.argMaxScoreCopy_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
 								this.MaxNoisyScore_0__B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
 							}
 							this.NoisyScores_ClassRange_ClassMaxNoisyScore_B[InstanceRange][ClassMaxNoisyScore][ClassRange] = Gaussian.Uniform();
@@ -1504,7 +1504,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.MaxNoisyScore_rep_B = new Gaussian[this.InstanceCount][][];
 			this.NoisyScoreDeltas_F = new Gaussian[this.InstanceCount][][];
 			this.NoisyScoreDeltas_B = new Gaussian[this.InstanceCount][][];
-			this.vdouble650_B = new Gaussian[this.InstanceCount][][];
+			this.argMaxScoreCopy_B = new Gaussian[this.InstanceCount][][];
 			this.MaxNoisyScore_0__B = new Gaussian[this.InstanceCount][][];
 			this.NoisyScores_ClassRange_ClassMaxNoisyScore_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount][];
 			this.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B = new Gaussian[this.InstanceCount][][];
@@ -1535,7 +1535,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
 				this.ModelSelector_selector_cases_0_rep39_B[InstanceRange] = Bernoulli.Uniform();
 			}
-			this.vbool62 = new bool[this.InstanceCount][][];
+			this.vbool65 = new bool[this.InstanceCount][][];
 			this.ModelSelector_selector_cases_0_rep40_B = new Bernoulli[this.InstanceCount];
 			this.ModelSelector_selector_cases_0_rep40_rep_B = new Bernoulli[this.InstanceCount][];
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {

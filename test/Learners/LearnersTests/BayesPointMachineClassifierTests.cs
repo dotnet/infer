@@ -25,6 +25,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using StandardPredictiveDistribution = System.Collections.Generic.Dictionary<string, double>;
     using BoolPredictiveDistribution = System.Collections.Generic.Dictionary<bool, double>;
     using IntPredictiveDistribution = System.Collections.Generic.Dictionary<int, double>;
+    using Microsoft.ML.Probabilistic.Models;
 
     /// <summary>
     /// Tests for the Bayes point machine classifier.
@@ -32,6 +33,29 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     //[DeploymentItem(@"CustomSerializedLearners\", "CustomSerializedLearners")]
     public class BayesPointMachineClassifierTests
     {
+        [Fact]
+        public void DenseBinaryVectorTrainingTest()
+        {
+            var trainer = new GaussianDenseBinaryVectorBpmTraining_EP();
+            trainer.InstanceCount = denseSimpleTrainingData.Count;
+            trainer.FeatureValues = denseSimpleTrainingData.ToArray();
+            trainer.Labels = denseSimpleTrainingLabels.ToArray();
+            int featureDim = denseSimpleTrainingData[0].Count;
+            trainer.WeightPriors = new VectorGaussian(Vector.Zero(featureDim), PositiveDefiniteMatrix.Identity(featureDim));
+            trainer.Execute(100);
+
+            var predictor = new GaussianDenseBinaryVectorBpmPrediction_EP();
+            predictor.InstanceCount = denseSimplePredictionData.Count;
+            predictor.FeatureValues = denseSimplePredictionData.ToArray();
+            predictor.WeightPriors = trainer.WeightsMarginal();
+            predictor.Execute(100);
+            var prediction = predictor.LabelsMarginal();
+            foreach (var bernoulli in prediction)
+            {
+                Assert.True(bernoulli.LogOdds > 0);
+            }
+        }
+
         [Fact]
         //[DeploymentItem(@"Data\W5ANormalized.csv.gz")]
         public void W5Test()

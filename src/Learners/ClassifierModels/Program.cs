@@ -53,6 +53,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                         trainingAlgorithmFactory(generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistributions);
                     }
                 }
+                AlgorithmFactories.CreateDenseBinaryVectorTrainingAlgorithm(generatedSourceFolder, computeModelEvidence, false);
             }
 
             // Generate all prediction algorithms

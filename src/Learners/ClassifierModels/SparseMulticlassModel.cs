@@ -240,7 +240,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             this.Weights.Name = "Weights";
 
             // Constrain weights to their marginals divided by their priors to allow for incremental and batched training
-            Variable.ConstrainEqualRandom<double[][], GaussianMatrix>(this.Weights, weightConstraints);
+            Variable.ConstrainEqualRandom(this.Weights, weightConstraints);
 
             // By switching to the ReplicateOp_NoDivide operators, weight precision rates are initialized before the computation of 
             // the likelihood. This results in the weights having a range similar to the data, avoiding numerical instabilities.
@@ -248,7 +248,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 
             // Constrain weight precision rates to their marginals divided by their priors to allow for incremental and batched training
             this.WeightPrecisionRates[this.featureRange] = Variable.Copy(sharedWeightPrecisionRates[this.featureRange]);
-            Variable.ConstrainEqualRandom<double[], GammaArray>(this.WeightPrecisionRates, weightPrecisionRateConstraints);
+            Variable.ConstrainEqualRandom(this.WeightPrecisionRates, weightPrecisionRateConstraints);
 
             // Anchor weight precision rates at feature values (required for compound prior distributions)
             indexedWeightPrecisionRates[this.instanceRange] = Variable.Subarray(this.WeightPrecisionRates, this.featureIndexes[this.instanceRange]);
@@ -289,7 +289,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             this.Weights.Name = "Weights";
 
             // Constrain weights to marginals divided by their priors to allow for incremental and batched training
-            Variable.ConstrainEqualRandom<double[][], GaussianMatrix>(this.Weights, weightConstraints);
+            Variable.ConstrainEqualRandom(this.Weights, weightConstraints);
         }
 
         /// <summary>
@@ -388,7 +388,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                 using (Variable.IfNot(argmax == classBlock.Index))
                 {
                     // This improves the schedule, preventing AllZeroExceptions due to large changes in scores.
-                    var argMaxScoreCopy = Variable<double>.Factor(Factors.LowPriority.Backward<double>, argMaxScore);
+                    var argMaxScoreCopy = Variable<double>.Factor(Factors.LowPriority.Backward, argMaxScore);
+                    argMaxScoreCopy.Name = nameof(argMaxScoreCopy);
                     Variable.ConstrainPositive((argMaxScoreCopy - scores[classBlock.Index]).Named("NoisyScoreDeltas"));
                 }
             }

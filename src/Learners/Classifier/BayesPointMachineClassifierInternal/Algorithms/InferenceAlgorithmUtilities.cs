@@ -307,7 +307,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                 typeof(CompoundDenseBinaryBpmTraining_EP),
                 typeof(GaussianDenseBinaryBpmTrainingEvidence_EP),
                 typeof(CompoundDenseBinaryBpmTrainingEvidence_EP));
-                }
+        }
 
         /// <summary>
         /// Creates an Infer.NET inference algorithm which trains a binary Bayes point machine classifier 
