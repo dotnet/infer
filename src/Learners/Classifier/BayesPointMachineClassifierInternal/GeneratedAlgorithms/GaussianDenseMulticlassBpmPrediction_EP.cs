@@ -101,7 +101,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionStructArray<Gaussian,double>[] Scores_B;
 		public DistributionStructArray<Gaussian,double>[] Scores_F;
 		public Gaussian SharedWeightsFirst_B_reduced;
-		public bool[][] vbool89_reduced;
+		public bool[][] vbool82_reduced;
 		/// <summary>Field backing the WeightConstraints property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> WeightConstraints_field;
 		/// <summary>Field backing the WeightPriors property</summary>
@@ -550,7 +550,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_uses_F[InstanceRange][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.ClassCount));
 			}
 			if (this.InstanceCount>0) {
-				this.vbool89_reduced = new bool[this.ClassCount][];
+				this.vbool82_reduced = new bool[this.ClassCount][];
 				this.Labels_InstanceRange__selector_cases_rep8_B_reduced = new Bernoulli[this.ClassCount][];
 			}
 			for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
@@ -563,15 +563,15 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					}
 				}
 				if (this.InstanceCount>0) {
-					this.vbool89_reduced[ClassMaxNoisyScore] = new bool[this.ClassCount];
+					this.vbool82_reduced[ClassMaxNoisyScore] = new bool[this.ClassCount];
 				}
 			}
 			for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.InstanceCount>0) {
 						if (ClassMaxNoisyScore!=ClassRange) {
-							this.vbool89_reduced[ClassMaxNoisyScore][ClassRange] = true;
-							this.Labels_InstanceRange__selector_cases_rep8_B_reduced[ClassMaxNoisyScore][ClassRange] = Bernoulli.FromLogOdds(ConstrainEqualOp<bool>.LogEvidenceRatio(true, this.vbool89_reduced[ClassMaxNoisyScore][ClassRange]));
+							this.vbool82_reduced[ClassMaxNoisyScore][ClassRange] = true;
+							this.Labels_InstanceRange__selector_cases_rep8_B_reduced[ClassMaxNoisyScore][ClassRange] = Bernoulli.FromLogOdds(ConstrainEqualOp<bool>.LogEvidenceRatio(true, this.vbool82_reduced[ClassMaxNoisyScore][ClassRange]));
 						}
 					}
 				}
@@ -747,7 +747,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_uses_F[InstanceRange] = new Discrete[2];
 			}
 			this.Labels_InstanceRange__selector_cases_uses_B = new Bernoulli[this.InstanceCount][][];
-			this.vbool89_reduced = default(bool[][]);
+			this.vbool82_reduced = default(bool[][]);
 			this.Labels_InstanceRange__selector_cases_rep8_B_reduced = default(Bernoulli[][]);
 			this.NoisyScoreDeltas_F = new Gaussian[this.InstanceCount][][];
 			this.NoisyScoreDeltas_B = new Gaussian[this.InstanceCount][][];

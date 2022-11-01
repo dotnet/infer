@@ -25,8 +25,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         public static readonly IEnumerable<Action<string, bool, bool>> TrainingAlgorithmFactories = 
             new Action<string, bool, bool>[]
                 {
-                    (generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution)
-                        => CreateDenseBinaryVectorTrainingAlgorithm(generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution),
                     (generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution) 
                         => CreateDenseBinaryTrainingAlgorithm(generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution),
                     (generatedSourceFolder, computeModelEvidence, useCompoundWeightPriorDistribution) 
@@ -69,7 +67,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
             bool computeModelEvidence,
             bool useCompoundWeightPriorDistributions)
         {
-            useCompoundWeightPriorDistributions = false;
             // Create the model
             var model = new DenseBinaryVectorModel(computeModelEvidence, useCompoundWeightPriorDistributions);
 

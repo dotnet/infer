@@ -4,9 +4,6 @@
 
 namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal
 {
-    using System;
-    using System.Linq;
-
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Models;

@@ -102,8 +102,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> TransposedWeights_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> TransposedWeights_F;
 		public double TransposedWeightSums_reduced;
-		/// <summary>The constant 'vbool15'</summary>
-		public bool[][][] vbool15;
+		/// <summary>The constant 'vbool12'</summary>
+		public bool[][][] vbool12;
 		/// <summary>Field backing the WeightConstraints property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> WeightConstraints_field;
 		/// <summary>Field backing the WeightPriors property</summary>
@@ -788,18 +788,18 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					}
 					this.NoisyScores_use_B[InstanceRange][ClassRange] = Gaussian.Uniform();
 				}
-				this.vbool15[InstanceRange] = new bool[this.ClassCount][];
+				this.vbool12[InstanceRange] = new bool[this.ClassCount][];
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 					if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
-						this.vbool15[InstanceRange][ClassMaxNoisyScore] = new bool[this.ClassCount];
+						this.vbool12[InstanceRange][ClassMaxNoisyScore] = new bool[this.ClassCount];
 					}
 				}
 				for(int ClassRange = 0; ClassRange<this.ClassCount; ClassRange++) {
 					for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.ClassCount; ClassMaxNoisyScore++) {
 						if (this.Labels[InstanceRange]==ClassMaxNoisyScore) {
 							if (ClassMaxNoisyScore!=ClassRange) {
-								this.vbool15[InstanceRange][ClassMaxNoisyScore][ClassRange] = true;
-								Constrain.Equal<bool>(true, this.vbool15[InstanceRange][ClassMaxNoisyScore][ClassRange]);
+								this.vbool12[InstanceRange][ClassMaxNoisyScore][ClassRange] = true;
+								Constrain.Equal<bool>(true, this.vbool12[InstanceRange][ClassMaxNoisyScore][ClassRange]);
 							}
 						}
 					}
@@ -896,7 +896,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.Scores_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
 			this.FeatureScores_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[this.InstanceCount];
 			this.IndexedWeights_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[this.InstanceCount];
-			this.vbool15 = new bool[this.InstanceCount][][];
+			this.vbool12 = new bool[this.InstanceCount][][];
 			this.Changed_InstanceCount_isDone = true;
 		}
 
