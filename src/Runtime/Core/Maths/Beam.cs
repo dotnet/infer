@@ -171,6 +171,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double width = input.Width();
             if (width == 0)
             {
+                // Want continuity as width->0, and to allow Beams to generalize autodiff
                 double derivative = fLower;
                 // Offset is exp(x) - exp(x)*x
                 return new Beam(derivative, fLower - fLower * input.LowerBound);
@@ -212,6 +213,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double width = input.Width();
             if (width == 0)
             {
+                // Want continuity as width->0, and to allow Beams to generalize autodiff
                 double derivative = 2 * input.LowerBound;
                 // Offset is x^2 - (2*x)*x = -x^2
                 return new Beam(derivative, -fLower);
@@ -232,6 +234,7 @@ namespace Microsoft.ML.Probabilistic.Math
             bool ensureNonnegative = false;
             if (ensureNonnegative)
             {
+                // Returning slope=0 is bad because slopes are multiplied during composition so the overall slope will be zero, reducing the Beam to an interval.
                 return new Beam(0, input.Abs());
             }
             else
