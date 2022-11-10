@@ -211,6 +211,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     };
                 }
             }
+            else if (expr is ICheckedExpression ice)
+            {
+                return GetBounds(ice.Expression, bounds);
+            }
             return null;
         }
 
@@ -226,27 +230,28 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 return GetVariableDeclaration(expr);
             }
-            else if (expr is IBinaryExpression indexBinaryExpr)
+            else if (expr is ICheckedExpression ice)
             {
-                if (indexBinaryExpr.Left is IVariableReferenceExpression ivre && 
-                    indexBinaryExpr.Right is ILiteralExpression offsetExpr && 
-                    offsetExpr.Value is int)
+                return GetOffsetVariable(ice.Expression, out offset);
+            }
+            else if (expr is IBinaryExpression indexBinaryExpr && 
+                    indexBinaryExpr.Left is IVariableReferenceExpression ivre &&
+                    indexBinaryExpr.Right is ILiteralExpression offsetExpr &&
+                    offsetExpr.Value is int value)
+            {
+                if (indexBinaryExpr.Operator == BinaryOperator.Subtract)
                 {
-                    offset = (int)offsetExpr.Value;
-                    if (indexBinaryExpr.Operator == BinaryOperator.Subtract)
-                    {
-                        offset = -offset;
-                    }
-                    else if (indexBinaryExpr.Operator == BinaryOperator.Add)
-                    {
-                        // do nothing
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                    return GetVariableDeclaration(ivre);
+                    offset = -value;
                 }
+                else if (indexBinaryExpr.Operator == BinaryOperator.Add)
+                {
+                    offset = value;
+                }
+                else
+                {
+                    return null;
+                }
+                return GetVariableDeclaration(ivre);
             }
             return null;
         }
@@ -940,6 +945,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 return 1 + System.Math.Max(GetExpressionDepth(iae.Target), GetExpressionDepth(iae.Expression));
             }
+            else if (expr is ICheckedExpression ice)
+            {
+                return 1 + GetExpressionDepth(ice.Expression);
+            }
             else if (expr is IVariableReferenceExpression || expr is ILiteralExpression || expr is IArgumentReferenceExpression || expr is ITypeReferenceExpression
                 || expr is IVariableDeclarationExpression || expr is IArrayCreateExpression)
             {
@@ -1006,6 +1015,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 else
                     yield return expr;
+            }
+            else if (expr is ICheckedExpression ice)
+            {
+                foreach (var summand in GetSummands(ice.Expression))
+                    yield return summand;
             }
             else
                 yield return expr;
@@ -1117,6 +1131,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     return true;
                 }
             }
+            else if (expr is ICheckedExpression ice)
+            {
+                return TryEvaluate(ice.Expression, bindings, out value);
+            }
             value = default(T);
             return false;
         }
@@ -1212,12 +1230,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 else if (ibe.Operator == BinaryOperator.GreaterThanOrEqual)
                 {
                     var start = LoopStartExpression(loop);
-                    if (start is IBinaryExpression ibe2)
+                    if (start is IBinaryExpression ibe2 
+                        && ibe2.Operator == BinaryOperator.Subtract)
                     {
-                        if (ibe2.Operator == BinaryOperator.Subtract)
-                        {
-                            return ibe2.Left;
-                        }
+                        return ibe2.Left;
                     }
                 }
                 throw new ArgumentException("Unrecognized loop syntax");
@@ -1277,7 +1293,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
             public override string ToString()
             {
-                return String.Format("[{0},{1}]", lowerBound, upperBound);
+                return $"[{lowerBound},{upperBound}]";
             }
         }
 
@@ -1747,6 +1763,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 foreach (var decl in GetVariablesAndParameters(iae.Target))
                     yield return decl;
             }
+            else if (expr is ICheckedExpression ice)
+            {
+                foreach (var decl in GetVariablesAndParameters(ice.Expression))
+                    yield return decl;
+            }
             else
             {
                 object decl = GetDeclaration(expr);
@@ -1777,6 +1798,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 foreach (var iare in GetArgumentReferenceExpressions(ibe.Left))
                     yield return iare;
                 foreach (var iare in GetArgumentReferenceExpressions(ibe.Right))
+                    yield return iare;
+            }
+            else if (expr is ICheckedExpression ice)
+            {
+                foreach (var iare in GetArgumentReferenceExpressions(ice.Expression))
                     yield return iare;
             }
         }

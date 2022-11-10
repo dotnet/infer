@@ -19,8 +19,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double LogEvidenceRatio<TDist>(TDist use, TDist def, TDist to_marginal)
             where TDist : CanGetLogAverageOf<TDist>
         {
-            //return def.GetLogAverageOf(to_marginal);
-            return def.GetLogAverageOf(use) - use.GetLogAverageOf(to_marginal);
+            return def.GetLogAverageOf(to_marginal);
+            //return def.GetLogAverageOf(use) - use.GetLogAverageOf(to_marginal);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/message_doc[@name="MarginalAverageConditionalInit{TDist}(TDist)"]/*'/>

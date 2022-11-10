@@ -218,8 +218,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     return ics;
                 }
 
-                ci.caseValue = Builder.LiteralExpr(((int) ile.Value) == 0);
-                ci.caseNumber = Builder.LiteralExpr(1 - (int) ile.Value);
+                int i = (int)ile.Value;
+                ci.caseValue = Builder.LiteralExpr(i == 0);
+                ci.caseNumber = Builder.LiteralExpr(1 - i);
                 ConvertConditionCase(ics.Else, ci);
             }
 

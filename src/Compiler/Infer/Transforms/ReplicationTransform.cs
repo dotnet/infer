@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                   (loopSize is IArgumentReferenceExpression) || (loopSize is ILiteralExpression)
                   || (loopSize is IPropertyReferenceExpression)))
             {
-                Error("Invalid expression type for the size of a loop (" + loopSize.GetType().Name + "): " + loopSize);
+                Error($"Invalid expression type for the size of a loop ({loopSize.GetType().Name}): {loopSize}");
                 return ifs;
             }
             if (loopSize is ILiteralExpression ile)
@@ -214,7 +214,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             LoopContext lc = context.InputAttributes.Get<LoopContext>(baseVar);
             if (lc == null)
             {
-                Error("Loop context not found for '" + baseVar.Name + "'.");
+                Error($"Loop context not found for '{baseVar.Name}'.");
                 return expr;
             }
 
@@ -235,9 +235,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 foreach (IExpression index in bracket)
                 {
                     IExpression indExpr = index;
-                    if (indExpr is IBinaryExpression ibe)
+                    while (true)
                     {
-                        indExpr = ibe.Left;
+                        if (indExpr is ICheckedExpression ice)
+                        {
+                            indExpr = ice.Expression;
+                        }
+                        else if (indExpr is IBinaryExpression ibe)
+                        {
+                            indExpr = ibe.Left;
+                        }
+                        else break;
                     }
                     IVariableDeclaration indVar = Recognizer.GetVariableDeclaration(indExpr);
                     if (indVar != null)
@@ -247,7 +255,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             int loopIndex = rlc.loopVariables.IndexOf(indVar);
                             if (loopIndex != -1)
                             {
-                                // indVar is a loop variable
+                                // indVar is a loop variable that appears "directly" as an array index.
+                                // Add it to constantLoopVars to signal that we don't need to replicate across that loop.
                                 constantLoopVars.Add(rlc.loopVariables[loopIndex]);
                             }
                             else 
@@ -318,11 +327,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             // Determine if this expression is being defined (is on the LHS of an assignment)
             bool isDef = Recognizer.IsBeingMutated(context, expr);
-
             Containers containers = context.InputAttributes.Get<Containers>(baseVar);
-
             IExpression originalExpr = expr;
-
             for (int currentLoop = 0; currentLoop < rlc.loopVariables.Count; currentLoop++)
             {
                 IVariableDeclaration loopVar = rlc.loopVariables[currentLoop];

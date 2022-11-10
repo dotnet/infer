@@ -404,7 +404,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <param name="iws"></param>
         protected override IStatement ConvertWhile(IWhileStatement iws)
         {
-            bool isWhileTrue = (iws.Condition is ILiteralExpression) && (((ILiteralExpression)iws.Condition).Value.Equals(true));
+            bool isWhileTrue = (iws.Condition is ILiteralExpression ile) && (ile.Value.Equals(true));
             if (!isWhileTrue)
                 return base.ConvertWhile(iws);
             IWhileStatement ws = Builder.WhileStmt(iws);
@@ -438,9 +438,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     List<IStatement> newContainers = new List<IStatement>();
                     foreach (IStatement container in containersOfSt)
                     {
-                        if (container is IForStatement)
+                        if (container is IForStatement ifs)
                         {
-                            IExpression loopVarExpr = Builder.VarRefExpr(Recognizer.LoopVariable((IForStatement)container));
+                            IExpression loopVarExpr = Builder.VarRefExpr(Recognizer.LoopVariable(ifs));
                             if (frame.replacements.ContainsKey(loopVarExpr))
                             {
                                 // add all missing containers
@@ -529,22 +529,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             // collect the set of forward and backward offset edges
             Dictionary<IVariableDeclaration, SerialLoopInfo> loopInfoOfVariable = new Dictionary<IVariableDeclaration, SerialLoopInfo>();
             List<SerialLoopInfo> infos = new List<SerialLoopInfo>();
-            Action<IVariableDeclaration, EdgeIndex> foundSpecialEdge = delegate (IVariableDeclaration loopVar, EdgeIndex edge)
-             {
-                 NodeIndex source = g.dependencyGraph.SourceOf(edge);
-                 IStatement stmt = inputStmts[source];
-                 Set<IStatement> stmts;
-                 if (!specialStmts.TryGetValue(loopVar, out stmts))
-                 {
-                     stmts = new Set<IStatement>();
-                     specialStmts.Add(loopVar, stmts);
-                 }
-                 stmts.Add(stmt);
-                 if (!specialTransformedStmts.ContainsKey(stmt))
-                 {
-                     specialTransformedStmts.Add(stmt, new Dictionary<Set<IVariableDeclaration>, IStatement>());
-                 }
-             };
+            void foundSpecialEdge(IVariableDeclaration loopVar, EdgeIndex edge)
+            {
+                NodeIndex source = g.dependencyGraph.SourceOf(edge);
+                IStatement stmt = inputStmts[source];
+                Set<IStatement> stmts;
+                if (!specialStmts.TryGetValue(loopVar, out stmts))
+                {
+                    stmts = new Set<IStatement>();
+                    specialStmts.Add(loopVar, stmts);
+                }
+                stmts.Add(stmt);
+                if (!specialTransformedStmts.ContainsKey(stmt))
+                {
+                    specialTransformedStmts.Add(stmt, new Dictionary<Set<IVariableDeclaration>, IStatement>());
+                }
+            }
             foreach (KeyValuePair<EdgeIndex, IOffsetInfo> entry in g.OffsetIndices)
             {
                 EdgeIndex edge = entry.Key;
@@ -556,8 +556,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     SerialLoopInfo info;
                     if (!loopInfoOfVariable.TryGetValue(loopVar, out info))
                     {
-                        info = new SerialLoopInfo();
-                        info.loopVar = loopVar;
+                        info = new SerialLoopInfo(loopVar);
                         infos.Add(info);
                         loopInfoOfVariable[loopVar] = info;
                     }
@@ -633,8 +632,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     outputStmts.Add(st);
                     transformedStmts.Add(ist, st);
                     reversedLoopVarsInStmt.Add(st, key);
-                    Dictionary<Set<IVariableDeclaration>, IStatement> dict;
-                    if (specialTransformedStmts.TryGetValue(ist, out dict))
+                    if (specialTransformedStmts.TryGetValue(ist, out Dictionary<Set<IVariableDeclaration>, IStatement> dict))
                     {
                         dict.Add(key, st);
                     }
@@ -1234,10 +1232,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
     internal class SerialLoopInfo : ICompilerAttribute
     {
-        public IVariableDeclaration loopVar;
-        public Set<EdgeIndex> forwardEdges = new Set<EdgeIndex>();
-        public Set<EdgeIndex> backwardEdges = new Set<EdgeIndex>();
-        public Set<NodeIndex> nodesInLoop = new Set<EdgeIndex>();
+        public readonly IVariableDeclaration loopVar;
+        public readonly Set<EdgeIndex> forwardEdges = new Set<EdgeIndex>();
+        public readonly Set<EdgeIndex> backwardEdges = new Set<EdgeIndex>();
+        public readonly Set<NodeIndex> nodesInLoop = new Set<EdgeIndex>();
+
+        public SerialLoopInfo(IVariableDeclaration loopVar)
+        {
+            this.loopVar = loopVar;
+        }
 
         public override string ToString()
         {

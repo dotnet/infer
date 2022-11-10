@@ -34,6 +34,34 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class ModelTests
     {
         [Fact]
+        public void CheckedArithmeticTest()
+        {
+            var observed = Variable.Observed(7);
+            observed.Name = nameof(observed);
+            var x = observed + observed;
+            x.Name = nameof(x);
+            Range item = new Range(1);
+            item.Name = nameof(item);
+            var array = Variable.Array<int>(item);
+            using (var block = Variable.ForEach(item))
+            {
+                array[item] = block.Index + observed;
+            }
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.WriteSourceFiles = true;
+            engine.ModelName = nameof(CheckedArithmeticTest);
+            engine.Infer(array);
+            string folder = "GeneratedSource";
+            string path = Path.Combine(folder, engine.ModelName + "_EP.cs");
+            string text = File.ReadAllText(path);
+            bool observedIsChecked = text.Contains($"checked(this.{observed.Name}+this.{observed.Name})");
+            bool arrayIsChecked = text.Contains($"checked({item.Name}+this.{observed.Name})");
+            Assert.True(observedIsChecked);
+            Assert.True(arrayIsChecked);
+        }
+
+        [Fact]
         public void InitializeConstrainedVariableArray()
         {
             Range item = new Range(1);

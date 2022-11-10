@@ -84,8 +84,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new MaxGaussianOpTests().MaxTest2();
-
             bool runAllTests = false;
             if (runAllTests)
             {

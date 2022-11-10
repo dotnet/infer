@@ -608,7 +608,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 {
                     if (!optimiseForVariables.Contains(v))
                     {
-                        throw new ArgumentException("Cannot call ML.Probabilistic() on variable '" + v.Name +
+                        throw new ArgumentException("Cannot call Infer() on variable '" + v.Name +
                                                     "' which is not in the OptimiseForVariables list. The list currently contains: " +
                                                     StringUtil.CollectionToString(OptimiseForVariables.ListSelect(x => "'" + x.Name + "'"), ",") + ".");
                     }

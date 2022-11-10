@@ -12,6 +12,12 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Preview)]
     public static class MaxGammaOp
     {
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma max)
+        {
+            return 0.0;
+        }
+
         public static TruncatedGamma MaxAverageConditional(Gamma a, double b)
         {
             return new TruncatedGamma(a, b, double.PositiveInfinity);
@@ -40,6 +46,12 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Preview)]
     public static class MaxTruncatedGammaOp
     {
+        [Skip]
+        public static double LogEvidenceRatio2(TruncatedGamma max)
+        {
+            return 0.0;
+        }
+
         public static TruncatedGamma MaxAverageConditional(TruncatedGamma a, double b)
         {
             return new TruncatedGamma(a.Gamma, Math.Max(b, a.LowerBound), a.UpperBound);

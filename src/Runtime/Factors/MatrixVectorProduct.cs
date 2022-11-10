@@ -84,6 +84,20 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MatrixVectorProductOp"]/message_doc[@name="LogEvidenceRatio(VectorGaussian, double[,], VectorGaussian)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(VectorGaussian product, double[,] A, VectorGaussian B)
+        {
+            return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MatrixVectorProductOp"]/message_doc[@name="LogEvidenceRatio(VectorGaussian, DistributionArray2D{Gaussian,double}, VectorGaussian)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(VectorGaussian product, DistributionArray2D<Gaussian, double> A, VectorGaussian B)
+        {
+            return 0.0;
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MatrixVectorProductOp"]/message_doc[@name="AverageLogFactor(VectorGaussian, Matrix, VectorGaussian)"]/*'/>
         [Skip]
         public static double AverageLogFactor(VectorGaussian product, Matrix A, VectorGaussian B)

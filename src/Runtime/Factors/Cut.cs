@@ -14,6 +14,15 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Preview)]
     public static class CutOp<T>
     {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="CutOp{T}"]/message_doc[@name="LogEvidenceRatio{TDist}(TDist)"]/*'/>
+        /// <typeparam name="TDist">The type of the distribution over the variable being copied.</typeparam>
+        [Skip]
+        public static double LogEvidenceRatio<TDist>(TDist backward)
+            where TDist : IDistribution<T>
+        {
+            return 0.0;
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="CutOp{T}"]/message_doc[@name="ValueAverageConditional{TDist}(TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the variable being copied.</typeparam>
         [Skip]

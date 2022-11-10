@@ -155,9 +155,9 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Preview)]
     public static class DampBackwardOp
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampBackwardOp"]/message_doc[@name="LogEvidenceRatio()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampBackwardOp"]/message_doc[@name="LogEvidenceRatio{Distribution}(Distribution)"]/*'/>
         [Skip]
-        public static double LogEvidenceRatio()
+        public static double LogEvidenceRatio<Distribution>(Distribution backward)
         {
             return 0.0;
         }
