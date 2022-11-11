@@ -330,7 +330,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (arg is IAddressOutExpression iaoe)
                 {
-                    targetsOfCurrentAssignment.Add(iaoe.Expression);
+                    if (targetsOfCurrentAssignment == null)
+                    {
+                        bool shouldDelete = false;
+                        ProcessAssign(iaoe.Expression, null, ref shouldDelete);
+                    }
+                    else
+                    {
+                        targetsOfCurrentAssignment.Add(iaoe.Expression);
+                    }
                 }
             }
             if (Recognizer.IsStaticGenericMethod(imie, new Func<IReadOnlyList<PlaceHolder>, int[][], PlaceHolder[][]>(Collection.JaggedSubarray)))

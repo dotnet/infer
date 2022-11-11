@@ -91,7 +91,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (ivd == null)
             {
                 ipd = Recognizer.GetParameterDeclaration(iae.Target);
-                if (ipd == null) return base.ConvertAssign(iae);
             }
             IAssignExpression ae = (IAssignExpression)base.ConvertAssign(iae);
             bool isLoopInitializer = (Recognizer.GetAncestorIndexOfLoopBeingInitialized(context) != -1);
@@ -111,44 +110,51 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     rhs = ((IMethodInvokeExpression)rhs).Arguments[0];
                 }
                 Type domainType = rhs.GetExpressionType();
-                if (domainType.Equals(typeof(bool)))
+                if (ipd != null || ivd != null)
                 {
-                    Type distType = typeof(Bernoulli);
-                    MethodInfo method = FactorManager.GetPointMassMethod(distType, domainType);
-                    if (method != null)
+                    if (domainType.Equals(typeof(bool)))
                     {
-                        IExpression dist = Builder.StaticMethod(method, rhs);
-                        IMethodInvokeExpression imie = Builder.StaticGenericMethod(new Func<Sampleable<PlaceHolder>, PlaceHolder>(Factor.Random<PlaceHolder>),
-                                                                                   new Type[] { domainType }, dist);
-                        stocAssign.Expression = imie;
-                        InferMarginalPrototype(stocAssign, targetHasLiteralIndices);
-                    }
-                }
-                else if (domainType.Equals(typeof(int)))
-                {
-                    Type distType = typeof(Discrete);
-                    MethodInfo method = (MethodInfo)Reflection.Invoker.GetBestMethod(distType, "PointMass",
-                        BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod |
-                        BindingFlags.FlattenHierarchy,
-                        null, new Type[] { domainType, typeof(int) }, out Exception exception);
-                    if (method != null)
-                    {
-                        IExpression cardinalityExpression = GetIntCardinalityExpression(rhs, ae.Target, targetHasLiteralIndices);
-                        if (cardinalityExpression == null) context.Error("Unknown cardinality of '" + ae.Target + "'.  Perhaps you forgot SetValueRange?");
-                        else
+                        Type distType = typeof(Bernoulli);
+                        MethodInfo method = FactorManager.GetPointMassMethod(distType, domainType);
+                        if (method != null)
                         {
-                            IExpression dist = Builder.StaticMethod(method, rhs, cardinalityExpression);
+                            IExpression dist = Builder.StaticMethod(method, rhs);
                             IMethodInvokeExpression imie = Builder.StaticGenericMethod(new Func<Sampleable<PlaceHolder>, PlaceHolder>(Factor.Random<PlaceHolder>),
                                                                                        new Type[] { domainType }, dist);
                             stocAssign.Expression = imie;
                             InferMarginalPrototype(stocAssign, targetHasLiteralIndices);
                         }
                     }
+                    else if (domainType.Equals(typeof(int)))
+                    {
+                        Type distType = typeof(Discrete);
+                        MethodInfo method = (MethodInfo)Reflection.Invoker.GetBestMethod(distType, "PointMass",
+                            BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod |
+                            BindingFlags.FlattenHierarchy,
+                            null, new Type[] { domainType, typeof(int) }, out Exception exception);
+                        if (method != null)
+                        {
+                            IExpression cardinalityExpression = GetIntCardinalityExpression(rhs, ae.Target, targetHasLiteralIndices);
+                            if (cardinalityExpression == null) context.Error("Unknown cardinality of '" + ae.Target + "'.  Perhaps you forgot SetValueRange?");
+                            else
+                            {
+                                IExpression dist = Builder.StaticMethod(method, rhs, cardinalityExpression);
+                                IMethodInvokeExpression imie = Builder.StaticGenericMethod(new Func<Sampleable<PlaceHolder>, PlaceHolder>(Factor.Random<PlaceHolder>),
+                                                                                           new Type[] { domainType }, dist);
+                                stocAssign.Expression = imie;
+                                InferMarginalPrototype(stocAssign, targetHasLiteralIndices);
+                            }
+                        }
+                    }
                 }
-                bool doReplace = (ipd == null && (CodeRecognizer.IsStochastic(context, ivd) || IsStochContext(ivd)));
+                bool doReplace = (ipd == null && ivd != null && (CodeRecognizer.IsStochastic(context, ivd) || IsStochContext(ivd)));
                 if (doReplace) ae = stocAssign;
+                else if (IsConstraint())
+                {
+                    return Builder.StaticGenericMethod(new Action<PlaceHolder, PlaceHolder>(Constrain.Equal), new Type[] { domainType }, ae.Target, rhs);
+                }
             }
-            if (ipd == null)
+            if (ipd == null && ivd != null)
             {
                 // Array creation with no initialiser can be either for stochastic or deterministic
                 // variables, so just return without marking the variable.
@@ -940,22 +946,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (isPoisson1 || isPoisson2)
                     {
                         MarginalPrototype mpa = new MarginalPrototype(null);
-                        mpa.prototypeExpression = Builder.StaticMethod(new Func<Microsoft.ML.Probabilistic.Distributions.Poisson>(Microsoft.ML.Probabilistic.Distributions.Poisson.Uniform));
+                        mpa.prototypeExpression = Builder.StaticMethod(new Func<Poisson>(Poisson.Uniform));
                         return mpa;
                     }
                     else
                     {
                         // int plus
                         // the following code comes from CopyMarginalPrototype
-                        // if A ranges 0,...,(dim1-1) and B ranges 0,...,(dim2-1)
-                        // then A+B ranges 0,...,(dim1+dim2-2)
                         IExpression dimension1 = GetIntCardinalityExpression(imie.Arguments[0], targetDecl);
                         IExpression dimension2 = GetIntCardinalityExpression(imie.Arguments[1], targetDecl);
                         if (dimension1 != null && dimension2 != null)
                         {
-                            IExpression dimensionExpression = Builder.BinaryExpr(
-                                Builder.BinaryExpr(dimension1, BinaryOperator.Add, dimension2),
-                                BinaryOperator.Subtract, Builder.LiteralExpr(1));
+                            IExpression dimensionExpression = CardinalityOfBinaryExpression(dimension1, BinaryOperator.Add, dimension2);
                             return GetDiscretePrototypeExpression(targetDecl, dimensionExpression);
                         }
                     }
@@ -1067,12 +1069,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     IExpression dimension2 = GetIntCardinalityExpression(imie.Arguments[1], targetDecl);
                     if (dimension1 != null && dimension2 != null)
                     {
-                        var one = Builder.LiteralExpr(1);
-                        dimension1 = Builder.BinaryExpr(dimension1, BinaryOperator.Subtract, one);
-                        dimension2 = Builder.BinaryExpr(dimension2, BinaryOperator.Subtract, one);
-                        IExpression dimensionExpression = Builder.BinaryExpr(
-                            Builder.BinaryExpr(dimension1, BinaryOperator.Multiply, dimension2),
-                            BinaryOperator.Add, one);
+                        IExpression dimensionExpression = CardinalityOfBinaryExpression(dimension1, BinaryOperator.Multiply, dimension2);
                         return GetDiscretePrototypeExpression(targetDecl, dimensionExpression);
                     }
                 }
@@ -1384,6 +1381,27 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return null;
         }
 
+        private static IExpression CardinalityOfBinaryExpression(IExpression dimension1, BinaryOperator op, IExpression dimension2)
+        {
+            var one = Builder.LiteralExpr(1);
+            if (op == BinaryOperator.Add)
+            {
+                // if A ranges 0,...,(dim1-1) and B ranges 0,...,(dim2-1)
+                // then A+B ranges 0,...,(dim1+dim2-2)
+                return Builder.BinaryExpr(
+                    Builder.BinaryExpr(dimension1, op, dimension2),
+                    BinaryOperator.Subtract, one);
+            }
+            else
+            {
+                dimension1 = Builder.BinaryExpr(dimension1, BinaryOperator.Subtract, one);
+                dimension2 = Builder.BinaryExpr(dimension2, BinaryOperator.Subtract, one);
+                return Builder.BinaryExpr(
+                    Builder.BinaryExpr(dimension1, op, dimension2),
+                    BinaryOperator.Add, one);
+            }
+        }
+
         protected MarginalPrototype GetSplitMarginalPrototype(IExpression source, IExpression target, object targetDecl, IExpression offset = null)
         {
             int targetDepth = Recognizer.GetIndexingDepth(target);
@@ -1594,6 +1612,20 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (expr is ICastExpression ice)
             {
                 return Builder.CastExpr(ReplaceIndices(containers, keepVars, ice.Expression), ice.TargetType);
+            }
+            else if (expr is ICheckedExpression iche)
+            {
+                return Builder.CheckedExpr(ReplaceIndices(containers, keepVars, iche.Expression));
+            }
+            else if (expr is IUnaryExpression iue)
+            {
+                return Builder.UnaryExpr(iue.Operator, ReplaceIndices(containers, keepVars, iue.Expression));
+            }
+            else if (expr is IBinaryExpression ibe)
+            {
+                var newLeft = ReplaceIndices(containers, keepVars, ibe.Left);
+                var newRight = ReplaceIndices(containers, keepVars, ibe.Right);
+                return Builder.BinaryExpr(newLeft, ibe.Operator, newRight);
             }
             else if (expr is IArrayIndexerExpression iaie)
             {
@@ -1853,6 +1885,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (!HasExtraIndices(source, targetDecl))
                     return Builder.BinaryExpr(source, BinaryOperator.Add, Builder.LiteralExpr(1));
+                if (ChannelTransform.RemoveCast(source) is IBinaryExpression ibe)
+                {
+                    IExpression dimension1 = GetIntCardinalityExpression(ibe.Left, targetDecl);
+                    IExpression dimension2 = GetIntCardinalityExpression(ibe.Right, targetDecl);
+                    if (dimension1 != null && dimension2 != null)
+                    {
+                        return CardinalityOfBinaryExpression(dimension1, ibe.Operator, dimension2);
+                    }
+                }
             }
             return null;
         }

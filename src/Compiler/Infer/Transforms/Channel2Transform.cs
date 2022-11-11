@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (ies.Expression is IAssignExpression iae)
                 {
-                    validIncrement = (iae.Expression is IBinaryExpression ibe) && (ibe.Operator == BinaryOperator.Add);
+                    validIncrement = (ChannelTransform.RemoveCast(iae.Expression) is IBinaryExpression ibe) && (ibe.Operator == BinaryOperator.Add);
                 }
                 else if (ies.Expression is IUnaryExpression iue)
                 {
@@ -418,7 +418,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 IExpression usageIndex = Builder.LiteralExpr(GetUseNumber(ivd, vtci));
                 IExpression newExpr = Builder.VarRefExpr(vtci.usesDecl);
-                if (vtci.usageDepth > indices.Count) Error("usageDepth (" + vtci.usageDepth + ") > indices.Count (" + indices.Count + ")");
+                if (vtci.usageDepth > indices.Count) Error($"usageDepth ({vtci.usageDepth}) > indices.Count ({indices.Count})");
                 // append the indices up to the usageDepth
                 for (int i = 0; i < vtci.usageDepth; i++)
                 {

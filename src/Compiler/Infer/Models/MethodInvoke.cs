@@ -19,10 +19,18 @@ namespace Microsoft.ML.Probabilistic.Models
 
     internal class MethodInvoke : IModelExpression
     {
+        internal const bool UseCheckedArithmetic = true;
+
         /// <summary>
         /// Helps build class declarations
         /// </summary>
         private static readonly CodeBuilder Builder = CodeBuilder.Instance;
+        private static readonly GlobalCounter globalCounter = new GlobalCounter();
+
+        internal static int GetTimestamp()
+        {
+            return globalCounter.GetNext();
+        }
 
         // The factor or constraint method
         internal MethodInfo method;
@@ -32,7 +40,6 @@ namespace Microsoft.ML.Probabilistic.Models
 
         // The return value (or null if void)
         internal IModelExpression returnValue;
-
 
         // The operator if this method was created from an operator
         internal Variable.Operator? op = null;
@@ -44,13 +51,6 @@ namespace Microsoft.ML.Probabilistic.Models
 
         // Provides global ordering for ModelBuilder
         internal readonly int timestamp;
-
-        private static readonly GlobalCounter globalCounter = new GlobalCounter();
-
-        internal static int GetTimestamp()
-        {
-            return globalCounter.GetNext();
-        }
 
         internal MethodInvoke(MethodInfo method, params IModelExpression[] args)
             : this(StatementBlock.GetOpenBlocks(), method, args)
@@ -154,7 +154,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// True if the expression is an operator applied to a loop index and all other variable references are observed.
         /// </summary>
         /// <returns></returns>
-        internal bool CanBeInlined()
+        internal bool CanBeInlined(bool mustHaveLoopIndex = false)
         {
             bool isIsIncreasing = method.Equals(new Func<int,bool>(Factors.InferNet.IsIncreasing).Method);
             if (isIsIncreasing) return true;
@@ -169,7 +169,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 }
                 else return false;
             }
-            return hasLoopIndex;
+            return !mustHaveLoopIndex || hasLoopIndex;
         }
 
         private static bool IsDeterminedByObservations(Variable<int> v)
@@ -194,8 +194,8 @@ namespace Microsoft.ML.Probabilistic.Models
             }
             if (inline || CanBeInlined())
             {
-                if (op == Variable.Operator.Plus) return Builder.BinaryExpr(argExprs[0], BinaryOperator.Add, argExprs[1]);
-                else if (op == Variable.Operator.Minus) return Builder.BinaryExpr(argExprs[0], BinaryOperator.Subtract, argExprs[1]);
+                if (op == Variable.Operator.Plus) return CheckedExpr(Builder.BinaryExpr(argExprs[0], BinaryOperator.Add, argExprs[1]));
+                else if (op == Variable.Operator.Minus) return CheckedExpr(Builder.BinaryExpr(argExprs[0], BinaryOperator.Subtract, argExprs[1]));
                 else if (op == Variable.Operator.LessThan) return Builder.BinaryExpr(argExprs[0], BinaryOperator.LessThan, argExprs[1]);
                 else if (op == Variable.Operator.LessThanOrEqual) return Builder.BinaryExpr(argExprs[0], BinaryOperator.LessThanOrEqual, argExprs[1]);
                 else if (op == Variable.Operator.GreaterThan) return Builder.BinaryExpr(argExprs[0], BinaryOperator.GreaterThan, argExprs[1]);
@@ -213,6 +213,11 @@ namespace Microsoft.ML.Probabilistic.Models
                 imie = Builder.StaticMethod(method, argExprs);
             }
             return imie;
+
+            IExpression CheckedExpr(IExpression expr)
+            {
+                return UseCheckedArithmetic ? Builder.CheckedExpr(expr) : expr;
+            }
         }
 
 

@@ -39,14 +39,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 loopStart = Recognizer.LoopStartExpression(ifs);
                 loopSize = Recognizer.LoopSizeExpression(ifs);
             }
-            else if (ifs.Condition is IBinaryExpression ibe) 
+            else if (ifs.Condition is IBinaryExpression ibe 
+                && ibe.Operator == BinaryOperator.GreaterThanOrEqual)
             {
-                if (ibe.Operator == BinaryOperator.GreaterThanOrEqual)
-                {
-                    // loop is "for(int i = end; i >= start; i--)"
-                    loopStart = ibe.Right;
-                    loopSize = Builder.BinaryExpr(Recognizer.LoopStartExpression(ifs), BinaryOperator.Add, Builder.LiteralExpr(1));
-                }
+                // loop is "for(int i = end; i >= start; i--)"
+                loopStart = ibe.Right;
+                loopSize = Builder.BinaryExpr(Recognizer.LoopStartExpression(ifs), BinaryOperator.Add, Builder.LiteralExpr(1));
             }
             if (loopSize == null) return base.ConvertFor(ifs);
             IAnonymousMethodExpression bodyDelegate = Builder.AnonMethodExpr(typeof (Action<int>));

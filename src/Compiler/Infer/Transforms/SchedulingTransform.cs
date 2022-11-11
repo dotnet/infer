@@ -586,8 +586,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     SerialLoopInfo info;
                     if (!loopInfoOfVariable.TryGetValue(loopVar, out info))
                     {
-                        info = new SerialLoopInfo();
-                        info.loopVar = loopVar;
+                        info = new SerialLoopInfo(loopVar);
                         infos.Add(info);
                         loopInfoOfVariable[loopVar] = info;
                     }
@@ -811,9 +810,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             foreach (IStatement ist in stmts)
             {
-                if (ist is IWhileStatement)
+                if (ist is IWhileStatement iws)
                 {
-                    IWhileStatement iws = (IWhileStatement)ist;
                     NodeIndex newGroup = nextGroupIndex;
                     nextGroupIndex++;
                     if (group >= 0)
@@ -911,17 +909,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                 }
                 // show dependency graph with offset edges colored
-                Predicate<EdgeIndex> isNegative = edge =>
+                bool isNegative(int edge)
                 {
                     IOffsetInfo info;
                     return g.OffsetIndices.TryGetValue(edge, out info) && (info.Count(offset => offset.offset < 0) > 0);
-                };
-                Predicate<EdgeIndex> isPositive = edge =>
+                }
+                bool isPositive(int edge)
                 {
                     IOffsetInfo info;
                     return g.OffsetIndices.TryGetValue(edge, out info) && (info.Count(offset => offset.offset > 0) > 0);
-                };
-                Predicate<EdgeIndex> isNoInit = edge => g.noInit[edge];
+                }
+                bool isNoInit(int edge) => g.noInit[edge];
                 var edgeStyles = new EdgeStylePredicate[] {
                     new EdgeStylePredicate("Positive", isPositive, EdgeStyle.Back),
                     new EdgeStylePredicate("Negative", isNegative, EdgeStyle.Blue),

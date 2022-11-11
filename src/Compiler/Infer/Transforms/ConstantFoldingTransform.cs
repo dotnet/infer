@@ -372,5 +372,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             return ibe;
         }
+
+        protected override IExpression ConvertCheckedExpr(ICheckedExpression ice)
+        {
+            var ce = (ICheckedExpression)base.ConvertCheckedExpr(ice);
+            if (ce.Expression is ILiteralExpression)
+            {
+                return ce.Expression;
+            }
+            if (ce.Expression is IBinaryExpression ibe
+                && Recognizer.GetVariablesAndParameters(ibe).All(IsLoopVariable))
+            {
+                return ce.Expression;
+            }
+            return ce;
+
+            bool IsLoopVariable(object decl) => decl is IVariableDeclaration ivd && Recognizer.GetLoopForVariable(context, ivd) != null;
+        }
     }
 }

@@ -236,9 +236,24 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         //-- VMP -----------------------------------------------------------------------------------------------
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ConstrainEqualOp{T}"]/message_doc[@name="AverageLogFactor()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ConstrainEqualOp{T}"]/message_doc[@name="AverageLogFactor(T, T)"]/*'/>
+        public static double AverageLogFactor(T a, T b)
+        {
+            return LogAverageFactor(a, b);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ConstrainEqualOp{T}"]/message_doc[@name="AverageLogFactor{TDistribution}(TDistribution, T)"]/*'/>
         [Skip]
-        public static double AverageLogFactor()
+        public static double AverageLogFactor<TDistribution>(TDistribution a, T b)
+            where TDistribution : HasPoint<T>
+        {
+            return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ConstrainEqualOp{T}"]/message_doc[@name="AverageLogFactor{TDistribution}(T, TDistribution)"]/*'/>
+        [Skip]
+        public static double AverageLogFactor<TDistribution>(T a, TDistribution b)
+            where TDistribution : HasPoint<T>
         {
             return 0.0;
         }

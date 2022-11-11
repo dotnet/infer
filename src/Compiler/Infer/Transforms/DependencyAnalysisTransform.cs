@@ -164,7 +164,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             try
             {
                 IList<IStatement> allocations = mutInfo.GetMutations(context, topLevelStatement, expr, allocationsOnly, false, bindings, bounds).ListSelect(m => m.stmt);
-
                 foreach (IStatement alloc in allocations)
                 {
                     dependencyInformation.Add(DependencyType.Overwrite, alloc);

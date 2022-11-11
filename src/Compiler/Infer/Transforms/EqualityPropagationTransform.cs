@@ -53,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IStatement st = base.DoConvertStatement(ist);
             // if the statement has been changed, then its lhs must have been replaced with a constant, 
             // in which case this is no longer an assignment but a constraint.
-            if (!ReferenceEquals(st, ist)) context.OutputAttributes.Set(st, new Microsoft.ML.Probabilistic.Models.Constraint());
+            if (!ReferenceEquals(st, ist)) context.OutputAttributes.Set(st, new Constraint());
             return st;
         }
 

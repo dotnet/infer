@@ -58,24 +58,20 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             context.SetPrimaryOutput(fs);
             // Check condition is valid
             fs.Condition = ifs.Condition;
-            if ((!(fs.Condition is IBinaryExpression)) || (((IBinaryExpression)fs.Condition).Operator != BinaryOperator.LessThan))
+            if ((!(fs.Condition is IBinaryExpression expression)) || (expression.Operator != BinaryOperator.LessThan))
                 Error("For statement condition must be of the form 'indexVar<loopSize', was " + fs.Condition);
 
             // Check increment is valid
             fs.Increment = ifs.Increment;
-            IExpressionStatement ies = fs.Increment as IExpressionStatement;
             bool validIncrement = false;
-            if (ies != null)
+            if (fs.Increment is IExpressionStatement ies)
             {
-                if (ies.Expression is IAssignExpression)
+                if (ies.Expression is IAssignExpression iae)
                 {
-                    IAssignExpression iae = (IAssignExpression)ies.Expression;
-                    IBinaryExpression ibe = RemoveCast(iae.Expression) as IBinaryExpression;
-                    validIncrement = (ibe != null) && (ibe.Operator == BinaryOperator.Add);
+                    validIncrement = (RemoveCast(iae.Expression) is IBinaryExpression ibe) && (ibe.Operator == BinaryOperator.Add);
                 }
-                else if (ies.Expression is IUnaryExpression)
+                else if (ies.Expression is IUnaryExpression iue)
                 {
-                    IUnaryExpression iue = (IUnaryExpression)ies.Expression;
                     validIncrement = (iue.Operator == UnaryOperator.PostIncrement);
                 }
             }
@@ -87,23 +83,21 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             // Check initializer is valid
             fs.Initializer = ifs.Initializer;
-            ies = fs.Initializer as IExpressionStatement;
-            if (ies == null)
+            if (fs.Initializer is IExpressionStatement ies2)
             {
-                Error("For statement initializer must be an expression statement, was " + fs.Initializer.GetType());
-            }
-            else
-            {
-                if (!(ies.Expression is IAssignExpression))
+                if (ies2.Expression is IAssignExpression iae2)
                 {
-                    Error("For statement initializer must be an assignment, was " + fs.Initializer.GetType().Name);
-                }
-                else
-                {
-                    IAssignExpression iae2 = (IAssignExpression)ies.Expression;
                     if (!(iae2.Target is IVariableDeclarationExpression)) Error("For statement initializer must be a variable declaration, was " + iae2.Target.GetType().Name);
                     if (!Recognizer.IsLiteral(iae2.Expression, 0)) Error("Loop index must start at 0, was " + iae2.Expression);
                 }
+                else
+                {
+                    Error("For statement initializer must be an assignment, was " + fs.Initializer.GetType().Name);
+                }
+            }
+            else
+            {
+                Error("For statement initializer must be an expression statement, was " + fs.Initializer.GetType());
             }
 
             fs.Body = ConvertBlock(ifs.Body);
@@ -112,9 +106,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal static IExpression RemoveCast(IExpression expr)
         {
-            // used to remove spurious casts
-            if (expr is ICastExpression) return ((ICastExpression)expr).Expression;
-            return expr;
+            if (expr is ICastExpression ice) return RemoveCast(ice.Expression);
+            else if (expr is ICheckedExpression iche) return RemoveCast(iche.Expression);
+            else return expr;
         }
 
         protected override IStatement DoConvertStatement(IStatement ist)

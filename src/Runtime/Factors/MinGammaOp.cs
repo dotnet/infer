@@ -12,6 +12,12 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Preview)]
     public static class MinGammaOp
     {
+        public static double LogEvidenceRatio(double min, double a, Gamma b)
+        {
+            TruncatedGamma to_min = MinAverageConditional(a, b);
+            return to_min.GetLogProb(min);
+        }
+
         public static TruncatedGamma MinAverageConditional(Gamma a, double b)
         {
             return new TruncatedGamma(a, 0, b);
@@ -39,7 +45,19 @@ namespace Microsoft.ML.Probabilistic.Factors
     [FactorMethod(new string[] { "min", "a", "b" }, typeof(Math), "Min", typeof(double), typeof(double))]
     [Quality(QualityBand.Preview)]
     public static class MinTruncatedGammaOp
-    { 
+    {
+        public static double LogEvidenceRatio(double min, double a, TruncatedGamma b)
+        {
+            TruncatedGamma to_min = MinAverageConditional(a, b);
+            return to_min.GetLogProb(min);
+        }
+
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma min, TruncatedGamma a, double b)
+        {
+            return 0.0;
+        }
+
         public static TruncatedGamma MinAverageConditional(TruncatedGamma a, double b)
         {
             return new TruncatedGamma(a.Gamma, a.LowerBound, Math.Min(b, a.UpperBound));

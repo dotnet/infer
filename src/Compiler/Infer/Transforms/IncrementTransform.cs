@@ -56,11 +56,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected override IExpression ConvertAssign(IAssignExpression iae)
         {
             object targetDecl = Recognizer.GetArrayDeclaration(iae.Target);
-            IStatement increment;
-            if (this.isOperatorStatement && targetDecl is IVariableDeclaration)
+            if (this.isOperatorStatement && targetDecl is IVariableDeclaration ivd)
             {
-                IVariableDeclaration ivd = (IVariableDeclaration)targetDecl;
-                if (analysis.onUpdate.TryGetValue(targetDecl, out increment))
+                if (analysis.onUpdate.TryGetValue(targetDecl, out IStatement increment))
                 {
                     IExpression incrExpr = ((IExpressionStatement)increment).Expression;
                     Containers containers = new Containers(context);

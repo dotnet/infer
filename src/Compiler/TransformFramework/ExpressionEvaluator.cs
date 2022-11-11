@@ -37,48 +37,42 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public object Evaluate(IExpression expr)
         {
-            if (expr is IObjectCreateExpression) return Evaluate((IObjectCreateExpression) expr);
-            else if (expr is ILiteralExpression) return ((ILiteralExpression) expr).Value;
-            else if (expr is ICastExpression) return Evaluate(((ICastExpression) expr).Expression);
-            else if (expr is ICheckedExpression) return Evaluate(((ICheckedExpression)expr).Expression);
-            else if (expr is IBinaryExpression)
+            if (expr is IObjectCreateExpression ioce) return Evaluate(ioce);
+            else if (expr is ILiteralExpression ile) return ile.Value;
+            else if (expr is ICastExpression ice) return Evaluate(ice.Expression);
+            else if (expr is ICheckedExpression iche) return Evaluate(iche.Expression);
+            else if (expr is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression) expr;
                 object left = Evaluate(ibe.Left);
                 object right = Evaluate(ibe.Right);
                 Type type = left.GetType();
-                return Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(type, binaryOperatorNames[(int) ibe.Operator], left, right);
+                return Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(type, binaryOperatorNames[(int)ibe.Operator], left, right);
             }
-            else if (expr is IUnaryExpression)
+            else if (expr is IUnaryExpression iue)
             {
-                IUnaryExpression iue = (IUnaryExpression) expr;
                 object target = Evaluate(iue.Expression);
                 Type type = target.GetType();
-                return Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(type, unaryOperatorNames[(int) iue.Operator], target);
+                return Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(type, unaryOperatorNames[(int)iue.Operator], target);
             }
-            else if (expr is IMethodInvokeExpression)
+            else if (expr is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression) expr;
                 object[] args = EvaluateAll(imie.Arguments);
                 return Invoke(imie.Method, args);
             }
-            else if (expr is IArrayCreateExpression)
+            else if (expr is IArrayCreateExpression iace)
             {
-                IArrayCreateExpression iace = (IArrayCreateExpression) expr;
                 Type t = Builder.ToType(iace.Type);
                 int[] lens = new int[iace.Dimensions.Count];
-                for (int i = 0; i < lens.Length; i++) lens[i] = (int) Evaluate(iace.Dimensions[i]);
+                for (int i = 0; i < lens.Length; i++) lens[i] = (int)Evaluate(iace.Dimensions[i]);
                 // TODO: evaluate initializer
                 if (iace.Initializer != null)
                     throw new NotImplementedException("IArrayCreateExpression has an initializer block");
                 return Array.CreateInstance(t, lens);
             }
-            else if (expr is IFieldReferenceExpression)
+            else if (expr is IFieldReferenceExpression ifre)
             {
-                IFieldReferenceExpression ifre = (IFieldReferenceExpression) expr;
-                if (ifre.Target is ITypeReferenceExpression)
+                if (ifre.Target is ITypeReferenceExpression itre)
                 {
-                    ITypeReferenceExpression itre = (ITypeReferenceExpression) ifre.Target;
                     Type type = Builder.ToType(itre.Type);
                     FieldInfo info = type.GetField(ifre.Field.Name);
                     return info.GetValue(null);
