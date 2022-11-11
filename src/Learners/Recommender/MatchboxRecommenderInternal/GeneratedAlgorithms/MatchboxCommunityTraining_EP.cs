@@ -3508,8 +3508,8 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 				return ;
 			}
 			for(int observation = 0; observation<this.ObservationCount; observation++) {
-				this.CurrentRating[observation] = Factor.Plus(this.Ratings[observation], 0);
-				this.NextRating[observation] = Factor.Plus(this.Ratings[observation], 1);
+				this.CurrentRating[observation] = checked(this.Ratings[observation]+0);
+				this.NextRating[observation] = checked(this.Ratings[observation]+1);
 			}
 			this.Changed_ObservationCount_Ratings_isDone = true;
 		}

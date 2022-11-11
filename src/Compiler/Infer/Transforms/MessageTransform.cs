@@ -15,7 +15,6 @@ using Microsoft.ML.Probabilistic.Factors.Attributes;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 using Microsoft.ML.Probabilistic.Utilities;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms

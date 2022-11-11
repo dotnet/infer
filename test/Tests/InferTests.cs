@@ -2530,6 +2530,33 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void InferDeterministicTest5()
+        {
+            Range item = new Range(1);
+            item.Name = nameof(item);
+            Range unwrappedValue = new Range(4).Named("unwrappedValue");
+            Variable<int> unwrapped = Variable.DiscreteUniform(unwrappedValue).Named("unwrapped");
+            Range wrappedValue = new Range(2).Named("wrappedValue");
+            VariableArray<int> wrapped = Variable.Array<int>(item).Named("wrapped");
+            VariableArray<int> modulo2 = Variable.Observed(new int[] { 0, 1, 0, 1 }, unwrappedValue).Named("modulo2");
+            modulo2.SetValueRange(wrappedValue);
+            using (Variable.Switch(unwrapped))
+            {
+                using (var block = Variable.ForEach(item))
+                {
+                    wrapped[item].SetTo(modulo2[unwrapped] + block.Index);
+                }
+            }
+            wrapped.ObservedValue = new[] { 1 };
+            InferenceEngine engine = new InferenceEngine();
+            Console.WriteLine(engine.Infer(unwrapped));
+            var wrappedActual = engine.Infer<IDistribution<int[]>>(wrapped);
+            //Console.WriteLine("wrapped = {0} should be {1}", wrappedActual, Discrete.PointMass(wrapped.ObservedValue, unwrappedValue.SizeAsInt));
+            Assert.True(wrappedActual.IsPointMass);
+            Assert.Equal(wrapped.ObservedValue, wrappedActual.Point);
+        }
+
+        [Fact]
         public void AllTrueTest()
         {
             AllTrue(new ExpectationPropagation());

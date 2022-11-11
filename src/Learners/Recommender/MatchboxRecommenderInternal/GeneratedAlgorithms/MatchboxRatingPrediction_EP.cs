@@ -936,7 +936,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			if (this.Changed_UserThresholdCount_isDone) {
 				return ;
 			}
-			this.vint45 = Factor.Difference(this.UserThresholdCount, 1);
+			this.vint45 = checked(this.UserThresholdCount-1);
 			this.Changed_UserThresholdCount_isDone = true;
 		}
 

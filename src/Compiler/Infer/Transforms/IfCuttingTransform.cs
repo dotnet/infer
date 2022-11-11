@@ -55,12 +55,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 keepIfStatement = true;
                 if (CodeRecognizer.IsInfer(expr)) keepIfStatement = false;
             }
-            else if (expr is IAssignExpression)
+            else if (expr is IAssignExpression iae)
             {
                 keepIfStatement = false;
-                IAssignExpression iae = (IAssignExpression) expr;
-                IMethodInvokeExpression imie = iae.Expression as IMethodInvokeExpression;
-                if (imie != null)
+                if (iae.Expression is IMethodInvokeExpression imie)
                 {
                     keepIfStatement = true;
                     if (imie.Arguments.Count > 0)
@@ -72,14 +70,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             ivdArg != null && context.InputAttributes.Has<DoNotSendEvidence>(ivdArg)) keepIfStatement = false;
                     }
                 }
+                else if (context.InputAttributes.Has<Models.Constraint>(ies))
+                {
+                    keepIfStatement = true;
+                }
                 else
                 {
                     expr = iae.Target;
                 }
             }
-            if (expr is IVariableDeclarationExpression)
+            if (expr is IVariableDeclarationExpression ivde)
             {
-                IVariableDeclarationExpression ivde = (IVariableDeclarationExpression) expr;
                 IVariableDeclaration ivd = ivde.Variable;
                 keepIfStatement = CodeRecognizer.IsStochastic(context, ivd) && !context.InputAttributes.Has<DoNotSendEvidence>(ivd);
             }

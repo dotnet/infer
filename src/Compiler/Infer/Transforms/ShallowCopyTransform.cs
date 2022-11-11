@@ -889,6 +889,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             IExpression newExpr = ConvertExpression(ice.Expression);
             if (ReferenceEquals(newExpr, ice.Expression))
                 return ice;
+            if (newExpr is null) return newExpr;
             return Builder.CheckedExpr(newExpr);
         }
 
