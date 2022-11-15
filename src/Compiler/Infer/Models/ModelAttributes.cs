@@ -19,13 +19,13 @@ namespace Microsoft.ML.Probabilistic.Models.Attributes
         /// <summary>
         /// The range indicating the values a variable can take or the dimension of the variable.
         /// </summary>
-        public Range Range;
+        public Microsoft.ML.Probabilistic.Models.Range Range;
 
         /// <summary>
         /// Creates a ValueRange with the specified range.
         /// </summary>
         /// <param name="range"></param>
-        public ValueRange(Range range)
+        public ValueRange(Microsoft.ML.Probabilistic.Models.Range range)
         {
             this.Range = range;
         }
@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Models.Attributes
         /// <returns></returns>
         public override string ToString()
         {
-            return "ValueRange(" + Range + ")";
+            return "ValueRange(" + this.Range + ")";
         }
     }
 
@@ -84,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Models.Attributes
     public class Sequential : ICompilerAttribute
     {
         /// <summary>
-        /// If true, the Range will be iterated both forward and backward, with sequential updates in each direction.  Otherwise, the Range will only be iterated in the forward direction.
+        /// If true, the Microsoft.ML.Probabilistic.Models.Range will be iterated both forward and backward, with sequential updates in each direction.  Otherwise, the Microsoft.ML.Probabilistic.Models.Range will only be iterated in the forward direction.
         /// </summary>
         public bool BackwardPass;
     }

@@ -13,7 +13,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net462</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -23,7 +23,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net6.0-windows;net462</TargetFrameworks>
+        <TargetFrameworks>net6.0-windows</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -74,4 +74,4 @@
   <ItemGroup>
     <Resource Include="Images\*" />
   </ItemGroup>
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval></PropertyGroup></Project>

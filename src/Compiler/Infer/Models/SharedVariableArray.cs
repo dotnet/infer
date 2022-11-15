@@ -110,11 +110,11 @@ namespace Microsoft.ML.Probabilistic.Models
             ICloneable, SettableToUniform, SettableTo<DistributionArrayType>, CanGetLogAverageOf<DistributionArrayType>
     {
         /// <summary>
-        /// Range for the array of shared variables
+        /// Microsoft.ML.Probabilistic.Models.Range for the array of shared variables
         /// </summary>
-        public Range range;
+        public Microsoft.ML.Probabilistic.Models.Range range;
 
-        internal SharedVariableArray(Range range, DistributionArrayType prior, bool divideMessages = true)
+        internal SharedVariableArray(Microsoft.ML.Probabilistic.Models.Range range, DistributionArrayType prior, bool divideMessages = true)
             : base(prior, divideMessages)
         {
             this.range = range;
@@ -234,13 +234,13 @@ namespace Microsoft.ML.Probabilistic.Models
         where ItemType : Variable, ICloneable, SettableTo<ItemType>
     {
         /// <summary>
-        /// Range for the array of shared variables
+        /// Microsoft.ML.Probabilistic.Models.Range for the array of shared variables
         /// </summary>
-        public Range range;
+        public Microsoft.ML.Probabilistic.Models.Range range;
 
         private ItemType itemPrototype;
 
-        internal SharedVariableArray(ItemType itemPrototype, Range range, DistributionArrayType prior, bool divideMessages = true)
+        internal SharedVariableArray(ItemType itemPrototype, Microsoft.ML.Probabilistic.Models.Range range, DistributionArrayType prior, bool divideMessages = true)
             : base(prior, divideMessages)
         {
             this.itemPrototype = itemPrototype;

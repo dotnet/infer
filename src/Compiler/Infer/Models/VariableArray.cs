@@ -16,9 +16,9 @@ namespace Microsoft.ML.Probabilistic.Models
     public interface IJaggedVariableArray<TItem> : IVariableArray
     {
         /// <summary>
-        /// Range for variable array
+        /// Microsoft.ML.Probabilistic.Models.Range for variable array
         /// </summary>
-        Range Range { get; }
+        Microsoft.ML.Probabilistic.Models.Range Range { get; }
 
         /// <summary>
         /// Sets/Gets element in array given by index expression
@@ -44,14 +44,14 @@ namespace Microsoft.ML.Probabilistic.Models
         where TItem : Variable, ICloneable, SettableTo<TItem>
     {
         /// <summary>
-        /// Range for the array
+        /// Microsoft.ML.Probabilistic.Models.Range for the array
         /// </summary>
-        public Range Range
+        public Microsoft.ML.Probabilistic.Models.Range Range
         {
             get { return Ranges[0]; }
         }
 
-        internal VariableArray(TItem itemPrototype, Range range)
+        internal VariableArray(TItem itemPrototype, Microsoft.ML.Probabilistic.Models.Range range)
             : base(itemPrototype, range)
         {
         }
@@ -171,7 +171,7 @@ namespace Microsoft.ML.Probabilistic.Models
         IVariableArray IVariableArray.ReplaceRanges(Dictionary<Range, Range> rangeReplacements, Dictionary<IModelExpression, IModelExpression> expressionReplacements, bool deepCopy)
         {
             // must do this replacement first, since it will influence how we replace the itemPrototype
-            Range newRange = Range.Replace(rangeReplacements, expressionReplacements);
+            Microsoft.ML.Probabilistic.Models.Range newRange = Range.Replace(rangeReplacements, expressionReplacements);
             TItem itemPrototype = (TItem) ((IVariableJaggedArray) this).ItemPrototype;
             if (itemPrototype is IVariableArray)
             {
@@ -194,12 +194,12 @@ namespace Microsoft.ML.Probabilistic.Models
     /// <typeparam name="T"></typeparam>
     public class VariableArray<T> : VariableArray<Variable<T>, T[]>, IVariableArray<T>, SettableTo<VariableArray<T>>, IVariableArray
     {
-        internal VariableArray(Range range)
+        internal VariableArray(Microsoft.ML.Probabilistic.Models.Range range)
             : base(new Variable<T>(), range)
         {
         }
 
-        internal VariableArray(Variable<T> itemPrototype, Range range)
+        internal VariableArray(Variable<T> itemPrototype, Microsoft.ML.Probabilistic.Models.Range range)
             : base(itemPrototype, range)
         {
         }
@@ -266,7 +266,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         IVariableArray IVariableArray.ReplaceRanges(Dictionary<Range, Range> rangeReplacements, Dictionary<IModelExpression, IModelExpression> expressionReplacements, bool deepCopy)
         {
-            Range newRange = Range.Replace(rangeReplacements, expressionReplacements);
+            Microsoft.ML.Probabilistic.Models.Range newRange = Range.Replace(rangeReplacements, expressionReplacements);
             Variable<T> itemPrototype2 = itemPrototype;
             if (deepCopy)
             {

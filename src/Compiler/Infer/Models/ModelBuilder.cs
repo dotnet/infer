@@ -244,7 +244,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 SearchMethodInvoke(methodInvoke);
                 return;
             }
-            if (expr is Range range)
+            if (expr is Microsoft.ML.Probabilistic.Models.Range range)
             {
                 SearchRange(range);
                 return;
@@ -305,7 +305,7 @@ namespace Microsoft.ML.Probabilistic.Models
             foreach (IModelExpression arg in method.ReturnValueAndArgs())
             {
                 MethodInvoke.ForEachRange(arg,
-                                          delegate (Range r) { if (!localRanges.Contains(r)) localRanges.Add(r); });
+                                          delegate (Microsoft.ML.Probabilistic.Models.Range r) { if (!localRanges.Contains(r)) localRanges.Add(r); });
             }
             ParameterInfo[] pis = method.method.GetParameters();
             for (int i = 0; i < pis.Length; i++)
@@ -326,7 +326,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     localRanges.Remove(br.Range);
                 }
             }
-            localRanges.Sort(delegate (Range a, Range b) { return MethodInvoke.CompareRanges(dict, a, b); });
+            localRanges.Sort(delegate (Microsoft.ML.Probabilistic.Models.Range a, Microsoft.ML.Probabilistic.Models.Range b) { return MethodInvoke.CompareRanges(dict, a, b); });
             // convert from List<Range> to List<IStatementBlock>
             List<IStatementBlock> localRangeBlocks = new List<IStatementBlock>(localRanges.Select(r => r));
             BuildStatementBlocks(stBlocks, true);
@@ -733,7 +733,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Search all variables referred to by a Range.
         /// </summary>
         /// <param name="range"></param>
-        private void SearchRange(Range range)
+        private void SearchRange(Microsoft.ML.Probabilistic.Models.Range range)
         {
             if (searched.Contains(range)) return;
             string name = ((IModelExpression)range).Name;
@@ -743,7 +743,7 @@ namespace Microsoft.ML.Probabilistic.Models
             SearchRangeAttributes(range);
         }
 
-        private void SearchRangeAttributes(Range range)
+        private void SearchRangeAttributes(Microsoft.ML.Probabilistic.Models.Range range)
         {
             IVariableDeclaration ivd = range.GetIndexDeclaration();
             foreach (ICompilerAttribute attr in range.GetAttributes<ICompilerAttribute>())
@@ -836,7 +836,7 @@ namespace Microsoft.ML.Probabilistic.Models
                             for (int i = 0; i < indexVars.Length; i++)
                             {
                                 IModelExpression expr = parent.indices[i];
-                                if (expr is Range range)
+                                if (expr is Microsoft.ML.Probabilistic.Models.Range range)
                                     indexVars[i] = range.GetIndexDeclaration();
                                 else
                                     throw new Exception(parent + ".InitializeTo is not allowed since the indices are not ranges");
@@ -959,7 +959,7 @@ namespace Microsoft.ML.Probabilistic.Models
             sizes = new IExpression[ranges.Count];
             indexVars = new IVariableDeclaration[ranges.Count];
             int i = 0;
-            foreach (Range r in ranges)
+            foreach (Microsoft.ML.Probabilistic.Models.Range r in ranges)
             {
                 SearchRange(r);
                 indexVars[i] = r.GetIndexDeclaration();

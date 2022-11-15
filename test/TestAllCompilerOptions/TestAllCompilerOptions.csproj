@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configurations>Debug;Release;DebugFull;ReleaseFull</Configurations>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net462</TargetFrameworks>
+    <TargetFrameworks>net6.0-windows</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Tests\Tests.csproj" />
   </ItemGroup>
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval></PropertyGroup></Project>

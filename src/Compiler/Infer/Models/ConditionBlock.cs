@@ -154,9 +154,9 @@ namespace Microsoft.ML.Probabilistic.Models
     public interface HasRange
     {
         /// <summary>
-        /// The Range being looped over.
+        /// The Microsoft.ML.Probabilistic.Models.Range being looped over.
         /// </summary>
-        Range Range { get; }
+        Microsoft.ML.Probabilistic.Models.Range Range { get; }
     }
 
     /// <summary>
@@ -165,14 +165,14 @@ namespace Microsoft.ML.Probabilistic.Models
     public class ForEachBlock : StatementBlock, HasRange
     {
         /// <summary>
-        /// Range associated with the 'for each' block
+        /// Microsoft.ML.Probabilistic.Models.Range associated with the 'for each' block
         /// </summary>
-        protected Range range;
+        protected Microsoft.ML.Probabilistic.Models.Range range;
 
         /// <summary>
-        /// Range associated with the 'for each' block
+        /// Microsoft.ML.Probabilistic.Models.Range associated with the 'for each' block
         /// </summary>
-        public Range Range
+        public Microsoft.ML.Probabilistic.Models.Range Range
         {
             get { return range; }
         }
@@ -186,7 +186,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Constructs 'for each' block from a range
         /// </summary>
         /// <param name="range">The range</param>
-        public ForEachBlock(Range range)
+        public ForEachBlock(Microsoft.ML.Probabilistic.Models.Range range)
         {
             this.range = range;
             OpenBlock();
@@ -202,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Models
             return "ForEach(" + range + ")";
         }
 
-        internal static void CheckRangeCanBeOpened(Range range)
+        internal static void CheckRangeCanBeOpened(Microsoft.ML.Probabilistic.Models.Range range)
         {
             // check that all ranges in Range.Size are already opened.
             Set<Range> openRanges = new Set<Range>();
@@ -215,7 +215,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 throw new InvalidOperationException("Range '" + range + "' is already open in a ForEach or Switch block");
             }
             Models.MethodInvoke.ForEachRange(range.Size,
-                                             delegate(Range r)
+                                             delegate(Microsoft.ML.Probabilistic.Models.Range r)
                                                  {
                                                      if (!openRanges.Contains(r))
                                                          throw new InvalidOperationException("Range '" + range + "' depends on range '" + r + "', but range '" + r +
@@ -378,7 +378,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 openRanges.Add(fb.Range);
             }
             Models.MethodInvoke.ForEachRange(conditionVariable,
-                                             delegate(Range r)
+                                             delegate(Microsoft.ML.Probabilistic.Models.Range r)
                                                  {
                                                      if (!openRanges.Contains(r))
                                                          throw new InvalidOperationException(conditionVariable + " depends on range '" + r + "', but range '" + r +
@@ -500,9 +500,9 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         private static CodeBuilder Builder = CodeBuilder.Instance;
 
-        private Range range;
+        private Microsoft.ML.Probabilistic.Models.Range range;
 
-        internal SwitchBlock(Variable<int> conditionVariable, Range range)
+        internal SwitchBlock(Variable<int> conditionVariable, Microsoft.ML.Probabilistic.Models.Range range)
             : base(conditionVariable, -1, false)
         {
             this.range = range;
@@ -521,7 +521,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Get switch block's range
         /// </summary>
-        public Range Range
+        public Microsoft.ML.Probabilistic.Models.Range Range
         {
             get { return range; }
         }

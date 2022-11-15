@@ -691,7 +691,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             x.ObservedValue = 0.5;
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
-            Assert.Equal(evActual, double.NegativeInfinity);
+            Assert.Equal(double.NegativeInfinity, evActual);
 
             x.ObservedValue = 1;
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;

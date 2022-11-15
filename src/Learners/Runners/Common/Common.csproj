@@ -31,4 +31,4 @@
     <Compile Include="..\..\..\Shared\SharedAssemblyFileVersion.cs" />
     <Compile Include="..\..\..\Shared\SharedAssemblyInfo.cs" />
   </ItemGroup>
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval></PropertyGroup></Project>

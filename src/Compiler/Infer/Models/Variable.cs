@@ -269,7 +269,7 @@ namespace Microsoft.ML.Probabilistic.Models
             {
                 IModelExpression index1 = list1[i];
                 IModelExpression index2 = list2[i];
-                if (index1 is Range || index2 is Range) continue;
+                if (index1 is Microsoft.ML.Probabilistic.Models.Range || index2 is Range) continue;
                 if (index1 == index2) continue;
                 if (!IsConstantScalar(index1)) continue;
                 if (!IsConstantScalar(index2)) continue;
@@ -634,7 +634,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ArgumentException">If the variable has no ValueRange attribute.</exception>
-        public Range GetValueRange()
+        public Microsoft.ML.Probabilistic.Models.Range GetValueRange()
         {
             return GetValueRange(true);
         }
@@ -645,7 +645,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="throwIfMissing">Indicates if a missing attribute should throw an exception.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">If the variable has no ValueRange attribute and <paramref name="throwIfMissing"/> is true.</exception>
-        public Range GetValueRange(bool throwIfMissing)
+        public Microsoft.ML.Probabilistic.Models.Range GetValueRange(bool throwIfMissing)
         {
             List<ValueRange> ranges = new List<ValueRange>(GetAttributes<ValueRange>());
             if (ranges.Count == 0)
@@ -658,7 +658,7 @@ namespace Microsoft.ML.Probabilistic.Models
             }
             else
             {
-                Range valueRange = ranges[0].Range;
+                Microsoft.ML.Probabilistic.Models.Range valueRange = ranges[0].Range;
                 // the ValueRange may refer to Ranges.
                 // replace all indices of this variable in the ValueRange.
                 Dictionary<Range, Range> rangeReplacements = new Dictionary<Range, Range>();
@@ -682,7 +682,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Sets the ValueRange attribute of this variable, replacing any previously set.
         /// </summary>
         /// <param name="valueRange">A range defining the set of values this variable can take on.  Only meaningful for Variable&lt;int&gt; and Variable&lt;Vector&gt;</param>
-        public void SetValueRange(Range valueRange)
+        public void SetValueRange(Microsoft.ML.Probabilistic.Models.Range valueRange)
         {
             List<ValueRange> ranges = new List<ValueRange>(GetAttributes<ValueRange>());
             if (ranges.Count == 0) AddAttribute(new ValueRange(valueRange));
@@ -901,7 +901,7 @@ namespace Microsoft.ML.Probabilistic.Models
             return aie;
         }
 
-        public Range loopRange;
+        public Microsoft.ML.Probabilistic.Models.Range loopRange;
 
         public bool IsLoopIndex
         {
@@ -969,8 +969,8 @@ namespace Microsoft.ML.Probabilistic.Models
     /// <remarks>null if the variable is not an array.</remarks>
         internal Variable item;
         public bool IsArray { get { return (item != null); } }
-        public Range Range { get { return indices[0]; } }
-        public Range Ranges { get { return indices; } }
+        public Microsoft.ML.Probabilistic.Models.Range Range { get { return indices[0]; } }
+        public Microsoft.ML.Probabilistic.Models.Range Ranges { get { return indices; } }
 
         /// <summary>
         /// Get or set the elements of an array.
@@ -986,7 +986,7 @@ namespace Microsoft.ML.Probabilistic.Models
             get { throw new NotSupportedException(this + " is not an array"); }
             set { throw new NotSupportedException(this + " is not an array"); }
         }
-        public virtual Variable this[Range range1, Range range2]
+        public virtual Variable this[Range range1, Microsoft.ML.Probabilistic.Models.Range range2]
         {
             get { throw new NotSupportedException(this + " is not an array"); }
             set { throw new NotSupportedException(this + " is not an array"); }
@@ -1021,7 +1021,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A new constant variable.</returns>
         public static VariableArray<T> Constant<T>(T[] value)
         {
-            return Constant(value, new Range(value.Length));
+            return Constant(value, new Microsoft.ML.Probabilistic.Models.Range(value.Length));
         }
 
         /// <summary>
@@ -1031,8 +1031,8 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="value">The constant array</param>
         /// <param name="r">The range associated with this constant array</param>
         /// <returns>A new constant variable.</returns>
-        //public static ConstantArray<T> Constant<T>(T[] value, Range r) { return new ConstantArray<T>(value, r); }
-        public static VariableArray<T> Constant<T>(T[] value, Range r)
+        //public static ConstantArray<T> Constant<T>(T[] value, Microsoft.ML.Probabilistic.Models.Range r) { return new ConstantArray<T>(value, r); }
+        public static VariableArray<T> Constant<T>(T[] value, Microsoft.ML.Probabilistic.Models.Range r)
         {
             VariableArray<T> var = new VariableArray<T>(Constant(default(T)), r);
             var.ObservedValue = value;
@@ -1054,7 +1054,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A new constant variable.</returns>
         public static VariableArray2D<T> Constant<T>(T[,] value)
         {
-            return Constant(value, new Range(value.GetLength(0)), new Range(value.GetLength(1)));
+            return Constant(value, new Microsoft.ML.Probabilistic.Models.Range(value.GetLength(0)), new Microsoft.ML.Probabilistic.Models.Range(value.GetLength(1)));
         }
 
         /// <summary>
@@ -1065,7 +1065,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r1">The range associated with the first index</param>
         /// <param name="r2">The range associated with the second index</param>
         /// <returns>A new constant variable.</returns>
-        public static VariableArray2D<T> Constant<T>(T[,] value, Range r1, Range r2)
+        public static VariableArray2D<T> Constant<T>(T[,] value, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             var var = new VariableArray2D<T>(Constant(default(T)), r1, r2);
             var.ObservedValue = value;
@@ -1088,7 +1088,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r1">The range associated with the first index</param>
         /// <param name="r2">The range associated with the second index</param>
         /// <returns>A new constant jagged array variable.</returns>
-        public static VariableArray<VariableArray<T>, T[][]> Constant<T>(T[][] value, Range r1, Range r2)
+        public static VariableArray<VariableArray<T>, T[][]> Constant<T>(T[][] value, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             var var = new VariableArray<VariableArray<T>, T[][]>(Constant(default(T[]), r2), r1);
             var.ObservedValue = value;
@@ -1114,7 +1114,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r3">The range associated with the third index</param>
         /// <returns>A new constant jagged array variable.</returns>
         /// <returns></returns>
-        public static VariableArray<VariableArray2D<T>, T[][,]> Constant<T>(T[][,] value, Range r1, Range r2, Range r3)
+        public static VariableArray<VariableArray2D<T>, T[][,]> Constant<T>(T[][,] value, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2, Microsoft.ML.Probabilistic.Models.Range r3)
         {
             var var = new VariableArray<VariableArray2D<T>, T[][,]>(Constant(default(T[,]), r2, r3), r1);
             var.ObservedValue = value;
@@ -1141,7 +1141,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r3">The range associated with the third index</param>
         /// <returns>A new constant jagged array variable.</returns>
         /// <returns></returns>
-        public static VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]> Constant<T>(T[][][] value, Range r1, Range r2, Range r3)
+        public static VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]> Constant<T>(T[][][] value, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2, Microsoft.ML.Probabilistic.Models.Range r3)
         {
             var var = new VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]>(Constant(default(T[][]), r2, r3), r1);
             var.ObservedValue = value;
@@ -1165,7 +1165,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A new constant variable.</returns>
         public static VariableArray<Variable<T>, IList<T>> Constant<T>(IList<T> value)
         {
-            return Constant(value, new Range(value.Count));
+            return Constant(value, new Microsoft.ML.Probabilistic.Models.Range(value.Count));
         }
 
         /// <summary>
@@ -1175,7 +1175,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="value">The constant list.</param>
         /// <param name="r">The range associated with this constant list.</param>
         /// <returns>A new constant variable.</returns>
-        public static VariableArray<Variable<T>, IList<T>> Constant<T>(IList<T> value, Range r)
+        public static VariableArray<Variable<T>, IList<T>> Constant<T>(IList<T> value, Microsoft.ML.Probabilistic.Models.Range r)
         {
             var result = new VariableArray<Variable<T>, IList<T>>(Constant(default(T)), r)
             {
@@ -1201,7 +1201,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r1">The range associated with the first index.</param>
         /// <param name="r2">The range associated with the second index.</param>
         /// <returns>A new constant jagged array variable.</returns>
-        public static VariableArray<VariableArray<Variable<T>, IList<T>>, IList<IList<T>>> Constant<T>(IList<IList<T>> value, Range r1, Range r2)
+        public static VariableArray<VariableArray<Variable<T>, IList<T>>, IList<IList<T>>> Constant<T>(IList<IList<T>> value, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             var result = new VariableArray<VariableArray<Variable<T>, IList<T>>, IList<IList<T>>>(Constant(default(IList<T>), r2), r1)
             {
@@ -1228,7 +1228,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A new constant variable.</returns>
         public static VariableArray<Variable<T>, IReadOnlyList<T>> Constant<T>(IReadOnlyList<T> value)
         {
-            return Constant(value, new Range(value.Count));
+            return Constant(value, new Microsoft.ML.Probabilistic.Models.Range(value.Count));
         }
 
         /// <summary>
@@ -1238,7 +1238,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="value">The constant list.</param>
         /// <param name="r">The range associated with this constant list.</param>
         /// <returns>A new constant variable.</returns>
-        public static VariableArray<Variable<T>, IReadOnlyList<T>> Constant<T>(IReadOnlyList<T> value, Range r)
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Constant<T>(IReadOnlyList<T> value, Microsoft.ML.Probabilistic.Models.Range r)
         {
             var result = new VariableArray<Variable<T>, IReadOnlyList<T>>(Constant(default(T)), r)
             {
@@ -1264,7 +1264,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r1">The range associated with the first index.</param>
         /// <param name="r2">The range associated with the second index.</param>
         /// <returns>A new constant jagged array variable.</returns>
-        public static VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>> Constant<T>(IReadOnlyList<IReadOnlyList<T>> value, Range r1, Range r2)
+        public static VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>> Constant<T>(IReadOnlyList<IReadOnlyList<T>> value, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             var result = new VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>>(Constant(default(IReadOnlyList<T>), r2), r1)
             {
@@ -1306,7 +1306,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
         public static VariableArray<T> Observed<T>(T[] observedValue)
         {
-            return Observed(observedValue, new Range(observedValue.Length));
+            return Observed(observedValue, new Microsoft.ML.Probabilistic.Models.Range(observedValue.Length));
         }
 
         /// <summary>
@@ -1318,7 +1318,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
         public static VariableArray2D<T> Observed<T>(T[,] observedValue)
         {
-            return Observed(observedValue, new Range(observedValue.GetLength(0)), new Range(observedValue.GetLength(1)));
+            return Observed(observedValue, new Microsoft.ML.Probabilistic.Models.Range(observedValue.GetLength(0)), new Microsoft.ML.Probabilistic.Models.Range(observedValue.GetLength(1)));
         }
 
         /// <summary>
@@ -1329,7 +1329,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">The range used to index the array</param>
         /// <returns>A new variable</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray<T> Observed<T>(T[] observedValue, Range r)
+        public static VariableArray<T> Observed<T>(T[] observedValue, Microsoft.ML.Probabilistic.Models.Range r)
         {
             VariableArray<T> g = new VariableArray<T>(r);
             g.ObservedValue = observedValue;
@@ -1345,7 +1345,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r2">The range used for the second index</param>
         /// <returns>A new variable</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray<VariableArray<T>, T[][]> Observed<T>(T[][] observedValue, Range r1, Range r2)
+        public static VariableArray<VariableArray<T>, T[][]> Observed<T>(T[][] observedValue, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             VariableArray<VariableArray<T>, T[][]> g = new VariableArray<VariableArray<T>, T[][]>(Constant(default(T[]), r2), r1);
             g.ObservedValue = observedValue;
@@ -1362,7 +1362,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r3">The range used for the third index</param>
         /// <returns>A new variable</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]> Observed<T>(T[][][] observedValue, Range r1, Range r2, Range r3)
+        public static VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]> Observed<T>(T[][][] observedValue, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2, Microsoft.ML.Probabilistic.Models.Range r3)
         {
             VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]> g =
                 new VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]>(Constant(default(T[][]), r2, r3), r1);
@@ -1381,7 +1381,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r4">The range used for the fourth index</param>
         /// <returns>A new variable</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray<VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]>, T[][][][]> Observed<T>(T[][][][] observedValue, Range r1, Range r2, Range r3, Range r4)
+        public static VariableArray<VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]>, T[][][][]> Observed<T>(T[][][][] observedValue, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2, Microsoft.ML.Probabilistic.Models.Range r3, Microsoft.ML.Probabilistic.Models.Range r4)
         {
             var g = new VariableArray<VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]>, T[][][][]>(Constant(default(T[][][]), r2, r3, r4), r1);
             g.ObservedValue = observedValue;
@@ -1397,7 +1397,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r1">The range used for the second index</param>
         /// <returns>A new variable</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray2D<T> Observed<T>(T[,] observedValue, Range r0, Range r1)
+        public static VariableArray2D<T> Observed<T>(T[,] observedValue, Microsoft.ML.Probabilistic.Models.Range r0, Microsoft.ML.Probabilistic.Models.Range r1)
         {
             VariableArray2D<T> g = new VariableArray2D<T>(r0, r1);
             g.ObservedValue = observedValue;
@@ -1414,7 +1414,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
         public static VariableArray<Variable<T>, IList<T>> Observed<T>(IList<T> observedValue)
         {
-            return Observed(observedValue, new Range(observedValue.Count));
+            return Observed(observedValue, new Microsoft.ML.Probabilistic.Models.Range(observedValue.Count));
         }
 
         /// <summary>
@@ -1425,7 +1425,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">The range used to index the array.</param>
         /// <returns>A new variable.</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray<Variable<T>, IList<T>> Observed<T>(IList<T> observedValue, Range r)
+        public static VariableArray<Variable<T>, IList<T>> Observed<T>(IList<T> observedValue, Microsoft.ML.Probabilistic.Models.Range r)
         {
             var result = new VariableArray<Variable<T>, IList<T>>(Constant(default(T)), r)
             {
@@ -1443,7 +1443,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r2">The range used for the second index.</param>
         /// <returns>A new variable.</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray<VariableArray<Variable<T>, IList<T>>, IList<IList<T>>> Observed<T>(IList<IList<T>> observedValue, Range r1, Range r2)
+        public static VariableArray<VariableArray<Variable<T>, IList<T>>, IList<IList<T>>> Observed<T>(IList<IList<T>> observedValue, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             var result = new VariableArray<VariableArray<Variable<T>, IList<T>>, IList<IList<T>>>(Constant(default(IList<T>), r2), r1);
             result.ObservedValue = observedValue;
@@ -1460,7 +1460,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
         public static VariableArray<Variable<T>, IReadOnlyList<T>> Observed<T>(IReadOnlyList<T> observedValue)
         {
-            return Observed(observedValue, new Range(observedValue.Count));
+            return Observed(observedValue, new Microsoft.ML.Probabilistic.Models.Range(observedValue.Count));
         }
 
         /// <summary>
@@ -1471,7 +1471,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">The range used to index the array.</param>
         /// <returns>A new variable.</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray<Variable<T>, IReadOnlyList<T>> Observed<T>(IReadOnlyList<T> observedValue, Range r)
+        public static VariableArray<Variable<T>, IReadOnlyList<T>> Observed<T>(IReadOnlyList<T> observedValue, Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<Variable<T>, IReadOnlyList<T>>(Constant(default(T)), r)
             {
@@ -1488,7 +1488,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r2">The range used for the second index.</param>
         /// <returns>A new variable.</returns>
         /// <remarks>The variable is not constant; its ObservedValue can be changed.</remarks>
-        public static VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>> Observed<T>(IReadOnlyList<IReadOnlyList<T>> observedValue, Range r1, Range r2)
+        public static VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>> Observed<T>(IReadOnlyList<IReadOnlyList<T>> observedValue, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             return new VariableArray<VariableArray<Variable<T>, IReadOnlyList<T>>, IReadOnlyList<IReadOnlyList<T>>>(Constant(default(IReadOnlyList<T>), r2), r1)
             {
@@ -1551,7 +1551,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// 
         /// <param name="range"></param>
         /// <returns></returns>
-        public static ForEachBlock ForEach(Range range)
+        public static ForEachBlock ForEach(Microsoft.ML.Probabilistic.Models.Range range)
         {
             return new ForEachBlock(range);
         }
@@ -1576,7 +1576,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>
         /// Returns a <c>VariableArray</c> object whose size is specified by <paramref name="r"/>.
         /// </returns>
-        public static VariableArray<T> Array<T>(Range r)
+        public static VariableArray<T> Array<T>(Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<T>(r);
         }
@@ -1591,7 +1591,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>
         /// Returns a <c>VariableArray</c> object whose size is specified by <paramref name="r"/>.
         /// </returns>
-        public static VariableArray<Variable<T>, IList<T>> IList<T>(Range r)
+        public static VariableArray<Variable<T>, IList<T>> IList<T>(Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<Variable<T>, IList<T>>(new Variable<T>(), r);
         }
@@ -1606,7 +1606,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>
         /// Returns a <c>VariableArray</c> object whose size is specified by <paramref name="r"/>.
         /// </returns>
-        public static VariableArray<Variable<T>, ISparseList<T>> ISparseList<T>(Range r)
+        public static VariableArray<Variable<T>, ISparseList<T>> ISparseList<T>(Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<Variable<T>, ISparseList<T>>(new Variable<T>(), r);
         }
@@ -1621,7 +1621,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>
         /// Returns a <c>VariableArray</c> object whose size is specified by <paramref name="r"/>.
         /// </returns>
-        public static VariableArray<Variable<T>, IArray<T>> IArray<T>(Range r)
+        public static VariableArray<Variable<T>, IArray<T>> IArray<T>(Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<Variable<T>, IArray<T>>(new Variable<T>(), r);
         }
@@ -1639,7 +1639,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>
         /// Returns a <c>VariableArray2D</c> object whose dimensions are pecified by <paramref name="r1"/> and <paramref name="r2"/>.
         /// </returns>
-        public static VariableArray2D<T> Array<T>(Range r1, Range r2)
+        public static VariableArray2D<T> Array<T>(Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             return new VariableArray2D<T>(r1, r2);
         }
@@ -1657,7 +1657,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>
         /// Returns a <c>VariableArray2D</c> object whose dimensions are pecified by <paramref name="r1"/> and <paramref name="r2"/>.
         /// </returns>
-        public static VariableArray2D<Variable<T>, IArray2D<T>> IArray<T>(Range r1, Range r2)
+        public static VariableArray2D<Variable<T>, IArray2D<T>> IArray<T>(Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             return new VariableArray2D<Variable<T>, IArray2D<T>>(new Variable<T>(), r1, r2);
         }
@@ -1679,7 +1679,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Returns a <c>VariableArray3D</c> object whose dimensions are pecified by <paramref name="r1"/>, 
         /// <paramref name="r2"/>, and <paramref name="r3"/>.
         /// </returns>
-        public static VariableArray3D<T> Array<T>(Range r1, Range r2, Range r3)
+        public static VariableArray3D<T> Array<T>(Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2, Microsoft.ML.Probabilistic.Models.Range r3)
         {
             return new VariableArray3D<T>(r1, r2, r3);
         }
@@ -1713,7 +1713,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">A <c>Range</c> object that is initialized with the array's length.</param>
         /// <returns>Returns a <c>VariableArray</c> object whose length is defined by <paramref name="r"/>. Each element of the array is
         /// a <c>VariableArray</c>object whose prototype is defined by <paramref name="array"/>.</returns>
-        public static VariableArray<VariableArray<T>, T[][]> Array<T>(VariableArray<T> array, Range r)
+        public static VariableArray<VariableArray<T>, T[][]> Array<T>(VariableArray<T> array, Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<VariableArray<T>, T[][]>(array, r);
         }
@@ -1726,7 +1726,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">A <c>Range</c> object that is initialized with the array's length.</param>
         /// <returns>Returns a <c>VariableArray</c> object whose length is defined by <paramref name="r"/>. Each element of the array is
         /// a <c>VariableArray</c>object whose prototype is defined by <paramref name="array"/>.</returns>
-        public static VariableArray<VariableArray<T>, IList<T[]>> IList<T>(VariableArray<T> array, Range r)
+        public static VariableArray<VariableArray<T>, IList<T[]>> IList<T>(VariableArray<T> array, Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<VariableArray<T>, IList<T[]>>(array, r);
         }
@@ -1739,7 +1739,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">A <c>Range</c> object that is initialized with the array's length.</param>
         /// <returns>Returns a <c>VariableArray</c> object whose length is defined by <paramref name="r"/>. Each element of the array is
         /// a <c>VariableArray</c>object whose prototype is defined by <paramref name="array"/>.</returns>
-        public static VariableArray<VariableArray<T>, IArray<T[]>> IArray<T>(VariableArray<T> array, Range r)
+        public static VariableArray<VariableArray<T>, IArray<T[]>> IArray<T>(VariableArray<T> array, Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<VariableArray<T>, IArray<T[]>>(array, r);
         }
@@ -1754,7 +1754,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Returns a <c>VariableArray</c> object whose length is defined by <paramref name="r"/>. Each element of the array is
         /// a <c>VariableArray2D</c>object whose prototype is defined by <paramref name="array"/>.
         /// </returns>
-        public static VariableArray<VariableArray2D<T>, T[][,]> Array<T>(VariableArray2D<T> array, Range r)
+        public static VariableArray<VariableArray2D<T>, T[][,]> Array<T>(VariableArray2D<T> array, Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<VariableArray2D<T>, T[][,]>(array, r);
         }
@@ -1769,7 +1769,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Returns a <c>VariableArray</c> object whose length is defined by <paramref name="r"/>. Each element of the array is
         /// a <c>VariableArray2D</c>object whose prototype is defined by <paramref name="array"/>.
         /// </returns>
-        public static VariableArray<VariableArray2D<T>, IArray<T[,]>> IArray<T>(VariableArray2D<T> array, Range r)
+        public static VariableArray<VariableArray2D<T>, IArray<T[,]>> IArray<T>(VariableArray2D<T> array, Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<VariableArray2D<T>, IArray<T[,]>>(array, r);
         }
@@ -1785,7 +1785,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Returns a <c>VariableArray2D</c> object whose dimensions are defined by <paramref name="r1"/> and <paramref name="r2"/>.
         /// Each element of the array is a <c>VariableArray</c>object whose prototype is defined by <paramref name="array"/>.
         /// </returns>
-        public static VariableArray2D<VariableArray<T>, T[,][]> Array<T>(VariableArray<T> array, Range r1, Range r2)
+        public static VariableArray2D<VariableArray<T>, T[,][]> Array<T>(VariableArray<T> array, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             return new VariableArray2D<VariableArray<T>, T[,][]>(array, r1, r2);
         }
@@ -1801,7 +1801,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Returns a <c>VariableArray2D</c> object whose dimensions are defined by <paramref name="r1"/> and <paramref name="r2"/>.
         /// Each element of the array is a <c>VariableArray</c>object whose prototype is defined by <paramref name="array"/>.
         /// </returns>
-        public static VariableArray2D<VariableArray<T>, IArray2D<T[]>> IArray<T>(VariableArray<T> array, Range r1, Range r2)
+        public static VariableArray2D<VariableArray<T>, IArray2D<T[]>> IArray<T>(VariableArray<T> array, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2)
         {
             return new VariableArray2D<VariableArray<T>, IArray2D<T[]>>(array, r1, r2);
         }
@@ -1819,7 +1819,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// and <paramref name="r3"/>.
         /// Each element of the array is a 1D <c>VariableArray</c>object whose prototype is defined by <paramref name="array"/>.
         /// </returns>
-        public static VariableArray3D<VariableArray<T>, T[,,][]> Array<T>(VariableArray<T> array, Range r1, Range r2, Range r3)
+        public static VariableArray3D<VariableArray<T>, T[,,][]> Array<T>(VariableArray<T> array, Microsoft.ML.Probabilistic.Models.Range r1, Microsoft.ML.Probabilistic.Models.Range r2, Microsoft.ML.Probabilistic.Models.Range r3)
         {
             return new VariableArray3D<VariableArray<T>, T[,,][]>(array, r1, r2, r3);
         }
@@ -1833,7 +1833,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">A <c>Range</c> object that specifies the array length.</param>
         /// <returns>Returns a <c>VariableArray</c> object whose length is defined by <paramref name="r"/>. Each element of this
         /// array is a object of type <c>VariableArray&lt;TItem,TArray&gt;</c></returns>
-        public static VariableArray<VariableArray<TItem, TArray>, TArray[]> Array<TItem, TArray>(VariableArray<TItem, TArray> array, Range r)
+        public static VariableArray<VariableArray<TItem, TArray>, TArray[]> Array<TItem, TArray>(VariableArray<TItem, TArray> array, Microsoft.ML.Probabilistic.Models.Range r)
             where TItem : Variable, SettableTo<TItem>, ICloneable
         {
             return new VariableArray<VariableArray<TItem, TArray>, TArray[]>(array, r);
@@ -1848,7 +1848,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">A <c>Range</c> object that specifies the array length.</param>
         /// <returns>Returns a <c>VariableArray</c> object whose length is defined by <paramref name="r"/>. Each element of this
         /// array is a object of type <c>VariableArray&lt;TItem,TArray&gt;</c></returns>
-        public static VariableArray<VariableArray<TItem, TArray>, IList<TArray>> IList<TItem, TArray>(VariableArray<TItem, TArray> array, Range r)
+        public static VariableArray<VariableArray<TItem, TArray>, IList<TArray>> IList<TItem, TArray>(VariableArray<TItem, TArray> array, Microsoft.ML.Probabilistic.Models.Range r)
             where TItem : Variable, SettableTo<TItem>, ICloneable
         {
             return new VariableArray<VariableArray<TItem, TArray>, IList<TArray>>(array, r);
@@ -1863,7 +1863,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">A <c>Range</c> object that specifies the array length.</param>
         /// <returns>Returns a <c>VariableArray</c> object whose length is defined by <paramref name="r"/>. Each element of this
         /// array is a object of type <c>VariableArray&lt;TItem,TArray&gt;</c></returns>
-        public static VariableArray<VariableArray<TItem, TArray>, IArray<TArray>> IArray<TItem, TArray>(VariableArray<TItem, TArray> array, Range r)
+        public static VariableArray<VariableArray<TItem, TArray>, IArray<TArray>> IArray<TItem, TArray>(VariableArray<TItem, TArray> array, Microsoft.ML.Probabilistic.Models.Range r)
             where TItem : Variable, SettableTo<TItem>, ICloneable
         {
             return new VariableArray<VariableArray<TItem, TArray>, IArray<TArray>>(array, r);
@@ -1878,7 +1878,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="r">A <c>Range</c> object that is initialized with the array's length.</param>
         /// <returns>Returns a <c>VariableArray</c> object whose length is also defined by <paramref name="r"/>. Each element of this
         /// array is a object of type <c>TItem</c> whose prototype is defined by <paramref name="itemPrototype"/>.</returns>
-        public static VariableArray<TItem, TArray> Array<TItem, TArray>(TItem itemPrototype, Range r)
+        public static VariableArray<TItem, TArray> Array<TItem, TArray>(TItem itemPrototype, Microsoft.ML.Probabilistic.Models.Range r)
             where TItem : Variable, SettableTo<TItem>, ICloneable
         {
             return new VariableArray<TItem, TArray>(itemPrototype, r);
@@ -2322,7 +2322,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A <see cref="SparseBernoulliList"/> distributed random variable</returns>
         public static VariableArray<Variable<bool>, ISparseList<bool>> BernoulliList(ISparseList<double> probTrue)
         {
-            var range = new Range(probTrue.Count);
+            var range = new Microsoft.ML.Probabilistic.Models.Range(probTrue.Count);
             var list = ISparseList<bool>(range);
             list.SetTo(Variable<ISparseList<bool>>.Random(SparseBernoulliList.FromProbTrue(probTrue)));
             return list;
@@ -2366,10 +2366,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Creates a random variable whose domain is a fixed-length list of type integer.
         /// </summary>
-        /// <param name="range">A Range defining the length of the list</param>
+        /// <param name="range">A Microsoft.ML.Probabilistic.Models.Range defining the length of the list</param>
         /// <param name="probInSubset">The probability of a given integer being in the random list. This is given as random variable over a sparse list - i.e. most of the probabilities are the same.</param>
         /// <returns>A <see cref="Distributions.BernoulliIntegerSubset"/> distributed random variable</returns>
-        public static VariableArray<Variable<int>, IList<int>> BernoulliIntegerSubset(Range range, Variable<ISparseList<double>> probInSubset)
+        public static VariableArray<Variable<int>, IList<int>> BernoulliIntegerSubset(Microsoft.ML.Probabilistic.Models.Range range, Variable<ISparseList<double>> probInSubset)
         {
             var subset = IList<int>(range);
             subset.SetTo(Distributions.BernoulliIntegerSubset.Sample, probInSubset);
@@ -2379,10 +2379,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Creates a random variable whose domain is a fixed-length list of type integer.
         /// </summary>
-        /// <param name="range">A Range defining the length of the list</param>
+        /// <param name="range">A Microsoft.ML.Probabilistic.Models.Range defining the length of the list</param>
         /// <param name="probInSubset">The probability of a given integer being in the random list. This is given as a sparse list - i.e. most of the probabilities are the same.</param>
         /// <returns>A <see cref="Distributions.BernoulliIntegerSubset"/> distributed random variable</returns>
-        public static VariableArray<Variable<int>, IList<int>> BernoulliIntegerSubset(Range range, ISparseList<double> probInSubset)
+        public static VariableArray<Variable<int>, IList<int>> BernoulliIntegerSubset(Microsoft.ML.Probabilistic.Models.Range range, ISparseList<double> probInSubset)
         {
             var subset = IList<int>(range);
             subset.SetTo(Variable<IList<int>>.Random(Distributions.BernoulliIntegerSubset.FromProbTrue(probInSubset)));
@@ -2445,7 +2445,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <paramref name="probs"/> contains only one element.
         /// To specify a uniform Discrete distribution, use <c>Variable.DiscreteUniform.</c>
         /// </exception>
-        public static Variable<int> Discrete(Range valueRange, params double[] probs)
+        public static Variable<int> Discrete(Microsoft.ML.Probabilistic.Models.Range valueRange, params double[] probs)
         {
             if (probs.Length == 0) return DiscreteUniform(valueRange);
             else
@@ -2479,7 +2479,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="v">A <c>Vector</c> object that specifies the probability of each possible value, from [0, probs.Length-1].
         /// The probabilities should sum to 1.0. If not, the probabilities will be normalized.</param>
         /// <returns>Returns a random variable that is statistically defined by the specified Discrete distribution.</returns>
-        public static Variable<int> Discrete(Range valueRange, Vector v)
+        public static Variable<int> Discrete(Microsoft.ML.Probabilistic.Models.Range valueRange, Vector v)
         {
             if (valueRange.SizeAsInt != v.Count) throw new ArgumentException($"Vector length ({v.Count}) != range.Size ({valueRange.SizeAsInt})");
             var rv = Discrete(v.ToArray()).Attrib(new ValueRange(valueRange));
@@ -2504,7 +2504,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         /// <param name="range">A <c>Range</c> object specifying the number of possible values.</param>
         /// <returns>A random integer with an equal probability of taking any value in the range.</returns>
-        public static Variable<int> DiscreteUniform(Range range)
+        public static Variable<int> DiscreteUniform(Microsoft.ML.Probabilistic.Models.Range range)
         {
             Variable<int> sample = Variable.New<int>();
             sample.SetTo(Factor.DiscreteUniform, range.Size);
@@ -2521,7 +2521,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<int> DiscreteUniform(Variable<int> size)
         {
             Variable<int> sample = Variable<int>.Factor(Factors.Factor.DiscreteUniform, size);
-            Range valueRange = size.GetValueRange(false);
+            Microsoft.ML.Probabilistic.Models.Range valueRange = size.GetValueRange(false);
             if (valueRange != null) sample.AddAttribute(new ValueRange(valueRange));
             return sample;
         }
@@ -2534,7 +2534,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="size">A random variable that represents the dimension of the discrete distribution.</param>
         /// <returns>Returns a random variable that is statistically defined by a Discrete distribution with equal
         /// probabilities for each possible value.</returns>
-        public static Variable<int> DiscreteUniform(Range valueRange, Variable<int> size)
+        public static Variable<int> DiscreteUniform(Microsoft.ML.Probabilistic.Models.Range valueRange, Variable<int> size)
         {
             Variable<int> sample = Variable<int>.Factor(Factors.Factor.DiscreteUniform, size);
             sample.AddAttribute(new ValueRange(valueRange));
@@ -2551,7 +2551,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<int> Discrete(Variable<Vector> probs)
         {
             Variable<int> v = Variable<int>.Factor(Factor.Discrete, probs);
-            Range range = probs.GetValueRange(false);
+            Microsoft.ML.Probabilistic.Models.Range range = probs.GetValueRange(false);
             if (range != null) v.AddAttribute(new ValueRange(range));
             SparsityAttribute sparsityAttr = probs.GetFirstAttribute<SparsityAttribute>();
             if (sparsityAttr != null && sparsityAttr.Sparsity != null)
@@ -2567,10 +2567,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="valueRange">A range defining the possible values for the variable.</param>
         /// <param name="probs">A variable holding the set of probabilities of having each value.  Must add up to one.</param>
         /// <returns>Returns a random variable that is statistically defined by the specified Discrete distribution.</returns>
-        public static Variable<int> Discrete(Range valueRange, Variable<Vector> probs)
+        public static Variable<int> Discrete(Microsoft.ML.Probabilistic.Models.Range valueRange, Variable<Vector> probs)
         {
             Variable<int> v = Variable<int>.Factor(Factor.Discrete, probs);
-            Range range2 = probs.GetValueRange(false);
+            Microsoft.ML.Probabilistic.Models.Range range2 = probs.GetValueRange(false);
             if (range2 != null && !valueRange.IsCompatibleWith(range2))
                 throw new ArgumentException(probs + " has ValueRange '" + range2 + "', which is inconsistent with the provided range '" + valueRange + "'.  Try omitting '" +
                                             valueRange + "'");
@@ -2592,7 +2592,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<TEnum> EnumDiscrete<TEnum>(Variable<Vector> probs)
         {
             var v = Variable<TEnum>.Factor(EnumSupport.DiscreteEnum<TEnum>, probs);
-            Range range = probs.GetValueRange(false);
+            Microsoft.ML.Probabilistic.Models.Range range = probs.GetValueRange(false);
             if (range != null) v.AddAttribute(new ValueRange(range));
             return v;
         }
@@ -2608,7 +2608,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<TEnum> EnumDiscrete<TEnum>(params double[] probs)
         {
             int valueCount = Enum.GetValues(typeof(TEnum)).Length;
-            return EnumDiscrete<TEnum>(new Range(valueCount), probs);
+            return EnumDiscrete<TEnum>(new Microsoft.ML.Probabilistic.Models.Range(valueCount), probs);
         }
 
         /// <summary>
@@ -2621,7 +2621,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// values. The probabilities must sum to one. If not, they will be normalized.</param>
         /// <returns>Returns a random variable that is statistically defined by the specified Discrete distribution.
         /// </returns>
-        public static Variable<TEnum> EnumDiscrete<TEnum>(Range valueRange, params double[] probs)
+        public static Variable<TEnum> EnumDiscrete<TEnum>(Microsoft.ML.Probabilistic.Models.Range valueRange, params double[] probs)
         {
             if (probs.Length == 0) return EnumUniform<TEnum>(valueRange);
             int valueCount = Enum.GetValues(typeof(TEnum)).Length;
@@ -2653,7 +2653,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="probs">The vector of probabilities of having each value.  Must add up to one.</param>
         /// <returns>Returns a random variable that is statistically defined by the specified Discrete distribution.
         /// </returns>
-        public static Variable<TEnum> EnumDiscrete<TEnum>(Range valueRange, Vector probs)
+        public static Variable<TEnum> EnumDiscrete<TEnum>(Microsoft.ML.Probabilistic.Models.Range valueRange, Vector probs)
         {
             return EnumDiscrete<TEnum>(valueRange, probs.ToArray());
         }
@@ -2668,7 +2668,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<TEnum> EnumUniform<TEnum>()
         {
             int valueCount = Enum.GetValues(typeof(TEnum)).Length;
-            return EnumUniform<TEnum>(new Range(valueCount));
+            return EnumUniform<TEnum>(new Microsoft.ML.Probabilistic.Models.Range(valueCount));
         }
 
         /// <summary>
@@ -2678,7 +2678,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <typeparam name="TEnum">The type of the enum</typeparam>
         /// <param name="valueRange">A range over the enum values.</param>
         /// <returns>Enum random variable</returns>
-        public static Variable<TEnum> EnumUniform<TEnum>(Range valueRange)
+        public static Variable<TEnum> EnumUniform<TEnum>(Microsoft.ML.Probabilistic.Models.Range valueRange)
         {
             var prior = Variable<DiscreteEnum<TEnum>>.Factor(DiscreteEnum<TEnum>.Uniform).Attrib(new DoNotInfer());
             return Variable<TEnum>.Random(prior)
@@ -2801,7 +2801,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// distribution's dimensionality.</param>
         /// <returns>Returns a uniform Dirichlet-distributed random variable. The distribution's pseudo-counts are
         /// all set to 1.</returns>
-        public static Variable<Vector> DirichletUniform(Range valueRange)
+        public static Variable<Vector> DirichletUniform(Microsoft.ML.Probabilistic.Models.Range valueRange)
         {
             Variable<Dirichlet> prior = Variable.New<Dirichlet>().Attrib(new DoNotInfer());
             prior.SetTo(Distributions.Dirichlet.Uniform, valueRange.Size);
@@ -2847,7 +2847,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// is applied to all dimensions.</param>
         /// <returns>Returns a symmetric Dirichlet-distributed random variable with the pseudo-counts
         /// set to <paramref name="pseudocount"/>.</returns>
-        public static Variable<Vector> DirichletSymmetric(Range valueRange, Variable<double> pseudocount)
+        public static Variable<Vector> DirichletSymmetric(Microsoft.ML.Probabilistic.Models.Range valueRange, Variable<double> pseudocount)
         {
             Variable<Vector> v = Variable.New<Vector>();
             v.SetTo(Factor.DirichletSymmetric, valueRange.Size, pseudocount);
@@ -2875,7 +2875,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// distribution's dimensionality.</param>
         /// <param name="u">An array containing the pseudo-counts.</param>
         /// <returns>Returns a Dirichlet-distributed random variable of dimension <paramref name="u"/></returns>
-        public static Variable<Vector> Dirichlet(Range valueRange, double[] u)
+        public static Variable<Vector> Dirichlet(Microsoft.ML.Probabilistic.Models.Range valueRange, double[] u)
         {
             if (valueRange.SizeAsInt != u.Length)
             {
@@ -2925,7 +2925,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>Returns a Dirichlet-distributed random variable with the dimensionality specified by
         /// <paramref name="valueRange"/> and the pseudo-counts specified
         /// by <paramref name="v"/>.</returns>
-        public static Variable<Vector> Dirichlet(Range valueRange, Vector v)
+        public static Variable<Vector> Dirichlet(Microsoft.ML.Probabilistic.Models.Range valueRange, Vector v)
         {
             if (valueRange.SizeAsInt != v.Count)
             {
@@ -2944,7 +2944,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>Returns a Dirichlet-distributed random variable with the dimensionality specified by
         /// <paramref name="valueRange"/> and the pseudo-counts specified
         /// by <paramref name="v"/>.</returns>
-        public static Variable<Vector> Dirichlet(Range valueRange, Variable<Vector> v)
+        public static Variable<Vector> Dirichlet(Microsoft.ML.Probabilistic.Models.Range valueRange, Variable<Vector> v)
         {
             return Dirichlet(v).Attrib(new ValueRange(valueRange));
         }
@@ -3023,7 +3023,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             var sample = Variable<int>.Factor(Rand.Binomial, Constant(trialCount), probSuccess);
             // sample ranges from 0 to trialCount
-            Range valueRange = new Range(trialCount + 1);
+            Microsoft.ML.Probabilistic.Models.Range valueRange = new Microsoft.ML.Probabilistic.Models.Range(trialCount + 1);
             sample.SetValueRange(valueRange);
             return sample;
         }
@@ -3039,7 +3039,7 @@ namespace Microsoft.ML.Probabilistic.Models
             Variable<int> sample = Variable<int>.Factor(Rand.Binomial, trialCount, probSuccess);
             // if trialCount ranges from 0 to valueRange.Size-1
             // then sample also ranges from 0 to valueRange.Size-1
-            Range valueRange = trialCount.GetValueRange(false);
+            Microsoft.ML.Probabilistic.Models.Range valueRange = trialCount.GetValueRange(false);
             if (valueRange != null)
                 sample.SetValueRange(valueRange);
             return sample;
@@ -3067,7 +3067,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns></returns>
         public static VariableArray<int> Multinomial(Variable<int> trialCount, Variable<Vector> probs)
         {
-            Range valueRange = probs.GetValueRange();
+            Microsoft.ML.Probabilistic.Models.Range valueRange = probs.GetValueRange();
             VariableArray<int> samples = Variable.Array<int>(valueRange);
             // SetTo(Variable.Factor(...)) will not work here
             samples.SetTo(Rand.Multinomial, trialCount, probs);
@@ -3083,7 +3083,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static VariableArray<int> Multinomial(Variable<int> trialCount, Vector probs)
         {
             Variable<Vector> probsVar = Constant(probs);
-            Range valueRange = new Range(probs.Count);
+            Microsoft.ML.Probabilistic.Models.Range valueRange = new Microsoft.ML.Probabilistic.Models.Range(probs.Count);
             probsVar.SetValueRange(valueRange);
             return Multinomial(trialCount, probsVar);
         }
@@ -3094,9 +3094,9 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="trials">A range whose length is the number of trials.  This is becomes the ValueRange for each x[i].</param>
         /// <param name="probs">A variable containing the probability distribution for drawing each value per trial.  Must have a ValueRange attribute specifying the number of possible values.</param>
         /// <returns></returns>
-        public static VariableArray<int> Multinomial(Range trials, Variable<Vector> probs)
+        public static VariableArray<int> Multinomial(Microsoft.ML.Probabilistic.Models.Range trials, Variable<Vector> probs)
         {
-            Range valueRange = probs.GetValueRange();
+            Microsoft.ML.Probabilistic.Models.Range valueRange = probs.GetValueRange();
             VariableArray<int> samples = Variable.Array<int>(valueRange);
             samples.SetValueRange(trials);
             samples.SetTo(Rand.Multinomial, trials.Size, probs);
@@ -3201,7 +3201,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns><c>sum_i a[i]*b[i]</c></returns>
         public static Variable<double> SumWhere(VariableArray<bool> a, Variable<Vector> b)
         {
-            Range range = a.Range;
+            Microsoft.ML.Probabilistic.Models.Range range = a.Range;
             var aDouble = Variable.Double(a[range]);
             return Variable.InnerProduct((VariableArray<double>)aDouble.ArrayVariable, b);
         }
@@ -3215,7 +3215,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<double> SumWhere(VariableArray<bool> a, VariableArray<double> b)
         {
             var blocks = OpenRangesInExpression(a);
-            Range range = a.Range;
+            Microsoft.ML.Probabilistic.Models.Range range = a.Range;
             VariableArray<double> products = Variable.Array<double>(range);
             using (Variable.ForEach(range))
             {
@@ -3342,7 +3342,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<double> Sum_Expanded(VariableArray<double> array)
         {
             var blocks = OpenRangesInExpression(array);
-            Range n = array.Range;
+            Microsoft.ML.Probabilistic.Models.Range n = array.Range;
             var sumUpTo = Variable.Array<double>(n);
             sumUpTo.Name = array.ToString() + "_sumUpTo";
             sumUpTo.AddAttribute(new DoNotInfer());
@@ -3397,7 +3397,7 @@ namespace Microsoft.ML.Probabilistic.Models
         private static List<Range> GetRangesNotOpen(IModelExpression modelExpressionWithRanges)
         {
             List<Range> ranges = new List<Range>();
-            MethodInvoke.ForEachRange(modelExpressionWithRanges, delegate (Range r)
+            MethodInvoke.ForEachRange(modelExpressionWithRanges, delegate (Microsoft.ML.Probabilistic.Models.Range r)
             {
                 if (!ranges.Contains(r))
                     ranges.Add(r);
@@ -3652,7 +3652,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="vector">A random vector</param>
         /// <param name="range">The range to use for indexing the array.  Must match the length of the vector.</param>
         /// <returns>A new array whose elements are equal to the elements of the vector</returns>
-        public static VariableArray<double> ArrayFromVector(Variable<Vector> vector, Range range)
+        public static VariableArray<double> ArrayFromVector(Variable<Vector> vector, Microsoft.ML.Probabilistic.Models.Range range)
         {
             VariableArray<double> result = Variable.Array<double>(range);
             // SetTo(Variable.Factor(...)) will not work here
@@ -3669,7 +3669,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="tailRange">The range associated with the tail array</param>
         /// <param name="tail">On return, holds the remaining elements</param>
         /// <returns>The initial elements of <paramref name="array"/></returns>
-        public static VariableArray<T> Split<T>(VariableArray<T> array, Range headRange, Range tailRange, out VariableArray<T> tail)
+        public static VariableArray<T> Split<T>(VariableArray<T> array, Microsoft.ML.Probabilistic.Models.Range headRange, Microsoft.ML.Probabilistic.Models.Range tailRange, out VariableArray<T> tail)
         {
             VariableArray<T> head = Variable.Array<T>(headRange);
             tail = Variable.Array<T>(tailRange);
@@ -3687,7 +3687,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="tailRange">The range associated with the tail array</param>
         /// <param name="tail">On return, holds the remaining elements</param>
         /// <returns>The initial elements of <paramref name="array"/></returns>
-        public static VariableArray<TItem, T[]> Split<TItem, T>(VariableArray<TItem, T[]> array, Range headRange, Range tailRange, out VariableArray<TItem, T[]> tail)
+        public static VariableArray<TItem, T[]> Split<TItem, T>(VariableArray<TItem, T[]> array, Microsoft.ML.Probabilistic.Models.Range headRange, Microsoft.ML.Probabilistic.Models.Range tailRange, out VariableArray<TItem, T[]> tail)
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             VariableArray<TItem, T[]> head = ReplaceRanges(array, headRange);
@@ -3729,7 +3729,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<T> Copy<T>(Variable<T> x)
         {
             Variable<T> result = Variable<T>.Factor(Clone.Copy<T>, x);
-            Range valueRange = x.GetValueRange(false);
+            Microsoft.ML.Probabilistic.Models.Range valueRange = x.GetValueRange(false);
             if (valueRange != null)
                 result.AddAttribute(new ValueRange(valueRange));
             return result;
@@ -3860,7 +3860,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<T> CutForwardWhen<T>(Variable<T> x, Variable<bool> shouldCut)
         {
             Variable<T> result = Variable<T>.Factor(Factors.Cut.ForwardWhen, x, shouldCut);
-            Range valueRange = x.GetValueRange(false);
+            Microsoft.ML.Probabilistic.Models.Range valueRange = x.GetValueRange(false);
             if (valueRange != null)
                 result.AddAttribute(new ValueRange(valueRange));
             return result;
@@ -3876,7 +3876,7 @@ namespace Microsoft.ML.Probabilistic.Models
         public static Variable<T> Cut<T>(Variable<T> x)
         {
             Variable<T> result = Variable<T>.Factor(Factors.Cut.Backward, x);
-            Range valueRange = x.GetValueRange(false);
+            Microsoft.ML.Probabilistic.Models.Range valueRange = x.GetValueRange(false);
             if (valueRange != null)
                 result.AddAttribute(new ValueRange(valueRange));
             return result;
@@ -3919,7 +3919,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="value">The value to replicate.</param>
         /// <param name="range">The range used to index the output array.</param>
         /// <returns>The array of replicated values.</returns>
-        public static VariableArray<T> Replicate<T>(Variable<T> value, Range range)
+        public static VariableArray<T> Replicate<T>(Variable<T> value, Microsoft.ML.Probabilistic.Models.Range range)
         {
             var result = Array<T>(range);
             CreateVariableArray(result, value);
@@ -3934,7 +3934,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="array">The array to replicate.</param>
         /// <param name="range">The range used to index the output array.</param>
         /// <returns>The array of replicated arrays.</returns>
-        public static VariableArray<VariableArray<T>, T[][]> Replicate<T>(VariableArray<T> array, Range range)
+        public static VariableArray<VariableArray<T>, T[][]> Replicate<T>(VariableArray<T> array, Microsoft.ML.Probabilistic.Models.Range range)
         {
             var result = Array<T>(array, range);
             CreateVariableArray(result, array);
@@ -3949,7 +3949,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="array">The array to replicate.</param>
         /// <param name="range">The range used to index the output array.</param>
         /// <returns>The array of replicated arrays.</returns>
-        public static VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]> Replicate<T>(VariableArray<VariableArray<T>, T[][]> array, Range range)
+        public static VariableArray<VariableArray<VariableArray<T>, T[][]>, T[][][]> Replicate<T>(VariableArray<VariableArray<T>, T[][]> array, Microsoft.ML.Probabilistic.Models.Range range)
         {
             var result = Array(array, range);
             CreateVariableArray(result, array);
@@ -3966,7 +3966,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="array">The array to replicate.</param>
         /// <param name="range">The range used to index the output array.</param>
         /// <returns>The array of replicated arrays.</returns>
-        public static VariableArray<VariableArray<VariableArray<TItem, T>, T[]>, T[][]> Replicate<TItem, T>(VariableArray<VariableArray<TItem, T>, T[]> array, Range range)
+        public static VariableArray<VariableArray<VariableArray<TItem, T>, T[]>, T[][]> Replicate<TItem, T>(VariableArray<VariableArray<TItem, T>, T[]> array, Microsoft.ML.Probabilistic.Models.Range range)
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             var result = Array(array, range);
@@ -4206,7 +4206,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="array"></param>
         /// <param name="newRange"></param>
         /// <returns></returns>
-        private static VariableArray<TItem, T[]> ReplaceRanges<TItem, T>(VariableArray<TItem, T[]> array, Range newRange)
+        private static VariableArray<TItem, T[]> ReplaceRanges<TItem, T>(VariableArray<TItem, T[]> array, Microsoft.ML.Probabilistic.Models.Range newRange)
             where TItem : Variable, ICloneable, SettableTo<TItem>
         {
             Dictionary<Range, Range> replacements = new Dictionary<Range, Range>();
@@ -4773,7 +4773,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </remarks>
         public static Variable<string> StringFormat(Variable<string> format, params Variable<string>[] args)
         {
-            var argsRange = new Range(args.Length);
+            var argsRange = new Microsoft.ML.Probabilistic.Models.Range(args.Length);
             VariableArray<string> argsArray = Variable.Array<string>(argsRange);
             argsArray.AddAttribute(new DoNotInfer());
             for (int i = 0; i < args.Length; ++i)
@@ -5231,7 +5231,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>A SwitchBlock object which must be closed before inference is performed.</returns>
         public static SwitchBlock Switch(Variable<int> i)
         {
-            Range range = i.GetValueRange();
+            Microsoft.ML.Probabilistic.Models.Range range = i.GetValueRange();
             return new SwitchBlock(i, range);
         }
 
@@ -5428,7 +5428,7 @@ namespace Microsoft.ML.Probabilistic.Models
             isReadOnly = that.IsReadOnly;
         }
 
-        internal Variable(Range range)
+        internal Variable(Microsoft.ML.Probabilistic.Models.Range range)
             : this()
         {
             loopRange = range;
@@ -5617,7 +5617,7 @@ namespace Microsoft.ML.Probabilistic.Models
             {
                 List<Range> headRanges;
                 List<Range> tailRanges = new List<Range>(ranges.Skip(1, out headRanges));
-                Range headRange = headRanges[0];
+                Microsoft.ML.Probabilistic.Models.Range headRange = headRanges[0];
                 ForEachBlock block = Variable.ForEach(headRange);
                 IVariableArray array = CreateVariableArrayFromItem(item, tailRanges);
                 block.CloseBlock();
@@ -5631,9 +5631,9 @@ namespace Microsoft.ML.Probabilistic.Models
             // check for jagged dependencies
             Set<Range> previousRanges = new Set<Range>();
             bool isJagged = false;
-            foreach (Range range in ranges)
+            foreach (Microsoft.ML.Probabilistic.Models.Range range in ranges)
             {
-                Models.MethodInvoke.ForEachRange(range.Size, delegate (Range r) { if (previousRanges.Contains(r)) isJagged = true; });
+                Models.MethodInvoke.ForEachRange(range.Size, delegate (Microsoft.ML.Probabilistic.Models.Range r) { if (previousRanges.Contains(r)) isJagged = true; });
                 if (isJagged) break;
                 previousRanges.Add(range);
             }
@@ -5643,7 +5643,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 List<Range> tailRanges = new List<Range>(ranges.Skip(previousRanges.Count, out headRanges));
                 // open all the headRanges
                 List<ForEachBlock> blocks = new List<ForEachBlock>();
-                foreach (Range r in headRanges)
+                foreach (Microsoft.ML.Probabilistic.Models.Range r in headRanges)
                 {
                     blocks.Add(Variable.ForEach(r));
                 }
@@ -5692,10 +5692,10 @@ namespace Microsoft.ML.Probabilistic.Models
             containers = ((Variable)varArray).Containers;
             foreach (IModelExpression ind in inds)
             {
-                if (ind is Range range)
+                if (ind is Microsoft.ML.Probabilistic.Models.Range range)
                 {
                     Models.MethodInvoke.ForEachRange(range.Size,
-                                                     delegate (Range r)
+                                                     delegate (Microsoft.ML.Probabilistic.Models.Range r)
                                                          {
                                                              if (!openRanges.Contains(r))
                                                                  throw new InvalidOperationException("Range '" + range + "' depends on range '" + r + "', but range '" + r +
@@ -5962,7 +5962,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         /// <param name="range">The desired range.</param>
         /// <returns><c>this</c>, modified to range over the newly created items.</returns>
-        public new Variable<T> ForEach(Range range)
+        public new Variable<T> ForEach(Microsoft.ML.Probabilistic.Models.Range range)
         {
             return ForEach(new Range[] { range });
         }
@@ -5991,7 +5991,7 @@ namespace Microsoft.ML.Probabilistic.Models
             if (ranges.Length == 0) throw new ArgumentException("range list is empty");
             List<Range> fullRanges = new List<Range>();
             MethodInvoke.ForEachRange(this, fullRanges.Add);
-            foreach (Range r in ranges)
+            foreach (Microsoft.ML.Probabilistic.Models.Range r in ranges)
             {
                 if (fullRanges.Contains(r)) throw new ArgumentException("ForEach is not needed on range '" + r + "' since the expression is already indexed by this range");
                 fullRanges.Add(r);
@@ -6013,7 +6013,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <returns>
         /// Returns a <c>VariableArray</c> object whose size is specified by <paramref name="r"/>.
         /// </returns>
-        public static VariableArray<T> Array(Range r)
+        public static VariableArray<T> Array(Microsoft.ML.Probabilistic.Models.Range r)
         {
             return new VariableArray<T>(r);
         }

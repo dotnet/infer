@@ -14,17 +14,17 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net462</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
       <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net6.0;net462</TargetFrameworks>
+        <TargetFrameworks>net6.0-windows</TargetFrameworks>
         <!-- No need to generate code twice -->
         <IgnorePostBuildNetCore>true</IgnorePostBuildNetCore>
       </PropertyGroup>
@@ -84,4 +84,4 @@
   <Target Name="PostBuildNetCore" AfterTargets="PostBuildEvent" Condition="'$(RunPostBuildNetCore)' == 'true'">
     <Exec Command="dotnet &quot;$(TargetPath)&quot; &quot;$([System.IO.Path]::Combine($(SolutionDir),'src', 'Learners', 'Classifier', 'BayesPointMachineClassifierInternal', 'GeneratedAlgorithms'))&quot;" />
   </Target>
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval></PropertyGroup></Project>

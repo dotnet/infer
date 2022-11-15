@@ -75,9 +75,9 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <summary>
         /// Ranges for the array of shared variables
         /// </summary>
-        public Range range0, range1;
+        public Microsoft.ML.Probabilistic.Models.Range range0, range1;
 
-        internal SharedVariableArray2D(Range range0, Range range1, DistributionArrayType prior, bool divideMessages = true)
+        internal SharedVariableArray2D(Microsoft.ML.Probabilistic.Models.Range range0, Microsoft.ML.Probabilistic.Models.Range range1, DistributionArrayType prior, bool divideMessages = true)
             : base(prior, divideMessages)
         {
             this.range0 = range0;

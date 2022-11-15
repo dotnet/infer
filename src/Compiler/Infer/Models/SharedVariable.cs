@@ -54,7 +54,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="prior">A distribution over an array, to use as the prior.</param>
         /// <param name="divideMessages">Use division (the faster default) for calculating messages to batches</param>
         /// <returns></returns>
-        public static SharedVariableArray<DomainType> Random<DistributionArrayType>(Range range, DistributionArrayType prior, bool divideMessages = true)
+        public static SharedVariableArray<DomainType> Random<DistributionArrayType>(Microsoft.ML.Probabilistic.Models.Range range, DistributionArrayType prior, bool divideMessages = true)
             where DistributionArrayType : IDistribution<DomainType[]>, Sampleable<DomainType[]>, SettableToProduct<DistributionArrayType>,
                 ICloneable, SettableToUniform, SettableTo<DistributionArrayType>, SettableToRatio<DistributionArrayType>, CanGetLogAverageOf<DistributionArrayType>
         {
@@ -70,7 +70,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="prior">Prior for the array.</param>
         /// <param name="divideMessages">Use division (the faster default) for calculating messages to batches</param>
         /// <returns></returns>
-        public static ISharedVariableArray<VariableArray<DomainType>, DomainType[][]> Random<DistributionArrayType>(VariableArray<DomainType> itemPrototype, Range range,
+        public static ISharedVariableArray<VariableArray<DomainType>, DomainType[][]> Random<DistributionArrayType>(VariableArray<DomainType> itemPrototype, Microsoft.ML.Probabilistic.Models.Range range,
                                                                                                                     DistributionArrayType prior, bool divideMessages = true)
             where DistributionArrayType : IDistribution<DomainType[][]>, Sampleable<DomainType[][]>, SettableToProduct<DistributionArrayType>,
                 ICloneable, SettableToUniform, SettableTo<DistributionArrayType>, SettableToRatio<DistributionArrayType>, CanGetLogAverageOf<DistributionArrayType>
@@ -88,7 +88,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <param name="prior">Prior for the array.</param>
         /// <param name="divideMessages">Use division (the faster default) for calculating messages to batches</param>
         /// <returns></returns>
-        public static ISharedVariableArray<ItemType, DomainType> Random<ItemType, DistributionArrayType>(ItemType itemPrototype, Range range, DistributionArrayType prior,
+        public static ISharedVariableArray<ItemType, DomainType> Random<ItemType, DistributionArrayType>(ItemType itemPrototype, Microsoft.ML.Probabilistic.Models.Range range, DistributionArrayType prior,
                                                                                                          bool divideMessages = true)
             where ItemType : Variable, SettableTo<ItemType>, ICloneable
             where DistributionArrayType : IDistribution<DomainType>, Sampleable<DomainType>, SettableToProduct<DistributionArrayType>,

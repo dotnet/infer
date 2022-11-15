@@ -15,19 +15,19 @@ namespace Microsoft.ML.Probabilistic.Models
     public interface IVariableArray3D<T> : IVariable, IVariableArray
     {
         /// <summary>
-        /// Range for first index
+        /// Microsoft.ML.Probabilistic.Models.Range for first index
         /// </summary>
-        Range Range0 { get; }
+        Microsoft.ML.Probabilistic.Models.Range Range0 { get; }
 
         /// <summary>
-        /// Range for second index
+        /// Microsoft.ML.Probabilistic.Models.Range for second index
         /// </summary>
-        Range Range1 { get; }
+        Microsoft.ML.Probabilistic.Models.Range Range1 { get; }
 
         /// <summary>
-        /// Range for third index
+        /// Microsoft.ML.Probabilistic.Models.Range for third index
         /// </summary>
-        Range Range2 { get; }
+        Microsoft.ML.Probabilistic.Models.Range Range2 { get; }
 
         /// <summary>
         /// Sets/Gets element in array given by the index expressions
@@ -48,30 +48,30 @@ namespace Microsoft.ML.Probabilistic.Models
         where TItem : Variable, ICloneable, SettableTo<TItem>
     {
         /// <summary>
-        /// Range for first index
+        /// Microsoft.ML.Probabilistic.Models.Range for first index
         /// </summary>
-        public Range Range0
+        public Microsoft.ML.Probabilistic.Models.Range Range0
         {
             get { return Ranges[0]; }
         }
 
         /// <summary>
-        /// Range for second index
+        /// Microsoft.ML.Probabilistic.Models.Range for second index
         /// </summary>
-        public Range Range1
+        public Microsoft.ML.Probabilistic.Models.Range Range1
         {
             get { return Ranges[1]; }
         }
 
         /// <summary>
-        /// Range for third index
+        /// Microsoft.ML.Probabilistic.Models.Range for third index
         /// </summary>
-        public Range Range2
+        public Microsoft.ML.Probabilistic.Models.Range Range2
         {
             get { return Ranges[2]; }
         }
 
-        internal VariableArray3D(TItem itemPrototype, Range range0, Range range1, Range range2)
+        internal VariableArray3D(TItem itemPrototype, Microsoft.ML.Probabilistic.Models.Range range0, Microsoft.ML.Probabilistic.Models.Range range1, Microsoft.ML.Probabilistic.Models.Range range2)
             : base(itemPrototype, range0, range1, range2)
         {
         }
@@ -96,7 +96,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// When setting the elements of an array, the right hand side must be a fresh variable with no other uses.
         /// The right-hand side must be an item variable indexed by exactly the ranges of the array, but possibly in a different order.
         /// </remarks>
-        public TItem this[Range range0, Range range1, Range range2]
+        public TItem this[Range range0, Microsoft.ML.Probabilistic.Models.Range range1, Microsoft.ML.Probabilistic.Models.Range range2]
         {
             get { return base[range0, range1, range2]; }
             set { base[range0, range1, range2] = value; }
@@ -113,7 +113,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// When setting the elements of an array, the right hand side must be a fresh variable with no other uses.
         /// The right-hand side must be an item variable indexed by exactly the ranges of the array, but possibly in a different order.
         /// </remarks>
-        public TItem this[Variable<int> range0, Range range1, Range range2]
+        public TItem this[Variable<int> range0, Microsoft.ML.Probabilistic.Models.Range range1, Microsoft.ML.Probabilistic.Models.Range range2]
         {
             get { return base[range0, range1, range2]; }
         }
@@ -129,7 +129,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// When setting the elements of an array, the right hand side must be a fresh variable with no other uses.
         /// The right-hand side must be an item variable indexed by exactly the ranges of the array, but possibly in a different order.
         /// </remarks>
-        public TItem this[Variable<int> range0, Variable<int> range1, Range range2]
+        public TItem this[Variable<int> range0, Variable<int> range1, Microsoft.ML.Probabilistic.Models.Range range2]
         {
             get { return base[range0, range1, range2]; }
         }
@@ -161,7 +161,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// When setting the elements of an array, the right hand side must be a fresh variable with no other uses.
         /// The right-hand side must be an item variable indexed by exactly the ranges of the array, but possibly in a different order.
         /// </remarks>
-        public TItem this[Variable<int> range0, Range range1, Variable<int> range2]
+        public TItem this[Variable<int> range0, Microsoft.ML.Probabilistic.Models.Range range1, Variable<int> range2]
         {
             get { return base[range0, range1, range2]; }
         }
@@ -177,7 +177,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// When setting the elements of an array, the right hand side must be a fresh variable with no other uses.
         /// The right-hand side must be an item variable indexed by exactly the ranges of the array, but possibly in a different order.
         /// </remarks>
-        public TItem this[Range range0, Variable<int> range1, Range range2]
+        public TItem this[Range range0, Variable<int> range1, Microsoft.ML.Probabilistic.Models.Range range2]
         {
             get { return base[range0, range1, range2]; }
         }
@@ -193,7 +193,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// When setting the elements of an array, the right hand side must be a fresh variable with no other uses.
         /// The right-hand side must be an item variable indexed by exactly the ranges of the array, but possibly in a different order.
         /// </remarks>
-        public TItem this[Range range0, Range range1, Variable<int> range2]
+        public TItem this[Range range0, Microsoft.ML.Probabilistic.Models.Range range1, Variable<int> range2]
         {
             get { return base[range0, range1, range2]; }
         }
@@ -259,9 +259,9 @@ namespace Microsoft.ML.Probabilistic.Models
         IVariableArray IVariableArray.ReplaceRanges(Dictionary<Range, Range> rangeReplacements, Dictionary<IModelExpression, IModelExpression> expressionReplacements, bool deepCopy)
         {
             // must do this replacement first, since it will influence how we replace the itemPrototype
-            Range newRange0 = Range0.Replace(rangeReplacements, expressionReplacements);
-            Range newRange1 = Range1.Replace(rangeReplacements, expressionReplacements);
-            Range newRange2 = Range2.Replace(rangeReplacements, expressionReplacements);
+            Microsoft.ML.Probabilistic.Models.Range newRange0 = Range0.Replace(rangeReplacements, expressionReplacements);
+            Microsoft.ML.Probabilistic.Models.Range newRange1 = Range1.Replace(rangeReplacements, expressionReplacements);
+            Microsoft.ML.Probabilistic.Models.Range newRange2 = Range2.Replace(rangeReplacements, expressionReplacements);
             TItem itemPrototype = (TItem) ((IVariableJaggedArray) this).ItemPrototype;
             if (itemPrototype is IVariableArray)
             {
@@ -283,12 +283,12 @@ namespace Microsoft.ML.Probabilistic.Models
     /// <typeparam name="T"></typeparam>
     public class VariableArray3D<T> : VariableArray3D<Variable<T>, T[,]>, IVariableArray3D<T>, SettableTo<VariableArray3D<T>>
     {
-        internal VariableArray3D(Range range0, Range range1, Range range2)
+        internal VariableArray3D(Microsoft.ML.Probabilistic.Models.Range range0, Microsoft.ML.Probabilistic.Models.Range range1, Microsoft.ML.Probabilistic.Models.Range range2)
             : base(new Variable<T>(), range0, range1, range2)
         {
         }
 
-        internal VariableArray3D(Variable<T> itemPrototype, Range range0, Range range1, Range range2)
+        internal VariableArray3D(Variable<T> itemPrototype, Microsoft.ML.Probabilistic.Models.Range range0, Microsoft.ML.Probabilistic.Models.Range range1, Microsoft.ML.Probabilistic.Models.Range range2)
             : base(itemPrototype, range0, range1, range2)
         {
         }

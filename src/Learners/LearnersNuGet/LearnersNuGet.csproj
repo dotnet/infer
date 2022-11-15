@@ -43,4 +43,4 @@
     <ProjectReference Include="..\Classifier\Classifier.csproj" />
     <ProjectReference Include="..\Recommender\Recommender.csproj" />
   </ItemGroup>
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval></PropertyGroup></Project>

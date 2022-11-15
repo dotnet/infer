@@ -88,7 +88,7 @@ namespace Microsoft.ML.Probabilistic.Models
             this.ranges = ranges;
             this.itemPrototype = itemPrototype;
             // check that none of the ranges match an open container
-            foreach (Range r in ranges)
+            foreach (Microsoft.ML.Probabilistic.Models.Range r in ranges)
             {
                 if (r == null) throw new ArgumentNullException("range");
                 foreach (IStatementBlock stBlock in containers)

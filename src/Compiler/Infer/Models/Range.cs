@@ -29,9 +29,9 @@ namespace Microsoft.ML.Probabilistic.Models
         public IModelExpression<int> Size { get; private set; }
 
         /// <summary>
-        /// Range from which this range was cloned, or null if none.
+        /// Microsoft.ML.Probabilistic.Models.Range from which this range was cloned, or null if none.
         /// </summary>
-        public Range Parent { get; private set; }
+        public Microsoft.ML.Probabilistic.Models.Range Parent { get; private set; }
 
         /// <summary>
         /// Name
@@ -80,7 +80,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         /// <param name="attr">The attribute to add</param>
         /// <returns>The range object</returns>
-        public Range Attrib(ICompilerAttribute attr)
+        public Microsoft.ML.Probabilistic.Models.Range Attrib(ICompilerAttribute attr)
         {
             AddAttribute(attr);
             return this;
@@ -138,7 +138,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Copy constructor
         /// </summary>
         /// <param name="parent"></param>
-        protected Range(Range parent)
+        protected Range(Microsoft.ML.Probabilistic.Models.Range parent)
             : this(parent.Size)
         {
             this.Parent = parent;
@@ -148,9 +148,9 @@ namespace Microsoft.ML.Probabilistic.Models
         /// Create a copy of a range.  The copy can be used to index the same arrays as the original range.
         /// </summary>
         /// <returns></returns>
-        public Range Clone()
+        public Microsoft.ML.Probabilistic.Models.Range Clone()
         {
-            return new Range(this);
+            return new Microsoft.ML.Probabilistic.Models.Range(this);
         }
 
         /// <summary>
@@ -164,10 +164,10 @@ namespace Microsoft.ML.Probabilistic.Models
                 if (Size is Variable<int> sizeVar)
                 {
                     if (!(sizeVar.IsObserved && sizeVar.IsReadOnly))
-                        throw new InvalidOperationException("The Range does not have constant size.  To use SizeAsInt, set IsReadOnly=true on the range size.");
+                        throw new InvalidOperationException("The Microsoft.ML.Probabilistic.Models.Range does not have constant size.  To use SizeAsInt, set IsReadOnly=true on the range size.");
                     return sizeVar.ObservedValue;
                 }
-                else throw new InvalidOperationException("The Range does not have constant size.  Set IsReadOnly=true on the range size.");
+                else throw new InvalidOperationException("The Microsoft.ML.Probabilistic.Models.Range does not have constant size.  Set IsReadOnly=true on the range size.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         /// <param name="name">Name for the range</param>
         /// <returns>this</returns>
-        public Range Named(string name)
+        public Microsoft.ML.Probabilistic.Models.Range Named(string name)
         {
             this.name = name;
             return this;
@@ -219,7 +219,7 @@ namespace Microsoft.ML.Probabilistic.Models
         internal static string ToString(IList<Range> ranges)
         {
             StringBuilder sb = new StringBuilder("[");
-            foreach (Range r in ranges)
+            foreach (Microsoft.ML.Probabilistic.Models.Range r in ranges)
             {
                 if (sb.Length > 1) sb.Append(",");
                 sb.Append(r.Name);
@@ -228,9 +228,9 @@ namespace Microsoft.ML.Probabilistic.Models
             return sb.ToString();
         }
 
-        internal Range GetRoot()
+        internal Microsoft.ML.Probabilistic.Models.Range GetRoot()
         {
-            Range root = this;
+            Microsoft.ML.Probabilistic.Models.Range root = this;
             while (root.Parent != null) root = root.Parent;
             return root;
         }
@@ -247,12 +247,12 @@ namespace Microsoft.ML.Probabilistic.Models
             return v;
         }
 
-        private static Range ReplaceExpressions(Range r, Dictionary<IModelExpression, IModelExpression> replacements)
+        private static Microsoft.ML.Probabilistic.Models.Range ReplaceExpressions(Microsoft.ML.Probabilistic.Models.Range r, Dictionary<IModelExpression, IModelExpression> replacements)
         {
             IModelExpression<int> newSize = (IModelExpression<int>)ReplaceExpressions(r.Size, replacements);
             if (ReferenceEquals(newSize, r.Size))
                 return r;
-            Range newRange = new Range(newSize);
+            Microsoft.ML.Probabilistic.Models.Range newRange = new Microsoft.ML.Probabilistic.Models.Range(newSize);
             newRange.Parent = r;
             replacements.Add(r, newRange);
             return newRange;
@@ -261,7 +261,7 @@ namespace Microsoft.ML.Probabilistic.Models
         private static IModelExpression ReplaceExpressions(IModelExpression expr, Dictionary<IModelExpression, IModelExpression> replacements)
         {
             if (replacements.ContainsKey(expr)) return replacements[expr];
-            if (expr is Range range)
+            if (expr is Microsoft.ML.Probabilistic.Models.Range range)
             {
                 return ReplaceExpressions(range, replacements);
             }
@@ -288,12 +288,12 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
-        /// Construct a new Range in which all subranges and size expressions have been replaced according to given Dictionaries.
+        /// Construct a new Microsoft.ML.Probabilistic.Models.Range in which all subranges and size expressions have been replaced according to given Dictionaries.
         /// </summary>
         /// <param name="rangeReplacements"></param>
         /// <param name="expressionReplacements">Modified on exit to contain newly created ranges</param>
         /// <returns></returns>
-        internal Range Replace(Dictionary<Range, Range> rangeReplacements, Dictionary<IModelExpression, IModelExpression> expressionReplacements)
+        internal Microsoft.ML.Probabilistic.Models.Range Replace(Dictionary<Range, Range> rangeReplacements, Dictionary<IModelExpression, IModelExpression> expressionReplacements)
         {
             if (rangeReplacements.ContainsKey(this)) return rangeReplacements[this];
             return ReplaceExpressions(this, expressionReplacements);
@@ -307,10 +307,10 @@ namespace Microsoft.ML.Probabilistic.Models
         /// <exclude/>
         internal bool IsCompatibleWith(IModelExpression index)
         {
-            if (index is Range range) return (range.GetRoot() == GetRoot());
+            if (index is Microsoft.ML.Probabilistic.Models.Range range) return (range.GetRoot() == GetRoot());
             else if (index is Variable indexVar)
             {
-                Range valueRange = indexVar.GetValueRange(false);
+                Microsoft.ML.Probabilistic.Models.Range valueRange = indexVar.GetValueRange(false);
                 if (valueRange == null) return true;
                 return IsCompatibleWith(valueRange);
             }

@@ -22,12 +22,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void WeightedAverageTest()
         {
             Assert.Equal(Environment.Is64BitProcess ? 3.86361619394904E-311 : 3.86361619394162E-311, MMath.WeightedAverage(0.82912896852490248, 2.5484859206000203E-311, 3.50752234977395E-313, 31.087830618727477));
-            Assert.Equal(MMath.WeightedAverage(0.1, double.MinValue, 0.01, double.MinValue), double.MinValue);
-            Assert.Equal(MMath.WeightedAverage(0.1, -double.Epsilon, double.MaxValue, -double.Epsilon), -double.Epsilon);
+            Assert.Equal(double.MinValue, MMath.WeightedAverage(0.1, double.MinValue, 0.01, double.MinValue));
+            Assert.Equal(-double.Epsilon, MMath.WeightedAverage(0.1, -double.Epsilon, double.MaxValue, -double.Epsilon));
             Assert.Equal(MMath.WeightedAverage(1e-100, 2e-250, 1e-100, 4e-250), MMath.Average(2e-250, 4e-250));
             Assert.Equal(MMath.WeightedAverage(1e100, 2e250, 1e100, 4e250), MMath.Average(2e250, 4e250));
-            Assert.Equal(MMath.WeightedAverage(0, 0, 0.1, -double.Epsilon), -double.Epsilon);
-            Assert.Equal(MMath.WeightedAverage(0.1, -double.Epsilon, 0, double.NegativeInfinity), -double.Epsilon);
+            Assert.Equal(-double.Epsilon, MMath.WeightedAverage(0, 0, 0.1, -double.Epsilon));
+            Assert.Equal(-double.Epsilon, MMath.WeightedAverage(0.1, -double.Epsilon, 0, double.NegativeInfinity));
             Assert.False(double.IsNaN(MMath.WeightedAverage(1.7976931348623157E+308, double.NegativeInfinity, 4.94065645841247E-324, double.NegativeInfinity)));
             Assert.False(double.IsNaN(MMath.WeightedAverage(0.01, double.NegativeInfinity, double.MaxValue, double.MaxValue)));
             Assert.False(double.IsNaN(MMath.WeightedAverage(0.01, double.NegativeInfinity, double.Epsilon, double.NegativeInfinity)));

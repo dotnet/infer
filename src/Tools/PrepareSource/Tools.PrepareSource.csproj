@@ -3,9 +3,9 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <AssemblyName>Microsoft.ML.Probabilistic.Tools.PrepareSource</AssemblyName>
     <RootNamespace>Microsoft.ML.Probabilistic.Tools.PrepareSource</RootNamespace>
   </PropertyGroup>
 
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval></PropertyGroup></Project>

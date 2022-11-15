@@ -267,7 +267,7 @@ namespace Microsoft.ML.Probabilistic.Models
             List<Range> ranges = new List<Range>();
             foreach (IModelExpression arg in ReturnValueAndArgs())
             {
-                ForEachRange(arg, delegate(Range r) { if (!ranges.Contains(r)) ranges.Add(r); });
+                ForEachRange(arg, delegate(Microsoft.ML.Probabilistic.Models.Range r) { if (!ranges.Contains(r)) ranges.Add(r); });
             }
             foreach (IStatementBlock b in Containers)
             {
@@ -281,7 +281,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         internal static void ForEachRange(IModelExpression arg, Action<Range> action)
         {
-            if (arg is Range range)
+            if (arg is Microsoft.ML.Probabilistic.Models.Range range)
             {
                 action(range);
                 return;
@@ -305,7 +305,7 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
-        /// Get a dictionary mapping all array indexer expressions (including sub-expressions) to a list of their Range indexes, in order.
+        /// Get a dictionary mapping all array indexer expressions (including sub-expressions) to a list of their Microsoft.ML.Probabilistic.Models.Range indexes, in order.
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
@@ -321,7 +321,7 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
-        /// If arg is an array indexer expression, get a list of all Range indexes, in order.  Indexes that are not Ranges instead get their Ranges added to dict.
+        /// If arg is an array indexer expression, get a list of all Microsoft.ML.Probabilistic.Models.Range indexes, in order.  Indexes that are not Ranges instead get their Ranges added to dict.
         /// </summary>
         /// <param name="arg"></param>
         /// <param name="dict"></param>
@@ -337,7 +337,7 @@ namespace Microsoft.ML.Probabilistic.Models
                     // must add item indices after array's indices
                     foreach (IModelExpression expr in v.indices)
                     {
-                        if (expr is Range range) indices.Add(range);
+                        if (expr is Microsoft.ML.Probabilistic.Models.Range range) indices.Add(range);
                         else
                         {
                             List<List<Range>> argBrackets = GetRangeBrackets(expr, dict);
@@ -351,7 +351,7 @@ namespace Microsoft.ML.Probabilistic.Models
             return new List<List<Range>>();
         }
 
-        internal static int CompareRanges(IDictionary<IModelExpression, List<List<Range>>> dict, Range a, Range b)
+        internal static int CompareRanges(IDictionary<IModelExpression, List<List<Range>>> dict, Microsoft.ML.Probabilistic.Models.Range a, Microsoft.ML.Probabilistic.Models.Range b)
         {
             foreach (List<List<Range>> brackets in dict.Values)
             {
@@ -361,7 +361,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 {
                     bool aInThisBracket = false;
                     bool bInThisBracket = false;
-                    foreach (Range range in bracket)
+                    foreach (Microsoft.ML.Probabilistic.Models.Range range in bracket)
                     {
                         if (range == a) aInThisBracket = true;
                         if (range == b) bInThisBracket = true;
@@ -385,7 +385,7 @@ namespace Microsoft.ML.Probabilistic.Models
         {
             Set<Range> argRanges = new Set<Range>();
             ForEachRange(arg, argRanges.Add);
-            foreach (Range r in ranges)
+            foreach (Microsoft.ML.Probabilistic.Models.Range r in ranges)
             {
                 if (!argRanges.Contains(r)) return false;
             }

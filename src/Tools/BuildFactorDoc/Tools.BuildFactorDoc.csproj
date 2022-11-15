@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Microsoft.ML.Probabilistic.Tools.BuildFactorDoc</RootNamespace>
     <AssemblyName>Microsoft.ML.Probabilistic.Tools.BuildFactorDoc</AssemblyName>
   </PropertyGroup>
@@ -12,4 +12,4 @@
     <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
   </ItemGroup>
 
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval></PropertyGroup></Project>
