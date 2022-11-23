@@ -789,7 +789,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 OnCompiled(new CompileEventArgs() {Exception = ex});
                 if (BrowserMode != BrowserMode.Never) ShowBrowser(tc, GeneratedSourceFolder, itd.Name);
-                throw new CompilationFailedException(ex.Results, ex.Message);
+                throw new CompilationFailedException(ex.Results, ex.ToString());
             }
         }
 

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\common.props" />
 
   <PropertyGroup>
@@ -77,4 +77,4 @@
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval><CheckForOverflowUnderflow>True</CheckForOverflowUnderflow></PropertyGroup></Project>

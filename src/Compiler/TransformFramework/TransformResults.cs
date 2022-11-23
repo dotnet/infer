@@ -149,7 +149,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 sb.AppendLine();
                 sb.Append("Details: ");
-                sb.Append(exception.Message);
+                sb.Append(exception.ToString());
             }
             return sb.ToString();
         }

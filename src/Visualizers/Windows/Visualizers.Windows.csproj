@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\nuget-properties.props" />
 
   <PropertyGroup>
@@ -57,4 +57,4 @@
     <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyNamePrefix)Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.xml</DocumentationFile>
   </PropertyGroup>
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval><CheckForOverflowUnderflow>True</CheckForOverflowUnderflow></PropertyGroup></Project>

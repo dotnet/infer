@@ -674,33 +674,36 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 var rand = new SerializableRandom();
 
-                int ii;
-                int mj, mk;
+                unchecked
+                {
+                    int ii;
+                    int mj, mk;
 
-                int subtraction = (seed == Int32.MinValue) ? Int32.MaxValue : Math.Abs(seed);
-                mj = MSEED - subtraction;
-                rand.seedArray[55] = mj;
-                mk = 1;
-                for (int i = 1; i < 55; i++)
-                {
-                    ii = (21 * i) % 55;
-                    rand.seedArray[ii] = mk;
-                    mk = mj - mk;
-                    if (mk < 0) mk += MBIG;
-                    mj = rand.seedArray[ii];
-                }
-                for (int k = 1; k < 5; k++)
-                {
-                    for (int i = 1; i < 56; i++)
+                    int subtraction = (seed == Int32.MinValue) ? Int32.MaxValue : Math.Abs(seed);
+                    mj = MSEED - subtraction;
+                    rand.seedArray[55] = mj;
+                    mk = 1;
+                    for (int i = 1; i < 55; i++)
                     {
-                        rand.seedArray[i] -= rand.seedArray[1 + (i + 30) % 55];
-                        if (rand.seedArray[i] < 0) rand.seedArray[i] += MBIG;
+                        ii = (21 * i) % 55;
+                        rand.seedArray[ii] = mk;
+                        mk = mj - mk;
+                        if (mk < 0) mk += MBIG;
+                        mj = rand.seedArray[ii];
                     }
-                }
-                rand.inext = 0;
-                rand.inextp = 21;
+                    for (int k = 1; k < 5; k++)
+                    {
+                        for (int i = 1; i < 56; i++)
+                        {
+                            rand.seedArray[i] -= rand.seedArray[1 + (i + 30) % 55];
+                            if (rand.seedArray[i] < 0) rand.seedArray[i] += MBIG;
+                        }
+                    }
+                    rand.inext = 0;
+                    rand.inextp = 21;
 
-                return rand;
+                    return rand;
+                }
             }
 
             double Sample()

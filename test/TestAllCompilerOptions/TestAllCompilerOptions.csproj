@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
 
   <PropertyGroup>
@@ -10,4 +10,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Tests\Tests.csproj" />
   </ItemGroup>
-</Project>
+<PropertyGroup><WarningLevel>0</WarningLevel><TagForRemoval>1</TagForRemoval><CheckForOverflowUnderflow>True</CheckForOverflowUnderflow></PropertyGroup></Project>
