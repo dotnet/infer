@@ -720,9 +720,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             if (anyCounter > 8)
                                 throw new NotSupportedException("Method has > 8 SkipIfAllUniform annotations");
-                            byte bit = (byte)(1 << (anyCounter - 1));
-                            // when a required node is missing and not labelled uniform, assume that it is available.  thus this bit is no longer required.
-                            requiredBits[targetIndex] &= (byte)~bit;
+                            unchecked
+                            {
+                                byte bit = (byte)(1 << (anyCounter - 1));
+                                // when a required node is missing and not labelled uniform, assume that it is available.  thus this bit is no longer required.
+                                requiredBits[targetIndex] &= (byte)~bit;
+                            }
                             // no need to consider rest of the AnyStatement
                             return true;
                         }
@@ -1578,13 +1581,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (findloops)
             {
                 dfs.BackEdge += delegate (Edge<NodeIndex> edge)
-                    {
-                        FindLoop(node, FreshTargetsOf, nodeData, "needs a fresh");
-                        //Console.WriteLine("{0} triggers {1}", edge.Source, edge.Target);
-                        //Console.WriteLine(StringUtil.JoinColumns("[" + edge.Source + "] ", NodeToString(edge.Source)));
-                        //Console.WriteLine(StringUtil.JoinColumns("[" + edge.Target + "] ", NodeToString(edge.Target)));
-                        throw new Exception("The model has a loop of fresh edges");
-                    };
+                {
+                    FindLoop(node, FreshTargetsOf, nodeData, "needs a fresh");
+                    //Console.WriteLine("{0} triggers {1}", edge.Source, edge.Target);
+                    //Console.WriteLine(StringUtil.JoinColumns("[" + edge.Source + "] ", NodeToString(edge.Source)));
+                    //Console.WriteLine(StringUtil.JoinColumns("[" + edge.Target + "] ", NodeToString(edge.Target)));
+                    throw new Exception("The model has a loop of fresh edges");
+                };
             }
             dfs.SearchFrom(node);
         }
@@ -1612,10 +1615,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             dfs.ClearActions();
             dfs.TreeEdge += delegate (Edge<NodeIndex> edge) { action(edge.Target); };
             dfs.BackEdge += delegate (Edge<NodeIndex> edge)
-                {
-                    FindLoop(trigger, TriggeesOf, nodeData, "is triggered by");
-                    throw new Exception("The model has a loop of deterministic edges, which is not allowed by Variational Message Passing.");
-                };
+            {
+                FindLoop(trigger, TriggeesOf, nodeData, "is triggered by");
+                throw new Exception("The model has a loop of deterministic edges, which is not allowed by Variational Message Passing.");
+            };
             dfs.SearchFrom(trigger);
         }
 
@@ -1675,22 +1678,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             DepthFirstSearch<NodeIndex> dfs = new DepthFirstSearch<NodeIndex>(successors, data);
             dfs.TreeEdge += delegate (Edge<NodeIndex> edge) { parent[edge.Target] = edge.Source; };
             dfs.BackEdge += delegate (Edge<NodeIndex> edge)
+            {
+                if (!found)
                 {
-                    if (!found)
+                    found = true;
+                    NodeIndex target = edge.Target;
+                    Console.WriteLine("{0} {2} {1}", edge.Target, edge.Source, message);
+                    Console.WriteLine(StringUtil.JoinColumns("[" + edge.Target + "] ", NodeToString(edge.Target)));
+                    NodeIndex node = edge.Source;
+                    while (!node.Equals(target))
                     {
-                        found = true;
-                        NodeIndex target = edge.Target;
-                        Console.WriteLine("{0} {2} {1}", edge.Target, edge.Source, message);
-                        Console.WriteLine(StringUtil.JoinColumns("[" + edge.Target + "] ", NodeToString(edge.Target)));
-                        NodeIndex node = edge.Source;
-                        while (!node.Equals(target))
-                        {
-                            Console.WriteLine("{0} {2} {1}", node, parent[node], message);
-                            Console.WriteLine(StringUtil.JoinColumns("[" + node + "] ", NodeToString(node)));
-                            node = parent[node];
-                        }
+                        Console.WriteLine("{0} {2} {1}", node, parent[node], message);
+                        Console.WriteLine(StringUtil.JoinColumns("[" + node + "] ", NodeToString(node)));
+                        node = parent[node];
                     }
-                };
+                }
+            };
             dfs.SearchFrom(start);
         }
 

@@ -67,10 +67,13 @@ namespace Microsoft.ML.Probabilistic.Utilities
         /// <returns>Incorporates the second hash key into the first hash key and returns the new, combined hash key</returns>
         public static Int32 Combine(Int32 hash, Int32 key)
         {
-            hash = Combine(hash, (byte) key);
-            hash = Combine(hash, (byte) (key >> 8));
-            hash = Combine(hash, (byte) (key >> 16));
-            hash = Combine(hash, (byte) (key >> 24));
+            unchecked
+            {
+                hash = Combine(hash, (byte)key);
+                hash = Combine(hash, (byte)(key >> 8));
+                hash = Combine(hash, (byte)(key >> 16));
+                hash = Combine(hash, (byte)(key >> 24));
+            }
             return hash;
         }
 
