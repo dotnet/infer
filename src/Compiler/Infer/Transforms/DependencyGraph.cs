@@ -720,12 +720,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             if (anyCounter > 8)
                                 throw new NotSupportedException("Method has > 8 SkipIfAllUniform annotations");
-                            unchecked
-                            {
-                                byte bit = (byte)(1 << (anyCounter - 1));
-                                // when a required node is missing and not labelled uniform, assume that it is available.  thus this bit is no longer required.
-                                requiredBits[targetIndex] &= (byte)~bit;
-                            }
+                            byte bit = (byte)(1 << (anyCounter - 1));
+                            // when a required node is missing and not labelled uniform, assume that it is available.  thus this bit is no longer required.
+                            // unchecked is required because the "~" operator returns an int, which then overflows when casting to a byte.
+                            requiredBits[targetIndex] &= unchecked((byte)~bit);
                             // no need to consider rest of the AnyStatement
                             return true;
                         }

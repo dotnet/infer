@@ -171,10 +171,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                     {
                         NodeType target = graph.TargetOf(edge);
                         bool isSinkEdge = IsSinkEdge(edge);
-
-                        // Long to avoid overflow.
-                        long distTarget = isSinkEdge ? 0 : distanceToSink[target];
-                        if (distanceToSink[node] != distTarget + 1) continue;
+                        if (sourceGroup.Contains(target)) continue;
+                        if (distanceToSink[node] - 1 != distanceToSink[target]) continue;
                         // target cannot be in sourceGroup since their distances are huge
                         float cap = capacity(edge);
                         float residual;
@@ -200,14 +198,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                     foreach (EdgeType edge in graph.EdgesInto(node))
                     {
                         NodeType target = graph.SourceOf(edge);
-
-                        // Long to avoid overflow
-                        long nodeDistanceToSink = distanceToSink[node];
-                        long targetDistanceToSink = distanceToSink[target];
-                        if (nodeDistanceToSink != targetDistanceToSink + 1) continue;
-                        // target cannot be in sourceGroup since their distances are huge,
-                        // unless it is both a source and sink.
-                        if (Sources.Contains(target)) continue;
+                        if (sourceGroup.Contains(target)) continue;
+                        if (distanceToSink[node] - 1 != distanceToSink[target]) continue;
                         float revCap = reverseCapacity(edge);
                         float residual;
                         if (-revCap == flow[edge]) residual = 0f;
