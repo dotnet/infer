@@ -172,7 +172,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                         NodeType target = graph.TargetOf(edge);
                         bool isSinkEdge = IsSinkEdge(edge);
                         if (sourceGroup.Contains(target)) continue;
-                        if (distanceToSink[node] - 1 != distanceToSink[target]) continue;
+                        int distTarget = isSinkEdge ? 0 : distanceToSink[target];
+                        if (distanceToSink[node] - 1 != distTarget) continue;
                         // target cannot be in sourceGroup since their distances are huge
                         float cap = capacity(edge);
                         float residual;
