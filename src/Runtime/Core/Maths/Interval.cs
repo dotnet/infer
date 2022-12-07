@@ -608,14 +608,14 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Compute bounds on the expected value of a function over an interval whose endpoints are uncertain.
         /// Incorporates the quantile estimation error of the distribution.
         /// </summary>
+        /// <param name="subdivisionCount"></param>
         /// <param name="cancellationToken"></param>
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <param name="skillDistribution"></param>
         /// <param name="getInterval"></param>
-        /// <param name="subdivisionCount"></param>
         /// <returns></returns>
-        public static Interval GetExpectation(CancellationToken cancellationToken, Interval left, Interval right, IEstimatedDistribution skillDistribution, Func<Interval, Interval> getInterval, int subdivisionCount)
+        public static Interval GetExpectation(int subdivisionCount, CancellationToken cancellationToken, Interval left, Interval right, IEstimatedDistribution skillDistribution, Func<Interval, Interval> getInterval)
         {
             Interval leftCdf = left.GetProbLessThan(skillDistribution);
             Interval rightCdf = right.GetProbLessThan(skillDistribution);
@@ -630,7 +630,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double increment = 1.0 / subdivisionCount;
             double start = increment;
             double error = 0;
-            Interval previousInput = left;
+            Interval previousInput = leftCdf.GetQuantile(skillDistribution);
             Interval previousCdf = leftCdf;
             Interval prevApproxProb = Interval.NaN;
             for (int i = 0; i < subdivisionCount; i++)

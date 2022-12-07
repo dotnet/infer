@@ -50,7 +50,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <inheritdoc/>
-        public virtual Interval GetExpectation(double maximumError, Interval left, Interval right, bool preservesPoint, Func<Interval, Interval> function, CancellationToken cancellationToken)
+        public virtual Interval GetExpectation(double maximumError, CancellationToken cancellationToken, Interval left, Interval right, bool preservesPoint, Func<Interval, Interval> function)
         {
             return Interval.GetExpectation(maximumError, cancellationToken, left, right, this, preservesPoint, function);
         }
