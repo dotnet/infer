@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (Product.IsPointMass)
                 return AAverageConditional(Product.Point, B);
-            if (Product.IsUniform() && B < double.MinValue) 
+            if (Product.IsUniform()) 
                 return Product;
             // (m - ab)^2/v = (a^2 b^2 - 2abm + m^2)/v
             // This code works correctly even if B=0 or Product is uniform (and B is finite). 
