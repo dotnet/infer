@@ -166,14 +166,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                 {
                     // discharge this node
                     // find an admissible edge
-                    // an edge is admissible if neither endpoint is in the sourceGroup, distanceToSink(source)=distanceToSink(target)+1, and residual capacity>0
+                    // an edge is admissible if neither endpoint is in the sourceGroup (unless target is a sink), distanceToSink(source)=distanceToSink(target)+1, and residual capacity>0
                     foreach (EdgeType edge in graph.EdgesOutOf(node))
                     {
                         NodeType target = graph.TargetOf(edge);
                         bool isSinkEdge = IsSinkEdge(edge);
                         int distTarget = isSinkEdge ? 0 : distanceToSink[target];
-                        if (distanceToSink[node] != distTarget + 1) continue;
-                        // target cannot be in sourceGroup since their distances are huge
+                        if (distanceToSink[node] - 1 != distTarget) continue;
+                        // target can be in sourceGroup if it is a sink
                         float cap = capacity(edge);
                         float residual;
                         if (cap == flow[edge]) residual = 0f; // avoid infinity-infinity
@@ -198,9 +198,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                     foreach (EdgeType edge in graph.EdgesInto(node))
                     {
                         NodeType target = graph.SourceOf(edge);
-                        if (distanceToSink[node] != distanceToSink[target] + 1) continue;
-                        // target cannot be in sourceGroup since their distances are huge,
-                        // unless it is both a source and sink.
+                        if (distanceToSink[node] - 1 != distanceToSink[target]) continue;
+                        // if target is both a source and sink, its distanceToSink will be zero, but we cannot push flow backward into it
                         if (Sources.Contains(target)) continue;
                         float revCap = reverseCapacity(edge);
                         float residual;
