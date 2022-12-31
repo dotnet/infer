@@ -1383,12 +1383,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private static bool IsGammaPower(MarginalPrototype mp)
         {
-            return mp != null && (mp.prototype is GammaPower || typeof(GammaPower).IsAssignableFrom(mp.prototypeExpression.GetExpressionType()));
+            return mp != null && (mp.prototype is GammaPower || mp.prototypeExpression?.GetExpressionType() == typeof(GammaPower));
         }
 
         private static bool IsGamma(MarginalPrototype mp)
         {
-            return mp != null && (mp.prototype is Gamma || typeof(Gamma).IsAssignableFrom(mp.prototypeExpression.GetExpressionType()));
+            return mp != null && (mp.prototype is Gamma || mp.prototypeExpression?.GetExpressionType() == typeof(Gamma));
         }
 
         private static IExpression CardinalityOfBinaryExpression(IExpression dimension1, BinaryOperator op, IExpression dimension2)
