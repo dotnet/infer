@@ -5452,11 +5452,31 @@
         <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(A) p(A) factor(A,B)]/p(B)</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="AverageLogFactor()">
+    <message_doc name="AverageLogFactor(T, T)">
       <summary>Evidence message for VMP.</summary>
+      <param name="a">Incoming message from <c>A</c>.</param>
+      <param name="b">Incoming message from <c>B</c>.</param>
       <returns>Zero.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(factor(A,B))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+        <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AverageLogFactor{TDistribution}(TDistribution, T)">
+      <summary>Evidence message for VMP.</summary>
+      <param name="a">Incoming message from <c>A</c>.</param>
+      <param name="b">Incoming message from <c>B</c>.</param>
+      <returns>Zero.</returns>
+      <remarks>
+        <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AverageLogFactor{TDistribution}(T, TDistribution)">
+      <summary>Evidence message for VMP.</summary>
+      <param name="a">Incoming message from <c>A</c>.</param>
+      <param name="b">Incoming message from <c>B</c>.</param>
+      <returns>Zero.</returns>
+      <remarks>
+        <para>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</para>
       </remarks>
     </message_doc>
     <message_doc name="AAverageLogarithm{TDistribution}(TDistribution, TDistribution)">
@@ -5939,6 +5959,14 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Cut.Backward{T}(T)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="LogEvidenceRatio{TDist}(TDist)">
+      <summary>Evidence message for EP.</summary>
+      <param name="backward">Incoming message from <c>backward</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(backward) p(backward) factor(backward,value) / sum_backward p(backward) messageTo(backward))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="ValueAverageConditional{TDist}(TDist)">
       <summary>EP message to <c>value</c>.</summary>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -13073,7 +13101,7 @@
     </message_doc>
     <message_doc name="BAverageConditional(IList{Bernoulli})">
       <summary>EP message to <c>b</c>.</summary>
-      <param name="cases">Incoming message from <c>cases</c>. Must be a proper distribution. If any element is uniform, the result will be uniform.</param>
+      <param name="cases">Incoming message from <c>cases</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <returns>The outgoing EP message to the <c>b</c> argument.</returns>
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(cases) p(cases) factor(cases,b)]/p(b)</c>.</para>
@@ -13083,12 +13111,14 @@
     </message_doc>
     <message_doc name="LogEvidenceRatio(IList{Bernoulli}, Bernoulli)">
       <summary>Evidence message for EP.</summary>
-      <param name="cases">Incoming message from <c>cases</c>.</param>
+      <param name="cases">Incoming message from <c>cases</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="b">Incoming message from <c>b</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
         <para>The formula for the result is <c>log(sum_(cases,b) p(cases,b) factor(cases,b) / sum_cases p(cases) messageTo(cases))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="cases" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="LogEvidenceRatio(IList{Bernoulli}, bool)">
       <summary>Evidence message for EP.</summary>
@@ -13129,7 +13159,7 @@
     </message_doc>
     <message_doc name="BAverageLogarithm(IList{Bernoulli})">
       <summary>VMP message to <c>b</c>.</summary>
-      <param name="cases">Incoming message from <c>cases</c>. Must be a proper distribution. If any element is uniform, the result will be uniform.</param>
+      <param name="cases">Incoming message from <c>cases</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <returns>The outgoing VMP message to the <c>b</c> argument.</returns>
       <remarks>
         <para>The outgoing message is the factor viewed as a function of <c>b</c> with <c>cases</c> integrated out. The formula is <c>sum_cases p(cases) factor(cases,b)</c>.</para>
@@ -13139,7 +13169,7 @@
     </message_doc>
     <message_doc name="AverageLogFactor(IList{Bernoulli}, Bernoulli)">
       <summary>Evidence message for VMP.</summary>
-      <param name="cases">Incoming message from <c>cases</c>. Must be a proper distribution. If any element is uniform, the result will be uniform.</param>
+      <param name="cases">Incoming message from <c>cases</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="b">Incoming message from <c>b</c>.</param>
       <returns>Zero.</returns>
       <remarks>
@@ -13239,7 +13269,7 @@
     </message_doc>
     <message_doc name="IAverageConditional(IList{Bernoulli}, Discrete)">
       <summary>EP message to <c>i</c>.</summary>
-      <param name="cases">Incoming message from <c>casesInt</c>. Must be a proper distribution. If any element is uniform, the result will be uniform.</param>
+      <param name="cases">Incoming message from <c>casesInt</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
@@ -13252,7 +13282,7 @@
     </message_doc>
     <message_doc name="LogEvidenceRatio(IList{Bernoulli}, Discrete)">
       <summary>Evidence message for EP.</summary>
-      <param name="cases">Incoming message from <c>casesInt</c>. Must be a proper distribution. If any element is uniform, the result will be uniform.</param>
+      <param name="cases">Incoming message from <c>casesInt</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="i">Incoming message from <c>i</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
@@ -13263,12 +13293,14 @@
     </message_doc>
     <message_doc name="LogEvidenceRatio(IList{Bernoulli}, int)">
       <summary>Evidence message for EP.</summary>
-      <param name="cases">Incoming message from <c>casesInt</c>.</param>
+      <param name="cases">Incoming message from <c>casesInt</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="i">Constant value for <c>i</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
         <para>The formula for the result is <c>log(sum_(casesInt) p(casesInt) factor(casesInt,i,count) / sum_casesInt p(casesInt) messageTo(casesInt))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="cases" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="CasesAverageLogarithm(Discrete, int)">
       <summary>VMP message to <c>casesInt</c>.</summary>
@@ -13289,7 +13321,7 @@
     </message_doc>
     <message_doc name="IAverageLogarithm(IList{Bernoulli}, Discrete)">
       <summary>VMP message to <c>i</c>.</summary>
-      <param name="cases">Incoming message from <c>casesInt</c>. Must be a proper distribution. If any element is uniform, the result will be uniform.</param>
+      <param name="cases">Incoming message from <c>casesInt</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
@@ -21634,6 +21666,57 @@
       </remarks>
     </message_doc>
   </message_op_class>
+  <message_op_class name="ParallelCopyOp">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="LowPriority.ParallelCopy{T}(T, out T)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="LogEvidenceRatio{T}(T, T, T)">
+      <summary>Evidence message for EP.</summary>
+      <param name="value">Incoming message from <c>value</c>.</param>
+      <param name="first">Incoming message from <c>first</c>.</param>
+      <param name="second">Incoming message from <c>second</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(value,first,second) p(value,first,second) factor(first,value,second) / sum_first p(first) messageTo(first))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="FirstAverageConditional{T}(T, T, T)">
+      <summary>EP message to <c>first</c>.</summary>
+      <param name="value">Incoming message from <c>value</c>.</param>
+      <param name="second">Incoming message from <c>second</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>first</c> as the random arguments are varied. The formula is <c>proj[p(first) sum_(value,second) p(value,second) factor(first,value,second)]/p(first)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="SecondAverageConditional{T}(T, T, T)">
+      <summary>EP message to <c>second</c>.</summary>
+      <param name="value">Incoming message from <c>value</c>.</param>
+      <param name="first">Incoming message from <c>first</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>second</c> as the random arguments are varied. The formula is <c>proj[p(second) sum_(value,first) p(value,first) factor(first,value,second)]/p(second)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="ValueAverageConditional{T}(T, T, T)">
+      <summary>EP message to <c>value</c>.</summary>
+      <param name="first">Incoming message from <c>first</c>.</param>
+      <param name="second">Incoming message from <c>second</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>value</c> as the random arguments are varied. The formula is <c>proj[p(value) sum_(first,second) p(first,second) factor(first,value,second)]/p(value)</c>.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
   <message_op_class name="LowPriorityForwardOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="LowPriority.Forward{T}(T)" />, given random arguments to the function.</summary>
@@ -22191,6 +22274,26 @@
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
         <para>The formula for the result is <c>log(sum_(product,b) p(product,b) factor(product,a,b) / sum_product p(product) messageTo(product))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(VectorGaussian, double[,], VectorGaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="product">Incoming message from <c>product</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(product,a,b) p(product,a,b) factor(product,a,b) / sum_product p(product) messageTo(product))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(VectorGaussian, DistributionArray2D{Gaussian, double}, VectorGaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="product">Incoming message from <c>product</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(product,a,b) p(product,a,b) factor(product,a,b) / sum_product p(product) messageTo(product))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="AverageLogFactor(VectorGaussian, Matrix, VectorGaussian)">
@@ -22886,6 +22989,14 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="LogEvidenceRatio(TruncatedGamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="max">Incoming message from <c>max</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(max) p(max) factor(max,val1,val2) / sum_max p(max) messageTo(max))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="MaxAverageConditional(Gamma, double)">
       <summary>EP message to <c>max</c>.</summary>
       <param name="a">Incoming message from <c>val1</c>.</param>
@@ -22931,6 +23042,14 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="LogEvidenceRatio2(TruncatedGamma)">
+      <summary />
+      <param name="max">Incoming message from <c>max</c>.</param>
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
     <message_doc name="MaxAverageConditional(TruncatedGamma, double)">
       <summary>EP message to <c>max</c>.</summary>
       <param name="a">Incoming message from <c>val1</c>.</param>
@@ -22976,6 +23095,16 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Min(double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="LogEvidenceRatio(double, double, Gamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="min">Constant value for <c>min</c>.</param>
+      <param name="a">Constant value for <c>val1</c>.</param>
+      <param name="b">Incoming message from <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(val2) p(val2) factor(min,val1,val2))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="MinAverageConditional(Gamma, double)">
       <summary>EP message to <c>min</c>.</summary>
       <param name="a">Incoming message from <c>val1</c>.</param>
@@ -23021,6 +23150,26 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Min(double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="LogEvidenceRatio(double, double, TruncatedGamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="min">Constant value for <c>min</c>.</param>
+      <param name="a">Constant value for <c>val1</c>.</param>
+      <param name="b">Incoming message from <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(val2) p(val2) factor(min,val1,val2))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(TruncatedGamma, TruncatedGamma, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="min">Incoming message from <c>min</c>.</param>
+      <param name="a">Incoming message from <c>val1</c>.</param>
+      <param name="b">Constant value for <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(min,val1) p(min,val1) factor(min,val1,val2) / sum_min p(min) messageTo(min))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="MinAverageConditional(TruncatedGamma, double)">
       <summary>EP message to <c>min</c>.</summary>
       <param name="a">Incoming message from <c>val1</c>.</param>
@@ -25653,11 +25802,12 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Damp.Backward{T}(T, double)" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="LogEvidenceRatio()">
+    <message_doc name="LogEvidenceRatio{Distribution}(Distribution)">
       <summary>Evidence message for EP.</summary>
+      <param name="backward">Incoming message from <c>backward</c>.</param>
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para>The formula for the result is <c>log(factor(backward,value,stepsize))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+        <para>The formula for the result is <c>log(sum_(backward) p(backward) factor(backward,value,stepsize) / sum_backward p(backward) messageTo(backward))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="AverageLogFactor()">
@@ -26933,6 +27083,88 @@
     </message_doc>
   </message_op_class>
   <message_op_class name="ReplicateOp_Divide">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Clone.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="DefAverageConditional{T}(T, T)">
+      <summary>EP message to <c>Def</c>.</summary>
+      <param name="toDef">Buffer <c>toDef</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>Def</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="UsesAverageConditional{T}(T, T, int, T)">
+      <summary>EP message to <c>Uses</c>.</summary>
+      <param name="Uses">Incoming message from <c>Uses</c>.</param>
+      <param name="marginal">Buffer <c>marginal</c>.</param>
+      <param name="resultIndex">Index of the <c>Uses</c> for which a message is desired.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is the factor viewed as a function of <c>Uses</c> conditioned on the given values.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="MarginalInit{T}(T)">
+      <summary>Initialize the buffer <c>marginal</c>.</summary>
+      <param name="Def">Incoming message from <c>Def</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>Initial value of buffer <c>marginal</c>.</returns>
+      <remarks>
+        <para />
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Def" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="Marginal{T}(T, T, T)">
+      <summary>Update the buffer <c>marginal</c>.</summary>
+      <param name="toDef">Buffer <c>toDef</c>.</param>
+      <param name="Def">Incoming message from <c>Def</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="MarginalIncrement{T}(T, T, T)">
+      <summary />
+      <param name="result">Modified to contain the outgoing message.</param>
+      <param name="def">Incoming message from <c>Def</c>.</param>
+      <param name="use" />
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="ToDefInit{T}(T)">
+      <summary>Initialize the buffer <c>toDef</c>.</summary>
+      <param name="Def">Incoming message from <c>Def</c>.</param>
+      <returns>Initial value of buffer <c>toDef</c>.</returns>
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="ToDef{T}(IReadOnlyList{T}, T)">
+      <summary>Update the buffer <c>toDef</c>.</summary>
+      <param name="Uses">Incoming message from <c>Uses</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="ReplicateOp_Divide_NoInit">
     <doc>
       <summary>Provides outgoing messages for <see cref="Clone.Replicate{T}(T, int)" />, given random arguments to the function.</summary>
     </doc>
@@ -30017,7 +30249,7 @@
     </message_doc>
     <message_doc name="LogEvidenceRatio{ItemType}(IReadOnlyList{ItemType}, IReadOnlyList{T}, int, IReadOnlyList{T})">
       <summary>Evidence message for EP.</summary>
-      <param name="array">Incoming message from <c>array</c>.</param>
+      <param name="array">Incoming message from <c>array</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="head">Incoming message from <c>head</c>.</param>
       <param name="count">Constant value for <c>count</c>.</param>
       <param name="tail">Incoming message from <c>tail</c>.</param>
@@ -30025,6 +30257,8 @@
       <remarks>
         <para>The formula for the result is <c>log(sum_(array,head,tail) p(array,head,tail) factor(head,array,count,tail) / sum_head p(head) messageTo(head))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="array" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="LogEvidenceRatio{ItemType}(IReadOnlyList{ItemType}, IReadOnlyList{ItemType}, int, IReadOnlyList{T})">
       <summary>Evidence message for EP.</summary>
@@ -30065,7 +30299,7 @@
       <summary>EP message to <c>array</c>.</summary>
       <param name="head">Incoming message from <c>head</c>.</param>
       <param name="count">Constant value for <c>count</c>.</param>
-      <param name="tail">Incoming message from <c>tail</c>.</param>
+      <param name="tail">Incoming message from <c>tail</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
@@ -30073,10 +30307,12 @@
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(head,tail) p(head,tail) factor(head,array,count,tail)]/p(array)</c>.</para>
       </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="tail" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="ArrayAverageConditional{ArrayType, ItemType}(IReadOnlyList{ItemType}, int, IReadOnlyList{T}, ArrayType)">
       <summary>EP message to <c>array</c>.</summary>
-      <param name="head">Incoming message from <c>head</c>.</param>
+      <param name="head">Incoming message from <c>head</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="count">Constant value for <c>count</c>.</param>
       <param name="tail">Incoming message from <c>tail</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
@@ -30086,6 +30322,8 @@
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>array</c> as the random arguments are varied. The formula is <c>proj[p(array) sum_(head,tail) p(head,tail) factor(head,array,count,tail)]/p(array)</c>.</para>
       </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="head" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="ArrayAverageConditional{ArrayType, ItemType}(IReadOnlyList{T}, int, IReadOnlyList{T}, ArrayType)">
       <summary>EP message to <c>array</c>.</summary>
@@ -30102,7 +30340,7 @@
     </message_doc>
     <message_doc name="HeadAverageConditional{ArrayType, ItemType}(IReadOnlyList{ItemType}, int, ArrayType)">
       <summary>EP message to <c>head</c>.</summary>
-      <param name="array">Incoming message from <c>array</c>.</param>
+      <param name="array">Incoming message from <c>array</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="count">Constant value for <c>count</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
@@ -30111,10 +30349,12 @@
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>head</c> as the random arguments are varied. The formula is <c>proj[p(head) sum_(array) p(array) factor(head,array,count,tail)]/p(head)</c>.</para>
       </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="array" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="TailAverageConditional{ArrayType, ItemType}(IReadOnlyList{ItemType}, int, ArrayType)">
       <summary>EP message to <c>tail</c>.</summary>
-      <param name="array">Incoming message from <c>array</c>.</param>
+      <param name="array">Incoming message from <c>array</c>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</param>
       <param name="count">Constant value for <c>count</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
@@ -30123,6 +30363,8 @@
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>tail</c> as the random arguments are varied. The formula is <c>proj[p(tail) sum_(array) p(array) factor(head,array,count,tail)]/p(tail)</c>.</para>
       </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="array" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="TailAverageConditional{ArrayType}(IReadOnlyList{T}, int, ArrayType)">
       <summary>EP message to <c>tail</c>.</summary>
