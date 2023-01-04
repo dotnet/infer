@@ -14,7 +14,7 @@ steps:
       displayName: Unit tests x64 (sequential)
       inputs:
         testSelector: 'testAssemblies'
-        testAssemblyVer2: test/Tests/bin/*/net462/Microsoft.ML.Probabilistic.Tests.dll
+        testAssemblyVer2: test/Tests/bin/*/net472/Microsoft.ML.Probabilistic.Tests.dll
         testFiltercriteria: '(Platform!=x86)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTests)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
         runInParallel: false
         runSettingsFile: test.runsettings
@@ -23,9 +23,9 @@ steps:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-          test/Tests/bin/*/net462/Microsoft.ML.Probabilistic.Tests.dll
-          test/Learners/LearnersTests/bin/*/net462/Microsoft.ML.Probabilistic.Learners.Tests.dll
-          test/TestPublic/bin/*/net462/TestPublic.dll
+          test/Tests/bin/*/net472/Microsoft.ML.Probabilistic.Tests.dll
+          test/Learners/LearnersTests/bin/*/net472/Microsoft.ML.Probabilistic.Learners.Tests.dll
+          test/TestPublic/bin/*/net472/TestPublic.dll
         testFiltercriteria: '(Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)' 
         runInParallel: true
         runSettingsFile: test.runsettings
@@ -35,7 +35,7 @@ steps:
       displayName: Unit tests x86 (sequential)
       inputs:
         testSelector: 'testAssemblies'
-        testAssemblyVer2: test/Tests/bin/*/net462/Microsoft.ML.Probabilistic.Tests.dll
+        testAssemblyVer2: test/Tests/bin/*/net472/Microsoft.ML.Probabilistic.Tests.dll
         testFiltercriteria: '(Platform!=x64)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTests)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
         runInParallel: false
         runSettingsFile: x86.runsettings
@@ -44,9 +44,9 @@ steps:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-          test/Tests/bin/*/net462/Microsoft.ML.Probabilistic.Tests.dll
-          test/Learners/LearnersTests/bin/*/net462/Microsoft.ML.Probabilistic.Learners.Tests.dll
-          test/TestPublic/bin/*/net462/TestPublic.dll
+          test/Tests/bin/*/net472/Microsoft.ML.Probabilistic.Tests.dll
+          test/Learners/LearnersTests/bin/*/net472/Microsoft.ML.Probabilistic.Learners.Tests.dll
+          test/TestPublic/bin/*/net472/TestPublic.dll
         testFiltercriteria: '(Platform!=x64)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)' 
         runInParallel: true
         runSettingsFile: x86.runsettings

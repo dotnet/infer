@@ -2,7 +2,7 @@
   "profiles": {
     "ClassifierModels": {
       "commandName": "Project",
-      "commandLineArgs": "."
+      "commandLineArgs": "\"C:\\Users\\jonat\\source\\repos\\TrueSkill2\\Infer.NET\\src\\Learners\\Classifier\\BayesPointMachineClassifierInternal\\GeneratedAlgorithms\""
     }
   }
 }

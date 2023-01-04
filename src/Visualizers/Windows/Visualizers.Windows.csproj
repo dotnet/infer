@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains visualization tools for exploring and analyzing models on Windows platform.</Description>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
     <AssemblyName>Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows</AssemblyName>
     <PackageId>Microsoft.ML.Probabilistic.Visualizers.Windows$(NuGetPackageIdSuffix)</PackageId>
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS, SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS</DefineConstants>
@@ -27,9 +27,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Msagl" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Msagl.Drawing" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Msagl.GraphViewerGdi" Version="1.1.1" />
+    <PackageReference Include="AutomaticGraphLayout" Version="1.1.12" />
+    <PackageReference Include="AutomaticGraphLayout.Drawing" Version="1.1.12" />
+    <PackageReference Include="AutomaticGraphLayout.GraphViewerGDI" Version="1.1.12" />
   </ItemGroup>
 
   <PropertyGroup Condition=" $(DefineConstants.Contains('INCLUDE_TRANSFORM_BROWSER'))">

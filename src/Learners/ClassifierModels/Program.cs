@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                 Trace.Listeners.Add(new TextWriterTraceListener(logWriter));
                 Debug.AutoFlush = true;
                 Trace.AutoFlush = true;
-#if NETFRAMEWORK
+#if NETFRAMEWORK || WINDOWS
                 Models.InferenceEngine.Visualizer = new WindowsVisualizer();
 #endif
                 Models.InferenceEngine.DefaultEngine.Compiler.BrowserMode = Compiler.BrowserMode.Always;

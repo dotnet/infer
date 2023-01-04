@@ -14,7 +14,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         /// </summary>
         public static void RunBrowser() // Must not be called "Run"
         {
-#if NETFRAMEWORK
+#if NETFRAMEWORK || WINDOWS
             InferenceEngine.Visualizer = new Compiler.Visualizers.WindowsVisualizer();
             // Show all tutorials, in a browser
             IAlgorithm[] algs = InferenceEngine.GetBuiltInAlgorithms();

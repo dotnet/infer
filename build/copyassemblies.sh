@@ -39,9 +39,9 @@ cp ../src/Learners/Recommender/${src}/Microsoft.ML.Probabilistic.Learners.Recomm
 cp ../src/Learners/Recommender/${src}/Microsoft.ML.Probabilistic.Learners.Recommender.pdb ${dst}
 cp ../src/Learners/Recommender/${src}/Microsoft.ML.Probabilistic.Learners.Recommender.xml ${dst}
 
-mkdir "${out}/net462"
-dst="${out}/net462"
-src="bin/${configuration}/net462"
+mkdir "${out}/net472"
+dst="${out}/net472"
+src="bin/${configuration}/net472"
 
 cp ../src/Visualizers/Windows/${src}/Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.dll ${dst}
 cp ../src/Visualizers/Windows/${src}/Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.pdb ${dst}

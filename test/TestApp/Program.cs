@@ -50,6 +50,8 @@ namespace TestApp
             Trace.Listeners.Add(new TextWriterTraceListener(logWriter));
 #if NETFRAMEWORK
             InferenceEngine.Visualizer = new WindowsVisualizer();
+#elif WINDOWS
+            InferenceEngine.Visualizer = new WindowsVisualizer();
 #endif
             Debug.AutoFlush = true;
             Trace.AutoFlush = true;

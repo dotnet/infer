@@ -76,7 +76,7 @@ There are three test assemblies in the solution:
 - **TestPublic.dll** in the folder `test/TestPublic`.
 - **Microsoft.ML.Probabilistic.Learners.Tests.dll** in the folder `test/Learners/LearnersTests`. 
 
-Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<net6.0|net462>` or `bin/Release<Core|Full>/<net6.0|net462>` subdirectories
+Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<net6.0|net472>` or `bin/Release<Core|Full>/<net6.0|net472>` subdirectories
 of the test project.
 
 Runner executes tests in parallel by default. However, some test category must be run

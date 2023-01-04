@@ -14,7 +14,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net462</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -24,7 +24,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net6.0;net462</TargetFrameworks>
+        <TargetFrameworks>net6.0;net6.0-windows;net472</TargetFrameworks>
         <!-- No need to generate code twice -->
         <IgnorePostBuildNetCore>true</IgnorePostBuildNetCore>
       </PropertyGroup>
@@ -35,7 +35,10 @@
     <RunPostBuildNetCore Condition="$(IgnorePostBuildNetCore) != 'true'">true</RunPostBuildNetCore>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net462'">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0-windows'">
+    <RunPostBuildNetFull>true</RunPostBuildNetFull>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net472'">
     <RunPostBuildNetFull>true</RunPostBuildNetFull>
   </PropertyGroup>
 
@@ -68,7 +71,7 @@
     <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK')) OR $(TargetFramework.Contains('windows'))">
     <ProjectReference Include="..\..\Visualizers\Windows\Visualizers.Windows.csproj" />
   </ItemGroup>
 
