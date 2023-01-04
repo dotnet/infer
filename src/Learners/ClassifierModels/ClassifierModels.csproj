@@ -81,10 +81,10 @@
   </ItemGroup>
 
   <Target Name="PostBuildNetFull" AfterTargets="PostBuildEvent" Condition="'$(RunPostBuildNetFull)' == 'true'">
-    <Exec Command="&quot;$(TargetPath)&quot; &quot;$([System.IO.Path]::Combine($(SolutionDir),'src', 'Learners', 'Classifier', 'BayesPointMachineClassifierInternal', 'GeneratedAlgorithms'))&quot;" />
+    <Exec Command="&quot;$(TargetPath.Replace('.dll', '.exe'))&quot; &quot;$([System.IO.Path]::Combine($(SolutionDir),'src', 'Learners', 'Classifier', 'BayesPointMachineClassifierInternal', 'GeneratedAlgorithms'))&quot;" />
   </Target>
 
   <Target Name="PostBuildNetCore" AfterTargets="PostBuildEvent" Condition="'$(RunPostBuildNetCore)' == 'true'">
-    <Exec Command="dotnet &quot;$(TargetPath)&quot; &quot;$([System.IO.Path]::Combine($(SolutionDir),'src', 'Learners', 'Classifier', 'BayesPointMachineClassifierInternal', 'GeneratedAlgorithms'))&quot;" />
+    <Exec Command="dotnet &quot;$(TargetPath.Replace('.dll', '.exe'))&quot; &quot;$([System.IO.Path]::Combine($(SolutionDir),'src', 'Learners', 'Classifier', 'BayesPointMachineClassifierInternal', 'GeneratedAlgorithms'))&quot;" />
   </Target>
 </Project>
