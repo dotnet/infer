@@ -14,7 +14,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -35,10 +35,7 @@
     <RunPostBuildNetCore Condition="$(IgnorePostBuildNetCore) != 'true'">true</RunPostBuildNetCore>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0-windows'">
-    <RunPostBuildNetFull>true</RunPostBuildNetFull>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net472'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows' OR '$(TargetFramework)' == 'net472'">
     <RunPostBuildNetFull>true</RunPostBuildNetFull>
   </PropertyGroup>
 
