@@ -84,10 +84,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new GatedFactorTests().GatedSplitTest();
-            //new SerialTests().CountTrueTest();
-            //new InferTests().InferDeterministicTest4();
-            //new ModelTests().ObservedConstraintViolationError();
 
             bool runAllTests = false;
             if (runAllTests)

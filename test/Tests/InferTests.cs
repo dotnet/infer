@@ -211,6 +211,38 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void DeterministicPowerTest()
+        {
+            foreach (var useMarginalPrototype in new[] { false, true })
+            {
+                var a = Variable.Observed(3.0);
+                if (useMarginalPrototype)
+                    a.AddAttribute(new MarginalPrototype(Gaussian.Uniform()));
+                var b = Variable.Observed(2.0);
+                var c = a ^ b;
+                var engine = new InferenceEngine();
+                var res = engine.Infer<Gaussian>(c);
+                Assert.Equal(9, res.Point);
+            }
+        }
+
+        [Fact]
+        public void DeterministicMaxTest()
+        {
+            foreach (var useMarginalPrototype in new[] { false, true })
+            {
+                var a = Variable.Observed(3.0);
+                if (useMarginalPrototype)
+                    a.AddAttribute(new MarginalPrototype(Gaussian.Uniform()));
+                var b = Variable.Observed(2.0);
+                var c = Variable.Max(a, b);
+                var engine = new InferenceEngine();
+                var res = engine.Infer<Gaussian>(c);
+                Assert.Equal(3, res.Point);
+            }
+        }
+
+        [Fact]
         public void TraceAllMessagesTest()
         {
             Variable<double> x = Variable.GaussianFromMeanAndPrecision(0, 1);

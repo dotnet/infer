@@ -974,7 +974,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 )
             {
                 var mpa = GetFirstMarginalPrototype(imie.Arguments, targetDecl);
-                if (mpa != null && (mpa.prototype is Gamma || (mpa.prototypeExpression?.GetExpressionType() == typeof(Gamma))))
+                if (IsGamma(mpa))
                     return new MarginalPrototype(new TruncatedGamma());
                 else
                     return mpa;
@@ -1336,13 +1336,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             else if (Recognizer.IsStaticMethod(imie, new Func<double, double, double>(System.Math.Pow)))
             {
                 MarginalPrototype mp = GetMarginalPrototype(imie.Arguments[0], targetDecl);
-                if ((mp.prototype is Gamma) || typeof(Gamma).IsAssignableFrom(mp.prototypeExpression.GetExpressionType()))
+                if (IsGamma(mp))
                 {
                     MarginalPrototype mpa = new MarginalPrototype(null);
                     mpa.prototypeExpression = Builder.StaticMethod(new Func<double, GammaPower>(GammaPower.Uniform), imie.Arguments[1]);
                     return mpa;
                 }
-                else if ((mp.prototype is GammaPower) || typeof(GammaPower).IsAssignableFrom(mp.prototypeExpression.GetExpressionType()))
+                else if (IsGammaPower(mp))
                 {
                     IExpression powerExpression;
                     if (mp.prototype is GammaPower gp)
@@ -1379,6 +1379,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             //    }
             //  }
             return null;
+        }
+
+        private static bool IsGammaPower(MarginalPrototype mp)
+        {
+            return mp != null && (mp.prototype is GammaPower || mp.prototypeExpression?.GetExpressionType() == typeof(GammaPower));
+        }
+
+        private static bool IsGamma(MarginalPrototype mp)
+        {
+            return mp != null && (mp.prototype is Gamma || mp.prototypeExpression?.GetExpressionType() == typeof(Gamma));
         }
 
         private static IExpression CardinalityOfBinaryExpression(IExpression dimension1, BinaryOperator op, IExpression dimension2)
