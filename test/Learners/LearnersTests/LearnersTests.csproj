@@ -10,7 +10,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net462</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -20,7 +20,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net6.0;net462</TargetFrameworks>
+        <TargetFrameworks>net6.0;net472</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
   </Choose>

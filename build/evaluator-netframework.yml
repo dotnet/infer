@@ -14,6 +14,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: ./Evaluator.exe InferNetRunsOnly.xml
-    workingDirectory: ${{ format('src/Learners/Runners/Evaluator/bin/{0}/net462', parameters.Configuration) }}
+    workingDirectory: ${{ format('src/Learners/Runners/Evaluator/bin/{0}/net472', parameters.Configuration) }}
     displayName: Running Evaluator
     continueOnError: true

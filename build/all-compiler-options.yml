@@ -47,7 +47,7 @@ jobs:
       configuration: '$(Configuration)'
   
   - script: |
-      test\TestAllCompilerOptions\bin\$(Configuration)\net462\TestAllCompilerOptions.exe
+      test\TestAllCompilerOptions\bin\$(Configuration)\net472\TestAllCompilerOptions.exe
     displayName: 'Run test'
 
   # Clean up the process if the script timeout out.

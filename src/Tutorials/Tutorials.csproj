@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AssemblyName>Tutorials</AssemblyName>
@@ -15,7 +14,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net462</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -25,7 +24,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net6.0;net462</TargetFrameworks>
+        <TargetFrameworks>net6.0;net6.0-windows;net472</TargetFrameworks>
         <AddSyntheticProjectReferencesForSolutionDependencies>false</AddSyntheticProjectReferencesForSolutionDependencies>
       </PropertyGroup>
     </Otherwise>
@@ -51,15 +50,26 @@
   <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK'))">
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <ProjectReference Include="..\Visualizers\Windows\Visualizers.Windows.csproj" />
-    <Compile Update="ExamplesViewer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('NETCOREAPP'))">
-    <Compile Remove="ExamplesViewer.cs">
-    </Compile>
-  </ItemGroup>
+  <Choose>
+    <When Condition="$(TargetFramework) == 'net472' OR $(TargetFramework) == 'net6.0-windows'">
+      <ItemGroup>
+        <ProjectReference Include="..\Visualizers\Windows\Visualizers.Windows.csproj" />
+        <Compile Update="ExamplesViewer.cs">
+          <SubType>UserControl</SubType>
+        </Compile>
+        <EmbeddedResource Update="ExamplesViewer.resx">
+          <DependentUpon>ExamplesViewer.cs</DependentUpon>
+        </EmbeddedResource>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Compile Remove="ExamplesViewer.cs" />
+        <EmbeddedResource Remove="ExamplesViewer.resx" />
+      </ItemGroup>  
+    </Otherwise>
+  </Choose>
   <ItemGroup>
     <Compile Update="BayesianPCA.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -134,8 +144,5 @@
     <Content Include="Infer.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Update="ExamplesViewer.resx">
-      <DependentUpon>ExamplesViewer.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

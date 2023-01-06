@@ -4,7 +4,7 @@
 @echo on
 
 set CONFIGURATION=Debug
-set TARGET_PLATFORM=net462
+set TARGET_PLATFORM=net472
 set RUN_DIR=bin\%CONFIGURATION%\%TARGET_PLATFORM%
 set RUNNER=%RUN_DIR%\Learner.exe Recommender
 set DATA=..\Runners\Evaluator\Data\Recommendation\MovieLens.dat

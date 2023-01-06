@@ -14,7 +14,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
-        <TargetFramework>net462</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
@@ -24,7 +24,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net6.0;net462</TargetFrameworks>
+        <TargetFrameworks>net6.0;net472</TargetFrameworks>
         <!-- No need to generate code twice -->
         <IgnorePostBuildNetCore>true</IgnorePostBuildNetCore>
       </PropertyGroup>
@@ -35,7 +35,7 @@
     <RunPostBuildNetCore Condition="$(IgnorePostBuildNetCore) != 'true'">true</RunPostBuildNetCore>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net462'">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net472'">
     <RunPostBuildNetFull>true</RunPostBuildNetFull>
   </PropertyGroup>
 
