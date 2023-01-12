@@ -14,7 +14,6 @@ namespace Microsoft.ML.Probabilistic.Math
     using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
     using Microsoft.ML.Probabilistic.Utilities;
 
-
     /// <summary>
     /// This class provides mathematical constants and special functions, 
     /// analogous to System.Math.
@@ -803,6 +802,41 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         /// <summary>
+        /// Computes the logarithm of the Pochhammer function: GammaLn(x + n) - GammaLn(x)
+        /// </summary>
+        /// <param name="x">A real number &gt; 0</param>
+        /// <param name="n">If zero, result is 0.</param>
+        /// <returns></returns>
+        public static double RisingFactorialLn(double x, double n)
+        {
+            // To ensure that the result increases with n, we group terms in n.
+            if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x), x, "x <= 0");
+            else if (n == 0) return 0;
+            else if (x < Ulp1 && x + n < Ulp1)
+            {
+                // GammaLn(x) = -log(x)
+                return -Log1Plus(n / x);
+            }
+            else if (Math.Abs(n / x) < CbrtUlp1)
+            {
+                // x >= 1e-6 ensures that Tetragamma doesn't overflow
+                // For small x, Digamma(x) = -1/x, Trigamma(x) = 1/x^2, Tetragamma(x) = -1/x^3
+                // To ignore the next term, we need 1/x to dominate n^3/x^4, i.e. 1 >> n^3/x^3
+                return n * (MMath.Digamma(x) + 0.5 * n * (MMath.Trigamma(x) + n / 3 * MMath.Tetragamma(x)));
+            }
+            else if (x > GammaLnLargeX && x + n > GammaLnLargeX)
+            {
+                double nOverX = n / x;
+                if (Math.Abs(nOverX) < SqrtUlp1)
+                    // log(1 + x) = x - 0.5*x^2  when x^2 << 1
+                    return n * (Log1Plus(nOverX) - 0.5 * (1 - 0.5 / x) * nOverX + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 0.5 / x + Math.Log(x));
+                else
+                    return n * ((1 + (x - 0.5) / n) * Log1Plus(nOverX) + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 1 + Math.Log(x));
+            }
+            else return MMath.GammaLn(x + n) - MMath.GammaLn(x);
+        }
+
+        /// <summary>
         /// Computes the logarithm of the Pochhammer function, divided by n: (GammaLn(x + n) - GammaLn(x))/n
         /// </summary>
         /// <param name="x">A real number &gt; 0</param>
@@ -1178,6 +1212,36 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         /// <summary>
+        /// Compute log(int_x^inf t^(a-1) exp(-b*t) dt)
+        /// </summary>
+        /// <param name="a">The shape parameter.</param>
+        /// <param name="logb">The logarithm of the rate parameter.</param>
+        /// <param name="logx">The logarithm of the threshold.</param>
+        /// <returns></returns>
+        public static double LogGammaUpper(double a, double logb, double logx)
+        {
+            double bx = Math.Exp(logb + logx);
+            if (bx - a > 1e16)
+            {
+                return a * logx - bx - Math.Log(bx - a + 1);
+            }
+            else if (AreEqual(bx, 0) && !AreEqual(logx, 0))
+            {
+                double b = Math.Exp(logb);
+                return Math.Log(GammaUpperSeries1(a, b, logx) + Math.Exp(LogGammaUpper(a, logb, 0)));
+            }
+            else if (a < 0 && bx < 1 && /*Math.Abs(bx * a / (a + 1)) < 1e-16 &&*/ Math.Pow(bx, a) > 1e16)
+            {
+                // In this case, GammaUpper(a, bx, false) == -bx^a/a
+                return a * logx - Math.Log(-a);
+            }
+            else
+            {
+                return Math.Log(GammaUpper(a, bx, false)) - a * logb;
+            }
+        }
+
+        /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
         /// </summary>
         /// <param name="a">The shape parameter.  Must be &gt; 0 if regularized is true or x is 0.</param>
@@ -1195,7 +1259,14 @@ namespace Microsoft.ML.Probabilistic.Math
             if (!regularized)
             {
                 if (a < 1 && x >= 1) return GammaUpperConFrac(a, x, regularized);
-                else if (a <= GammaSmallX) return GammaUpperSeries(a, x, regularized);
+                else if (a <= GammaSmallX)
+                {
+                    if (x < 1)
+                    {
+                        return GammaUpperSeries1(a, x, regularized) + GammaUpperConFrac(a, 1, regularized);
+                    }
+                    return GammaUpperSeries(a, x, regularized);
+                }
                 else return Gamma(a) * GammaUpper(a, x, true);
             }
             if (a <= 0)
@@ -1414,6 +1485,127 @@ namespace Microsoft.ML.Probabilistic.Math
                     return sum * scale;
             }
             throw new Exception($"GammaLowerSeries not converging for a={a:g17} x={x:g17}");
+        }
+
+        /// <summary>
+        /// Compute int_x^1 t^(a-1) sum_{k=0}^inf (-t)^k/k! dt by series expansion.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="x"></param>
+        /// <param name="regularized"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static double GammaUpperSeries1(double a, double x, bool regularized)
+        {
+            // The starting point is exp(-t) = sum_{k=0}^inf (-t)^k/k!
+            // Substituting gives sum_{k=0}^inf int_x^1 t^(a-1) (-t)^k/k! dt
+            // = sum_{k=0}^inf (-1)^k/k! int_x^1 t^(a+k-1) dt
+            // = sum_{k=0}^inf (-1)^k/k! ((1 - x^(a+k))/(a+k) 1(a+k != 0) -log(x) 1(a+k == 0))
+            // = (1 - x^a)/a - (1 - x^(a+1))/(a+1) + 1/2*(1 - x^(a+2))/(a+2) ...
+            // Combining consecutive terms gives:
+            // ((1 - x^(a+k))/(a+k) - (1 - x^(a+k+1))/(a+k+1)/(k+1))/k!
+            // = ((k+1)*(a+k+1)*(1 - x^(a+k)) - (a+k)*(1 - x^(a+k+1)))/k!/(k+1)/(a+k)/(a+k+1)
+            // = ((k+1)*(a+k+1) - (k+1)*(a+k+1)*x^(a+k) - (a+k) + (a+k)*x^(a+k+1))/k!/(k+1)/(a+k)/(a+k+1)
+            // = (k*(a+k+1) + 1 + ((a+k)*x - (a+k+1)*(k+1))*x^(a+k))/k!/(k+1)/(a+k)/(a+k+1)
+            // the coefficient of x^(a+k) tends toward -1/k!/(a+k)
+            // k=0 gives (1 + (a*x - a - 1)*x^a)/a/(a+1)  if a != 0 and a != -1
+            double xPowerA = Math.Pow(x, a);
+            if (xPowerA > double.MaxValue && a < 0) return xPowerA;
+            double logx = Math.Log(x);
+            double sum;
+            double alogx = a * logx;
+            if (Math.Abs(alogx) < 1e-16)
+            {
+                // abs(x) < 1e-16 implies ExpMinus1(x) == x
+                sum = -logx;
+            }
+            else
+            {
+                double xaMinus1 = MMath.ExpMinus1(alogx);
+                sum = -xaMinus1 / a;
+                //sum = (1 - xPowerA) / a;
+            }
+            double sign = 1;
+            double factorial = 1;
+            for (int i = 1; i < 1000; i++)
+            {
+                xPowerA *= x;
+                sign *= -1;
+                factorial *= i;
+                double sumOld = sum;
+                double term;
+                if (a + i == 0)
+                {
+                    term = -Math.Log(x);
+                }
+                else
+                {
+                    term = (1 - xPowerA) / (a + i);
+                }
+                sum += sign * term / factorial;
+                if (AreEqual(sum, sumOld))
+                {
+                    return regularized ? sum / MMath.Gamma(a) : sum;
+                }
+            }
+            throw new Exception($"GammaUpperSeries1 not converging for a={a:g17} x={x:g17}");
+        }
+
+        /// <summary>
+        /// Compute int_x^1 t^(a-1) sum_{k=0}^inf (-b*t)^k/k! dt by series expansion.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="logx"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static double GammaUpperSeries1(double a, double b, double logx)
+        {
+            // The starting point is exp(-b*t) = sum_{k=0}^inf (-b*t)^k/k!
+            // Substituting gives sum_{k=0}^inf int_x^1 t^(a-1) (-b*t)^k/k! dt
+            // = sum_{k=0}^inf (-b)^k/k! int_x^1 t^(a+k-1) dt
+            // = sum_{k=0}^inf (-b)^k/k! ((1 - x^(a+k))/(a+k) 1(a+k != 0) -log(x) 1(a+k == 0))
+            // = (1 - x^a)/a - b*(1 - x^(a+1))/(a+1) + b^2/2*(1 - x^(a+2))/(a+2) ...
+            double alogx = a * logx;
+            double xPowerA = Math.Exp(alogx);
+            if (xPowerA > double.MaxValue && a < 0) return xPowerA;
+            double sum;
+            if (Math.Abs(alogx) < 1e-16)
+            {
+                // abs(x) < 1e-16 implies ExpMinus1(x) == x
+                sum = -logx;
+            }
+            else
+            {
+                double xaMinus1 = MMath.ExpMinus1(alogx);
+                sum = -xaMinus1 / a;
+                //sum = (1 - xPowerA) / a;
+            }
+            double sign = 1;
+            double factorial = 1;
+            double x = Math.Exp(logx);
+            for (int i = 1; i < 1000; i++)
+            {
+                xPowerA *= x;
+                sign *= -b;
+                factorial *= i;
+                double sumOld = sum;
+                double term;
+                if (a + i == 0)
+                {
+                    term = -Math.Log(x);
+                }
+                else
+                {
+                    term = (1 - xPowerA) / (a + i);
+                }
+                sum += sign * term / factorial;
+                if (AreEqual(sum, sumOld))
+                {
+                    return sum;
+                }
+            }
+            throw new Exception($"GammaUpperSeries1 not converging for a={a:g17} x={x:g17}");
         }
 
         /// <summary>

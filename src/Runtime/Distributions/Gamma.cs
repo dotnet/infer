@@ -447,7 +447,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new ArgumentException("Cannot compute E[x^" + power + "] for " + this + " (shape <= " + (-power) + ")");
             }
-            else return Math.Exp(MMath.GammaLn(Shape + power) - MMath.GammaLn(Shape) - power * Math.Log(Rate));
+            else return Math.Exp(MMath.RisingFactorialLn(Shape, power) - power * Math.Log(Rate));
         }
 
         /// <inheritdoc/>
@@ -469,8 +469,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new ImproperDistributionException(this);
             }
+            else if (x*Rate < 0.25 && x*Rate*Shape < 1e-16)
+            {
+                // GammaLower =approx x^a/Gamma(a+1)
+                return Math.Exp(Shape * (Math.Log(x) + Math.Log(Rate))) / MMath.Gamma(1 + Shape);
+            }
             else
+            {
                 return MMath.GammaLower(Shape, x * Rate);
+            }
         }
 
         /// <inheritdoc/>
@@ -610,7 +617,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double mode = (shape - 1) / rate; // cannot be zero
                 double xOverMode = x / mode;
                 if (xOverMode > double.MaxValue) return double.NegativeInfinity;
-                else return (shape - 1) * (Math.Log(xOverMode) + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
+                else
+                {
+                    double logXOverMode = (xOverMode == 0) ? (Math.Log(x) - Math.Log(mode)) : Math.Log(xOverMode);
+                    return (shape - 1) * (logXOverMode + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
+                }
             }
             double result = 0;
             if (shape != 1) result += (shape - 1) * Math.Log(x);

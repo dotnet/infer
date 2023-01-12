@@ -29,9 +29,20 @@ namespace Microsoft.ML.Probabilistic.Factors
             return PlusGammaVmpOp.AAverageLogarithm(sum, a, b, to_a, to_b);
         }
 
-        private static double TruncatedGammaPowerGetMean(GammaPower gammaPower, double lowerBound, double upperBound)
+        public static double TruncatedGammaPowerGetMean(GammaPower gammaPower, double lowerBound, double upperBound)
         {
-            return Math.Pow(new TruncatedGamma(Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate), Math.Pow(lowerBound, 1 / gammaPower.Power), Math.Pow(upperBound, 1/gammaPower.Power)).GetMean(), gammaPower.Power);
+            // int_(L^(1/p))^(U^(1/p)) x^p p(x) dx
+            TruncatedGamma truncatedGamma;
+            if (gammaPower.Power < 0)
+            {
+                truncatedGamma = new TruncatedGamma(Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate), Math.Pow(upperBound, 1 / gammaPower.Power), Math.Pow(lowerBound, 1 / gammaPower.Power));
+            }
+            else
+            {
+                truncatedGamma = new TruncatedGamma(Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate), Math.Pow(lowerBound, 1 / gammaPower.Power), Math.Pow(upperBound, 1 / gammaPower.Power));
+            }
+            //return Math.Pow(truncatedGamma.GetMean(), gammaPower.Power);
+            return truncatedGamma.GetMeanPower(gammaPower.Power);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="AAverageConditional(GammaPower, GammaPower)"]/*'/>
@@ -64,7 +75,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double aVariance = a.GetVariance();
                 if (aVariance >= rVariance)
                 {
-                    if(rMean < 0)
+                    if (rMean < 0)
                     {
                         // If b cannot be less than x, then sum cannot be less than x.
                         double tailProbability = 0.1;
@@ -373,11 +384,24 @@ namespace Microsoft.ML.Probabilistic.Factors
                 //    MMath.LogSumExp(logMean, Math.Log(b)) :
                 //    MMath.LogDifferenceOfExp(logMean, Math.Log(-b));
                 double newMean = Math.Max(0, a.GetMean() + b);
+                if (b < 0 && false)
+                {
+                    newMean = Math.Max(0, TruncatedGammaPowerGetMean(a, -b, double.PositiveInfinity) + b);
+                }
                 double newLogMean = Math.Log(newMean);
                 // If logShape is big, this difference can lose accuracy
                 // Find newLogRate to satisfy logShape - newLogRate <= newLogMean/a.Power
-                double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, a.Power);
-                double newLogRate = -MMath.LargestDoubleSum(-logShape, newLogMeanOverPower);
+                double newLogRate;
+                if (a.Power < 0)
+                {
+                    double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, -a.Power);
+                    newLogRate = MMath.LargestDoubleSum(logShape, newLogMeanOverPower);
+                }
+                else
+                {
+                    double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, a.Power);
+                    newLogRate = -MMath.LargestDoubleSum(-logShape, newLogMeanOverPower);
+                }
                 // check: (logShape - newLogRate)*a.Power <= newLogMean
                 if ((double)((logShape - newLogRate) * a.Power) > newLogMean) throw new Exception();
                 double newRate = Math.Exp(newLogRate);
@@ -437,7 +461,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 {
                     if (bHasInfiniteMean)
                     {
-                        return InvGammaFromShapeAndMeanInverse(Math.Min(a.Shape, b.Shape), MeanInverseOfSum(a,b));
+                        return InvGammaFromShapeAndMeanInverse(Math.Min(a.Shape, b.Shape), MeanInverseOfSum(a, b));
                     }
                     else return InvGammaFromShapeAndMeanInverse(a.Shape, MeanInverseOfSum(a, b));
                 }
@@ -447,10 +471,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             b.GetMeanAndVariance(out double bMean, out double bVariance);
             double mean = aMean + bMean;
             double variance = aVariance + bVariance;
-            if(result.Power == -1 && variance > double.MaxValue && false)
+            if (result.Power == -1 && variance > double.MaxValue && false)
             {
                 // mean is finite
-                return InvGammaFromMeanAndMeanInverse(mean, MeanInverseOfSum(a,b));
+                return InvGammaFromMeanAndMeanInverse(mean, MeanInverseOfSum(a, b));
             }
             return GammaPower.FromMeanAndVariance(mean, variance, result.Power);
         }
@@ -525,7 +549,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (a.Power != sum.Power) throw new NotSupportedException($"a.Power ({a.Power}) != sum.Power ({sum.Power})");
             double x = sum.Shape - sum.Power;
             GammaPower aPost = a * to_a;
-            if(aPost.IsUniform())
+            if (aPost.IsUniform())
             {
                 return sum;
             }

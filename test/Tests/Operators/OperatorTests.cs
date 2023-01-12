@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Math;
@@ -100,7 +101,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             long count = 0;
             Parallel.ForEach(new[] {
                 GammaPower.FromShapeAndRate(double.MaxValue, double.MaxValue, 100000000000000.0),
-            }.Concat(GammaPowers()).Where(g => g.Power != 0 && g.Shape > 1).Take(100000), gammaPower =>
+            }.Concat(GammaPowers(1000000)).Where(g => g.Power != 0 && g.Shape > 1), gammaPower =>
             {
                 Assert.True(gammaPower.IsPointMass || gammaPower.IsProper());
                 GammaPower gammaPower1 = GammaPower.FromShapeAndRate(gammaPower.Shape, double.Epsilon, gammaPower.Power);
@@ -1161,9 +1162,19 @@ zL = (L - mx)*sqrt(prec)
             }
         }
 
+        public static IEnumerable<double> Doubles(int count)
+        {
+            return Doubles().TakeRandom(count);
+        }
+
         public static IEnumerable<double> DoublesGreaterThanZero()
         {
             return Doubles().Where(value => value > 0);
+        }
+
+        public static IEnumerable<double> DoublesGreaterThanZero(int count)
+        {
+            return DoublesGreaterThanZero().TakeRandom(count);
         }
 
         public static IEnumerable<double> DoublesLessThanZero()
@@ -1174,6 +1185,11 @@ zL = (L - mx)*sqrt(prec)
         public static IEnumerable<double> DoublesAtLeastZero()
         {
             return Doubles().Where(value => value >= 0);
+        }
+
+        public static IEnumerable<double> DoublesAtLeastZero(int count)
+        {
+            return DoublesAtLeastZero().TakeRandom(count);
         }
 
         public static IEnumerable<Bernoulli> Bernoullis()
@@ -1200,14 +1216,31 @@ zL = (L - mx)*sqrt(prec)
         }
 
         /// <summary>
+        /// Generates a representative set of proper Gamma distributions.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Gamma> Gammas(int count)
+        {
+            int half = (int)System.Math.Sqrt(count);
+            foreach (var shape in DoublesGreaterThanZero(half))
+            {
+                foreach (var rate in DoublesGreaterThanZero(half))
+                {
+                    yield return Gamma.FromShapeAndRate(shape, rate);
+                }
+            }
+        }
+
+        /// <summary>
         /// Generates a representative set of proper GammaPower distributions.
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<GammaPower> GammaPowers()
+        public static IEnumerable<GammaPower> GammaPowers(int count)
         {
-            foreach (var gamma in Gammas())
+            int half = (int)System.Math.Sqrt(count);
+            foreach (var gamma in Gammas(half))
             {
-                foreach (var power in Doubles().Where(x => !double.IsInfinity(x)))
+                foreach (var power in Doubles(half).Where(x => !double.IsInfinity(x)))
                 {
                     yield return GammaPower.FromGamma(gamma, power);
                 }
@@ -1218,11 +1251,12 @@ zL = (L - mx)*sqrt(prec)
         /// Generates a representative set of proper TruncatedGamma distributions with infinite upper bound.
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<TruncatedGamma> LowerTruncatedGammas()
+        public static IEnumerable<TruncatedGamma> LowerTruncatedGammas(int count)
         {
-            foreach (var gamma in Gammas())
+            int half = (int)System.Math.Sqrt(count);
+            foreach (var gamma in Gammas(half))
             {
-                foreach (var lowerBound in DoublesAtLeastZero())
+                foreach (var lowerBound in DoublesAtLeastZero(half))
                 {
                     if (gamma.IsPointMass && gamma.Point < lowerBound) continue;
                     yield return new TruncatedGamma(gamma, lowerBound, double.PositiveInfinity);
@@ -1234,13 +1268,15 @@ zL = (L - mx)*sqrt(prec)
         /// Generates a representative set of proper TruncatedGamma distributions.
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<TruncatedGamma> TruncatedGammas()
+        public static IEnumerable<TruncatedGamma> TruncatedGammas(int count)
         {
-            foreach (var gamma in Gammas())
+            int half = (int)System.Math.Sqrt(count);
+            int quarter = (int)System.Math.Sqrt(half);
+            foreach (var gamma in Gammas(quarter))
             {
-                foreach (var lowerBound in DoublesAtLeastZero())
+                foreach (var lowerBound in DoublesAtLeastZero(quarter))
                 {
-                    foreach (var gap in DoublesGreaterThanZero())
+                    foreach (var gap in DoublesGreaterThanZero(half))
                     {
                         double upperBound = lowerBound + gap;
                         if (upperBound == lowerBound) continue;
