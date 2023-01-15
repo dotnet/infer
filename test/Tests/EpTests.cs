@@ -2878,7 +2878,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             double unpowerLowerBound = System.Math.Pow((gammaPower.Power < 0) ? upperBound : lowerBound, 1 / gammaPower.Power);
             double unpowerUpperBound = System.Math.Pow((gammaPower.Power < 0) ? lowerBound : upperBound, 1 / gammaPower.Power);
-            return TruncatedGamma.GammaProbBetween(gammaPower.Shape, gammaPower.Rate, unpowerLowerBound, unpowerUpperBound);
+            return MMath.GammaProbBetween(gammaPower.Shape, gammaPower.Rate, unpowerLowerBound, unpowerUpperBound);
         }
 
         /// <summary>

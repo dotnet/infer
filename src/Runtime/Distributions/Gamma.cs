@@ -483,7 +483,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <inheritdoc/>
         public double GetProbBetween(double lowerBound, double upperBound)
         {
-            return TruncatedGamma.GammaProbBetween(Shape, Rate, lowerBound, upperBound);
+            return MMath.GammaProbBetween(Shape, Rate, lowerBound, upperBound);
         }
 
         /// <summary>

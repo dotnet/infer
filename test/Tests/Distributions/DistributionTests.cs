@@ -479,6 +479,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "OpenBug")]
         public void TruncatedGamma_GetMeanPower_WithinBounds()
         {
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(9.9999999999999992E+80, 1.0000000000000149E-269), 9.9999999999999995E+246, double.PositiveInfinity).GetMeanPower(4.94065645841247E-324) >= 1);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1.0000000000000011E-19, 1.0000000000000101E-181), 1.0000000000000165E-298, double.PositiveInfinity).GetMeanPower(0.010000000000000002) >= 0.0010471285480508983);
+            Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1.0000002306925374E-317, 1.0000000000000159E-286), 1.0000000000000053E-95, double.PositiveInfinity).GetMeanPower(4.94065645841247E-324) >= 1);
             Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1.0000000000000106E-191, 4.9406564584124654E-324), 1.0000000000000096E-173, double.PositiveInfinity).GetMeanPower(-0.00010000000000000002) <= 1.0406387653975053);
             Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1.0000000000000112E-203, 1.0000000000000149E-269), 4.9406564584124654E-324, double.PositiveInfinity).GetMeanPower(-0.1) <= 2.1410239937243691E+32);
             Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1.0000000000000048E-87, 1.0000000000000112E-201), 1.0000000000000001E+190, double.PositiveInfinity).GetMeanPower(-100) <= 0);
@@ -512,12 +515,12 @@ namespace Microsoft.ML.Probabilistic.Tests
                     if (power >= 0)
                     {
                         // Compiler.Quoter.Quote(dist)
-                        Assert.True(meanPower >= System.Math.Pow(dist.LowerBound, power) || OperatorTests.UlpDiff(meanPower, System.Math.Pow(dist.LowerBound, power)) < 1000000);
+                        Assert.True(meanPower >= System.Math.Pow(dist.LowerBound, power) || OperatorTests.UlpDiff(meanPower, System.Math.Pow(dist.LowerBound, power)) < 100000);
                         Assert.True(meanPower <= System.Math.Pow(dist.UpperBound, power));
                     }
                     else
                     {
-                        Assert.True(meanPower <= System.Math.Pow(dist.LowerBound, power) || OperatorTests.UlpDiff(meanPower, System.Math.Pow(dist.LowerBound, power)) < 1000000);
+                        Assert.True(meanPower <= System.Math.Pow(dist.LowerBound, power) || OperatorTests.UlpDiff(meanPower, System.Math.Pow(dist.LowerBound, power)) < 100000);
                         Assert.True(meanPower >= System.Math.Pow(dist.UpperBound, power));
                     }
                     if (power == 1)

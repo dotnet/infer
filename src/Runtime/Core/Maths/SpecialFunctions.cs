@@ -1212,6 +1212,65 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         /// <summary>
+        /// Computes GammaLower(a, r*u) - GammaLower(a, r*l) to high accuracy.
+        /// </summary>
+        /// <param name="shape"></param>
+        /// <param name="rate"></param>
+        /// <param name="lowerBound">Any real number.</param>
+        /// <param name="upperBound">Any real number.</param>
+        /// <param name="regularized">If true, result is divided by <c>MMath.Gamma(shape)</c></param>
+        /// <returns></returns>
+        public static double GammaProbBetween(double shape, double rate, double lowerBound, double upperBound, bool regularized = true)
+        {
+            lowerBound = Math.Max(0, lowerBound);
+            if (lowerBound >= upperBound) return 0;
+            double rl = rate * lowerBound;
+            double ru = rate * upperBound;
+            double logRate = Math.Log(rate);
+            double logl = Math.Log(lowerBound);
+            double logrl = logRate + logl;
+            // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
+            bool lowerIsSmaller;
+            if (rl > 0.25)
+                lowerIsSmaller = (shape > rl + 0.25);
+            else
+                lowerIsSmaller = (shape > -MMath.Ln2 / logrl);
+            if (!lowerIsSmaller)
+            {
+                double smallShape = -1e-16 / logrl;
+                if (ru < 1e-16 && Math.Abs(shape) < smallShape)
+                {
+                    double logu = Math.Log(upperBound);
+                    double result = logu - logl;
+                    return regularized ? result * shape : result;
+                }
+                else
+                {
+                    double lower;
+                    if (MMath.AreEqual(rl, 0))
+                    {
+                        //lower = -logrl;
+                        lower = Math.Exp(MMath.LogGammaUpper(shape, 0, logrl));
+                        if (regularized) lower *= shape;
+                    }
+                    else
+                    {
+                        lower = MMath.GammaUpper(shape, rl, regularized);
+                    }
+                    // No special handling needed here since we took the 'else' above.
+                    double upper = MMath.GammaUpper(shape, ru, regularized);
+                    // This is inaccurate when lowerBound is close to upperBound.  In that case, use a Taylor expansion of lowerBound around upperBound.
+                    return lower - upper;
+                }
+            }
+            else
+            {
+                double diff = MMath.GammaLower(shape, ru) - MMath.GammaLower(shape, rl);
+                return regularized ? diff : (MMath.Gamma(shape) * diff);
+            }
+        }
+
+        /// <summary>
         /// Compute log(int_x^inf t^(a-1) exp(-b*t) dt)
         /// </summary>
         /// <param name="a">The shape parameter.</param>
@@ -1230,10 +1289,17 @@ namespace Microsoft.ML.Probabilistic.Math
                 double b = Math.Exp(logb);
                 return Math.Log(GammaUpperSeries1(a, b, logx) + Math.Exp(LogGammaUpper(a, logb, 0)));
             }
-            else if (a < 0 && bx < 1 && /*Math.Abs(bx * a / (a + 1)) < 1e-16 &&*/ Math.Pow(bx, a) > 1e16)
+            else if (a < 0 && bx < 1)
             {
-                // In this case, GammaUpper(a, bx, false) == -bx^a/a
-                return a * logx - Math.Log(-a);
+                if (Math.Exp(a * (logb + logx)) > 1e16)
+                {
+                    // In this case, GammaUpper(a, bx, false) == -bx^a/a
+                    return a * logx - Math.Log(-a);
+                }
+                else
+                {
+                    return Math.Log(GammaUpperSeries1(a, bx, logb + logx, false) + GammaUpperConFrac(a, 1, false)) - a * logb;
+                }
             }
             else
             {
@@ -1263,7 +1329,8 @@ namespace Microsoft.ML.Probabilistic.Math
                 {
                     if (x < 1)
                     {
-                        return GammaUpperSeries1(a, x, regularized) + GammaUpperConFrac(a, 1, regularized);
+                        double logx = Math.Log(x);
+                        return GammaUpperSeries1(a, x, logx, regularized) + GammaUpperConFrac(a, 1, regularized);
                     }
                     return GammaUpperSeries(a, x, regularized);
                 }
@@ -1492,10 +1559,11 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </summary>
         /// <param name="a"></param>
         /// <param name="x"></param>
+        /// <param name="logx"></param>
         /// <param name="regularized"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static double GammaUpperSeries1(double a, double x, bool regularized)
+        private static double GammaUpperSeries1(double a, double x, double logx, bool regularized)
         {
             // The starting point is exp(-t) = sum_{k=0}^inf (-t)^k/k!
             // Substituting gives sum_{k=0}^inf int_x^1 t^(a-1) (-t)^k/k! dt
@@ -1509,11 +1577,10 @@ namespace Microsoft.ML.Probabilistic.Math
             // = (k*(a+k+1) + 1 + ((a+k)*x - (a+k+1)*(k+1))*x^(a+k))/k!/(k+1)/(a+k)/(a+k+1)
             // the coefficient of x^(a+k) tends toward -1/k!/(a+k)
             // k=0 gives (1 + (a*x - a - 1)*x^a)/a/(a+1)  if a != 0 and a != -1
-            double xPowerA = Math.Pow(x, a);
-            if (xPowerA > double.MaxValue && a < 0) return xPowerA;
-            double logx = Math.Log(x);
-            double sum;
             double alogx = a * logx;
+            double xPowerA = Math.Exp(alogx);
+            if (xPowerA > double.MaxValue && a < 0) return xPowerA;
+            double sum;
             if (Math.Abs(alogx) < 1e-16)
             {
                 // abs(x) < 1e-16 implies ExpMinus1(x) == x

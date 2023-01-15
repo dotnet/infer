@@ -271,7 +271,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 // Equivalent but less accurate:
                 //return this.Gamma.GetProbLessThan(UpperBound) - this.Gamma.GetProbLessThan(LowerBound);
-                return GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound);
+                return MMath.GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound);
             }
             else
             {
@@ -292,11 +292,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 if (this.Gamma.Shape < 1 && rl > 0)
                 {
                     // When Shape < 1, Gamma(Shape) > 1 so use the unregularized version to avoid underflow.
-                    return Math.Log(GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound, false)) - MMath.GammaLn(this.Gamma.Shape);
+                    return Math.Log(MMath.GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound, false)) - MMath.GammaLn(this.Gamma.Shape);
                 }
                 else
                 {
-                    return Math.Log(GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound));
+                    return Math.Log(MMath.GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound));
                 }
             }
             else
@@ -736,35 +736,47 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 // Large powers lead to overflow
                 power = Math.Min(Math.Max(power, -1e300), 1e300);
-                double logZ = GetLogNormalizer();
+                bool regularized = this.Gamma.Shape >= 1;
+                double logZ = Math.Log(MMath.GammaProbBetween(this.Gamma.Shape, this.Gamma.Rate, LowerBound, UpperBound, regularized));
                 if (logZ < double.MinValue)
                 {
                     return Math.Pow(GetMode(), power);
                 }
                 double shapePlusPower = this.Gamma.Shape + power;
                 double logRate = Math.Log(this.Gamma.Rate);
-                bool regularized = shapePlusPower >= 1;
+                bool regularized2 = shapePlusPower >= 1;
                 bool includeRatePower = true;
-                double logProbBetween = Math.Log(GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized));
-                if (!regularized && logProbBetween > double.MaxValue && double.IsPositiveInfinity(UpperBound) && shapePlusPower < 0)
+                double logProbBetween = Math.Log(MMath.GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized2));
+                if (!regularized2 && logProbBetween > double.MaxValue && double.IsPositiveInfinity(UpperBound) && shapePlusPower < 0)
                 {
                     logProbBetween = MMath.LogGammaUpper(shapePlusPower, logRate * power / shapePlusPower, Math.Log(LowerBound) + logRate * this.Gamma.Shape / shapePlusPower);
                     includeRatePower = false;
                 }
-                else if (!regularized && logProbBetween > double.MaxValue && shapePlusPower > 0)
+                else if (!regularized2 && logProbBetween > double.MaxValue && shapePlusPower > 0)
                 {
-                    regularized = true;
-                    logProbBetween = Math.Log(GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized));
+                    regularized2 = true;
+                    logProbBetween = Math.Log(MMath.GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized2));
                 }
                 double logZ1;
-                if (regularized)
+                if (regularized2)
                 {
                     // This formula cannot be used when shapePlusPower <= 0
-                    logZ1 = MMath.RisingFactorialLn(this.Gamma.Shape, power) + logProbBetween;
+                    if (regularized)
+                    {
+                        logZ1 = MMath.RisingFactorialLn(this.Gamma.Shape, power) + logProbBetween;
+                    }
+                    else
+                    {
+                        logZ1 = MMath.GammaLn(shapePlusPower) + logProbBetween;
+                    }
                 }
-                else
+                else if (regularized)
                 {
-                    logZ1 = -MMath.GammaLn(this.Gamma.Shape) + logProbBetween;                        
+                    logZ1 = -MMath.GammaLn(this.Gamma.Shape) + logProbBetween;
+                }
+                else 
+                { 
+                    logZ1 = logProbBetween;
                 }
                 if (includeRatePower) logZ1 -= power * logRate;
                 double result = Math.Exp(logZ1 - logZ);
@@ -789,72 +801,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     // If shapePlusPower is large and Gamma.Rate * UpperBound is small, then this can lead to Inf * 0
                     Z1 = Math.Exp(MMath.RisingFactorialLn(this.Gamma.Shape, power)) *
-                        GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized);
+                        MMath.GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized);
                 }
                 else
                 {
                     Z1 = Math.Exp(-gammaLnShape) *
-                        GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized);
+                        MMath.GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized);
                 }
                 return Z1 / (Math.Pow(this.Gamma.Rate, power) * Z);
-            }
-        }
-
-        /// <summary>
-        /// Computes GammaLower(a, r*u) - GammaLower(a, r*l) to high accuracy.
-        /// </summary>
-        /// <param name="shape"></param>
-        /// <param name="rate"></param>
-        /// <param name="lowerBound">Any real number.</param>
-        /// <param name="upperBound">Any real number.</param>
-        /// <param name="regularized">If true, result is divided by <c>MMath.Gamma(shape)</c></param>
-        /// <returns></returns>
-        public static double GammaProbBetween(double shape, double rate, double lowerBound, double upperBound, bool regularized = true)
-        {
-            lowerBound = Math.Max(0, lowerBound);
-            if (lowerBound >= upperBound) return 0;
-            double rl = rate * lowerBound;
-            double ru = rate * upperBound;
-            double logRate = Math.Log(rate);
-            double logl = Math.Log(lowerBound);
-            double logrl = logRate + logl;
-            // Use the criterion from Gautschi (1979) to determine whether GammaLower(a,x) or GammaUpper(a,x) is smaller.
-            bool lowerIsSmaller;
-            if (rl > 0.25)
-                lowerIsSmaller = (shape > rl + 0.25);
-            else
-                lowerIsSmaller = (shape > -MMath.Ln2 / logrl);
-            if (!lowerIsSmaller)
-            {
-                double smallShape = -1e-16 / logrl;
-                if (ru < 1e-16 && Math.Abs(shape) < smallShape)
-                {
-                    double logu = Math.Log(upperBound);
-                    double result = logu - logl;
-                    return regularized ? result * shape : result;
-                }
-                else
-                {
-                    double lower;
-                    if (MMath.AreEqual(rl, 0) && Math.Abs(shape) < smallShape)
-                    {
-                        lower = -logrl;
-                        if (regularized) lower *= shape;
-                    }
-                    else
-                    {
-                        lower = MMath.GammaUpper(shape, rl, regularized);
-                    }
-                    // No special handling needed here since we took the 'else' above.
-                    double upper = MMath.GammaUpper(shape, ru, regularized);
-                    // This is inaccurate when lowerBound is close to upperBound.  In that case, use a Taylor expansion of lowerBound around upperBound.
-                    return lower - upper;
-                }
-            }
-            else
-            {
-                double diff = MMath.GammaLower(shape, ru) - MMath.GammaLower(shape, rl);
-                return regularized ? diff : (MMath.Gamma(shape) * diff);
             }
         }
 
