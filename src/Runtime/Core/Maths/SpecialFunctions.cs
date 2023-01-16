@@ -1633,6 +1633,7 @@ namespace Microsoft.ML.Probabilistic.Math
             // = sum_{k=0}^inf (-b)^k/k! int_x^1 t^(a+k-1) dt
             // = sum_{k=0}^inf (-b)^k/k! ((1 - x^(a+k))/(a+k) 1(a+k != 0) -log(x) 1(a+k == 0))
             // = (1 - x^a)/a - b*(1 - x^(a+1))/(a+1) + b^2/2*(1 - x^(a+2))/(a+2) ...
+            if (logx >= 0) return 0;
             double alogx = a * logx;
             double xPowerA = Math.Exp(alogx);
             if (xPowerA > double.MaxValue && a < 0) return xPowerA;

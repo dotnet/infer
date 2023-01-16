@@ -743,6 +743,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     return Math.Pow(GetMode(), power);
                 }
                 double shapePlusPower = this.Gamma.Shape + power;
+                if (MMath.AreEqual(this.Gamma.Shape, shapePlusPower) && this.Gamma.Shape > 1e15)
+                {
+                    // In this case, logProbBetween == logZ and digamma(shape) == log(shape) and MMath.RisingFactorialLn(this.Gamma.Shape, power) = power * log(this.Gamma.Shape)
+                    double mean = this.Gamma.Shape / this.Gamma.Rate;
+                    if (mean > 0)
+                    {
+                        // This version is the most accurate when applicable.
+                        return Math.Pow(mean, power);
+                    }
+                    else
+                    {
+                        return Math.Exp(power * (Math.Log(this.Gamma.Shape) - Math.Log(this.Gamma.Rate)));
+                    }
+                }
                 double logRate = Math.Log(this.Gamma.Rate);
                 bool regularized2 = shapePlusPower >= 1;
                 bool includeRatePower = true;
@@ -757,31 +771,33 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     regularized2 = true;
                     logProbBetween = Math.Log(MMath.GammaProbBetween(shapePlusPower, this.Gamma.Rate, LowerBound, UpperBound, regularized2));
                 }
-                double logZ1;
+                double correction;
                 if (regularized2)
                 {
                     // This formula cannot be used when shapePlusPower <= 0
                     if (regularized)
                     {
-                        logZ1 = MMath.RisingFactorialLn(this.Gamma.Shape, power) + logProbBetween;
+                        correction = MMath.RisingFactorialLn(this.Gamma.Shape, power);
                     }
                     else
                     {
-                        logZ1 = MMath.GammaLn(shapePlusPower) + logProbBetween;
+                        correction = MMath.GammaLn(shapePlusPower);
                     }
                 }
                 else if (regularized)
                 {
-                    logZ1 = -MMath.GammaLn(this.Gamma.Shape) + logProbBetween;
+                    correction = -MMath.GammaLn(this.Gamma.Shape);
                 }
                 else 
                 { 
-                    logZ1 = logProbBetween;
+                    correction = 0;
                 }
-                if (includeRatePower) logZ1 -= power * logRate;
-                double result = Math.Exp(logZ1 - logZ);
-                return result;
-                //return Math.Max(lowerBoundPower, Math.Min(upperBoundPower, result));
+                if (includeRatePower)
+                {
+                    correction -= power * logRate;
+                }
+                double result = Math.Exp(logProbBetween - logZ + correction);
+                return Math.Max(lowerBoundPower, Math.Min(upperBoundPower, result));
             }
             else
             {
