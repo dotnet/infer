@@ -9,7 +9,7 @@ from System import Console, ConsoleColor
 
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), r'../Tests/bin/DebugFull/net462/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), r'../Tests/bin/Debug/net472/'))
 clr.AddReference("Microsoft.ML.Probabilistic")
 clr.AddReference("Microsoft.ML.Probabilistic.Compiler")
 from Microsoft.ML.Probabilistic import *
