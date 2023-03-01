@@ -60,10 +60,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Adds a weighted discrete distribution item to the estimator
         /// </summary>
         /// <param name="distribution">A Discrete instance</param>
-        /// <param name="weight">Weight</param>
+        /// <param name="weight">The weight of the instance</param>
         public void Add(Discrete distribution, double weight)
         {
             NProb.SetToSum(1.0, NProb, weight, distribution.GetProbs());
+            N += weight;
+        }
+
+        /// <summary>
+        /// Adds a weighted discrete sample to the estimator
+        /// </summary>
+        /// <param name="sample">The sample value</param>
+        /// <param name="weight">The weight of the sample</param>
+        public void Add(int sample, double weight)
+        {
+            NProb[sample] += weight;
             N += weight;
         }
 
