@@ -166,20 +166,20 @@ ncdf(-12.2)
         [Fact]
         public void GammaUpperTest()
         {
-//            double[,] gammaUpperScale_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpperScale.csv"));
-//            CheckFunctionValues(nameof(MMath.GammaUpperScale), MMath.GammaUpperScale, gammaUpperScale_pairs);
+            double[,] gammaUpperScale_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpperScale.csv"));
+            CheckFunctionValues(nameof(MMath.GammaUpperScale), MMath.GammaUpperScale, gammaUpperScale_pairs);
 
-//            double[,] gammaLower_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLower.csv"));
-//            CheckFunctionValues(nameof(MMath.GammaLower), MMath.GammaLower, gammaLower_pairs);
+            double[,] gammaLower_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLower.csv"));
+            CheckFunctionValues(nameof(MMath.GammaLower), MMath.GammaLower, gammaLower_pairs);
 
-//            /* In python mpmath:
-//from mpmath import *
-//mp.dps = 500
-//mp.pretty = True
-//gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
-//            */
-//            double[,] gammaUpperRegularized_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpperRegularized.csv"));
-//            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
+            */
+            double[,] gammaUpperRegularized_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpperRegularized.csv"));
+            CheckFunctionValues("GammaUpperRegularized", (a, x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
 
             /* In python mpmath:
 from mpmath import *

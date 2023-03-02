@@ -340,7 +340,7 @@ def float_str_python_to_csharp(s):
 dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', '..', 'test', 'Tests', 'data', 'SpecialFunctionsValues')
 with os.scandir(dir) as it:
     for entry in it:
-        if entry.name.endswith('.csv') and entry.is_file() and entry.name == 'GammaUpper.csv':
+        if entry.name.endswith('.csv') and entry.is_file():
             print(f'Processing {entry.name}...')
             if entry.name not in pair_info.keys() or pair_info[entry.name] == None:
                 print("Don't know how to process. Skipping.")

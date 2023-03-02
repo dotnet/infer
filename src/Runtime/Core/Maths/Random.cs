@@ -625,7 +625,7 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         [Stochastic]
-        public static double LogGamma(double shape)
+        private static double LogGamma(double shape)
         {
             if (shape < 1)
                 // boost using Marsaglia's (1961) method: gam(a) = gam(a+1)*U^(1/a)

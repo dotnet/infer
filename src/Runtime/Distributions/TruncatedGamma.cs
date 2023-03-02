@@ -477,7 +477,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static double Sample(Gamma gamma, double lowerBound, double upperBound)
         {
             if (gamma.IsUniform()) return Rand.UniformBetween(lowerBound, upperBound);
-            bool useQuantile = (gamma.Shape == 1) || true;
+            bool useQuantile = (gamma.Shape == 1);
             if (useQuantile)
             {
                 return GetQuantile(gamma, lowerBound, upperBound, Rand.UniformBetween(0, 1));
@@ -518,7 +518,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
             if (probability > 1) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1");
-            if (true)
+            bool useBinarySearch = false;
+            if (useBinarySearch)
             {
                 // Binary search
                 probability *= gamma.GetProbBetween(lowerBound, upperBound);
@@ -543,12 +544,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 return lowerX;
             }
-            //double lowerProbability = gamma.GetProbLessThan(lowerBound);
-            //if (MMath.AreEqual(lowerProbability, 1)) throw new NotImplementedException();
-            //double totalProbability = gamma.GetProbBetween(lowerBound, upperBound);
-            //if (totalProbability + lowerProbability > 1.01) throw new Exception();
-            //double quantile = gamma.GetQuantile(probability * totalProbability + lowerProbability);
-            //return Math.Min(upperBound, Math.Max(lowerBound, quantile));
+            else
+            {
+                double lowerProbability = gamma.GetProbLessThan(lowerBound);
+                if (MMath.AreEqual(lowerProbability, 1)) throw new NotImplementedException();
+                double totalProbability = gamma.GetProbBetween(lowerBound, upperBound);
+                if (totalProbability + lowerProbability > 1.01) throw new Exception();
+                double quantile = gamma.GetQuantile(probability * totalProbability + lowerProbability);
+                return Math.Min(upperBound, Math.Max(lowerBound, quantile));
+            }
         }
 
         /// <inheritdoc/>

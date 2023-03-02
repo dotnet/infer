@@ -476,7 +476,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void TruncatedGamma_GetMeanPower_WithinBounds()
         {
             Assert.True(new TruncatedGamma(Gamma.FromShapeAndRate(1000.0, 9.8813129168249309E-323), 1.0000000000000014E-25, double.PositiveInfinity).GetMeanPower(-10000) <= double.PositiveInfinity);
