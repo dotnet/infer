@@ -32,23 +32,22 @@ namespace Microsoft.ML.Probabilistic.Compiler
         public static IExpression Quote(object value)
         {
             if (value == null) return Builder.LiteralExpr(value);
-            IExpression expr = null;
+            IExpression expr;
 
             if (TryQuoteConstructable(value, out expr)) return expr;
 
-            if (value is Microsoft.ML.Probabilistic.Distributions.Kernels.NNKernel)
+            if (value is Distributions.Kernels.NNKernel g)
             {
                 // todo: change this to use ConstructionAttribute
-                Microsoft.ML.Probabilistic.Distributions.Kernels.NNKernel g = (Microsoft.ML.Probabilistic.Distributions.Kernels.NNKernel) value;
                 expr = Builder.NewObject(value.GetType(), Quote(g.GetLogWeightVariances()), Quote(g.GetLogBiasWeightVariance()));
             }
             else if (value is Array array)
             {
                 expr = QuoteArray(array);
             }
-            else if (value is ConvertibleToArray)
+            else if (value is ConvertibleToArray convertibleToArray)
             {
-                expr = Builder.NewObject(value.GetType(), QuoteArray(((ConvertibleToArray) value).ToArray()));
+                expr = Builder.NewObject(value.GetType(), QuoteArray(convertibleToArray.ToArray()));
             }
             else if (value is IList ilist)
             {
@@ -66,10 +65,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 expr = QuotePropertyInfo(propertyInfo);
             }
-            else if (value is System.Linq.Expressions.Expression)
+            else if (value is System.Linq.Expressions.Expression linqExpression)
             {
-                var expconv = new Microsoft.ML.Probabilistic.Compiler.Transforms.LinqExpressionTransform();
-                expr = expconv.Convert((System.Linq.Expressions.Expression) value);
+                var expconv = new Transforms.LinqExpressionTransform();
+                expr = expconv.Convert(linqExpression);
             }
             else if (value is DateTime dt)
             {
@@ -97,11 +96,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     Type gt = t.GetGenericTypeDefinition();
                     if (gt.Equals(typeof (List<>)))
                     {
-                        expr = (IExpression) Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(typeof (Quoter), "QuoteList", value);
+                        expr = (IExpression) Reflection.Invoker.InvokeStatic(typeof (Quoter), "QuoteList", value);
                     }
                     else if (gt == typeof (GibbsMarginal<,>))
                     {
-                        expr = (IExpression) Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(typeof (Quoter), "QuoteGibbsEstimator", value);
+                        expr = (IExpression) Reflection.Invoker.InvokeStatic(typeof (Quoter), "QuoteGibbsEstimator", value);
                     }
                 }
                 else
