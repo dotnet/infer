@@ -9,7 +9,9 @@ from System import Console, ConsoleColor
 
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), r'../Tests/bin/DebugFull/net462/'))
+# Path to references depends on the Solution Configuration
+# by default assumed DebugFull configuration
+sys.path.append(os.path.join(os.path.dirname(__file__), r'../Tests/bin/DebugFull/net472/'))
 clr.AddReference("Microsoft.ML.Probabilistic")
 clr.AddReference("Microsoft.ML.Probabilistic.Compiler")
 from Microsoft.ML.Probabilistic import *
