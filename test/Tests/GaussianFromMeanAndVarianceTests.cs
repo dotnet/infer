@@ -26,6 +26,36 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class GaussianFromMeanAndVarianceTests
     {
         [Fact]
+        public void PointVarianceTest()
+        {
+            Gamma variance = Gamma.PointMass(6.1699356586552062E-08);
+            Gaussian mean = Gaussian.PointMass(0.0);
+            for (int i = 7; i < 200; i++)
+            {
+                Gaussian sample = Gaussian.FromNatural(-0.00078333235196782888, System.Math.Pow(10, -i));
+                Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, mean, variance);
+                ////Trace.WriteLine($"{i} {message}");
+                Assert.Equal(0, message.Rate);
+                Assert.True(message.Shape >= 1);
+            }
+        }
+
+        [Fact]
+        public void PointVarianceTest2()
+        {
+            Gamma variance = Gamma.PointMass(double.Epsilon);
+            Gaussian mean = Gaussian.PointMass(0.0);
+            for (int i = 100; i < 324; i++)
+            {
+                Gaussian sample = Gaussian.FromMeanAndVariance(1.23, System.Math.Pow(10, -i));
+                Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, mean, variance);
+                ////Trace.WriteLine($"{i} {message} {message.Rate}");
+                Assert.Equal(0, message.Rate);
+                Assert.True(message.Shape >= 1);
+            }
+        }
+
+        [Fact]
         [Trait("Category", "OpenBug")]
         public void VarianceGammaTimesGaussianMomentsTest()
         {

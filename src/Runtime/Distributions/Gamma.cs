@@ -317,18 +317,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="x">Cannot be negative</param>
         /// <param name="dLogP">Desired derivative of log-density at x</param>
-        /// <param name="ddLogP">Desired second derivative of log-density at x</param>
+        /// <param name="xdLogP">Desired derivative of log-density at x, times x</param>
+        /// <param name="xxddLogP">Desired second derivative of log-density at x, times x squared</param>
         /// <param name="forceProper">If true and both derivatives cannot be matched by a proper distribution, match only the first.</param>
         /// <returns></returns>
-        public static Gamma FromDerivatives(double x, double dLogP, double ddLogP, bool forceProper)
+        public static Gamma FromDerivatives(double x, double dLogP, double xdLogP, double xxddLogP, bool forceProper)
         {
             if (x < 0)
                 throw new ArgumentOutOfRangeException(nameof(x), x, "x < 0");
             double a;
             if (double.IsPositiveInfinity(x))
             {
-                if (ddLogP < 0) return Gamma.PointMass(x);
-                else if (ddLogP == 0) a = 0.0;
+                if (xxddLogP < 0) return Gamma.PointMass(x);
+                else if (xxddLogP == 0) a = 0.0;
                 else if (forceProper)
                 {
                     if (dLogP <= 0) return Gamma.FromShapeAndRate(1, -dLogP);
@@ -338,8 +339,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                a = -ddLogP * x * x;
-                if (a + 1 > double.MaxValue) return Gamma.PointMass(x);
+                a = -xxddLogP;
             }
             if (forceProper)
             {
@@ -350,8 +350,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
-                    double amin = x * dLogP;
-                    if (a < amin)
+                    double amin = xdLogP;
+                    if (amin > double.MaxValue)
+                    {
+                        // we want a/x - b == dLogP > 0
+                        // if a / x == dLogP == infinity then b = 0 works
+                        // let a be the smallest value for which a / x == infinity                     
+                        a = MMath.NextDouble(MMath.LargestDoubleProduct(double.MaxValue, x));
+                        return Gamma.FromShapeAndRate(a + 1, 0);
+                    }
+                    else if (a < amin)
                     {
                         return Gamma.FromShapeAndRate(amin + 1, 0);
                     }

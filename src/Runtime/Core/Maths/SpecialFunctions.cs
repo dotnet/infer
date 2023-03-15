@@ -4832,7 +4832,7 @@ rr = mpf('-0.99999824265582826');
         }
 
         /// <summary>
-        /// Returns the largest value such that value * denominator &lt;= product.
+        /// Returns the largest value such that value * denominator &lt;= numerator.
         /// </summary>
         /// <param name="numerator"></param>
         /// <param name="denominator"></param>

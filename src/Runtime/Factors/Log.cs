@@ -72,9 +72,9 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             // Factor is N(log(d); m, v) = exp(m/v*log(d) - 0.5/v*log(d)^2)
             double logd = Math.Log(d);
-            double dlogp = (log.MeanTimesPrecision - log.Precision * logd) / d;
-            double ddlogp = (-log.Precision / d - dlogp) / d;
-            return Gamma.FromDerivatives(d, dlogp, ddlogp, false);
+            double xdlogp = log.MeanTimesPrecision - log.Precision * logd;
+            double xxddlogp = -log.Precision - xdlogp;
+            return Gamma.FromDerivatives(d, xdlogp / d, xdlogp, xxddlogp, false);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="LogOp_EP"]/message_doc[@name="DAverageConditional(Gaussian, Gamma, Gaussian)"]/*'/>

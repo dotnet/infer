@@ -820,7 +820,6 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (sample.Precision == 0 || mean.Precision == 0)
                 return Gamma.Uniform();
             double mx, vx, mm, vm;
-            double a, b;
             sample.GetMeanAndVariance(out mx, out vx);
             mean.GetMeanAndVariance(out mm, out vm);
             if (variance.IsPointMass)
@@ -832,14 +831,17 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // ddlogf = 0.5/(v+vx+vm)^2 - (mx-mm)^2/(v+vx+vm)^3
                 double vp = variance.Point;
                 double denom = 1.0 / (vp + vx + vm);
+                double vpdenom = vp / (vp + vx + vm);
                 double mxm = mx - mm;
-                double mxm2 = mxm * mxm;
-                double dlogf = -0.5 * denom + 0.5 * mxm2 * denom * denom;
-                double ddlogf = 0.5 * denom * denom - mxm2 * denom * denom * denom;
-                return Gamma.FromDerivatives(vp, dlogf, ddlogf, ForceProper);
+                double mxmdenom = mxm * denom;
+                double mxmvpdenom = mxm * vpdenom;
+                double dlogf = (-0.5 + 0.5 * mxm * mxmdenom) * denom;
+                double xdlogf = -0.5 * vpdenom + 0.5 * mxmvpdenom * mxmdenom;
+                double xxddlogf = (0.5 * vpdenom - mxmvpdenom * mxmdenom) * vpdenom;
+                return Gamma.FromDerivatives(vp, dlogf, xdlogf, xxddlogf, ForceProper);
             }
-            a = variance.Shape;
-            b = variance.Rate;
+            double a = variance.Shape;
+            double b = variance.Rate;
             double c = Math.Sqrt(2 * b);
             double m = c * (mx - mm);
             double v = c * c * (vx + vm);

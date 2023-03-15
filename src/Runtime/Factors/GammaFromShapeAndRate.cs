@@ -537,13 +537,15 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double shape2 = shape + rate.Shape;
                 double xrr = x + rate.Rate;
                 double shape2OverXrr = shape2 / xrr;
+                double shape2TimesXOverXrr = shape2 * x / xrr;
                 if (x == 0)
                 {
                     if (shape == 1)
                     {
                         double dlogf = -shape2OverXrr;
-                        double ddlogf = shape2OverXrr / xrr;
-                        return Gamma.FromDerivatives(x, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
+                        double xdlogf = -shape2TimesXOverXrr;
+                        double xxddlogf = shape2TimesXOverXrr * x / xrr;
+                        return Gamma.FromDerivatives(x, dlogf, xdlogf, xxddlogf, GammaFromShapeAndRateOp.ForceProper);
                     }
                     else
                     {
@@ -556,8 +558,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 {
                     double shapeMinus1OverX = (shape - 1) / x;
                     double dlogf = shapeMinus1OverX - shape2OverXrr;
-                    double ddlogf = -shapeMinus1OverX / x + shape2OverXrr / xrr;
-                    return Gamma.FromDerivatives(x, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
+                    double xdlogf = shape - 1 - shape2TimesXOverXrr;
+                    double xxddlogf = -(shape - 1) + shape2TimesXOverXrr * x / xrr;
+                    return Gamma.FromDerivatives(x, dlogf, xdlogf, xxddlogf, GammaFromShapeAndRateOp.ForceProper);
                 }
             }
             double sampleMean, sampleVariance;
@@ -948,8 +951,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 else
                 {
                     double dlogf = shape / r - shape2 / r2;
-                    double ddlogf = -shape / (r * r) + shape2 / (r2 * r2);
-                    return Gamma.FromDerivatives(r, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
+                    double xdlogf = shape - shape2 * r / r2;
+                    double xxddlogf = -shape + shape2 * (r / r2) * (r / r2);
+                    return Gamma.FromDerivatives(r, dlogf, xdlogf, xxddlogf, GammaFromShapeAndRateOp.ForceProper);
                 }
             }
             double shape1 = shape + rate.Shape;
