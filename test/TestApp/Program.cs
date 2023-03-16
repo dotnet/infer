@@ -84,6 +84,7 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
+            new GaussianFromMeanAndVarianceTests().PointVarianceTest4();
 
             bool runAllTests = false;
             if (runAllTests)

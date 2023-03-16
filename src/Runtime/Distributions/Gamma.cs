@@ -350,6 +350,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
+                    // TODO: check that derivative of result is correct
                     double amin = xdLogP;
                     if (amin > double.MaxValue)
                     {

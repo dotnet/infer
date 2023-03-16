@@ -56,6 +56,34 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void PointVarianceTest3()
+        {
+            for (int i = 300; i < 324; i++)
+            {
+                Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(Gaussian.FromNatural(-0.00070557425617118793, System.Math.Pow(10, -i)), Gaussian.FromNatural(0, 13466586.033404613), Gamma.PointMass(0.09965));
+                ////Trace.WriteLine($"{i} {message} {message.Rate}");
+                Assert.True(message.Rate >= 0);
+                Assert.True(message.Shape >= 1);
+            }
+        }
+
+        [Fact]
+        public void PointVarianceTest4()
+        {
+            Gaussian zero = Gaussian.PointMass(0);
+            foreach (var variance in OperatorTests.DoublesGreaterThanZero())
+            {
+                foreach (var sample in OperatorTests.Gaussians())
+                {
+                    Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, zero, Gamma.PointMass(variance));
+                    Gaussian mean = Gaussian.FromNatural(-sample.MeanTimesPrecision, sample.Precision);
+                    Gamma message2 = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(zero, mean, Gamma.PointMass(variance));
+                    Assert.Equal(message, message2);
+                }
+            }
+        }
+
+        [Fact]
         [Trait("Category", "OpenBug")]
         public void VarianceGammaTimesGaussianMomentsTest()
         {
