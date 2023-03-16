@@ -340,6 +340,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 a = -xxddLogP;
+                a = Math.Min(double.MaxValue, a);
             }
             if (forceProper)
             {
@@ -358,10 +359,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         // if a / x == dLogP == infinity then b = 0 works
                         // let a be the smallest value for which a / x == infinity                     
                         a = MMath.NextDouble(MMath.LargestDoubleProduct(double.MaxValue, x));
+                        a = Math.Min(double.MaxValue, a);
+                        Debug.Assert(a + 1 <= double.MaxValue);
                         return Gamma.FromShapeAndRate(a + 1, 0);
                     }
-                    else if (a < amin)
+                    else if (a <= amin || double.IsPositiveInfinity(dLogP))
                     {
+                        Debug.Assert(amin + 1 <= double.MaxValue);
                         return Gamma.FromShapeAndRate(amin + 1, 0);
                     }
                 }
@@ -372,6 +376,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // correct roundoff errors that might make b negative
                 b = Math.Max(b, 0);
             }
+            Debug.Assert(a + 1 <= double.MaxValue);
             return Gamma.FromShapeAndRate(a + 1, b);
         }
 

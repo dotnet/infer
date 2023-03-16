@@ -73,11 +73,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian zero = Gaussian.PointMass(0);
             foreach (var variance in OperatorTests.DoublesGreaterThanZero())
             {
+                Gamma varianceDist = Gamma.PointMass(variance);
                 foreach (var sample in OperatorTests.Gaussians())
                 {
-                    Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, zero, Gamma.PointMass(variance));
+                    Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, zero, varianceDist);
                     Gaussian mean = Gaussian.FromNatural(-sample.MeanTimesPrecision, sample.Precision);
-                    Gamma message2 = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(zero, mean, Gamma.PointMass(variance));
+                    Gamma message2 = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(zero, mean, varianceDist);
                     Assert.Equal(message, message2);
                 }
             }

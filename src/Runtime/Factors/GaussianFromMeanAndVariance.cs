@@ -833,12 +833,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double denom = 1.0 / (vp + vx + vm);
                 if (MMath.AreEqual(denom, 0)) return Gamma.Uniform();
                 double vdenom = vp / (vp + vx + vm);
-                double mxm = mx - mm;
-                double mxmdenom = mxm * denom;
-                double mxmvdenom = mxm * vdenom;
-                double dlogf = (-0.5 + 0.5 * mxm * mxmdenom) * denom;
-                double xdlogf = -0.5 * vdenom + 0.5 * mxmvdenom * mxmdenom;
-                double xxddlogf = (0.5 * vdenom - mxmvdenom * mxmdenom) * vdenom;
+                double mxm = Math.Abs(mx - mm);
+                double mxmdenom = MMath.AreEqual(mxm, 0) ? 0 : mxm * denom;
+                double mxmvdenom = MMath.AreEqual(vdenom, 0) ? (mxmdenom * vp) : (mxm * vdenom);
+                double dlogf = double.IsInfinity(mxmdenom) ? double.PositiveInfinity : (-0.5 * denom + 0.5 * mxmdenom * mxmdenom);
+                double xdlogf = -0.5 * vdenom + 0.5 * Math.Max(mxmdenom, mxmvdenom) * Math.Min(mxmdenom, mxmvdenom);
+                double xxddlogf = 0.5 * vdenom * vdenom - (MMath.AreEqual(mxmvdenom, 0) ? 0 : denom * mxmvdenom * mxmvdenom);
                 return Gamma.FromDerivatives(vp, dlogf, xdlogf, xxddlogf, ForceProper);
             }
             double a = variance.Shape;
