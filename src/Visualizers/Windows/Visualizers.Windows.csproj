@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains visualization tools for exploring and analyzing models on Windows platform.</Description>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
     <AssemblyName>Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows</AssemblyName>
     <PackageId>Microsoft.ML.Probabilistic.Visualizers.Windows$(NuGetPackageIdSuffix)</PackageId>
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS, SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS</DefineConstants>
@@ -27,9 +27,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Msagl" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Msagl.Drawing" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Msagl.GraphViewerGdi" Version="1.1.1" />
+    <PackageReference Include="AutomaticGraphLayout" Version="1.1.12" />
+    <PackageReference Include="AutomaticGraphLayout.Drawing" Version="1.1.12" />
+    <PackageReference Include="AutomaticGraphLayout.GraphViewerGDI" Version="1.1.12" />
   </ItemGroup>
 
   <PropertyGroup Condition=" $(DefineConstants.Contains('INCLUDE_TRANSFORM_BROWSER'))">
@@ -54,7 +54,26 @@
     <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
   </ItemGroup>
 
-    <PropertyGroup>
+  <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyNamePrefix)Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+    NuGet's IncludeSymbols setting creates a separate symbols NuGet package, but we would like the
+    symbols included in the same package - hence this workaround.
+    -->
+    <!--
+    First we remove the entry that is added by nuget-properties.props that does not work here because
+    of the multiple target platforms.
+    -->
+    <None Remove="$(OutDir)$(AssemblyName).pdb" />
+    <!--
+    There isn't a convenient way right now to use the $(TargetPlatform) because of the manner NuGet
+    resolves property values during packing; or to map these platforms to the target-framework paths used
+    by the NuGet package format; so we list them explicitly here.
+    -->
+    <None Include="bin\Any CPU\$(Configuration)\net6.0-windows\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net6.0-windows7.0\" />
+    <None Include="bin\Any CPU\$(Configuration)\net472\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net472\" />
+  </ItemGroup>
 </Project>
