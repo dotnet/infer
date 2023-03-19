@@ -371,6 +371,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
             }
             double b = ((a == 0) ? 0 : (a / x)) - dLogP;
+            if (double.IsPositiveInfinity(b))
+            {
+                b = (a - xdLogP) / x;
+            }
+
             if (forceProper)
             {
                 // correct roundoff errors that might make b negative
@@ -400,13 +405,26 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="ddlogp">On exit, the second derivative.</param>
         public void GetDerivatives(double x, out double dlogp, out double ddlogp)
         {
+            if (IsPointMass)
+            {
+                ddlogp = double.NegativeInfinity;
+                if (x < Point) dlogp = double.PositiveInfinity;
+                else if (x == Point) dlogp = 0;
+                else dlogp = double.NegativeInfinity;
+                return;
+            }
+
             dlogp = -this.Rate;
             ddlogp = 0;
             double a = this.Shape - 1;
             if (a != 0) // avoid 0/0
             {
-                dlogp += a / x;
                 ddlogp -= a / (x * x);
+                dlogp += a / x;
+                if (double.IsPositiveInfinity(dlogp))
+                {
+                    dlogp = (a - this.Rate * x) / x;
+                }
             }
         }
 

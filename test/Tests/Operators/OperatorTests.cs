@@ -349,7 +349,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaLower_IsIncreasingInX()
         {
-            Parallel.ForEach(DoublesGreaterThanZero(), a =>
+           Parallel.ForEach(DoublesGreaterThanZero(), a =>
            {
                IsIncreasingForAtLeastZero(x => MMath.GammaLower(a, x));
            });
@@ -1302,6 +1302,18 @@ zL = (L - mx)*sqrt(prec)
             }
         }
 
+        public static IEnumerable<Gaussian> Gaussians(int count)
+        {
+            int half = (int)System.Math.Sqrt(count);
+            foreach (var tau in Doubles(half))
+            {
+                foreach (var precision in DoublesGreaterThanZero(half))
+                {
+                    yield return Gaussian.FromNatural(tau, precision);
+                }
+            }
+        }
+
         public static IEnumerable<double> UpperBounds(double lowerBound)
         {
             HashSet<double> set = new HashSet<double>();
@@ -1341,7 +1353,7 @@ zL = (L - mx)*sqrt(prec)
                         if (double.IsNegativeInfinity(lowerBound) && double.IsPositiveInfinity(upperBound))
                             center = 0;
                         if (double.IsInfinity(center)) continue;
-                        foreach (var x in Gaussians().Take(10000))
+                        foreach (var x in Gaussians(10000))
                         {
                             double mx = x.GetMean();
                             if (double.IsInfinity(mx)) continue;
@@ -1405,14 +1417,14 @@ zL = (L - mx)*sqrt(prec)
             double maxUlpErrorUpperBound = 0;
             // maxUlpError = 22906784576, lowerBound = -0.010000000000000002, upperBound = -0.01
             bool trace = false;
-            Parallel.ForEach(new double[] { 0 }.Concat(Doubles()).Take(1), lowerBound =>
+            foreach (double lowerBound in new double[] { 0 }.Concat(Doubles()).Take(1))
             {
                 foreach (double upperBound in new double[] { 1 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
                     if (trace) Trace.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
-                    foreach (var x in Gaussians().Take(100000))
+                    Parallel.ForEach(Gaussians(100000), x =>
                     {
-                        if (x.IsPointMass) continue;
+                        if (x.IsPointMass) return;
                         double mx = x.GetMean();
                         bool isBetween = Factor.IsBetween(mx, lowerBound, upperBound);
                         if (!isBetween)
@@ -1421,7 +1433,7 @@ zL = (L - mx)*sqrt(prec)
                             double distance;
                             if (mx < lowerBound) distance = System.Math.Abs(mx - lowerBound);
                             else distance = System.Math.Abs(mx - upperBound);
-                            if (distance < 1 / System.Math.Sqrt(x.Precision)) continue;
+                            if (distance < 1 / System.Math.Sqrt(x.Precision)) return;
                         }
                         double logProbBetween = IsBetweenGaussianOp.LogProbBetween(x, lowerBound, upperBound);
                         foreach (var precisionDelta in DoublesGreaterThanZero())
@@ -1443,10 +1455,10 @@ zL = (L - mx)*sqrt(prec)
                                 }
                             }
                         }
-                    }
+                    });
                     if (trace) Trace.WriteLine($"maxUlpError = {maxUlpError}, lowerBound = {maxUlpErrorLowerBound:g17}, upperBound = {maxUlpErrorUpperBound:g17}");
                 }
-            });
+            }
             Assert.True(maxUlpError < 1e3);
         }
 
@@ -1466,7 +1478,7 @@ zL = (L - mx)*sqrt(prec)
                 foreach (double upperBound in new[] { -9999.9999999999982 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
                     if (trace) Trace.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
-                    Parallel.ForEach(Gaussians().Where(g => !g.IsPointMass).Take(100000), x =>
+                    Parallel.ForEach(Gaussians(100000).Where(g => !g.IsPointMass), x =>
                     {
                         double mx = x.GetMean();
                         Gaussian toX = IsBetweenGaussianOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
@@ -1578,7 +1590,7 @@ zL = (L - mx)*sqrt(prec)
                     double center = (lowerBound + upperBound) / 2;
                     if (double.IsNegativeInfinity(lowerBound) && double.IsPositiveInfinity(upperBound))
                         center = 0;
-                    Parallel.ForEach(Gaussians().Take(100000), x =>
+                    Parallel.ForEach(Gaussians(100000), x =>
                     {
                         double mx = x.GetMean();
                         Gaussian toX = IsBetweenGaussianOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
@@ -1673,7 +1685,7 @@ zL = (L - mx)*sqrt(prec)
                 foreach (double upperBound in new[] { 1.0 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
                     if (trace) Console.WriteLine($"lowerBound = {lowerBound:g17}, upperBound = {upperBound:g17}");
-                    Parallel.ForEach(Gaussians().Take(100000), x =>
+                    Parallel.ForEach(Gaussians(100000), x =>
                     {
                         Gaussian toX = IsBetweenGaussianOp.XAverageConditional(true, x, lowerBound, upperBound);
                         Gaussian xPost;

@@ -863,6 +863,15 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        private static Gamma FromDerivativesCheck(double x, double dLogP, double xdLogP, double xxddLogP, bool forceProper)
+        {
+            Gamma result = Gamma.FromDerivatives(x, dLogP, xdLogP, xxddLogP, forceProper);
+            result.GetDerivatives(x, out double dlogp2, out double ddlogp2);
+            bool bothInfinity = double.IsInfinity(dLogP) && (dLogP == dlogp2);
+            if (!bothInfinity && MMath.AbsDiff(xdLogP, x*dlogp2, 1e-10) > 1e-1 && MMath.AbsDiff(2*xdLogP, 2*x * dlogp2, 1e-10) > 1e-1) throw new Exception();
+            return result;
+        }
+
         /// <summary>
         /// Compute int_{-Inf}^{Inf} N(x;m,v) VG(x;a) dx * 2/N(m/sqrt(v);0,1)
         /// </summary>

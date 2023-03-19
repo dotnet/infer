@@ -7,6 +7,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
@@ -71,17 +72,17 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void PointVarianceTest4()
         {
             Gaussian zero = Gaussian.PointMass(0);
-            foreach (var variance in OperatorTests.DoublesGreaterThanZero())
+            Parallel.ForEach(OperatorTests.DoublesGreaterThanZero(), variance =>
             {
                 Gamma varianceDist = Gamma.PointMass(variance);
-                foreach (var sample in OperatorTests.Gaussians())
+                foreach (var sample in OperatorTests.Gaussians(10000))
                 {
                     Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, zero, varianceDist);
                     Gaussian mean = Gaussian.FromNatural(-sample.MeanTimesPrecision, sample.Precision);
                     Gamma message2 = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(zero, mean, varianceDist);
                     Assert.Equal(message, message2);
                 }
-            }
+            });
         }
 
         [Fact]
