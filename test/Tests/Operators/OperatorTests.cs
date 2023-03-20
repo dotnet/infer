@@ -1247,6 +1247,17 @@ zL = (L - mx)*sqrt(prec)
             }
         }
 
+        public static IEnumerable<GammaPower> GammaPowers()
+        {
+            foreach (var gamma in Gammas())
+            {
+                foreach (var power in Doubles().Where(x => !double.IsInfinity(x)))
+                {
+                    yield return GammaPower.FromGamma(gamma, power);
+                }
+            }
+        }
+
         /// <summary>
         /// Generates a representative set of proper TruncatedGamma distributions with infinite upper bound.
         /// </summary>

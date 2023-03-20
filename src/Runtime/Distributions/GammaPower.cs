@@ -460,8 +460,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else
                 {
                     // The formula must be computed this way to get consistency between power=1 and power=2 in 32-bit mode.
-                    double diffTimesPower = (MMath.RisingFactorialLnOverN(Shape, power2) - Math.Log(Rate)) * Power;
-                    return diffTimesPower * power;
+                    double diff = MMath.RisingFactorialLnOverN(Shape, power2) - Math.Log(Rate);
+                    double diffTimesPower = (double)diff * Power;
+                    return (double)diffTimesPower * power;
                 }
             }
         }
