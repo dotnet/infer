@@ -459,7 +459,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else if (power2 > double.MaxValue) return double.PositiveInfinity;
                 else
                 {
-                    return power2 * (MMath.RisingFactorialLnOverN(Shape, power2) - Math.Log(Rate));
+                    // The formula must be computed this way to get consistency between power=1 and power=2 in 32-bit mode.
+                    double diffTimesPower = (MMath.RisingFactorialLnOverN(Shape, power2) - Math.Log(Rate)) * Power;
+                    return diffTimesPower * power;
                 }
             }
         }

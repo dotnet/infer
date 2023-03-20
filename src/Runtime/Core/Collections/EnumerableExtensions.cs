@@ -309,6 +309,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static IEnumerable<T> TakeRandom<T>(this IEnumerable<T> list, int count)
         {
+            // Reservoir sampling
             List<T> values = new List<T>();
             int k = 0;
             foreach (var item in list)

@@ -254,7 +254,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerMeanAndVarianceFuzzTest()
         {
-            foreach (var gammaPower in OperatorTests.GammaPowers(100000))
+            Assert.False(GammaPower.FromShapeAndRate(1E+49, 1E+66, 9.99999999999997E-311).GetVariance() < 0);
+            foreach (var gammaPower in OperatorTests.GammaPowers(10000000))
             {
                 gammaPower.GetMeanAndVariance(out double mean, out double variance);
                 Assert.False(double.IsNaN(mean));

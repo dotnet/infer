@@ -547,7 +547,7 @@ zL = (L - mx)*sqrt(prec)
                     //X = Gaussian.FromMeanAndPrecision(mx, X.Precision + 1.0000000000000011E-19);
                     Gaussian toX2 = IsBetweenGaussianOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
                     Gaussian xPost = X * toX2;
-                    Console.WriteLine($"mx = {X.GetMean():g17} mp = {xPost.GetMean():g17} vp = {xPost.GetVariance():g17} toX = {toX2}");
+                    ////Console.WriteLine($"mx = {X.GetMean():g17} mp = {xPost.GetMean():g17} vp = {xPost.GetVariance():g17} toX = {toX2}");
                     //X.Precision *= 100;
                     //X.MeanTimesPrecision *= 0.999999;
                     //X.SetMeanAndPrecision(mx, X.Precision * 2);
@@ -565,7 +565,7 @@ zL = (L - mx)*sqrt(prec)
                         mva.Add(sample);
                 }
                 Gaussian toX = IsBetweenGaussianOp.XAverageConditional(Bernoulli.PointMass(true), X, lowerBound, upperBound);
-                Console.WriteLine($"expected mp = {mva.Mean}, vp = {mva.Variance}, {X * toX}");
+                ////Console.WriteLine($"expected mp = {mva.Mean}, vp = {mva.Variance}, {X * toX}");
                 XAverageConditional_Debug(X, lowerBound, upperBound);
             }
         }
@@ -975,7 +975,7 @@ zL = (L - mx)*sqrt(prec)
             double lp = IsBetweenGaussianOp.LogProbBetween(x, 100, 100.1);
             double lp2 = IsBetweenGaussianOp.LogProbBetween(x, -100.1, -100);
             Assert.True(MMath.AbsDiff(lp, lp2, 1e-8) < 1e-8);
-            Console.WriteLine("{0} {1}", lp, lp2);
+            ////Console.WriteLine("{0} {1}", lp, lp2);
 
             Gaussian lowerBound = Gaussian.PointMass(0);
             Gaussian upperBound = Gaussian.PointMass(1);
@@ -1057,17 +1057,17 @@ zL = (L - mx)*sqrt(prec)
                     upperBound = Gaussian.PointMass(1);
                 else
                     upperBound = new Gaussian(1, 1e-8);
-                Console.WriteLine($"upperBound = {upperBound}");
+                ////Console.WriteLine($"upperBound = {upperBound}");
                 Gaussian lowerBound = Gaussian.PointMass(-1);
                 Gaussian result2 = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                Console.WriteLine($"{lowerBound}: {result2}");
+                ////Console.WriteLine($"{lowerBound}: {result2}");
                 for (int i = 6; i < 30; i++)
                 {
                     double v = System.Math.Pow(0.1, i);
                     lowerBound = Gaussian.FromMeanAndVariance(-1, v);
                     Gaussian result = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                     double error = result.MaxDiff(result2);
-                    Console.WriteLine($"{lowerBound}: {result} {error}");
+                    ////Console.WriteLine($"{lowerBound}: {result} {error}");
                     Assert.True(error < 1e-6);
                 }
             }
@@ -1086,17 +1086,17 @@ zL = (L - mx)*sqrt(prec)
                     lowerBound = Gaussian.PointMass(-1);
                 else
                     lowerBound = new Gaussian(-1, 1e-8);
-                Console.WriteLine($"lowerBound = {lowerBound}");
+                ////Console.WriteLine($"lowerBound = {lowerBound}");
                 Gaussian upperBound = Gaussian.PointMass(1);
                 Gaussian result2 = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
-                Console.WriteLine($"{upperBound}: {result2}");
+                ////Console.WriteLine($"{upperBound}: {result2}");
                 for (int i = 6; i < 300; i++)
                 {
                     double v = System.Math.Pow(0.1, i);
                     upperBound = Gaussian.FromMeanAndVariance(1, v);
                     Gaussian result = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                     double error = result.MaxDiff(result2);
-                    Console.WriteLine($"{upperBound}: {result} {error}");
+                    ////Console.WriteLine($"{upperBound}: {result} {error}");
                     Assert.True(error < 1e-6);
                 }
             }
@@ -1333,6 +1333,7 @@ zL = (L - mx)*sqrt(prec)
         [Fact]
         public void GaussianIsBetweenCRCC_IsSymmetricInXMean()
         {
+            IsBetweenGaussianOp.XAverageConditional(new Bernoulli(0), Gaussian.FromNatural(-1E+153, 1e308), -1.0000000000000085E-153, 1.0000000000000085E-153);
             double meanMaxUlpError = 0;
             double meanMaxUlpErrorLowerBound = 0;
             double meanMaxUlpErrorUpperBound = 0;
@@ -1387,8 +1388,8 @@ zL = (L - mx)*sqrt(prec)
                     }
                 });
             }
-            Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:g17}, upperBound = {meanMaxUlpErrorUpperBound:g17}, isBetween = {meanMaxUlpErrorIsBetween}");
-            Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:g17}, upperBound = {precMaxUlpErrorUpperBound:g17}, isBetween = {precMaxUlpErrorIsBetween}");
+            ////Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:g17}, upperBound = {meanMaxUlpErrorUpperBound:g17}, isBetween = {meanMaxUlpErrorIsBetween}");
+            ////Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:g17}, upperBound = {precMaxUlpErrorUpperBound:g17}, isBetween = {precMaxUlpErrorIsBetween}");
             Assert.True(meanMaxUlpError == 0);
             Assert.True(precMaxUlpError == 0);
         }
@@ -1882,7 +1883,7 @@ zL = (L - mx)*sqrt(prec)
             Gaussian toLowerExpected = IsBetweenGaussianOp.LowerBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
             Gaussian toUpperExpected = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
             if (double.IsNaN(toXExpected.Precision)) throw new Exception();
-            Console.WriteLine($"expected toX={toXExpected} toLower={toLowerExpected} toUpper={toUpperExpected}");
+            ////Console.WriteLine($"expected toX={toXExpected} toLower={toLowerExpected} toUpper={toUpperExpected}");
             Gaussian previousXpost = new Gaussian();
             Gaussian previousToLower = new Gaussian();
             Gaussian previousToUpper = new Gaussian();
@@ -1894,7 +1895,7 @@ zL = (L - mx)*sqrt(prec)
                 Gaussian toUpper = IsBetweenGaussianOp.UpperBoundAverageConditional_Slow(isBetween, x, lowerBound, upperBound);
                 Assert.True(toX.Precision >= 0);
                 Xpost.SetToProduct(x, toX);
-                Console.WriteLine($"{x}: {toX} {Xpost} toLower={toLower} toUpper={toUpper}");
+                ////Console.WriteLine($"{x}: {toX} {Xpost} toLower={toLower} toUpper={toUpper}");
                 if (i > 0)
                 {
                     Assert.True(Xpost.GetVariance() < previousXpost.GetVariance());
@@ -2669,13 +2670,13 @@ weight * (tau + alphaX) + alphaX
                 double xMean = (trial == 0) ? -1 : 1;
                 Gaussian x = Gaussian.FromMeanAndVariance(xMean, 0);
                 Gaussian result2 = BernoulliFromLogOddsOp.LogOddsAverageConditional(true, x);
-                Console.WriteLine("{0}: {1}", x, result2);
+                ////Console.WriteLine("{0}: {1}", x, result2);
                 for (int i = 8; i < 30; i++)
                 {
                     double v = System.Math.Pow(0.1, i);
                     x = Gaussian.FromMeanAndVariance(xMean, v);
                     Gaussian result = BernoulliFromLogOddsOp.LogOddsAverageConditional(true, x);
-                    Console.WriteLine("{0}: {1} maxDiff={2}", x, result, result2.MaxDiff(result));
+                    ////Console.WriteLine("{0}: {1} maxDiff={2}", x, result, result2.MaxDiff(result));
                     Assert.True(result2.MaxDiff(result) < 1e-6);
                 }
             }
@@ -2683,22 +2684,22 @@ weight * (tau + alphaX) + alphaX
             for (int i = 0; i < 10; i++)
             {
                 Gaussian falseMsg = LogisticOp.FalseMsg(new Beta(0.2, 1.8), new Gaussian(0, 97.0 * (i + 1)), new Gaussian());
-                Console.WriteLine(falseMsg);
+                ////Console.WriteLine(falseMsg);
             }
             Gaussian toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(-4662, 1314));
-            Console.WriteLine(toLogOdds);
+            ////Console.WriteLine(toLogOdds);
             toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(2249, 2.5));
-            Console.WriteLine(toLogOdds);
+            ////Console.WriteLine(toLogOdds);
             Gaussian logOdds = new Gaussian(100, 100);
             toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, logOdds);
-            Console.WriteLine(toLogOdds * logOdds);
+            ////Console.WriteLine(toLogOdds * logOdds);
             // test m =approx 1.5*v for increasing v
             for (int i = 0; i < 10; i++)
             {
                 double v = System.Math.Pow(2, i + 5);
                 Gaussian g = new Gaussian(37 + 1.5 * v, v);
                 toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, g);
-                Console.WriteLine("{0}: {1}", g, toLogOdds);
+                ////Console.WriteLine("{0}: {1}", g, toLogOdds);
                 Gaussian actualPost = toLogOdds * g;
                 Gaussian expectedPost = new Gaussian(0, 1);
                 if (i == 0)
@@ -2732,7 +2733,7 @@ weight * (tau + alphaX) + alphaX
                 double v = System.Math.Pow(2, i + 5);
                 Gaussian g = new Gaussian(v - 1, v);
                 toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, g);
-                Console.WriteLine("{0}: {1}", g, toLogOdds);
+                ////Console.WriteLine("{0}: {1}", g, toLogOdds);
                 Gaussian actualPost = toLogOdds * g;
                 Gaussian expectedPost = new Gaussian(0, 1);
                 if (i == 0)
@@ -2751,13 +2752,13 @@ weight * (tau + alphaX) + alphaX
             for (int i = 0; i < 10; i++)
             {
                 toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(54.65 / 10 * (i + 1), 8.964));
-                Console.WriteLine(toLogOdds);
+                ////Console.WriteLine(toLogOdds);
             }
             toLogOdds = BernoulliFromLogOddsOp.LogOddsAverageConditional(false, new Gaussian(9900, 10000) ^ 0.1);
-            Console.WriteLine(toLogOdds);
+            ////Console.WriteLine(toLogOdds);
             Gaussian falseMsg2 = LogisticOp.FalseMsg(new Beta(0.9, 0.1), Gaussian.FromNatural(-10.097766458353044, 0.000011644704327819733),
               Gaussian.FromNatural(-0.0010832099815010626, 0.000010092906656322242));
-            Console.WriteLine(falseMsg2);
+            ////Console.WriteLine(falseMsg2);
         }
 
         [Fact]
