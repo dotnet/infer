@@ -1905,6 +1905,8 @@ namespace Microsoft.ML.Probabilistic.Math
                 s += 2; // s = 2*i + 1 - a
                 double tau = p * (1 + rho);
                 rho = tau / (q - tau);
+                if (AreEqual(rho, 0))
+                    return sum;
                 t *= rho;
                 double oldSum = sum;
                 sum += t;

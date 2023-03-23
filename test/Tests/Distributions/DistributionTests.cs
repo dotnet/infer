@@ -170,7 +170,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 foreach (var x in OperatorTests.DoublesAtLeastZero())
                 {
                     double logProb = dist.GetLogProb(x);
-                    Assert.False(double.IsNaN(logProb));
+                    Assert.False(double.IsNaN(logProb), $"TruncatedGamma({dist.Gamma.Shape:g17}, {dist.Gamma.GetScale():g17}, {dist.LowerBound:g17}, {dist.UpperBound:g17}).GetLogProb({x:g17}) is NaN");
                     if (logProb > max)
                     {
                         max = logProb;
