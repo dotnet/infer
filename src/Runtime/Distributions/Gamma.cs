@@ -626,13 +626,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="x">Where to evaluate the density</param>
         /// <param name="shape">Shape parameter</param>
         /// <param name="rate">Rate parameter</param>
+        /// <param name="normalized">If true, include the normalizer</param>
         /// <returns>log(Gamma(x;shape,rate))</returns>
         /// <remarks>
         /// The distribution is <c>p(x) = x^(a-1)*exp(-x*b)*b^a/Gamma(a)</c>.
         /// When a &lt;= 0 or b &lt;= 0 the <c>b^a/Gamma(a)</c> term is dropped.
         /// Thus if shape = 1 and rate = 0 the density is 1.
         /// </remarks>
-        public static double GetLogProb(double x, double shape, double rate)
+        public static double GetLogProb(double x, double shape, double rate, bool normalized = true)
         {
             if (x < 0) return double.NegativeInfinity;
             if (x > double.MaxValue) // Avoid subtracting infinities below
@@ -641,7 +642,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else if (rate < 0) return x;
                 // fall through when rate == 0
             }
-            if (shape > 1e10 && IsProper(shape, rate))
+            if (normalized) normalized = IsProper(shape, rate);
+            if (shape > 1e10 && normalized)
             {
                 // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
                 // Also log(1-1/x) = -1/x - 0.5/x^2  for x > 1e10
@@ -658,7 +660,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double result = 0;
             if (shape != 1) result += (shape - 1) * Math.Log(x);
             if (rate != 0 && x != 0) result -= x * rate;
-            if (IsProper(shape, rate))
+            if (normalized)
             {
                 result += shape * Math.Log(rate) - MMath.GammaLn(shape);
             }

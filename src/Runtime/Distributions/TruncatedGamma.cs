@@ -257,7 +257,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     return (value == GetMode()) ? 0.0 : double.NegativeInfinity;
                 }
-                return this.Gamma.GetLogProb(value) + (this.Gamma.GetLogNormalizer() - logZ);
+                double normalizer = this.Gamma.GetLogNormalizer();
+                if (double.IsPositiveInfinity(normalizer))
+                {
+                    return Gamma.GetLogProb(value, this.Gamma.Shape, this.Gamma.Rate, normalized: false) - logZ;
+                }
+                else
+                {
+                    return this.Gamma.GetLogProb(value) + (normalizer - logZ);
+                }
             }
         }
 

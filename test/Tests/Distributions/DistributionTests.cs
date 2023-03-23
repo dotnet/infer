@@ -159,6 +159,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void TruncatedGamma_GetMode_MaximizesGetLogProb()
         {
+            Assert.False(double.IsNaN(new TruncatedGamma(Gamma.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324), 1E+25, double.PositiveInfinity).GetLogProb(1.7976931348623157E+308)));
             Assert.False(double.IsNaN(new TruncatedGamma(1.0000000000000032E-58, 1e-77, 1E+113, 1E+232).GetLogProb(1E+232)));
             Assert.False(double.IsNaN(new TruncatedGamma(1E+230, 1e-35, 4.94065645841247E-324, 1.0000000000000015E-28).GetLogProb(4.94065645841247E-324)));
             long count = 0;

@@ -367,9 +367,30 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaUpper_IsDecreasingInX()
         {
+            bool debug = false;
+            if (debug)
+            {
+                double x2 = 1.7976931348623466;
+                x2 = 0.10000000000000024;
+                double fp = double.NaN;
+                for (int i = 0; i < 100; i++)
+                {
+                    double f = MMath.GammaUpper(4.94065645841247E-324, x2, false);
+                    string star = (f > fp) ? "*" : "";
+                    Trace.WriteLine($"{x2:g17} {f:g17} {star}");
+                    x2 = MMath.NextDouble(x2);
+                    fp = f;
+                }
+            }
+            Assert.True(MMath.GammaUpper(4.94065645841247E-324, 0.10000000000000024, false) >= MMath.GammaUpper(4.94065645841247E-324, 0.10000000000000026, false));
+            Assert.True(MMath.GammaUpper(4.94065645841247E-324, 1.7976931348623466, false) >= MMath.GammaUpper(4.94065645841247E-324, 1.7976931348623475, false));
+            Assert.True(MMath.GammaUpper(4.94065645841247E-324, 1.7976931348623466, false) >= MMath.GammaUpper(4.94065645841247E-324, 1.7976931348623484, false));
             Parallel.ForEach(DoublesGreaterThanZero(), a =>
             {
-                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x));
+                foreach (var regularized in new[] { true, false })
+                {
+                    IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x, regularized));
+                }
             });
         }
 
@@ -1288,6 +1309,27 @@ zL = (L - mx)*sqrt(prec)
                 foreach (var lowerBound in DoublesAtLeastZero(quarter))
                 {
                     foreach (var gap in DoublesGreaterThanZero(half))
+                    {
+                        double upperBound = lowerBound + gap;
+                        if (upperBound == lowerBound) continue;
+                        if (gamma.IsPointMass && (gamma.Point < lowerBound || gamma.Point > upperBound)) continue;
+                        yield return new TruncatedGamma(gamma, lowerBound, upperBound);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generates a representative set of proper TruncatedGamma distributions.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<TruncatedGamma> TruncatedGammas()
+        {
+            foreach (var gamma in Gammas())
+            {
+                foreach (var lowerBound in DoublesAtLeastZero())
+                {
+                    foreach (var gap in DoublesGreaterThanZero())
                     {
                         double upperBound = lowerBound + gap;
                         if (upperBound == lowerBound) continue;

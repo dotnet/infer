@@ -1259,6 +1259,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     }
                     // No special handling needed here since we took the 'else' above.
                     double upper = MMath.GammaUpper(shape, ru, regularized);
+                    // For this difference to be non-negative, we need GammaUpper to be non-increasing
                     // This is inaccurate when lowerBound is close to upperBound.  In that case, use a Taylor expansion of lowerBound around upperBound.
                     return lower - upper;
                 }
@@ -1324,17 +1325,21 @@ namespace Microsoft.ML.Probabilistic.Math
                 throw new ArgumentException($"x ({x}) < 0");
             if (!regularized)
             {
-                if (a < 1 && x >= 1) return GammaUpperConFrac(a, x, regularized);
+                if (a < 1 && x >= 0.1) return GammaUpperConFrac2(a, x, regularized);
                 else if (a <= GammaSmallX)
                 {
                     if (x < 1)
                     {
                         double logx = Math.Log(x);
-                        return GammaUpperSeries1(a, x, logx, regularized) + GammaUpperConFrac(a, 1, regularized);
+                        return GammaUpperSeries1(a, x, logx, regularized) + GammaUpperConFrac2(a, 1, regularized);
                     }
                     return GammaUpperSeries(a, x, regularized);
                 }
-                else return Gamma(a) * GammaUpper(a, x, true);
+                else
+                {
+                    double regularizedResult = GammaUpper(a, x, true);
+                    return MMath.AreEqual(regularizedResult, 0) ? 0 : Gamma(a) * regularizedResult;
+                }
             }
             if (a <= 0)
                 throw new ArgumentException($"a ({a}) <= 0");
@@ -1357,8 +1362,10 @@ namespace Microsoft.ML.Probabilistic.Math
             else if (x > 1.5)
                 return GammaUpperConFrac(a, x);
             else if (a <= Ulp1)
+            {
                 // Gamma(a) = 1/a for a <= 1e-16
                 return a * GammaUpperSeries(a, x, false);
+            }
             else
                 return GammaUpperSeries(a, x);
         }
@@ -1725,7 +1732,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 term *= -x / (i + 1);
                 double sumOld = sum;
                 sum += term / (a + i + 1);
-                //Console.WriteLine("{0}: {1}", i, sum);
+                ////Console.WriteLine($"{i}: {sum}");
                 if (AreEqual(sum, sumOld))
                 {
                     return scale * sum + offset;
@@ -1861,9 +1868,49 @@ namespace Microsoft.ML.Probabilistic.Math
                 double del = c / d;
                 double oldH = h;
                 h *= del;
-                //Trace.WriteLine($"h = {h} del = {del}");
+                ////Trace.WriteLine($"h = {h:g17} del = {del:g17}");
                 if (AreEqual(h, oldH))
                     return h;
+            }
+            throw new Exception($"GammaUpperConFrac not converging for a={a:g17} x={x:g17}");
+        }
+
+        /// <summary>
+        /// Compute the regularized upper incomplete Gamma function by a continued fraction
+        /// </summary>
+        /// <param name="a">A real number.  Must be &gt; 0 if regularized is true.</param>
+        /// <param name="x">A real number &gt;= 1.1</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
+        /// <returns></returns>
+        private static double GammaUpperConFrac2(double a, double x, bool regularized = true)
+        {
+            // Origin: Gautschi (1979)
+            double scale = regularized ? GammaUpperScale(a, x) : Math.Exp(a * Math.Log(x) - x);
+            ////Trace.WriteLine($"{scale:g17}");
+            if (scale == 0)
+                return scale;
+            if (x > double.MaxValue) return 0.0;
+            double p = 0;
+            double q = (x - 1 - a) * (x + 1 - a);
+            double r = 4 * (x + 1 - a);
+            double s = 1 - a;
+            double rho = 0;
+            double t = scale / (x + 1 - a);
+            double sum = t;
+            for (int i = 1; i < 1000; ++i)
+            {
+                p += s; // p = -i*(a-i)
+                q += r; // q = (x + 2*i - 1 - a) * (x + 2*i + 1 - a)
+                r += 8; // r = 4 * (x + 2*i + 1 - a)
+                s += 2; // s = 2*i + 1 - a
+                double tau = p * (1 + rho);
+                rho = tau / (q - tau);
+                t *= rho;
+                double oldSum = sum;
+                sum += t;
+                ////Trace.WriteLine($"sum={sum} t={t} rho={rho} p={p} q={q} r={r} s={s}");
+                if (AreEqual(sum, oldSum))
+                    return sum;
             }
             throw new Exception($"GammaUpperConFrac not converging for a={a:g17} x={x:g17}");
         }

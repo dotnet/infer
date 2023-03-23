@@ -731,7 +731,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
 
         public static bool IsErrorSignificant(double assertTolerance, double err)
         {
-            return err > assertTolerance;
+            return double.IsNaN(err) || err > assertTolerance;
         }
     }
 }
