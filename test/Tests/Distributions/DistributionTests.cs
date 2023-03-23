@@ -118,17 +118,21 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPower_GetMode_MaximizesGetLogProb()
         {
+            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1E+306, 1E+226, 1.7976931348623157E+308).GetLogProb(0)));
             long count = 0;
             Parallel.ForEach(new[] {
                 GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308),
-            }.Concat(OperatorTests.GammaPowers(100000)), gammaPower =>
+            }.Concat(OperatorTests.GammaPowers(1000000)), gammaPower =>
             {
                 double argmax = double.NaN;
                 double max = double.NegativeInfinity;
                 foreach (var x in OperatorTests.DoublesAtLeastZero())
                 {
                     double logProb = gammaPower.GetLogProb(x);
-                    Assert.False(double.IsNaN(logProb));
+                    if (double.IsNaN(logProb))
+                    {
+                        throw new Exception($"GammaPower.FromShapeAndRate({gammaPower.Shape}, {gammaPower.Rate}, {gammaPower.Power}).GetLogProb({x:g17}) is NaN");
+                    }
                     if (logProb > max)
                     {
                         max = logProb;
@@ -171,7 +175,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                 foreach (var x in OperatorTests.DoublesAtLeastZero())
                 {
                     double logProb = dist.GetLogProb(x);
-                    Assert.False(double.IsNaN(logProb), $"TruncatedGamma({dist.Gamma.Shape:g17}, {dist.Gamma.GetScale():g17}, {dist.LowerBound:g17}, {dist.UpperBound:g17}).GetLogProb({x:g17}) is NaN");
+                    if (double.IsNaN(logProb))
+                    {
+                        throw new Exception($"TruncatedGamma({dist.Gamma.Shape:g17}, {dist.Gamma.GetScale():g17}, {dist.LowerBound:g17}, {dist.UpperBound:g17}).GetLogProb({x:g17}) is NaN");
+                    }
                     if (logProb > max)
                     {
                         max = logProb;

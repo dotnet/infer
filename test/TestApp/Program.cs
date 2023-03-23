@@ -84,6 +84,12 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
+            for (int i = 0; i < 100; i++)
+            {
+                new DistributionTests().GammaPower_GetMode_MaximizesGetLogProb();
+                new DistributionTests().TruncatedGamma_GetMode_MaximizesGetLogProb();
+            }
+
             bool runAllTests = false;
             if (runAllTests)
             {
