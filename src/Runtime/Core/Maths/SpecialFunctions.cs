@@ -1249,7 +1249,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     double lower;
                     if (MMath.AreEqual(rl, 0))
                     {
-                        //lower = -logrl;
+                        //lower = -logrl; when shape is small
                         lower = Math.Exp(MMath.LogGammaUpper(shape, 0, logrl));
                         if (regularized) lower *= shape;
                     }
@@ -1257,8 +1257,19 @@ namespace Microsoft.ML.Probabilistic.Math
                     {
                         lower = MMath.GammaUpper(shape, rl, regularized);
                     }
-                    // No special handling needed here since we took the 'else' above.
-                    double upper = MMath.GammaUpper(shape, ru, regularized);
+                    double upper;
+                    if (MMath.AreEqual(ru, 0))
+                    {
+                        //upper = -logru; when shape is small
+                        double logu = Math.Log(upperBound);
+                        double logru = logRate + logu;
+                        upper = Math.Exp(MMath.LogGammaUpper(shape, 0, logru));
+                        if (regularized) upper *= shape;
+                    }
+                    else
+                    {
+                        upper = MMath.GammaUpper(shape, ru, regularized);
+                    }
                     // For this difference to be non-negative, we need GammaUpper to be non-increasing
                     // This is inaccurate when lowerBound is close to upperBound.  In that case, use a Taylor expansion of lowerBound around upperBound.
                     return lower - upper;
