@@ -643,18 +643,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // fall through when rate == 0
             }
             if (normalized) normalized = IsProper(shape, rate);
-            if (shape > 1e10 && normalized)
+            if (shape > 1e10)
             {
-                // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
+                // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x + MMath.LnSqrt2PI for x > 1e10
                 // Also log(1-1/x) = -1/x - 0.5/x^2  for x > 1e10
                 // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
                 double mode = (shape - 1) / rate; // cannot be zero
                 double xOverMode = x / mode;
                 if (xOverMode > double.MaxValue) return double.NegativeInfinity;
-                else
+                else if (normalized)
                 {
                     double logXOverMode = (xOverMode == 0) ? (Math.Log(x) - Math.Log(mode)) : Math.Log(xOverMode);
                     return (shape - 1) * (logXOverMode + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
+                }
+                else if (shape != 1 && rate != 0 && x != 0)
+                {
+                    return (shape - 1) * (Math.Log(x) - xOverMode);
                 }
             }
             double result = 0;
@@ -696,6 +700,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsProper() && !IsPointMass)
             {
+                if (Shape > 1e10)
+                {
+                    // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x + MMath.LnSqrt2PI for x > 1e10
+                    return (Shape - 0.5) * Math.Log(Shape / Rate) - Shape + MMath.LnSqrt2PI;
+                }
                 return MMath.GammaLn(Shape) - Shape * Math.Log(Rate);
             }
             else

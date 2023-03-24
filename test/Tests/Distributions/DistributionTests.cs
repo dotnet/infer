@@ -119,6 +119,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GammaPower_GetMode_MaximizesGetLogProb()
         {
             Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1E+306, 1E+226, 1.7976931348623157E+308).GetLogProb(0)));
+            Assert.True(GammaPower.FromShapeAndRate(1E+17, 1E+17, -10000000000).GetLogProb(double.Epsilon) >= GammaPower.FromShapeAndRate(1E+17, 1E+17, -10000000000).GetLogProb(MMath.NextDouble(double.Epsilon)));
+            Assert.False(double.IsPositiveInfinity(GammaPower.FromShapeAndRate(1.00000000000001E-152, 1E-88, -1E-06).GetLogProb(0)));
             long count = 0;
             Parallel.ForEach(new[] {
                 GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308),
@@ -163,6 +165,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void TruncatedGamma_GetMode_MaximizesGetLogProb()
         {
+            Assert.False(double.IsNaN(new TruncatedGamma(9.9999999999999999e+306, 9.9999999999999996e-70, 1e+149, double.PositiveInfinity).GetLogProb(1.7976931348623157e+308)));
+            Assert.False(double.IsNaN(new TruncatedGamma(9.9999999999999999e+306, 1e-108, 9.9999999999999995e+123, 1e+270).GetLogProb(9.9999999999999995e+123)));
             Assert.False(double.IsNaN(new TruncatedGamma(1.0000000000000005e-09, 9.9999999999999129e+156, 4.9406564584124654e-324, 9.8813129168249309e-324).GetLogProb(4.9406564584124654e-324)));
             Assert.False(double.IsNaN(new TruncatedGamma(Gamma.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324), 1E+25, double.PositiveInfinity).GetLogProb(1.7976931348623157E+308)));
             Assert.False(double.IsNaN(new TruncatedGamma(1.0000000000000032E-58, 1e-77, 1E+113, 1E+232).GetLogProb(1E+232)));

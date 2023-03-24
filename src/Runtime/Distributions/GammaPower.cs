@@ -704,7 +704,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
-                    if (shape != power && x != 1) result += (shape / power - 1) * logx;
+                    if (shape != power && x != 1)
+                    {
+                        result += (shape / power - 1) * logx;
+                    }
                     if (rate != 0)
                     {
                         double xInvPowerRate = -Math.Exp(logxOverPower + logRate);
@@ -725,14 +728,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     if (shape > 1e10)
                     {
                         double logShape = Math.Log(shape);
-                        // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
-                        minusLogNormalizer = shape * (logRate - logShape + 1) + 0.5 * logShape - Math.Log(Math.Abs(power));
-                        if (double.IsNegativeInfinity(minusLogNormalizer) && double.IsPositiveInfinity(result))
+                        // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x + MMath.LnSqrt2Pi for x > 1e10
+                        minusLogNormalizer = shape * (logRate - logShape + 1) + 0.5 * logShape - MMath.LnSqrt2PI - Math.Log(Math.Abs(power));
+                        double result1 = result;
+                        result += minusLogNormalizer;
+                        if ((double.IsNaN(result) || Math.Abs(result) < Math.Abs(minusLogNormalizer) * 1e-10) && shape != power)
                         {
+                            if (double.IsNegativeInfinity(logx))
+                            {
+                                return result1;
+                            }
                             // Recompute a different way to avoid subtracting infinities
-                            result = -logx - rate * Math.Exp(logxOverPower) + shape * (logx / power + logRate - logShape + 1) + 0.5 * logShape - Math.Log(Math.Abs(power));
+                            result = -logx - rate * Math.Exp(logxOverPower) + shape * (logRate - logShape + 1 + logx / power) + 0.5 * logShape - MMath.LnSqrt2PI - Math.Log(Math.Abs(power));
                         }
-                        else result += minusLogNormalizer;
                     }
                     else
                     {
