@@ -1272,12 +1272,13 @@ namespace Microsoft.ML.Probabilistic.Math
                     }
                     // For this difference to be non-negative, we need GammaUpper to be non-increasing
                     // This is inaccurate when lowerBound is close to upperBound.  In that case, use a Taylor expansion of lowerBound around upperBound.
-                    return lower - upper;
+                    return Math.Max(0, lower - upper);
                 }
             }
             else
             {
                 double diff = MMath.GammaLower(shape, ru) - MMath.GammaLower(shape, rl);
+                diff = Math.Max(0, diff);
                 return regularized ? diff : (MMath.Gamma(shape) * diff);
             }
         }
@@ -1711,7 +1712,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double logx = Math.Log(x);
             double alogx = a * logx;
             double xaMinus1 = MMath.ExpMinus1(alogx);
-            double offset, scale, term;
+            double offset, term;
             if (regularized)
             {
                 double aReciprocalFactorial, aReciprocalFactorialMinus1;
@@ -1727,26 +1728,28 @@ namespace Microsoft.ML.Probabilistic.Math
                 }
                 // offset = 1 - x^a/Gamma(a+1)
                 offset = -xaMinus1 * aReciprocalFactorial - aReciprocalFactorialMinus1;
-                scale = 1 - offset;
-                term = x * a;
+                double scale = 1 - offset;
+                term = x * a * scale;
             }
             else
             {
                 if (Math.Abs(alogx) <= Ulp1) offset = GammaSeries(a) - logx;
                 else offset = GammaSeries(a) - xaMinus1 / a;
-                scale = 1 + xaMinus1;
-                term = x;
+                double scale = 1 + xaMinus1;
+                term = x * scale;
             }
-            double sum = term / (a + 1);
+            // Unfortunately this computation is not monotonic in x.
+            // Kahan summation can improve the accuracy, but it remains non-monotonic.
+            double sum = offset + term / (a + 1);
             for (int i = 1; i < 1000; i++)
             {
                 term *= -x / (i + 1);
                 double sumOld = sum;
                 sum += term / (a + i + 1);
-                ////Console.WriteLine($"{i}: {sum}");
+                ////Trace.WriteLine($"{i}: {sum}");
                 if (AreEqual(sum, sumOld))
                 {
-                    return scale * sum + offset;
+                    return sum;
                 }
             }
             throw new Exception($"GammaUpperSeries not converging for a={a:g17} x={x:g17} regularized={regularized}");

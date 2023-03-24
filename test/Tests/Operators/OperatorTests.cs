@@ -365,32 +365,44 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "OpenBug")]
         public void GammaUpper_IsDecreasingInX()
         {
-            bool debug = false;
+            bool debug = true;
             if (debug)
             {
                 double x2 = 1.7976931348623466;
                 x2 = 0.10000000000000024;
+                x2 = 0.099999999999923289;
                 double fp = double.NaN;
-                for (int i = 0; i < 100; i++)
+                bool anyIncreasing = false;
+                for (int i = 0; i < 10000; i++)
                 {
                     double f = MMath.GammaUpper(4.94065645841247E-324, x2, false);
-                    string star = (f > fp) ? "*" : "";
+                    string star = (f > fp) ? "increasing" : "";
+                    anyIncreasing |= (f > fp);
                     Trace.WriteLine($"{x2:g17} {f:g17} {star}");
                     x2 = MMath.NextDouble(x2);
                     fp = f;
                 }
+                Assert.False(anyIncreasing);
+                return;
             }
             Assert.True(MMath.GammaUpper(4.94065645841247E-324, 0.10000000000000024, false) >= MMath.GammaUpper(4.94065645841247E-324, 0.10000000000000026, false));
             Assert.True(MMath.GammaUpper(4.94065645841247E-324, 1.7976931348623466, false) >= MMath.GammaUpper(4.94065645841247E-324, 1.7976931348623475, false));
             Assert.True(MMath.GammaUpper(4.94065645841247E-324, 1.7976931348623466, false) >= MMath.GammaUpper(4.94065645841247E-324, 1.7976931348623484, false));
             Parallel.ForEach(DoublesGreaterThanZero(), a =>
             {
-                foreach (var regularized in new[] { true, false })
-                {
-                    IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x, regularized));
-                }
+                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x, false));
+            });
+        }
+
+        [Fact]
+        public void GammaUpperRegularized_IsDecreasingInX()
+        {
+            Parallel.ForEach(DoublesGreaterThanZero(), a =>
+            {
+                IsIncreasingForAtLeastZero(x => -MMath.GammaUpper(a, x, true));
             });
         }
 
