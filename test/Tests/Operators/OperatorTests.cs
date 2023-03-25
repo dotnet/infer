@@ -374,14 +374,22 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double x2 = 1.7976931348623466;
                 x2 = 0.10000000000000024;
                 x2 = 0.099999999999923289;
+                x2 = 1 - 1e-15;
                 double fp = double.NaN;
                 bool anyIncreasing = false;
-                for (int i = 0; i < 10000; i++)
+                Stopwatch watch = new Stopwatch();
+                for (int i = 0; i < 100; i++)
                 {
                     double f = MMath.GammaUpper(4.94065645841247E-324, x2, false);
+                    watch.Restart();
+                    for (int j = 0; j < 10000; j++)
+                    {
+                        f = MMath.GammaUpper(4.94065645841247E-324, x2, false);
+                    }
+                    var elapsed = watch.ElapsedMilliseconds;
                     string star = (f > fp) ? "increasing" : "";
                     anyIncreasing |= (f > fp);
-                    Trace.WriteLine($"{x2:g17} {f:g17} {star}");
+                    Trace.WriteLine($"{x2:g17} {f:g17} {elapsed} {star}");
                     x2 = MMath.NextDouble(x2);
                     fp = f;
                 }
