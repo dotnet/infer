@@ -258,7 +258,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     return (value == GetMode()) ? 0.0 : double.NegativeInfinity;
                 }
                 double normalizer = this.Gamma.GetLogNormalizer();
-                if (double.IsPositiveInfinity(normalizer))
+                if (normalizer > double.MaxValue)
                 {
                     return Gamma.GetLogProb(value, this.Gamma.Shape, this.Gamma.Rate, normalized: false) - logZ;
                 }
