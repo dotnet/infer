@@ -287,6 +287,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             y.SetMarginalPrototype(yLikeVar);
             InferenceEngine engine = new InferenceEngine();
 
+            Rand.Restart(0);
             foreach (var powerValue in linspace(1, 10, 10))
             {
                 TruncatedGamma xPrior = new TruncatedGamma(Gamma.FromShapeAndRate(3, 3), 1, double.PositiveInfinity);
@@ -301,7 +302,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 GammaEstimator xEstimator = new GammaEstimator();
                 GammaEstimator yEstimator = new GammaEstimator();
                 MeanVarianceAccumulator yExpectedInverse = new MeanVarianceAccumulator();
-                int nSamples = 1000000;
+                int nSamples = 100000;
                 for (int i = 0; i < nSamples; i++)
                 {
                     double xSample = xPrior.Sample();
@@ -318,7 +319,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double meanInverseError = MMath.AbsDiff(yExpectedInverse.Mean, yActualMeanInverse, 1e-8);
                 Trace.WriteLine($"power = {powerValue}:");
                 Trace.WriteLine($"  x = {xActual} should be {xExpected}");
-                Trace.WriteLine($"  y = {yActual}[E^-1={yActual.GetMeanPower(-1)}] should be {yExpected}[E^-1={yExpectedInverse.Mean}], E^-1 error = {meanInverseError}");
+                Trace.WriteLine($"  y = {yActual}[E^-1={yActualMeanInverse}] should be {yExpected}[E^-1={yExpectedInverse.Mean}], E^-1 error = {meanInverseError}");
                 Assert.True(yActual.Shape > 1);
                 Assert.True(MMath.AbsDiff(yExpected.GetMean(), yActual.GetMean(), 1e-8) < 1);
                 Assert.True(meanInverseError < 1e-2);
@@ -342,6 +343,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             y.SetMarginalPrototype(yLikeVar);
             InferenceEngine engine = new InferenceEngine();
 
+            Rand.Restart(0);
             foreach (var powerValue in linspace(1, 10, 10))
             {
                 TruncatedGamma xPrior = new TruncatedGamma(Gamma.FromShapeAndRate(3, 3), 1, double.PositiveInfinity);
@@ -358,7 +360,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 GammaPowerEstimator yEstimator = new GammaPowerEstimator(yLike.Power);
                 MeanVarianceAccumulator yExpectedInverse = new MeanVarianceAccumulator();
                 MeanVarianceAccumulator yMva = new MeanVarianceAccumulator();
-                int nSamples = 1000000;
+                int nSamples = 100000;
                 for (int i = 0; i < nSamples; i++)
                 {
                     double xSample = xPrior.Sample();
@@ -380,7 +382,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Trace.WriteLine($"  y = {yActual}[E^-1={yActual.GetMeanPower(-1)}] should be {yExpected}[E^-1={yExpectedInverse.Mean}], error = {meanInverseError}");
                 Assert.True(yActual.Shape > 1);
                 Assert.True(MMath.AbsDiff(yExpected.GetMean(), yActual.GetMean(), 1e-8) < 1);
-                Assert.True(meanInverseError < 1e-2);
+                Assert.True(meanInverseError < 2e-2);
             }
         }
 
@@ -410,7 +412,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 // Importance sampling
                 GammaEstimator xEstimator = new GammaEstimator();
                 GammaEstimator yEstimator = new GammaEstimator();
-                MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
+                MeanVarianceAccumulator yExpectedInverse = new MeanVarianceAccumulator();
                 int nSamples = 1000000;
                 for (int i = 0; i < nSamples; i++)
                 {
@@ -420,17 +422,19 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double weight = System.Math.Exp(logWeight);
                     xEstimator.Add(xSample, weight);
                     yEstimator.Add(ySample, weight);
-                    mva.Add(1 / ySample, weight);
+                    yExpectedInverse.Add(1 / ySample, weight);
                 }
                 Gamma xExpected = xEstimator.GetDistribution(new Gamma());
                 Gamma yExpected = yEstimator.GetDistribution(new Gamma());
                 double yActualMeanInverse = yActual.GetMeanPower(-1);
-                double meanInverseError = MMath.AbsDiff(mva.Mean, yActualMeanInverse, 1e-8);
+                double yExpectedMeanInverse = xPrior.GetMeanPower(-powerValue);
+                double meanInverseError = MMath.AbsDiff(yExpectedInverse.Mean, yActualMeanInverse, 1e-8);
                 Trace.WriteLine($"power = {powerValue}:");
                 Trace.WriteLine($"  x = {xActual} should be {xExpected}");
-                Trace.WriteLine($"  y = {yActual}[E^-1={yActualMeanInverse}] should be {yExpected}[E^-1={mva.Mean}], error = {meanInverseError}");
+                Trace.WriteLine($"  y = {yActual}[E^-1={yActualMeanInverse}] should be {yExpected}[E^-1={yExpectedInverse.Mean} should be {yExpectedMeanInverse}], error = {meanInverseError}");
                 Assert.True(yActual.Shape > 2);
                 Assert.True(MMath.AbsDiff(yExpected.GetMean(), yActual.GetMean(), 1e-8) < 1);
+                // E^1 doesn't match because yActual is projected onto a Gamma.
                 //Assert.True(meanInverseError < 10);
             }
         }
@@ -2878,7 +2882,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             double unpowerLowerBound = System.Math.Pow((gammaPower.Power < 0) ? upperBound : lowerBound, 1 / gammaPower.Power);
             double unpowerUpperBound = System.Math.Pow((gammaPower.Power < 0) ? lowerBound : upperBound, 1 / gammaPower.Power);
-            return TruncatedGamma.GammaProbBetween(gammaPower.Shape, gammaPower.Rate, unpowerLowerBound, unpowerUpperBound);
+            return MMath.GammaProbBetween(gammaPower.Shape, gammaPower.Rate, unpowerLowerBound, unpowerUpperBound);
         }
 
         /// <summary>

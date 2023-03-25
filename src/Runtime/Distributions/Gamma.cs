@@ -317,18 +317,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="x">Cannot be negative</param>
         /// <param name="dLogP">Desired derivative of log-density at x</param>
-        /// <param name="ddLogP">Desired second derivative of log-density at x</param>
+        /// <param name="xdLogP">Desired derivative of log-density at x, times x</param>
+        /// <param name="xxddLogP">Desired second derivative of log-density at x, times x squared</param>
         /// <param name="forceProper">If true and both derivatives cannot be matched by a proper distribution, match only the first.</param>
         /// <returns></returns>
-        public static Gamma FromDerivatives(double x, double dLogP, double ddLogP, bool forceProper)
+        public static Gamma FromDerivatives(double x, double dLogP, double xdLogP, double xxddLogP, bool forceProper)
         {
             if (x < 0)
                 throw new ArgumentOutOfRangeException(nameof(x), x, "x < 0");
             double a;
             if (double.IsPositiveInfinity(x))
             {
-                if (ddLogP < 0) return Gamma.PointMass(x);
-                else if (ddLogP == 0) a = 0.0;
+                if (xxddLogP < 0) return Gamma.PointMass(x);
+                else if (xxddLogP == 0) a = 0.0;
                 else if (forceProper)
                 {
                     if (dLogP <= 0) return Gamma.FromShapeAndRate(1, -dLogP);
@@ -338,8 +339,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                a = -ddLogP * x * x;
-                if (a + 1 > double.MaxValue) return Gamma.PointMass(x);
+                a = -xxddLogP;
+                a = Math.Min(double.MaxValue, a);
             }
             if (forceProper)
             {
@@ -350,19 +351,37 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
-                    double amin = x * dLogP;
-                    if (a < amin)
+                    // TODO: check that derivative of result is correct
+                    double amin = xdLogP;
+                    if (amin > double.MaxValue)
                     {
+                        // we want a/x - b == dLogP > 0
+                        // if a / x == dLogP == infinity then b = 0 works
+                        // let a be the smallest value for which a / x == infinity                     
+                        a = MMath.NextDouble(MMath.LargestDoubleProduct(double.MaxValue, x));
+                        a = Math.Min(double.MaxValue, a);
+                        Debug.Assert(a + 1 <= double.MaxValue);
+                        return Gamma.FromShapeAndRate(a + 1, 0);
+                    }
+                    else if (a <= amin || double.IsPositiveInfinity(dLogP))
+                    {
+                        Debug.Assert(amin + 1 <= double.MaxValue);
                         return Gamma.FromShapeAndRate(amin + 1, 0);
                     }
                 }
             }
             double b = ((a == 0) ? 0 : (a / x)) - dLogP;
+            if (double.IsPositiveInfinity(b))
+            {
+                b = (a - xdLogP) / x;
+            }
+
             if (forceProper)
             {
                 // correct roundoff errors that might make b negative
                 b = Math.Max(b, 0);
             }
+            Debug.Assert(a + 1 <= double.MaxValue);
             return Gamma.FromShapeAndRate(a + 1, b);
         }
 
@@ -386,13 +405,26 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="ddlogp">On exit, the second derivative.</param>
         public void GetDerivatives(double x, out double dlogp, out double ddlogp)
         {
+            if (IsPointMass)
+            {
+                ddlogp = double.NegativeInfinity;
+                if (x < Point) dlogp = double.PositiveInfinity;
+                else if (x == Point) dlogp = 0;
+                else dlogp = double.NegativeInfinity;
+                return;
+            }
+
             dlogp = -this.Rate;
             ddlogp = 0;
             double a = this.Shape - 1;
             if (a != 0) // avoid 0/0
             {
-                dlogp += a / x;
                 ddlogp -= a / (x * x);
+                dlogp += a / x;
+                if (double.IsPositiveInfinity(dlogp))
+                {
+                    dlogp = (a - this.Rate * x) / x;
+                }
             }
         }
 
@@ -447,7 +479,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new ArgumentException("Cannot compute E[x^" + power + "] for " + this + " (shape <= " + (-power) + ")");
             }
-            else return Math.Exp(MMath.GammaLn(Shape + power) - MMath.GammaLn(Shape) - power * Math.Log(Rate));
+            else return Math.Exp(MMath.RisingFactorialLn(Shape, power) - power * Math.Log(Rate));
         }
 
         /// <inheritdoc/>
@@ -469,14 +501,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new ImproperDistributionException(this);
             }
+            else if (x*Rate < 0.25 && x*Rate*Shape < 1e-16)
+            {
+                // GammaLower =approx x^a/Gamma(a+1)
+                return Math.Exp(Shape * (Math.Log(x) + Math.Log(Rate))) / MMath.Gamma(1 + Shape);
+            }
             else
+            {
                 return MMath.GammaLower(Shape, x * Rate);
+            }
         }
 
         /// <inheritdoc/>
         public double GetProbBetween(double lowerBound, double upperBound)
         {
-            return TruncatedGamma.GammaProbBetween(Shape, Rate, lowerBound, upperBound);
+            return MMath.GammaProbBetween(Shape, Rate, lowerBound, upperBound);
         }
 
         /// <summary>
@@ -587,13 +626,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="x">Where to evaluate the density</param>
         /// <param name="shape">Shape parameter</param>
         /// <param name="rate">Rate parameter</param>
+        /// <param name="normalized">If true, include the normalizer</param>
         /// <returns>log(Gamma(x;shape,rate))</returns>
         /// <remarks>
         /// The distribution is <c>p(x) = x^(a-1)*exp(-x*b)*b^a/Gamma(a)</c>.
         /// When a &lt;= 0 or b &lt;= 0 the <c>b^a/Gamma(a)</c> term is dropped.
         /// Thus if shape = 1 and rate = 0 the density is 1.
         /// </remarks>
-        public static double GetLogProb(double x, double shape, double rate)
+        public static double GetLogProb(double x, double shape, double rate, bool normalized = true)
         {
             if (x < 0) return double.NegativeInfinity;
             if (x > double.MaxValue) // Avoid subtracting infinities below
@@ -602,20 +642,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else if (rate < 0) return x;
                 // fall through when rate == 0
             }
-            if (shape > 1e10 && IsProper(shape, rate))
+            if (normalized) normalized = IsProper(shape, rate);
+            if (shape > 1e10)
             {
-                // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
+                // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x + MMath.LnSqrt2PI for x > 1e10
                 // Also log(1-1/x) = -1/x - 0.5/x^2  for x > 1e10
                 // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
                 double mode = (shape - 1) / rate; // cannot be zero
                 double xOverMode = x / mode;
                 if (xOverMode > double.MaxValue) return double.NegativeInfinity;
-                else return (shape - 1) * (Math.Log(xOverMode) + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
+                else if (normalized)
+                {
+                    double logXOverMode = (xOverMode == 0) ? (Math.Log(x) - Math.Log(mode)) : Math.Log(xOverMode);
+                    return (shape - 1) * (logXOverMode + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
+                }
+                else if (shape != 1 && rate != 0 && x != 0)
+                {
+                    return (shape - 1) * (Math.Log(x) - xOverMode);
+                }
             }
             double result = 0;
             if (shape != 1) result += (shape - 1) * Math.Log(x);
             if (rate != 0 && x != 0) result -= x * rate;
-            if (IsProper(shape, rate))
+            if (normalized)
             {
                 result += shape * Math.Log(rate) - MMath.GammaLn(shape);
             }
@@ -651,6 +700,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsProper() && !IsPointMass)
             {
+                if (Shape > 1e10)
+                {
+                    // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x + MMath.LnSqrt2PI for x > 1e10
+                    return (Shape - 0.5) * Math.Log(Shape / Rate) - Shape + MMath.LnSqrt2PI;
+                }
                 return MMath.GammaLn(Shape) - Shape * Math.Log(Rate);
             }
             else

@@ -614,15 +614,13 @@ namespace Microsoft.ML.Probabilistic.Factors
                     double logPhiU = X.GetLogProb(upperBound);
                     double alphaU = d_p * Math.Exp(logPhiU - logZ);
                     double alphaX = alphaL - alphaU;
-                    double betaX = alphaX * alphaX;
                     double betaU;
                     if (alphaU == 0.0) betaU = 0;
-                    else betaU = (upperBound * X.Precision - X.MeanTimesPrecision) * alphaU;   // (upperBound - mx) / vx * alphaU;
+                    else betaU = (upperBound * X.Precision - X.MeanTimesPrecision - alphaX) * alphaU;   // (upperBound - mx) / vx * alphaU;
                     double betaL;
                     if (alphaL == 0.0) betaL = 0;
-                    else betaL = (X.MeanTimesPrecision - lowerBound * X.Precision) * alphaL; // -(lowerBound - mx) / vx * alphaL;
-                    if (Math.Abs(betaU) > Math.Abs(betaL)) betaX = (betaX + betaL) + betaU;
-                    else betaX = (betaX + betaU) + betaL;
+                    else betaL = (X.MeanTimesPrecision - lowerBound * X.Precision + alphaX) * alphaL; // -(lowerBound - mx) / vx * alphaL;
+                    double betaX = betaU + betaL;
                     if (Math.Abs(betaX) > double.MaxValue)
                     {
                         if (d_p == -1.0) return GetPointMessage();

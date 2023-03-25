@@ -271,9 +271,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
             // Stick on all the remaining array dimensions
             IType elementType = iae.Type;
-            while (elementType is IArrayType)
+            while (elementType is IArrayType iat)
             {
-                IArrayType iat = (IArrayType) elementType;
                 AppendArrayRank(sb, iat.Rank);
                 elementType = iat.ElementType;
             }
@@ -369,13 +368,13 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <param name="ibe">IBlockExpression</param>
         protected override void AppendBlockExpression(StringBuilder sb, IBlockExpression ibe)
         {
-            sb.Append("{");
+            sb.Append("{ ");
             for (int i = 0; i < ibe.Expressions.Count; i++)
             {
                 if (i != 0) sb.Append(comma);
                 AppendExpression(sb, ibe.Expressions[i]);
             }
-            sb.Append("}");
+            sb.Append(" }");
         }
 
         protected override void AppendCanCastExpression(StringBuilder sb, ICanCastExpression icce)

@@ -404,10 +404,9 @@
             Gaussian dist = new Gaussian(1, 2);
             double expected = Math.Exp(dist.GetLogAverageOf(new Gaussian(0, 1)));
             Interval actual = Interval.GetExpectation(
-                default, Interval.Point(-10), Interval.Point(10),
+                1000, default, Interval.Point(-10), Interval.Point(10),
                 EstimatedDistribution.NoError(dist),
-                BoundGaussian,
-                1000);
+                BoundGaussian);
             Console.WriteLine($"actual = {actual} should be {expected}");
             Assert.True(actual.Contains(expected));
         }

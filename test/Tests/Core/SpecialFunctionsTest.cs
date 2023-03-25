@@ -179,7 +179,7 @@ mp.pretty = True
 gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
             */
             double[,] gammaUpperRegularized_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpperRegularized.csv"));
-            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
+            CheckFunctionValues("GammaUpperRegularized", (a, x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
 
             /* In python mpmath:
 from mpmath import *
@@ -582,7 +582,9 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         private static readonly Dictionary<string, double> doubleParsingWorkarounds = new Dictionary<string, double>()
             {
                 { "1.0866893952407441142985209453839598005754913416137e-317", 1.0866894829774883E-317 },
-                { "1.4752977335476395893266937547311965076180770936655e-317", 1.4752978048452125E-317 }
+                { "1.4752977335476395893266937547311965076180770936655e-317", 1.4752978048452125E-317 },
+                { "9.9999999999985400000000001172379999999931533008e+2628", double.PositiveInfinity },
+                { "8.7432346725418748345517984418356955202593669773535e+22005185347451822441642474609178574152257326040675780012584300835562556718334196807739458376343563329726769290143343263935463229609569787933711840058557961298006731067257214226525645302856902417504745728399459717322818291964340458508973669264873826129339400419536238302065289447890487684206500524608861", double.PositiveInfinity }
             };
 
         private static bool DoubleTryParseWithWorkarounds(string s, out double result)
@@ -729,7 +731,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
 
         public static bool IsErrorSignificant(double assertTolerance, double err)
         {
-            return err > assertTolerance;
+            return double.IsNaN(err) || err > assertTolerance;
         }
     }
 }

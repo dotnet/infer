@@ -29,6 +29,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="preservesPoint">If true, the output interval approaches a point as the input interval does.</param>
         /// <param name="function"></param>
         /// <returns></returns>
-        Interval GetExpectation(double maximumError, Interval left, Interval right, bool preservesPoint, Func<Interval, Interval> function, CancellationToken cancellationToken);
+        Interval GetExpectation(double maximumError, CancellationToken cancellationToken, Interval left, Interval right, bool preservesPoint, Func<Interval, Interval> function);
     }
 }

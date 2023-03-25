@@ -610,27 +610,28 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <summary>
         /// Generates a random sample from a Gamma distribution.
         /// </summary>
-        /// <param name="a">The shape parameter.  Must be finite and > 0.</param>
+        /// <param name="shape">The shape parameter.  Must be finite and > 0.</param>
         /// <returns>A nonnegative finite real number.  May be zero.</returns>
         /// <remarks>The distribution is defined as p(x) = x^(a-1)*exp(-x)/Gamma(a).
         /// To incorporate a scale parameter b, multiply the result by b.</remarks>
         [Stochastic]
-        public static double Gamma(double a)
+        public static double Gamma(double shape)
         {
-            if (a < 1)
+            if (shape < 1)
                 // boost using Marsaglia's (1961) method: gam(a) = gam(a+1)*U^(1/a)
-                return GammaShapeGE1(a + 1)* System.Math.Exp(System.Math.Log(gen.NextDouble())/ a);
+                return GammaShapeGE1(shape + 1) * System.Math.Exp(System.Math.Log(gen.NextDouble()) / shape);
             else
-                return GammaShapeGE1(a);
+                return GammaShapeGE1(shape);
         }
 
-        private static double LogGamma(double a)
+        [Stochastic]
+        private static double LogGamma(double shape)
         {
-            if (a < 1)
+            if (shape < 1)
                 // boost using Marsaglia's (1961) method: gam(a) = gam(a+1)*U^(1/a)
-                return System.Math.Log(GammaShapeGE1(a + 1)) + System.Math.Log(gen.NextDouble())/ a;
+                return System.Math.Log(GammaShapeGE1(shape + 1)) + System.Math.Log(gen.NextDouble()) / shape;
             else
-                return System.Math.Log(GammaShapeGE1(a));
+                return System.Math.Log(GammaShapeGE1(shape));
         }
 
         /// <summary>

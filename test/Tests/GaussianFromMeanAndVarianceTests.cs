@@ -7,6 +7,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
@@ -25,6 +26,65 @@ namespace Microsoft.ML.Probabilistic.Tests
 {
     public class GaussianFromMeanAndVarianceTests
     {
+        [Fact]
+        public void PointVarianceTest()
+        {
+            Gamma variance = Gamma.PointMass(6.1699356586552062E-08);
+            Gaussian mean = Gaussian.PointMass(0.0);
+            for (int i = 7; i < 200; i++)
+            {
+                Gaussian sample = Gaussian.FromNatural(-0.00078333235196782888, System.Math.Pow(10, -i));
+                Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, mean, variance);
+                ////Trace.WriteLine($"{i} {message}");
+                Assert.Equal(0, message.Rate);
+                Assert.True(message.Shape >= 1);
+            }
+        }
+
+        [Fact]
+        public void PointVarianceTest2()
+        {
+            Gamma variance = Gamma.PointMass(double.Epsilon);
+            Gaussian mean = Gaussian.PointMass(0.0);
+            for (int i = 100; i < 324; i++)
+            {
+                Gaussian sample = Gaussian.FromMeanAndVariance(1.23, System.Math.Pow(10, -i));
+                Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, mean, variance);
+                ////Trace.WriteLine($"{i} {message} {message.Rate}");
+                Assert.Equal(0, message.Rate);
+                Assert.True(message.Shape >= 1);
+            }
+        }
+
+        [Fact]
+        public void PointVarianceTest3()
+        {
+            for (int i = 300; i < 324; i++)
+            {
+                Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(Gaussian.FromNatural(-0.00070557425617118793, System.Math.Pow(10, -i)), Gaussian.FromNatural(0, 13466586.033404613), Gamma.PointMass(0.09965));
+                ////Trace.WriteLine($"{i} {message} {message.Rate}");
+                Assert.True(message.Rate >= 0);
+                Assert.True(message.Shape >= 1);
+            }
+        }
+
+        [Fact]
+        public void PointVarianceTest4()
+        {
+            Gaussian zero = Gaussian.PointMass(0);
+            Parallel.ForEach(OperatorTests.DoublesGreaterThanZero(), variance =>
+            {
+                Gamma varianceDist = Gamma.PointMass(variance);
+                foreach (var sample in OperatorTests.Gaussians(10000))
+                {
+                    Gamma message = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, zero, varianceDist);
+                    Gaussian mean = Gaussian.FromNatural(-sample.MeanTimesPrecision, sample.Precision);
+                    Gamma message2 = GaussianFromMeanAndVarianceOp.VarianceAverageConditional(zero, mean, varianceDist);
+                    Assert.Equal(message, message2);
+                }
+            });
+        }
+
         [Fact]
         [Trait("Category", "OpenBug")]
         public void VarianceGammaTimesGaussianMomentsTest()

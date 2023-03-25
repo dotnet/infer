@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Collections
@@ -304,6 +305,27 @@ namespace Microsoft.ML.Probabilistic.Collections
         public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> list)
         {
             return list.ToList();
+        }
+
+        public static IEnumerable<T> TakeRandom<T>(this IEnumerable<T> list, int count)
+        {
+            // Reservoir sampling
+            List<T> values = new List<T>();
+            int k = 0;
+            foreach (var item in list)
+            {
+                if (k < count) values.Add(item);
+                else
+                {
+                    int index = Rand.Int(k);
+                    if (index < count)
+                    {
+                        values[index] = item;
+                    }
+                }
+                k++;
+            }
+            return values;
         }
     }
 }

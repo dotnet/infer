@@ -820,7 +820,6 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (sample.Precision == 0 || mean.Precision == 0)
                 return Gamma.Uniform();
             double mx, vx, mm, vm;
-            double a, b;
             sample.GetMeanAndVariance(out mx, out vx);
             mean.GetMeanAndVariance(out mm, out vm);
             if (variance.IsPointMass)
@@ -832,14 +831,18 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // ddlogf = 0.5/(v+vx+vm)^2 - (mx-mm)^2/(v+vx+vm)^3
                 double vp = variance.Point;
                 double denom = 1.0 / (vp + vx + vm);
-                double mxm = mx - mm;
-                double mxm2 = mxm * mxm;
-                double dlogf = -0.5 * denom + 0.5 * mxm2 * denom * denom;
-                double ddlogf = 0.5 * denom * denom - mxm2 * denom * denom * denom;
-                return Gamma.FromDerivatives(vp, dlogf, ddlogf, ForceProper);
+                if (MMath.AreEqual(denom, 0)) return Gamma.Uniform();
+                double vdenom = vp / (vp + vx + vm);
+                double mxm = Math.Abs(mx - mm);
+                double mxmdenom = MMath.AreEqual(mxm, 0) ? 0 : mxm * denom;
+                double mxmvdenom = MMath.AreEqual(vdenom, 0) ? (mxmdenom * vp) : (mxm * vdenom);
+                double dlogf = double.IsInfinity(mxmdenom) ? double.PositiveInfinity : (-0.5 * denom + 0.5 * mxmdenom * mxmdenom);
+                double xdlogf = -0.5 * vdenom + 0.5 * Math.Max(mxmdenom, mxmvdenom) * Math.Min(mxmdenom, mxmvdenom);
+                double xxddlogf = 0.5 * vdenom * vdenom - (MMath.AreEqual(mxmvdenom, 0) ? 0 : denom * mxmvdenom * mxmvdenom);
+                return Gamma.FromDerivatives(vp, dlogf, xdlogf, xxddlogf, ForceProper);
             }
-            a = variance.Shape;
-            b = variance.Rate;
+            double a = variance.Shape;
+            double b = variance.Rate;
             double c = Math.Sqrt(2 * b);
             double m = c * (mx - mm);
             double v = c * c * (vx + vm);
@@ -857,6 +860,15 @@ namespace Microsoft.ML.Probabilistic.Factors
                 result = Gamma.FromShapeAndRate(variance.Shape, variance.Shape / vmp);
                 result.SetToRatio(result, variance, true);
             }
+            return result;
+        }
+
+        private static Gamma FromDerivativesCheck(double x, double dLogP, double xdLogP, double xxddLogP, bool forceProper)
+        {
+            Gamma result = Gamma.FromDerivatives(x, dLogP, xdLogP, xxddLogP, forceProper);
+            result.GetDerivatives(x, out double dlogp2, out double ddlogp2);
+            bool bothInfinity = double.IsInfinity(dLogP) && (dLogP == dlogp2);
+            if (!bothInfinity && MMath.AbsDiff(xdLogP, x*dlogp2, 1e-10) > 1e-1 && MMath.AbsDiff(2*xdLogP, 2*x * dlogp2, 1e-10) > 1e-1) throw new Exception();
             return result;
         }
 
