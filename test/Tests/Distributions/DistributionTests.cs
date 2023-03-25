@@ -151,10 +151,13 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.False(double.IsNaN(logProbAtMode));
                 logProbAtMode = System.Math.Max(System.Math.Max(logProbAtMode, logProbAboveMode), logProbBelowMode);
                 const double smallestNormalized = 1e-308;
-                Assert.True(logProbAtMode >= max ||
+                bool logProbAtModeIsMax = logProbAtMode >= max ||
                     MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-8 ||
-                    (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max)
-                    );
+                    (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max);
+                if (!logProbAtModeIsMax)
+                {
+                    throw new Exception($"GammaPower.FromShapeAndRate({gammaPower.Shape}, {gammaPower.Rate}, {gammaPower.Power}) logProbAtMode={logProbAtMode} max={max} mode={mode} logProbAtMode={logProbAtMode} logProbBelowMode={logProbBelowMode} logProbAboveMode={logProbAboveMode}");
+                }
                 Interlocked.Add(ref count, 1);
                 if (count % 100000 == 0)
                     Trace.WriteLine($"{count} cases passed");
