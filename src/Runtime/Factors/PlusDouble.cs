@@ -169,6 +169,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusEvidenceOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGaussian)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGaussian sum)
+        {
+            return 0.0;
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusEvidenceOp"]/message_doc[@name="LogEvidenceRatio(double, double, double)"]/*'/>
         public static double LogEvidenceRatio(double Sum, double a, double b)
         {
@@ -196,6 +203,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleMinusEvidenceOp"]/message_doc[@name="LogEvidenceRatio(Gaussian)"]/*'/>
         [Skip]
         public static double LogEvidenceRatio(Gaussian difference)
+        {
+            return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleMinusEvidenceOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGaussian)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGaussian difference)
         {
             return 0.0;
         }

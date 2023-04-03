@@ -18,6 +18,18 @@ namespace Microsoft.ML.Probabilistic.Factors
             return to_min.GetLogProb(min);
         }
 
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma min, Gamma a, double b)
+        {
+            return 0.0;
+        }
+
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma min, double a, Gamma b)
+        {
+            return 0.0;
+        }
+
         public static TruncatedGamma MinAverageConditional(Gamma a, double b)
         {
             return new TruncatedGamma(a, 0, b);
@@ -54,6 +66,12 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         [Skip]
         public static double LogEvidenceRatio(TruncatedGamma min, TruncatedGamma a, double b)
+        {
+            return 0.0;
+        }
+
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma min, double a, TruncatedGamma b)
         {
             return 0.0;
         }
