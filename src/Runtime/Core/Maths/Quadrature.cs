@@ -86,9 +86,10 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public static double AdaptivePositiveHalfAxisTrapeziumRule(Converter<double, double> f, double scale, double relTol, int maxNodes)
         {
+            if (double.IsNaN(scale)) throw new ArgumentException($"scale is NaN", nameof(scale));
             double intervalWidth = 1.0 / 8;
-            double sumf2 = 0;
             double sumf1 = f(0);
+            if (double.IsNaN(sumf1)) throw new ArgumentException($"f(0) is NaN", nameof(f));
             double x = 0;
             double oldSum;
             int usedNodes = 1;
@@ -107,7 +108,7 @@ namespace Microsoft.ML.Probabilistic.Math
             while (usedNodes < maxNodes)
             {
                 intervalWidth /= 2;
-                sumf2 = sumf1;
+                double sumf2 = sumf1;
                 x = intervalWidth;
                 sumf2 += f(x);
                 do

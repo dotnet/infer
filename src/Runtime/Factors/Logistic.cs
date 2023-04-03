@@ -609,7 +609,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             double precision = a * a + (1 - 2 * a) * sa;
             // meanTimesPrecision = m*a*a + 1-2*a*sa;
-            double meanTimesPrecision = m * precision + 1 - sa;
+            double meanTimesPrecision = 1 - sa;
+            if (precision != 0) meanTimesPrecision += m * precision; // avoid 0 * infinity
             //double vf = 1/(a*a + (1-2*a)*sa);
             //double mf = m + vf*(true ? 1-sa : sa);
             //double precision = 1/vf;
