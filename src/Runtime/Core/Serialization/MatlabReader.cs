@@ -718,21 +718,24 @@ namespace Microsoft.ML.Probabilistic.Serialization
             using (StreamReader reader = File.OpenText(path))
             {
                 string header = reader.ReadLine();
-                if (header.Contains('"')) throw new NotSupportedException("double quotes are not supported");
-                string[] columnNames = header.Split(',');
-                foreach (var columnName in columnNames)
+                if (header != null)
                 {
-                    result[columnName] = new List<string>();
-                }
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-                    if (line.Contains('"')) throw new NotSupportedException("double quotes are not supported");
-                    string[] values = line.Split(',');
-                    for (int i = 0; i < values.Length; i++)
+                    if (header.Contains('"')) throw new NotSupportedException("double quotes are not supported");
+                    string[] columnNames = header.Split(',');
+                    foreach (var columnName in columnNames)
                     {
-                        var list = result[columnNames[i]];
-                        list.Add(values[i]);
+                        result[columnName] = new List<string>();
+                    }
+                    while (!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine();
+                        if (line.Contains('"')) throw new NotSupportedException("double quotes are not supported");
+                        string[] values = line.Split(',');
+                        for (int i = 0; i < values.Length; i++)
+                        {
+                            var list = result[columnNames[i]];
+                            list.Add(values[i]);
+                        }
                     }
                 }
             }

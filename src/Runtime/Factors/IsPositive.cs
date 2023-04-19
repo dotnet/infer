@@ -221,7 +221,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             else
             {
-                //double v = MMath.LogSumExp(isPositive.LogProbTrue + MMath.NormalCdfLn(z), isPositive.LogProbFalse + MMath.NormalCdfLn(-z));
+                //double v = MMath.LogSumExp(isPositive.GetLogProbTrue() + MMath.NormalCdfLn(z), isPositive.GetLogProbFalse() + MMath.NormalCdfLn(-z));
                 double v = LogAverageFactor(isPositive, x);
                 alpha = sqrtPrec * Math.Exp(-z * z * 0.5 - MMath.LnSqrt2PI - v) * (2 * isPositive.GetProbTrue() - 1);
             }
