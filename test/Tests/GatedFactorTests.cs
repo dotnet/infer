@@ -533,13 +533,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             maxTruePost = Gaussian.PointMass(1);
             xTruePost = new Gaussian(0.0905236949662384, 0.788663673789836);
             yTruePost = new Gaussian(0.684239540063073, 0.465531317650653);
-            //TestMax(ie, maxXY, maxTruePost);
+            //AssertPosteriorEquals(ie, maxXY, maxTruePost);
             AssertPosteriorEquals(ie, x, xTruePost);
             AssertPosteriorEquals(ie, y, yTruePost);
             evActual = ie.Infer<Bernoulli>(evidence).LogOdds;
             evExpected = -1.459999071323817;
             Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
             Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-5) < 1e-5);
+
+            yprior.ObservedValue = Gaussian.Uniform();
+            AssertPosteriorEquals(ie, maxXY, maxConstrain.ObservedValue);
+            AssertPosteriorEquals(ie, x, xprior.ObservedValue);
+            AssertPosteriorEquals(ie, y, yprior.ObservedValue);
         }
 
         [Fact]

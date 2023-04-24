@@ -759,6 +759,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
                     result += name[i];
             }
 
+            // Matlab variable names cannot start with an underscore.
             while (result.Length > 0 && result[0] == '_') result = result.Substring(1);
             return result;
         }
