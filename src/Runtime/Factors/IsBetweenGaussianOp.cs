@@ -25,6 +25,28 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         //-- TruncatedGaussian bounds ------------------------------------------------------------------------------
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleIsBetweenOp"]/message_doc[@name="LogEvidenceRatio(bool, Gaussian, TruncatedGaussian, TruncatedGaussian)"]/*'/>
+        public static double LogEvidenceRatio(bool isBetween, [RequiredArgument] Gaussian X, TruncatedGaussian lowerBound, TruncatedGaussian upperBound)
+        {
+            if (lowerBound.IsPointMass && upperBound.IsPointMass)
+            {
+                return LogEvidenceRatio(isBetween, X, lowerBound.Point, upperBound.Point);
+            }
+            else
+                throw new NotImplementedException($"{nameof(lowerBound)} is not a point mass");
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleIsBetweenOp"]/message_doc[@name="LogEvidenceRatio(Bernoull, Gaussian, TruncatedGaussian, TruncatedGaussian)"]/*'/>
+        public static double LogEvidenceRatio([SkipIfUniform] Bernoulli isBetween, [RequiredArgument] Gaussian X, TruncatedGaussian lowerBound, TruncatedGaussian upperBound)
+        {
+            if (lowerBound.IsPointMass && upperBound.IsPointMass)
+            {
+                return LogEvidenceRatio(isBetween, X, lowerBound.Point, upperBound.Point);
+            }
+            else
+                throw new NotImplementedException($"{nameof(lowerBound)} is not a point mass");
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleIsBetweenOp"]/message_doc[@name="LowerBoundAverageConditional(bool, double)"]/*'/>
         public static TruncatedGaussian LowerBoundAverageConditional(bool isBetween, double x)
         {

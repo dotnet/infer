@@ -8,7 +8,6 @@ using System.Text;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
 using Microsoft.ML.Probabilistic.Utilities;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using System.IO;
 using System.Reflection;
@@ -21,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     internal class TracingTransform : ShallowCopyTransform
     {
         IVariableDeclaration iterationVar;
-        Dictionary<Set<IVariableDeclaration>, TableInfo> tableOfIndexVars = new Dictionary<Set<IVariableDeclaration>, TableInfo>();
+        readonly Dictionary<Set<IVariableDeclaration>, TableInfo> tableOfIndexVars = new Dictionary<Set<IVariableDeclaration>, TableInfo>();
         MethodInfo writeMethod, writeBytesMethod, writeLineMethod, flushMethod, disposeMethodInfo;
         IMethodDeclaration traceWriterMethod, disposeMethod;
         public static bool UseToString = true;
@@ -176,6 +175,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 var toStringMethod = type.GetMethod("ToString", new Type[0]);
                 dict["ToString"] = Builder.Method(expr, toStringMethod);
+            }
+            else if (typeof(Distributions.Gaussian).IsAssignableFrom(type))
+            {
+                foreach (var field in new[] { "MeanTimesPrecision", "Precision" })
+                {
+                    dict[field] = Builder.FieldRefExpr(expr, type, field);
+                }
             }
             else
             {

@@ -170,13 +170,23 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             foreach (bool flip in new[] { false, true })
             {
+                var evidence = Variable.Bernoulli(0.5);
+                var evBlock = Variable.If(evidence);
                 Variable<double> x = Variable.TruncatedGammaFromShapeAndRate(2, 3, 1, double.PositiveInfinity).Named("x");
                 double upperBound = 4;
                 Variable<double> y = flip ? Variable<double>.Factor(System.Math.Min, x, upperBound) : Variable<double>.Factor(System.Math.Min, upperBound, x);
+                var yLike = new TruncatedGamma(4, 5, 1, upperBound);
+                Variable.ConstrainEqualRandom(y, yLike);
+                evBlock.CloseBlock();
+
                 InferenceEngine engine = new InferenceEngine();
                 var yActual = engine.Infer<TruncatedGamma>(y);
-                var yExpected = new TruncatedGamma(Gamma.FromShapeAndRate(2, 3), 1, upperBound);
+                var yDef = new TruncatedGamma(Gamma.FromShapeAndRate(2, 3), 1, upperBound);
+                var yExpected = yDef * yLike;
                 Assert.True(yExpected.MaxDiff(yActual) < 1e-10);
+                var evExpected = yDef.GetLogAverageOf(yLike);
+                var evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                Assert.Equal(evExpected, evActual, 1e-10);
             }
         }
 
@@ -185,13 +195,23 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             foreach (bool flip in new[] { false, true })
             {
+                var evidence = Variable.Bernoulli(0.5);
+                var evBlock = Variable.If(evidence);
                 Variable<double> x = Variable.GammaFromShapeAndRate(2, 3).Named("x");
                 double upperBound = 4;
                 Variable<double> y = flip ? Variable<double>.Factor(System.Math.Min, x, upperBound) : Variable<double>.Factor(System.Math.Min, upperBound, x);
+                var yLike = new TruncatedGamma(4, 5, 0, upperBound);
+                Variable.ConstrainEqualRandom(y, yLike);
+                evBlock.CloseBlock();
+
                 InferenceEngine engine = new InferenceEngine();
                 var yActual = engine.Infer<TruncatedGamma>(y);
-                var yExpected = new TruncatedGamma(Gamma.FromShapeAndRate(2, 3), 0, upperBound);
+                var yDef = new TruncatedGamma(Gamma.FromShapeAndRate(2, 3), 0, upperBound);
+                var yExpected = yDef * yLike;
                 Assert.True(yExpected.MaxDiff(yActual) < 1e-10);
+                var evExpected = yDef.GetLogAverageOf(yLike);
+                var evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                Assert.Equal(evExpected, evActual, 1e-10);
             }
         }
 
@@ -513,13 +533,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             maxTruePost = Gaussian.PointMass(1);
             xTruePost = new Gaussian(0.0905236949662384, 0.788663673789836);
             yTruePost = new Gaussian(0.684239540063073, 0.465531317650653);
-            //TestMax(ie, maxXY, maxTruePost);
+            //AssertPosteriorEquals(ie, maxXY, maxTruePost);
             AssertPosteriorEquals(ie, x, xTruePost);
             AssertPosteriorEquals(ie, y, yTruePost);
             evActual = ie.Infer<Bernoulli>(evidence).LogOdds;
             evExpected = -1.459999071323817;
             Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
             Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-5) < 1e-5);
+
+            yprior.ObservedValue = Gaussian.Uniform();
+            AssertPosteriorEquals(ie, maxXY, maxConstrain.ObservedValue);
+            AssertPosteriorEquals(ie, x, xprior.ObservedValue);
+            AssertPosteriorEquals(ie, y, yprior.ObservedValue);
         }
 
         [Fact]

@@ -888,7 +888,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             private IExpression WrapWithTracing(IExpression operatorMethod, Type returnType, IVariableDeclaration channelDecl, IExpression msg)
             {
                 // Support for the 'TraceMessages' and 'ListenToMessages' attributes
-                if (transform.compiler.TraceAllMessages ||
+                if ((transform.compiler.TraceAllMessages && !ModelCompiler.UseTracingTransform) ||
                     (channelDecl != null && (context.InputAttributes.Has<TraceMessages>(channelDecl) ||
                                                context.InputAttributes.Has<ListenToMessages>(channelDecl))))
                 {
@@ -902,7 +902,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (listenTo != null && listenTo.Containing != null && !msgText.Contains(listenTo.Containing)) listenTo = null;
 
 
-                    if ((listenTo != null) || (trace != null) || transform.compiler.TraceAllMessages)
+                    if ((listenTo != null) || (trace != null) || (transform.compiler.TraceAllMessages && !ModelCompiler.UseTracingTransform))
                     {
                         IExpression textExpr = DebuggingSupport.GetExpressionTextExpression(msg);
                         if (listenTo != null)

@@ -83,7 +83,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (b.IsPointMass)
                 return SumAverageConditional(a, b.Point);
-            if (b.IsUniform())
+            if (b.Precision == 0)
                 return b;
             double meanTimesPrecision = b.MeanTimesPrecision + a * b.Precision;
             if (Math.Abs(meanTimesPrecision) > double.MaxValue)
@@ -169,6 +169,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusEvidenceOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGaussian)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGaussian sum)
+        {
+            return 0.0;
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusEvidenceOp"]/message_doc[@name="LogEvidenceRatio(double, double, double)"]/*'/>
         public static double LogEvidenceRatio(double Sum, double a, double b)
         {
@@ -196,6 +203,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleMinusEvidenceOp"]/message_doc[@name="LogEvidenceRatio(Gaussian)"]/*'/>
         [Skip]
         public static double LogEvidenceRatio(Gaussian difference)
+        {
+            return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoubleMinusEvidenceOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGaussian)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGaussian difference)
         {
             return 0.0;
         }
@@ -570,24 +584,26 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="AAverageLogarithm(Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageLogarithm([SkipIfUniform, Proper] Gaussian Sum, [Proper] Gaussian b)
         {
-            Gaussian result = new Gaussian();
-            if (Sum.IsUniform())
+            if (Sum.Precision == 0)
             {
-                result.SetToUniform();
+                return Sum;
             }
             else if (Sum.Precision < 0)
             {
                 throw new ImproperMessageException(Sum);
             }
+            else if (Sum.IsPointMass)
+            {
+                return Gaussian.PointMass(Sum.Point - b.GetMean());
+            }
             else
             {
                 // p(a|sum,b) = N(E[sum] - E[b], var(sum) )
-                double ms, vs;
-                double mb = b.GetMean();
-                Sum.GetMeanAndVariance(out ms, out vs);
-                result.SetMeanAndVariance(ms - mb, vs);
+                Gaussian result = new Gaussian();
+                result.MeanTimesPrecision = Sum.MeanTimesPrecision - b.GetMean() * Sum.Precision;
+                result.Precision = Sum.Precision;
+                return result;
             }
-            return result;
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusVmpOp"]/message_doc[@name="AAverageLogarithm(double, Gaussian)"]/*'/>

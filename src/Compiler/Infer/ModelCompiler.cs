@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Diagnostics;
 using Microsoft.ML.Probabilistic.Compiler.Transforms;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
-using Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete;
 using System.Runtime.Serialization;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
 using Microsoft.ML.Probabilistic.Models;
@@ -26,6 +25,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
     /// </summary>
     public class ModelCompiler
     {
+        internal static bool UseTracingTransform = false;
         private readonly FactorManager factorManager = new FactorManager();
         private IAlgorithm algorithm;
 
@@ -982,8 +982,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             tc.AddTransform(new ParallelScheduleTransform());
             // All messages after each iteration will be logged to csv files in a folder named with the model name.
             // Use MatlabWriter.WriteFromCsvFolder to convert these to a mat file.
-            bool useTracingTransform = false;
-            if (TraceAllMessages && useTracingTransform)
+            if (TraceAllMessages && UseTracingTransform)
                 tc.AddTransform(new TracingTransform());
             bool useArraySizeTracing = false;
             if (useArraySizeTracing)

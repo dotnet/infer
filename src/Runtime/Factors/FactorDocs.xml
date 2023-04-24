@@ -6308,6 +6308,14 @@
         <para>The formula for the result is <c>log(sum_(difference) p(difference) factor(difference,a,b) / sum_difference p(difference) messageTo(difference))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
+    <message_doc name="LogEvidenceRatio(TruncatedGaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="difference">Incoming message from <c>difference</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(difference) p(difference) factor(difference,a,b) / sum_difference p(difference) messageTo(difference))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="LogEvidenceRatio(double, double, double)">
       <summary>Evidence message for EP.</summary>
       <param name="difference">Constant value for <c>difference</c>.</param>
@@ -19077,6 +19085,30 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.IsBetween(double, double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="LogEvidenceRatio(bool, Gaussian, TruncatedGaussian, TruncatedGaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="isBetween">Constant value for <c>isBetween</c>.</param>
+      <param name="X">Incoming message from <c>x</c>.</param>
+      <param name="lowerBound">Incoming message from <c>lowerBound</c>.</param>
+      <param name="upperBound">Incoming message from <c>upperBound</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(x,lowerBound,upperBound) p(x,lowerBound,upperBound) factor(isBetween,x,lowerBound,upperBound))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(Bernoulli, Gaussian, TruncatedGaussian, TruncatedGaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="isBetween">Incoming message from <c>isBetween</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="X">Incoming message from <c>x</c>.</param>
+      <param name="lowerBound">Incoming message from <c>lowerBound</c>.</param>
+      <param name="upperBound">Incoming message from <c>upperBound</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(isBetween,x,lowerBound,upperBound) p(isBetween,x,lowerBound,upperBound) factor(isBetween,x,lowerBound,upperBound) / sum_isBetween p(isBetween) messageTo(isBetween))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="isBetween" /> is not a proper distribution.</exception>
+    </message_doc>
     <message_doc name="LowerBoundAverageConditional(bool, double)">
       <summary>EP message to <c>lowerBound</c>.</summary>
       <param name="isBetween">Constant value for <c>isBetween</c>.</param>
@@ -23105,6 +23137,26 @@
         <para>The formula for the result is <c>log(sum_(val2) p(val2) factor(min,val1,val2))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
+    <message_doc name="LogEvidenceRatio(TruncatedGamma, Gamma, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="min">Incoming message from <c>min</c>.</param>
+      <param name="a">Incoming message from <c>val1</c>.</param>
+      <param name="b">Constant value for <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(min,val1) p(min,val1) factor(min,val1,val2) / sum_min p(min) messageTo(min))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(TruncatedGamma, double, Gamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="min">Incoming message from <c>min</c>.</param>
+      <param name="a">Constant value for <c>val1</c>.</param>
+      <param name="b">Incoming message from <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(min,val2) p(min,val2) factor(min,val1,val2) / sum_min p(min) messageTo(min))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="MinAverageConditional(Gamma, double)">
       <summary>EP message to <c>min</c>.</summary>
       <param name="a">Incoming message from <c>val1</c>.</param>
@@ -23168,6 +23220,16 @@
       <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
         <para>The formula for the result is <c>log(sum_(min,val1) p(min,val1) factor(min,val1,val2) / sum_min p(min) messageTo(min))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(TruncatedGamma, double, TruncatedGamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="min">Incoming message from <c>min</c>.</param>
+      <param name="a">Constant value for <c>val1</c>.</param>
+      <param name="b">Incoming message from <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(min,val2) p(min,val2) factor(min,val1,val2) / sum_min p(min) messageTo(min))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="MinAverageConditional(TruncatedGamma, double)">
@@ -23806,6 +23868,14 @@
         <para>The formula for the result is <c>log(sum_(Sum) p(Sum) factor(Sum,A,B) / sum_Sum p(Sum) messageTo(Sum))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
+    <message_doc name="LogEvidenceRatio(TruncatedGaussian)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(Sum) p(Sum) factor(Sum,A,B) / sum_Sum p(Sum) messageTo(Sum))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="LogEvidenceRatio(double, double, double)">
       <summary>Evidence message for EP.</summary>
       <param name="Sum">Constant value for <c>Sum</c>.</param>
@@ -24103,6 +24173,16 @@
         <paramref name="a" /> is not a proper distribution.</exception>
       <exception cref="ImproperMessageException">
         <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="TruncatedGammaPowerGetMean(GammaPower, double, double)">
+      <summary />
+      <param name="gammaPower" />
+      <param name="lowerBound" />
+      <param name="upperBound" />
+      <returns />
+      <remarks>
+        <para />
+      </remarks>
     </message_doc>
     <message_doc name="AAverageConditional2(GammaPower, GammaPower, GammaPower, GammaPower)">
       <summary />
@@ -32760,6 +32840,14 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.TruncatedGammaFromShapeAndRate(double, double, double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="LogEvidenceRatio(TruncatedGamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="sample">Incoming message from <c>sample</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(sample) p(sample) factor(sample,shape,rate,lowerBound,upperBound) / sum_sample p(sample) messageTo(sample))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="RateAverageConditional(double, double, double, double)">
       <summary>EP message to <c>rate</c>.</summary>
       <param name="sample">Constant value for <c>sample</c>.</param>

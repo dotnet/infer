@@ -8,6 +8,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MinGammaOp"]/doc/*'/>
     [FactorMethod(new string[] { "min", "a", "b" }, typeof(Math), "Min", typeof(double), typeof(double))]
     [Quality(QualityBand.Preview)]
     public static class MinGammaOp
@@ -16,6 +17,20 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             TruncatedGamma to_min = MinAverageConditional(a, b);
             return to_min.GetLogProb(min);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MinGammaOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGamma,Gamma,double)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma min, Gamma a, double b)
+        {
+            return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MinGammaOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGamma,double,Gamma)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma min, double a, Gamma b)
+        {
+            return 0.0;
         }
 
         public static TruncatedGamma MinAverageConditional(Gamma a, double b)
@@ -31,6 +46,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Gamma AAverageConditional([SkipIfUniform] TruncatedGamma min, double b)
         {
             if (min.IsUniform()) return Gamma.Uniform();
+            if (min.LowerBound == 0 && min.UpperBound == b) return min.Gamma;
             if (!min.IsPointMass)
                 throw new ArgumentException("min is not a point mass");
             return Gamma.PointMass(min.Point);
@@ -42,6 +58,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MinTruncatedGammaOp"]/doc/*'/>
     [FactorMethod(new string[] { "min", "a", "b" }, typeof(Math), "Min", typeof(double), typeof(double))]
     [Quality(QualityBand.Preview)]
     public static class MinTruncatedGammaOp
@@ -52,8 +69,16 @@ namespace Microsoft.ML.Probabilistic.Factors
             return to_min.GetLogProb(min);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MinGammaOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGamma,TruncatedGamma,double)"]/*'/>
         [Skip]
         public static double LogEvidenceRatio(TruncatedGamma min, TruncatedGamma a, double b)
+        {
+            return 0.0;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MinGammaOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGamma,double,TruncatedGamma)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma min, double a, TruncatedGamma b)
         {
             return 0.0;
         }
@@ -71,6 +96,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static TruncatedGamma AAverageConditional([SkipIfUniform] TruncatedGamma min, double b)
         {
             if (min.IsUniform()) return TruncatedGamma.Uniform();
+            if (min.UpperBound == b) return new TruncatedGamma(min.Gamma, min.LowerBound, double.PositiveInfinity);
             if (!min.IsPointMass)
                 throw new ArgumentException("min is not a point mass");
             return TruncatedGamma.PointMass(min.Point);

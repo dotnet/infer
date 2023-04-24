@@ -8,10 +8,18 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="TruncatedGammaFromShapeAndRateOp"]/doc/*'/>
     [FactorMethod(typeof(Factor), "TruncatedGammaFromShapeAndRate")]
     [Quality(QualityBand.Experimental)]
     public static class TruncatedGammaFromShapeAndRateOp
     {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="TruncatedGammaFromShapeAndRateOp"]/message_doc[@name="LogEvidenceRatio(TruncatedGamma)"]/*'/>
+        [Skip]
+        public static double LogEvidenceRatio(TruncatedGamma sample)
+        {
+            return 0.0;
+        }
+
         public static Gamma RateAverageConditional(double sample, double shape, double lowerBound, double upperBound)
         {
             // f(x,a,b,L) = b^a x^(a-1) exp(-bx) / GammaUpper(a,L*b)

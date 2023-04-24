@@ -441,7 +441,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             name = MakeValidVariableName(name);
 
             // pad the name to an 8-byte boundary
-            int numNameBytes = ((name.Length + 7)/8)*8;
+            int numNameBytes = ((name.Length + 7) / 8) * 8;
 
             // precompute the field bytes
             int numDataBytes = 0;
@@ -751,13 +751,16 @@ namespace Microsoft.ML.Probabilistic.Serialization
         private static string MakeValidVariableName(string name)
         {
             string result = "";
-
             for (int i = 0; i < name.Length; i++)
+            {
                 if (!Char.IsDigit(name[i]) && !Char.IsLetter(name[i]))
                     result += '_';
                 else
                     result += name[i];
+            }
 
+            // Matlab variable names cannot start with an underscore.
+            while (result.Length > 0 && result[0] == '_') result = result.Substring(1);
             return result;
         }
 
@@ -769,7 +772,6 @@ namespace Microsoft.ML.Probabilistic.Serialization
         protected static byte[] Matlab5Header(string comments)
         {
             byte[] header = new byte[128];
-
             if (comments.Length > 124)
                 comments = comments.Substring(0, 124);
             else
@@ -780,7 +782,6 @@ namespace Microsoft.ML.Probabilistic.Serialization
             header[125] = 0x01;
             header[126] = (byte) 'I';
             header[127] = (byte) 'M';
-
             return header;
         }
 

@@ -170,7 +170,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     logPhi1 = MMath.NormalCdfLn(z1);
                     alpha1 = sqrtBPrec / MMath.NormalCdfRatio(z1);
                     double sqrtAPrec = Math.Sqrt(a.Precision);
-                    double z2 = (mx2 * a.Precision - a.MeanTimesPrecision) / sqrtAPrec;
+                    double z2 = MMath.AreEqual(sqrtAPrec, 0) ? 0 : (mx2 * a.Precision - a.MeanTimesPrecision) / sqrtAPrec;
                     logPhi2 = MMath.NormalCdfLn(z2);
                     alpha2 = sqrtAPrec / MMath.NormalCdfRatio(z2);
                 }
@@ -236,7 +236,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     vx2 = 0.0;
                     mx2 = b.Point;
                     double sqrtAPrec = Math.Sqrt(a.Precision);
-                    double z2 = (b.Point * a.Precision - a.MeanTimesPrecision) / sqrtAPrec;
+                    double z2 = MMath.AreEqual(sqrtAPrec, 0) ? 0 : (b.Point * a.Precision - a.MeanTimesPrecision) / sqrtAPrec;
                     logPhi2 = MMath.NormalCdfLn(z2);
                     alpha2 = sqrtAPrec / MMath.NormalCdfRatio(z2);
                 }
@@ -372,6 +372,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Gaussian MaxAverageConditional(Gaussian max, [Proper] Gaussian a, [Proper] Gaussian b)
         {
             // the following code works correctly even if max is uniform or improper.
+            if (a.IsUniform() || b.IsUniform()) return Gaussian.Uniform();
             if (!a.IsProper())
                 throw new ImproperMessageException(a);
             if (!b.IsProper())
@@ -519,7 +520,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxGaussianOp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian max, [Proper] Gaussian a, [Proper] Gaussian b)
         {
-            if (max.IsUniform())
+            if (max.IsUniform() || b.IsUniform())
                 return Gaussian.Uniform();
             if (!b.IsProper())
                 throw new ImproperMessageException(b);
@@ -529,7 +530,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double logz;
             ComputeStats(max, a, b, out logz, out logw1, out alpha1, out vx1, out mx1,
                          out logw2, out alpha2, out vx2, out mx2);
-            double w1,w2;
+            double w1, w2;
             if (logz < double.MinValue)
             {
                 w1 = (alpha1 > 0) ? 1.0 : 0.0;
@@ -613,7 +614,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 else
                 {
                     //z = vx1 * (max.MeanTimesPrecision * a.Precision - a.MeanTimesPrecision * max.Precision);
-                    z = (max.MeanTimesPrecision - a.GetMean() * max.Precision)/(max.Precision/a.Precision + 1);
+                    if (a.Precision == 0) z = 0;
+                    else z = (max.MeanTimesPrecision - a.GetMean() * max.Precision) / (max.Precision / a.Precision + 1);
                     alpha = z * w1 - vx1 * max.Precision * w2 * alpha2;
                     if (w2 == 0)
                     {
