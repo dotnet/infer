@@ -140,9 +140,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             double point = 3;
             Gaussian toPoint = MaxGaussianOp.AAverageConditional(max, Gaussian.PointMass(point), b);
             //Console.WriteLine($"{point} {toPoint} {toPoint.MeanTimesPrecision:g17} {toPoint.Precision:g17}");
+            Gaussian toUniform = MaxGaussianOp.AAverageConditional(max, Gaussian.Uniform(), b);
             if (max.IsPointMass && b.IsPointMass)
             {
-                Gaussian toUniform = MaxGaussianOp.AAverageConditional(max, Gaussian.Uniform(), b);
                 if (max.Point > b.Point)
                 {
                     Assert.Equal(toUniform, max);
@@ -158,6 +158,17 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Gaussian a = Gaussian.FromMeanAndPrecision(point, System.Math.Pow(10, i));
                 Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, b);
                 double diff = toPoint.MaxDiff(to_a);
+                //Console.WriteLine($"{i} {a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17} {diff:g17}");
+                if (diff < 1e-14) diff = 0;
+                Assert.True(diff <= oldDiff);
+                oldDiff = diff;
+            }
+            oldDiff = double.PositiveInfinity;
+            for (int i = 3; i < 100; i++)
+            {
+                Gaussian a = Gaussian.FromMeanAndPrecision(point, System.Math.Pow(10, -i));
+                Gaussian to_a = MaxGaussianOp.AAverageConditional(max, a, b);
+                double diff = toUniform.MaxDiff(to_a);
                 //Console.WriteLine($"{i} {a} {to_a} {to_a.MeanTimesPrecision:g17} {to_a.Precision:g17} {diff:g17}");
                 if (diff < 1e-14) diff = 0;
                 Assert.True(diff <= oldDiff);
