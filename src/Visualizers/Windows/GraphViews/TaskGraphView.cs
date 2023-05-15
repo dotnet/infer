@@ -10,7 +10,6 @@ using Microsoft.Msagl.GraphViewerGdi;
 using Microsoft.Msagl.Drawing;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
 using Node = Microsoft.Msagl.Drawing.Node;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.Transforms;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using Microsoft.ML.Probabilistic.Collections;
@@ -20,9 +19,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
     /// <summary>
     /// A view of a task graph, which is a schedule when the tasks are message computations.
     /// </summary>
-    internal class TaskGraphView
+    internal class TaskGraphView : IDisposable
     {
-        private GViewer gviewer = new GViewer();
+        private readonly GViewer gviewer = new GViewer();
 
         protected enum Stage
         {
@@ -33,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         /// <summary>
         /// Helps build class declarations
         /// </summary>
-        private static CodeBuilder Builder = CodeBuilder.Instance;
+        private static readonly CodeBuilder Builder = CodeBuilder.Instance;
 
         internal IList<IStatement> pretasks;
         internal IList<IStatement> looptasks;
@@ -48,9 +47,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 if (!context.InputAttributes.Has<OperatorMethod>(imd)) continue;
                 foreach (IStatement ist in imd.Body.Statements)
                 {
-                    if (ist is IWhileStatement)
+                    if (ist is IWhileStatement iws)
                     {
-                        looptasks.AddRange(((IWhileStatement) ist).Body.Statements);
+                        looptasks.AddRange(iws.Body.Statements);
                         continue;
                     }
                     if (context.InputAttributes.Has<OperatorStatement>(ist)) pretasks.Add(ist);
@@ -150,18 +149,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             //if (di.IsOutput) nd.Attr.Fillcolor = Color.LightBlue;
             nd.LabelText = s;
             if (stage == Stage.Initialisation) nd.Attr.FillColor = Color.LightGray;
-            if (ist is IExpressionStatement)
+            if (ist is IExpressionStatement ies)
             {
-                IExpressionStatement ies = (IExpressionStatement) ist;
-                IAssignExpression iae = ies.Expression as IAssignExpression;
-                if ((iae != null) && (iae.Target is IVariableDeclarationExpression)) nd.Attr.LineWidth = 2;
+                if ((ies.Expression is IAssignExpression iae) && (iae.Target is IVariableDeclarationExpression)) nd.Attr.LineWidth = 2;
             }
             nd.Attr.Shape = Shape.Box;
             nd.Label.FontSize = 9;
             return nd;
         }
 
-        private Dictionary<Stage, Dictionary<IStatement, Node>> stmtNodeMap = new Dictionary<Stage, Dictionary<IStatement, Node>>();
+        private readonly Dictionary<Stage, Dictionary<IStatement, Node>> stmtNodeMap = new Dictionary<Stage, Dictionary<IStatement, Node>>();
 
         protected Node GetNodeForStatement(IStatement ist, Stage stg)
         {
@@ -176,44 +173,36 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             stmtNodeMap[stg][ist] = nd;
         }
 
-
-        protected bool ReferenceContains(IList<IStatement> list, object value)
-        {
-            foreach (object obj in list) if (object.ReferenceEquals(obj, value)) return true;
-            return false;
-        }
-
         protected string StatementLabel(IStatement ist)
         {
-            if (ist is IExpressionStatement)
+            if (ist is IExpressionStatement ies)
             {
-                IExpressionStatement ies = (IExpressionStatement) ist;
                 string s;
-                if (ies.Expression is IAssignExpression)
+                if (ies.Expression is IAssignExpression iae)
                 {
-                    s = ExpressionToString(((IAssignExpression) ies.Expression).Target);
+                    s = ExpressionToString(iae.Target);
                 }
                 else s = ExpressionToString(ies.Expression);
                 if (s.StartsWith("this.")) s = s.Substring(5);
                 //if (s.EndsWith("[0]")) s = s.Substring(0, s.Length - 3);
                 return s;
             }
-            if (ist is IForStatement)
+            if (ist is IForStatement ifs)
             {
-                return StatementLabel(((IForStatement) ist).Body.Statements[0]);
+                return StatementLabel(ifs.Body.Statements[0]);
             }
-            if (ist is IConditionStatement)
+            if (ist is IConditionStatement ics)
             {
-                return String.Format("if ({0}) {1}", ((IConditionStatement) ist).Condition.ToString(),
-                                     StatementLabel(((IConditionStatement) ist).Then));
+                return String.Format("if ({0}) {1}", ics.Condition.ToString(),
+                                     StatementLabel(ics.Then));
             }
-            if (ist is IBlockStatement)
+            if (ist is IBlockStatement ibs)
             {
-                int blockSize = ((IBlockStatement) ist).Statements.Count;
+                int blockSize = ibs.Statements.Count;
                 string s;
                 if (blockSize > 0)
                 {
-                    s = StatementLabel(((IBlockStatement) ist).Statements[0]);
+                    s = StatementLabel(ibs.Statements[0]);
                 }
                 else
                 {
@@ -238,6 +227,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         public void RunInForm()
         {
             WindowsVisualizer.FormHelper.RunInForm(gviewer, "Infer.NET Schedule Viewer", false);
+        }
+
+        public void Dispose()
+        {
+            gviewer.Dispose();
         }
     }
 }

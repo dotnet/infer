@@ -1567,33 +1567,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        private void VectorEquality(Vector a)
-        {
-            Rand.Restart(12347);
-
-            Vector aCopy = Vector.Copy(a);
-            Vector aPlusNoise = a.Clone();
-            for (int i = 0; i < a.Count; i++)
-                aPlusNoise[i] += Rand.Double();
-
-            Assert.True(a == aCopy);
-            Assert.False(a != aCopy);
-            Assert.Equal(a, aCopy);
-            Assert.Equal(0.0, a.MaxDiff(aCopy));
-
-            Assert.False(a == aPlusNoise);
-            Assert.True(a != aPlusNoise);
-            Assert.NotEqual(Vector.Zero(aPlusNoise.Count), aPlusNoise);
-            double diff = 0.0;
-            for (int i = 0; i < a.Count; i++)
-            {
-                double d = System.Math.Abs(a[i] - aPlusNoise[i]) / (System.Math.Abs(a[i]) + TOLERANCE);
-                if (d > diff) diff = d;
-            }
-            double diff1 = a.MaxDiff(aPlusNoise, TOLERANCE);
-            Assert.Equal(diff, diff1);
-        }
-
         [Fact]
         public void VectorEqualityTests()
         {
@@ -1608,6 +1581,29 @@ namespace Microsoft.ML.Probabilistic.Tests
             aVector[4] = Vector.FromArray(a, Sparsity.Piecewise);
             for (int i = 0; i < aVector.Length; i++)
                 VectorEquality(aVector[i]);
+
+            void VectorEquality(Vector v)
+            {
+                Vector copy = Vector.Copy(v);
+                Assert.True(v == copy);
+                Assert.False(v != copy);
+                Assert.Equal(v, copy);
+                Assert.Equal(0.0, v.MaxDiff(copy));
+
+                double delta = 0.25;
+                Vector noisy = v.Clone();
+                noisy[0] += delta;
+                Assert.False(v == noisy);
+                Assert.True(v != noisy);
+                Assert.NotEqual(Vector.Zero(noisy.Count), noisy);
+                double diffExpected = delta / (v[0] + TOLERANCE);
+                double diff = v.MaxDiff(noisy, TOLERANCE);
+                Assert.Equal(diffExpected, diff);
+
+                v[0] = double.NaN;
+                Vector withNaN = v.Clone();
+                Assert.Equal(0.0, v.MaxDiff(withNaN));
+            }
         }
 
         private void VectorInequality(Vector a)
@@ -1702,23 +1698,17 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             // rectangular matrix tests
             Matrix R = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 } });
-            Console.WriteLine("R:\n{0}", R);
-
             Matrix Rt = R.Transpose();
-            Console.WriteLine("R':\n{0}", Rt);
             Matrix Rtt = new Matrix(R.Rows, R.Cols);
             Rtt.SetToTranspose(Rt);
             Assert.True(Rtt.Equals(R));
             Assert.True(Rtt.GetHashCode() == R.GetHashCode());
-            Console.WriteLine("");
 
             Matrix RRTrue = new Matrix(new double[,] { { 14, 32 }, { 32, 77 } });
             Matrix RR = new Matrix(R.Rows, Rt.Cols);
             RR.SetToProduct(R, Rt);
             //Rt.SetToProduct(R,Rt); RR.SetTo(Rt);
-            Console.WriteLine("R*R':\n{0}", RR);
             Assert.True(RR.MaxDiff(RRTrue) < TOLERANCE);
-            Console.WriteLine("");
 
             RR.SetTo(RRTrue);
             Assert.Equal(RR, RRTrue);
@@ -1732,14 +1722,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             // square matrix tests
             // A = [2 1 1; 1 2 1; 1 1 2]
             PositiveDefiniteMatrix A = new PositiveDefiniteMatrix(new double[,] { { 2, 1, 1 }, { 1, 2, 1 }, { 1, 1, 2 } });
-            Console.WriteLine("A:\n{0}", A);
-            Console.WriteLine("");
             Assert.True(A.SymmetryError() == 0.0);
 
             double det = A.Determinant();
-            Console.Write("det(A) = {0}", det);
             Assert.True(System.Math.Abs(det - 4) < TOLERANCE);
-            Console.WriteLine("");
 
             PositiveDefiniteMatrix AinvTrue = new PositiveDefiniteMatrix(new double[,]
                 {
@@ -1749,16 +1735,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 });
             PositiveDefiniteMatrix Ainv = new PositiveDefiniteMatrix(3, 3);
             Ainv.SetToInverse(A);
-            Console.WriteLine("inv(A):\n{0}", Ainv);
             Assert.True(Ainv.MaxDiff(AinvTrue) < TOLERANCE);
             Assert.True(Ainv.SymmetryError() == 0.0);
-            Console.WriteLine("");
 
-            Console.WriteLine("sum(b): {0}", b.Sum());
             Vector v = Ainv * b;
-            Console.WriteLine("inv(A)*b:\n{0}", v);
             Assert.True(v.MaxDiff(c) < TOLERANCE);
-            Console.WriteLine("");
 
             v.SetTo(b);
             Assert.Equal(v, b);
@@ -1766,12 +1747,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             (new LuDecomposition(A)).Solve((DenseVector)v);
             // should be same as above
-            Console.WriteLine("Solve(A,b):\n{0}", v);
             Assert.True(v.MaxDiff(c) < TOLERANCE);
             Vector b2 = Vector.Zero(b.Count);
             b2.SetToProduct(A, v);
             Assert.True(b.MaxDiff(b2) < TOLERANCE);
-            Console.WriteLine("");
 
             LowerTriangularMatrix LTrue = new LowerTriangularMatrix(new double[,]
                 {
@@ -1781,10 +1760,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 });
             LowerTriangularMatrix L = new LowerTriangularMatrix(3, 3);
             bool isPosDef = L.SetToCholesky(A);
-            //Console.WriteLine("IsPosDef(A): {0}", isPosDef);
             Assert.True(isPosDef);
-            //Console.WriteLine("Cholesky(A):\n{0}", L);
-            Console.WriteLine("Cholesky(A) error = {0}", L.MaxDiff(LTrue));
             Assert.True(L.MaxDiff(LTrue) < TOLERANCE);
 
             LowerTriangularMatrix LinvTrue = new LowerTriangularMatrix(new double[,]
@@ -1795,11 +1771,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 });
             LowerTriangularMatrix Linv = new LowerTriangularMatrix(3, 3);
             Linv.SetToInverse(L);
-            Console.WriteLine("inv(L) error = {0}", Linv.MaxDiff(LinvTrue));
             Assert.True(Linv.MaxDiff(LinvTrue) < TOLERANCE);
             Linv.SetTo(L);
             Linv.SetToInverse(Linv);
-            Console.WriteLine("inv(L) error = {0}", Linv.MaxDiff(LinvTrue));
             Assert.True(Linv.MaxDiff(LinvTrue) < TOLERANCE);
 
             // L*L' = A, so L'\L\A = I
@@ -1812,14 +1786,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             eye.PredivideBy(L);
             eye.PredivideByTranspose(L);
             Assert.True(eye.MaxDiff(Matrix.Identity(3)) < TOLERANCE);
-            Console.WriteLine("");
 
             // L*L' = A, so inv(A)*b = inv(L')*inv(L)*b
             v.SetTo(b);
             v.PredivideBy(L);
-            Console.WriteLine("v = {0}", v); // should be 2.8284, 1.633, 1.1547
             v.PredivideBy(L.Transpose());
-            Console.WriteLine("v = {0}", v);
             Assert.True(v.MaxDiff(c) < TOLERANCE);
 
             v.SetTo(b);
@@ -1949,7 +1920,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void VectorTest()
+        public void VectorSetTo_WithWrongArraySize_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() =>
             {
@@ -1957,7 +1928,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Vector x = Vector.Zero(3);
                 double[] array = new double[] { 1, 2, 3 };
                 x.SetTo(array);
-                Console.WriteLine(x);
                 for (int i = 0; i < array.Length; i++)
                 {
                     Assert.Equal(array[i], x[i]);
@@ -1990,27 +1960,21 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             // rectangular matrix tests
             Matrix R = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 } });
-            Console.WriteLine("R:\n{0}", R);
-
             Matrix Rt = R.Transpose();
-            Console.WriteLine("R':\n{0}", Rt);
             Matrix Rtt = new Matrix(R.Rows, R.Cols);
             Rtt.SetToTranspose(Rt);
             Assert.True(Rtt.Equals(R));
             Assert.True(Rtt.GetHashCode() == R.GetHashCode());
-            Console.WriteLine("");
 
             Matrix RRTrue = new Matrix(new double[,] { { 14, 32 }, { 32, 77 } });
             Matrix RR = new Matrix(R.Rows, Rt.Cols);
             RR.SetToProduct(R, Rt);
             //Rt.SetToProduct(R,Rt); RR.SetTo(Rt);
-            Console.WriteLine("R*R':\n{0}", RR);
             Assert.True(RR.MaxDiff(RRTrue) < TOLERANCE);
             RR.SetToOuter(R);
             Assert.True(RR.MaxDiff(RRTrue) < TOLERANCE);
             RR.SetToOuterTranspose(Rt);
             Assert.True(RR.MaxDiff(RRTrue) < TOLERANCE);
-            Console.WriteLine("");
 
             RR.SetTo(RRTrue);
             Assert.Equal(RR, RRTrue);
@@ -2024,14 +1988,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             // square matrix tests
             // A = [2 1 1; 1 2 1; 1 1 2]
             PositiveDefiniteMatrix A = new PositiveDefiniteMatrix(new double[,] { { 2, 1, 1 }, { 1, 2, 1 }, { 1, 1, 2 } });
-            Console.WriteLine("A:\n{0}", A);
-            Console.WriteLine("");
             Assert.True(A.SymmetryError() == 0.0);
 
             double det = A.Determinant();
-            Console.Write("det(A) = {0}", det);
             Assert.True(System.Math.Abs(det - 4) < TOLERANCE);
-            Console.WriteLine("");
 
             PositiveDefiniteMatrix AinvTrue = new PositiveDefiniteMatrix(new double[,]
                 {
@@ -2046,18 +2006,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             Lapack.SymmetricInverseInPlace(t); 
             Assert.True(Ainv.MaxDiff(t) < TOLERANCE);
 #endif
-            Console.WriteLine("inv(A):\n{0}", Ainv);
             Assert.True(Ainv.MaxDiff(AinvTrue) < TOLERANCE);
             Assert.True(Ainv.SymmetryError() == 0.0);
-            Console.WriteLine("");
 
             Vector b = Vector.FromArray(new double[] { 4, 4, 4 });
             Vector c = Vector.FromArray(new double[] { 1, 1, 1 });
-            Console.WriteLine("sum(b): {0}", b.Sum());
             Vector v = Ainv * b;
-            Console.WriteLine("inv(A)*b:\n{0}", v);
             Assert.True(v.MaxDiff(c) < TOLERANCE);
-            Console.WriteLine("");
 
             v.SetTo(b);
             Assert.Equal(v, b);
@@ -2065,12 +2020,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             (new LuDecomposition(A)).Solve(v);
             // should be same as above
-            Console.WriteLine("Solve(A,b):\n{0}", v);
             Assert.True(v.MaxDiff(c) < TOLERANCE);
             Vector b2 = Vector.Zero(b.Count);
             b2.SetToProduct(A, v);
             Assert.True(b.MaxDiff(b2) < TOLERANCE);
-            Console.WriteLine("");
 
             LowerTriangularMatrix LTrue = new LowerTriangularMatrix(new double[,]
                 {
@@ -2080,17 +2033,12 @@ namespace Microsoft.ML.Probabilistic.Tests
                 });
             LowerTriangularMatrix L = new LowerTriangularMatrix(3, 3);
             bool isPosDef = L.SetToCholesky(A);
-            //Console.WriteLine("IsPosDef(A): {0}", isPosDef);
             Assert.True(isPosDef);
-            Console.WriteLine("Cholesky(A):\n{0}", L);
-            Console.WriteLine("Cholesky(A) error = {0}", L.MaxDiff(LTrue));
             Assert.True(L.MaxDiff(LTrue) < TOLERANCE);
 
             PositiveDefiniteMatrix Acopy = (PositiveDefiniteMatrix)A.Clone();
             L = Acopy.CholeskyInPlace(out isPosDef);
             Assert.True(isPosDef);
-            Console.WriteLine("Cholesky(A):\n{0}", L);
-            Console.WriteLine("Cholesky(A) error = {0}", L.MaxDiff(LTrue));
             Assert.True(L.MaxDiff(LTrue) < TOLERANCE);
 
             LowerTriangularMatrix LinvTrue = new LowerTriangularMatrix(new double[,]
@@ -2101,11 +2049,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 });
             LowerTriangularMatrix Linv = new LowerTriangularMatrix(3, 3);
             Linv.SetToInverse(L);
-            Console.WriteLine("inv(L) error = {0}", Linv.MaxDiff(LinvTrue));
             Assert.True(Linv.MaxDiff(LinvTrue) < TOLERANCE);
             Linv.SetTo(L);
             Linv.SetToInverse(Linv);
-            Console.WriteLine("inv(L) error = {0}", Linv.MaxDiff(LinvTrue));
             Assert.True(Linv.MaxDiff(LinvTrue) < TOLERANCE);
 
             // L*L' = A, so L'\L\A = I
@@ -2118,14 +2064,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             eye.PredivideBy(L);
             eye.PredivideByTranspose(L);
             Assert.True(eye.MaxDiff(Matrix.Identity(3)) < TOLERANCE);
-            Console.WriteLine("");
 
             // L*L' = A, so inv(A)*b = inv(L')*inv(L)*b
             v.SetTo(b);
             v.PredivideBy(L);
-            Console.WriteLine("v = {0}", v); // should be 2.8284, 1.633, 1.1547
             v.PredivideBy(L.Transpose());
-            Console.WriteLine("v = {0}", v);
             Assert.True(v.MaxDiff(c) < TOLERANCE);
 
             v.SetTo(b);
@@ -2242,14 +2185,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             double VError = VExpected.MaxDiff(V);
             Matrix USExpected = UExpected * Matrix.FromDiagonal(SExpected);
             double USError = USExpected.MaxDiff(US);
-            Console.WriteLine(StringUtil.JoinColumns("US = ", US.ToString("g17"), " expected ", USExpected.ToString("g17"), " error ", USError));
-            Console.WriteLine(StringUtil.JoinColumns("U = ", U.ToString("g17"), " expected ", UExpected.ToString("g17"), " error ", UError));
-            Console.WriteLine(StringUtil.JoinColumns("S = ", S, " expected ", SExpected, " error ", SError));
-            Console.WriteLine(StringUtil.JoinColumns("V = ", V, " expected ", VExpected, " error ", VError));
+            //Console.WriteLine(StringUtil.JoinColumns("US = ", US.ToString("g17"), " expected ", USExpected.ToString("g17"), " error ", USError));
+            //Console.WriteLine(StringUtil.JoinColumns("U = ", U.ToString("g17"), " expected ", UExpected.ToString("g17"), " error ", UError));
+            //Console.WriteLine(StringUtil.JoinColumns("S = ", S, " expected ", SExpected, " error ", SError));
+            //Console.WriteLine(StringUtil.JoinColumns("V = ", V, " expected ", VExpected, " error ", VError));
             Matrix AExpected = UExpected * Matrix.FromDiagonal(SExpected) * VExpected.Transpose();
             Matrix USVActual = U * Matrix.FromDiagonal(S) * V.Transpose();
             Matrix AActual = US * V.Transpose();
-            Console.WriteLine(StringUtil.JoinColumns("A = ", AActual.ToString("g17"), " expected ", AExpected.ToString("g17")));
+            //Console.WriteLine(StringUtil.JoinColumns("A = ", AActual.ToString("g17"), " expected ", AExpected.ToString("g17")));
             Assert.True(UError < 1e-7);
             Assert.True(SError < 1e-10);
             Assert.True(VError < 1e-10);
@@ -2295,9 +2238,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 { 0 /* -0.60148066629825048 */, 0.608938144188165,  0.793217710690245 }
             });
 
-            Console.WriteLine(StringUtil.JoinColumns("U = ", U, " expected ", UExpected));
-            Console.WriteLine(StringUtil.JoinColumns("S = ", S, " expected ", SExpected));
-            Console.WriteLine(StringUtil.JoinColumns("V = ", V, " expected ", VExpected));
+            //Console.WriteLine(StringUtil.JoinColumns("U = ", U, " expected ", UExpected));
+            //Console.WriteLine(StringUtil.JoinColumns("S = ", S, " expected ", SExpected));
+            //Console.WriteLine(StringUtil.JoinColumns("V = ", V, " expected ", VExpected));
             Assert.True(UExpected.MaxDiff(U) < 1e-10);
             Assert.True(SExpected.MaxDiff(S) < 1e-10);
             Assert.True(VExpected.MaxDiff(V) < 1e-10);
@@ -2307,7 +2250,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void MatrixEigenvectorsSymmetricTest()
         {
             PositiveDefiniteMatrix A = new PositiveDefiniteMatrix(new double[,] { { 2, 1, 1 }, { 1, 2, 1 }, { 1, 1, 2 } });
-            Console.WriteLine("A:\n{0}", A);
             PositiveDefiniteMatrix Aev;
             double[] eigenvaluesReal = new double[A.Rows];
             double[] eigenvaluesImag = new double[A.Rows];
@@ -2325,22 +2267,21 @@ namespace Microsoft.ML.Probabilistic.Tests
             Matrix eigenvectors = new Matrix(A.Rows, A.Cols);
             Aev = (PositiveDefiniteMatrix)A.Clone();
             eigenvectors.SetToEigenvectorsOfSymmetric(Aev);
-            Console.WriteLine("eigenvectors as cols:\n{0}", eigenvectors);
-            Console.WriteLine("eigenvalues:\n{0}", Aev);
             Matrix product = eigenvectors * Aev * eigenvectors.Transpose();
             Assert.True(product.MaxDiff(A) < TOLERANCE);
 
             //A = new PositiveDefiniteMatrix(new double[,] { { 1, 5, 7 }, { 3, 0, 6 }, { 4, 3, 1 } });
             Aev = (PositiveDefiniteMatrix)A.Clone();
             Aev.EigenvaluesInPlace(eigenvaluesReal, eigenvaluesImag);
-            Console.WriteLine("eigenvalues Real: {0}", StringUtil.CollectionToString(eigenvaluesReal, " "));
-            Console.WriteLine("eigenvalues Imag: {0}", StringUtil.CollectionToString(eigenvaluesImag, " "));
+            //Console.WriteLine("eigenvalues Real: {0}", StringUtil.CollectionToString(eigenvaluesReal, " "));
+            //Console.WriteLine("eigenvalues Imag: {0}", StringUtil.CollectionToString(eigenvaluesImag, " "));
+            // TODO: assertion
 
             A.SetTo(new double[,] { { double.PositiveInfinity, 0, 0 }, { 0, 2, 1 }, { 0, 1, 2 } });
             Aev = (PositiveDefiniteMatrix)A.Clone();
             eigenvectors.SetToEigenvectorsOfSymmetric(Aev);
-            Console.WriteLine("eigenvectors as cols:\n{0}", eigenvectors);
-            Console.WriteLine("eigenvalues:\n{0}", Aev);
+            //Console.WriteLine("eigenvectors as cols:\n{0}", eigenvectors);
+            //Console.WriteLine("eigenvalues:\n{0}", Aev);
         }
 
         // Test a case where balancing is required
@@ -2390,9 +2331,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             double[] eigenvaluesImag = new double[A.Rows];
             var Aev = (Matrix)A.Clone();
             Aev.EigenvaluesInPlace(eigenvaluesReal, eigenvaluesImag);
-            Console.WriteLine(Aev);
-            Console.WriteLine("eigenvalues Real: {0}", StringUtil.CollectionToString(eigenvaluesReal, " "));
-            Console.WriteLine("eigenvalues Imag: {0}", StringUtil.CollectionToString(eigenvaluesImag, " "));
             for (int i = 0; i < A.Rows; i++)
             {
                 bool found = false;
@@ -2430,10 +2368,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Matrix A = new Matrix(new double[,] { { 1, 2 }, { 3, 4 } });
             Matrix C = A.Kronecker(A);
-            Console.WriteLine(C);
+            //Console.WriteLine(C);
+            // TODO: assertion
 
             Matrix K = Matrix.Commutation(4, 3);
-            Console.WriteLine(K);
+            //Console.WriteLine(K);
         }
     }
 }

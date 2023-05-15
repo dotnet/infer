@@ -15,9 +15,9 @@ using Microsoft.Msagl.Drawing;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 {
-    internal class ModelView
+    internal class ModelView : IDisposable
     {
-        private GViewer gviewer = new GViewer();
+        private readonly GViewer gviewer = new GViewer();
 
         internal ModelBuilder modelBuilder;
 
@@ -56,6 +56,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         {
             Form f = WindowsVisualizer.FormHelper.ShowInForm(gviewer, title, maximise);
             Application.Run(f);
+        }
+
+        public void Dispose()
+        {
+            gviewer.Dispose();
         }
     }
 

@@ -1458,7 +1458,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Replaces the current distribution with an improper distribution which assigns the probability of 1 to every sequence.
+        /// Replaces the current distribution with an improper distribution which assigns the probability of 1 to every sequence, or a different value if <see cref="SetLogValueOverride"/> was previously called.
         /// Sequence elements are restricted to be non-zero probability elements from a given distribution.
         /// </summary>
         /// <param name="allowedElements">The distribution representing allowed sequence elements.</param>
@@ -1468,7 +1468,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Replaces the current distribution with an improper distribution which assigns the probability of 1 to every sequence.
+        /// Replaces the current distribution with an improper distribution which assigns the probability of 1 to every sequence, or a different value if <see cref="SetLogValueOverride"/> was previously called.
         /// </summary>
         public void SetToUniform()
         {

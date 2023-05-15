@@ -2164,15 +2164,7 @@ namespace Microsoft.ML.Probabilistic.Math
             return (true);
         }
 
-        /// <summary>
-        /// Returns the maximum absolute difference between this vector and another vector.
-        /// </summary>
-        /// <param name="that">The second vector.</param>
-        /// <returns><c>max(abs(this[i] - that[i]))</c>. 
-        /// Matching infinities or NaNs do not count.  
-        /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
-        /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.
-        /// </remarks>
+        /// <inheritdoc/>
         public override double MaxDiff(Vector that)
         {
             if (that.Sparsity == Sparsity.Dense)
@@ -2194,13 +2186,9 @@ namespace Microsoft.ML.Probabilistic.Math
                 bool ynan = Double.IsNaN(y);
                 if (xnan != ynan)
                     return Double.PositiveInfinity;
-                else if (x == y)
-                {
-                    // catches infinities
-                    // do nothing
-                }
                 else
                 {
+                    // matching infinities or NaNs will not change max
                     double diff = System.Math.Abs(x - y);
                     if (diff > max)
                     {
@@ -2212,15 +2200,7 @@ namespace Microsoft.ML.Probabilistic.Math
             return max;
         }
 
-        /// <summary>
-        /// Returns the maximum absolute difference between this dense vector and another dense vector.
-        /// </summary>
-        /// <param name="that">The second vector.</param>
-        /// <returns><c>max(abs(this[i] - that[i]))</c>. 
-        /// Matching infinities or NaNs do not count.  
-        /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
-        /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.
-        /// </remarks>
+        /// <inheritdoc cref="MaxDiff(Vector)"/>
         public double MaxDiff(DenseVector that)
         {
             if (count != that.Count)
@@ -2238,13 +2218,9 @@ namespace Microsoft.ML.Probabilistic.Math
                 bool ynan = Double.IsNaN(y);
                 if (xnan != ynan)
                     return Double.PositiveInfinity;
-                else if (x == y)
-                {
-                    // catches infinities
-                    // do nothing
-                }
                 else
                 {
+                    // matching infinities or NaNs will not change max
                     double diff = System.Math.Abs(x - y);
                     if (diff > max)
                     {
@@ -2255,16 +2231,7 @@ namespace Microsoft.ML.Probabilistic.Math
             return max;
         }
 
-        /// <summary>
-        /// Returns the maximum relative difference between this vector and another.
-        /// </summary>
-        /// <param name="that">The second vector.</param>
-        /// <param name="rel">An offset to avoid division by zero.</param>
-        /// <returns><c>max(abs(this[i] - that[i])/(abs(this[i]) + rel))</c>. 
-        /// Matching infinities or NaNs do not count.  
-        /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
-        /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.
-        /// </remarks>
+        /// <inheritdoc/>
         public override double MaxDiff(Vector that, double rel)
         {
             if (that.Sparsity == Sparsity.Dense)
@@ -2286,14 +2253,10 @@ namespace Microsoft.ML.Probabilistic.Math
                 bool ynan = Double.IsNaN(y);
                 if (xnan != ynan)
                     return Double.PositiveInfinity;
-                else if (x == y)
-                {
-                    // catches infinities
-                    // do nothing
-                }
                 else
                 {
-                    double diff = System.Math.Abs(x - y) / (System.Math.Abs(x) + rel);
+                    // matching infinities or NaNs will not change max
+                    double diff = MMath.AbsDiff(x, y, rel);
                     if (diff > max)
                     {
                         max = diff;
@@ -2304,16 +2267,7 @@ namespace Microsoft.ML.Probabilistic.Math
             return max;
         }
 
-        /// <summary>
-        /// Returns the maximum relative difference between this dense vector and another.
-        /// </summary>
-        /// <param name="that">The second vector.</param>
-        /// <param name="rel">An offset to avoid division by zero.</param>
-        /// <returns><c>max(abs(this[i] - that[i])/(abs(this[i]) + rel))</c>. 
-        /// Matching infinities or NaNs do not count.  
-        /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
-        /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.
-        /// </remarks>
+        /// <inheritdoc cref="MaxDiff(Vector, double)"/>
         public double MaxDiff(DenseVector that, double rel)
         {
             if (count != that.Count)
@@ -2323,7 +2277,6 @@ namespace Microsoft.ML.Probabilistic.Math
 
             double max = 0.0;
             int end = start + count;
-            DenseVector thatd = (DenseVector)that;
             for (int i = start, j = that.start; i < end;)
             {
                 double x = this.data[i++];
@@ -2332,14 +2285,10 @@ namespace Microsoft.ML.Probabilistic.Math
                 bool ynan = Double.IsNaN(y);
                 if (xnan != ynan)
                     return Double.PositiveInfinity;
-                else if (x == y)
-                {
-                    // catches infinities
-                    // do nothing
-                }
                 else
                 {
-                    double diff = System.Math.Abs(x - y) / (System.Math.Abs(x) + rel);
+                    // matching infinities or NaNs will not change max
+                    double diff = MMath.AbsDiff(x, y, rel);
                     if (diff > max)
                     {
                         max = diff;

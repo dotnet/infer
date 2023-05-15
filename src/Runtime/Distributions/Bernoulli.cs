@@ -202,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsPointMass)
             {
-                return power*that.GetLogProb(Point);
+                return power * that.GetLogProb(Point);
             }
             else if (that.IsPointMass)
             {
@@ -211,8 +211,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                var product = this*(that ^ power);
-                return product.GetLogNormalizer() - this.GetLogNormalizer() - power*that.GetLogNormalizer();
+                var product = this * (that ^ power);
+                return product.GetLogNormalizer() - this.GetLogNormalizer() - power * that.GetLogNormalizer();
             }
         }
 
@@ -230,7 +230,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 // p must not be 0 or 1.
                 double p = GetProbTrue();
-                return p*that.GetLogProbTrue() + (1 - p)*that.GetLogProbFalse();
+                return p * that.GetLogProbTrue() + (1 - p) * that.GetLogProbFalse();
             }
         }
 
@@ -299,7 +299,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsPointMass) return 0.0;
             double p = GetProbTrue();
-            return p*(1 - p);
+            return p * (1 - p);
         }
 
 #if class
@@ -452,7 +452,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 if (exponent < 0 && dist.IsPointMass)
                     throw new DivideByZeroException($"The {nameof(exponent)} is negative and the distribution is a point mass");
-                LogOdds = dist.LogOdds*exponent;
+                LogOdds = dist.LogOdds * exponent;
             }
         }
 
@@ -494,7 +494,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 throw new ArgumentException($"{nameof(weight1)} ({weight1}) + {nameof(weight2)} ({weight2}) < 0");
             else if (weight1 == 0) SetTo(dist2);
             else if (weight2 == 0) SetTo(dist1);
-                // if dist1 == dist2 then we must return dist1, with no roundoff error
+            // if dist1 == dist2 then we must return dist1, with no roundoff error
             else if (dist1.LogOdds == dist2.LogOdds) LogOdds = dist1.LogOdds;
             else if (double.IsPositiveInfinity(weight1))
             {
@@ -510,7 +510,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else if (double.IsPositiveInfinity(weight2)) SetTo(dist2);
             else
             {
-                SetProbTrue((weight1*dist1.GetProbTrue() + weight2*dist2.GetProbTrue())/(weight1 + weight2));
+                SetProbTrue((weight1 * dist1.GetProbTrue() + weight2 * dist2.GetProbTrue()) / (weight1 + weight2));
             }
         }
 
@@ -545,7 +545,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double MaxDiff(object thatd)
         {
             if (!(thatd is Bernoulli)) return Double.PositiveInfinity;
-            Bernoulli that = (Bernoulli) thatd;
+            Bernoulli that = (Bernoulli)thatd;
             return MMath.AbsDiff(LogOdds, that.LogOdds);
         }
 
@@ -558,7 +558,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public override bool Equals(object thatd)
         {
             if (!(thatd is Bernoulli)) return false;
-            Bernoulli that = (Bernoulli) thatd;
+            Bernoulli that = (Bernoulli)thatd;
             return (LogOdds == that.LogOdds);
         }
 
@@ -627,8 +627,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (x == y) diff = 0; // in case x and y are Inf
             //double min = 0.5 * (sum - diff);  // same as Math.Min(x,y)
             double min = System.Math.Min(x, y);
-            double result = min + System.Math.Log((1 + System.Math.Exp(-sum))/(1 + System.Math.Exp(-diff)));
-            return result*sign;
+            double result = min + System.Math.Log((1 + System.Math.Exp(-sum)) / (1 + System.Math.Exp(-diff)));
+            return result * sign;
         }
 
         /// <summary>

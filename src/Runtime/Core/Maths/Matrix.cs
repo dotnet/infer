@@ -429,9 +429,9 @@ namespace Microsoft.ML.Probabilistic.Math
                     {
                         return Double.PositiveInfinity;
                     }
-                    else if (x != y)
+                    else
                     {
-                        // catches infinities
+                        // matching infinities will not change max
                         double diff = System.Math.Abs(x - y);
                         if (diff > max) max = diff;
                     }

@@ -1418,12 +1418,12 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>True if the vectors have the same size and element values.</returns>
         public static bool operator ==(Vector a, Vector b)
         {
-            if (Object.ReferenceEquals(a, b))
+            if (ReferenceEquals(a, b))
             {
-                return (true);
+                return true;
             }
-            if (Object.ReferenceEquals(a, null) || Object.ReferenceEquals(b, null))
-                return (false);
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+                return false;
 
             return a.Equals(b);
         }
@@ -1436,7 +1436,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>True if vectors are not equal.</returns>
         public static bool operator !=(Vector a, Vector b)
         {
-            return (!(a == b));
+            return !(a == b);
         }
 
         /// <summary>
@@ -1448,9 +1448,9 @@ namespace Microsoft.ML.Probabilistic.Math
         public override bool Equals(object obj)
         {
             Vector that = obj as Vector;
-            if (Object.ReferenceEquals(that, null))
+            if (ReferenceEquals(that, null))
                 return false;
-            if (Object.ReferenceEquals(this, that))
+            if (ReferenceEquals(this, that))
                 return true;
             if (this.Count != that.Count)
                 return false;
@@ -1657,7 +1657,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </summary>
         /// <param name="that">The second vector.</param>
         /// <param name="rel">An offset to avoid division by zero.</param>
-        /// <returns><c>max(abs(this[i] - that[i])/(abs(this[i]) + rel))</c>. 
+        /// <returns><c>max(abs(this[i] - that[i])/(min(abs(this[i]),abs(that[i])) + rel))</c>. 
         /// Matching infinities or NaNs do not count.  
         /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
         /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.

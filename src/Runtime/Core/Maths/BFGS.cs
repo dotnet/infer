@@ -455,7 +455,7 @@ namespace Microsoft.ML.Probabilistic.Math
                         convergenceCheck = System.Math.Sqrt(invDim * currentDeriv.Inner(currentDeriv));
                         break;
                     case ConvergenceCriteria.Objective:
-                        convergenceCheck = System.Math.Abs(prevObj - currentObj) / System.Math.Max(1, System.Math.Max(prevObj, currentObj));
+                        convergenceCheck = MMath.AbsDiff(prevObj, currentObj, 1);
                         break;
                 }
                 prevObj = currentObj;

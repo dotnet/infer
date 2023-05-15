@@ -830,46 +830,21 @@ namespace Microsoft.ML.Probabilistic.Math
             return (this - that).LessThanOrEqual(0);
         }
 
-        /// <summary>
-        /// Returns the maximum absolute difference between this vector and another vector.
-        /// </summary>
-        /// <param name="that">The second vector.</param>
-        /// <returns><c>max(abs(this[i] - that[i]))</c>. 
-        /// Matching infinities or NaNs do not count.  
-        /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
-        /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.
-        /// </remarks>
+        /// <inheritdoc/>
         public override double MaxDiff(Vector that)
         {
             if (Count != that.Count) return Double.PositiveInfinity;
 
             var absdiff = new PiecewiseVector(Count);
-            absdiff.SetToFunction(this, that, (a, b) => a == b ? 0 : System.Math.Abs(a - b));
-            // TODO: consider copying behaviour of Vector, which is roughly:
-            //bool xnan = Double.IsNaN(x);
-            //bool ynan = Double.IsNaN(y);
-            //if (xnan != ynan) return Double.PositiveInfinity;
-            //else if (x != y)
-            //{
-            //   double diff = Math.Abs(x - y);
-            //}
+            absdiff.SetToFunction(this, that, (a, b) => MMath.AbsDiffAllowingNaNs(a, b));
             return absdiff.Max();
         }
 
-        /// <summary>
-        /// Returns the maximum relative difference between this vector and another.
-        /// </summary>
-        /// <param name="that">The second vector.</param>
-        /// <param name="rel">An offset to avoid division by zero.</param>
-        /// <returns><c>max(abs(this[i] - that[i])/(abs(this[i]) + rel))</c>. 
-        /// Matching infinities or NaNs do not count.  
-        /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
-        /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.
-        /// </remarks>
+        /// <inheritdoc/>
         public override double MaxDiff(Vector that, double rel)
         {
             var absdiff = new PiecewiseVector(Count);
-            absdiff.SetToFunction(this, that, (a, b) => System.Math.Abs(a - b)/(System.Math.Abs(a) + rel));
+            absdiff.SetToFunction(this, that, (a, b) => MMath.AbsDiffAllowingNaNs(a, b, rel));
             return absdiff.Max();
         }
 
