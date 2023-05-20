@@ -273,7 +273,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(1, v.IndexOf(commonValue));
 
             // Test IndexOfAll/FindAll
-            Converter<double, bool> filter = x => x >= commonValue && x < v[2];
+            Func<double, bool> filter = x => x >= commonValue && x < v[2];
             int[] indexOfAll = v.IndexOfAll(filter).ToArray();
             ValueAtIndex<double>[] all = v.FindAll(filter).ToArray();
             int allCount = v.CountAll(filter);
@@ -1570,17 +1570,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void VectorEqualityTests()
         {
-            double[] a = new double[] { 1.2, 2.3, 3.4, 1.2, 1.2, 2.3 };
+            double[] a = new double[] { 1.2, 2.3, 3.4, 1.2, 1.2, 2.3, double.PositiveInfinity, double.NegativeInfinity };
             double[] aExt = new double[] { 5.6, 1.2, 1.2, 6.7, 7.8, 1.2, 1.2, 6.7 };
             Sparsity approxSparsity = Sparsity.ApproximateWithTolerance(0.001);
-            Vector[] aVector = new Vector[5];
-            aVector[0] = Vector.FromArray(a);
-            aVector[1] = Vector.FromArray(a, Sparsity.Sparse);
-            aVector[2] = Vector.FromArray(a, approxSparsity);
-            aVector[3] = DenseVector.FromArrayReference(6, aExt, 1);
-            aVector[4] = Vector.FromArray(a, Sparsity.Piecewise);
-            for (int i = 0; i < aVector.Length; i++)
-                VectorEquality(aVector[i]);
+            VectorEquality(Vector.FromArray(a));
+            VectorEquality(Vector.FromArray(a, Sparsity.Sparse));
+            VectorEquality(Vector.FromArray(a, approxSparsity));
+            VectorEquality(Vector.FromArray(a, Sparsity.Piecewise));
+            VectorEquality(DenseVector.FromArrayReference(6, aExt, 1));
 
             void VectorEquality(Vector v)
             {
@@ -1606,82 +1603,87 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        private void VectorInequality(Vector a)
-        {
-            double min = a.Min();
-            double max = a.Max();
-            Assert.True(a.All(x => x < max + 0.1));
-            Assert.True(a.Any(x => x > max - 0.1));
-
-            int i2 = a.Count / 2;
-
-            Vector b = Vector.Copy(a);
-            b[i2] = a[i2] + 0.1;
-
-            Assert.True(b >= a);
-            Assert.False(b > a);
-            Assert.False(b < a);
-            Assert.False(b <= a);
-            Assert.True(a <= b);
-            Assert.False(a < b);
-            Assert.False(a > b);
-            Assert.False(a >= b);
-
-            for (int i = 0; i < a.Count; i++)
-                b[i] = a[i] + 0.1;
-            Assert.True(b >= a);
-            Assert.True(b > a);
-            Assert.False(b < a);
-            Assert.False(b <= a);
-            Assert.True(a <= b);
-            Assert.True(a < b);
-            Assert.False(a > b);
-            Assert.False(a >= b);
-
-            for (int i = 0; i < a.Count; i++)
-                b[i] = (i % 2) == 0 ? a[i] + 0.1 : a[i] - 0.1;
-            Assert.False(b >= a);
-            Assert.False(b > a);
-            Assert.False(b < a);
-            Assert.False(b <= a);
-            Assert.False(a <= b);
-            Assert.False(a < b);
-            Assert.False(a > b);
-            Assert.False(a >= b);
-
-            double d = 0.5 * (min + max);
-            Assert.False(a <= d);
-            Assert.False(a < d);
-            Assert.False(a > d);
-            Assert.False(a >= d);
-
-            Assert.True(a <= max);
-            Assert.True(a < max + 0.1);
-            Assert.False(a < max);
-            Assert.False(a > max);
-            Assert.False(a >= max);
-
-            Assert.True(a >= min);
-            Assert.True(a > min - 0.1);
-            Assert.False(a > min);
-            Assert.False(a < min);
-            Assert.False(a <= min);
-        }
-
         [Fact]
         public void VectorInequalityTests()
         {
             double[] a = new double[] { 1.2, 2.3, 3.4, 1.2, 1.2, 2.3 };
             double[] aExt = new double[] { 5.6, 1.2, 1.2, 6.7, 7.8, 1.2, 1.2, 6.7 };
             Sparsity approxSparsity = Sparsity.ApproximateWithTolerance(0.001);
-            Vector[] aVector = new Vector[5];
-            aVector[0] = Vector.FromArray(a);
-            aVector[1] = Vector.FromArray(a, Sparsity.Sparse);
-            aVector[2] = Vector.FromArray(a, approxSparsity);
-            aVector[3] = DenseVector.FromArrayReference(6, aExt, 1);
-            aVector[4] = Vector.FromArray(a, Sparsity.Piecewise);
-            for (int i = 0; i < aVector.Length; i++)
-                VectorInequality(aVector[i]);
+            VectorInequality(Vector.FromArray(a));
+            VectorInequality(Vector.FromArray(a, Sparsity.Sparse));
+            VectorInequality(Vector.FromArray(a, approxSparsity));
+            VectorInequality(Vector.FromArray(a, Sparsity.Piecewise));
+            VectorInequality(DenseVector.FromArrayReference(6, aExt, 1));
+
+            void VectorInequality(Vector v)
+            {
+                double min = v.Min();
+                double max = v.Max();
+                Assert.True(v.All(x => x < max + 0.1));
+                Assert.True(v.Any(x => x > max - 0.1));
+
+                int i2 = v.Count / 2;
+
+                Vector b = Vector.Copy(v);
+                b[i2] = v[i2] + 0.1;
+
+                Assert.True(b >= v);
+                Assert.False(b > v);
+                Assert.False(b < v);
+                Assert.False(b <= v);
+                Assert.True(v <= b);
+                Assert.False(v < b);
+                Assert.False(v > b);
+                Assert.False(v >= b);
+
+                for (int i = 0; i < v.Count; i++)
+                    b[i] = v[i] + 0.1;
+                Assert.True(b >= v);
+                Assert.True(b > v);
+                Assert.False(b < v);
+                Assert.False(b <= v);
+                Assert.True(v <= b);
+                Assert.True(v < b);
+                Assert.False(v > b);
+                Assert.False(v >= b);
+
+                for (int i = 0; i < v.Count; i++)
+                    b[i] = (i % 2) == 0 ? v[i] + 0.1 : v[i] - 0.1;
+                Assert.False(b >= v);
+                Assert.False(b > v);
+                Assert.False(b < v);
+                Assert.False(b <= v);
+                Assert.False(v <= b);
+                Assert.False(v < b);
+                Assert.False(v > b);
+                Assert.False(v >= b);
+
+                double d = 0.5 * (min + max);
+                Assert.False(v <= d);
+                Assert.False(v < d);
+                Assert.False(v > d);
+                Assert.False(v >= d);
+
+                Assert.True(v <= max);
+                Assert.True(v < max + 0.1);
+                Assert.False(v < max);
+                Assert.False(v > max);
+                Assert.False(v >= max);
+
+                Assert.True(v >= min);
+                Assert.True(v > min - 0.1);
+                Assert.False(v > min);
+                Assert.False(v < min);
+                Assert.False(v <= min);
+
+                v[0] = double.NegativeInfinity;
+                v[1] = double.PositiveInfinity;
+                b.SetTo(v);
+                Assert.True(b >= v);
+                Assert.True(b <= v);
+                Assert.False(b > v);
+                Assert.False(b < v);
+            }
         }
 
         [Fact]
