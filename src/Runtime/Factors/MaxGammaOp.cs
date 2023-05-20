@@ -12,6 +12,16 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Preview)]
     public static class MaxGammaOp
     {
+        public static double LogEvidenceRatio(double max, Gamma a, double b)
+        {
+            return MaxAverageConditional(a, b).GetLogProb(max);
+        }
+
+        public static double LogEvidenceRatio(double max, double a, Gamma b)
+        {
+            return LogEvidenceRatio(max, b, a);
+        }
+
         [Skip]
         public static double LogEvidenceRatio(TruncatedGamma max)
         {
@@ -46,10 +56,14 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Preview)]
     public static class MaxTruncatedGammaOp
     {
-        [Skip]
-        public static double LogEvidenceRatio2(TruncatedGamma max)
+        public static double LogEvidenceRatio(double max, TruncatedGamma a, double b)
         {
-            return 0.0;
+            return MaxAverageConditional(a, b).GetLogProb(max);
+        }
+
+        public static double LogEvidenceRatio(double max, double a, TruncatedGamma b)
+        {
+            return LogEvidenceRatio(max, b, a);
         }
 
         public static TruncatedGamma MaxAverageConditional(TruncatedGamma a, double b)

@@ -3,37 +3,24 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
+
 using Microsoft.ML.Probabilistic.Math;
+
 using Xunit;
+
 using Assert = Xunit.Assert;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
-    
     public class RandomTests
     {
         public const double TOLERANCE = 4.0e-2;
         public const int nsamples = 100000;
 
-        /*
-        [STAThread]
-        public static void Main(string[] args)
-        {
-            RandUniform();
-            RandNormal();
-            RandGamma();
-            RandNormal2();
-            RandNormalP();
-            RandWishart();
-            Console.ReadKey();
-        }
-         */
-
         [Fact]
-        public void RandUniform()
+        public void RandSample_HasCorrectDistribution()
         {
-            double error = 0.0;
-
             // Uniform integers
             Vector hist = Vector.Zero(4);
             for (int i = 0; i < nsamples; i++)
@@ -42,31 +29,48 @@ namespace Microsoft.ML.Probabilistic.Tests
                 hist[x]++;
             }
 
-            hist = hist*(1.0/nsamples);
-            Console.WriteLine("[0.25,0.25,0.25,0.25]: {0}", hist);
+            hist *= (1.0 / nsamples);
             Vector unif = Vector.Constant(4, 0.25);
-            error = hist.MaxDiff(unif);
+            double error = hist.MaxDiff(unif);
             if (error > TOLERANCE)
             {
-                Assert.True(false, String.Format("Uniform: error={0}", error));
+                Assert.True(false, $"Uniform: error={error}");
             }
 
             hist.SetAllElementsTo(0);
-            double[] init1 = new double[] {0.1, 0.2, 0.3, 0.4};
+            double[] init1 = new double[] { 0.1, 0.2, 0.3, 0.4 };
             Vector p = Vector.FromArray(init1);
             for (int i = 0; i < nsamples; i++)
             {
                 int x = Rand.Sample(p);
                 hist[x]++;
             }
-            hist = hist*(1.0/nsamples);
-            Console.WriteLine("\n[0.1,0.2,0.3,0.4]: {0}", hist);
+            hist *= (1.0 / nsamples);
             error = hist.MaxDiff(p);
             if (error > TOLERANCE)
             {
-                Assert.True(false, String.Format("Sample([0.1,0.2,0.3,0.4]) error={0}", error));
+                Assert.True(false, $"Sample([0.1,0.2,0.3,0.4]) error={error}");
             }
+        }
 
+        [Fact]
+        public void RandSample_NeverDrawsZero()
+        {
+            const int nsamples = 1_000_000;
+            double[] init1 = new double[] { 0, double.Epsilon };
+            Vector p = Vector.FromArray(init1);
+            for (int i = 0; i < nsamples; i++)
+            {
+                int x = Rand.Sample(p);
+                Assert.Equal(1, x);
+                x = Rand.Sample((IList<double>)p, p[1]);
+                Assert.Equal(1, x);
+            }
+        }
+
+        [Fact]
+        public void RandRestart()
+        {
             Rand.Restart(7);
             double first = Rand.Double();
             Rand.Restart(7);
@@ -82,22 +86,22 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 double x = Rand.Normal();
                 sum += x;
-                sum2 += x*x;
+                sum2 += x * x;
             }
-            double m = sum/nsamples;
-            double v = sum2/nsamples - m*m;
+            double m = sum / nsamples;
+            double v = sum2 / nsamples - m * m;
             // the sample mean has stddev = 1/sqrt(n)
             double dError = System.Math.Abs(m);
-            if (dError > 4/ System.Math.Sqrt(nsamples))
+            if (dError > 4 / System.Math.Sqrt(nsamples))
             {
-                Assert.True(false, string.Format("m: error = {0}", dError));
+                Assert.True(false, $"m: error = {dError}");
             }
 
             // the sample variance is Gamma(n/2,n/2) whose stddev = sqrt(2/n)
             dError = System.Math.Abs(v - 1.0);
-            if (dError > 4* System.Math.Sqrt(2.0/ nsamples))
+            if (dError > 4 * System.Math.Sqrt(2.0 / nsamples))
             {
-                Assert.True(false, string.Format("v: error = {0}", dError));
+                Assert.True(false, $"v: error = {dError}");
             }
         }
 
@@ -116,8 +120,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void RandNormalGreaterThan(double lowerBound)
         {
-            double meanExpected, varianceExpected;
-            new Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian(0, 1, lowerBound, double.PositiveInfinity).GetMeanAndVariance(out meanExpected, out varianceExpected);
+            new Probabilistic.Distributions.TruncatedGaussian(0, 1, lowerBound, double.PositiveInfinity).GetMeanAndVariance(out double meanExpected, out double varianceExpected);
 
             MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
             for (int i = 0; i < nsamples; i++)
@@ -127,20 +130,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             double m = mva.Mean;
             double v = mva.Variance;
-            Console.WriteLine("mean = {0} should be {1}", m, meanExpected);
-            Console.WriteLine("variance = {0} should be {1}", v, varianceExpected);
             // the sample mean has stddev = 1/sqrt(n)
             double dError = System.Math.Abs(m - meanExpected);
-            if (dError > 4/ System.Math.Sqrt(nsamples))
+            if (dError > 4 / System.Math.Sqrt(nsamples))
             {
-                Assert.True(false, string.Format("m: error = {0}", dError));
+                Assert.True(false, $"m: error = {dError}");
             }
 
             // the sample variance is Gamma(n/2,n/2) whose stddev = sqrt(2/n)
             dError = System.Math.Abs(v - varianceExpected);
-            if (dError > 4* System.Math.Sqrt(2.0/ nsamples))
+            if (dError > 4 * System.Math.Sqrt(2.0 / nsamples))
             {
-                Assert.True(false, string.Format("v: error = {0}", dError));
+                Assert.True(false, $"v: error = {dError}");
             }
         }
 
@@ -156,8 +157,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void RandNormalBetween(double lowerBound, double upperBound)
         {
-            double meanExpected, varianceExpected;
-            new Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian(0, 1, lowerBound, upperBound).GetMeanAndVariance(out meanExpected, out varianceExpected);
+            new Probabilistic.Distributions.TruncatedGaussian(0, 1, lowerBound, upperBound).GetMeanAndVariance(out double meanExpected, out double varianceExpected);
 
             MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
             for (int i = 0; i < nsamples; i++)
@@ -167,20 +167,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             double m = mva.Mean;
             double v = mva.Variance;
-            Console.WriteLine("mean = {0} should be {1}", m, meanExpected);
-            Console.WriteLine("variance = {0} should be {1}", v, varianceExpected);
             // the sample mean has stddev = 1/sqrt(n)
             double dError = System.Math.Abs(m - meanExpected);
-            if (dError > 4/ System.Math.Sqrt(nsamples))
+            if (dError > 4 / System.Math.Sqrt(nsamples))
             {
-                Assert.True(false, string.Format("m: error = {0}", dError));
+                Assert.True(false, $"m: error = {dError}");
             }
 
             // the sample variance is Gamma(n/2,n/2) whose stddev = sqrt(2/n)
             dError = System.Math.Abs(v - varianceExpected);
-            if (dError > 4* System.Math.Sqrt(2.0/ nsamples))
+            if (dError > 4 * System.Math.Sqrt(2.0 / nsamples))
             {
-                Assert.True(false, string.Format("v: error = {0}", dError));
+                Assert.True(false, $"v: error = {dError}");
             }
         }
 
@@ -199,33 +197,32 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 double x = Rand.Gamma(a);
                 sum += x;
-                sum2 += x*x;
+                sum2 += x * x;
             }
-            double m = sum/nsamples;
-            double v = sum2/nsamples - m*m;
-            Console.WriteLine("Gamma({2}) mean: {0} variance: {1}", m, v, a);
+            double m = sum / nsamples;
+            double v = sum2 / nsamples - m * m;
 
             // sample mean has stddev = sqrt(a/n)
             double dError = System.Math.Abs(m - a);
-            if (dError > 4* System.Math.Sqrt(a / nsamples))
+            if (dError > 4 * System.Math.Sqrt(a / nsamples))
             {
-                Assert.True(false, string.Format("m: error = {0}", dError));
+                Assert.True(false, $"m: error = {dError}");
             }
 
             dError = System.Math.Abs(v - a);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, String.Format("v: error = {0}", dError));
+                Assert.True(false, $"v: error = {dError}");
             }
         }
 
         [Fact]
         public void RandNormal2()
         {
-            double[] m_init = {1, 2, 3};
+            double[] m_init = { 1, 2, 3 };
             Vector mt = Vector.FromArray(m_init);
 
-            double[,] v_init = {{2, 1, 1}, {1, 2, 1}, {1, 1, 2}};
+            double[,] v_init = { { 2, 1, 1 }, { 1, 2, 1 }, { 1, 1, 2 } };
             PositiveDefiniteMatrix vt = new PositiveDefiniteMatrix(v_init);
 
             int d = mt.Count;
@@ -238,35 +235,28 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             Vector m = mva.Mean;
             Matrix v = mva.Variance;
-
-            Console.WriteLine("");
-            Console.WriteLine("Multivariate Normal");
-            Console.WriteLine("-------------------");
-
-            Console.WriteLine("m = {0}", m);
             double dError = m.MaxDiff(mt);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, String.Format("m: error = {0}", dError));
+                Assert.True(false, $"m: error = {dError}");
             }
 
-            Console.WriteLine("v = \n{0}", v);
             dError = v.MaxDiff(vt);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, String.Format("v: error = {0}", dError));
+                Assert.True(false, $"v: error = {dError}");
             }
         }
 
         [Fact]
         public void RandNormalP()
         {
-            double[] m_init = {1, 2, 3};
+            double[] m_init = { 1, 2, 3 };
             Vector mt = Vector.FromArray(m_init);
 
-            double[,] v_init = {{2, 1, 1}, {1, 2, 1}, {1, 1, 2}};
+            double[,] v_init = { { 2, 1, 1 }, { 1, 2, 1 }, { 1, 1, 2 } };
             PositiveDefiniteMatrix vt = new PositiveDefiniteMatrix(v_init);
-            PositiveDefiniteMatrix pt = ((PositiveDefiniteMatrix) vt.Clone()).SetToInverse(vt);
+            PositiveDefiniteMatrix pt = ((PositiveDefiniteMatrix)vt.Clone()).SetToInverse(vt);
 
             int d = mt.Count;
             Vector x = Vector.Zero(d);
@@ -279,22 +269,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             Vector m = mva.Mean;
             PositiveDefiniteMatrix v = mva.Variance;
 
-            Console.WriteLine("");
-            Console.WriteLine("Multivariate NormalP");
-            Console.WriteLine("--------------------");
-
-            Console.WriteLine("m = {0}", m);
             double dError = m.MaxDiff(mt);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, String.Format("m: error = {0}", dError));
+                Assert.True(false, $"m: error = {dError}");
             }
 
-            Console.WriteLine("v = \n{0}", v);
             dError = v.MaxDiff(vt);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, String.Format("v: error = {0}", dError));
+                Assert.True(false, $"v: error = {dError}");
             }
         }
 
@@ -316,27 +300,22 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Rand.Wishart(a, L);
                 X.SetToProduct(L, L.Transpose());
-                m = m + X;
-                s = s + X.LogDeterminant();
+                m += X;
+                s += X.LogDeterminant();
             }
             double sTrue = 0;
-            for (int i = 0; i < d; i++) sTrue += MMath.Digamma(a - i*0.5);
-            m.Scale(1.0/nsamples);
-            s = s/nsamples;
+            for (int i = 0; i < d; i++) sTrue += MMath.Digamma(a - i * 0.5);
+            m.Scale(1.0 / nsamples);
+            s /= nsamples;
 
-            Console.WriteLine("");
-            Console.WriteLine("Multivariate Gamma");
-            Console.WriteLine("-------------------");
-
-            Console.WriteLine("m = \n{0}", m);
             double dError = m.MaxDiff(mTrue);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, String.Format("Wishart({0}) mean: (should be {0}*I), error = {1}", a, dError));
+                Assert.True(false, $"Wishart({a}) mean: (should be {a}*I), error = {dError}");
             }
             if (System.Math.Abs(s - sTrue) > TOLERANCE)
             {
-                Assert.True(false, string.Format("E[logdet]: {0} (should be {1})", s, sTrue));
+                Assert.True(false, $"E[logdet]: {s} (should be {sTrue})");
             }
         }
 
@@ -354,27 +333,27 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void RandBinomial(double p, int n)
         {
-            double meanExpected = p*n;
-            double varianceExpected = p*(1 - p)*n;
+            double meanExpected = p * n;
+            double varianceExpected = p * (1 - p) * n;
             double sum = 0;
             double sum2 = 0;
             for (int i = 0; i < nsamples; i++)
             {
                 double x = Rand.Binomial(n, p);
                 sum += x;
-                sum2 += x*x;
+                sum2 += x * x;
             }
-            double mean = sum/nsamples;
-            double variance = sum2/nsamples - mean*mean;
+            double mean = sum / nsamples;
+            double variance = sum2 / nsamples - mean * mean;
             double error = MMath.AbsDiff(meanExpected, mean, 1e-6);
-            if (error > System.Math.Sqrt(varianceExpected) *5)
+            if (error > System.Math.Sqrt(varianceExpected) * 5)
             {
-                Assert.True(false, string.Format("Binomial({0},{1}) mean = {2} should be {3}, error = {4}", p, n, mean, meanExpected, error));
+                Assert.True(false, $"Binomial({p},{n}) mean = {mean} should be {meanExpected}, error = {error}");
             }
             error = MMath.AbsDiff(varianceExpected, variance, 1e-6);
-            if (error > System.Math.Sqrt(varianceExpected) *5)
+            if (error > System.Math.Sqrt(varianceExpected) * 5)
             {
-                Assert.True(false, string.Format("Binomial({0},{1}) variance = {2} should be {3}, error = {4}", p, n, variance, varianceExpected, error));
+                Assert.True(false, $"Binomial({p},{n}) variance = {variance} should be {varianceExpected}, error = {error}");
             }
         }
 
@@ -394,8 +373,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void RandMultinomial(DenseVector p, int n)
         {
-            Vector meanExpected = p*n;
-            Vector varianceExpected = p*(1 - p)*n;
+            Vector meanExpected = p * n;
+            Vector varianceExpected = p * (1 - p) * n;
             DenseVector sum = DenseVector.Zero(p.Count);
             DenseVector sum2 = DenseVector.Zero(p.Count);
             for (int i = 0; i < nsamples; i++)
@@ -404,18 +383,18 @@ namespace Microsoft.ML.Probabilistic.Tests
                 for (int dim = 0; dim < x.Length; dim++)
                 {
                     sum[dim] += x[dim];
-                    sum2[dim] += x[dim]*x[dim];
+                    sum2[dim] += x[dim] * x[dim];
                 }
             }
-            Vector mean = sum*(1.0/nsamples);
-            Vector variance = sum2*(1.0/nsamples) - mean*mean;
+            Vector mean = sum * (1.0 / nsamples);
+            Vector variance = sum2 * (1.0 / nsamples) - mean * mean;
             for (int dim = 0; dim < p.Count; dim++)
             {
                 double error = MMath.AbsDiff(meanExpected[dim], mean[dim], 1e-6);
-                Console.WriteLine("Multinomial({0},{1})     mean[{5}] = {2} should be {3}, error = {4}", p, n, mean[dim], meanExpected[dim], error, dim);
+                ////Console.WriteLine("Multinomial({0},{1})     mean[{5}] = {2} should be {3}, error = {4}", p, n, mean[dim], meanExpected[dim], error, dim);
                 Assert.True(error < TOLERANCE);
                 error = MMath.AbsDiff(varianceExpected[dim], variance[dim], 1e-6);
-                Console.WriteLine("Multinomial({0},{1}) variance[{5}] = {2} should be {3}, error = {4}", p, n, variance[dim], varianceExpected[dim], error, dim);
+                ////Console.WriteLine("Multinomial({0},{1}) variance[{5}] = {2} should be {3}, error = {4}", p, n, variance[dim], varianceExpected[dim], error, dim);
                 Assert.True(error < TOLERANCE);
             }
         }
@@ -425,7 +404,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                Rand.Int(9, 9);        
+                Rand.Int(9, 9);
             });
         }
 

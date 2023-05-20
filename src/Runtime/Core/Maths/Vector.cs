@@ -645,16 +645,27 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <summary>
         /// Tests if all elements in the vector satisfy the specified condition.
         /// </summary>
+        /// <param name="fun">The condition for the elements to satisfy.</param>
+        /// <returns>True if all elements satisfy the condition, false otherwise.</returns>
+        public abstract bool All(Func<double, bool> fun);
+
+        /// <summary>
+        /// Test if all corresponding elements in this and that vector satisfy a condition
+        /// </summary>
+        /// <param name="that"></param>
         /// <param name="fun"></param>
         /// <returns></returns>
-        public abstract bool All(Converter<double, bool> fun);
+        public bool All(Vector that, Func<double, double, bool> fun)
+        {
+            return !Any(that, (x, y) => !fun(x, y));
+        }
 
         /// <summary>
         /// Tests if any elements in the vector satisfy the specified condition.
         /// </summary>
-        /// <param name="fun"></param>
-        /// <returns></returns>
-        public abstract bool Any(Converter<double, bool> fun);
+        /// <param name="fun">The condition for the elements to satisfy.</param>
+        /// <returns>True if any elements satisfy the condition, false otherwise.</returns>
+        public abstract bool Any(Func<double, bool> fun);
 
         /// <summary>
         /// Test if any corresponding elements in this and that vector satisfy a condition
@@ -664,7 +675,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public virtual bool Any(Vector that, Func<double, double, bool> fun)
         {
-            if (that is DenseVector) return ((DenseVector) that).Any(this, (x, y) => fun(y, x));
+            if (that is DenseVector denseVector) return denseVector.Any(this, (x, y) => fun(y, x));
             throw new NotImplementedException();
         }
 
@@ -674,7 +685,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </summary>
         /// <param name="fun">A function to check if the condition is satisfied.</param>
         /// <returns>An enumeration over the indices of all elements which satisfy the specified condition.</returns>
-        public IEnumerable<int> IndexOfAll(Converter<double, bool> fun)
+        public IEnumerable<int> IndexOfAll(Func<double, bool> fun)
         {
             return this.FindAll(fun).Select(valueAtIndex => valueAtIndex.Index);
         }
@@ -685,28 +696,28 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </summary>
         /// <param name="fun">A function to check if the condition is satisfied.</param>
         /// <returns>An enumeration over the indices and values of all elements which satisfy the specified condition.</returns>
-        public abstract IEnumerable<ValueAtIndex<double>> FindAll(Converter<double, bool> fun);
+        public abstract IEnumerable<ValueAtIndex<double>> FindAll(Func<double, bool> fun);
 
         /// <summary>
         /// Returns the number of elements in the vector which satisfy a given condition.
         /// </summary>
         /// <param name="fun">The condition for the elements to satisfy.</param>
         /// <returns>The number of elements in the vector which satisfy the condition.</returns>
-        public abstract int CountAll(Converter<double, bool> fun);
+        public abstract int CountAll(Func<double, bool> fun);
 
         /// <summary>
-        /// Returns the index of the first element that satisfies satisfy a given condition.
+        /// Returns the index of the first element that satisfies a given condition.
         /// </summary>
         /// <param name="fun">The condition for the element to satisfy.</param>
-        /// <returns>The zero-based index of the first occurrence of an element that matches the conditions defined by match, if found; otherwise, �1.</returns>
-        public abstract int FindFirstIndex(Converter<double, bool> fun);
+        /// <returns>The zero-based index of the first occurrence of an element that matches the conditions defined by match, if found; otherwise, -1.</returns>
+        public abstract int FindFirstIndex(Func<double, bool> fun);
 
         /// <summary>
-        /// Returns the index of the last element that satisfiessatisfy a given condition.
+        /// Returns the index of the last element that satisfies a given condition.
         /// </summary>
         /// <param name="fun">The condition for the element to satisfy.</param>
-        /// <returns>The zero-based index of the last occurrence of an element that matches the conditions defined by match, if found; otherwise, �1.</returns>
-        public abstract int FindLastIndex(Converter<double, bool> fun);
+        /// <returns>The zero-based index of the last occurrence of an element that matches the conditions defined by match, if found; otherwise, -1.</returns>
+        public abstract int FindLastIndex(Func<double, bool> fun);
 
         #endregion
 
@@ -1418,12 +1429,12 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>True if the vectors have the same size and element values.</returns>
         public static bool operator ==(Vector a, Vector b)
         {
-            if (Object.ReferenceEquals(a, b))
+            if (ReferenceEquals(a, b))
             {
-                return (true);
+                return true;
             }
-            if (Object.ReferenceEquals(a, null) || Object.ReferenceEquals(b, null))
-                return (false);
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+                return false;
 
             return a.Equals(b);
         }
@@ -1436,21 +1447,21 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>True if vectors are not equal.</returns>
         public static bool operator !=(Vector a, Vector b)
         {
-            return (!(a == b));
+            return !(a == b);
         }
 
         /// <summary>
         /// Determines object equality.
         /// </summary>
-        /// <param name="obj">Another (DenseVector) object.</param>
+        /// <param name="obj">Another vector.</param>
         /// <returns>True if equal.</returns>
         /// <exclude/>
         public override bool Equals(object obj)
         {
             Vector that = obj as Vector;
-            if (Object.ReferenceEquals(that, null))
+            if (ReferenceEquals(that, null))
                 return false;
-            if (Object.ReferenceEquals(this, that))
+            if (ReferenceEquals(this, that))
                 return true;
             if (this.Count != that.Count)
                 return false;
@@ -1657,7 +1668,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </summary>
         /// <param name="that">The second vector.</param>
         /// <param name="rel">An offset to avoid division by zero.</param>
-        /// <returns><c>max(abs(this[i] - that[i])/(abs(this[i]) + rel))</c>. 
+        /// <returns><c>max(abs(this[i] - that[i])/(min(abs(this[i]),abs(that[i])) + rel))</c>. 
         /// Matching infinities or NaNs do not count.  
         /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
         /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.

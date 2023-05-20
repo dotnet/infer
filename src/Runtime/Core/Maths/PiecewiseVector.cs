@@ -759,22 +759,14 @@ namespace Microsoft.ML.Probabilistic.Math
 
         #region Equality
 
-        /// <summary>
-        /// Determines object equality.
-        /// </summary>
-        /// <param name="obj">Another (vector) object.</param>
-        /// <returns>True if equal.</returns>
-        /// <exclude/>
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {            
             var that = obj as Vector;
             if (ReferenceEquals(this, that)) return true;
-            if (ReferenceEquals(that, null))
-                return false;
+            if (ReferenceEquals(that, null)) return false;
             if (Count != that.Count) return false;
-            // TODO: change to maxdiff?
-            Vector diff = this - that;
-            return diff.EqualsAll(0.0);
+            return this.MaxDiff(that) == 0;
         }
 
         /// <summary>
@@ -790,86 +782,45 @@ namespace Microsoft.ML.Probabilistic.Math
             return hash;
         }
 
-        /// <summary>
-        /// Tests if this vector is strictly greater than a second vector.
-        /// </summary>
-        /// <param name="that">The value to test against.</param>
-        /// <returns>True if each element is strictly greater than the corresponding element of <paramref name="that"/>.</returns>
+        /// <inheritdoc/>
         public override bool GreaterThan(Vector that)
         {
-            return (this - that).GreaterThan(0);
+            return this.All(that, (x, y) => x > y);
         }
 
-        /// <summary>
-        /// Tests if this vector is strictly less than a second vector.
-        /// </summary>
-        /// <param name="that">The value to test against.</param>
-        /// <returns>True if each element is strictly less than the corresponding element of <paramref name="that"/>.</returns>
+        /// <inheritdoc/>
         public override bool LessThan(Vector that)
         {
-            return (this - that).LessThan(0);
+            return this.All(that, (x, y) => x < y);
         }
 
-        /// <summary>
-        /// Tests if this vector is than or equal to a second vector.
-        /// </summary>
-        /// <param name="that">The value to test against.</param>
-        /// <returns>True if each element is greater than or equal to the corresponding element of <paramref name="that"/>.</returns>
+        /// <inheritdoc/>
         public override bool GreaterThanOrEqual(Vector that)
         {
-            return (this - that).GreaterThanOrEqual(0);
+            return this.All(that, (x, y) => x >= y);
         }
 
-        /// <summary>
-        /// Tests if this vector is less than or equal to a second vector.
-        /// </summary>
-        /// <param name="that">The value to test against.</param>
-        /// <returns>True if each element is strictly less than or equal to the corresponding element of <paramref name="that"/>.</returns>
+        /// <inheritdoc/>
         public override bool LessThanOrEqual(Vector that)
         {
-            return (this - that).LessThanOrEqual(0);
+            return this.All(that, (x, y) => x <= y);
         }
 
-        /// <summary>
-        /// Returns the maximum absolute difference between this vector and another vector.
-        /// </summary>
-        /// <param name="that">The second vector.</param>
-        /// <returns><c>max(abs(this[i] - that[i]))</c>. 
-        /// Matching infinities or NaNs do not count.  
-        /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
-        /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.
-        /// </remarks>
+        /// <inheritdoc/>
         public override double MaxDiff(Vector that)
         {
             if (Count != that.Count) return Double.PositiveInfinity;
 
             var absdiff = new PiecewiseVector(Count);
-            absdiff.SetToFunction(this, that, (a, b) => a == b ? 0 : System.Math.Abs(a - b));
-            // TODO: consider copying behaviour of Vector, which is roughly:
-            //bool xnan = Double.IsNaN(x);
-            //bool ynan = Double.IsNaN(y);
-            //if (xnan != ynan) return Double.PositiveInfinity;
-            //else if (x != y)
-            //{
-            //   double diff = Math.Abs(x - y);
-            //}
+            absdiff.SetToFunction(this, that, (a, b) => MMath.AbsDiffAllowingNaNs(a, b));
             return absdiff.Max();
         }
 
-        /// <summary>
-        /// Returns the maximum relative difference between this vector and another.
-        /// </summary>
-        /// <param name="that">The second vector.</param>
-        /// <param name="rel">An offset to avoid division by zero.</param>
-        /// <returns><c>max(abs(this[i] - that[i])/(abs(this[i]) + rel))</c>. 
-        /// Matching infinities or NaNs do not count.  
-        /// If <c>this</c> and <paramref name="that"/> are not the same size, returns infinity.</returns>
-        /// <remarks>This routine is typically used instead of <c>Equals</c>, since <c>Equals</c> is susceptible to roundoff errors.
-        /// </remarks>
+        /// <inheritdoc/>
         public override double MaxDiff(Vector that, double rel)
         {
             var absdiff = new PiecewiseVector(Count);
-            absdiff.SetToFunction(this, that, (a, b) => System.Math.Abs(a - b)/(System.Math.Abs(a) + rel));
+            absdiff.SetToFunction(this, that, (a, b) => MMath.AbsDiffAllowingNaNs(a, b, rel));
             return absdiff.Max();
         }
 
@@ -877,12 +828,8 @@ namespace Microsoft.ML.Probabilistic.Math
 
         #region LINQ-like operators (All, Any, FindAll etc.)
 
-        /// <summary>
-        /// Tests if all elements in the vector satisfy the specified condition.
-        /// </summary>
-        /// <param name="fun">The condition for the elements to satisfy.</param>
-        /// <returns>True if all elements satisfy the condition, false otherwise.</returns>
-        public override bool All(Converter<double, bool> fun)
+        /// <inheritdoc/>
+        public override bool All(Func<double, bool> fun)
         {
             if (this.HasCommonElements() && !fun(this.CommonValue))
             {
@@ -900,12 +847,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return true;
         }
 
-        /// <summary>
-        /// Tests if any elements in the vector satisfy the specified condition.
-        /// </summary>
-        /// <param name="fun">The condition for the elements to satisfy.</param>
-        /// <returns>True if any elements satisfy the condition, false otherwise.</returns>
-        public override bool Any(Converter<double, bool> fun)
+        /// <inheritdoc/>
+        public override bool Any(Func<double, bool> fun)
         {
             if (this.HasCommonElements() && fun(this.CommonValue))
             {
@@ -923,6 +866,7 @@ namespace Microsoft.ML.Probabilistic.Math
             return false;
         }
 
+        /// <inheritdoc/>
         public override bool Any(Vector that, Func<double, double, bool> fun)
         {
             if (that.Sparsity.IsPiecewise)
@@ -933,6 +877,7 @@ namespace Microsoft.ML.Probabilistic.Math
             return base.Any(that, fun);
         }
 
+        /// <inheritdoc cref="Any(Vector, Func{double, double, bool})"/>
         public bool Any(PiecewiseVector that, Func<double, double, bool> fun)
         {
             bool any = false;
@@ -940,13 +885,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return any;
         }
 
-        /// <summary>
-        /// Returns an enumeration over the indices and values of all the elements which satisfy the specified condition.
-        /// Indices are returned in sorted order.
-        /// </summary>
-        /// <param name="fun">A function to check if the condition is satisfied.</param>
-        /// <returns>An enumeration over the indices and values of all the elements which satisfy the specified condition.</returns>
-        public override IEnumerable<ValueAtIndex<double>> FindAll(Converter<double, bool> fun)
+        /// <inheritdoc/>
+        public override IEnumerable<ValueAtIndex<double>> FindAll(Func<double, bool> fun)
         {
             if (fun == null)
             {
@@ -979,12 +919,8 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
-        /// <summary>
-        /// Returns the number of elements in the vector which satisfy a given condition.
-        /// </summary>
-        /// <param name="fun">The condition for the elements to satisfy.</param>
-        /// <returns>The number of elements in the vector which satisfy the condition.</returns>
-        public override int CountAll(Converter<double, bool> fun)
+        /// <inheritdoc/>
+        public override int CountAll(Func<double, bool> fun)
         {
             if (fun == null)
             {
@@ -1011,12 +947,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return result;
         }
 
-        /// <summary>
-        /// Returns the index of the first element that satisfies a given condition.
-        /// </summary>
-        /// <param name="fun">The condition for the element to satisfy.</param>
-        /// <returns>The zero-based index of the first occurrence of an element that matches the conditions defined by match, if found; otherwise, –1.</returns>
-        public override int FindFirstIndex(Converter<double, bool> fun)
+        /// <inheritdoc/>
+        public override int FindFirstIndex(Func<double, bool> fun)
         {
             if (fun == null)
             {
@@ -1051,12 +983,8 @@ namespace Microsoft.ML.Probabilistic.Math
             return firstIndex;
         }
 
-        /// <summary>
-        /// Returns the index of the last element that satisfies a given condition.
-        /// </summary>
-        /// <param name="fun">The condition for the element to satisfy.</param>
-        /// <returns>The last index.</returns>
-        public override int FindLastIndex(Converter<double, bool> fun)
+        /// <inheritdoc/>
+        public override int FindLastIndex(Func<double, bool> fun)
         {
             if (fun == null)
             {

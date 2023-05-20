@@ -17,15 +17,15 @@ using System.Windows.Forms;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 {
-    internal class DependencyGraphView
+    internal class DependencyGraphView : IDisposable
     {
-        private Panel panel = new Panel();
-        private GViewer gviewer = new GViewer();
-        private IndexedGraph dg;
-        private IndexedProperty<NodeIndex, Node> nodeOf;
-        private Func<NodeIndex, string> nodeName;
-        private Func<EdgeIndex, string> edgeName;
-        private IEnumerable<EdgeStylePredicate> edgeStyles;
+        private readonly Panel panel = new Panel();
+        private readonly GViewer gviewer = new GViewer();
+        private readonly IndexedGraph dg;
+        private readonly IndexedProperty<NodeIndex, Node> nodeOf;
+        private readonly Func<NodeIndex, string> nodeName;
+        private readonly Func<EdgeIndex, string> edgeName;
+        private readonly IEnumerable<EdgeStylePredicate> edgeStyles;
 
         internal DependencyGraphView(IndexedGraph dg, IEnumerable<EdgeStylePredicate> edgeStyles = null, 
                                     Func<NodeIndex, string> nodeName = null,
@@ -167,6 +167,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         public void RunInForm(string title = "Infer.NET Dependency Graph Viewer")
         {
             WindowsVisualizer.FormHelper.RunInForm(panel, title, false);
+        }
+
+        public void Dispose()
+        {
+            panel.Dispose();
+            gviewer.Dispose();
         }
     }
 }

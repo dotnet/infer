@@ -273,7 +273,8 @@ namespace Microsoft.ML.Probabilistic.Math
             double cumsum = prob[x];
             Assert.IsTrue(prob[x] >= 0, "negative probability");
             Assert.IsTrue(sum > 0, "sum is not positive");
-            double u = gen.NextDouble()*sum;
+            double u = gen.NextDouble() * sum;
+            u = System.Math.Max(u, double.Epsilon);
             while (u > cumsum)
             {
                 ++x;
@@ -297,7 +298,8 @@ namespace Microsoft.ML.Probabilistic.Math
             double cumsum = prob[x];
             Assert.IsTrue(prob[x] >= 0, "negative probability");
             Assert.IsTrue(sum > 0, "sum is not positive");
-            double u = gen.NextDouble()*sum;
+            double u = gen.NextDouble() * sum;
+            u = System.Math.Max(u, double.Epsilon);
             while (u > cumsum)
             {
                 ++x;
@@ -326,15 +328,15 @@ namespace Microsoft.ML.Probabilistic.Math
             /* Generate a random point inside the unit circle */
             do
             {
-                x1 = 2.0*gen.NextDouble() - 1.0;
-                x2 = 2.0*gen.NextDouble() - 1.0;
-                w = (x1*x1) + (x2*x2);
+                x1 = 2.0 * gen.NextDouble() - 1.0;
+                x2 = 2.0 * gen.NextDouble() - 1.0;
+                w = (x1 * x1) + (x2 * x2);
             } while ((w >= 1.0) || (w == 0.0));
 
             /* Apply the Box-Muller formula */
-            w = System.Math.Sqrt(-2.0* System.Math.Log(w) / w);
-            x1 = w*x1;
-            x2 = w*x2;
+            w = System.Math.Sqrt(-2.0 * System.Math.Log(w) / w);
+            x1 = w * x1;
+            x2 = w * x2;
 
             usePreviousSample = true;
             previousSample = x2;
@@ -350,7 +352,7 @@ namespace Microsoft.ML.Probabilistic.Math
         [Stochastic]
         public static double Normal(double mean, double stdDev)
         {
-            return mean + stdDev*Normal();
+            return mean + stdDev * Normal();
         }
 
         /// <summary>
@@ -454,28 +456,28 @@ namespace Microsoft.ML.Probabilistic.Math
                 {
                     // Devroye's (Ch.9) rejection sampler with x ~ Exp(lowerBound)
                     // requires lowerBound > 0
-                    double c = 2*lowerBound*lowerBound;
+                    double c = 2 * lowerBound * lowerBound;
                     while (true)
                     {
                         // note it is possible to generate two exponential r.v.s with a single logarithm (Devroye Ch.9 sec.2.1)
                         double E = -System.Math.Log(Rand.Double());
                         double E2 = -System.Math.Log(Rand.Double());
-                        if (E*E <= c*E2) return lowerBound + E/lowerBound;
+                        if (E * E <= c * E2) return lowerBound + E / lowerBound;
                     }
                 }
                 else
                 {
                     // Marsaglia's (1964) rejection sampler (Devroye Ch.9)
                     // Reference: "Non-Uniform Random Variate Generation" by Luc Devroye (1986)
-                    double c = lowerBound*lowerBound*0.5;
+                    double c = lowerBound * lowerBound * 0.5;
                     while (true)
                     {
                         double U = Rand.Double();
                         double V = Rand.Double();
                         double x = c - System.Math.Log(U);
-                        if (V*V*x <= c)
+                        if (V * V * x <= c)
                         {
-                            return System.Math.Sqrt(2* x);
+                            return System.Math.Sqrt(2 * x);
                         }
                     }
                 }
@@ -535,13 +537,13 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 // Rejection sampler using truncated exponential proposal
                 double lambda = lowerBound;
-                double s = MMath.ExpMinus1(-lambda*delta);
-                double c = 2*lambda*lambda;
+                double s = MMath.ExpMinus1(-lambda * delta);
+                double c = 2 * lambda * lambda;
                 while (true)
                 {
                     double x = -MMath.Log1Plus(s * Rand.Double());
                     double u = -System.Math.Log(Rand.Double());
-                    if (c*u > x*x) return x/lambda + lowerBound;
+                    if (c * u > x * x) return x / lambda + lowerBound;
                 }
                 throw new InferRuntimeException("failed to sample");
             }
@@ -554,9 +556,9 @@ namespace Microsoft.ML.Probabilistic.Math
                 // Uniform rejection
                 while (true)
                 {
-                    double x = Rand.Double()*delta + lowerBound;
+                    double x = Rand.Double() * delta + lowerBound;
                     double u = -System.Math.Log(Rand.Double());
-                    if (2*u > x*x) return x;
+                    if (2 * u > x * x) return x;
                 }
             }
             else
@@ -577,7 +579,7 @@ namespace Microsoft.ML.Probabilistic.Math
         // http://portal.acm.org/citation.cfm?id=358414
         private static double GammaShapeGE1(double a)
         {
-            double d = a - 1.0/3, c = 1.0/ System.Math.Sqrt(9* d);
+            double d = a - 1.0 / 3, c = 1.0 / System.Math.Sqrt(9 * d);
             double v;
             while (true)
             {
@@ -585,10 +587,10 @@ namespace Microsoft.ML.Probabilistic.Math
                 do
                 {
                     x = Normal();
-                    v = 1 + c*x;
+                    v = 1 + c * x;
                 } while (v <= 0);
-                v = v*v*v;
-                x = x*x;
+                v = v * v * v;
+                x = x * x;
                 double u = gen.NextDouble();
 #if false
     // first version
@@ -598,13 +600,13 @@ namespace Microsoft.ML.Probabilistic.Math
                 }
 #else
                 // faster version
-                if ((u < 1 - .0331* x * x) || (System.Math.Log(u) < 0.5* x + d*(1 - v + System.Math.Log(v))))
+                if ((u < 1 - .0331 * x * x) || (System.Math.Log(u) < 0.5 * x + d * (1 - v + System.Math.Log(v))))
                 {
                     break;
                 }
 #endif
             }
-            return d*v;
+            return d * v;
         }
 
         /// <summary>
@@ -672,10 +674,10 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 for (int j = 0; j < i; ++j)
                 {
-                    result[i, j] = Normal()*MMath.SqrtHalf;
+                    result[i, j] = Normal() * MMath.SqrtHalf;
                     result[j, i] = 0;
                 }
-                result[i, i] = System.Math.Sqrt(Gamma(a - i*0.5));
+                result[i, i] = System.Math.Sqrt(Gamma(a - i * 0.5));
             }
         }
 
@@ -693,9 +695,9 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 // To handle small counts, use Stuart's (1962) theorem:
                 // gamma(a) has the same distribution as gamma(a+1)*exp(log(U)/a)
-                double boost1 = System.Math.Log(gen.NextDouble())/ trueCount;
+                double boost1 = System.Math.Log(gen.NextDouble()) / trueCount;
                 trueCount++;
-                double boost2 = System.Math.Log(gen.NextDouble())/ falseCount;
+                double boost2 = System.Math.Log(gen.NextDouble()) / falseCount;
                 falseCount++;
                 if (boost1 > boost2)
                 {
@@ -715,7 +717,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 gTrue = Rand.Gamma(trueCount);
                 gFalse = Rand.Gamma(falseCount);
             }
-            return gTrue/(gTrue + gFalse);
+            return gTrue / (gTrue + gFalse);
         }
 
         /// <summary>
@@ -734,7 +736,7 @@ namespace Microsoft.ML.Probabilistic.Math
             // If pseudo-count is sparse and its common value is not 0, we need
             // to process it as a dense vector so that samples from common value
             // are allowed to differ
-            if (pseudoCount.IsSparse && ((SparseVector) pseudoCount).CommonValue != 0.0)
+            if (pseudoCount.IsSparse && ((SparseVector)pseudoCount).CommonValue != 0.0)
                 pseudoCount = DenseVector.Copy(pseudoCount);
 
             if (pseudoCount.Max() < 1)
@@ -742,16 +744,16 @@ namespace Microsoft.ML.Probabilistic.Math
                 // To handle small counts, use Stuart's (1962) theorem:
                 // gamma(a) has the same distribution as gamma(a+1)*exp(log(U)/a)
                 Vector boost = Vector.Copy(pseudoCount);
-                boost.SetToFunction(pseudoCount, a => System.Math.Log(gen.NextDouble())/ a);
+                boost.SetToFunction(pseudoCount, a => System.Math.Log(gen.NextDouble()) / a);
                 double maxBoost = boost.Max();
-                result.SetToFunction(pseudoCount, boost, (a, b) => Rand.Gamma(a + 1)* System.Math.Exp(b - maxBoost));
+                result.SetToFunction(pseudoCount, boost, (a, b) => Rand.Gamma(a + 1) * System.Math.Exp(b - maxBoost));
             }
             else
             {
                 result.SetToFunction(pseudoCount, a => Rand.Gamma(a));
             }
             double sum = result.Sum();
-            result.Scale(1.0/sum);
+            result.Scale(1.0 / sum);
             return result;
         }
 
@@ -770,7 +772,7 @@ namespace Microsoft.ML.Probabilistic.Math
         [Stochastic]
         public static int Binomial(int n, double p)
         {
-            if (p*(n + 1) == n + 1) return n;
+            if (p * (n + 1) == n + 1) return n;
             if (n < 15)
             {
                 // coin flip method
@@ -782,20 +784,20 @@ namespace Microsoft.ML.Probabilistic.Math
                 }
                 return result;
             }
-            else if (n*p < 150)
+            else if (n * p < 150)
             {
                 // waiting time method
                 // this takes O(np) time
                 double q = -System.Math.Log(1 - p);
                 int r = n;
                 double e = -System.Math.Log(Rand.Double());
-                double s = e/r;
+                double s = e / r;
                 while (s <= q)
                 {
                     r--;
                     if (r == 0) break;
                     e = -System.Math.Log(Rand.Double());
-                    s = s + e/r;
+                    s = s + e / r;
                 }
                 return n - r;
             }
@@ -803,12 +805,12 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 // recursive method
                 // this makes O(log(log(n))) recursive calls
-                int i = (int) (p*(n + 1));
+                int i = (int)(p * (n + 1));
                 double b = Rand.Beta(i, n + 1 - i);
                 if (b <= p)
-                    return i + Rand.Binomial(n - i, (p - b)/(1 - b));
+                    return i + Rand.Binomial(n - i, (p - b) / (1 - b));
                 else
-                    return i - 1 - Rand.Binomial(i - 1, (b - p)/b);
+                    return i - 1 - Rand.Binomial(i - 1, (b - p) / b);
             }
         }
 
@@ -821,7 +823,7 @@ namespace Microsoft.ML.Probabilistic.Math
         [Stochastic]
         public static int[] Multinomial(int trialCount, Vector probs)
         {
-            return Multinomial(trialCount, (DenseVector) probs);
+            return Multinomial(trialCount, (DenseVector)probs);
         }
 
         /// <summary>
@@ -838,7 +840,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double remainingProb = 1;
             for (int dim = 0; dim < result.Length - 1; dim++)
             {
-                int sample = Binomial(trialCount, probs[dim]/remainingProb);
+                int sample = Binomial(trialCount, probs[dim] / remainingProb);
                 result[dim] = sample;
                 trialCount -= sample;
                 remainingProb -= probs[dim];
@@ -879,15 +881,15 @@ namespace Microsoft.ML.Probabilistic.Math
                 double mu = System.Math.Floor(mean);
                 double muLogFact = MMath.GammaLn(mu + 1);
                 double logMeanMu = System.Math.Log(mean / mu);
-                double delta = System.Math.Max(6, System.Math.Min(mu, System.Math.Sqrt(2* mu * System.Math.Log(128* mu / System.Math.PI))));
-                double c1 = System.Math.Sqrt(System.Math.PI* mu / 2);
-                double c2 = c1 + System.Math.Sqrt(System.Math.PI*(mu + delta/2)/2)* System.Math.Exp(1/(2* mu + delta));
+                double delta = System.Math.Max(6, System.Math.Min(mu, System.Math.Sqrt(2 * mu * System.Math.Log(128 * mu / System.Math.PI))));
+                double c1 = System.Math.Sqrt(System.Math.PI * mu / 2);
+                double c2 = c1 + System.Math.Sqrt(System.Math.PI * (mu + delta / 2) / 2) * System.Math.Exp(1 / (2 * mu + delta));
                 double c3 = c2 + 2;
-                double c4 = c3 + System.Math.Exp(1.0/78);
-                double c = c4 + 2/ delta * (2* mu + delta)* System.Math.Exp(-delta / (2* mu + delta)*(1 + delta/2));
+                double c4 = c3 + System.Math.Exp(1.0 / 78);
+                double c = c4 + 2 / delta * (2 * mu + delta) * System.Math.Exp(-delta / (2 * mu + delta) * (1 + delta / 2));
                 while (true)
                 {
-                    double u = Rand.Double()*c;
+                    double u = Rand.Double() * c;
                     double x, w;
                     if (u <= c1)
                     {
@@ -895,15 +897,15 @@ namespace Microsoft.ML.Probabilistic.Math
                         double y = -System.Math.Abs(n) * System.Math.Sqrt(mu) - 1;
                         x = System.Math.Floor(y);
                         if (x < -mu) continue;
-                        w = -n*n/2;
+                        w = -n * n / 2;
                     }
                     else if (u <= c2)
                     {
                         double n = Rand.Normal();
-                        double y = 1 + System.Math.Abs(n) * System.Math.Sqrt(mu + delta/2);
+                        double y = 1 + System.Math.Abs(n) * System.Math.Sqrt(mu + delta / 2);
                         x = System.Math.Ceiling(y);
                         if (x > delta) continue;
-                        w = (2 - y)*y/(2*mu + delta);
+                        w = (2 - y) * y / (2 * mu + delta);
                     }
                     else if (u <= c3)
                     {
@@ -918,13 +920,13 @@ namespace Microsoft.ML.Probabilistic.Math
                     else
                     {
                         double v = -System.Math.Log(Rand.Double());
-                        double y = delta + v*2/delta*(2*mu + delta);
+                        double y = delta + v * 2 / delta * (2 * mu + delta);
                         x = System.Math.Ceiling(y);
-                        w = -delta/(2*mu + delta)*(1 + y/2);
+                        w = -delta / (2 * mu + delta) * (1 + y / 2);
                     }
                     double e = -System.Math.Log(Rand.Double());
-                    w -= e + x*logMeanMu;
-                    double qx = x* System.Math.Log(mu) - MMath.GammaLn(mu + x + 1) + muLogFact;
+                    w -= e + x * logMeanMu;
+                    double qx = x * System.Math.Log(mu) - MMath.GammaLn(mu + x + 1) + muLogFact;
                     if (w <= qx) return (int)System.Math.Round(x + mu);
                 }
             }

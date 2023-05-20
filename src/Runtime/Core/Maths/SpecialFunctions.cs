@@ -4782,8 +4782,8 @@ rr = mpf('-0.99999824265582826');
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="rel">An offset to avoid division by zero.</param>
-        /// <returns><c>abs(x - y)/(abs(x) + rel)</c>. 
-        /// Matching infinities give zero.
+        /// <returns><c>abs(x - y)/(min(abs(x),abs(y)) + rel)</c>. 
+        /// Matching infinities give zero.  Any NaN gives NaN.
         /// </returns>
         /// <remarks>
         /// This routine is often used to measure the error of y in estimating x.
@@ -4796,18 +4796,52 @@ rr = mpf('-0.99999824265582826');
         }
 
         /// <summary>
+        /// Returns the relative distance between two numbers.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="rel">An offset to avoid division by zero.</param>
+        /// <returns><c>abs(x - y)/(min(abs(x),abs(y)) + rel)</c>. 
+        /// Matching infinities or NaNs give zero.
+        /// </returns>
+        /// <remarks>
+        /// This routine is often used to measure the error of y in estimating x.
+        /// </remarks>
+        public static double AbsDiffAllowingNaNs(double x, double y, double rel)
+        {
+            if (double.IsNaN(x)) return double.IsNaN(y) ? 0 : double.PositiveInfinity;
+            if (double.IsNaN(y)) return double.PositiveInfinity;
+            return AbsDiff(x, y, rel);
+        }
+
+        /// <summary>
         /// Returns the distance between two numbers.
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns><c>abs(x - y)</c>. 
-        /// Matching infinities give zero.
+        /// Matching infinities give zero.  Any NaN gives NaN.
         /// </returns>
         public static double AbsDiff(double x, double y)
         {
             if (x == y)
                 return 0; // catches infinities
             return Math.Abs(x - y);
+        }
+
+        /// <summary>
+        /// Returns the distance between two numbers.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns><c>abs(x - y)</c>. 
+        /// Matching infinities or NaNs give zero.
+        /// </returns>
+        public static double AbsDiffAllowingNaNs(double x, double y)
+        {
+            if (double.IsNaN(x)) return double.IsNaN(y) ? 0 : double.PositiveInfinity;
+            if (double.IsNaN(y)) return double.PositiveInfinity;
+            return AbsDiff(x, y);
         }
 
         /// <summary>
