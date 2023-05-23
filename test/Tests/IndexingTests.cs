@@ -2213,9 +2213,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             if (!(algorithm is GibbsSampling)) block = Variable.If(evidence);
 
             var bools = Variable.Array<bool>(C).Named("bools");
-            var priors = Variable.Array<Bernoulli>(C).Named("priors");
-            priors.ObservedValue = Util.ArrayInit(C.SizeAsInt, j => new Bernoulli(0.1*(j + 1)));
-            bools[C] = Variable<bool>.Random(priors[C]);
+            bool compoundPrior = false;
+            if (compoundPrior)
+            {
+                var prob = Variable.Beta(2, 2);
+                bools[C] = Variable.Bernoulli(prob).ForEach(C);
+            }
+            else
+            {
+                var priors = Variable.Array<Bernoulli>(C).Named("priors");
+                priors.ObservedValue = Util.ArrayInit(C.SizeAsInt, j => new Bernoulli(0.1 * (j + 1)));
+                bools[C] = Variable<bool>.Random(priors[C]);
+            }
             if (observeArray) bools.ObservedValue = Util.ArrayInit(C.SizeAsInt, j => true);
 
             Bernoulli like = new Bernoulli(0.2);

@@ -32,19 +32,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// All variables that have been assigned to so far
         /// </summary>
-        private Set<IVariableDeclaration> variablesAssigned = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        private readonly Set<IVariableDeclaration> variablesAssigned = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
-        private Set<IVariableDeclaration> variablesLackingVariableFactor = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        private readonly Set<IVariableDeclaration> variablesOmittingVariableFactor = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         private Set<IExpression> targetsOfCurrentAssignment;
 
-        private Dictionary<object, IVariableDeclaration> useOfVariable =
+        private readonly Dictionary<object, IVariableDeclaration> useOfVariable =
             new Dictionary<object, IVariableDeclaration>(ReferenceEqualityComparer<object>.Instance);
 
-        private Dictionary<object, IVariableDeclaration> marginalOfVariable =
+        private readonly Dictionary<object, IVariableDeclaration> marginalOfVariable =
             new Dictionary<object, IVariableDeclaration>(ReferenceEqualityComparer<object>.Instance);
 
-        private IAlgorithm algorithmDefault;
+        private readonly IAlgorithm algorithmDefault;
         private VariableAnalysisTransform analysis;
 
         public VariableTransform(IAlgorithm algorithm)
@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 IBlockStatement block = Builder.BlockStmt();
                 block.Statements.Add(Builder.CommentStmt("variablesOmittingVariableFactor:"));
-                foreach (var ivd in analysis.variablesExcludingVariableFactor)
+                foreach (var ivd in analysis.variablesOmittingVariableFactor)
                 {
                     block.Statements.Add(Builder.CommentStmt(ivd.ToString()));
                 }
@@ -146,9 +146,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 context.AddStatementsBeforeAncestorIndex(ancIndex, stmts);
             }
             bool isPointEstimate = context.InputAttributes.Has<PointEstimate>(ivd);
-            if (this.analysis.variablesExcludingVariableFactor.Contains(ivd))
+            if (this.analysis.variablesOmittingVariableFactor.Contains(ivd))
             {
-                this.variablesLackingVariableFactor.Add(ivd);
+                this.variablesOmittingVariableFactor.Add(ivd);
                 // ivd will get a marginal channel in ConvertMethodInvoke
                 useOfVariable[ivd] = ivd;
                 return;
@@ -345,7 +345,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 IExpression arrayExpr = imie.Arguments[0];
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(imie.Arguments[0]);
-                if (ivd != null && (arrayExpr is IVariableReferenceExpression) && this.variablesLackingVariableFactor.Contains(ivd)
+                if (ivd != null && (arrayExpr is IVariableReferenceExpression) && this.variablesOmittingVariableFactor.Contains(ivd)
                     && !marginalOfVariable.ContainsKey(ivd))
                 {
                     VariableInformation vi = VariableInformation.GetVariableInformation(context, ivd);
@@ -441,8 +441,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     /// </summary>
     internal class VariableAnalysisTransform : ShallowCopyTransform
     {
-        public Set<IVariableDeclaration> variablesExcludingVariableFactor = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
-        bool useJaggedSubarrayWithMarginal;
+        public Set<IVariableDeclaration> variablesOmittingVariableFactor = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        readonly bool useJaggedSubarrayWithMarginal;
 
         public override string Name
         {
@@ -466,7 +466,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // restrict to IVariableReferenceExpression for simplicity
                 if (ivd != null && !context.InputAttributes.Has<PointEstimate>(ivd) && arrayExpr is IVariableReferenceExpression)
                 {
-                    variablesExcludingVariableFactor.Add(ivd);
+                    variablesOmittingVariableFactor.Add(ivd);
                 }
             }
             return base.ConvertMethodInvoke(imie);

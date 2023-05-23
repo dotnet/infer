@@ -227,8 +227,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             // if we find the pattern:
             // forwardExpr = JaggedSubarrayWithMarginalOp<>.ItemsAverageConditional(backwardExpr[index], *, marginalExpr, indices, index, forwardExpr)
+            // which corresponds to forwardExpr = marginalExpr[indices[index]]/backwardExpr[index]
             // then when backwardExpr is updated, we insert the following statement:
             // MarginalIncrementItems(backwardExpr[index], forwardExpr,  indices, index, marginalExpr)
+            // which corresponds to marginalExpr[indices[index]] = backwardExpr[index] * forwardExpr
             if (Recognizer.IsStaticGenericMethod(imie, typeof(JaggedSubarrayWithMarginalOp<>), "ItemsAverageConditional"))
             {
                 IExpression backwardExpr = imie.Arguments[0];
@@ -260,7 +262,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         object backwardDecl = Recognizer.GetArrayDeclaration(backwardExpr);
                         onUpdate[backwardDecl] = increment;
                         IVariableDeclaration marginalVar = Recognizer.GetVariableDeclaration(marginalExpr);
-                        suppressUpdate[marginalVar] = attr;
+                        // It is only valid to suppress when prior of marginalExpr never changes.
+                        // Counterexamples: TrueSkillChainWithInitialisationTest, WinnersLosersTest
+                        //suppressUpdate[marginalVar] = attr;
                     }
                     var indicesVar = Recognizer.GetDeclaration(indicesExpr);
                     if (indicesVar != null)
@@ -275,14 +279,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             // if we find the pattern:
             // backwardExpr = JaggedSubarrayWithMarginalOp<>.ArrayAverageConditional(forwardExpr, marginalExpr, backwardExpr)
+            // which corresponds to backwardExpr = marginalExpr / forwardExpr
             // then when forwardExpr is updated, we insert the following statement:
-            // MarginalIncrementArray
+            // marginalExpr = MarginalIncrementArray(forwardExpr, backwardExpr, marginalExpr)
+            // which corresponds to marginalExpr = forwardExpr * backwardExpr
             if (Recognizer.IsStaticGenericMethod(imie, typeof(JaggedSubarrayWithMarginalOp<>), "ArrayAverageConditional"))
             {
                 IExpression forwardExpr = imie.Arguments[0];
                 IExpression marginalExpr = imie.Arguments[1];
                 IExpression backwardExpr = imie.Arguments[2];
-                if (true)
+                if (forwardExpr.GetExpressionType().Equals(marginalExpr.GetExpressionType()))
                 {
                     IMethodReferenceExpression imre = imie.Method;
                     ITypeReference itr = ((ITypeReferenceExpression)imre.Target).Type;

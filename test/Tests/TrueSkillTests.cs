@@ -29,6 +29,75 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class TrueSkillTests
     {
         [Fact]
+        public void WinnersLosersTest()
+        {
+            // 0 beat 1, 1 beat 2, 3 beat 2
+            var winnerData = new[] { new[] { 0 }, new[] { 1 }, new[] { 3 } };
+            var loserData = new[] { new[] { 1 }, new[] { 2 }, new[] { 2 } };
+
+            // Define the statistical model as a probabilistic program
+            var game = new Range(winnerData.Length).Named("game");
+            game.AddAttribute(new Sequential());
+            var player = new Range(winnerData.Concat(loserData).SelectMany(x => x).Max() + 1);
+            player.Name = nameof(player);
+            var playerSkills = Variable.Array<double>(player);
+            playerSkills[player] = Variable.GaussianFromMeanAndVariance(6, 9).ForEach(player);
+            playerSkills.Name = nameof(playerSkills);
+
+            var winner = new Range(1);
+            var loser = new Range(1);
+
+            var winners = Variable.Observed(default(int[][]), game, winner);
+            winners.Name = nameof(winners);
+            var losers = Variable.Observed(default(int[][]), game, loser);
+            losers.Name = nameof(losers);
+
+            using (Variable.ForEach(game))
+            {
+                var winnerSkills = Variable.Subarray(playerSkills, winners[game]);
+                winnerSkills.Name = nameof(winnerSkills);
+                var loserSkills = Variable.Subarray(playerSkills, losers[game]);
+                loserSkills.Name = nameof(loserSkills);
+
+                var winnerPerformances = Variable.Array<double>(winner);
+                winnerPerformances.Name = nameof(winnerPerformances);
+                winnerPerformances[winner] = Variable.GaussianFromMeanAndVariance(winnerSkills[winner], 1.0);
+                var winnerPerformance = Variable.Sum(winnerPerformances);
+                winnerPerformance.Name = nameof(winnerPerformance);
+
+                var loserPerformances = Variable.Array<double>(loser);
+                loserPerformances.Name = nameof(loserPerformances);
+                loserPerformances[loser] = Variable.GaussianFromMeanAndVariance(loserSkills[loser], 1.0);
+                var loserPerformance = Variable.Sum(loserPerformances);
+                loserPerformance.Name = nameof(loserPerformance);
+
+                Variable.ConstrainTrue(winnerPerformance > loserPerformance);
+            }
+
+            // Attach the data to the model
+            winners.ObservedValue = winnerData;
+            losers.ObservedValue = loserData;
+
+            Gaussian[] skillsExpected = new Gaussian[]
+            {
+                new Gaussian(8.147, 5.685),
+                new Gaussian(5.722, 4.482),
+                new Gaussian(3.067, 4.814),
+                new Gaussian(7.065, 6.588)
+            };
+
+            // Run inference
+            var inferenceEngine = new InferenceEngine();
+            inferenceEngine.ShowProgress = false;
+            var inferredSkills = inferenceEngine.Infer<Gaussian[]>(playerSkills);
+            for (int i = 0; i < inferredSkills.Length; ++i)
+            {
+                //Console.WriteLine($"{i}: {inferredSkills[i]}");
+                Assert.True(skillsExpected[i].MaxDiff(inferredSkills[i]) < 2e-4);
+            }
+        }
+
+        [Fact]
         [Trait("Category", "OpenBug")]
         public void RaterDrawMarginPrecisionAndThresholdsModel()
         {
@@ -451,7 +520,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// this doesn't seem possible to fix under the way Increments are handled.
         /// </summary>
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void TrueSkillChainWithInitialisationTest()
         {
             TrueSkillChain(true);
@@ -597,7 +665,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
 
-            InferenceAlgorithm.Execute(120);
+            InferenceAlgorithm.Execute(initialise ? 140 : 120);
             var skillsActual = InferenceAlgorithm.Marginal<IList<Gaussian>>(PlayerSkills.Name);
             Assert.True(skillsExpected.MaxDiff(skillsActual) < 1e-2);
         }

@@ -322,7 +322,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             ItemType result)
             where ArrayType : IList<DistributionType>
             where ItemType : IList<DistributionType>
-            where DistributionType : SettableToRatio<DistributionType>
+            where DistributionType : SettableToRatio<DistributionType>, IDistribution<T>
         {
             int i = resultIndex;
             if(result.Count != indices[i].Count)
@@ -339,13 +339,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
             [SkipIfAllUniform] IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
-            where DistributionType : SettableToProduct<DistributionType>
+            where DistributionType : SettableToProduct<DistributionType>, IDistribution<T>
         {
             if(items.Count != indices.Count)
                 throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
@@ -367,7 +367,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{T}}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IReadOnlyList{IReadOnlyList{int}}, IReadOnlyList{IReadOnlyList{T}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
@@ -400,7 +400,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             [SkipIfAllUniform] IReadOnlyList<DistributionType> array, IReadOnlyList<IReadOnlyList<int>> indices, ResultType result)
             where ResultType : IList<ItemType>
             where ItemType : IList<DistributionType>
-            where DistributionType : SettableTo<DistributionType>
+            where DistributionType : SettableTo<DistributionType>, IDistribution<T>
         {
             for (int i = 0; i < indices.Count; i++)
             {
@@ -420,7 +420,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType>(
             [SkipIfAllUniform] IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
-            where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
+            where DistributionType : SettableToUniform, SettableToProduct<DistributionType>, IDistribution<T>
         {
             if (items.Count != indices.Count)
                 throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
@@ -799,14 +799,11 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="Marginal{ArrayType, DistributionType, ItemArrayType, ItemType}(ArrayType, IList{ItemType}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of a message from <c>array</c>.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
-        /// <typeparam name="ItemArrayType">The type of an incoming message from <c>items</c>.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         [SkipIfAllUniform("array", "items")]
-        public static ArrayType MarginalAverageConditional<ArrayType, DistributionType, ItemArrayType, ItemType>(
-            ArrayType array, [NoInit] IList<ItemType> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
+        public static ArrayType MarginalAverageConditional<ArrayType, DistributionType>(
+            ArrayType array, [NoInit] IReadOnlyList<IReadOnlyList<T>> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableTo<ArrayType>
             where DistributionType : HasPoint<T>
-            where ItemType : IList<T>
         {
             if (items.Count != indices.Count)
                 throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
@@ -884,6 +881,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+#if false
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageConditional{ArrayType}(ArrayType, ArrayType, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         public static ArrayType ArrayAverageConditional<ArrayType>(
@@ -907,30 +905,28 @@ namespace Microsoft.ML.Probabilistic.Factors
             result.SetToProduct(array, to_array);
             return result;
         }
+#endif
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IReadOnlyList{IReadOnlyList{DistributionType}}, IReadOnlyList{IReadOnlyList{int}}, ArrayType)"]/*'/>
+        /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
+        /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
+        public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
+            [SkipIfAllUniform] IReadOnlyList<IReadOnlyList<DistributionType>> items, IReadOnlyList<IReadOnlyList<int>> indices, ArrayType result)
+            where ArrayType : IList<DistributionType>, SettableToUniform
+            where DistributionType : SettableToProduct<DistributionType>, IDistribution<T>
+        {
+            return JaggedSubarrayOp<T>.ArrayAverageConditional<DistributionType, ArrayType>(items, indices, result);
+        }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{int}}, IList{ItemType}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static ArrayType ArrayAverageConditional<DistributionType, ArrayType, ItemType>(
-            IReadOnlyList<IReadOnlyList<int>> indices, IList<ItemType> items, ArrayType result)
+        public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
+            IReadOnlyList<IReadOnlyList<int>> indices, IReadOnlyList<IReadOnlyList<T>> items, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
-            where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
-            if (items.Count != indices.Count)
-                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
-            result.SetToUniform();
-            for (int i = 0; i < indices.Count; i++)
-            {
-                for (int j = 0; j < indices[i].Count; j++)
-                {
-                    DistributionType value = result[indices[i][j]];
-                    value.Point = items[i][j];
-                    result[indices[i][j]] = value;
-                }
-            }
-            return result;
+            return JaggedSubarrayOp<T>.ArrayAverageConditional<DistributionType, ArrayType>(indices, items, result);
         }
 
         //-- VMP -------------------------------------------------------------------------------------------------------------
@@ -995,14 +991,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType, ItemType}(IReadOnlyList{IReadOnlyList{int}}, IList{ItemType}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
-        /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
-        public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType, ItemType>(
-            IReadOnlyList<IReadOnlyList<int>> indices, IList<ItemType> items, ArrayType result)
+        public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType>(
+            IReadOnlyList<IReadOnlyList<int>> indices, IReadOnlyList<IReadOnlyList<T>> items, ArrayType result)
             where ArrayType : IList<DistributionType>, SettableToUniform
-            where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
-            return ArrayAverageConditional<DistributionType, ArrayType, ItemType>(indices, items, result);
+            return ArrayAverageConditional<DistributionType, ArrayType>(indices, items, result);
         }
     }
 }

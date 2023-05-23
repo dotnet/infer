@@ -223,11 +223,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			this.Labels_F = new DistributionStructArray<Bernoulli,bool>(this.InstanceCount);
-			this.NoisyScore_F = new Gaussian[this.InstanceCount];
 			this.FeatureScores_F = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
 			this.Weights_FeatureIndexes_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.InstanceCount);
-			this.Score_F = new Gaussian[this.InstanceCount];
+			this.NoisyScore_F = new Gaussian[this.InstanceCount];
 			this.IndexedWeights_B = new DistributionStructArray<Gaussian,double>[this.InstanceCount];
+			this.Score_F = new Gaussian[this.InstanceCount];
 			this.Labels_marginal_F = new DistributionStructArray<Bernoulli,bool>(this.InstanceCount);
 			this.Labels_use_B_reduced = default(Bernoulli);
 			if (this.InstanceCount>0) {
