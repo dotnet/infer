@@ -1042,5 +1042,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return prob.SumISq() - mean * mean;
             }
         }
+
+        /// <summary>
+        /// Creates a distribution with reduced support.
+        /// </summary>
+        /// <param name="lowerBound">The smallest allowed value.</param>
+        /// <param name="upperBound">The largest allowed value.</param>
+        /// <returns></returns>
+        public Discrete Truncate(int lowerBound, int upperBound)
+        {
+            Vector probs = this.prob.Subvector(0, upperBound + 1);
+            if (lowerBound > 0)
+            {
+                probs.SetSubvector(0, Vector.Zero(lowerBound + 1));
+            }
+            return new Discrete(probs);
+        }
     }
 }
