@@ -281,8 +281,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                     {
                         foreach (var variableIndex in this.variablesUsedByNode[node])
                         {
-                            VariableLocation location;
-                            if (lastThreadOfVariable.TryGetValue(variableIndex, out location))
+                            if (lastThreadOfVariable.TryGetValue(variableIndex, out VariableLocation location))
                             {
                                 commCosts[location.Thread]++;
                             }
@@ -337,8 +336,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
             {
                 int[] commCosts = commCostsOfBlock[blockIndex];
                 // gap = difference between highest cost and 2nd highest cost
-                int gap;
-                int threadWithMaxCost = GetThreadWithMaxCost(threadsToAllocate, commCosts, out gap);
+                int threadWithMaxCost = GetThreadWithMaxCost(threadsToAllocate, commCosts, out int gap);
                 queueForThread[threadWithMaxCost].Add(new QueueEntry(blockIndex, gap));
             }
             while (threadsToAllocate.Count > 0)
@@ -371,8 +369,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                 {
                     blockIndex = entry.Node;
                     int[] commCosts = commCostsOfBlock[blockIndex];
-                    int gap;
-                    int threadWithMaxCost = GetThreadWithMaxCost(threadsToAllocate, commCosts, out gap);
+                    int threadWithMaxCost = GetThreadWithMaxCost(threadsToAllocate, commCosts, out int gap);
                     queueForThread[threadWithMaxCost].Add(new QueueEntry(blockIndex, gap));
                 }
                 bestQueue.Clear();
@@ -446,18 +443,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
             for (int process = 0; process < numThreads; process++)
             {
                 int processLocalNodeIndex = 0;
-                List<int[]> processLocalStages = new List<int[]>();
-                for (int stageIndex = 0; stageIndex < schedulePerThread[process].Length; stageIndex++)
-                {
-                    List<int> processLocalBlock = new List<int>();
-                    for (int indexInBlock = 0; indexInBlock < schedulePerThread[process][stageIndex].Length; indexInBlock++)
-                    {
-                        int nodeIndex = schedulePerThread[process][stageIndex][indexInBlock];
-                        processLocalBlock.Add(processLocalNodeIndex++);
-                    }
-                    processLocalStages.Add(processLocalBlock.ToArray());
-                }
-                scheduleForProcess[process] = processLocalStages.ToArray();
+                scheduleForProcess[process] = Util.ArrayInit(schedulePerThread[process].Length, stageIndex =>
+                    Util.ArrayInit(schedulePerThread[process][stageIndex].Length, indexInBlock => processLocalNodeIndex++));
             }
             return scheduleForProcess;
         }
@@ -599,8 +586,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                         int nodeIndex = schedulePerProcess[process][stageIndex][indexInBlock];
                         foreach (var arrayIndex in variablesUsedByNode[nodeIndex])
                         {
-                            int lastProcess;
-                            if (lastProcessOfVariable.TryGetValue(arrayIndex, out lastProcess) && (lastProcess != process))
+                            if (lastProcessOfVariable.TryGetValue(arrayIndex, out int lastProcess) && (lastProcess != process))
                             {
                                 // lastProcess must send prior to this stage
                                 arrayIndicesToSendList[lastProcess][stageIndex][process].Add(arrayIndex);
@@ -618,15 +604,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 
         public DistributedCommunicationInfo[] GetDistributedCommunicationInfos(int[][][] schedulePerProcess)
         {
-            Dictionary<int, int>[] processLocalIndexOfArrayIndexForProcess;
-            return GetDistributedCommunicationInfos(schedulePerProcess, this.variablesUsedByNode, out processLocalIndexOfArrayIndexForProcess);
+            return GetDistributedCommunicationInfos(schedulePerProcess, this.variablesUsedByNode, out _);
         }
 
         public static DistributedCommunicationInfo[] GetDistributedCommunicationInfos(int[][][] schedulePerProcess,
             IReadOnlyList<int[]> variablesUsedByNode)
         {
-            Dictionary<int, int>[] processLocalIndexOfArrayIndexForProcess;
-            return GetDistributedCommunicationInfos(schedulePerProcess, variablesUsedByNode, out processLocalIndexOfArrayIndexForProcess);
+            return GetDistributedCommunicationInfos(schedulePerProcess, variablesUsedByNode, out _);
         }
 
         public static DistributedCommunicationInfo[] GetDistributedCommunicationInfos(int[][][] schedulePerProcess,
@@ -644,12 +628,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                 Dictionary<int, int> processLocalIndexOfArrayIndex = new Dictionary<int, int>();
                 for (int stageIndex = 0; stageIndex < schedulePerProcess[process].Length; stageIndex++)
                 {
-                    List<int> processLocalBlock = new List<int>();
                     for (int indexInBlock = 0; indexInBlock < schedulePerProcess[process][stageIndex].Length; indexInBlock++)
                     {
                         int nodeIndex = schedulePerProcess[process][stageIndex][indexInBlock];
-                        List<int> processLocalIndicesThisNode = new List<int>(); //[variablesUsedByNode[nodeIndex].Length];
-                        foreach (var arrayIndex in variablesUsedByNode[nodeIndex])
+                        var processLocalIndicesThisNode = variablesUsedByNode[nodeIndex].Select(arrayIndex =>
                         {
                             int processLocalArrayIndex;
                             if (!processLocalIndexOfArrayIndex.TryGetValue(arrayIndex, out processLocalArrayIndex))
@@ -659,9 +641,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                                 processLocalIndexOfArrayIndex[arrayIndex] = processLocalArrayIndex;
                                 //Debug.WriteLine($"process {process} local index {processLocalArrayIndex} = global index {arrayIndex} for node {nodeIndex}");
                             }
-                            processLocalIndicesThisNode.Add(processLocalArrayIndex);
-                        }
-                        indicesThisProcess.Add(processLocalIndicesThisNode.ToArray());
+                            return processLocalArrayIndex;
+                        }).ToArray();
+                        indicesThisProcess.Add(processLocalIndicesThisNode);
                     }
                     // translate the send/receive arrays
                     foreach (var arrayIndicesFromOther in arrayIndicesToReceive[process][stageIndex])
@@ -682,11 +664,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                     }
                 }
                 processLocalIndexOfArrayIndexForProcess[process] = processLocalIndexOfArrayIndex;
-                DistributedCommunicationInfo distributedCommunicationInfo = new DistributedCommunicationInfo();
-                distributedCommunicationInfo.indices = indicesThisProcess.ToArray();
-                distributedCommunicationInfo.arrayLength = processLocalIndexOfArrayIndex.Count;
-                distributedCommunicationInfo.arrayIndicesToSend = arrayIndicesToSend[process];
-                distributedCommunicationInfo.arrayIndicesToReceive = arrayIndicesToReceive[process];
+                DistributedCommunicationInfo distributedCommunicationInfo = new DistributedCommunicationInfo
+                {
+                    indices = indicesThisProcess.ToArray(),
+                    arrayLength = processLocalIndexOfArrayIndex.Count,
+                    arrayIndicesToSend = arrayIndicesToSend[process],
+                    arrayIndicesToReceive = arrayIndicesToReceive[process]
+                };
                 distributedCommunicationInfos[process] = distributedCommunicationInfo;
             }
             return distributedCommunicationInfos;
