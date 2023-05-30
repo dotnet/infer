@@ -246,7 +246,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.OnProgressChanged(new ProgressChangedEventArgs(iteration));
 			}
 			this.Weights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[1], this.IndexedWeights_B, this.FeatureIndexes, this.Weights_marginal_F);
-			this.Weights_uses_B[1] = JaggedSubarrayWithMarginalOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.IndexedWeights_B, this.FeatureIndexes, this.Weights_uses_B[1]);
+			this.Weights_uses_B[1] = JaggedSubarrayWithMarginalOp<double>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[1], this.Weights_marginal_F, this.Weights_uses_B[1]);
 			this.Weights_B = ReplicateOp_NoDivide.DefAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_uses_B, this.Weights_B);
 			this.Changed_FeatureIndexes_FeatureValues_InstanceCount_InstanceFeatureCounts_Labels_numberOfIterations_W7_isDone = true;
 		}

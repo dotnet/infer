@@ -256,7 +256,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.OnProgressChanged(new ProgressChangedEventArgs(iteration));
 			}
 			this.Weights_marginal_F = JaggedSubarrayWithMarginalOp<double>.MarginalAverageConditional<DistributionStructArray<Gaussian,double>,Gaussian,DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[1], this.IndexedWeights_B, this.FeatureIndexes, this.Weights_marginal_F);
-			this.Weights_uses_B[1] = JaggedSubarrayWithMarginalOp<double>.ArrayAverageConditional<Gaussian,DistributionStructArray<Gaussian,double>>(this.IndexedWeights_B, this.FeatureIndexes, this.Weights_uses_B[1]);
+			this.Weights_uses_B[1] = JaggedSubarrayWithMarginalOp<double>.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[1], this.Weights_marginal_F, this.Weights_uses_B[1]);
 			this.Weights_uses_F[0] = ReplicateOp_NoDivide.UsesAverageConditional<DistributionStructArray<Gaussian,double>>(this.Weights_uses_B, this.WeightPriors, 0, this.Weights_uses_F[0]);
 			this.ModelSelector_selector_cases_0_uses_B[3] = Bernoulli.FromLogOdds(ReplicateOp.LogEvidenceRatio<DistributionStructArray<Gaussian,double>>(this.Weights_uses_B, this.WeightPriors, this.Weights_uses_F));
 			this.ModelSelector_selector_cases_0_uses_B[4] = Bernoulli.FromLogOdds(ConstrainEqualRandomOp<double[]>.LogEvidenceRatio<DistributionStructArray<Gaussian,double>>(this.Weights_uses_F[0], this.WeightConstraints));

@@ -3604,9 +3604,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 			this.UserTraitFeatureWeights_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.TraitCount);
 			this.UserTraitFeatureWeights_marginal_F = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.TraitCount);
 			this.UserTraitFeatureWeights_use_B = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.TraitCount);
-			this.ItemTraits_index10_index10_0__index10__B = new Gaussian[this.TraitCount][];
-			this.ItemTraits_trait_index10_0__0__B = new Gaussian[this.TraitCount][];
 			this.vbool3 = new bool[this.TraitCount][];
+			this.ItemTraits_trait_index10_0__0__B = new Gaussian[this.TraitCount][];
+			this.ItemTraits_index10_index10_0__index10__B = new Gaussian[this.TraitCount][];
 			for(int trait = 0; trait<this.TraitCount; trait++) {
 				this.vbool3[trait] = new bool[this.TraitCount];
 			}

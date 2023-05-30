@@ -620,9 +620,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private List<NodeIndex> DeleteOffsetEdges(DependencyGraph g, IReadOnlyList<IStatement> inputStmts, ICollection<IVariableDeclaration> offsetVarsToDelete, out List<NodeIndex> initSchedule)
         {
             // note we could use SerialSchedulingInfo to do the deletion here
-            bool anyBlockIsCyclicLocal;
             if (compiler.UseSerialSchedules && !compiler.UseExperimentalSerialSchedules &&
-                g.DeleteAllOffsetIndexEdges(offsetVarsToDelete, out anyBlockIsCyclicLocal))
+                g.DeleteAllOffsetIndexEdges(offsetVarsToDelete, out _))
             {
                 if (debug)
                 {

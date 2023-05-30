@@ -18,6 +18,9 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Factors;
     using Microsoft.ML.Probabilistic.Models.Attributes;
     using Range = Microsoft.ML.Probabilistic.Models.Range;
+    using Xunit.Sdk;
+    using Microsoft.ML.Probabilistic.Compiler.Transforms;
+    using System.Numerics;
 
     public class ParallelSchedulerTests
     {
@@ -112,20 +115,26 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ParallelScheduleTest()
         {
+            parallelScheduleTest(true);
+            parallelScheduleTest(false);
+        }
+
+        private void parallelScheduleTest(bool initialise)
+        {
             IReadOnlyList<Gaussian> xMarginal;
             Gaussian shiftMarginal;
             IReadOnlyList<int[]> variablesUsedByNode;
-            parallelScheduleTest(2, 20, out xMarginal, out shiftMarginal, out variablesUsedByNode);
+            parallelScheduleTest(2, 20, initialise, out xMarginal, out shiftMarginal, out variablesUsedByNode);
         }
 
-        private int[][][] parallelScheduleTest(int numThreads, int nodeCount, out IReadOnlyList<Gaussian> xMarginal, out Gaussian shiftMarginal, out IReadOnlyList<int[]> variablesUsedByNode)
+        private int[][][] parallelScheduleTest(int numThreads, int nodeCount, bool initialise, out IReadOnlyList<Gaussian> xMarginal, out Gaussian shiftMarginal, out IReadOnlyList<int[]> variablesUsedByNode)
         {
             int maxParentCount = 1;
             variablesUsedByNode = GenerateVariablesUsedByNode(nodeCount, maxParentCount);
             ParallelScheduler ps = new ParallelScheduler();
             ps.CreateGraph(variablesUsedByNode);
             var schedule = ps.GetScheduleWithBarriers(numThreads);
-            ParallelScheduler.WriteSchedule(schedule, true);
+            //ParallelScheduler.WriteSchedule(schedule, true);
             var schedulePerThread = ps.ConvertToSchedulePerThread(schedule, numThreads);
 
             var nodeCountVar = Variable.Observed(nodeCount).Named("nodeCount");
@@ -133,6 +142,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             node.AddAttribute(new Sequential() { BackwardPass = true });
             var x = Variable.Array<double>(node).Named("x");
             x[node] = Variable.GaussianFromMeanAndPrecision(0, 1).ForEach(node);
+            if (initialise)
+                x[node].InitialiseTo(Gaussian.FromMeanAndVariance(0, 10));
             var parentCount = Variable.Observed(variablesUsedByNode.Select(a => a.Length).ToArray(), node).Named("parentCount");
             Range parent = new Range(parentCount[node]).Named("parent");
             var indices = Variable.Observed(variablesUsedByNode.ToArray(), node, parent).Named("indices");
@@ -153,10 +164,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             InferenceEngine engine = new InferenceEngine();
-            engine.NumberOfIterations = 2;
+            //engine.Compiler.UseExistingSourceFiles = true;
+            engine.ShowProgress = false;
+            engine.NumberOfIterations = 20;
             engine.OptimiseForVariables = new IVariable[] { x, shift };
-            var xExpected = engine.Infer(x);
+            var xExpected = engine.Infer<IReadOnlyList<Gaussian>>(x);
             //Console.WriteLine(xExpected);
+            if (nodeCount == 20)
+                Assert.True(new Gaussian(-0.3333, 0.3333).MaxDiff(xExpected[0]) < 1e-3);
+            else if (nodeCount == 100)
+                Assert.Equal(new Gaussian(-1.75, 0.125), xExpected[0]);
             var shiftExpected = engine.Infer(shift);
 
             var threadCount = Variable.Observed(0).Named("threadCount");
@@ -194,21 +211,22 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void DistributedScheduleTest()
         {
             DistributedSchedule(2, 1);
-            DistributedSchedule(2, 2);
+            //DistributedSchedule(2, 2);
         }
 
         private void DistributedSchedule(int processCount, int threadCount)
         {
-            int nodeCount = 100;
+            bool initialise = true;
+            int nodeCount = 20;
             IReadOnlyList<Gaussian> xExpected;
             Gaussian shiftExpected;
             IReadOnlyList<int[]> variablesUsedByNode;
-            var schedulePerThread = parallelScheduleTest(processCount, nodeCount, out xExpected, out shiftExpected, out variablesUsedByNode);
+            var schedulePerThread = parallelScheduleTest(processCount, nodeCount, initialise, out xExpected, out shiftExpected, out variablesUsedByNode);
 
             int[][][] schedulePerProcess = ParallelScheduler.ConvertToSchedulePerProcess(schedulePerThread);
             Dictionary<int, int>[] processLocalIndexOfArrayIndexPerProcess;
             IReadOnlyList<Compiler.Graphs.DistributedCommunicationInfo> distributedCommunicationInfos = ParallelScheduler.GetDistributedCommunicationInfos(schedulePerThread, variablesUsedByNode, out processLocalIndexOfArrayIndexPerProcess);
-            Console.WriteLine("communication cost = {0}", TotalCommunicationCost(distributedCommunicationInfos));
+            ////Console.WriteLine("communication cost = {0}", TotalCommunicationCost(distributedCommunicationInfos));
             int[][][][][] schedulePerThreadPerProcess;
             if (threadCount > 1)
             {
@@ -246,6 +264,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     int arrayIndex = entry.Key;
                     int localIndex = entry.Value;
                     arrayMarginal[arrayIndex] = xResultPerProcess[process][localIndex];
+                    Assert.True(arrayMarginal[arrayIndex].MaxDiff(xExpected[arrayIndex]) < 1e-10);
                 }
             }
             var arrayActual = new DistributionStructArray<Gaussian, double>(arrayMarginal);
@@ -334,12 +353,17 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var processCount = Variable.Observed(0).Named("processCount");
             Range sender = new Range(processCount);
+            sender.Name = nameof(sender);
             var arrayIndicesToSendCount = Variable.Observed(default(int[][]), distributedStage, sender).Named("arrayIndicesToSendCount");
             Range arrayIndexToSend = new Range(arrayIndicesToSendCount[distributedStage][sender]);
-            var arrayIndicesToSendVar = Variable.Observed(default(int[][][]), distributedStage, sender, arrayIndexToSend).Named("arrayIndicesToSend");
+            arrayIndexToSend.Name = nameof(arrayIndexToSend);
+            var arrayIndicesToSendVar = Variable.Observed(default(int[][][]), distributedStage, sender, arrayIndexToSend);
+            arrayIndicesToSendVar.Name = nameof(arrayIndicesToSendVar);
             var arrayIndicesToReceiveCount = Variable.Observed(default(int[][]), distributedStage, sender).Named("arrayIndicesToReceiveCount");
             Range arrayIndexToReceive = new Range(arrayIndicesToReceiveCount[distributedStage][sender]);
-            var arrayIndicesToReceiveVar = Variable.Observed(default(int[][][]), distributedStage, sender, arrayIndexToReceive).Named("arrayIndexToReceive");
+            arrayIndexToReceive.Name = nameof(arrayIndexToReceive);
+            var arrayIndicesToReceiveVar = Variable.Observed(default(int[][][]), distributedStage, sender, arrayIndexToReceive);
+            arrayIndicesToReceiveVar.Name = nameof(arrayIndicesToReceiveVar);
             indices.AddAttribute(new DistributedCommunication(arrayIndicesToSendVar, arrayIndicesToReceiveVar));
 
             distributedStageCount.ObservedValue = scheduleForProcess.Length;

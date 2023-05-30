@@ -285,8 +285,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 List<NodeIndex> deps = new List<EdgeIndex>();
                 foreach (IStatement source in di.Dependencies)
                 {
-                    int sourceIndex;
-                    if (indexOfNode.TryGetValue(source, out sourceIndex))
+                    if (indexOfNode.TryGetValue(source, out int sourceIndex))
                     {
                         if (!sources.Contains(sourceIndex))
                         {
@@ -387,6 +386,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         {
                             if (!ignoreMissingNodes)
                                 context.Error("Initializer statement not found: " + source);
+                        }
+                    }
+                    if (deleteCancels)
+                    {
+                        foreach (IStatement source in di.GetDependenciesOfType(DependencyType.Cancels))
+                        {
+                            if (indexOfNode.TryGetValue(source, out int sourceIndex))
+                            {
+                                // write-after-read dependency
+                                newEdges.Add(new Edge<NodeIndex>(targetIndex, sourceIndex));
+                            }
+                            else
+                            {
+                                if (!ignoreMissingNodes)
+                                    context.Error("Dependency statement not found: " + source);
+                            }
                         }
                     }
                 }
@@ -536,7 +551,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             int edge = dependencyGraph.GetEdge(sourceIndex, targetIndex);
                             isCancels[edge] = true;
                             // TODO: this deletion should be done outside of the constructor.
-                            if (deleteCancels)
+                            if (deleteCancels && false)
                             {
                                 isDeleted[edge] = true;
                                 if (debug)
@@ -862,7 +877,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 NodeIndex source = dependencyGraph.SourceOf(edge);
                 if (isFreshEdge[edge] && staleNodes.Contains(getTargetIndex(source)))
                     yield return source;
-                if (invalidNodes.Contains(source) && (initialized == null || scheduled.Contains(source)))
+                if (invalidNodes.Contains(source) && (initialized == null /*|| scheduled.Contains(source)*/))
                     yield return source;
             }
             action(node);

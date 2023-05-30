@@ -881,7 +881,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-#if false
+#if true
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="ArrayAverageConditional{ArrayType}(ArrayType, ArrayType, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         public static ArrayType ArrayAverageConditional<ArrayType>(
@@ -897,8 +897,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="JaggedSubarrayWithMarginalOp{T}"]/message_doc[@name="MarginalIncrementArray{ArrayType}(ArrayType, ArrayType, ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of the outgoing message.</typeparam>
         public static ArrayType MarginalIncrementArray<ArrayType>(
-            [SkipIfUniform] ArrayType array,  // SkipIfUniform on 'array' causes this line to be pruned when the incoming message isn't changing
-            [Cancels] ArrayType to_array,     // Cancels since updating to_array does not require recomputing the increment
+            [SkipIfUniform, Trigger] ArrayType array,  // SkipIfUniform on 'array' causes this line to be pruned when the incoming message isn't changing // Trigger
+            /*[Cancels]*/ ArrayType to_array,     // Cancels since updating to_array does not require recomputing the increment
             ArrayType result)
             where ArrayType : SettableToProduct<ArrayType>
         {

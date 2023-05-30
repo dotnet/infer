@@ -263,8 +263,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         onUpdate[backwardDecl] = increment;
                         IVariableDeclaration marginalVar = Recognizer.GetVariableDeclaration(marginalExpr);
                         // It is only valid to suppress when prior of marginalExpr never changes.
-                        // Counterexamples: TrueSkillChainWithInitialisationTest, WinnersLosersTest
-                        //suppressUpdate[marginalVar] = attr;
+                        // Counterexamples: TrueSkillChainWithInitialisationTest, WinnersLosersTest, ParallelScheduleTest
+                        suppressUpdate[marginalVar] = attr;
                     }
                     var indicesVar = Recognizer.GetDeclaration(indicesExpr);
                     if (indicesVar != null)

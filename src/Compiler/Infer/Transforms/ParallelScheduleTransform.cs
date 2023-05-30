@@ -129,22 +129,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (isBackwardLoop)
             {
                 loopBlock.Body.Statements.Add(loopInBlock);
-                foreach (var tuple in this.distributedCommunicationExpressions)
-                {
-                    var arrayExpr = tuple.Item1;
-                    var dce = tuple.Item2;
-                    IExpression sendExpr = Builder.ArrayIndex(dce.arrayIndicesToSendExpression, Builder.VarRefExpr(loopVarBlock));
-                    IExpression receiveExpr = Builder.ArrayIndex(dce.arrayIndicesToReceiveExpression, Builder.VarRefExpr(loopVarBlock));
-                    var sendReceiveMethod = Builder.StaticGenericMethod(new Action<ICommunicator, IList<PlaceHolder>, int[][], int[][]>(Communicator.AlltoallSubarrays),
-                        new Type[] { Utilities.Util.GetElementType(arrayExpr.GetExpressionType()) },
-                        commExpr, arrayExpr,
-                        receiveExpr,
-                        sendExpr);
-                    loopBlock.Body.Statements.Add(Builder.ExprStatement(sendReceiveMethod));
-                }
+                AddCommunicatorStatements();
                 Recognizer.ReverseLoopDirection(loopBlock);
             }
             else
+            {
+                AddCommunicatorStatements();
+                loopBlock.Body.Statements.Add(loopInBlock);
+            }
+            return loopBlock;
+
+            void AddCommunicatorStatements()
             {
                 foreach (var tuple in this.distributedCommunicationExpressions)
                 {
@@ -155,13 +150,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     var sendReceiveMethod = Builder.StaticGenericMethod(new Action<ICommunicator, IList<PlaceHolder>, int[][], int[][]>(Communicator.AlltoallSubarrays),
                         new Type[] { Utilities.Util.GetElementType(arrayExpr.GetExpressionType()) },
                         commExpr, arrayExpr,
-                        sendExpr,
-                        receiveExpr);
+                        isBackwardLoop ? receiveExpr : sendExpr,
+                        isBackwardLoop ? sendExpr : receiveExpr);
                     loopBlock.Body.Statements.Add(Builder.ExprStatement(sendReceiveMethod));
                 }
-                loopBlock.Body.Statements.Add(loopInBlock);
             }
-            return loopBlock;
         }
 
         protected override IExpression ConvertMethodInvoke(IMethodInvokeExpression imie)
@@ -207,7 +200,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             if (isDistributed)
                             {
                                 // A statement that multiplies across a distributed range will only multiply the items in the local process.
-                                // To combine the results from each process, add the statement:
+                                // To combine the results from each process, we add the statement:
                                 // shift_rep_B_toDef = Communicator.MultiplyAll(comm, shift_rep_B_toDef);
                                 IExpression targetExpr = imie.Arguments[imie.Arguments.Count-1];
                                 IExpression commExpr = dse.commExpression;
