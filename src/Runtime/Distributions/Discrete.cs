@@ -1051,10 +1051,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public Discrete Truncate(int lowerBound, int upperBound)
         {
-            Vector probs = this.prob.Subvector(0, upperBound + 1);
+            Vector probs = this.prob.Subvector(0, Math.Min(upperBound + 1, this.Dimension));
             if (lowerBound > 0)
             {
-                probs.SetSubvector(0, Vector.Zero(lowerBound + 1));
+                probs.SetSubvector(0, Vector.Zero(lowerBound));
             }
             return new Discrete(probs);
         }
