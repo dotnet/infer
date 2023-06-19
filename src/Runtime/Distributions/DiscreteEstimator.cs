@@ -47,6 +47,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Adds all items in another estimator to this estimator.
+        /// </summary>
+        /// <param name="that">Another estimator</param>
+        public void Add(DiscreteEstimator that)
+        {
+            NProb.SetToSum(NProb, that.NProb);
+            N += that.N;
+        }
+
+        /// <summary>
         /// Adds a discrete distribution item to the estimator
         /// </summary>
         /// <param name="distribution">A Discrete instance</param>
