@@ -51,6 +51,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\src\Csoft\Csoft.csproj" />
     <ProjectReference Include="..\..\src\Runtime\Runtime.csproj" />

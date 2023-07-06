@@ -26,6 +26,8 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Serialization;
 
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
+    using System.Text;
+    using Microsoft.ML.Probabilistic.Learners.Runners;
 
     public class SerializableTests
     {
@@ -82,18 +84,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             mc.AssertEqualTo(mc2);
         }
 
-#if NETFRAMEWORK
-        [Fact]
-        public void BinaryFormatterTest()
-        {
-            var mc = new MyClass();
-            mc.Initialize(skipStringDistributions: true);
-
-            var mc2 = CloneBinaryFormatter(mc);
-            mc.AssertEqualTo(mc2);
-        }
-#endif
-
         [Fact]
         public void JsonNetSerializerTest()
         {
@@ -104,25 +94,31 @@ namespace Microsoft.ML.Probabilistic.Tests
             mc.AssertEqualTo(mc2);
         }
 
-#if NETFRAMEWORK
         [Fact]
         public void VectorSerializeTests()
         {
+            var serializer = SerializationUtils.GetJsonFormatter();
             Sparsity approxSparsity = Sparsity.ApproximateWithTolerance(0.001);
             double[] fromArray = new double[] {1.2, 2.3, 3.4, 1.2, 1.2, 2.3};
             Vector vdense = Vector.FromArray(fromArray);
             Vector vsparse = Vector.FromArray(fromArray, Sparsity.Sparse);
             Vector vapprox = Vector.FromArray(fromArray, approxSparsity);
             MemoryStream stream = new MemoryStream();
-            BinaryFormatter serializer = new BinaryFormatter();
-            serializer.Serialize(stream, vdense);
-            serializer.Serialize(stream, vsparse);
-            serializer.Serialize(stream, vapprox);
+            {
+#pragma warning disable SYSLIB0011
+                serializer.Serialize(stream, vdense);
+                serializer.Serialize(stream, vsparse);
+                serializer.Serialize(stream, vapprox);
+#pragma warning restore SYSLIB0011
+            }
 
             stream.Position = 0;
-            Vector vdense2 = (Vector) serializer.Deserialize(stream);
-            SparseVector vsparse2 = (SparseVector) serializer.Deserialize(stream);
-            ApproximateSparseVector vapprox2 = (ApproximateSparseVector) serializer.Deserialize(stream);
+            var streamReader = new StreamReader(stream);
+#pragma warning disable SYSLIB0011
+            Vector vdense2 = (Vector)serializer.Deserialize(stream);
+            SparseVector vsparse2 = (SparseVector)serializer.Deserialize(stream);
+            ApproximateSparseVector vapprox2 = (ApproximateSparseVector)serializer.Deserialize(stream);
+#pragma warning restore SYSLIB0011
 
             Assert.Equal(6, vdense2.Count);
             for (int i = 0; i < fromArray.Length; i++) Assert.Equal(fromArray[i], vdense2[i]);
@@ -142,7 +138,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(3, vapprox2.SparseValues.Count);
             Assert.True(vapprox2.HasCommonElements);
         }
-#endif
 
         [DataContract]
         [Serializable]
@@ -241,8 +236,6 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 if (!skipStringDistributions)
                 {
-                    // String distributions can not be serialized by some formatters (namely BinaryFormatter)
-                    // That is fine because this combination is never used in practice
                     this.stringDistribution1 = StringDistribution.String("aa")
                         .Append(StringDistribution.OneOf("b", "ccc")).Append("dddd");
                     this.stringDistribution2 = new StringDistribution();
@@ -306,29 +299,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-#if NETFRAMEWORK
-        private static T CloneBinaryFormatter<T>(T obj)
-        {
-            var bf = new BinaryFormatter();
-            using (var ms = new MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                ms.Position = 0;
-                return (T)bf.Deserialize(ms);
-            }
-        }
-#endif
-
         private static T CloneJsonNet<T>(T obj)
         {
-            var serializerSettings = new JsonSerializerSettings
-                                         {
-                                             TypeNameHandling = TypeNameHandling.Auto,
-                                             ContractResolver = new CollectionAsObjectResolver(),
-                                             PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                                         };
-            var serializer = JsonSerializer.Create(serializerSettings);
-
+            var serializer = SerializationUtils.GetJsonSerializer();
             using (var memoryStream = new MemoryStream())
             {
                 var streamWriter = new StreamWriter(memoryStream);
@@ -342,36 +315,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var jsonReader = new JsonTextReader(streamReader);
                 return serializer.Deserialize<T>(jsonReader);
             }
-        }
-    }
-
-    /// <summary>
-    /// Treats as objects distribution member types which implement <see cref="IList{T}"/>.
-    /// </summary>
-    public class CollectionAsObjectResolver : DefaultContractResolver
-    {
-        private static readonly HashSet<Type> SerializeAsObjectTypes = new HashSet<Type>
-            {
-                typeof(Vector),
-                typeof(Matrix),
-                typeof(IArray<>),
-                typeof(ISparseList<>)
-            };
-
-        private static readonly ConcurrentDictionary<Type, JsonContract> ResolvedContracts = new ConcurrentDictionary<Type, JsonContract>();
-
-        public override JsonContract ResolveContract(Type type) => ResolvedContracts.GetOrAdd(type, this.ResolveContractInternal);
-
-        private JsonContract ResolveContractInternal(Type type) => IsExcludedType(type)
-            ? this.CreateObjectContract(type)
-            : this.CreateContract(type);
-
-        private static bool IsExcludedType(Type type)
-        {
-            if (type == null) return false;
-            if (SerializeAsObjectTypes.Contains(type)) return true;
-            if (type.IsGenericType && SerializeAsObjectTypes.Contains(type.GetGenericTypeDefinition())) return true;
-            return IsExcludedType(type.BaseType) || type.GetInterfaces().Any(IsExcludedType);
         }
     }
 }

@@ -26,6 +26,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using BoolPredictiveDistribution = System.Collections.Generic.Dictionary<bool, double>;
     using IntPredictiveDistribution = System.Collections.Generic.Dictionary<int, double>;
     using Microsoft.ML.Probabilistic.Models;
+    using System.Runtime.InteropServices.ComTypes;
+    using Microsoft.ML.Probabilistic.Learners.Runners;
 
     /// <summary>
     /// Tests for the Bayes point machine classifier.
@@ -5042,13 +5044,15 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
 
-            classifier.Save(UntrainedFileName);
+            var formatter = SerializationUtils.GetJsonFormatter();
+
+            classifier.Save(UntrainedFileName, formatter);
             classifier.Train(trainingData);
-            classifier.Save(TrainedFileName);
+            classifier.Save(TrainedFileName, formatter);
 
             // Deserialize and test
-            var trainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(TrainedFileName);
-            var untrainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(UntrainedFileName);
+            var trainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(TrainedFileName, formatter);
+            var untrainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(UntrainedFileName, formatter);
 
             untrainedClassifier.Train(trainingData);
 
@@ -5090,19 +5094,20 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier together with its mapping
-            mapping.SaveForwardCompatible(UntrainedFileName); 
-            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+            var formatter = SerializationUtils.GetJsonFormatter(); 
+            mapping.SaveForwardCompatible(UntrainedFileName, formatter); 
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter, FileMode.Append);
 
             classifier.Train(trainingData);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
@@ -5110,7 +5115,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 var deserializedMapping1 = new BinaryNativeBayesPointMachineClassifierTestMapping(reader);
                 var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping1);
                 return (untrainedClassifier1, deserializedMapping1);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5136,9 +5142,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<Bernoulli> expectedIncrementalLabelDistributions,
             Action<IEnumerable<Bernoulli>, IEnumerable<Bernoulli>, double> checkPrediction)
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             foreach (string fileName in fileNames)
             {
-                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(fileName, binaryNativeMapping);
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(fileName, binaryNativeMapping, formatter);
                 CheckDeserializedNativePrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
         }
@@ -5170,19 +5177,20 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier together with its mapping
-            mapping.SaveForwardCompatible(UntrainedFileName);
-            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            mapping.SaveForwardCompatible(UntrainedFileName, formatter);
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter, FileMode.Append);
 
             classifier.Train(trainingData);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
@@ -5190,7 +5198,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 var deserializedMapping1 = new MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
                 var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping1);
                 return (untrainedClassifier1, deserializedMapping1);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5216,9 +5225,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<Discrete> expectedIncrementalLabelDistributions,
             Action<IEnumerable<Discrete>, IEnumerable<Discrete>, double> checkPrediction)
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             foreach (string fileName in fileNames)
             {
-                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(fileName, multiclassNativeMapping);
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(fileName, multiclassNativeMapping, formatter);
                 CheckDeserializedNativePrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
         }
@@ -5249,24 +5259,26 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier
-            classifier.SaveForwardCompatible(UntrainedFileName);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter);
 
             classifier.Train(trainingData, trainingLabels);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
                 return BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction, trainingLabels);
@@ -5297,26 +5309,28 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier together with its mapping
-            mapping.SaveForwardCompatible(UntrainedFileName);
-            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            mapping.SaveForwardCompatible(UntrainedFileName, formatter);
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter, FileMode.Append);
 
             classifier.Train(trainingData);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
                 var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
                 return BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(reader, deserializedMapping);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5344,7 +5358,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             foreach (string fileName in fileNames)
             {
-                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(fileName, binaryStandardMapping);
+                var formatter = SerializationUtils.GetJsonFormatter();
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(fileName, binaryStandardMapping, formatter);
                 CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
         }
@@ -5375,24 +5390,26 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier
-            classifier.SaveForwardCompatible(UntrainedFileName);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter);
 
             classifier.Train(trainingData, trainingLabels);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
                 return BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction, trainingLabels);
@@ -5423,26 +5440,28 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier together with its mapping
-            mapping.SaveForwardCompatible(UntrainedFileName);
-            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            mapping.SaveForwardCompatible(UntrainedFileName, formatter);
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter, FileMode.Append);
 
             classifier.Train(trainingData);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
                 var deserializedMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
                 return BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(reader, deserializedMapping);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5468,9 +5487,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
             Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             foreach (string fileName in fileNames)
             {
-                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(fileName, multiclassStandardMapping);
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(fileName, multiclassStandardMapping, formatter);
                 CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
         }
@@ -5501,19 +5521,20 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier together with its mapping
-            mapping.SaveForwardCompatible(UntrainedFileName);
-            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            mapping.SaveForwardCompatible(UntrainedFileName, formatter);
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter, FileMode.Append);
 
             classifier.Train(trainingData);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
@@ -5521,7 +5542,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 var deserializedMapping1 = new BinaryNativeBayesPointMachineClassifierTestMapping(reader);
                 var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping1);
                 return (untrainedClassifier1, deserializedMapping1);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5547,9 +5569,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<Bernoulli> expectedIncrementalLabelDistributions,
             Action<IEnumerable<Bernoulli>, IEnumerable<Bernoulli>, double> checkPrediction)
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             foreach (string fileName in fileNames)
             {
-                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(fileName, binaryNativeMapping);
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(fileName, binaryNativeMapping, formatter);
                 CheckDeserializedNativePrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
         }
@@ -5580,19 +5603,20 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier together with its mapping
-            mapping.SaveForwardCompatible(UntrainedFileName);
-            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            mapping.SaveForwardCompatible(UntrainedFileName, formatter);
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter, FileMode.Append);
 
             classifier.Train(trainingData);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var (untrainedClassifier, deserializedMapping) = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
@@ -5600,7 +5624,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 var deserializedMapping1 = new MulticlassNativeBayesPointMachineClassifierTestMapping(reader);
                 var untrainedClassifier1 = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping1);
                 return (untrainedClassifier1, deserializedMapping1);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedNativePrediction(trainedClassifier, untrainedClassifier, deserializedMapping, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5626,9 +5651,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<Discrete> expectedIncrementalLabelDistributions,
             Action<IEnumerable<Discrete>, IEnumerable<Discrete>, double> checkPrediction)
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             foreach (string fileName in fileNames)
             {
-                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(fileName, multiclassNativeMapping);
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(fileName, multiclassNativeMapping, formatter);
                 CheckDeserializedNativePrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
         }
@@ -5659,26 +5685,28 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier together with its mapping
-            mapping.SaveForwardCompatible(UntrainedFileName);
-            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            mapping.SaveForwardCompatible(UntrainedFileName, formatter);
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter, FileMode.Append);
 
             classifier.Train(trainingData);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
                 var deserializedMapping = new BinaryStandardBayesPointMachineClassifierTestMapping(reader);
                 return BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, deserializedMapping);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5704,9 +5732,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
             Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             foreach (string fileName in fileNames)
             {
-                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(fileName, binaryStandardMapping);
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(fileName, binaryStandardMapping, formatter);
                 CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
         }
@@ -5737,26 +5766,28 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.IterationCount = IterationCount;
 
             // Save untrained classifier together with its mapping
-            mapping.SaveForwardCompatible(UntrainedFileName);
-            classifier.SaveForwardCompatible(UntrainedFileName, FileMode.Append);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            mapping.SaveForwardCompatible(UntrainedFileName, formatter);
+            classifier.SaveForwardCompatible(UntrainedFileName, formatter, FileMode.Append);
 
             classifier.Train(trainingData);
 
             // Save trained classifier without its mapping
-            classifier.SaveForwardCompatible(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName, formatter);
 
             // Check wrong versions throw a serialization exception
             CheckCustomSerializationVersionException(reader => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, mapping));
 
             // Deserialize classifier alone
-            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(TrainedFileName, mapping);
+            var trainedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(TrainedFileName, mapping, formatter);
 
             // Deserialize both classifier and mapping
             var untrainedClassifier = BayesPointMachineClassifier.WithReader(UntrainedFileName, reader =>
             {
                 var deserializedMapping = new MulticlassStandardBayesPointMachineClassifierTestMapping(reader);
                 return BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, deserializedMapping);
-            });
+            },
+            formatter);
 
             // Check predictions of deserialized classifiers
             CheckDeserializedStandardPrediction(trainedClassifier, untrainedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
@@ -5782,9 +5813,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             IEnumerable<IDictionary<string, double>> expectedIncrementalLabelDistributions,
             Action<IEnumerable<IDictionary<string, double>>, IEnumerable<IDictionary<string, double>>, double> checkPrediction)
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             foreach (string fileName in fileNames)
             {
-                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(fileName, multiclassStandardMapping);
+                var deserializedClassifier = BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(fileName, multiclassStandardMapping, formatter);
                 CheckDeserializedStandardPrediction(deserializedClassifier, trainingData, testData, expectedLabelDistributions, expectedIncrementalLabelDistributions, checkPrediction);
             }
         }
@@ -5967,14 +5999,15 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="deserialize">The action which deserializes from a binary reader.</param>
         private static void CheckCustomSerializationVersionException(Action<IReader> deserialize)
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             using (var stream = new MemoryStream())
             {
-                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream), formatter);
                 writer.Write(new Guid("57CB3182-7C83-49F3-B56D-C3C7661439F5")); // Invalid serialization guid
                 
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream), formatter))
                 {
                     Assert.Throws<SerializationException>(() => deserialize(reader));
                 }

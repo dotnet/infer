@@ -26,6 +26,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         Microsoft.ML.Probabilistic.Distributions.DistributionRefArray<Microsoft.ML.Probabilistic.Distributions.DistributionStructArray<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>, double[]>;
     using Microsoft.ML.Probabilistic.Models.Attributes;
     using Range = Microsoft.ML.Probabilistic.Models.Range;
+    using Microsoft.ML.Probabilistic.Learners.Runners;
 
     /// <summary>
     /// Matchbox recommender tests
@@ -679,20 +680,19 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
 
-#if NETFRAMEWORK
-                if (false)
+                var serializer = SerializationUtils.GetJsonFormatter();
+                using (var writer = new FileStream("userTraits.bin", FileMode.Create))
                 {
-                    BinaryFormatter serializer = new BinaryFormatter();
-                    using (var writer = new FileStream("userTraits.bin", FileMode.Create))
-                    {
-                        serializer.Serialize(writer, engine.Infer(userTraits));
-                    }
-                    using (var writer = new FileStream("itemTraits.bin", FileMode.Create))
-                    {
-                        serializer.Serialize(writer, engine.Infer(itemTraits));
-                    }
+#pragma warning disable SYSLIB0011
+                    serializer.Serialize(writer, engine.Infer(userTraits));
+#pragma warning restore SYSLIB0011
                 }
-#endif
+                using (var writer = new FileStream("itemTraits.bin", FileMode.Create))
+                {
+#pragma warning disable SYSLIB0011
+                    serializer.Serialize(writer, engine.Infer(itemTraits));
+#pragma warning restore SYSLIB0011
+                }
 
                 // test resetting inference
                 if (engine.Compiler.ReturnCopies)

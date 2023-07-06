@@ -8,6 +8,7 @@ namespace Microsoft.ML.Probabilistic.Learners
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using System.Runtime.InteropServices.ComTypes;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
@@ -28,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </summary>
         /// <param name="learner">The learner to serialize.</param>
         /// <param name="fileName">The name of the file.</param>
-        public static void Save(this ILearner learner, string fileName)
+        public static void Save(this ILearner learner, string fileName, IFormatter formatter)
         {
             if (learner == null)
             {
@@ -42,7 +43,6 @@ namespace Microsoft.ML.Probabilistic.Learners
 
             using (Stream stream = File.Open(fileName, FileMode.Create))
             {
-                var formatter = new BinaryFormatter();
                 learner.Save(stream, formatter);
             }
         }
@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The name of the file.</param>
         /// <param name="fileMode">The mode used to open the file. Defaults to <see cref="FileMode.Create"/>.</param>
         /// <remarks>To load a saved learner, you can use the factory methods whose names start with LoadBackwardCompatible.</remarks>
-        public static void SaveForwardCompatible(this ICustomSerializable obj, string fileName, FileMode fileMode = FileMode.Create)
+        public static void SaveForwardCompatible(this ICustomSerializable obj, string fileName, IFormatter formatter, FileMode fileMode = FileMode.Create)
         {
             if (obj == null)
             {
@@ -97,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             {
                 if (fileName.EndsWith(".bin"))
                 {
-                    obj.SaveForwardCompatibleAsBinary(stream);
+                    obj.SaveForwardCompatibleAsBinary(stream, formatter);
                 }
                 else
                 {
@@ -112,7 +112,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="obj">The object to be serialized.</param>
         /// <param name="stream">The serialization stream.</param>
         /// <remarks>To load a saved learner, you can use the factory methods whose names start with LoadBackwardCompatible.</remarks>
-        public static void SaveForwardCompatibleAsBinary(this ICustomSerializable obj, Stream stream)
+        public static void SaveForwardCompatibleAsBinary(this ICustomSerializable obj, Stream stream, IFormatter formatter)
         {
             if (obj == null)
             {
@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var writer = new WrappedBinaryWriter(new BinaryWriter(stream, Encoding.UTF8, true)))
+            using (var writer = new WrappedBinaryWriter(new BinaryWriter(stream, Encoding.UTF8, true), formatter))
             {
                 obj.SaveForwardCompatible(writer);
             }
@@ -187,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TLearner">The type of a learner.</typeparam>
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized learner object.</returns>
-        public static TLearner Load<TLearner>(string fileName)
+        public static TLearner Load<TLearner>(string fileName, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -196,7 +196,6 @@ namespace Microsoft.ML.Probabilistic.Learners
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
             {
-                var formatter = new BinaryFormatter();
                 return Load<TLearner>(stream, formatter);
             }
         }

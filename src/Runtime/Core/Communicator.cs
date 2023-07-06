@@ -263,15 +263,6 @@ namespace Microsoft.ML.Probabilistic
             }
         }
 
-        /// <summary>
-        /// Does not work with BinaryFormatter.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="comm"></param>
-        /// <param name="inputArray"></param>
-        /// <param name="indicesToSend"></param>
-        /// <param name="outputArray"></param>
-        /// <param name="indicesToReceive"></param>
         public static void AlltoallSubarrays2<T>(ICommunicator comm, IReadOnlyList<T> inputArray, ICollection<int>[] indicesToSend, IList<T> outputArray, ICollection<int>[] indicesToReceive)
         {
             var sendCounts = indicesToSend.Select(indices => indices.Count).ToArray();

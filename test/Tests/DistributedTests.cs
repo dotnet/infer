@@ -32,6 +32,8 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Compiler;
     using Microsoft.ML.Probabilistic.Algorithms;
     using Microsoft.ML.Probabilistic.Models.Attributes;
+    using System.Runtime.Serialization;
+    using Microsoft.ML.Probabilistic.Learners.Runners;
 
     public class DistributedTests
     {
@@ -1160,8 +1162,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "DistributedTest")]
         public void FileArrayTest()
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             string folder = FileArray<double>.GetTempFolder("doubles");
-            FileArray<double> doubles = new FileArray<double>(folder, 4, i => 1.0 + i);
+            FileArray<double> doubles = new FileArray<double>(folder, 4, i => 1.0 + i, formatter);
             for (int i = 0; i < doubles.Count; i++)
             {
                 double x = doubles[i];
@@ -1417,7 +1420,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 {
                     return;
                 }
-                this.w_rep0_B = new DistributionFileArray<GaussianArray, double[]>(FileArray<bool>.GetTempFolder("w_rep0_B"), 2);
+
+                var formatter = SerializationUtils.GetJsonFormatter();
+                this.w_rep0_B = new DistributionFileArray<GaussianArray, double[]>(FileArray<bool>.GetTempFolder("w_rep0_B"), 2, formatter);
                 for (int item = 0; item < 2; item++)
                 {
                     this.w_rep0_B[item] = new GaussianArray(2);

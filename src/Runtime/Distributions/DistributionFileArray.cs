@@ -46,20 +46,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
             IDistribution<DomainType>,
             Sampleable<DomainType>
     {
-        public DistributionFileArray(string prefix, int count, [SkipIfUniform] Func<int, T> init)
-            : base(prefix, count, init)
+        public DistributionFileArray(string prefix, int count, [SkipIfUniform] Func<int, T> init, IFormatter formatter)
+            : base(prefix, count, init, formatter)
         {
         }
 
         [Skip]
-        public DistributionFileArray(string prefix, int count)
-            : base(prefix, count)
+        public DistributionFileArray(string prefix, int count, IFormatter formatter)
+            : base(prefix, count, formatter)
         {
         }
 
         [Skip]
-        public DistributionFileArray([IgnoreDeclaration] FileArray<DistributionFileArray<T, DomainType>> parent, int index, int count)
-            : this(parent.GetItemFolder(index), count)
+        public DistributionFileArray([IgnoreDeclaration] FileArray<DistributionFileArray<T, DomainType>> parent, int index, int count, IFormatter formatter)
+            : this(parent.GetItemFolder(index), count, formatter)
         {
             parent.containsFileArrays = true;
             this.doNotDelete = true;
@@ -70,7 +70,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (containsFileArrays) throw new NotImplementedException();
             string folder = prefix.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-            return new DistributionFileArray<T, DomainType>(folder + "_clone", count, i => this[i]);
+            return new DistributionFileArray<T, DomainType>(folder + "_clone", count, i => this[i], formatter);
         }
 
         public void SetTo(DistributionFileArray<T, DomainType> value)

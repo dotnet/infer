@@ -15,6 +15,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Serialization;
+    using System.Runtime.Serialization;
+    using Microsoft.ML.Probabilistic.Learners.Runners;
 
     /// <summary>
     /// Tests for the negative data generator.
@@ -114,11 +116,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             var negativeDataGeneratorMapping = positiveOnlyMapping.WithGeneratedNegativeData(1.0);
             using (Stream stream = new MemoryStream())
             {
-                negativeDataGeneratorMapping.SaveForwardCompatibleAsBinary(stream);
-
+                var formatter = SerializationUtils.GetJsonFormatter();
+                negativeDataGeneratorMapping.SaveForwardCompatibleAsBinary(stream, formatter);
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream), formatter))
                 {
                     var deserializedMapping =
                         new NegativeDataGeneratorMapping<PositiveOnlyDataset, Tuple<string, string>, string, string, FeatureProvider, Vector>(reader, positiveOnlyMapping);

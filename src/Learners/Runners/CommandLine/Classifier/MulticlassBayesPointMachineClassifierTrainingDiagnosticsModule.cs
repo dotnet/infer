@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.Serialization;
+
 namespace Microsoft.ML.Probabilistic.Learners.Runners
 {
     /// <summary>
@@ -42,7 +44,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             classifier.Settings.Training.IterationCount = iterationCount;
             classifier.Settings.Training.BatchCount = batchCount;
 
-            BayesPointMachineClassifierModuleUtilities.DiagnoseClassifier(classifier, trainingSet, maxParameterChangesFile, modelFile);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            BayesPointMachineClassifierModuleUtilities.DiagnoseClassifier(classifier, trainingSet, maxParameterChangesFile, modelFile, formatter);
 
             return true;
         }

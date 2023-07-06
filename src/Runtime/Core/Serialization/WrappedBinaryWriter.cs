@@ -6,14 +6,17 @@ namespace Microsoft.ML.Probabilistic.Serialization
 {
     using System;
     using System.IO;
+    using System.Runtime.Serialization;
 
     public class WrappedBinaryWriter : IWriter, IDisposable
     {
-        BinaryWriter binaryWriter;
+        readonly BinaryWriter binaryWriter;
+        readonly IFormatter formatter;
 
-        public WrappedBinaryWriter(BinaryWriter binaryWriter)
+        public WrappedBinaryWriter(BinaryWriter binaryWriter, IFormatter formatter)
         {
             this.binaryWriter = binaryWriter;
+            this.formatter = formatter;
         }
 
         public void Dispose()
@@ -48,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
         public void WriteObject(object value)
         {
-            binaryWriter.WriteObject(value);
+            binaryWriter.WriteObject(value, formatter);
         }
     }
 }

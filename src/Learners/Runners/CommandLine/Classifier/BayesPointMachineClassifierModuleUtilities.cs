@@ -9,7 +9,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
-
+    using System.Runtime.Serialization;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
@@ -31,7 +31,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             IBayesPointMachineClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<string>> classifier,
             IList<LabeledFeatureValues> trainingSet,
             string maxParameterChangesFileName,
-            string modelFileName)
+            string modelFileName,
+            IFormatter formatter)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             // Create prior distributions over weights
@@ -98,7 +99,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             // Save trained model
             if (!string.IsNullOrEmpty(modelFileName))
             {
-                classifier.Save(modelFileName);
+                classifier.Save(modelFileName, formatter);
             }
         }
 

@@ -95,14 +95,14 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="reader">The reader of the binary stream.</param>
         /// <returns>The object constructed from the binary stream.</returns>
-        public static T ReadObject<T>(this BinaryReader reader)
+        public static T ReadObject<T>(this BinaryReader reader, IFormatter formatter)
         {
             if (reader == null)
             {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return ByteArrayToObject<T>(reader.ReadByteArray());
+            return ByteArrayToObject<T>(reader.ReadByteArray(), formatter);
         }
 
         /// <summary>
@@ -268,16 +268,15 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="array">The byte array to convert.</param>
         /// <returns>The object for the specified byte array.</returns>
-        private static T ByteArrayToObject<T>(byte[] array)
+        private static T ByteArrayToObject<T>(byte[] array, IFormatter formatter)
         {
             Debug.Assert(array != null, "The array must not be null.");
 
             using (var memoryStream = new MemoryStream())
             {
-                var binaryFormatter = new BinaryFormatter();
                 memoryStream.Write(array, 0, array.Length);
                 memoryStream.Seek(0, SeekOrigin.Begin);
-                return (T)binaryFormatter.Deserialize(memoryStream);
+                return (T)formatter.Deserialize(memoryStream);
             }
         }
 

@@ -13,6 +13,7 @@ using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Models.Attributes;
 using Range = Microsoft.ML.Probabilistic.Models.Range;
+using Microsoft.ML.Probabilistic.Learners.Runners;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -136,21 +137,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
             writer.Dispose();
-#if NETFRAMEWORK
-            // In the .NET 5.0 BinaryFormatter is obsolete
-            // and would produce errors. This test code should be migrated. 
-            // See https://aka.ms/binaryformatter
 
-            if (true)
+            using (Stream stream = File.Create(Path.Combine(dataFolder, "weights.bin")))
             {
-                BinaryFormatter serializer = new BinaryFormatter();
-                using (Stream stream = File.Create(Path.Combine(dataFolder, "weights.bin")))
-                {
-                    serializer.Serialize(stream, train.wPost);
-                    serializer.Serialize(stream, train.biasPost);
-                }
+                var serializer = SerializationUtils.GetJsonFormatter();
+#pragma warning disable SYSLIB0011
+                serializer.Serialize(stream, train.wPost);
+                serializer.Serialize(stream, train.biasPost);
+#pragma warning restore SYSLIB0011
             }
-#endif
         }
 
         // (0.5,0.5):
@@ -170,16 +165,17 @@ namespace Microsoft.ML.Probabilistic.Tests
 #pragma warning restore 162
 #endif
 
-#if NETFRAMEWORK
         public static void Rcv1Test2()
         {
             GaussianArray wPost;
             Gaussian biasPost;
-            BinaryFormatter serializer = new BinaryFormatter();
+            var serializer = SerializationUtils.GetJsonFormatter();
             using (Stream stream = File.OpenRead(Path.Combine(dataFolder, "weights.bin")))
             {
+#pragma warning disable SYSLIB0011
                 wPost = (GaussianArray)serializer.Deserialize(stream);
                 biasPost = (Gaussian)serializer.Deserialize(stream);
+#pragma warning restore SYSLIB0011
             }
             if (true)
             {
@@ -199,7 +195,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
             Console.WriteLine("error rate = {0} = {1}/{2}", (double) errors/count, errors, count);
         }
-#endif
 
         public static void Rcv1Test3()
         {

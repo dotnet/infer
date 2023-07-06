@@ -7,6 +7,7 @@ namespace Microsoft.ML.Probabilistic.Learners
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Runtime.InteropServices.ComTypes;
     using System.Runtime.Serialization;
     using System.Text;
 
@@ -122,11 +123,11 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized Bayes point machine classifier object.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>
-            Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>(string fileName)
+            Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>(string fileName, IFormatter formatter)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
             where TPredictionSettings : IBayesPointMachineClassifierPredictionSettings<TLabel>
         {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>>(fileName);
+            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, TPredictionSettings>>(fileName, formatter);
         }
 
         /// <summary>
@@ -162,10 +163,10 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized binary Bayes point machine classifier object.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(string fileName)
+            LoadBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(string fileName, IFormatter formatter)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
+            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName, formatter);
         }
 
         /// <summary>
@@ -199,10 +200,10 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized multi-class Bayes point machine classifier object.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(string fileName)
+            LoadMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(string fileName, IFormatter formatter)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
+            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName, formatter);
         }
 
         /// <summary>
@@ -235,9 +236,9 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized binary Bayes point machine classifier object.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
+            LoadBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName, IFormatter formatter)
         {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
+            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName, formatter);
         }
 
         /// <summary>
@@ -268,9 +269,9 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized multi-class Bayes point machine classifier object.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
+            LoadMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName, IFormatter formatter)
         {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
+            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName, formatter);
         }
 
         /// <summary>
@@ -331,7 +332,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The binary Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
             LoadBackwardCompatibleBinaryClassifier<TInstanceSource, TInstance, TLabelSource>(
-                string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
+                string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -341,7 +342,8 @@ namespace Microsoft.ML.Probabilistic.Learners
             return WithReader(fileName, reader =>
             {
                 return LoadBackwardCompatibleBinaryClassifier(reader, mapping);
-            });
+            },
+            formatter);
         }
 
         /// <summary>
@@ -381,7 +383,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
             LoadBackwardCompatibleMulticlassClassifier<TInstanceSource, TInstance, TLabelSource>(
-                string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
+                string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -391,7 +393,8 @@ namespace Microsoft.ML.Probabilistic.Learners
             return WithReader(fileName, reader =>
             {
                 return LoadBackwardCompatibleMulticlassClassifier(reader, mapping);
-            });
+            },
+            formatter);
         }
 
         /// <summary>
@@ -433,7 +436,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The binary Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, BayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
-                string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
+                string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -443,7 +446,8 @@ namespace Microsoft.ML.Probabilistic.Learners
             return WithReader(fileName, reader =>
             {
                 return LoadBackwardCompatibleBinaryClassifier(reader, mapping);
-            });
+            },
+            formatter);
         }
 
         /// <summary>
@@ -485,7 +489,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, BayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
-                string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
+                string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -495,7 +499,8 @@ namespace Microsoft.ML.Probabilistic.Learners
             return WithReader(fileName, reader =>
             {
                 return LoadBackwardCompatibleMulticlassClassifier(reader, mapping);
-            });
+            },
+            formatter);
         }
 
         #endregion
@@ -604,9 +609,9 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized binary Bayes point machine classifier object.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
+            LoadGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName, IFormatter formatter)
         {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
+            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName, formatter);
         }
 
         /// <summary>
@@ -639,9 +644,9 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="fileName">The file name.</param>
         /// <returns>The deserialized multi-class Bayes point machine classifier object.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
-            LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName)
+            LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution>(string fileName, IFormatter formatter)
         {
-            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName);
+            return Utilities.Load<IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>>(fileName, formatter);
         }
 
         /// <summary>
@@ -705,7 +710,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The binary Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<bool>>
             LoadBackwardCompatibleGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource>(
-                string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
+                string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -715,7 +720,8 @@ namespace Microsoft.ML.Probabilistic.Learners
             return WithReader(fileName, reader =>
             {
                 return LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, mapping);
-            });
+            },
+            formatter);
         }
 
         /// <summary>
@@ -757,7 +763,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<int>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource>(
-                string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping)
+                string fileName, IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, int> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -767,7 +773,8 @@ namespace Microsoft.ML.Probabilistic.Learners
             return WithReader(fileName, reader =>
             {
                 return LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, mapping);
-            });
+            },
+            formatter);
         }
 
         /// <summary>
@@ -811,7 +818,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The binary Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, BinaryBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorBinaryClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
-                string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
+                string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -821,7 +828,8 @@ namespace Microsoft.ML.Probabilistic.Learners
             return WithReader(fileName, reader =>
             {
                 return LoadBackwardCompatibleGaussianPriorBinaryClassifier(reader, mapping);
-            });
+            },
+            formatter);
         }
 
         /// <summary>
@@ -865,7 +873,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The multi-class Bayes point machine classifier instance.</returns>
         public static IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, IDictionary<TLabel, double>, GaussianBayesPointMachineClassifierTrainingSettings, MulticlassBayesPointMachineClassifierPredictionSettings<TLabel>>
             LoadBackwardCompatibleGaussianPriorMulticlassClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(
-                string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping)
+                string fileName, IClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel, Vector> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -875,18 +883,19 @@ namespace Microsoft.ML.Probabilistic.Learners
             return WithReader(fileName, reader =>
             {
                 return LoadBackwardCompatibleGaussianPriorMulticlassClassifier(reader, mapping);
-            });
+            },
+            formatter);
         }
 
         #endregion
 
-        internal static T WithReader<T>(string fileName, Func<IReader, T> action)
+        internal static T WithReader<T>(string fileName, Func<IReader, T> action, IFormatter formatter)
         {
             using (var stream = File.Open(fileName, FileMode.Open))
             {
                 if (fileName.EndsWith(".bin"))
                 {
-                    using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                    using (var reader = new WrappedBinaryReader(new BinaryReader(stream), formatter))
                     {
                         return action(reader);
                     }
