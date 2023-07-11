@@ -131,7 +131,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 auc.Add(evaluator.AreaUnderRocCurve(validationSet, predictions));
 
                 // Compute log evidence if desired
-                evidence.Add(computeModelEvidence ? classifier.LogModelEvidence : double.NaN);
+                evidence.Add(computeModelEvidence ? classifier.GetLogModelEvidence() : double.NaN);
 
                 // Persist performance metrics
                 Console.WriteLine(

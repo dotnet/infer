@@ -53,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
             if (classifier.Settings.Training.ComputeModelEvidence)
             {
-                Console.WriteLine("Log evidence = {0,10:0.0000}", classifier.LogModelEvidence);
+                Console.WriteLine("Log evidence = {0,10:0.0000}", classifier.GetLogModelEvidence());
             }
 
             var formatter = SerializationUtils.GetJsonFormatter();

@@ -13,6 +13,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Learners.Mappings;
     using Microsoft.ML.Probabilistic.Serialization;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// An abstract Bayes point machine classifier which operates on 
@@ -158,44 +159,38 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// Gets the natural logarithm of the evidence for the Bayes point machine classifier model. 
         /// Use this for model selection.
         /// </summary>
-        public double LogModelEvidence
+        public double GetLogModelEvidence()
         {
-            get
+            if (!this.Settings.Training.ComputeModelEvidence)
             {
-                if (!this.Settings.Training.ComputeModelEvidence)
-                {
-                    throw new InvalidOperationException("Evidence is only computed during training when Settings.ComputeModelEvidence is set to true.");
-                }
-
-                if (!this.IsTrained)
-                {
-                    throw new InvalidOperationException("Evidence can only be obtained from a trained model.");
-                }
-
-                if (this.isIncrementallyTrained)
-                {
-                    throw new InvalidOperationException("Evidence cannot be obtained from an incrementally trained model.");
-                }
-
-                return this.logModelEvidence;
+                throw new InvalidOperationException("Evidence is only computed during training when Settings.ComputeModelEvidence is set to true.");
             }
+
+            if (!this.IsTrained)
+            {
+                throw new InvalidOperationException("Evidence can only be obtained from a trained model.");
+            }
+
+            if (this.isIncrementallyTrained)
+            {
+                throw new InvalidOperationException("Evidence cannot be obtained from an incrementally trained model.");
+            }
+
+            return this.logModelEvidence;
         }
 
         /// <summary>
         /// Gets the posterior distributions over the weights of the Bayes point machine classifier.
         /// </summary>
-        public IReadOnlyList<IReadOnlyList<Gaussian>> WeightPosteriorDistributions
+        public IReadOnlyList<IReadOnlyList<Gaussian>> GetWeightPosteriorDistributions()
         {
-            get
+            if (!this.IsTrained)
             {
-                if (!this.IsTrained)
-                {
-                    throw new InvalidOperationException(
-                        "The posterior distributions over weights can only be obtained from a trained classifier.");
-                }
-
-                return this.InferenceAlgorithms.WeightDistributions;
+                throw new InvalidOperationException(
+                    "The posterior distributions over weights can only be obtained from a trained classifier.");
             }
+
+            return this.InferenceAlgorithms.WeightDistributions;
         }
 
         /// <summary>

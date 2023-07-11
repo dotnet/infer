@@ -37,11 +37,11 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <summary>
         /// Gets the natural logarithm of the model evidence. Use this for model selection.
         /// </summary>
-        double LogModelEvidence { get; }
+        double GetLogModelEvidence();
 
         /// <summary>
         /// Gets the posterior distributions of the weights of the Bayes point machine classifier.
         /// </summary>
-        IReadOnlyList<IReadOnlyList<Gaussian>> WeightPosteriorDistributions { get; }
+        IReadOnlyList<IReadOnlyList<Gaussian>> GetWeightPosteriorDistributions();
     }
 }

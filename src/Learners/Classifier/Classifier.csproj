@@ -33,4 +33,8 @@
     <Compile Include="..\..\Shared\SharedAssemblyFileVersion.cs" />
     <Compile Include="..\..\Shared\SharedAssemblyInfo.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
 </Project>

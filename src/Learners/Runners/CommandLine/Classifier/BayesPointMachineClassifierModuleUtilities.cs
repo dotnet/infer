@@ -93,7 +93,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             // Compute evidence
             if (classifier.Settings.Training.ComputeModelEvidence)
             {
-                Console.WriteLine("Log evidence = {0,10:0.0000}", classifier.LogModelEvidence);
+                Console.WriteLine("Log evidence = {0,10:0.0000}", classifier.GetLogModelEvidence());
             }
 
             // Save trained model
@@ -288,7 +288,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             Debug.Assert(classifier != null, "The classifier must not be null.");
 
-            IReadOnlyList<IReadOnlyList<Gaussian>> weightPosteriorDistributions = classifier.WeightPosteriorDistributions;
+            IReadOnlyList<IReadOnlyList<Gaussian>> weightPosteriorDistributions = classifier.GetWeightPosteriorDistributions();
             int classCount = weightPosteriorDistributions.Count < 2 ? 2 : weightPosteriorDistributions.Count;
             int featureCount = weightPosteriorDistributions[0].Count;
 

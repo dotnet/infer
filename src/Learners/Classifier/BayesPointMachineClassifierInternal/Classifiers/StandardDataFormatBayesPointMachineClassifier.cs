@@ -117,18 +117,16 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <summary>
         /// Gets the natural logarithm of the model evidence. Use this for model selection.
         /// </summary>
-        public double LogModelEvidence
+        public double GetLogModelEvidence()
         {
-            get { return this.Classifier.LogModelEvidence; }
+            return this.Classifier.GetLogModelEvidence();
         }
 
         /// <summary>
         /// Gets the posterior distributions of the weights of the Bayes point machine classifier.
         /// </summary>
-        public IReadOnlyList<IReadOnlyList<Gaussian>> WeightPosteriorDistributions
-        {
-            get { return this.Classifier.WeightPosteriorDistributions; }
-        }
+        public IReadOnlyList<IReadOnlyList<Gaussian>> GetWeightPosteriorDistributions()
+        { return this.Classifier.GetWeightPosteriorDistributions(); }
 
         /// <summary>
         /// Gets or sets the Bayes point machine classifier which operates on data in the native format.

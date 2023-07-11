@@ -523,6 +523,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseBinaryNativeCustomSerializationRegressionTest()
         {
+            // FROM HERE
             TestBinaryNativeClassifierCustomSerializationRegression(
                 this.denseNativeTrainingData, 
                 this.denseNativePredictionData,
@@ -4941,7 +4942,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 () =>
                 {
                     classifier.Settings.Training.ComputeModelEvidence = true;
-                    Assert.True(classifier.LogModelEvidence <= 0.0);
+                    Assert.True(classifier.GetLogModelEvidence() <= 0.0);
                 });
         }
 
@@ -4978,11 +4979,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             // Check model evidence
             classifier.Train(instanceSource);
-            Assert.Equal(expectedLogEvidence, classifier.LogModelEvidence, Tolerance);
+            Assert.Equal(expectedLogEvidence, classifier.GetLogModelEvidence(), Tolerance);
 
             // Incremental training: no evidence
             classifier.TrainIncremental(instanceSource);
-            Assert.Throws<InvalidOperationException>(() => { double logEvidence = classifier.LogModelEvidence; });
+            Assert.Throws<InvalidOperationException>(() => { double logEvidence = classifier.GetLogModelEvidence(); });
 
             if (mapping != null)
             {
@@ -5010,7 +5011,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Throws<InvalidOperationException>(() =>
             {
                 classifier.Train(instanceSource);
-                Assert.True(classifier.LogModelEvidence <= 0.0);
+                Assert.True(classifier.GetLogModelEvidence() <= 0.0);
             });
         }
 
@@ -6285,7 +6286,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                  () => classifier.Settings.Prediction.SetPredictionLossFunction(LossFunction.Absolute, Metrics.ZeroOneError)); // Inconsistent settings: Throw
 
             IReadOnlyList<IReadOnlyList<Gaussian>> weightPosteriorDistributions;
-            Assert.Throws<InvalidOperationException>(() => { weightPosteriorDistributions = classifier.WeightPosteriorDistributions; }); // Posterior weights distribution: Throw
+            Assert.Throws<InvalidOperationException>(() => { weightPosteriorDistributions = classifier.GetWeightPosteriorDistributions(); }); // Posterior weights distribution: Throw
 
             // Training
             classifier.Train(instanceSource, labelSource);
@@ -6297,7 +6298,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Training.BatchCount = 3; // OK
             classifier.Settings.Prediction.SetPredictionLossFunction(LossFunction.ZeroOne); // OK
             classifier.Settings.Prediction.SetPredictionLossFunction(LossFunction.Custom, Metrics.ZeroOneError); // OK
-            weightPosteriorDistributions = classifier.WeightPosteriorDistributions; // OK
+            weightPosteriorDistributions = classifier.GetWeightPosteriorDistributions(); // OK
             Assert.True(weightPosteriorDistributions != null);
         }
 
@@ -6372,7 +6373,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                  () => classifier.Settings.Prediction.SetPredictionLossFunction(LossFunction.Absolute, Metrics.ZeroOneError)); // Inconsistent settings: Throw
 
             IReadOnlyList<IReadOnlyList<Gaussian>> weightPosteriorDistributions;
-            Assert.Throws<InvalidOperationException>(() => { weightPosteriorDistributions = classifier.WeightPosteriorDistributions; }); // Posterior weights distribution: Throw
+            Assert.Throws<InvalidOperationException>(() => { weightPosteriorDistributions = classifier.GetWeightPosteriorDistributions(); }); // Posterior weights distribution: Throw
 
             // Training
             classifier.Train(instanceSource, labelSource);
@@ -6385,7 +6386,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             classifier.Settings.Prediction.IterationCount = 5; // OK
             classifier.Settings.Prediction.SetPredictionLossFunction(LossFunction.ZeroOne); // OK
             classifier.Settings.Prediction.SetPredictionLossFunction(LossFunction.Custom, Metrics.ZeroOneError); // OK
-            weightPosteriorDistributions = classifier.WeightPosteriorDistributions; // OK
+            weightPosteriorDistributions = classifier.GetWeightPosteriorDistributions(); // OK
             Assert.True(weightPosteriorDistributions != null);
         }
 
@@ -6742,8 +6743,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.NotNull(((ILearner)classifier).Settings);
 
             // Check dimensions of posterior distributions over weights
-            Assert.Equal(1, classifier.WeightPosteriorDistributions.Count);
-            Assert.Equal(nativePredictionData.FeatureCount, classifier.WeightPosteriorDistributions[0].Count);
+            Assert.Equal(1, classifier.GetWeightPosteriorDistributions().Count);
+            Assert.Equal(nativePredictionData.FeatureCount, classifier.GetWeightPosteriorDistributions()[0].Count);
         }
 
         /// <summary>
@@ -6803,8 +6804,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.NotNull(((ILearner)classifier).Settings);
 
             // Check dimensions of posterior distributions over weights
-            Assert.Equal(nativePredictionData.ClassCount, classifier.WeightPosteriorDistributions.Count);
-            Assert.Equal(nativePredictionData.FeatureCount, classifier.WeightPosteriorDistributions[0].Count);
+            Assert.Equal(nativePredictionData.ClassCount, classifier.GetWeightPosteriorDistributions().Count);
+            Assert.Equal(nativePredictionData.FeatureCount, classifier.GetWeightPosteriorDistributions()[0].Count);
         }
 
         /// <summary>
@@ -6852,8 +6853,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.NotNull(((ILearner)classifier).Settings);
 
             // Check dimensions of posterior distributions over weights
-            Assert.Equal(1, classifier.WeightPosteriorDistributions.Count);
-            Assert.Equal(standardPredictionData.FeatureVectors["First"].Count, classifier.WeightPosteriorDistributions[0].Count);
+            Assert.Equal(1, classifier.GetWeightPosteriorDistributions().Count);
+            Assert.Equal(standardPredictionData.FeatureVectors["First"].Count, classifier.GetWeightPosteriorDistributions()[0].Count);
         }
 
         /// <summary>
@@ -6901,8 +6902,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.NotNull(((ILearner)classifier).Settings);
 
             // Check dimensions of posterior distributions over weights
-            Assert.Equal(standardPredictionData.ClassLabels.Length, classifier.WeightPosteriorDistributions.Count);
-            Assert.Equal(standardPredictionData.FeatureVectors["First"].Count, classifier.WeightPosteriorDistributions[0].Count);
+            Assert.Equal(standardPredictionData.ClassLabels.Length, classifier.GetWeightPosteriorDistributions().Count);
+            Assert.Equal(standardPredictionData.FeatureVectors["First"].Count, classifier.GetWeightPosteriorDistributions()[0].Count);
         }
 
         /// <summary>

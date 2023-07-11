@@ -1,6 +1,7 @@
 ﻿using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Math;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Concurrent;
@@ -18,9 +19,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             var serializerSettings = new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.Auto,
+                TypeNameHandling = TypeNameHandling.All,
                 ContractResolver = new CollectionAsObjectResolver(),
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             };
             var serializer = JsonSerializer.Create(serializerSettings);
             return serializer;
@@ -31,6 +32,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
         private sealed class JsonFormatter : IFormatter
         {
+            private readonly Dictionary<Stream, object[]> items = new Dictionary<Stream, object[]>();
+            private readonly Dictionary<Stream, int> itemCounts = new Dictionary<Stream, int>();
+
             private readonly JsonSerializer jsonSerializer = GetJsonSerializer();
 
             public SerializationBinder Binder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -39,18 +43,33 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
             public object Deserialize(Stream serializationStream)
             {
-                var streamReader = new StreamReader(serializationStream);
-                var jsonReader = new JsonTextReader(streamReader);
-                return jsonSerializer.Deserialize(jsonReader);
+                if (!items.ContainsKey(serializationStream))
+                {
+                    var streamReader = new StreamReader(serializationStream);
+                    var jsonReader = new JsonTextReader(streamReader);
+                    var obj = jsonSerializer.Deserialize(jsonReader);
+                    items.Add(serializationStream, (object[])obj);
+                }
+
+                //var obj = (JObject)jsonSerializer.Deserialize(jsonReader);
+                //var wrapper = obj.ToObject<DummyWrapper>();
+                //return wrapper.obj;
             }
 
             public void Serialize(Stream serializationStream, object graph)
             {
-                using (var streamWriter = new StreamWriter(serializationStream, Encoding.UTF8, 1024, leaveOpen: true))
+                using (var streamWriter = new StreamWriter(serializationStream, Encoding.bom, 1024, leaveOpen: true))
                 {
+                    //var wrapper = new DummyWrapper { obj = graph };
+                    //jsonSerializer.Serialize(streamWriter, wrapper);
                     jsonSerializer.Serialize(streamWriter, graph);
                 }
             }
+
+            //private class DummyWrapper
+            //{
+            //    public object obj { get; set; }
+            //}
         }
 
         /// <summary>
