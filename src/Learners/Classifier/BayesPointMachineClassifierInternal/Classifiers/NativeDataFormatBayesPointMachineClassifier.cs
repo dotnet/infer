@@ -153,6 +153,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <summary>
         /// Gets or sets the settings of the Bayes point machine classifier.
         /// </summary>
+        [JsonIgnore]
         public IBayesPointMachineClassifierSettings<TLabel, TTrainingSettings, TPredictionSettings> Settings { get; protected set; }
 
         /// <summary>
@@ -196,11 +197,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <summary>
         /// Gets a value indicating whether the Bayes point machine classifier is trained.
         /// </summary>
+        [JsonProperty]
         public bool IsTrained { get; private set; }
 
         /// <summary>
         /// Gets the mapping used for accessing data in the native format.
         /// </summary>
+        [JsonProperty]
         protected IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, TLabel> Mapping { get; private set; }
 
         /// <summary>
@@ -211,6 +214,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <summary>
         /// Gets or sets the generated inference algorithms for training and prediction.
         /// </summary>
+        [JsonProperty]
         protected IInferenceAlgorithms<TLabel, TLabelDistribution> InferenceAlgorithms { get; set; }
 
         #endregion

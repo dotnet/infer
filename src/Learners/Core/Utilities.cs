@@ -6,13 +6,14 @@ namespace Microsoft.ML.Probabilistic.Learners
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
     using System.Runtime.InteropServices.ComTypes;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
-
+    using Newtonsoft.Json;
     using Serialization;
 
     /// <summary>
@@ -189,10 +190,55 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <returns>The deserialized learner object.</returns>
         public static TLearner Load<TLearner>(string fileName, IFormatter formatter)
         {
+            //var text = @"""Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.CompoundBinaryNativeDataFormatBayesPointMachineClassifier`3[[Microsoft.ML.Probabilistic.Learners.Tests.BayesPointMachineClassifierTests+NativeDataset, Microsoft.ML.Probabilistic.Learners.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e4813102a62778da],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[Microsoft.ML.Probabilistic.Learners.Tests.BayesPointMachineClassifierTests+NativeDataset, Microsoft.ML.Probabilistic.Learners.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e4813102a62778da]], Microsoft.ML.Probabilistic.Learners.Classifier, Version=65534.0.0.0, Culture=neutral, PublicKeyToken=e4813102a62778da""6{""$id"":""2"",""$type"":""Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.CompoundBinaryNativeDataFormatBayesPointMachineClassifier`3[[Microsoft.ML.Probabilistic.Learners.Tests.BayesPointMachineClassifierTests+NativeDataset, Microsoft.ML.Probabilistic.Learners.Tests],[System.Int32, mscorlib],[Microsoft.ML.Probabilistic.Learners.Tests.BayesPointMachineClassifierTests+NativeDataset, Microsoft.ML.Probabilistic.Learners.Tests]], Microsoft.ML.Probabilistic.Learners.Classifier"",""Capabilities"":{""$type"":""Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierCapabilities, Microsoft.ML.Probabilistic.Learners.Classifier"",""IsPrecompiled"":true,""SupportsMissingData"":false,""SupportsSparseData"":true,""SupportsStreamedData"":false,""SupportsBatchedTraining"":true,""SupportsDistributedTraining"":false,""SupportsIncrementalTraining"":true,""SupportsModelEvidenceComputation"":true,""SupportsCustomPredictionLossFunction"":true},""Settings"":{""$type"":""Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierSettings`1[[System.Boolean, mscorlib]], Microsoft.ML.Probabilistic.Learners.Classifier"",""Training"":{""$type"":""Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierTrainingSettings, Microsoft.ML.Probabilistic.Learners.Classifier"",""ComputeModelEvidence"":false,""IterationCount"":50,""BatchCount"":1},""Prediction"":{""$type"":""Microsoft.ML.Probabilistic.Learners.BinaryBayesPointMachineClassifierPredictionSettings`1[[System.Boolean, mscorlib]], Microsoft.ML.Probabilistic.Learners.Classifier""}},""IsTrained"":true}";
+
             if (fileName == null)
             {
                 throw new ArgumentNullException(nameof(fileName));
             }
+            //string str;
+            //using (Stream stream = File.Open(fileName, FileMode.Open))
+            //{
+            //    str = new StreamReader(stream).ReadToEnd();
+            //    if (str != text)
+            //    {
+            //        if (str.Length != text.Length)
+            //        {
+            //            Debugger.Break();
+            //        }
+            //        for (int i = 0; i < str.Length; i++)
+            //        {
+            //            if (str[i] != text[i])
+            //            {
+            //                Debugger.Break();
+            //            }
+            //        }
+            //        Debugger.Break();
+            //    }
+            //}
+            string str;
+            using (Stream stream = File.Open(fileName, FileMode.Open))
+            {
+                str = new StreamReader(stream).ReadToEnd();
+            }
+
+            //IList<object> roles = new List<object>();
+            //JsonTextReader reader = new JsonTextReader(new StringReader(str));
+            //reader.SupportMultipleContent = true;
+            //while (true)
+            //{
+            //    if (!reader.Read())
+            //    {
+            //        break;
+            //    }
+
+            //    JsonSerializer serializer = new JsonSerializer();
+            //    var role = serializer.Deserialize(reader);
+
+            //    roles.Add(role);
+            //}
+
+            //Debugger.Break();
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
             {
@@ -297,10 +343,12 @@ namespace Microsoft.ML.Probabilistic.Learners
             }
 
             // Reconstructing type by its serialized assembly qualified name
-            var type = Type.GetType((string)formatter.Deserialize(stream));
+            var typeString = (string)formatter.Deserialize(stream);
+            var type = Type.GetType(typeString);
             var expectedSerializationVersion = GetSerializationVersion(type);
 
-            var actualSerializationVersion = (int)formatter.Deserialize(stream);
+            var p = formatter.Deserialize(stream);
+            var actualSerializationVersion = (long)p;
 
             if (expectedSerializationVersion != actualSerializationVersion)
             {

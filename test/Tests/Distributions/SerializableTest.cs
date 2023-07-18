@@ -97,30 +97,24 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void VectorSerializeTests()
         {
-            var serializer = SerializationUtils.GetJsonFormatter();
             Sparsity approxSparsity = Sparsity.ApproximateWithTolerance(0.001);
             double[] fromArray = new double[] {1.2, 2.3, 3.4, 1.2, 1.2, 2.3};
             Vector vdense = Vector.FromArray(fromArray);
             Vector vsparse = Vector.FromArray(fromArray, Sparsity.Sparse);
             Vector vapprox = Vector.FromArray(fromArray, approxSparsity);
-            MemoryStream vdenseStream = new MemoryStream();
-            MemoryStream vsparseStream = new MemoryStream();
-            MemoryStream vapproxStream = new MemoryStream();
-            {
+            MemoryStream stream = new MemoryStream();
+            var serializer = SerializationUtils.GetJsonFormatter();
 #pragma warning disable SYSLIB0011
-                serializer.Serialize(vdenseStream, vdense);
-                serializer.Serialize(vsparseStream, vsparse);
-                serializer.Serialize(vapproxStream, vapprox);
+            serializer.Serialize(stream, vdense);
+            serializer.Serialize(stream, vsparse);
+            serializer.Serialize(stream, vapprox);
 #pragma warning restore SYSLIB0011
-            }
 
-            vdenseStream.Position = 0;
-            vsparseStream.Position = 0;
-            vapproxStream.Position = 0;
+            stream.Position = 0;
 #pragma warning disable SYSLIB0011
-            Vector vdense2 = (Vector)serializer.Deserialize(vdenseStream);
-            SparseVector vsparse2 = (SparseVector)serializer.Deserialize(vsparseStream);
-            ApproximateSparseVector vapprox2 = (ApproximateSparseVector)serializer.Deserialize(vapproxStream);
+            Vector vdense2 = (Vector)serializer.Deserialize(stream);
+            SparseVector vsparse2 = (SparseVector)serializer.Deserialize(stream);
+            ApproximateSparseVector vapprox2 = (ApproximateSparseVector)serializer.Deserialize(stream);
 #pragma warning restore SYSLIB0011
 
             Assert.Equal(6, vdense2.Count);

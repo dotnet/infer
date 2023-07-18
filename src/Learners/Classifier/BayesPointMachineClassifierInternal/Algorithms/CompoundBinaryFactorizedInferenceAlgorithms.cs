@@ -13,6 +13,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 
     using GammaArray = Microsoft.ML.Probabilistic.Distributions.DistributionStructArray<Distributions.Gamma, double>;
     using GaussianArray = Microsoft.ML.Probabilistic.Distributions.DistributionStructArray<Distributions.Gaussian, double>;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// A binary Bayes point machine classifier with compound prior distributions over factorized weights.
@@ -52,6 +53,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <param name="computeModelEvidence">If true, the training algorithm computes evidence.</param>
         /// <param name="useSparseFeatures">If true, the inference algorithms expect features in a sparse representation.</param>
         /// <param name="featureCount">The number of features that the inference algorithms use.</param>
+        [JsonConstructor]
         public CompoundBinaryFactorizedInferenceAlgorithms(bool computeModelEvidence, bool useSparseFeatures, int featureCount)
             : base(computeModelEvidence, useSparseFeatures, featureCount)
         {

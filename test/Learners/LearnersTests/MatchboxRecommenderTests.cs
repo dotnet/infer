@@ -22,6 +22,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using RatingDistribution = System.Collections.Generic.IDictionary<int, double>;
     using System.Runtime.InteropServices.ComTypes;
     using Microsoft.ML.Probabilistic.Learners.Runners;
+    using Microsoft.ML.Probabilistic.Factors;
 
     /// <summary>
     /// Tests for Matchbox recommender.
@@ -653,21 +654,40 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             const string TrainedFileName = "trainedNativeRecommender.bin";
             const string NotTrainedFileName = "notTrainedNativeRecommender.bin";
 
-            var formatter = SerializationUtils.GetJsonFormatter();
+            //var formatter = SerializationUtils.GetJsonFormatter();
 
             // Train and serialize
             {
                 var recommender = this.CreateNativeDataFormatMatchboxRecommender();
-                recommender.Save(NotTrainedFileName, formatter);
+                using (var re = File.OpenWrite(NotTrainedFileName))
+                {
+                    recommender.SaveForwardCompatibleAsText(re);
+                }
                 recommender.Train(this.nativeTrainingData, this.nativeTrainingData);
-                recommender.Save(TrainedFileName, formatter);
+                using (var re = File.OpenWrite(TrainedFileName))
+                {
+                    recommender.SaveForwardCompatibleAsText(re);
+                }
             }
 
             // Deserialize and test
             {
-                var trainedRecommender = MatchboxRecommender.Load<NativeDataset, int, int, Discrete, NativeDataset>(TrainedFileName, formatter);
-                var notTrainedRecommender = MatchboxRecommender.Load<NativeDataset, int, int, Discrete, NativeDataset>(NotTrainedFileName, formatter);
-
+                IMatchboxRecommender<NativeDataset, int, int, Discrete, NativeDataset> trainedRecommender;
+                using (var re = new StreamReader(TrainedFileName))
+                {
+                    using (var reader = new WrappedTextReader(re))
+                    {
+                        trainedRecommender = MatchboxRecommender.LoadBackwardCompatible<NativeDataset, NativeDataset>(reader, (IMatchboxRecommenderMapping<NativeDataset, NativeDataset>)this.nativeMapping);
+                    }
+                }
+                IMatchboxRecommender<NativeDataset, int, int, Discrete, NativeDataset> notTrainedRecommender;
+                using (var re = new StreamReader(NotTrainedFileName))
+                {
+                    using (var reader = new WrappedTextReader(re))
+                    {
+                        notTrainedRecommender = MatchboxRecommender.LoadBackwardCompatible<NativeDataset, NativeDataset>(reader, (IMatchboxRecommenderMapping<NativeDataset, NativeDataset>)this.nativeMapping);
+                    }
+                }
                 notTrainedRecommender.Train(this.nativeTrainingData, this.nativeTrainingData);
 
                 this.VerifyNativeRatingDistributionOfUserOneAndItemThree(trainedRecommender.PredictDistribution(1, 3, this.nativeTrainingData));
@@ -692,23 +712,43 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.standardTrainingDataFeatures.UserFeatures.Add(User.WithId("u2"), Vector.FromArray(4, 2, 1.3, 1.2, 2));
             this.standardTrainingDataFeatures.ItemFeatures.Add(Item.WithId("i4"), Vector.FromArray(6.3, 0.5));
 
-            var formatter = SerializationUtils.GetJsonFormatter();
+            //var formatter = SerializationUtils.GetJsonFormatter();
 
             // Train and serialize
             {
                 var recommender = this.CreateStandardDataFormatMatchboxRecommender();
                 recommender.Settings.Training.BatchCount = BatchCount;
-                recommender.Save(NotTrainedFileName, formatter);
+                using (var re = File.OpenWrite(NotTrainedFileName))
+                {
+                    recommender.SaveForwardCompatibleAsText(re);
+                }
                 recommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
-                recommender.Save(TrainedFileName, formatter);
+                using (var re = File.OpenWrite(TrainedFileName))
+                {
+                    recommender.SaveForwardCompatibleAsText(re);
+                }
 
                 CheckStandardRatingPrediction(recommender, this.standardTrainingDataFeatures);
             }
 
             // Deserialize and test
             {
-                var trainedRecommender = MatchboxRecommender.Load<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(TrainedFileName, formatter);
-                var notTrainedRecommender = MatchboxRecommender.Load<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(NotTrainedFileName, formatter);
+                IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider> trainedRecommender;
+                using (var re = new StreamReader(TrainedFileName))
+                {
+                    using (var reader = new WrappedTextReader(re))
+                    {
+                        trainedRecommender = (IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider>)MatchboxRecommender.LoadBackwardCompatible(reader, (IStarRatingRecommenderMapping<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider, Vector>)this.standardMapping);
+                    }
+                }
+                IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider> notTrainedRecommender;
+                using (var re = new StreamReader(NotTrainedFileName))
+                {
+                    using (var reader = new WrappedTextReader(re))
+                    {
+                        notTrainedRecommender = (IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider>)MatchboxRecommender.LoadBackwardCompatible(reader, (IStarRatingRecommenderMapping<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider, Vector>)this.standardMapping);
+                    }
+                }
 
                 notTrainedRecommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
 

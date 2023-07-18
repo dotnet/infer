@@ -14,6 +14,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
     using Microsoft.ML.Probabilistic.Serialization;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// An abstract Bayes point machine classifier which wraps generated inference algorithms for training and prediction.
@@ -150,6 +151,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <summary>
         /// Gets or sets the marginal distributions over weights.
         /// </summary>
+        [JsonProperty]
         protected TWeightDistributions WeightMarginals { get; set; }
 
         /// <summary>

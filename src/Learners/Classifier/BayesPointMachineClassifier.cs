@@ -893,20 +893,20 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             using (var stream = File.Open(fileName, FileMode.Open))
             {
-                if (fileName.EndsWith(".bin"))
-                {
-                    using (var reader = new WrappedBinaryReader(new BinaryReader(stream), formatter))
-                    {
-                        return action(reader);
-                    }
-                }
-                else
-                {
+                //if (fileName.EndsWith(".bin"))
+                //{
+                //    using (var reader = new WrappedBinaryReader(new BinaryReader(stream), formatter))
+                //    {
+                //        return action(reader);
+                //    }
+                //}
+                //else
+                //{
                     using (var reader = new WrappedTextReader(new StreamReader(stream)))
                     {
                         return action(reader);
                     }
-                }
+                //}
             }
         }
     }

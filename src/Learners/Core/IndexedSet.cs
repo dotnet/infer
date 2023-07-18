@@ -87,6 +87,32 @@ namespace Microsoft.ML.Probabilistic.Collections
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="IndexedSet{T}"/> class
+        /// from a reader of a binary stream.
+        /// </summary>
+        /// <param name="reader">The reader to load the indexed set from.</param>
+        public IndexedSet(IReader reader, Func<string, T> parseEntity) : this()
+        {
+            if (reader == null)
+            {
+                throw new ArgumentNullException(nameof(reader));
+            }
+
+            int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
+
+            if (deserializedVersion == CustomSerializationVersion)
+            {
+                int elementCount = reader.ReadInt32();
+                for (int index = 0; index < elementCount; index++)
+                {
+                    var elementString = reader.ReadString();
+                    var element = parseEntity(elementString);
+                    this.Add(element, false);
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the number of elements in the indexed set.
         /// </summary>
         public int Count
@@ -231,6 +257,25 @@ namespace Microsoft.ML.Probabilistic.Collections
             for (int index = 0; index < this.Count; index++)
             {
                 writer.WriteObject(this.indexToElement[index]);
+            }
+        }
+
+        /// <summary>
+        /// Saves the elements of the indexed set to a binary writer.
+        /// </summary>
+        /// <param name="writer">The writer to save the elements of the indexed set to.</param>
+        public void SaveForwardCompatible(IWriter writer, Func<T, string> serialize)
+        {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.Write(CustomSerializationVersion);
+            writer.Write(this.Count);
+            for (int index = 0; index < this.Count; index++)
+            {
+                writer.Write(serialize(this.indexToElement[index]));
             }
         }
 

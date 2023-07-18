@@ -10,6 +10,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Learners.Mappings;
     using Microsoft.ML.Probabilistic.Serialization;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// A binary Bayes point machine classifier with compound prior distributions over weights
@@ -19,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
     /// <typeparam name="TInstance">The type of an instance.</typeparam>
     /// <typeparam name="TLabelSource">The type of the label source.</typeparam>
     [Serializable]
-    [SerializationVersion(6)]
+    [SerializationVersion(6)] // TODO increase?
     internal class CompoundBinaryNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource> :
         BinaryNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, BayesPointMachineClassifierTrainingSettings>
     {
@@ -35,6 +36,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// class.
         /// </summary>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
+        [JsonConstructor]
         public CompoundBinaryNativeDataFormatBayesPointMachineClassifier(IBayesPointMachineClassifierMapping<TInstanceSource, TInstance, TLabelSource, bool> mapping)
             : base(mapping)
         {

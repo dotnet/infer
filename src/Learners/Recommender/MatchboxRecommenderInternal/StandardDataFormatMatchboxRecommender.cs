@@ -9,13 +9,13 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
-
+    using System.Text;
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Learners.Mappings;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Serialization;
-
+    using Newtonsoft.Json;
     using RatingDistribution = System.Collections.Generic.IDictionary<int, double>;
 
     /// <summary>
@@ -1140,7 +1140,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
                 if (deserializedVersion == CustomSerializationVersion)
                 {
-                    this.indexedEntitySet = new IndexedSet<TEntity>(reader);
+                    this.indexedEntitySet = new IndexedSet<TEntity>(reader, ParseEntity);
                 }
             }
 
@@ -1206,7 +1206,30 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             public void SaveForwardCompatible(IWriter writer)
             {
                 writer.Write(CustomSerializationVersion);
-                this.indexedEntitySet.SaveForwardCompatible(writer);
+                this.indexedEntitySet.SaveForwardCompatible(writer, FormatEntity);
+            }
+
+            private static string FormatEntity(TEntity entity)
+            {
+                var sb = new StringBuilder();
+                using (var sw = new StringWriter(sb))
+                {
+                    var serializer = Runners.SerializationUtils.GetJsonSerializer();
+                    serializer.Serialize(sw, entity);
+                }
+
+                // int.MaxValue is 10 digits long
+                //return $"{sb.Length:D10}{sb}";
+                return sb.ToString();
+            }
+
+            private static TEntity ParseEntity(string entity)
+            {
+                using (var sw = new StringReader(entity))
+                {
+                    var serializer = Runners.SerializationUtils.GetJsonSerializer();
+                    return (TEntity)serializer.Deserialize(sw, typeof(TEntity));
+                }
             }
         }
 
