@@ -6,8 +6,13 @@ namespace Microsoft.ML.Probabilistic.Tests
 {
     using System;
     using System.IO;
+    using System.Runtime.InteropServices.ComTypes;
+    using System.Runtime.Serialization;
+
     using Xunit;
+
     using Microsoft.ML.Probabilistic.Distributions;
+    using Microsoft.ML.Probabilistic.Learners.Runners;
     using Microsoft.ML.Probabilistic.Serialization;
 
     using Assert = Xunit.Assert;
@@ -25,14 +30,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             using (var stream = new MemoryStream())
             {
-                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
+                var formatter = SerializationUtils.GetJsonFormatter();
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream), formatter);
                 writer.Write(Gaussian.FromNatural(-13.89, 436.12)); 
                 writer.Write(Gaussian.PointMass(Math.PI)); 
-                writer.Write(Gaussian.Uniform()); 
-
+                writer.Write(Gaussian.Uniform());
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream), formatter))
                 {
                     Gaussian natural = reader.ReadGaussian();
                     Assert.Equal(-13.89, natural.MeanTimesPrecision);
@@ -56,14 +61,15 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             using (var stream = new MemoryStream())
             {
-                var writer = new WrappedBinaryWriter(new BinaryWriter(stream));
+                var formatter = SerializationUtils.GetJsonFormatter();
+                var writer = new WrappedBinaryWriter(new BinaryWriter(stream), formatter);
                 writer.Write(Gamma.FromShapeAndRate(1.0, 10.0)); 
                 writer.Write(Gamma.PointMass(Math.PI));
                 writer.Write(Gamma.Uniform()); 
 
                 stream.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new WrappedBinaryReader(new BinaryReader(stream)))
+                using (var reader = new WrappedBinaryReader(new BinaryReader(stream), formatter))
                 {
                     Gamma shapeAndRate = reader.ReadGamma();
                     Assert.Equal(1.0, shapeAndRate.Shape);

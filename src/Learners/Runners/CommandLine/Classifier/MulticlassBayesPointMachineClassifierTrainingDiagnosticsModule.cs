@@ -4,6 +4,8 @@
 
 namespace Microsoft.ML.Probabilistic.Learners.Runners
 {
+    using System.Runtime.Serialization;
+
     /// <summary>
     /// A command-line module to diagnose training of a multi-class Bayes point machine classifier on given data.
     /// </summary>
@@ -42,7 +44,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             classifier.Settings.Training.IterationCount = iterationCount;
             classifier.Settings.Training.BatchCount = batchCount;
 
-            BayesPointMachineClassifierModuleUtilities.DiagnoseClassifier(classifier, trainingSet, maxParameterChangesFile, modelFile);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            BayesPointMachineClassifierModuleUtilities.DiagnoseClassifier(classifier, trainingSet, maxParameterChangesFile, modelFile, formatter);
 
             return true;
         }

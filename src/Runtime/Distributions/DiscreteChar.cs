@@ -1822,7 +1822,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             new ImmutableDiscreteChar(Storage.Read(readInt32, readDouble));
 
         /// <summary>
-        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter.
+        /// Constructor used during deserialization by Newtonsoft.Json.
         /// </summary>
         private ImmutableDiscreteChar(SerializationInfo info, StreamingContext context) =>
             this.data_ = Storage.FromSerializationInfo(info);

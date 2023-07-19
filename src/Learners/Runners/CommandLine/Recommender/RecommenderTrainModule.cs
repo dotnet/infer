@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.Serialization;
+
 namespace Microsoft.ML.Probabilistic.Learners.Runners
 {
     /// <summary>
@@ -48,7 +50,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             recommender.Settings.Training.UseUserFeatures = useUserFeatures;
             recommender.Settings.Training.UseItemFeatures = useItemFeatures;
             recommender.Train(trainingDataset);
-            recommender.Save(trainedModelFile);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            recommender.Save(trainedModelFile, formatter);
 
             return true;
         }

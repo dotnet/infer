@@ -37,6 +37,7 @@ namespace Microsoft.ML.Probabilistic.Collections
     {
         protected readonly int count;
         protected readonly string prefix;
+        protected readonly IFormatter formatter;
         protected bool doNotDelete;
         internal bool containsFileArrays;
 
@@ -53,9 +54,11 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <param name="folder">Temporary folder for storing data.  Will be deleted when the FileArray is disposed.</param>
         /// <param name="count"></param>
         /// <param name="func"></param>
-        public FileArray(string folder, int count, [SkipIfUniform] Func<int, T> func)
+        /// <param name="formatter">The formatter to use.</param>
+        public FileArray(string folder, int count, [SkipIfUniform] Func<int, T> func, IFormatter formatter)
         {
             this.count = count;
+            this.formatter = formatter;
             folder = folder.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             this.prefix = folder + Path.DirectorySeparatorChar;
             lock (folderLock)
@@ -73,13 +76,13 @@ namespace Microsoft.ML.Probabilistic.Collections
         }
 
         [Skip]
-        public FileArray(string folder, int count) : this(folder, count, i => default(T))
+        public FileArray(string folder, int count, IFormatter formatter) : this(folder, count, i => default(T), formatter)
         {
         }
 
         [Skip]
-        public FileArray([IgnoreDeclaration] FileArray<FileArray<T>> parent, int index, int count)
-            : this(parent.GetItemFolder(index), count)
+        public FileArray([IgnoreDeclaration] FileArray<FileArray<T>> parent, int index, int count, IFormatter formatter)
+            : this(parent.GetItemFolder(index), count, formatter)
         {
             parent.containsFileArrays = true;
             this.doNotDelete = true;
@@ -99,7 +102,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             if (containsFileArrays) throw new NotImplementedException();
             string folder = prefix.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-            return new FileArray<T>(folder + "_clone", count, i => this[i]);
+            return new FileArray<T>(folder + "_clone", count, i => this[i], formatter);
         }
 
         internal string GetItemFolder(int index)
@@ -147,7 +150,6 @@ namespace Microsoft.ML.Probabilistic.Collections
                 FileStats.AddRead();
                 string path = prefix + index.ToString(CultureInfo.InvariantCulture) + ".bin";
                 if (!File.Exists(path)) return default(T);
-                IFormatter formatter = new BinaryFormatter();
                 using (var stream = new FileStream(prefix + index.ToString(CultureInfo.InvariantCulture) + ".bin", FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     return (T) formatter.Deserialize(stream);
@@ -163,7 +165,6 @@ namespace Microsoft.ML.Probabilistic.Collections
             if (object.ReferenceEquals(value, null) || value.Equals(default(T))) File.Delete(path);
             else
             {
-                IFormatter formatter = new BinaryFormatter();
                 using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     formatter.Serialize(stream, value);

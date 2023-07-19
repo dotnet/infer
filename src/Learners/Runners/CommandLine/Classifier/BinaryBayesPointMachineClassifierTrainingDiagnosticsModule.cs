@@ -42,7 +42,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             classifier.Settings.Training.IterationCount = iterationCount;
             classifier.Settings.Training.BatchCount = batchCount;
 
-            BayesPointMachineClassifierModuleUtilities.DiagnoseClassifier(classifier, trainingSet, maxParameterChangesFile, modelFile);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            BayesPointMachineClassifierModuleUtilities.DiagnoseClassifier(classifier, trainingSet, maxParameterChangesFile, modelFile, formatter);
 
             return true;
         }

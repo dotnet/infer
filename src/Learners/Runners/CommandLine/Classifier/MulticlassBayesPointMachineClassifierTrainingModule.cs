@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 {
     using System;
     using System.Linq;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// A command-line module to train a multi-class Bayes point machine classifier on some given data.
@@ -55,7 +56,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 Console.WriteLine("Log evidence = {0,10:0.0000}", classifier.LogModelEvidence);
             }
 
-            classifier.Save(modelFile);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            classifier.Save(modelFile, formatter);
 
             return true;
         }

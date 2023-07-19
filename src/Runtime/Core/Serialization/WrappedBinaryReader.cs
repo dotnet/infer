@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Microsoft.ML.Probabilistic.Serialization
 {
     public class WrappedBinaryReader : IReader, IDisposable
     {
-        BinaryReader binaryReader;
+        readonly BinaryReader binaryReader;
+        readonly IFormatter formatter;
 
-        public WrappedBinaryReader(BinaryReader binaryReader)
+        public WrappedBinaryReader(BinaryReader binaryReader, IFormatter formatter)
         {
             this.binaryReader = binaryReader;
+            this.formatter = formatter;
         }
 
         public void Dispose()
@@ -41,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
         public T ReadObject<T>()
         {
-            return binaryReader.ReadObject<T>();
+            return binaryReader.ReadObject<T>(formatter);
         }
 
         public string ReadString()

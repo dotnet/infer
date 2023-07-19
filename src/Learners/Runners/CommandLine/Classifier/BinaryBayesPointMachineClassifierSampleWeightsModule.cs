@@ -30,8 +30,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 return false;
             }
 
+            var formatter = SerializationUtils.GetJsonFormatter();
             var classifier =
-                BayesPointMachineClassifier.LoadBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile);
+                BayesPointMachineClassifier.LoadBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile, formatter);
 
             BayesPointMachineClassifierModuleUtilities.SampleWeights(classifier, samplesFile);
 

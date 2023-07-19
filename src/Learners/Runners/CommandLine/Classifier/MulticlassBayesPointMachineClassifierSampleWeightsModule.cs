@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Learners.Runners
 {
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// A command-line module to sample weights from a trained multi-class Bayes point machine classifier model.
@@ -29,9 +30,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             {
                 return false;
             }
-
+            var formatter = SerializationUtils.GetJsonFormatter();
             var classifier =
-                BayesPointMachineClassifier.LoadMulticlassClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile);
+                BayesPointMachineClassifier.LoadMulticlassClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile, formatter);
 
             BayesPointMachineClassifierModuleUtilities.SampleWeights(classifier, samplesFile);
 

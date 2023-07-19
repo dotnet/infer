@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Learners.Runners
 {
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// A command-line module to predict labels given a trained multi-class Bayes point machine classifier model and a test set.
@@ -33,10 +34,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             }
 
             var testSet = ClassifierPersistenceUtils.LoadLabeledFeatureValues(testSetFile);
-            BayesPointMachineClassifierModuleUtilities.WriteDataSetInfo(testSet);            
-
+            BayesPointMachineClassifierModuleUtilities.WriteDataSetInfo(testSet);
+            var formatter = SerializationUtils.GetJsonFormatter();
             var classifier =
-                BayesPointMachineClassifier.LoadMulticlassClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile);
+                BayesPointMachineClassifier.LoadMulticlassClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile, formatter);
 
             // Predict labels
             var predictions = classifier.PredictDistribution(testSet);

@@ -58,6 +58,7 @@
     <PackageReference Include="xunit.runner.utility" Version="2.4.1" />
     <ProjectReference Include="..\..\src\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\src\Csoft\Csoft.csproj" />
+    <ProjectReference Include="..\..\src\Learners\Runners\Common\Common.csproj" />
     <ProjectReference Include="..\..\src\Runtime\Runtime.csproj" />
   </ItemGroup>
 

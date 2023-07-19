@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Learners
 {
     using System;
     using System.IO;
+    using System.Runtime.InteropServices.ComTypes;
     using System.Runtime.Serialization;
     using System.Text;
 
@@ -79,11 +80,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TRatingDistribution">The type of a distribution over ratings.</typeparam>
         /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
         /// <param name="fileName">The file name.</param>
+        /// <param name="formatter">The formatter to use.</param>
         /// <returns>The deserialized recommender object.</returns>
         public static IMatchboxRecommender<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>
-            Load<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>(string fileName)
+            Load<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>(string fileName, IFormatter formatter)
         {
-            return Utilities.Load<IMatchboxRecommender<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>>(fileName);
+            return Utilities.Load<IMatchboxRecommender<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>>(fileName, formatter);
         }
         
         /// <summary>
@@ -139,17 +141,18 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
         /// <param name="stream">The binary stream to a serialized Matchbox recommender.</param>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
+        /// <param name="formatter">The formatter to use.</param>
         /// <returns>The deserialized recommender object.</returns>
         public static IMatchboxRecommender<TInstanceSource, int, int, Discrete, TFeatureSource>
             LoadBackwardCompatible<TInstanceSource, TFeatureSource>(
-                Stream stream, IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource> mapping)
+                Stream stream, IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource> mapping, IFormatter formatter)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true), formatter))
             {
                 return LoadBackwardCompatible(reader, mapping);
             }
@@ -162,10 +165,11 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
         /// <param name="fileName">The name of the file of a serialized Matchbox recommender.</param>
         /// <param name="mapping">The mapping used for accessing data in the native format.</param>
+        /// <param name="formatter">The formatter to use.</param>
         /// <returns>The deserialized recommender object.</returns>
         public static IMatchboxRecommender<TInstanceSource, int, int, Discrete, TFeatureSource>
             LoadBackwardCompatible<TInstanceSource, TFeatureSource>(
-                string fileName, IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource> mapping)
+                string fileName, IMatchboxRecommenderMapping<TInstanceSource, TFeatureSource> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -174,7 +178,7 @@ namespace Microsoft.ML.Probabilistic.Learners
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
             {
-                return LoadBackwardCompatible(stream, mapping);
+                return LoadBackwardCompatible(stream, mapping, formatter);
             }
         }
 
@@ -218,17 +222,18 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
         /// <param name="stream">The binary stream to a serialized Matchbox recommender.</param>
         /// <param name="mapping">The mapping used for accessing data in the standard format.</param>
+        /// <param name="formatter">The formatter to use.</param>
         /// <returns>The deserialized recommender object.</returns>
         public static IMatchboxRecommender<TInstanceSource, TUser, TItem, RatingDistribution, TFeatureSource>
             LoadBackwardCompatible<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(
-                Stream stream, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping)
+                Stream stream, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping, IFormatter formatter)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true)))
+            using (var reader = new WrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true), formatter))
             {
                 return LoadBackwardCompatible(reader, mapping);
             }
@@ -245,10 +250,11 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
         /// <param name="fileName">The name of the file of a serialized Matchbox recommender.</param>
         /// <param name="mapping">The mapping used for accessing data in the standard format.</param>
+        /// <param name="formatter">The formatter to use.</param>
         /// <returns>The deserialized recommender object.</returns>
         public static IMatchboxRecommender<TInstanceSource, TUser, TItem, RatingDistribution, TFeatureSource>
             LoadBackwardCompatible<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(
-                string fileName, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping)
+                string fileName, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping, IFormatter formatter)
         {
             if (fileName == null)
             {
@@ -257,7 +263,7 @@ namespace Microsoft.ML.Probabilistic.Learners
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
             {
-                return LoadBackwardCompatible(stream, mapping);
+                return LoadBackwardCompatible(stream, mapping, formatter);
             }
         }
 

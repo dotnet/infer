@@ -8,6 +8,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
 
     using Microsoft.ML.Probabilistic.Distributions;
@@ -24,7 +25,8 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// </summary>
         /// <param name="writer">The binary writer.</param>
         /// <param name="obj">The object to write to the stream.</param>
-        public static void WriteObject(this BinaryWriter writer, object obj)
+        /// <param name="formatter">The formatter to use.</param>
+        public static void WriteObject(this BinaryWriter writer, object obj, IFormatter formatter)
         {
             if (writer == null)
             {
@@ -36,7 +38,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
                 throw new ArgumentNullException(nameof(obj));
             }
 
-            byte[] array = ObjectToByteArray(obj);
+            byte[] array = ObjectToByteArray(obj, formatter);
             writer.Write(array.Length);
             writer.Write(array);
         }
@@ -205,15 +207,15 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// Converts an object to a byte array.
         /// </summary>
         /// <param name="obj">The object to convert.</param>
+        /// <param name="formatter">The formatter to use.</param>
         /// <returns>The byte array of the specified object.</returns>
-        private static byte[] ObjectToByteArray(object obj)
+        private static byte[] ObjectToByteArray(object obj, IFormatter formatter)
         {
             Debug.Assert(obj != null, "The object must not be null.");
 
             using (var memoryStream = new MemoryStream())
             {
-                var binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(memoryStream, obj);
+                formatter.Serialize(memoryStream, obj);
                 return memoryStream.ToArray();
             }
         }

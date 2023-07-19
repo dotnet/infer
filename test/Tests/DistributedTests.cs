@@ -4,16 +4,22 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.ML.Probabilistic.Collections;
-using Microsoft.ML.Probabilistic.Models;
-using Microsoft.ML.Probabilistic.Factors;
-using Microsoft.ML.Probabilistic.Distributions;
-using Microsoft.ML.Probabilistic.Math;
-using Microsoft.ML.Probabilistic.Utilities;
-using Xunit;
 using System.IO;
 using System.Linq;
-using Range = Microsoft.ML.Probabilistic.Models.Range;
+using System.Runtime.Serialization;
+using System.Threading.Tasks;
+using Microsoft.ML.Probabilistic.Algorithms;
+using Microsoft.ML.Probabilistic.Collections;
+using Microsoft.ML.Probabilistic.Compiler;
+using Microsoft.ML.Probabilistic.Models;
+using Microsoft.ML.Probabilistic.Models.Attributes;
+using Microsoft.ML.Probabilistic.Factors;
+using Microsoft.ML.Probabilistic.Distributions;
+using Microsoft.ML.Probabilistic.Learners.Runners;
+using Microsoft.ML.Probabilistic.Math;
+using Microsoft.ML.Probabilistic.Utilities;
+
+using Xunit;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -21,6 +27,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 #pragma warning disable 162
 #endif
 
+    using Range = Microsoft.ML.Probabilistic.Models.Range;
     using Assert = Xunit.Assert;
     using BernoulliArray = DistributionStructArray<Bernoulli, bool>;
     using BernoulliArrayArray = DistributionRefArray<DistributionStructArray<Bernoulli, bool>, bool[]>;
@@ -28,10 +35,6 @@ namespace Microsoft.ML.Probabilistic.Tests
     using GaussianArray = DistributionStructArray<Gaussian, double>;
     using GaussianArrayArray = DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>;
     using DirichletArray = DistributionRefArray<Dirichlet, Vector>;
-    using System.Threading.Tasks;
-    using Microsoft.ML.Probabilistic.Compiler;
-    using Microsoft.ML.Probabilistic.Algorithms;
-    using Microsoft.ML.Probabilistic.Models.Attributes;
 
     public class DistributedTests
     {
@@ -1160,8 +1163,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "DistributedTest")]
         public void FileArrayTest()
         {
+            var formatter = SerializationUtils.GetJsonFormatter();
             string folder = FileArray<double>.GetTempFolder("doubles");
-            FileArray<double> doubles = new FileArray<double>(folder, 4, i => 1.0 + i);
+            FileArray<double> doubles = new FileArray<double>(folder, 4, i => 1.0 + i, formatter);
             for (int i = 0; i < doubles.Count; i++)
             {
                 double x = doubles[i];
@@ -1417,7 +1421,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 {
                     return;
                 }
-                this.w_rep0_B = new DistributionFileArray<GaussianArray, double[]>(FileArray<bool>.GetTempFolder("w_rep0_B"), 2);
+
+                var formatter = SerializationUtils.GetJsonFormatter();
+                this.w_rep0_B = new DistributionFileArray<GaussianArray, double[]>(FileArray<bool>.GetTempFolder("w_rep0_B"), 2, formatter);
                 for (int item = 0; item < 2; item++)
                 {
                     this.w_rep0_B[item] = new GaussianArray(2);

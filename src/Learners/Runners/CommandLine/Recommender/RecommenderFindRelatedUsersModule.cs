@@ -44,7 +44,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
             RecommenderDataset testDataset = RecommenderDataset.Load(datasetFile);
 
-            var trainedModel = MatchboxRecommender.Load<RecommenderDataset, User, Item, RatingDistribution, DummyFeatureSource>(trainedModelFile);
+            var formatter = SerializationUtils.GetJsonFormatter();
+            var trainedModel = MatchboxRecommender.Load<RecommenderDataset, User, Item, RatingDistribution, DummyFeatureSource>(trainedModelFile, formatter);
             var evaluator = new RecommenderEvaluator<RecommenderDataset, User, Item, int, int, RatingDistribution>(
                 Mappings.StarRatingRecommender.ForEvaluation());
             IDictionary<User, IEnumerable<User>> relatedUsers = evaluator.FindRelatedUsersWhoRatedSameItems(

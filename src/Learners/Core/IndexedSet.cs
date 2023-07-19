@@ -66,7 +66,8 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// from a reader of a binary stream.
         /// </summary>
         /// <param name="reader">The reader to load the indexed set from.</param>
-        public IndexedSet(IReader reader) : this()
+        /// <param name="parseEntity">Optional custom parsing for items in the set.</param>
+        public IndexedSet(IReader reader, Func<string, T> parseEntity = null) : this()
         {
             if (reader == null)
             {
@@ -80,7 +81,16 @@ namespace Microsoft.ML.Probabilistic.Collections
                 int elementCount = reader.ReadInt32();
                 for (int index = 0; index < elementCount; index++)
                 {
-                    var element = reader.ReadObject<T>();
+                    T element;
+                    if (parseEntity != null)
+                    {
+                        var elementString = reader.ReadString();
+                        element = parseEntity(elementString);
+                    }
+                    else
+                    {
+                        element = reader.ReadObject<T>();
+                    }
                     this.Add(element, false);
                 }
             }
@@ -219,7 +229,8 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// Saves the elements of the indexed set to a binary writer.
         /// </summary>
         /// <param name="writer">The writer to save the elements of the indexed set to.</param>
-        public void SaveForwardCompatible(IWriter writer)
+        /// <param name="serialize">An optional custom serializer for items of the set.</param>
+        public void SaveForwardCompatible(IWriter writer, Func<T, string> serialize = null)
         {
             if (writer == null)
             {
@@ -230,7 +241,14 @@ namespace Microsoft.ML.Probabilistic.Collections
             writer.Write(this.Count);
             for (int index = 0; index < this.Count; index++)
             {
-                writer.WriteObject(this.indexToElement[index]);
+                if (serialize != null)
+                {
+                    writer.Write(serialize(this.indexToElement[index]));
+                }
+                else
+                {
+                    writer.WriteObject(this.indexToElement[index]);
+                }
             }
         }
 

@@ -35,8 +35,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             var testSet = ClassifierPersistenceUtils.LoadLabeledFeatureValues(testSetFile);
             BayesPointMachineClassifierModuleUtilities.WriteDataSetInfo(testSet);            
 
+            var formatter = SerializationUtils.GetJsonFormatter();
             var classifier =
-                BayesPointMachineClassifier.LoadBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile);
+                BayesPointMachineClassifier.LoadBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile, formatter);
 
             // Predict labels
             var predictions = classifier.PredictDistribution(testSet);
