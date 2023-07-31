@@ -22,8 +22,8 @@ compath=/bin/${configuration}/net6.0/
 parallel_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)'
 
 # filter for sequential test run
-#sequential_filter='-notrait Platform=x86 -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest'
-sequential_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category=CsoftModel|Category=ModifiesGlobals|Category=DistributedTests|Category=Performance)'
+#sequential_filter='-notrait Platform=x86 -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTest -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest'
+sequential_filter='--filter (Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category=CsoftModel|Category=ModifiesGlobals|Category=DistributedTest|Category=Performance)'
 
 exitcode=0
 
