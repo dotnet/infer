@@ -15,7 +15,7 @@ steps:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: test/Tests/bin/*/net472/Microsoft.ML.Probabilistic.Tests.dll
-        testFiltercriteria: '(Platform!=x86)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTests)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
+        testFiltercriteria: '(Platform!=x86)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTest)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
         runInParallel: false
         runSettingsFile: test.runsettings
     - task: VSTest@2
@@ -36,7 +36,7 @@ steps:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: test/Tests/bin/*/net472/Microsoft.ML.Probabilistic.Tests.dll
-        testFiltercriteria: '(Platform!=x64)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTests)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
+        testFiltercriteria: '(Platform!=x64)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTest)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
         runInParallel: false
         runSettingsFile: x86.runsettings
     - task: VSTest@2
