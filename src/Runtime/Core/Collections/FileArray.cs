@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
+using Microsoft.ML.Probabilistic.Serialization;
 
 namespace Microsoft.ML.Probabilistic.Collections
 {
@@ -145,28 +146,39 @@ namespace Microsoft.ML.Probabilistic.Collections
             get
             {
                 FileStats.AddRead();
-                string path = prefix + index.ToString(CultureInfo.InvariantCulture) + ".bin";
+                string path = GetFilePath(index);
                 if (!File.Exists(path)) return default(T);
-                IFormatter formatter = new BinaryFormatter();
-                using (var stream = new FileStream(prefix + index.ToString(CultureInfo.InvariantCulture) + ".bin", FileMode.Open, FileAccess.Read, FileShare.Read))
+                var serializer = GetSerializer();
+                using (var reader = XmlDictionaryReader.CreateTextReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read), new XmlDictionaryReaderQuotas()))
                 {
-                    return (T) formatter.Deserialize(stream);
+                    return (T)serializer.ReadObject(reader);
                 }
             }
             set { if (!containsFileArrays) StoreItem(index, value); }
         }
 
+        private string GetFilePath(int index) =>
+            prefix + index.ToString(CultureInfo.InvariantCulture) + ".bin";
+
+        private DataContractSerializer GetSerializer() =>
+            new DataContractSerializer(
+                typeof(T),
+                new DataContractSerializerSettings
+                {
+                    DataContractResolver = new InferDataContractResolver()
+                });
+
         internal void StoreItem(int index, T value)
         {
             FileStats.AddWrite();
-            string path = prefix + index.ToString(CultureInfo.InvariantCulture) + ".bin";
+            string path = GetFilePath(index);
             if (object.ReferenceEquals(value, null) || value.Equals(default(T))) File.Delete(path);
             else
             {
-                IFormatter formatter = new BinaryFormatter();
-                using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+                var serializer = GetSerializer();
+                using (var writer = XmlDictionaryWriter.CreateTextWriter(new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None)))
                 {
-                    formatter.Serialize(stream, value);
+                    serializer.WriteObject(writer, value);
                 }
             }
         }
