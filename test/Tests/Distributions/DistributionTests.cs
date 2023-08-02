@@ -1413,6 +1413,20 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void DiscreteTruncateTest()
+        {
+            Discrete d = new Discrete(SparseVector.FromArray(0.1, 0.0, 0.3, 0.6));
+            Discrete truncated = d.Truncate(0, 2);
+            Assert.True(truncated.Dimension == 3);
+            truncated = d.Truncate(1, 2);
+            Assert.True(truncated.IsPointMass);
+            Assert.True(truncated.Point == 2);
+            truncated = d.Truncate(2, 2);
+            Assert.True(truncated.IsPointMass);
+            Assert.True(truncated.Point == 2);
+        }
+
+        [Fact]
         [Trait("Category", "ModifiesGlobals")]
         public void DirichletTest()
         {
