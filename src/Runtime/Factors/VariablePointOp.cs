@@ -154,6 +154,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (double.IsNaN(currPoint)) throw new ArgumentException("currPoint is NaN");
             if (double.IsInfinity(currPoint)) throw new ArgumentException("currPoint is infinite");
             if (double.IsNaN(currDeriv)) throw new ArgumentException("currDeriv is NaN");
+            bool vanilla = false;
+            if (vanilla)
+            {
+                stepsize = 1e-3;
+                nextPoint = currPoint + currDeriv * stepsize;
+                Console.WriteLine($"currPoint = {currPoint} currDeriv = {currDeriv} nextPoint = {nextPoint}");
+                return;
+            }
             if (hasPrevious)
             {
                 double prevStep = currPoint - prevPoint;

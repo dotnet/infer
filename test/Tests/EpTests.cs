@@ -4148,6 +4148,28 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        [Fact]
+        public void PointEstimateTest()
+        {
+            Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x");
+            Variable<double> y = Variable.GaussianFromMeanAndVariance(0, 1).Named("y");
+            var xNoisy = Variable.GaussianFromMeanAndVariance(x, 1e-8);
+            xNoisy.Name = nameof(xNoisy);
+            Variable.ConstrainTrue(xNoisy > y);
+            x.InitialiseTo(Gaussian.PointMass(1));
+            y.InitialiseTo(Gaussian.PointMass(10));
+            x.AddAttribute(new PointEstimate());
+            y.AddAttribute(new PointEstimate());
+
+            InferenceEngine engine = new InferenceEngine();
+            for (int iter = 0; iter < 100; iter++)
+            {
+                engine.NumberOfIterations = iter;
+                double xActual = engine.Infer<Gaussian>(x).Point;
+                double yActual = engine.Infer<Gaussian>(y).Point;
+                Console.WriteLine($"{iter} {xActual} {yActual}");
+            }
+        }
 
         [Fact]
         public void VectorGaussianEvidenceTest()
