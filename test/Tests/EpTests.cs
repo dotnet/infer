@@ -4148,6 +4148,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        // TODO: generate correct code here
         [Fact]
         public void PointEstimateTest()
         {
@@ -4156,18 +4157,28 @@ namespace Microsoft.ML.Probabilistic.Tests
             var xNoisy = Variable.GaussianFromMeanAndVariance(x, 1e-8);
             xNoisy.Name = nameof(xNoisy);
             Variable.ConstrainTrue(xNoisy > y);
+            //Variable.ConstrainTrue(xNoisy > 0);
             x.InitialiseTo(Gaussian.PointMass(1));
             y.InitialiseTo(Gaussian.PointMass(10));
             x.AddAttribute(new PointEstimate());
             y.AddAttribute(new PointEstimate());
 
             InferenceEngine engine = new InferenceEngine();
-            for (int iter = 0; iter < 100; iter++)
+            engine.ShowProgress = false;
+            double xPrevious = double.NaN, yPrevious = double.NaN;
+            for (int iter = 1; iter <= 2000; iter++)
             {
                 engine.NumberOfIterations = iter;
                 double xActual = engine.Infer<Gaussian>(x).Point;
                 double yActual = engine.Infer<Gaussian>(y).Point;
-                Console.WriteLine($"{iter} {xActual} {yActual}");
+                Trace.WriteLine($"{iter} {xActual} {yActual}");
+                if (MMath.AbsDiff(xActual, xPrevious) < 1e-8 && MMath.AbsDiff(yActual, yPrevious) < 1e-8)
+                {
+                    Trace.WriteLine($"Converged after {iter} iterations");
+                    break;
+                }
+                xPrevious = xActual;
+                yPrevious = yActual;
             }
         }
 
