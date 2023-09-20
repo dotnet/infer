@@ -286,18 +286,18 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void UniformDetection()
         {
-            StringDistribution dist1 = StringDistribution.OneOf(0.0, StringDistribution.Zero(), 1.0, StringDistribution.Any());
-            Assert.True(dist1.IsUniform());
-            StringInferenceTestUtilities.TestProbability(dist1, 1.0, string.Empty, "a", "bc");
-
-            StringDistribution dist2 = StringDistribution.OneOf(0.3, StringDistribution.Any(), 0.7, StringDistribution.Any());
-            Assert.True(dist2.IsUniform());
-            StringInferenceTestUtilities.TestProbability(dist1, 1.0, string.Empty, "a", "bc");
-
-            StringDistribution dist3 =
-                StringDistribution.OneOf(1.0, StringDistribution.Any(), 2.0, StringDistribution.OneOf(0.1, StringDistribution.Any(), 0.2, StringDistribution.Any()));
-            Assert.True(dist3.IsUniform());
-            StringInferenceTestUtilities.TestProbability(dist3, 1.0, string.Empty, "a", "bc");
+            var dists = new[] 
+            {
+                StringDistribution.OneOf(0.0, StringDistribution.Zero(), 1.0, StringDistribution.Any()),
+                StringDistribution.OneOf(0.3, StringDistribution.Any(), 0.7, StringDistribution.Any()),
+                StringDistribution.OneOf(1.0, StringDistribution.Any(), 2.0, StringDistribution.OneOf(0.1, StringDistribution.Any(), 0.2, StringDistribution.Any())),
+            };
+            foreach (var dist in dists)
+            { 
+                Assert.True(dist.IsUniform());
+                Assert.True(dist.IsPartialUniform());
+                StringInferenceTestUtilities.TestProbability(dist, 1.0, string.Empty, "a", "bc");
+            }
         }
 
         /// <summary>
@@ -309,6 +309,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var mixture = StringDistribution.OneOf(StringDistribution.String("a"), StringDistribution.String("b"));
             StringInferenceTestUtilities.TestProbability(mixture, 0.5, "a", "b");
+            Assert.True(mixture.IsPartialUniform());
         }
 
         /// <summary>
@@ -326,6 +327,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var mixture = StringDistribution.OneOf(dist1, dist2);
             StringInferenceTestUtilities.TestProbability(mixture, 0.25, "a", "b", "c", "d");
+            Assert.True(mixture.IsPartialUniform());
         }
 
         /// <summary>
@@ -341,6 +343,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             StringInferenceTestUtilities.TestProbability(mixture, 0.5 / 2, "a", "b");
             StringInferenceTestUtilities.TestProbability(mixture, 0.5 / 3, "c", "d", "e");
+            Assert.False(mixture.IsPartialUniform());
+            mixture.SetToPartialUniform();
+            Assert.True(mixture.IsPartialUniform());
+            StringInferenceTestUtilities.TestProbability(mixture, 1.0 / 5, "a", "b", "c", "d", "e");
         }
 
         /// <summary>
@@ -380,8 +386,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var dist = StringDistribution.String("1337");
             Assert.False(dist.IsUniform());
+            Assert.True(dist.IsPartialUniform());
+            dist.SetToPartialUniform();
+            Assert.False(dist.IsUniform());
+            Assert.True(dist.IsPartialUniform());
             dist.SetToUniform();
             Assert.True(dist.IsUniform());
+            Assert.True(dist.IsPartialUniform());
         }
 
         /// <summary>
@@ -859,6 +870,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var unif2 = StringDistribution.Uniform();
             Assert.True(unif1.IsUniform());
             Assert.True(unif2.IsUniform());
+            Assert.True(unif1.IsPartialUniform());
+            Assert.True(unif2.IsPartialUniform());
             Assert.False(unif1.IsProper());
             Assert.False(unif2.IsProper());
             StringInferenceTestUtilities.TestProbability(unif1, 1.0, "hello", string.Empty);
