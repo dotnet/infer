@@ -1503,7 +1503,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns><see langword="true"/> if the distribution is uniform over its support, <see langword="false"/> otherwise.</returns>
         public bool IsPartialUniform()
         {
-            throw new NotImplementedException();
+            if (this.IsPointMass)
+            {
+                return true;
+            }
+
+            if (IsCanonicUniform())
+            {
+                // This should be much faster for distributions which are canonic uniform.
+                return true;
+            }
+
+            TThis partialUniform = this.Clone();
+            partialUniform.SetToPartialUniform();
+            return this.Equals(partialUniform);
         }
 
         /// <summary>
