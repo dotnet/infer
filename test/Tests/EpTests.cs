@@ -4169,15 +4169,19 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             InferenceEngine engine = new InferenceEngine();
             engine.ShowProgress = false;
+            engine.Compiler.UseExistingSourceFiles = true;
             engine.Compiler.InitialisationAffectsSchedule = true;
             engine.Compiler.GivePriorityTo(typeof(GaussianFromMeanAndVarianceOp_PointVariance));
             double xPrevious = double.NaN, yPrevious = double.NaN;
+            List<string> lines = new List<string>();
             for (int iter = 1; iter <= 20000; iter++)
             {
                 engine.NumberOfIterations = iter;
                 double xActual = engine.Infer<Gaussian>(x).Point;
                 double yActual = engine.Infer<Gaussian>(y).Point;
                 Trace.WriteLine($"{iter} {xActual} {yActual}");
+                string line = $"{xActual}, {yActual}";
+                lines.Add(line);
                 if (MMath.AbsDiff(xActual, xPrevious) < 1e-8 && MMath.AbsDiff(yActual, yPrevious) < 1e-8)
                 {
                     Trace.WriteLine($"Converged after {iter} iterations");
@@ -4186,6 +4190,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 xPrevious = xActual;
                 yPrevious = yActual;
             }
+            System.IO.File.WriteAllLines("points.csv", lines);
         }
 
         [Fact]

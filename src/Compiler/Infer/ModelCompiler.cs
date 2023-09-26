@@ -904,7 +904,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             tc.AddTransform(new ReplicationTransform());
             if (useVariableTransform)
             {
-                tc.AddTransform(new VariableTransform(algorithm));
+                tc.AddTransform(new VariableTransform(this));
                 if (useDepthCloning)
                     tc.AddTransform(new Channel2Transform(useDepthCloning, false));
             }
